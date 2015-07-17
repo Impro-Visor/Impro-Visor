@@ -78,6 +78,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     private static final int HIGH = 1;
     private Object Improvisor;
     
+    MelodyPart guideToneLine;
     /**
      * Creates new form GuideToneLineDialog
      * @param parent Frame that spawned this dialog box
@@ -135,6 +136,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         generateLine = new javax.swing.JButton();
         transformPanel = new javax.swing.JPanel();
         transformLine = new javax.swing.JButton();
+        divideLine = new javax.swing.JButton();
         scaleDeg2Panel = new javax.swing.JPanel();
         scaleDeg2Label = new javax.swing.JLabel();
         maxDurationPanel = new javax.swing.JPanel();
@@ -280,6 +282,14 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
             }
         });
         transformPanel.add(transformLine, new java.awt.GridBagConstraints());
+
+        divideLine.setText("Divide Line");
+        divideLine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                divideLineActionPerformed(evt);
+            }
+        });
+        transformPanel.add(divideLine, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -630,7 +640,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
                                                               duration,
                                                               mix,
                                                               allowColor);
-            MelodyPart guideToneLine = guideLine.makeGuideLine();
+            guideToneLine = guideLine.makeGuideLine();
             notate.addChorus(guideToneLine);
         }
         
@@ -869,6 +879,11 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         range = rangeChooser.getRange();
     }//GEN-LAST:event_rangeChooserButtonActionPerformed
 
+    private void divideLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideLineActionPerformed
+        MelodyPart fractalSolo = GuideLineGenerator.fractalImprovise(guideToneLine, notate.getChordProg());
+        notate.addChorus(fractalSolo);
+    }//GEN-LAST:event_divideLineActionPerformed
+
     /**
      * returns which JRadioButton in a ButtonGroup is selected
      * @param group the ButtonGroup from which you want to return the selected button
@@ -957,6 +972,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     private javax.swing.ButtonGroup directionButtons;
     private javax.swing.JLabel directionLabel;
     private javax.swing.JPanel directionPanel;
+    private javax.swing.JButton divideLine;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;

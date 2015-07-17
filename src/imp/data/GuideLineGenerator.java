@@ -1076,4 +1076,75 @@ public class GuideLineGenerator implements Constants {
         return getMod(pitch1) == getMod(pitch2);
     }
     
+    public static MelodyPart fractalImprovise(MelodyPart gtl, ChordPart chords)
+    {
+        for(int i = 0; i < 3; ++i)
+        {
+            gtl = splitSolo(gtl, chords);
+        }
+        
+        return gtl;
+    }
+    
+    private static MelodyPart splitSolo(MelodyPart solo, ChordPart chords)
+    {
+        MelodyPart newSolo = new MelodyPart();
+        
+        int slot = 0;
+        while(slot < solo.getSize()){
+            Note first = solo.getCurrentNote(slot);
+            Note second = solo.getNextNote(slot);
+            int nextIndex = solo.getNextIndex(slot);
+            Chord firstChord = chords.getCurrentChord(slot);
+            Chord secondChord = chords.getCurrentChord(nextIndex);
+            
+            ArrayList<Note> newNotes = splitNotes(first,
+                                                  second,
+                                                  firstChord,
+                                                  secondChord);
+            for(Note note : newNotes){
+                newSolo.addNote(note);
+            }
+            slot = nextIndex;
+        }
+        return newSolo;
+    }
+    
+    private static ArrayList<Note> splitNotes(Note firstNote, 
+                                       Note secondNote,
+                                       Chord firstChord,
+                                       Chord secondChord)
+    {
+        ArrayList<Note> newNotes = new ArrayList<Note>();
+        
+        double randInt = 0.75;
+        
+        if(randInt < 0.5){
+            newNotes.add(firstNote);
+        } else {
+            int subdivs = 2;
+            newNotes = getDividedNotes(firstNote,
+                                       secondNote,
+                                       firstChord,
+                                       secondChord,
+                                       subdivs);
+        }
+        
+        return newNotes;
+    }
+    
+    private static ArrayList<Note> getDividedNotes(Note firstNote, 
+                                            Note secondNote,
+                                            Chord firstChord,
+                                            Chord secondChord,
+                                            int subdivs)
+    {
+        ArrayList<Note> newNotes = new ArrayList<Note>();
+        int rhythmValue = firstNote.getRhythmValue();
+        Note halfNote = new Note(firstNote.getPitch(), rhythmValue/2);
+        for(int i = 0; i < subdivs; ++i){
+            newNotes.add(halfNote);
+        }
+        return newNotes;
+    }
 }
