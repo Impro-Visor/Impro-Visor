@@ -1,0 +1,26 @@
+Building Impro-Visor Version 5.xx from source:
+
+You will need to have installed already:
+
+    Java Virtual Machine (jvm) version 1.6 or later
+
+    Apache ant
+
+Connect to the root directory of the release.
+
+Execute:
+
+    ant improvisor
+
+That will both build the sources if necessary and run the application.
+
+
+If you would like a stand-alone application, execute
+
+    ant zip
+
+That will create a .zip file with containing the java jar "executable"
+and the necessary support files.
+
+
+
