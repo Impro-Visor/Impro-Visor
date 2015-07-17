@@ -1022,7 +1022,7 @@ public void setTableColumnWidths()
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.ipadx = 320;
@@ -1036,13 +1036,14 @@ public void setTableColumnWidths()
         jLabel21.setText("Step 1: Choose a Theme");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         customizeSolo.getContentPane().add(jLabel21, gridBagConstraints);
 
         jLabel22.setText("Step 2: Choose Some Transformations");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         customizeSolo.getContentPane().add(jLabel22, gridBagConstraints);
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
@@ -1379,13 +1380,15 @@ public void setTableColumnWidths()
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
         customizeSolo.getContentPane().add(jPanel4, gridBagConstraints);
 
         jLabel24.setText("*Please select in the order you want the transformations done in*");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
         customizeSolo.getContentPane().add(jLabel24, gridBagConstraints);
 
         transformationsUsed.setMinimumSize(new java.awt.Dimension(300, 100));
@@ -1399,7 +1402,7 @@ public void setTableColumnWidths()
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.6;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 20, 20);
@@ -1408,7 +1411,8 @@ public void setTableColumnWidths()
         jLabel29.setText("Chosen Transformations (In Order):");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         customizeSolo.getContentPane().add(jLabel29, gridBagConstraints);
 
@@ -1457,7 +1461,7 @@ public void setTableColumnWidths()
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel12.add(resetSoloButton, gridBagConstraints);
 
-        rectifySoloButton.setText("Rectify Solo");
+        rectifySoloButton.setText("Rectify Pitches");
         rectifySoloButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rectifySoloButtonActionPerformed(evt);
@@ -1533,16 +1537,16 @@ public void setTableColumnWidths()
         jPanel6.add(pasteToLeadsheetButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
         customizeSolo.getContentPane().add(jPanel6, gridBagConstraints);
 
         jLabel39.setText("Optional: Choose Placement of Theme");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 7);
         customizeSolo.getContentPane().add(jLabel39, gridBagConstraints);
 
@@ -1567,14 +1571,14 @@ public void setTableColumnWidths()
         jPanel11.add(jLabel40, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
         customizeSolo.getContentPane().add(jPanel11, gridBagConstraints);
 
         jLabel41.setText("*Leave Blank To Advance Step by Step*");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
         customizeSolo.getContentPane().add(jLabel41, gridBagConstraints);
 
         jPanel13.setLayout(new java.awt.GridBagLayout());
@@ -1596,16 +1600,16 @@ public void setTableColumnWidths()
         jPanel13.add(jLabel44, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         customizeSolo.getContentPane().add(jPanel13, gridBagConstraints);
 
         setLocation(new java.awt.Point(10, 10));
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(1000, 800));
-        setPreferredSize(new java.awt.Dimension(1100, 775));
-        setSize(new java.awt.Dimension(1100, 775));
+        setPreferredSize(new java.awt.Dimension(1100, 820));
+        setSize(new java.awt.Dimension(1100, 820));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 ThemeWeaver.this.windowClosed(evt);
@@ -3201,7 +3205,10 @@ private void closeWindow()
         }
 
         setTransformationsTextArea();
-        
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_sideslipButtonActionPerformed
 
     private void expandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expandButtonActionPerformed
@@ -3290,77 +3297,133 @@ private void closeWindow()
     private void transposeUpRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeUpRadioButtonActionPerformed
         transposeDownRadioButton.setSelected(false);
         directionOfTransposition = "up";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_transposeUpRadioButtonActionPerformed
 
     private void transposeDownRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeDownRadioButtonActionPerformed
         transposeUpRadioButton.setSelected(false);
         directionOfTransposition = "down";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_transposeDownRadioButtonActionPerformed
 
     private void halfStepRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_halfStepRadioButtonActionPerformed
         wholeStepRadioButton.setSelected(false);
         thirdRadioButton.setSelected(false);
         distanceOfTransposition = "half";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_halfStepRadioButtonActionPerformed
 
     private void wholeStepRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wholeStepRadioButtonActionPerformed
         halfStepRadioButton.setSelected(false);
         thirdRadioButton.setSelected(false);
         distanceOfTransposition = "whole";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_wholeStepRadioButtonActionPerformed
 
     private void thirdRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thirdRadioButtonActionPerformed
         wholeStepRadioButton.setSelected(false);
         halfStepRadioButton.setSelected(false);
         distanceOfTransposition = "third";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_thirdRadioButtonActionPerformed
 
     private void expandBy3RadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expandBy3RadioButtonActionPerformed
         expandBy2RadioButton.setSelected(false);
         expandBy = 3;
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_expandBy3RadioButtonActionPerformed
 
     private void expandBy2RadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expandBy2RadioButtonActionPerformed
         expandBy3RadioButton.setSelected(false);
         expandBy = 2;
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_expandBy2RadioButtonActionPerformed
 
     private void sideslipUpRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideslipUpRadioButtonActionPerformed
         sideslipDownRadioButton.setSelected(false);
         directionOfSideslip = "up";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_sideslipUpRadioButtonActionPerformed
 
     private void sideslipDownRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sideslipDownRadioButtonActionPerformed
         sideslipUpRadioButton.setSelected(false);
         directionOfSideslip = "down";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_sideslipDownRadioButtonActionPerformed
 
     private void halfStepRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_halfStepRadioButton1ActionPerformed
         wholeStepRadioButton1.setSelected(false);
         thirdRadioButton1.setSelected(false);
         distanceOfSideslip = "half";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_halfStepRadioButton1ActionPerformed
 
     private void wholeStepRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wholeStepRadioButton1ActionPerformed
         halfStepRadioButton1.setSelected(false);
         thirdRadioButton1.setSelected(false);
         distanceOfSideslip = "whole";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_wholeStepRadioButton1ActionPerformed
 
     private void thirdRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thirdRadioButton1ActionPerformed
         wholeStepRadioButton1.setSelected(false);
         halfStepRadioButton1.setSelected(false);
         distanceOfSideslip = "third";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_thirdRadioButton1ActionPerformed
 
     private void shiftForwardRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shiftForwardRadioButtonActionPerformed
         shiftBackwardRadioButton.setSelected(false);
         directionOfShift = "forwards";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_shiftForwardRadioButtonActionPerformed
 
     private void shiftBackwardRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shiftBackwardRadioButtonActionPerformed
         shiftForwardRadioButton.setSelected(false);
         directionOfShift = "backwards";
+        //tranform theme
+        MelodyPart adjustedTheme = chosenCustomThemeOriginal.copy();
+        adjustedTheme = transformTheme(adjustedTheme, transformationOrder);
+        chosenCustomTheme = adjustedTheme;
     }//GEN-LAST:event_shiftBackwardRadioButtonActionPerformed
     
     private void pasteToLeadsheetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteToLeadsheetButtonActionPerformed
@@ -3451,7 +3514,7 @@ private void closeWindow()
         int length = customSolo.getSize();
         ChordPart themeChords = notate.getChordProg().extract(0, length);
         //set chords of theme to be the chordpart extracted from length to length +length
-        cm.execute(new RectifyPitchesCommand(customSolo, 0, length, themeChords, false, false));
+        cm.execute(new RectifyPitchesCommand(customSolo, 0, length, themeChords, false, false, true, false, false));
         notate.setCurrentSelectionStart(0); //start selection at beginning
         
         notate.pasteMelody(customSolo); //paste solo into leadsheet
@@ -4485,7 +4548,7 @@ public MelodyPart generateSolohelper(ThemeUse chosenthemeUse, MelodyPart chosent
       }
 
     themeUsageTextArea.append("\n");
-    ChordPart themeChords = notate.getChordProg().extract(length, length + length);
+    ChordPart themeChords = notate.getChordProg().extract(length, length + adjustedTheme.getSize());
     //set chords of theme to be the chordpart extracted from length to length +length
     cm.execute(new RectifyPitchesCommand(adjustedTheme, 0, length, themeChords, false, false));
     //resolve pitches of the theme
@@ -4684,8 +4747,7 @@ public void generateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
       }
     notate.setCurrentSelectionStart(0); //start selection at beginning
 
-    // Experimental: Resolve pitches in entire solo: seems to improve things, but
-    // may generate some repeated notes.
+    //Resolve pitches in entire solo
     cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false));
 
     notate.pasteMelody(solo); //paste solo into leadsheet
@@ -4733,15 +4795,22 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
     
     int i=0;
     
+    MelodyPart newMelody = new MelodyPart();
+    
+    MelodyPart prevSection = new MelodyPart();
+    MelodyPart nextSection = new MelodyPart();
+    
     while (i<notate.getScoreLength())
     {//increment through and fill the whole score 
+        prevSection = newMelody;
+        
         themeInterval = new Integer(themeIntervalTextField.getText());
         double randProbNT = random.nextDouble();//random number used for no-theme
         
         int beat = i / slots;//this is the beat number that we're on
         int bar = 1 + (beat / notate.getBeatsPerMeasure());//this is the bar number we're on
         
-        MelodyPart newMelody = new MelodyPart();//this will be added to the solo eventually
+        newMelody = new MelodyPart();//this will be added to the solo eventually
         
         int increaseIncrement = 0;//keeps track of how i should change depending on how newMelody is changed 
                                         //and how the solo size should change
@@ -4832,8 +4901,10 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
             newMelody = adjustToFit(newMelody);
             themeUsageText = "";
         }
+        nextSection = newMelody;
+        MelodyPart addToSolo = connectSections(prevSection, nextSection);
         solo.setSize(solo.getSize() + increaseIncrement);//increase the solo size appropriately
-        solo.pasteSlots(newMelody, i);//add newMelody to the solo
+        solo.pasteSlots(addToSolo, i-prevSection.getSize());//add newMelody to the solo
         i+=increaseIncrement;//and increment
         if (endSoloEarly)
         {
@@ -4844,9 +4915,106 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
     
     notate.setCurrentSelectionStart(0); //start selection at beginning
     //rectify pitches in entire solo
-    cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false));
+    cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false, true, false, false));
     notate.pasteMelody(solo); //paste solo into leadsheet
     imp.ImproVisor.setPlayEntrySounds(true); //play solo
+}
+
+private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
+{// makes a smoother connection between previous and next
+    //System.out.println("1 "+previous.toString());
+    //System.out.println("1 "+next.toString());
+    if (previous.getSize() != 0 && next.getSize() != 0)
+    {
+        Note prevNote = previous.getLastNote();
+        Note nextNote = next.getFirstNote();
+        if (prevNote != null && nextNote != null)
+        {//check the pitches
+            int prevPitch = prevNote.getPitch();
+            int nextPitch = nextNote.getPitch();
+            System.out.println(prevPitch + " "+ nextPitch);
+            int difference = Math.abs(prevPitch - nextPitch);
+            if (difference >= 4)
+            {
+                /*int movePrevBy;
+                int moveNextBy;
+                if (prevPitch>nextPitch)
+                {
+                    movePrevBy = -1*difference/4;
+                    moveNextBy = difference/4;
+                }
+                else
+                {
+                    movePrevBy = difference/4;
+                    moveNextBy = -1*difference/4;
+                }
+                Note newPrev = new Note(prevPitch);
+                newPrev.shiftPitch(movePrevBy, notate.getScore().getKeySignature());
+                Note newNext = new Note(nextPitch);
+                newNext.shiftPitch(moveNextBy, notate.getScore().getKeySignature());
+                previous.setNote(getLastNoteIndex(previous), newPrev);
+                next.setNote(next.getFirstIndex(), newNext);*/
+                
+                ArrayList<Note> nextNotes = next.getNoteList();
+                int div1 = 4;
+                int nextMoveBy = difference/div1;
+                ArrayList<Note> prevNotes = previous.getNoteList();
+                int div2 = 4;
+                int prevMoveBy = difference/div2;
+                
+                if (prevPitch>nextPitch)
+                {
+                    prevMoveBy = -1*difference/4;
+                    nextMoveBy = difference/4;
+                }
+                else
+                {
+                    prevMoveBy = difference/4;
+                    nextMoveBy = -1*difference/4;
+                }
+                
+                for (int i=0; i<nextNotes.size(); i++)
+                {
+                    if (div1 < difference)
+                    {//move note by moveBy
+                        nextNotes.get(i).shiftPitch(nextMoveBy, notate.getScore().getKeySignature());
+                        div1+=2;
+                        nextMoveBy = difference/div1;
+                    }
+                }
+                for (int i=0; i<nextNotes.size(); i++)
+                {
+                    if (div2 < difference)
+                    {//move note by moveBy
+                        nextNotes.get(i).shiftPitch(prevMoveBy, notate.getScore().getKeySignature());
+                        div2+=2;
+                        prevMoveBy = difference/div2;
+                    }
+                }
+                
+            }
+        }
+    }
+    //System.out.println("2 "+previous.toString());
+   // System.out.println("2 "+next.toString());
+    MelodyPart solo = new MelodyPart(previous.getSize() + next.getSize());
+    solo.pasteSlots(previous, 0);
+    solo.pasteSlots(next, previous.getSize());
+    return solo;
+}
+
+private int getLastNoteIndex(MelodyPart melody)
+{//could probably put this in the MelodyPart class....
+    int index = melody.getPrevIndex(melody.getSize());
+
+    Note n = melody.getNote(index);
+
+     while(n.isRest()) {
+         index = melody.getPrevIndex(index);
+         n = melody.getNote(index);
+     }
+
+    return index;
 }
 
 private MelodyPart adjustToFit(MelodyPart melody)
@@ -5144,9 +5312,11 @@ private MelodyPart transpose(MelodyPart melody, int length)
 
 private MelodyPart expandBy(MelodyPart melody, int length, int num)
 {
+    System.out.println(num);
     int newLength = length*num;
     MelodyPart adjustedMelody = melody.copy();
     adjustedMelody.setSize(newLength);
+   
     cm.execute(new TimeWarpCommand(adjustedMelody,0, newLength, true, num, 1));
    
     return adjustedMelody;
