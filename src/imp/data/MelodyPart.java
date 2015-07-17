@@ -1,4 +1,4 @@
-/**
+ /**
  * This Java Class is part of the Impro-Visor Application
  *
  * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
@@ -379,6 +379,20 @@ public Note getFirstNote()
     return null;
   }
 
+
+private int getLastNoteIndex()
+{
+    int index = this.getPrevIndex(this.getSize());
+
+    Note n = this.getNote(index);
+
+     while(n.isRest()) {
+         index = this.getPrevIndex(index);
+         n = this.getNote(index);
+     }
+
+    return index;
+}
 
 /**
  * Returns the Note sounding at this index.

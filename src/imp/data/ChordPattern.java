@@ -833,6 +833,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         vgen.setHalfStepReducer(avs.getHalfStepReducer());
         vgen.setFullStepReducer(avs.getFullStepReducer());
         vgen.setInvertM9(avs.getInvertM9());
+        vgen.setVoiceAll(avs.getVoiceAll());
 
         /*get values from the user*/
 
