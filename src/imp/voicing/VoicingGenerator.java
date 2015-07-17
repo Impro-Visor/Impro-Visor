@@ -49,16 +49,85 @@ public class VoicingGenerator {
      */
     public void calculate()
     {
-        
         allLeftValues=new ArrayList<Integer>();
         allRightValues=new ArrayList<Integer>();
         leftHand=new ArrayList<Integer>();
         rightHand=new ArrayList<Integer>();
+        
+        int noteToAdd;
+        int start=0;
+        
+        if(voiceAll)
+        {
+            System.out.println("Driving VAN");
+            //enable only chord notes
+            for(int i=0; i<allMidiValues.length; i++)
+            {
+                allMidiValues[i]=0;
+            }
+            for(int p=0; p<priority.length; p++)
+            {
+                setupNote(priority[p], (int)(maxPriority*10-p*10*priorityMultiplier));
+            }
+            
+            
+            //do usual calculations, modded to ensure all notes happen
+            for(int i=0; i<priority.length; i++)
+            {
+                setupAllLeftValues();   
+                if(!allLeftValues.isEmpty())
+                {
+                    if(i<priority.length)
+                    {
+                        noteToAdd=allLeftValues.get((int)(Math.random()*allLeftValues.size()));
+                        leftHand.add(noteToAdd);
+                        allMidiValues[noteToAdd]=0;
+                        if(allMidiValues[noteToAdd+1]*halfStepReducer>0)
+                            allMidiValues[noteToAdd+1]*=halfStepReducer;
+                        if(allMidiValues[noteToAdd-1]*halfStepReducer>0)
+                            allMidiValues[noteToAdd-1]*=halfStepReducer;
+                        if(allMidiValues[noteToAdd+2]*halfStepReducer>0)
+                            allMidiValues[noteToAdd+2]*=halfStepReducer;
+                        if(allMidiValues[noteToAdd-2]*halfStepReducer>0)
+                            allMidiValues[noteToAdd-2]*=halfStepReducer;
+                        multiplyNotes(noteToAdd,0);
+
+                    }
+                }
+                setupAllRightValues();
+                if(!allRightValues.isEmpty())
+                {
+                    if(i<priority.length)
+                    {
+                        noteToAdd=allRightValues.get((int)(Math.random()*allRightValues.size()));
+                        rightHand.add(noteToAdd);
+                        allMidiValues[noteToAdd]=0;
+                        if(allMidiValues[noteToAdd+1]*halfStepReducer>0)
+                            allMidiValues[noteToAdd+1]*=halfStepReducer;
+                        if(allMidiValues[noteToAdd-1]*halfStepReducer>0)
+                            allMidiValues[noteToAdd-1]*=halfStepReducer;
+                        if(allMidiValues[noteToAdd+2]*halfStepReducer>0)
+                            allMidiValues[noteToAdd+2]*=halfStepReducer;
+                        if(allMidiValues[noteToAdd-2]*halfStepReducer>0)
+                            allMidiValues[noteToAdd-2]*=halfStepReducer;
+                        multiplyNotes(noteToAdd,0);
+
+                    }
+
+                }
+                
+            }
+            start=priority.length;
+        }
+        //begin normal algorithm
         initAllMidiValues();
+        for(int i:leftHand)
+            allMidiValues[i]=0;
+        for(int i:rightHand)
+            allMidiValues[i]=0;
         if(previousVoicing!=null)
             weightPreviousVoicing();
-        int noteToAdd;
-        for(int i=0; i<numNotesLeft || i<numNotesRight; i++)
+        for(int i = start; i<numNotesLeft || i<numNotesRight; i++)
         {
             setupAllLeftValues();   
             if(!allLeftValues.isEmpty())
@@ -91,8 +160,9 @@ public class VoicingGenerator {
                     multiplyNotes(noteToAdd,repeatMultiplier);
                     
                 }
+            
             }
-            System.out.println("calculate called");
+           // System.out.println("calculate called");
             if(invertM9)
             {
                 invertM9th(leftHand, leftHand);
@@ -102,6 +172,7 @@ public class VoicingGenerator {
             
             
         }
+        
         
     }
 
@@ -461,6 +532,27 @@ public class VoicingGenerator {
         return chord;
         
     }
+    public boolean isVoiceAll() {
+        return voiceAll;
+    }
+    public boolean getVoiceAll() {
+        return voiceAll;
+    }
+    public void setVoiceAll(boolean voiceAll) {
+        this.voiceAll = voiceAll;
+    }
+    private boolean invertM9;
+    public boolean isInvertM9() {
+        return invertM9;
+    }
+    
+    public boolean getInvertM9() {
+        return invertM9;
+    }
+
+    public void setInvertM9(boolean invertM9) {
+        this.invertM9 = invertM9;
+    }
     private int allMidiValues[]= new int[128];
     private int color[];
     private int priority[];
@@ -485,18 +577,9 @@ public class VoicingGenerator {
     private double repeatMultiplier;
     private double halfStepReducer;
     private double fullStepReducer;
+    private boolean voiceAll;
 
-    public boolean isInvertM9() {
-        return invertM9;
-    }
     
-    public boolean getInvertM9() {
-        return invertM9;
-    }
-
-    public void setInvertM9(boolean invertM9) {
-        this.invertM9 = invertM9;
-    }
-    private boolean invertM9;
+    
 
 }
