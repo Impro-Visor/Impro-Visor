@@ -1878,7 +1878,6 @@ public Critic getCritic()
         noteCursorBtn = new javax.swing.JButton();
         showAdviceButton = new javax.swing.JToggleButton();
         improviseButton = new javax.swing.JToggleButton();
-        useSubstitutorCheckBox = new javax.swing.JCheckBox();
         generationGapSpinner = new javax.swing.JSpinner();
         freezeLayoutButton = new javax.swing.JToggleButton();
         colorationButton = new javax.swing.JToggleButton();
@@ -2074,6 +2073,7 @@ public Critic getCritic()
         createRoadMapCheckBox = new javax.swing.JCheckBoxMenuItem();
         tradingMenu = new javax.swing.JMenu();
         tradingWindow = new javax.swing.JMenuItem();
+        transformCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         notateGrammarMenu = new javax.swing.JMenu();
         windowMenu = new javax.swing.JMenu();
         closeWindowMI = new javax.swing.JMenuItem();
@@ -4526,6 +4526,7 @@ public Critic getCritic()
         cancelLickTitle.setText("Cancel");
         cancelLickTitle.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cancelLickTitle.setDefaultCapable(false);
+        cancelLickTitle.setOpaque(true);
         cancelLickTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelLickTitleActionPerformed(evt);
@@ -4545,6 +4546,7 @@ public Critic getCritic()
         okSaveButton.setText("Save This");
         okSaveButton.setToolTipText("Saves the item in the vocabulary file.");
         okSaveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        okSaveButton.setOpaque(true);
         okSaveButton.setSelected(true);
         okSaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4662,6 +4664,7 @@ public Critic getCritic()
         ignoreDuplicate.setText("Ignore This One");
         ignoreDuplicate.setToolTipText("Do not save the duplicate in the vocabulary.");
         ignoreDuplicate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ignoreDuplicate.setOpaque(true);
         ignoreDuplicate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ignoreDuplicateActionPerformed(evt);
@@ -4684,6 +4687,7 @@ public Critic getCritic()
         saveDuplicate.setToolTipText("Saves the lick in the vocabulary");
         saveDuplicate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saveDuplicate.setDefaultCapable(false);
+        saveDuplicate.setOpaque(true);
         saveDuplicate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveDuplicateActionPerformed(evt);
@@ -4739,6 +4743,7 @@ public Critic getCritic()
         overwriteLickButton.setText("Overwrite Lick");
         overwriteLickButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         overwriteLickButton.setDefaultCapable(false);
+        overwriteLickButton.setOpaque(true);
         overwriteLickButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 overwriteLickButtonActionPerformed(evt);
@@ -6510,6 +6515,7 @@ public Critic getCritic()
         cancelTruncate.setText("Cancel truncation");
         cancelTruncate.setToolTipText("Do not truncate the part.");
         cancelTruncate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelTruncate.setOpaque(true);
         cancelTruncate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelTruncateActionPerformed(evt);
@@ -6532,6 +6538,7 @@ public Critic getCritic()
         acceptTruncate.setToolTipText("Truncates the part as specified.");
         acceptTruncate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         acceptTruncate.setDefaultCapable(false);
+        acceptTruncate.setOpaque(true);
         acceptTruncate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 acceptTruncateActionPerformed(evt);
@@ -7162,7 +7169,6 @@ public Critic getCritic()
         showAdviceButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         showAdviceButton.setMaximumSize(new java.awt.Dimension(30, 30));
         showAdviceButton.setMinimumSize(new java.awt.Dimension(30, 30));
-        showAdviceButton.setOpaque(true);
         showAdviceButton.setPreferredSize(new java.awt.Dimension(30, 30));
         showAdviceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -7190,22 +7196,6 @@ public Critic getCritic()
             }
         });
         standardToolbar.add(improviseButton);
-
-        useSubstitutorCheckBox.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        useSubstitutorCheckBox.setText("xfm");
-        useSubstitutorCheckBox.setToolTipText("Transform generated melody line when checked.");
-        useSubstitutorCheckBox.setBorder(null);
-        useSubstitutorCheckBox.setBorderPaintedFlat(true);
-        useSubstitutorCheckBox.setFocusable(false);
-        useSubstitutorCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        useSubstitutorCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        useSubstitutorCheckBox.setIconTextGap(0);
-        useSubstitutorCheckBox.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        useSubstitutorCheckBox.setMaximumSize(new java.awt.Dimension(30, 28));
-        useSubstitutorCheckBox.setMinimumSize(new java.awt.Dimension(30, 28));
-        useSubstitutorCheckBox.setPreferredSize(new java.awt.Dimension(30, 28));
-        useSubstitutorCheckBox.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        standardToolbar.add(useSubstitutorCheckBox);
 
         generationGapSpinner.setModel(new javax.swing.SpinnerNumberModel(4.0d, -20.0d, 20.0d, 0.01d));
         generationGapSpinner.setToolTipText("Specifies the lead time, in beats, for generating next chorus before the end of the current chorus, if Recur is toggled on.");
@@ -7616,7 +7606,6 @@ public Critic getCritic()
         stepInputBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         stepInputBtn.setMaximumSize(new java.awt.Dimension(30, 30));
         stepInputBtn.setMinimumSize(new java.awt.Dimension(30, 30));
-        stepInputBtn.setOpaque(true);
         stepInputBtn.setPreferredSize(new java.awt.Dimension(30, 30));
         stepInputBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -8042,6 +8031,7 @@ public Critic getCritic()
         clearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         clearButton.setMaximumSize(new java.awt.Dimension(46, 38));
         clearButton.setMinimumSize(new java.awt.Dimension(46, 38));
+        clearButton.setOpaque(true);
         clearButton.setPreferredSize(new java.awt.Dimension(46, 38));
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -8076,17 +8066,17 @@ public Critic getCritic()
             }
         });
         scoreTab.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                scoreTabMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                mouseEnteredTabPanel(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 scoreTabMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 scoreTabMouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scoreTabMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mouseEnteredTabPanel(evt);
             }
         });
         scoreTab.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -9084,7 +9074,7 @@ public Critic getCritic()
 
         menuBar.add(roadmapMenu);
 
-        tradingMenu.setText("Trading");
+        tradingMenu.setText("Improv");
         tradingMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tradingMenuActionPerformed(evt);
@@ -9098,6 +9088,14 @@ public Critic getCritic()
             }
         });
         tradingMenu.add(tradingWindow);
+
+        transformCheckBoxMenuItem.setText("Transform");
+        transformCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transformCheckBoxMenuItemActionPerformed(evt);
+            }
+        });
+        tradingMenu.add(transformCheckBoxMenuItem);
 
         menuBar.add(tradingMenu);
 
@@ -21113,7 +21111,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                 adjustLickToHead(solo);
               }
 
-            if( useSubstitutorCheckBox.isSelected() )
+            if( transformCheckBoxMenuItem.isSelected() )
               {
                 ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                           improviseEndSlot);
@@ -21173,7 +21171,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                             + "cannot generate lick with desired grade."),
                                                   "Alert", JOptionPane.PLAIN_MESSAGE);
 
-                    if( useSubstitutorCheckBox.isSelected() )
+                    if( transformCheckBoxMenuItem.isSelected() )
                       {
                         ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                                   improviseEndSlot);
@@ -21190,7 +21188,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                 // If the grade is high enough, pass it through the filter
                 else if( gradeFromCritic != null && gradeFromCritic >= criticGrade )
                   {
-                    if( useSubstitutorCheckBox.isSelected() )
+                    if( transformCheckBoxMenuItem.isSelected() )
                       {
                         ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                                   improviseEndSlot);
@@ -21253,7 +21251,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                 //             + " beats, but " + beatsRequested + " requested (more)");
               }
 
-            if( useSubstitutorCheckBox.isSelected() )
+            if( transformCheckBoxMenuItem.isSelected() )
               {
                 ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                           improviseEndSlot);
@@ -22769,6 +22767,10 @@ int quantizeResolution = 60;
     private void delAllMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delAllMIActionPerformed
         delAllMelody();
     }//GEN-LAST:event_delAllMIActionPerformed
+
+    private void transformCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformCheckBoxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_transformCheckBoxMenuItemActionPerformed
 void delAllMelody()
   {
     Trace.log(2, "delete all melody");
@@ -23511,6 +23513,7 @@ private void populateTradingMenu()
     tradingMenu.removeAll();
     tradingMenu.add(tradingWindow);
     tradingMenu.add(themeWovenCheckBox);
+    tradingMenu.add(transformCheckBoxMenuItem);
     tradingMenu.add(whetherToTradeCheckBox);
     tradingMenu.add(tradingCheckBox);
 
@@ -25245,6 +25248,7 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField trackerDelayTextField2;
     private javax.swing.JMenu tradingMenu;
     private javax.swing.JMenuItem tradingWindow;
+    private javax.swing.JCheckBoxMenuItem transformCheckBoxMenuItem;
     private javax.swing.JMenuItem transposeBothDownSemitone;
     private javax.swing.JMenuItem transposeBothUpSemitone;
     private javax.swing.JMenuItem transposeChordsDownSemitone;
@@ -25267,7 +25271,6 @@ private ImageIcon pauseButton =
     private javax.swing.JCheckBoxMenuItem useAudioInputMI;
     private javax.swing.JCheckBoxMenuItem useBeamsMI;
     private javax.swing.JButton usePreviousStyleButton;
-    private javax.swing.JCheckBox useSubstitutorCheckBox;
     private javax.swing.JLabel useSuperColliderCheckboxText;
     private javax.swing.JMenu utilitiesMenu;
     private javax.swing.JMenu viewMenu;
