@@ -271,6 +271,7 @@ public void setTableColumnWidths()
         revertSoloButton = new javax.swing.JButton();
         fillSoloButton = new javax.swing.JButton();
         keepEditsFromLeadsheetCheckBox = new javax.swing.JCheckBox();
+        jButton3 = new javax.swing.JButton();
         pasteToLeadsheetButton = new javax.swing.JButton();
         jLabel39 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
@@ -1514,6 +1515,14 @@ public void setTableColumnWidths()
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel12.add(keepEditsFromLeadsheetCheckBox, gridBagConstraints);
+
+        jButton3.setText("Test");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jButton3, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -3579,6 +3588,14 @@ private void closeWindow()
     private void keepEditsFromLeadsheetCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keepEditsFromLeadsheetCheckBoxActionPerformed
         
     }//GEN-LAST:event_keepEditsFromLeadsheetCheckBoxActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        MelodyPart sel = notate.getCurrentStave().getMelodyPart().extract(
+                notate.getCurrentSelectionStart(),
+                notate.getCurrentSelectionEnd());
+        MelodyPart smooth = connectSections(chosenCustomTheme, sel);
+        notate.pasteMelody(smooth);
+    }//GEN-LAST:event_jButton3ActionPerformed
     
     
     private void setTransformationsTextArea()
@@ -4918,12 +4935,29 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
     cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false, true, false, false));
     notate.pasteMelody(solo); //paste solo into leadsheet
     imp.ImproVisor.setPlayEntrySounds(true); //play solo
+    System.out.println("*********");
 }
 
 private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
 {// makes a smoother connection between previous and next
     //System.out.println("1 "+previous.toString());
     //System.out.println("1 "+next.toString());
+    MelodyPart solo = new MelodyPart();
+    ArrayList<Note> previousNotes1 = previous.getNoteList();
+    ArrayList<Note> nextNotes1 = next.getNoteList();
+    ArrayList<Integer> prevNotesMidi1 = new ArrayList<Integer>();
+    ArrayList<Integer> nextNotesMidi1 = new ArrayList<Integer>();
+    for (int i=0; i<previousNotes1.size(); i++)
+    {
+        prevNotesMidi1.add(previousNotes1.get(i).getPitch());
+    }
+    for (int i=0; i<nextNotes1.size(); i++)
+    {
+        nextNotesMidi1.add(nextNotes1.get(i).getPitch());
+    }
+    System.out.println("prev 1"+prevNotesMidi1.toString());
+    System.out.println("next 1"+nextNotesMidi1.toString());
+    System.out.println("######");
     if (previous.getSize() != 0 && next.getSize() != 0)
     {
         Note prevNote = previous.getLastNote();
@@ -4932,7 +4966,7 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
         {//check the pitches
             int prevPitch = prevNote.getPitch();
             int nextPitch = nextNote.getPitch();
-            System.out.println(prevPitch + " "+ nextPitch);
+            //System.out.println(prevPitch + " "+ nextPitch);
             int difference = Math.abs(prevPitch - nextPitch);
             if (difference >= 4)
             {
@@ -4955,40 +4989,90 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
                 previous.setNote(getLastNoteIndex(previous), newPrev);
                 next.setNote(next.getFirstIndex(), newNext);*/
                 
-                ArrayList<Note> nextNotes = next.getNoteList();
+                
+                //make array lists of the note indices
+                ArrayList<Integer> previousIndices = new ArrayList<Integer>();
+                if (previous.getNote(previous.getFirstIndex()) != null && !previous.getNote(previous.getFirstIndex()).isRest());
+                {
+                    previousIndices.add(previous.getFirstIndex());
+                }
+                int prevInitialSize = previousIndices.size();
+                for (int i=prevInitialSize; i<previous.size(); i++)
+                {
+                    int nextIndex = previous.getNextIndex(i);
+                    if (previous.getNote(nextIndex)!= null && !previous.getNote(nextIndex).isRest())
+                    {
+                        previousIndices.add(nextIndex);
+                        i=nextIndex;
+                    }
+                }
+                ArrayList<Integer> nextIndices = new ArrayList<Integer>();
+                if (next.getNote(next.getFirstIndex()) != null && !next.getNote(next.getFirstIndex()).isRest());
+                {
+                    nextIndices.add(next.getFirstIndex());
+                }
+                int nextInitialSize = nextIndices.size();
+                for (int i=nextInitialSize; i<previous.size(); i++)
+                {
+                    int nextIndex = next.getNextIndex(i);
+                    if (next.getNote(nextIndex)!= null && !next.getNote(nextIndex).isRest())
+                    {
+                        nextIndices.add(nextIndex);
+                        i=nextIndex;
+                    }
+                }
+                
+                //System.out.println("prev indices*** " + previousIndices.toString());
+                //System.out.println("next indices*** " + nextIndices.toString());
+                
+                
                 int div1 = 4;
                 int nextMoveBy = difference/div1;
-                ArrayList<Note> prevNotes = previous.getNoteList();
                 int div2 = 4;
                 int prevMoveBy = difference/div2;
-                
                 if (prevPitch>nextPitch)
                 {
-                    prevMoveBy = -1*difference/4;
-                    nextMoveBy = difference/4;
+                    prevMoveBy = -1*difference/div2;
+                    nextMoveBy = difference/div1;
                 }
                 else
                 {
-                    prevMoveBy = difference/4;
-                    nextMoveBy = -1*difference/4;
+                    prevMoveBy = difference/div2;
+                    nextMoveBy = -1*difference/div1;
                 }
                 
-                for (int i=0; i<nextNotes.size(); i++)
+                for (int i=0; i<nextIndices.size(); i++)
                 {
-                    if (div1 < difference)
+                    if (div1 <= Math.abs(difference))
                     {//move note by moveBy
-                        nextNotes.get(i).shiftPitch(nextMoveBy, notate.getScore().getKeySignature());
+                        
+                        next.getNote(nextIndices.get(i)).shiftPitch(nextMoveBy, notate.getScore().getKeySignature());
+                        
+                        next.setNote(nextIndices.get(i), next.getNote(nextIndices.get(i)));
+                        
+                        
                         div1+=2;
-                        nextMoveBy = difference/div1;
+                        nextMoveBy = difference/div1 ;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                for (int i=0; i<nextNotes.size(); i++)
+                for (int i=previousIndices.size()-1; i>=0; i--)
                 {
-                    if (div2 < difference)
+                    if (div2 <= Math.abs(difference))
                     {//move note by moveBy
-                        nextNotes.get(i).shiftPitch(prevMoveBy, notate.getScore().getKeySignature());
-                        div2+=2;
-                        prevMoveBy = difference/div2;
+                        previous.getNote(previousIndices.get(i)).shiftPitch(prevMoveBy, notate.getScore().getKeySignature());
+                        previous.setNote(previousIndices.get(i), previous.getNote(previousIndices.get(i)));
+                        
+                        
+                        div1+=2;
+                        prevMoveBy = difference/div2 ;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
                 
@@ -4996,8 +5080,22 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
         }
     }
     //System.out.println("2 "+previous.toString());
-   // System.out.println("2 "+next.toString());
-    MelodyPart solo = new MelodyPart(previous.getSize() + next.getSize());
+    //System.out.println("2 "+next.toString());
+    solo = new MelodyPart(previous.getSize() + next.getSize());
+    ArrayList<Note> previousNotes = previous.getNoteList();
+    ArrayList<Note> nextNotes = next.getNoteList();
+    ArrayList<Integer> prevNotesMidi = new ArrayList<Integer>();
+    ArrayList<Integer> nextNotesMidi = new ArrayList<Integer>();
+    for (int i=0; i<previousNotes.size(); i++)
+    {
+        prevNotesMidi.add(previousNotes.get(i).getPitch());
+    }
+    for (int i=0; i<nextNotes.size(); i++)
+    {
+        nextNotesMidi.add(nextNotes.get(i).getPitch());
+    }
+    System.out.println("prev 2"+prevNotesMidi.toString());
+    System.out.println("next 2"+nextNotesMidi.toString());
     solo.pasteSlots(previous, 0);
     solo.pasteSlots(next, previous.getSize());
     return solo;
@@ -5792,6 +5890,7 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JToggleButton invertButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
