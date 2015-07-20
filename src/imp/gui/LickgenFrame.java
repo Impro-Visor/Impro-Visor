@@ -157,7 +157,10 @@ public class LickgenFrame
      * Create the panel for flatten
      */
     private TransformLearningPanel transformLearningTab;
-    
+    /**
+     * Create IntervalLearningPanel
+     */
+    private IntervalLearningPanel intervalLearningTab;    
 
     /**
      * Creates new LickgenFrame
@@ -179,6 +182,9 @@ public class LickgenFrame
         
         transformLearningTab = new TransformLearningPanel(notate, transformTab);
         transformLearningPanel.add(transformLearningTab, new GridLayout(1, 1, 1, 1));
+        
+        intervalLearningTab = new IntervalLearningPanel(notate);
+        intervalLearningPanel.add(intervalLearningTab, new GridLayout(1, 1, 1, 1));
     }
 
     public void applySubstitutions(MelodyPart melody, ChordPart chords) {
@@ -390,6 +396,7 @@ public class LickgenFrame
         moveLayerUpTableButton = new javax.swing.JButton();
         moveLayerDownTableButton = new javax.swing.JButton();
         weightFileButton = new javax.swing.JButton();
+        intervalLearningPanel = new javax.swing.JPanel();
         generatorMenuBar1 = new javax.swing.JMenuBar();
         grammarMenu1 = new javax.swing.JMenu();
         openGrammarMI1 = new javax.swing.JMenuItem();
@@ -576,7 +583,6 @@ public class LickgenFrame
         getAbstractMelodyButton.setMaximumSize(new java.awt.Dimension(500, 29));
         getAbstractMelodyButton.setMinimumSize(new java.awt.Dimension(250, 29));
         getAbstractMelodyButton.setPreferredSize(new java.awt.Dimension(420, 29));
-        getAbstractMelodyButton.setSize(new java.awt.Dimension(250, 0));
         getAbstractMelodyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 getAbstractMelodyButtonActionPerformed(evt);
@@ -2296,7 +2302,6 @@ public class LickgenFrame
         loadBaseGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         loadBaseGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
         loadBaseGrammarBtn.setMinimumSize(new java.awt.Dimension(105, 60));
-        loadBaseGrammarBtn.setOpaque(true);
         loadBaseGrammarBtn.setPreferredSize(new java.awt.Dimension(173, 60));
         loadBaseGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2317,7 +2322,6 @@ public class LickgenFrame
         saveGrammarAsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saveGrammarAsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         saveGrammarAsButton.setMaximumSize(new java.awt.Dimension(9999, 9999));
-        saveGrammarAsButton.setOpaque(true);
         saveGrammarAsButton.setPreferredSize(new java.awt.Dimension(173, 60));
         saveGrammarAsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2340,7 +2344,6 @@ public class LickgenFrame
         openCorpusBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         openCorpusBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
         openCorpusBtn.setMinimumSize(new java.awt.Dimension(240, 75));
-        openCorpusBtn.setOpaque(true);
         openCorpusBtn.setPreferredSize(new java.awt.Dimension(240, 75));
         openCorpusBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2362,7 +2365,6 @@ public class LickgenFrame
         toGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         toGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 70));
         toGrammarBtn.setMinimumSize(new java.awt.Dimension(240, 75));
-        toGrammarBtn.setOpaque(true);
         toGrammarBtn.setPreferredSize(new java.awt.Dimension(240, 75));
         toGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2402,7 +2404,6 @@ public class LickgenFrame
         testGeneration.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         testGeneration.setMaximumSize(new java.awt.Dimension(9999, 9999));
         testGeneration.setMinimumSize(new java.awt.Dimension(240, 29));
-        testGeneration.setOpaque(true);
         testGeneration.setPreferredSize(new java.awt.Dimension(240, 29));
         testGeneration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2893,6 +2894,9 @@ public class LickgenFrame
 
         generatorPane.addTab("Neural Network", neuralNetworkPanel);
 
+        intervalLearningPanel.setLayout(new java.awt.GridLayout());
+        generatorPane.addTab("Interval Learning", intervalLearningPanel);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -2989,12 +2993,12 @@ public class LickgenFrame
 
         generatorWindowMenu1.setLabel("Window");
         generatorWindowMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                generatorWindowMenu1MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                generatorWindowMenu1MenuSelected(evt);
             }
         });
 
@@ -6257,6 +6261,7 @@ private void updateUseSoloist()
     private javax.swing.JPanel grammarLearningPanel;
     private javax.swing.JMenu grammarMenu1;
     private javax.swing.JLabel intervalLabel;
+    private javax.swing.JPanel intervalLearningPanel;
     private javax.swing.JTable layerDataTable;
     private javax.swing.JScrollPane layerInfoScrollPane;
     private javax.swing.JTextField leapProbField;
