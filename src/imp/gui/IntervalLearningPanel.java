@@ -101,6 +101,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         learnFromAll = new javax.swing.JButton();
         QNsoloButton = new javax.swing.JButton();
         chooseRange = new javax.swing.JButton();
+        rhythmSolo = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -167,8 +168,20 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         buttonsPanel.add(chooseRange, gridBagConstraints);
+
+        rhythmSolo.setText("Generate Solo w/ Same Rhythm as Chorus 1");
+        rhythmSolo.setEnabled(false);
+        rhythmSolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rhythmSoloActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        buttonsPanel.add(rhythmSolo, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -186,6 +199,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         }
         QNsoloButton.setEnabled(true);
+        rhythmSolo.setEnabled(true);
         probabilitiesPanel.repaint();
     }//GEN-LAST:event_learnProbabilitiesButtonActionPerformed
 
@@ -214,6 +228,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         }
         QNsoloButton.setEnabled(true);
+        rhythmSolo.setEnabled(true);
         probabilitiesPanel.repaint();
     }//GEN-LAST:event_learnFromAllActionPerformed
 
@@ -231,6 +246,16 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         range = chooser.getRange();
     }//GEN-LAST:event_chooseRangeActionPerformed
 
+    private void rhythmSoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rhythmSoloActionPerformed
+        ChordPart chords = notate.getChordProg();
+        //RhythmGenerator rgen = new RhythmGenerator(notate.getScore().getLength());
+        //MelodyPart rhythm = rgen.rhythm(Constants.EIGHTH);
+        MelodyPart rhythm = notate.getScore().getPart(0);
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range);
+        MelodyPart result = mgen.melody();
+        notate.addChorus(result);
+    }//GEN-LAST:event_rhythmSoloActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton QNsoloButton;
@@ -240,6 +265,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JButton learnFromAll;
     private javax.swing.JButton learnProbabilitiesButton;
     private javax.swing.JPanel probabilitiesPanel;
+    private javax.swing.JButton rhythmSolo;
     private javax.swing.JLabel sourceIntervals;
     // End of variables declaration//GEN-END:variables
 }
