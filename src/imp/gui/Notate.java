@@ -25912,6 +25912,10 @@ public void setLayoutTF(String text)
     layoutTF.setText(text);
   }
 
+public void destroyTradingWindow(){
+    trader = null;
+}
+
 public boolean getUseNoteCursor()
   {
     return useNoteCursor;
