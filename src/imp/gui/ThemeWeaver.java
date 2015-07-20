@@ -271,7 +271,6 @@ public void setTableColumnWidths()
         revertSoloButton = new javax.swing.JButton();
         fillSoloButton = new javax.swing.JButton();
         keepEditsFromLeadsheetCheckBox = new javax.swing.JCheckBox();
-        jButton3 = new javax.swing.JButton();
         pasteToLeadsheetButton = new javax.swing.JButton();
         jLabel39 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
@@ -283,6 +282,7 @@ public void setTableColumnWidths()
         themeNameTextPane = new javax.swing.JTextPane();
         themeNameTextPane.setEditable(false);
         jLabel44 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         soloTableScrollPane = new javax.swing.JScrollPane();
         soloTable = new javax.swing.JTable();
         themeListScrollPane = new javax.swing.JScrollPane();
@@ -1516,14 +1516,6 @@ public void setTableColumnWidths()
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel12.add(keepEditsFromLeadsheetCheckBox, gridBagConstraints);
 
-        jButton3.setText("Test");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel12.add(jButton3, new java.awt.GridBagConstraints());
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -1613,6 +1605,9 @@ public void setTableColumnWidths()
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         customizeSolo.getContentPane().add(jPanel13, gridBagConstraints);
+
+        jToggleButton1.setText("jToggleButton1");
+        customizeSolo.getContentPane().add(jToggleButton1, new java.awt.GridBagConstraints());
 
         setLocation(new java.awt.Point(10, 10));
         setLocationByPlatform(true);
@@ -3588,14 +3583,6 @@ private void closeWindow()
     private void keepEditsFromLeadsheetCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keepEditsFromLeadsheetCheckBoxActionPerformed
         
     }//GEN-LAST:event_keepEditsFromLeadsheetCheckBoxActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        MelodyPart sel = notate.getCurrentStave().getMelodyPart().extract(
-                notate.getCurrentSelectionStart(),
-                notate.getCurrentSelectionEnd());
-        MelodyPart smooth = connectSections(chosenCustomTheme, sel);
-        notate.pasteMelody(smooth);
-    }//GEN-LAST:event_jButton3ActionPerformed
     
     
     private void setTransformationsTextArea()
@@ -5890,7 +5877,6 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JToggleButton invertButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -5950,6 +5936,7 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JCheckBox keepEditsFromLeadsheetCheckBox;
     private javax.swing.JMenuItem loadThemesMI;
     private javax.swing.JDialog nameErrorMessage;
