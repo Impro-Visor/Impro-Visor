@@ -35,125 +35,125 @@ public class AVPFileCreator
                 if(line.contains("Auto Voicing Preset File."));
                 else if(!line.contains("("))
                     throw new Exception();
-                else if(line.contains("LH Lower Limit"))
+                else if(line.contains("LH-lower-limit"))
                 {
-                    line=line.substring(line.indexOf("LH Lower Limit")+"LH Lower Limit".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("LH-lower-limit")+"LH-lower-limit".length()+1,line.indexOf(")"));
                     settings.setLeftHandLowerLimit(Integer.parseInt(line));
                 }
-                else if(line.contains("RH Lower Limit"))
+                else if(line.contains("RH-lower-limit"))
                 {
-                    line=line.substring(line.indexOf("RH Lower Limit")+"RH Lower Limit".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("RH-lower-limit")+"RH-lower-limit".length()+1,line.indexOf(")"));
                     settings.setRightHandLowerLimit(Integer.parseInt(line));
                 }
-                else if(line.contains("LH Upper Limit"))
+                else if(line.contains("LH-upper-limit"))
                 {
-                    line=line.substring(line.indexOf("LH Upper Limit")+"LH Upper Limit".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("LH-upper-limit")+"LH-upper-limit".length()+1,line.indexOf(")"));
                     settings.setLeftHandUpperLimit(Integer.parseInt(line));
                 }
-                else if(line.contains("RH Upper Limit"))
+                else if(line.contains("RH-upper-limit"))
                 {
-                    line=line.substring(line.indexOf("RH Upper Limit")+"RH Upper Limit".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("RH-upper-limit")+"RH-upper-limit".length()+1,line.indexOf(")"));
                     settings.setRightHandUpperLimit(Integer.parseInt(line));
                 }
-                else if(line.contains("LH Spread"))
+                else if(line.contains("LH-spread"))
                 {
-                    line=line.substring(line.indexOf("LH Spread")+"LH Spread".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("LH-spread")+"LH-spread".length()+1,line.indexOf(")"));
                     settings.setLeftHandSpread(Integer.parseInt(line));
                 }
-                else if(line.contains("RH Spread"))
+                else if(line.contains("RH-spread"))
                 {
-                    line=line.substring(line.indexOf("RH Spread")+"RH Spread".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("RH-spread")+"RH-spread".length()+1,line.indexOf(")"));
                     settings.setRightHandSpread(Integer.parseInt(line));
                 }
-                else if(line.contains("LH Min Notes"))
+                else if(line.contains("LH-min-notes"))
                 {
-                    line=line.substring(line.indexOf("LH Min Notes")+"LH Min Notes".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("LH-min-notes")+"LH-min-notes".length()+1,line.indexOf(")"));
                     settings.setLeftHandMinNotes(Integer.parseInt(line));
                 }
-                else if(line.contains("RH Min Notes"))
+                else if(line.contains("RH-min-notes"))
                 {
-                    line=line.substring(line.indexOf("RH Min Notes")+"RH Min Notes".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("RH-min-notes")+"RH-min-notes".length()+1,line.indexOf(")"));
                     settings.setRightHandMinNotes(Integer.parseInt(line));
                 }
-                else if(line.contains("LH Max Notes"))
+                else if(line.contains("LH-max-notes"))
                 {
-                    line=line.substring(line.indexOf("LH Max Notes")+"LH Max Notes".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("LH-max-notes")+"LH-max-notes".length()+1,line.indexOf(")"));
                     settings.setLeftHandMaxNotes(Integer.parseInt(line));
                 }
-                else if(line.contains("RH Max Notes"))
+                else if(line.contains("RH-max-notes"))
                 {
-                    line=line.substring(line.indexOf("RH Max Notes")+"RH Max Notes".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("RH-max-notes")+"RH-max-notes".length()+1,line.indexOf(")"));
                     settings.setRightHandMaxNotes(Integer.parseInt(line));
                 }
-                else if(line.contains("Pref Motion Range"))
+                else if(line.contains("pref-motion-range"))
                 {
-                    line=line.substring(line.indexOf("Pref Motion Range")+"Pref Motion Range".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("pref-motion-range")+"pref-motion-range".length()+1,line.indexOf(")"));
                     settings.setPreferredMotionRange(Integer.parseInt(line));
                 }
-                else if(line.contains("Pref Motion"))
+                else if(line.contains("pref-motion"))
                 {
-                    line=line.substring(line.indexOf("Pref Motion")+"Pref Motion".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("pref-motion")+"pref-motion".length()+1,line.indexOf(")"));
                     settings.setPreferredMotion(Integer.parseInt(line));
                 }
                 
-                else if(line.contains("Prev Voicing Multiplier"))
+                else if(line.contains("prev-voicing-multiplier"))
                 {
-                    line=line.substring(line.indexOf("Prev Voicing Multiplier")+"Prev Voicing Multiplier".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("prev-voicing-multiplier")+"prev-voicing-multiplier".length()+1,line.indexOf(")"));
                     settings.setPreviousVoicingMultiplier(Integer.parseInt(line));
                 }
-                else if(line.contains("Half Step Multiplier"))
+                else if(line.contains("half-step-multiplier"))
                 {
-                    line=line.substring(line.indexOf("Half Step Multiplier")+"Half Step Multiplier".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("half-step-multiplier")+"half-step-multiplier".length()+1,line.indexOf(")"));
                     settings.setHalfStepAwayMultiplier(Integer.parseInt(line));
                 }
-                else if(line.contains("Full Step Multiplier"))
+                else if(line.contains("full-step-multiplier"))
                 {
-                    line=line.substring(line.indexOf("Full Step Multiplier")+"Full Step Multiplier".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("full-step-multiplier")+"full-step-multiplier".length()+1,line.indexOf(")"));
                     settings.setFullStepAwayMultiplier(Integer.parseInt(line));
                 }
-                else if(line.contains("LH Color Priority"))
+                else if(line.contains("LH-color-priority"))
                 {
-                    line=line.substring(line.indexOf("LH Color Priority")+"LH Color Priority".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("LH-color-priority")+"LH-color-priority".length()+1,line.indexOf(")"));
                     settings.setLeftColorPriority(Integer.parseInt(line));
                 }
-                else if(line.contains("RH Color Priority"))
+                else if(line.contains("RH-color-priority"))
                 {
-                    line=line.substring(line.indexOf("RH Color Priority")+"RH Color Priority".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("RH-color-priority")+"RH-color-priority".length()+1,line.indexOf(")"));
                     settings.setRightColorPriority(Integer.parseInt(line));
                 }
-                else if(line.contains("Max Priority"))
+                else if(line.contains("max-priority"))
                 {
-                    line=line.substring(line.indexOf("Max Priority")+"Max Priority".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("max-priority")+"max-priority".length()+1,line.indexOf(")"));
                     settings.setMaxPriority(Integer.parseInt(line));
                 }
-                else if(line.contains("Priority Multiplier"))
+                else if(line.contains("priority-multiplier"))
                 {
-                    line=line.substring(line.indexOf("Priority Multiplier")+"Priority Multiplier".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("priority-multiplier")+"priority-multiplier".length()+1,line.indexOf(")"));
                     settings.setPriorityMultiplier(Integer.parseInt(line));
                 }
-                else if(line.contains("Repeat Multiplier"))
+                else if(line.contains("repeat-multiplier"))
                 {
-                    line=line.substring(line.indexOf("Repeat Multiplier")+"Repeat Multiplier".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("repeat-multiplier")+"repeat-multiplier".length()+1,line.indexOf(")"));
                     settings.setRepeatMultiplier(Integer.parseInt(line));
                 }
-                else if(line.contains("Half Step Reducer"))
+                else if(line.contains("half-step-reducer"))
                 {
-                    line=line.substring(line.indexOf("Half Step Reducer")+"Half Step Reducer".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("half-step-reducer")+"half-step-reducer".length()+1,line.indexOf(")"));
                     settings.setHalfStepReducer(Integer.parseInt(line));
                 }
-                else if(line.contains("Full Step Reducer"))
+                else if(line.contains("full-step-reducer"))
                 {
-                    line=line.substring(line.indexOf("Full Step Reducer")+"Full Step Reducer".length()+1,line.indexOf(")"));
+                    line=line.substring(line.indexOf("full-step-reducer")+"full-step-reducer".length()+1,line.indexOf(")"));
                     settings.setFullStepReducer(Integer.parseInt(line));
                 }
-                else if(line.contains("Invert9th"))
+                else if(line.contains("invert-9th"))
                 {
                     if(line.contains("on"))
                         settings.setInvertM9(true);
                     if(line.contains("off"))
                         settings.setInvertM9(false);
                 }
-                else if(line.contains("VoiceAll"))
+                else if(line.contains("voice-all"))
                 {
                     if(line.contains("on"))
                         settings.setVoiceAll(true);
@@ -176,39 +176,39 @@ public class AVPFileCreator
     {
         try{
                     PrintWriter writer = new PrintWriter(file, "UTF-8");
-                    writer.println("(Auto Voicing Preset File. Please check parameter limits (in Impro-visor) before modifying.");
-                    writer.println("(LH Lower Limit "+settings.getLeftHandLowerLimit()+")");
-                    writer.println("(RH Lower Limit "+settings.getRightHandLowerLimit()+")");
-                    writer.println("(LH Upper Limit "+settings.getLeftHandUpperLimit()+")");
-                    writer.println("(RH Upper Limit "+settings.getRightHandUpperLimit()+")");
-                    writer.println("(LH Spread "+settings.getLeftHandSpread()+")");
-                    writer.println("(RH Spread "+settings.getRightHandSpread()+")");
-                    writer.println("(LH Min Notes "+settings.getLeftHandMinNotes()+")");
-                    writer.println("(LH Max Notes "+settings.getLeftHandMaxNotes()+")");
-                    writer.println("(RH Min Notes "+settings.getRightHandMinNotes()+")");
-                    writer.println("(RH Max Notes "+settings.getRightHandMaxNotes()+")");
+                    writer.println("(comments \"Auto Voicing Preset File. Please check parameter limits (in Impro-visor) before modifying.\")");
+                    writer.println("(LH-lower-limit "+settings.getLeftHandLowerLimit()+")");
+                    writer.println("(RH-lower-limit "+settings.getRightHandLowerLimit()+")");
+                    writer.println("(LH-upper-limit "+settings.getLeftHandUpperLimit()+")");
+                    writer.println("(RH-upper-limit "+settings.getRightHandUpperLimit()+")");
+                    writer.println("(LH-spread "+settings.getLeftHandSpread()+")");
+                    writer.println("(RH-spread "+settings.getRightHandSpread()+")");
+                    writer.println("(LH-min-notes "+settings.getLeftHandMinNotes()+")");
+                    writer.println("(LH-max-notes "+settings.getLeftHandMaxNotes()+")");
+                    writer.println("(RH-min-notes "+settings.getRightHandMinNotes()+")");
+                    writer.println("(RH-max-notes "+settings.getRightHandMaxNotes()+")");
                     //voice leading controls
-                    writer.println("(Pref Motion "+settings.getPreferredMotion()+")");
-                    writer.println("(Pref Motion Range "+settings.getPreferredMotionRange()+")");
-                    writer.println("(Prev Voicing Multiplier "+(int)(settings.getPreviousVoicingMultiplier()*10)+")");// multiplier for notes used in previous voicing
-                    writer.println("(Half Step Multiplier "+(int)(settings.getHalfStepAwayMultiplier()*10)+")");
-                    writer.println("(Full Step Multiplier "+(int)(settings.getFullStepAwayMultiplier()*10)+")");
+                    writer.println("(pref-motion "+settings.getPreferredMotion()+")");
+                    writer.println("(pref-motion-range "+settings.getPreferredMotionRange()+")");
+                    writer.println("(prev-voicing-multiplier "+(int)(settings.getPreviousVoicingMultiplier()*10)+")");// multiplier for notes used in previous voicing
+                    writer.println("(half-step-multiplier "+(int)(settings.getHalfStepAwayMultiplier()*10)+")");
+                    writer.println("(full-step-multiplier "+(int)(settings.getFullStepAwayMultiplier()*10)+")");
                     //voicing control
-                    writer.println("(LH Color Priority "+settings.getLeftColorPriority()+")");//priority of any color note
-                    writer.println("(RH Color Priority "+settings.getRightColorPriority()+")");//priority of any color note
-                    writer.println("(Max Priority "+settings.getMaxPriority()+")");//max priority a note in the priority array can have
-                    writer.println("(Priority Multiplier "+(int)(+settings.getPriorityMultiplier()*10)+")");//should be between 0 and 1, multiply this by the index in priority array, subtract result from max priority to get note priority
-                    writer.println("(Repeat Multiplier "+(int)(settings.getRepeatMultiplier()*10)+")");
-                    writer.println("(Half Step Reducer "+(int)(settings.getHalfStepReducer()*10)+")");
-                    writer.println("(Full Step Reducer "+(int)(settings.getFullStepReducer()*10)+")");
+                    writer.println("(LH-color-priority "+settings.getLeftColorPriority()+")");//priority of any color note
+                    writer.println("(RH-color-priority "+settings.getRightColorPriority()+")");//priority of any color note
+                    writer.println("(max-priority "+settings.getMaxPriority()+")");//max priority a note in the priority array can have
+                    writer.println("(priority-multiplier "+(int)(+settings.getPriorityMultiplier()*10)+")");//should be between 0 and 1, multiply this by the index in priority array, subtract result from max priority to get note priority
+                    writer.println("(repeat-multiplier "+(int)(settings.getRepeatMultiplier()*10)+")");
+                    writer.println("(half-step-reducer "+(int)(settings.getHalfStepReducer()*10)+")");
+                    writer.println("(full-step-reducer "+(int)(settings.getFullStepReducer()*10)+")");
                     if(settings.getInvertM9())
-                        writer.println("(Invert9th on)");
+                        writer.println("(invert-9th on)");
                     else
-                        writer.println("(Invert9th off)");
+                        writer.println("(invert-9th off)");
                     if(settings.getVoiceAll())
-                        writer.println("(VoiceAll on)");
+                        writer.println("(voice-all on)");
                     else
-                        writer.println("(VoiceAll off)");
+                        writer.println("(voice-all off)");
                     writer.close();
                 }
                 catch(Exception f)
