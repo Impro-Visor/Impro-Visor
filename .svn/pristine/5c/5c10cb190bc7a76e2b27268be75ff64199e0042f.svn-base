@@ -1,6 +1,0 @@
-
-RoadMapFrame.showStartingNoteCheckBoxMI.text=Show Starting Note
-RoadMapFrame.showVariantsCheckBoxMI.text=Show Variants
-RoadMapFrame.showStylesCheckBoxMI.text=Show Styles
-RoadMapFrame.border.title=Transpose
-RoadMapFrame.toolTipText=Transposes the playback the specified number of half steps (e.g. use -2 for Bb instruments, +3 for Eb).
