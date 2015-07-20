@@ -9,8 +9,12 @@ import imp.Constants;
 import static imp.Constants.OCTAVE;
 import static imp.data.GuideLineGenerator.ASCENDING;
 import static imp.data.GuideLineGenerator.DESCENDING;
+import imp.gui.Notate;
+import imp.lickgen.Grammar;
+import imp.lickgen.LickGen;
 import java.util.ArrayList;
 import java.util.Random;
+import polya.Polylist;
 import polya.PolylistEnum;
 
 /**
@@ -33,12 +37,134 @@ public class MelodyGenerator {
         this.chords = chords;
         this.range = range;
     }
+    
+    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range){
+        this(probabilities, polylistToMelodyPart(rhythm), chords, range);
+    }
+    
+    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range){
+        this(probabilities, rhythm(notate), chords, range);
+    }
+    
+    public static Polylist rhythm(Notate notate){
+        Grammar gram = new Grammar(notate.getGrammarFileName());
+        //System.out.println(gram.getRules());
+        return justRhythm(gram.run(0, notate.getScoreLength(), notate, false, notate.getImprovisorTradeFirst(), notate.getTradingQuantum()));
+//        LickGen gen = notate.getLickGen();
+//        Polylist abstractMelody = gen.generateRhythmFromGrammar(0, notate.getScoreLength());
+//        return justRhythm(abstractMelody);
+    }
+    
+//    public static Polylist rhythm(Notate notate){
+//        LickGen gen = new LickGen(notate.getGrammarFileName(), notate);
+//        int slots = notate.getScoreLength();
+//        Grammar gram = gen.getGrammar();
+//        ArrayList<Polylist> params = gram.getParams();
+//        int minDur = 0, maxDur = 0;
+//        double restProb = 0;
+//        for(Polylist param : params){
+//            String paramName = (String)param.first();
+//            if(paramName.equals("min-duration")){
+//                minDur = (int)(long)(Long)param.second();
+//            }else if(paramName.equals("max-duration")){
+//                maxDur = (int)(long)(Long)param.second();
+//            }else if(paramName.equals("rest-prob")){
+//                restProb = (Double)param.second();
+//            }
+//        }
+//        minDur = 16; maxDur = 4; restProb = .1;
+//        //System.out.println("slots: "+slots+"; minDur: "+minDur+"; maxDur: "+maxDur+"; restProb: "+restProb);
+//        Polylist rhythm = gen.generateRandomRhythm(slots, minDur, maxDur, restProb);
+//        //System.out.println("generated rhythm: "+rhythm);
+//        return rhythm;
+//    }
+    
+    private static Polylist justRhythm(Polylist abstractMelody){
+        //System.out.println(abstractMelody);
+        PolylistEnum iterator = abstractMelody.elements();
+        Polylist justRhythm = new Polylist();
+        while(iterator.hasMoreElements()){
+            Object nextElem = iterator.nextElement();
+            try{
+                Polylist note = (Polylist)nextElem;
+                if(note.first().toString().equals("triadic")){
+                    int totalDur = Duration.getDuration(note.second().toString());
+                    int smallDur = Duration.getDuration(note.third().toString());
+                    int numberOfNotes = totalDur/smallDur;
+                    for(int i = 0; i<numberOfNotes; i++){
+                        justRhythm = justRhythm.addToEnd("X"+note.third().toString());
+                    }
+                }else{
+                    PolylistEnum i = note.elements();
+                    while(i.hasMoreElements()){
+                        try{
+                            String elem = i.nextElement().toString();
+                            //System.out.println("elem: "+elem);
+                            if(elem.matches("[A-Z].*")){
+                                //System.out.println("elem matches");
+                                if(elem.charAt(0)=='R'){
+                                    justRhythm = justRhythm.addToEnd(elem);
+                                    //System.out.println(justRhythm);
+                                }else{
+                                    justRhythm = justRhythm.addToEnd("X"+elem.substring(1));
+                                    //System.out.println(justRhythm);
+                                }
+                            }
+                        }catch(Exception e){
+
+                        }
+                    }
+                }
+                
+            }catch(Exception ex){
+                try{
+                    String elem = nextElem.toString();
+                    if(elem.matches("[A-Z].*")){
+                        //System.out.println("elem matches");
+                        if(elem.charAt(0)=='R'){
+                            justRhythm = justRhythm.addToEnd(elem);
+                            //System.out.println(justRhythm);
+                        }else{
+                            justRhythm = justRhythm.addToEnd("X"+elem.substring(1));
+                            //System.out.println(justRhythm);
+                        }
+                    }
+                }catch(Exception exp){
+                    
+                }
+            }
+        }
+        //System.out.println(justRhythm);
+        return justRhythm;
+    }
+    
+    public static MelodyPart polylistToMelodyPart(Polylist rhythm){
+        MelodyPart result = new MelodyPart();
+        PolylistEnum iterator = rhythm.elements();
+        while(iterator.hasMoreElements()){
+            String s = (String)iterator.nextElement();
+            //System.out.println(s);
+            char restOrNote = s.charAt(0);
+            String RorX = Character.toString(restOrNote);
+            
+            int duration = Duration.getDuration(s.substring(1));
+            
+            Note n;
+            if(RorX.equals("R")){
+                n = new Rest(duration);
+            }else{//N, C, L, A, X, S
+                n = new Note(Constants.C4, duration);
+            }
+            result.addNote(n);
+        }
+        return result;
+    }
 
     public MelodyPart melody() {
         MelodyPart result = new MelodyPart();
         int prevInterval = NO_DATA;
         Note prevNote = null; //always a note, never a rest
-        int slot = rhythm.getFirstIndex();
+        int slot = 0;
         Note n = rhythm.getNote(slot);
         int duration = n.getRhythmValue();
         Chord chord = chords.getCurrentChord(slot);

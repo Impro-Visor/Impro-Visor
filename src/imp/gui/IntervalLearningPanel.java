@@ -11,9 +11,13 @@ import imp.data.IntervalLearner;
 import imp.data.MelodyGenerator;
 import imp.data.MelodyPart;
 import imp.data.RhythmGenerator;
+import imp.lickgen.Grammar;
+import imp.lickgen.LickGen;
 import java.awt.Color;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import javax.swing.JLabel;
+import polya.Polylist;
 
 /**
  *
@@ -36,8 +40,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         initComponents();
         range = new int [2];
         //default
-        range[0] = Constants.C4;
-        range[1] = Constants.C5;
+        range[0] = Constants.G3;
+        range[1] = Constants.G5;
         probabilityLabels = new JLabel[26][26];
         for(int row = 0; row<probabilityLabels.length; row++){
             for(int column = 0; column<probabilityLabels[row].length; column++){
@@ -102,6 +106,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         QNsoloButton = new javax.swing.JButton();
         chooseRange = new javax.swing.JButton();
         rhythmSolo = new javax.swing.JButton();
+        grammarRhythmSolo = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -168,7 +173,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         buttonsPanel.add(chooseRange, gridBagConstraints);
 
         rhythmSolo.setText("Generate Solo w/ Same Rhythm as Chorus 1");
@@ -182,6 +187,18 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         buttonsPanel.add(rhythmSolo, gridBagConstraints);
+
+        grammarRhythmSolo.setText("Generate Solo w/ Grammar-Generated Rhythm");
+        grammarRhythmSolo.setEnabled(false);
+        grammarRhythmSolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                grammarRhythmSoloActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        buttonsPanel.add(grammarRhythmSolo, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -200,6 +217,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         }
         QNsoloButton.setEnabled(true);
         rhythmSolo.setEnabled(true);
+        grammarRhythmSolo.setEnabled(true);
         probabilitiesPanel.repaint();
     }//GEN-LAST:event_learnProbabilitiesButtonActionPerformed
 
@@ -229,6 +247,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         }
         QNsoloButton.setEnabled(true);
         rhythmSolo.setEnabled(true);
+        grammarRhythmSolo.setEnabled(true);
         probabilitiesPanel.repaint();
     }//GEN-LAST:event_learnFromAllActionPerformed
 
@@ -256,12 +275,30 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         notate.addChorus(result);
     }//GEN-LAST:event_rhythmSoloActionPerformed
 
+    private void grammarRhythmSoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grammarRhythmSoloActionPerformed
+        //LickGen gen = notate.getLickGen();
+        //String grammarName = notate.getGrammarFileName();
+        //Grammar gram = new Grammar(grammarName);
+//        ArrayList<Polylist> params = gram.getParams();
+//        int minDur;
+//        int maxDur;
+//        double restProb;
+//        Polylist rhythm = gen.generateRandomRhythm(notate.getScoreLength(), minDur, maxDur, restProb);
+//        //Polylist rhythm = gen.generateRhythmFromGrammar(0, notate.getScoreLength());
+//        System.out.println(rhythm);
+        ChordPart chords = notate.getChordProg();
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, notate, chords, range);
+        MelodyPart result = mgen.melody();
+        notate.addChorus(result);
+    }//GEN-LAST:event_grammarRhythmSoloActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton QNsoloButton;
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton chooseRange;
     private javax.swing.JLabel destinationIntervals;
+    private javax.swing.JButton grammarRhythmSolo;
     private javax.swing.JButton learnFromAll;
     private javax.swing.JButton learnProbabilitiesButton;
     private javax.swing.JPanel probabilitiesPanel;
