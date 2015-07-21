@@ -30,6 +30,9 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private double[][] probabilities;
     private int [] range;
     private boolean preRectify;
+    private boolean displayProbabilities;
+    private boolean addToRunningTotal;
+    int [][] counts;
 //    private JLabel [] sourceLabels;
 //    private JLabel [] destLabels;
     
@@ -39,6 +42,14 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     public IntervalLearningPanel(Notate notate) {
         this.notate = notate;
         initComponents();
+        counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
+        for(int [] row : counts){
+            for(int c = 0; c < row.length; c++){
+                row[c] = 0;
+            }
+        }
+        probabilities = IntervalLearner.probabilities(counts);
+        
         range = new int [2];
         //default
         range[0] = Constants.G3;
@@ -55,7 +66,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
                 }else if(column == 0){
                     probabilityLabels[row][column].setText(Integer.toString(row-Constants.OCTAVE-1));
                 }else{
-                    probabilityLabels[row][column].setText("n/a"); 
+                    //probabilityLabels[row][column].setText("n/a"); 
                 }
                 
                 if(row == 0 || column == 0){
@@ -70,9 +81,18 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
                     probabilityLabels[row][column].setBackground(Color.WHITE);
                 }
                 probabilitiesPanel.add(probabilityLabels[row][column]);
-                preRectify = preRectifyButton.isSelected();
+                
+                
             }
+            
         }
+        preRectify = preRectifyButton.isSelected();
+        displayProbabilities = getDisplayFromButton();
+        refreshDisplay();
+        addToRunningTotal = addToTotal.isSelected();
+        
+        
+        
 //        sourceLabels = new JLabel[25];
 //        
 //        for(int i = 0; i<sourceLabels.length; i++){
@@ -89,6 +109,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         
     }
 
+    private boolean getDisplayFromButton(){
+        return toggleView.getText().equals("Probabilities");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,74 +124,196 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         preAndPost = new javax.swing.ButtonGroup();
+        yesNo = new javax.swing.ButtonGroup();
         probabilitiesPanel = new javax.swing.JPanel();
         sourceIntervals = new javax.swing.JLabel();
         destinationIntervals = new javax.swing.JLabel();
         buttonsPanel = new javax.swing.JPanel();
-        learnProbabilitiesButton = new javax.swing.JButton();
-        learnFromAll = new javax.swing.JButton();
-        QNsoloButton = new javax.swing.JButton();
+        learnButtonPanel = new javax.swing.JPanel();
+        thisChorus = new javax.swing.JButton();
+        allChoruses = new javax.swing.JButton();
+        learnLabel = new javax.swing.JLabel();
+        addToTotal = new javax.swing.JRadioButton();
+        resetThenAdd = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        otherOptionsPanel = new javax.swing.JPanel();
+        toggleLabel = new javax.swing.JLabel();
+        toggleView = new javax.swing.JToggleButton();
+        clearAll = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        optionsPanel = new javax.swing.JPanel();
+        optionsLabel = new javax.swing.JLabel();
         chooseRange = new javax.swing.JButton();
-        rhythmSolo = new javax.swing.JButton();
-        grammarRhythmSolo = new javax.swing.JButton();
         preRectifyButton = new javax.swing.JRadioButton();
         postRectifyButton = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        generateButtonsPanel = new javax.swing.JPanel();
+        QNsoloButton = new javax.swing.JButton();
+        rhythmSolo = new javax.swing.JButton();
+        grammarRhythmSolo = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
 
+        setMinimumSize(new java.awt.Dimension(800, 300));
+        setPreferredSize(new java.awt.Dimension(800, 300));
         setLayout(new java.awt.GridBagLayout());
 
         probabilitiesPanel.setLayout(new java.awt.GridLayout(26, 26, 5, 5));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 4;
         add(probabilitiesPanel, gridBagConstraints);
 
         sourceIntervals.setText("Source Intervals");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 4;
         add(sourceIntervals, gridBagConstraints);
 
         destinationIntervals.setText("Destination Intervals");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 2;
         add(destinationIntervals, gridBagConstraints);
 
         buttonsPanel.setLayout(new java.awt.GridBagLayout());
 
-        learnProbabilitiesButton.setText("Learn Interval Probabilities for this Chorus");
-        learnProbabilitiesButton.addActionListener(new java.awt.event.ActionListener() {
+        learnButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        learnButtonPanel.setLayout(new java.awt.GridBagLayout());
+
+        thisChorus.setText("This Chorus");
+        thisChorus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                learnProbabilitiesButtonActionPerformed(evt);
+                thisChorusActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        learnButtonPanel.add(thisChorus, gridBagConstraints);
+
+        allChoruses.setText("All Choruses");
+        allChoruses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allChorusesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        learnButtonPanel.add(allChoruses, gridBagConstraints);
+
+        learnLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        learnLabel.setText("Learn Interval Probabilities");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        buttonsPanel.add(learnProbabilitiesButton, gridBagConstraints);
+        gridBagConstraints.gridwidth = 3;
+        learnButtonPanel.add(learnLabel, gridBagConstraints);
 
-        learnFromAll.setText("Learn Interval Probabilities for all Choruses");
-        learnFromAll.addActionListener(new java.awt.event.ActionListener() {
+        yesNo.add(addToTotal);
+        addToTotal.setSelected(true);
+        addToTotal.setText("Yes");
+        addToTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                learnFromAllActionPerformed(evt);
+                addToTotalActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        learnButtonPanel.add(addToTotal, gridBagConstraints);
+
+        yesNo.add(resetThenAdd);
+        resetThenAdd.setText("No");
+        resetThenAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetThenAddActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        learnButtonPanel.add(resetThenAdd, gridBagConstraints);
+
+        jLabel5.setText("Add to total?");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        buttonsPanel.add(learnFromAll, gridBagConstraints);
+        learnButtonPanel.add(jLabel5, gridBagConstraints);
 
-        QNsoloButton.setText("Generate Eigth Note Solo in new Chorus");
-        QNsoloButton.setEnabled(false);
-        QNsoloButton.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setText("Learn from:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        learnButtonPanel.add(jLabel7, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        buttonsPanel.add(learnButtonPanel, gridBagConstraints);
+
+        otherOptionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        otherOptionsPanel.setLayout(new java.awt.GridBagLayout());
+
+        toggleLabel.setText("Toggle View:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        otherOptionsPanel.add(toggleLabel, gridBagConstraints);
+
+        toggleView.setText("Probabilities");
+        toggleView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                QNsoloButtonActionPerformed(evt);
+                toggleViewActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        otherOptionsPanel.add(toggleView, gridBagConstraints);
+
+        clearAll.setText("Clear All Probabilities");
+        clearAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAllActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        buttonsPanel.add(QNsoloButton, gridBagConstraints);
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        otherOptionsPanel.add(clearAll, gridBagConstraints);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Other Options");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        otherOptionsPanel.add(jLabel6, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        buttonsPanel.add(otherOptionsPanel, gridBagConstraints);
+
+        optionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        optionsPanel.setLayout(new java.awt.GridBagLayout());
+
+        optionsLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        optionsLabel.setText("Solo Options");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        optionsPanel.add(optionsLabel, gridBagConstraints);
 
         chooseRange.setText("Choose Range");
         chooseRange.addActionListener(new java.awt.event.ActionListener() {
@@ -176,33 +322,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        buttonsPanel.add(chooseRange, gridBagConstraints);
-
-        rhythmSolo.setText("Generate Solo w/ Same Rhythm as Chorus 1");
-        rhythmSolo.setEnabled(false);
-        rhythmSolo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rhythmSoloActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        buttonsPanel.add(rhythmSolo, gridBagConstraints);
-
-        grammarRhythmSolo.setText("Generate Solo w/ Grammar-Generated Rhythm");
-        grammarRhythmSolo.setEnabled(false);
-        grammarRhythmSolo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                grammarRhythmSoloActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        buttonsPanel.add(grammarRhythmSolo, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        optionsPanel.add(chooseRange, gridBagConstraints);
 
         preAndPost.add(preRectifyButton);
         preRectifyButton.setSelected(true);
@@ -213,9 +336,9 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        buttonsPanel.add(preRectifyButton, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        optionsPanel.add(preRectifyButton, gridBagConstraints);
 
         preAndPost.add(postRectifyButton);
         postRectifyButton.setText("Post-Rectify");
@@ -225,60 +348,170 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        optionsPanel.add(postRectifyButton, gridBagConstraints);
+
+        jLabel1.setText("Range:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        buttonsPanel.add(postRectifyButton, gridBagConstraints);
+        gridBagConstraints.gridy = 1;
+        optionsPanel.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setText("Rectification:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        optionsPanel.add(jLabel2, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        buttonsPanel.add(optionsPanel, gridBagConstraints);
+
+        generateButtonsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        generateButtonsPanel.setLayout(new java.awt.GridBagLayout());
+
+        QNsoloButton.setText("Eigth Notes");
+        QNsoloButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QNsoloButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        generateButtonsPanel.add(QNsoloButton, gridBagConstraints);
+
+        rhythmSolo.setText("Chorus 1");
+        rhythmSolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rhythmSoloActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        generateButtonsPanel.add(rhythmSolo, gridBagConstraints);
+
+        grammarRhythmSolo.setText("Grammar-Generated");
+        grammarRhythmSolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                grammarRhythmSoloActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        generateButtonsPanel.add(grammarRhythmSolo, gridBagConstraints);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Generate Solo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        generateButtonsPanel.add(jLabel4, gridBagConstraints);
+
+        jLabel3.setText("Rhythm:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        generateButtonsPanel.add(jLabel3, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        buttonsPanel.add(generateButtonsPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         add(buttonsPanel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        add(filler1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        add(filler2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void learnProbabilitiesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnProbabilitiesButtonActionPerformed
-        IntervalLearner learner = new IntervalLearner(notate.getCurrentMelodyPart());
-        probabilities = learner.probabilities();
-        DecimalFormat df = new DecimalFormat("#.##");
-        for(int row = 0; row < probabilities.length; row++){
-            for(int column = 0; column < probabilities[row].length; column++){
-                probabilityLabels[row+1][column+1].setText(df.format(probabilities[row][column]));
-            }
-        }
-        QNsoloButton.setEnabled(true);
-        rhythmSolo.setEnabled(true);
-        grammarRhythmSolo.setEnabled(true);
-        probabilitiesPanel.repaint();
-    }//GEN-LAST:event_learnProbabilitiesButtonActionPerformed
+    private void thisChorusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thisChorusActionPerformed
 
-    private void learnFromAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnFromAllActionPerformed
-        int [][] counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
-        for(int [] row : counts){
-            for(int c = 0; c < row.length; c++){
-                row[c] = 0;
+//        IntervalLearner learner = new IntervalLearner(notate.getCurrentMelodyPart());
+//            counts = learner.counts();
+//            probabilities = IntervalLearner.probabilities(counts);
+//            refreshDisplay();
+//            probabilitiesPanel.repaint();
+            if(!addToRunningTotal){
+                clearAll();
             }
+            addThisToTotal();
+            //refreshDisplay();
+            //probabilitiesPanel.repaint();
+//        if(!addToRunningTotal){
+//            IntervalLearner learner = new IntervalLearner(notate.getCurrentMelodyPart());
+//            counts = learner.counts();
+//            probabilities = IntervalLearner.probabilities(counts);
+//            refreshDisplay();
+//        }else{
+//            IntervalLearner learner = new IntervalLearner(notate.getCurrentMelodyPart());
+//            int [][] countsToAdd = learner.counts();
+//            for(int i = 0; i < counts.length; i++){
+//                for(int j = 0; j < counts.length; j++){
+//                    counts[i][j] += countsToAdd[i][j];
+//                }
+//            }
+//            probabilities = IntervalLearner.probabilities(counts);
+//            refreshDisplay();
+//        }
+        
+        
+        
+        //QNsoloButton.setEnabled(true);
+        //rhythmSolo.setEnabled(true);
+        //grammarRhythmSolo.setEnabled(true);
+        //probabilitiesPanel.repaint();
+    }//GEN-LAST:event_thisChorusActionPerformed
+
+    private void allChorusesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allChorusesActionPerformed
+        if(!addToRunningTotal){
+            clearAll();
         }
-        for(int i = 0; i < notate.getScore().size(); ++i){
-            MelodyPart learnFromThis = notate.getMelodyPart(notate.getStaveAtTab(i));
-            IntervalLearner learner = new IntervalLearner(learnFromThis);
-            int [][] specificCounts = learner.counts();
-            for(int row = 0; row < counts.length; row++){
-                for(int c = 0; c < counts[row].length; c++){
-                    counts[row][c] += specificCounts[row][c];
-                }
-            }
-        }
-        probabilities = IntervalLearner.probabilities(counts);
-        DecimalFormat df = new DecimalFormat("#.##");
-        for(int row = 0; row < probabilities.length; row++){
-            for(int column = 0; column < probabilities[row].length; column++){
-                probabilityLabels[row+1][column+1].setText(df.format(probabilities[row][column]));
-            }
-        }
-        QNsoloButton.setEnabled(true);
-        rhythmSolo.setEnabled(true);
-        grammarRhythmSolo.setEnabled(true);
-        probabilitiesPanel.repaint();
-    }//GEN-LAST:event_learnFromAllActionPerformed
+        addAllToTotal();
+        //refreshDisplay();
+        //probabilitiesPanel.repaint();
+
+//        counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
+//        for(int [] row : counts){
+//            for(int c = 0; c < row.length; c++){
+//                row[c] = 0;
+//            }
+//        }
+//        for(int i = 0; i < notate.getScore().size(); ++i){
+//            MelodyPart learnFromThis = notate.getMelodyPart(notate.getStaveAtTab(i));
+//            IntervalLearner learner = new IntervalLearner(learnFromThis);
+//            int [][] specificCounts = learner.counts();
+//            for(int row = 0; row < counts.length; row++){
+//                for(int c = 0; c < counts[row].length; c++){
+//                    counts[row][c] += specificCounts[row][c];
+//                }
+//            }
+//        }
+//        probabilities = IntervalLearner.probabilities(counts);
+//        refreshDisplay();
+        
+        //QNsoloButton.setEnabled(true);
+        //rhythmSolo.setEnabled(true);
+        //grammarRhythmSolo.setEnabled(true);
+        //probabilitiesPanel.repaint();
+    }//GEN-LAST:event_allChorusesActionPerformed
 
     private void QNsoloButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QNsoloButtonActionPerformed
         ChordPart chords = notate.getChordProg();
@@ -305,16 +538,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_rhythmSoloActionPerformed
 
     private void grammarRhythmSoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grammarRhythmSoloActionPerformed
-        //LickGen gen = notate.getLickGen();
-        //String grammarName = notate.getGrammarFileName();
-        //Grammar gram = new Grammar(grammarName);
-//        ArrayList<Polylist> params = gram.getParams();
-//        int minDur;
-//        int maxDur;
-//        double restProb;
-//        Polylist rhythm = gen.generateRandomRhythm(notate.getScoreLength(), minDur, maxDur, restProb);
-//        //Polylist rhythm = gen.generateRhythmFromGrammar(0, notate.getScoreLength());
-//        System.out.println(rhythm);
         ChordPart chords = notate.getChordProg();
         MelodyGenerator mgen = new MelodyGenerator(probabilities, notate, chords, range, preRectify);
         MelodyPart result = mgen.melody();
@@ -329,20 +552,127 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         preRectify = preRectifyButton.isSelected();
     }//GEN-LAST:event_postRectifyButtonActionPerformed
 
+    private void toggleViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleViewActionPerformed
+        if(toggleView.getText().equals("Probabilities")){
+            toggleView.setText("Counts");
+            displayProbabilities = false;
+        }else{
+            toggleView.setText("Probabilities");
+            displayProbabilities = true;
+        }
+        
+        refreshDisplay();
+    }//GEN-LAST:event_toggleViewActionPerformed
+
+    private void addAllToTotal(){
+        for(int i = 0; i < notate.getScore().size(); ++i){
+            MelodyPart learnFromThis = notate.getMelodyPart(notate.getStaveAtTab(i));
+            IntervalLearner learner = new IntervalLearner(learnFromThis);
+            int [][] countsToAdd = learner.counts();
+            for(int row = 0; row < counts.length; row++){
+                for(int c = 0; c < counts[row].length; c++){
+                    counts[row][c] += countsToAdd[row][c];
+                }
+            }
+        }
+        probabilities = IntervalLearner.probabilities(counts);
+        refreshDisplay();
+    }
+    
+    private void addThisToTotal(){
+        IntervalLearner learner = new IntervalLearner(notate.getCurrentMelodyPart());
+        int [][] countsToAdd = learner.counts();
+       
+        for(int i = 0; i < counts.length; i++){
+            for(int j = 0; j < counts.length; j++){
+                counts[i][j] += countsToAdd[i][j];
+            }
+        }
+        probabilities = IntervalLearner.probabilities(counts);
+        refreshDisplay();
+    }
+    
+    private void clearAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllActionPerformed
+        clearAll();
+    }//GEN-LAST:event_clearAllActionPerformed
+
+    private void clearAll(){
+        counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
+        for(int [] row : counts){
+            for(int c = 0; c < row.length; c++){
+                row[c] = 0;
+            }
+        }
+        probabilities = IntervalLearner.probabilities(counts);
+        refreshDisplay();
+    }
+    
+    private void addToTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToTotalActionPerformed
+        addToRunningTotal = true;
+    }//GEN-LAST:event_addToTotalActionPerformed
+
+    private void resetThenAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetThenAddActionPerformed
+        addToRunningTotal = false;
+    }//GEN-LAST:event_resetThenAddActionPerformed
+
+    
+    private void refreshDisplay(){
+        DecimalFormat df = new DecimalFormat("#.##");
+        if(displayProbabilities){
+            if(probabilities!=null){
+                for(int row = 0; row < probabilities.length; row++){
+                    for(int column = 0; column < probabilities[row].length; column++){
+                        probabilityLabels[row+1][column+1].setText(df.format(probabilities[row][column]));
+                    }
+                }
+            }
+            
+        }else{
+            if(counts!=null){
+                for(int row = 0; row < counts.length; row++){
+                    for(int column = 0; column < counts[row].length; column++){
+                        probabilityLabels[row+1][column+1].setText(Integer.toString(counts[row][column]));
+                    }
+                }
+            }
+            
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton QNsoloButton;
+    private javax.swing.JRadioButton addToTotal;
+    private javax.swing.JButton allChoruses;
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton chooseRange;
+    private javax.swing.JButton clearAll;
     private javax.swing.JLabel destinationIntervals;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.JPanel generateButtonsPanel;
     private javax.swing.JButton grammarRhythmSolo;
-    private javax.swing.JButton learnFromAll;
-    private javax.swing.JButton learnProbabilitiesButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel learnButtonPanel;
+    private javax.swing.JLabel learnLabel;
+    private javax.swing.JLabel optionsLabel;
+    private javax.swing.JPanel optionsPanel;
+    private javax.swing.JPanel otherOptionsPanel;
     private javax.swing.JRadioButton postRectifyButton;
     private javax.swing.ButtonGroup preAndPost;
     private javax.swing.JRadioButton preRectifyButton;
     private javax.swing.JPanel probabilitiesPanel;
+    private javax.swing.JRadioButton resetThenAdd;
     private javax.swing.JButton rhythmSolo;
     private javax.swing.JLabel sourceIntervals;
+    private javax.swing.JButton thisChorus;
+    private javax.swing.JLabel toggleLabel;
+    private javax.swing.JToggleButton toggleView;
+    private javax.swing.ButtonGroup yesNo;
     // End of variables declaration//GEN-END:variables
 }
