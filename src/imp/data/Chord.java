@@ -485,8 +485,6 @@ public class Chord implements Constants, Unit, Serializable {
 
         usedTones = usedTones.prefix(LIMIT);
 
-        PolylistEnum tones = usedTones.elements();
-
         int pitch = Key.makeNote(bass.toString(), C2, 0).getPitch();
         //Trace.log(2, "\nrendering chord " + this + ", tones = " + usedTones + " transposition = " + transposition);
 
@@ -495,7 +493,8 @@ public class Chord implements Constants, Unit, Serializable {
         
         if( voicing == null )
           {
-          setVoicing(ChordPattern.findVoicing(symbol, style.getChordBase(), style));
+          voicing = ChordPattern.findVoicing(symbol, style.getChordBase(), style);
+          setVoicing(voicing);
           }
           
         if(voicing != null) {
@@ -525,7 +524,14 @@ public class Chord implements Constants, Unit, Serializable {
     
     public void setVoicing(Polylist voicing)
     {
-    //System.out.println("setting voicing " +  this);
+    if( voicing.isEmpty() && this.voicing.nonEmpty() )
+      {
+        // Not sure why this can happen. It might be due to sharing the
+        // same Chord at multiple places in the ChordPart
+        // However, it has a bad effect on voicing display.
+        // System.out.println("thwarted attempt to set voicing empty from " + this.voicing);
+        return;
+      }
 
     this.voicing = voicing;
     }

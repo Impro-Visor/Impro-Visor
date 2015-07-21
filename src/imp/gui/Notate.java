@@ -26021,6 +26021,9 @@ private Trading autoImprovisation = null;
 private long totalSlotsElapsed = 0;
 private int previousSynthSlot = 0;
 
+private Chord previousChord = null;
+private Polylist previousVoicing = Polylist.nil;
+
 /*
  * This was formerly embedded inside executable code.
  */
@@ -26110,8 +26113,15 @@ public void actionPerformed(ActionEvent evt) {
 
     int tab = currentPlaybackTab;
 
-    if( keyboard != null && keyboard.isVisible() && keyboard.isPlaying() )
+    if( currentChord != null 
+            && keyboard != null 
+            && keyboard.isVisible() 
+            && keyboard.isPlaying()
+            && !currentChord.equals(previousChord)
+            && !currentChord.getVoicing().equals(previousVoicing))
       {
+        previousChord = currentChord;
+        previousVoicing = currentChord.getVoicing();
         keyboardPlayback(currentChord, tab, slotInChorus, slot, totalSlots);
       }
 
