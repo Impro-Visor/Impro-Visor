@@ -2074,6 +2074,7 @@ public Critic getCritic()
         tradingMenu = new javax.swing.JMenu();
         tradingWindow = new javax.swing.JMenuItem();
         transformCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         notateGrammarMenu = new javax.swing.JMenu();
         windowMenu = new javax.swing.JMenu();
         closeWindowMI = new javax.swing.JMenuItem();
@@ -7606,6 +7607,7 @@ public Critic getCritic()
         stepInputBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         stepInputBtn.setMaximumSize(new java.awt.Dimension(30, 30));
         stepInputBtn.setMinimumSize(new java.awt.Dimension(30, 30));
+        stepInputBtn.setOpaque(true);
         stepInputBtn.setPreferredSize(new java.awt.Dimension(30, 30));
         stepInputBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -9096,6 +9098,14 @@ public Critic getCritic()
             }
         });
         tradingMenu.add(transformCheckBoxMenuItem);
+
+        saveImprovCheckBoxMenuItem.setText("Save Improvisation");
+        saveImprovCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rememberImprovCheckBoxActionPerformed(evt);
+            }
+        });
+        tradingMenu.add(saveImprovCheckBoxMenuItem);
 
         menuBar.add(tradingMenu);
 
@@ -13769,7 +13779,16 @@ static private void invalidInteger(String text)
 public Stave getCurrentStave()
   {
     //System.out.println("staveScrollPane = " + staveScrollPane + ", currTabIndex = " + currTabIndex);
-    return staveScrollPane[currTabIndex].getStave();
+  if( staveScrollPane == null )
+    {
+      return null;
+    }
+  StaveScrollPane pane = staveScrollPane[currTabIndex];
+  if( pane == null )
+    {
+      return null;
+    }
+  return pane.getStave();
   }
 
 /**
@@ -22771,6 +22790,10 @@ int quantizeResolution = 60;
     private void transformCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformCheckBoxMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_transformCheckBoxMenuItemActionPerformed
+
+    private void rememberImprovCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberImprovCheckBoxActionPerformed
+        lickgenFrame.setSaveImp(saveImprovCheckBoxMenuItem.isSelected());
+    }//GEN-LAST:event_rememberImprovCheckBoxActionPerformed
 void delAllMelody()
   {
     Trace.log(2, "delete all melody");
@@ -23514,6 +23537,7 @@ private void populateTradingMenu()
     tradingMenu.add(tradingWindow);
     tradingMenu.add(themeWovenCheckBox);
     tradingMenu.add(transformCheckBoxMenuItem);
+    tradingMenu.add(saveImprovCheckBoxMenuItem);
     tradingMenu.add(whetherToTradeCheckBox);
     tradingMenu.add(tradingCheckBox);
 
@@ -25174,6 +25198,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem saveAsLeadsheetMI;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton saveDuplicate;
+    private javax.swing.JCheckBoxMenuItem saveImprovCheckBoxMenuItem;
     private javax.swing.JMenuItem saveLeadsheetMI;
     private javax.swing.JFrame saveLickFrame;
     private javax.swing.JButton savePrefsBtn;
