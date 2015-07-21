@@ -2894,7 +2894,7 @@ public class LickgenFrame
 
         generatorPane.addTab("Neural Network", neuralNetworkPanel);
 
-        intervalLearningPanel.setLayout(new java.awt.GridLayout());
+        intervalLearningPanel.setLayout(new java.awt.GridLayout(1, 0));
         generatorPane.addTab("Interval Learning", intervalLearningPanel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -2993,12 +2993,12 @@ public class LickgenFrame
 
         generatorWindowMenu1.setLabel("Window");
         generatorWindowMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                generatorWindowMenu1MenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                generatorWindowMenu1MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -6025,6 +6025,11 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
        saveImp = saveImpCheckbox.isSelected();
     }//GEN-LAST:event_saveImpCheckboxActionPerformed
 
+    public void setSaveImp(boolean value)
+    {
+        saveImp = value;
+        saveImpCheckbox.setSelected(value);
+    }
     public boolean shouldSaveImp(){
         return saveImp;
     }
