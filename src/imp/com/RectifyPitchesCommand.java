@@ -111,12 +111,15 @@ public class RectifyPitchesCommand
  */
 public void execute()
   {
+      //System.out.println("*******Rectifying Pitches*******");
       if(!(chordTones||colorTones)){
           //Invalid input. Include all.
           chordTones = true;
           colorTones = true;
           approachTones = true;
       }
+      
+      //int lastActiveSlot = part.getLastActiveSlot();
     //Trace.log(2, "executing RectifyPitchesCommand");
 
     //Was used to prevent two of the same note in a row
@@ -132,7 +135,8 @@ public void execute()
 
     try
       {
-        for( int i = startIndex; i < stopIndex; i++ )
+        //for( int i = startIndex; i < stopIndex; i++ )
+          for(int i = startIndex; i < stopIndex; i = part.getNextIndex(i))
           {
             Note currentNote = part.getNote(i);
             Note resolved = currentNote;
@@ -141,7 +145,8 @@ public void execute()
               {
                //System.out.println("part at " + i + " had " + part.getNote(i));
 
-               int value = Math.min(currentNote.getRhythmValue(), slotsRemaining);
+               //int value = Math.min(currentNote.getRhythmValue(), slotsRemaining);
+               int value = currentNote.getRhythmValue();
 
                 if( currentNote.isRest() )
                   {
@@ -150,63 +155,124 @@ public void execute()
                   }
                 else
                   {
+                    //System.out.println("Not a rest");
                     Chord chord = chordProg.getCurrentChord(i);
+                    
+                    //nextChord - for use in determing appraoch tones
+                    Chord nextChord = null;
+                    int nextIndex = part.getNextIndex(i);
+                    if(nextIndex <= part.getLastActiveSlot()){
+                        nextChord = chordProg.getCurrentChord(nextIndex);
+                    }
+                    
                     if( chord.isNOCHORD() )
                       {
                       // leave currentNote as resolved
                       }
                     else
                       {
+                        //System.out.println("Not isNOCHORD");
                         ChordForm form = chord.getChordSymbol().getChordForm();
                         String root = chord.getRoot();
-
+                        //System.out.println("Got form and root");
+                        ChordForm nextForm = null;
+                        String nextRoot = null;
+                        if(nextChord != null){
+                            nextForm = nextChord.getChordSymbol().getChordForm();
+                            nextRoot = nextChord.getRoot();
+                        }
+                        //System.out.println("Got nextForm and nextRoot");
+                        
                         // usableTones combines chord, color, and scale tones
                         // This could be done within ChordForm more efficiently
 
                         Polylist usableTones = Polylist.nil;
-
+                        Polylist nextUsableTones = Polylist.nil;
+                        //System.out.println("Checkpoint 1");
                         if(chordTones){
+                            //System.out.println("Checkpoint 1.25");
                             usableTones = usableTones.append(form.getSpell(root));
+                            if(nextForm!=null){
+                                nextUsableTones = nextUsableTones.append(nextForm.getSpell(nextRoot));
+                            }
+                            
                         }
-                        
+                        //System.out.println("Checkpoint 2");
 
                         //option to only include chord tones
                         if(colorTones){
                            usableTones = usableTones.append(form.getColor(root)); 
+                           if(nextForm!=null){
+                             nextUsableTones = nextUsableTones.append(nextForm.getColor(nextRoot));  
+                           }
+                           
                         }
-                        
+                        //System.out.println("Checkpoint 3");
 
                         // Not so good: usableTones = usableTones.append(form.getFirstScaleTones(root));
 
                         if( directional )
                         {
+                            //System.out.println("Directional Mode");
                             // Directional transposition specified
                             resolved = Note.getClosestMatchDirectional(currentNote.getPitch(), usableTones, direction);
                         }
                         else
                         {
+                            //System.out.println("Rectification Mode");
                             // Rectification specified
                             Note nextNote = part.getNextNote(i);
                             if(NoteSymbol.makeNoteSymbol(currentNote).enhMember(usableTones) )
                               {
                                 // No rectification necessary
                                 resolved = currentNote;
+                                //System.out.println("No rectification necessary");
+                                //System.out.println(resolved);
+                                //TEST
+//                                if(!NoteSymbol.makeNoteSymbol(resolved).enhMember(usableTones) )
+//                              {
+//                                  System.out.println("No rectification necessary - not enhMember");
+//                                System.out.println(resolved);
+//                              }
                               }
-                            else if( approachTones && nextNote != null && nextNote.adjacentPitch(currentNote) && NoteSymbol.makeNoteSymbol(nextNote).enhMember(usableTones) )
+                            //PROBLEM: They are using the chord of the current note to see if the next note is a chord/color tone - BAD
+                            else if( approachTones && nextNote != null && nextNote.adjacentPitch(currentNote) && NoteSymbol.makeNoteSymbol(nextNote).enhMember(nextUsableTones) )
                             {
                                 // Allow approach tones to stand
                                 //System.out.println("allowing approach: " + currentNote.toLeadsheet() + " to " + nextNote.toLeadsheet() );
-
+                                
                                 resolved = currentNote;
+                                //TEST
+                                //System.out.println("Allow approach tones to stand");
+                                //System.out.println(resolved);
+//                                if(!NoteSymbol.makeNoteSymbol(resolved).enhMember(usableTones) )
+//                              {
+//                                  System.out.println("Allow approach tones to stand - not enhMember");
+//                                System.out.println(resolved);
+//                              }
+                                
+                                //System.out.println("Allow approach tone");
+                                //System.out.println(currentNote);
                             }
                             else
                               {
                                 // Move anything else to a usable tone
                                   //This should NOT use getClosestMatchDirectional because a direction was not specified.
                                   resolved = Note.getClosestMatch(currentNote.getPitch(), usableTones);
+                                  
                               //resolved = Note.getClosestMatchDirectional(currentNote.getPitch(), usableTones, direction);
 
-                              resolved.setRhythmValue(value);
+                                resolved.setRhythmValue(value);
+                                //System.out.println("Move anything else to a usable tone");
+                                //System.out.println(resolved);
+                                //TEST
+//                                if(!NoteSymbol.makeNoteSymbol(resolved).enhMember(usableTones) )
+//                              {
+//                                  System.out.println("Move anything else to a usable tone - not enhMember");
+//                                System.out.println(resolved);
+//                              }                              
+                                //System.out.println("Move to usable tone");
+                                //System.out.println(resolved);
                               }
                         }
 
@@ -230,7 +296,7 @@ public void execute()
                       }
                     
                      part.setNote(i, resolved);
-
+                     
                      
                      //was used to prevent having two of the same note in a row
                      //previousNote = currentNote;
@@ -248,6 +314,21 @@ public void execute()
         //ErrorLog.log(ErrorLog.WARNING, "*** Warning: pitch resolution failed.");
       }
   //playIt();
+//    int duration = part.getNote(0).getRhythmValue();
+//    for(int i = 0; i <= part.getLastActiveSlot(); i += duration){
+//        Note n = part.getNote(i);
+//        Note next = part.getNextNote(i);
+//        Chord c = chordProg.getCurrentChord(i);
+//        Polylist usableTones = c.getSpell().append(c.getColor());
+//        if(!n.isRest() && NoteSymbol.makeNoteSymbol(n).enhMember(usableTones)){
+//            if(n.adjacentPitch(next)){
+//                System.out.println("Approach:");
+//            }else{
+//                System.out.println("Red:");
+//            }
+//            System.out.println(n);
+//        }
+//    }
   }
   
   private void playIt()
