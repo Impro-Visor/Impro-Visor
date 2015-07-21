@@ -7,6 +7,7 @@ package imp.data;
 
 import imp.Constants;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  *
@@ -93,48 +94,67 @@ public class IntervalLearner {
             }
         }
         
-        //first note
-        int slot = melody.getFirstIndex();
-        //System.out.println("first slot: "+slot);
-        Note first = melody.getNote(slot);
-        //System.out.println("first note: "+first);
-        int size = melody.size();
-        
-        //go through notes, logging a count whenever there's a valid group of three
-        for( ; slot < size; slot = slot + first.getRhythmValue(), first = melody.getNote(slot)){
-            //first note note rest
-            if(!first.isRest()){
-                int slot2 = slot + first.getRhythmValue();
-                //second note within list
-                if(slot2 < size){
-                    Note second = melody.getNote(slot2);
-                    //second note not rest
-                    if(!second.isRest()){
-                        int slot3 = slot2 + second.getRhythmValue();
-                        //third note within list
-                        if(slot3 < size){
-                            Note third = melody.getNote(slot3);
-                            //third note not rest
-                            if(!third.isRest()){
-                                //pitches
-                                int pitch1 = first.getPitch();
-                                int pitch2 = second.getPitch();
-                                int pitch3 = third.getPitch();
-                                //intervals
-                                int interval1 = pitch2-pitch1;
-                                int interval2 = pitch3-pitch2;
-                                
-                                //both intervals are in range (less than an octave)
-                                if(inRange(interval1) && inRange(interval2)){
-                                    //System.out.println("interval 1: "+interval1 + "interval 2: "+interval2);
-                                    counts[intervalToIndex(interval1)][intervalToIndex(interval2)] ++;
-                                }
-                            }
-                        }
-                    }
-                }
+        //make list of just notes (no rests)
+        ArrayList<Note> notes = new ArrayList<Note>();
+        for(Note n : melody.getNoteList()){
+            if(!n.isRest()){
+                notes.add(n);
             }
         }
+        
+        //stop at third note from end
+        for(int i = 0; i<notes.size()-2; i++){
+            int first = notes.get(i).getPitch();
+            int second = notes.get(i+1).getPitch();
+            int third = notes.get(i+2).getPitch();
+            
+            int src = second-first;
+            int dest = third-second;
+            
+            if(inRange(src) && inRange(dest)){
+                counts[intervalToIndex(src)][intervalToIndex(dest)]++;
+            }
+        }
+        
+//        //first note
+//        int slot = melody.getFirstIndex();
+//        Note first = melody.getNote(slot);
+//        int size = melody.size();
+//        
+//        //go through notes, logging a count whenever there's a valid group of three
+//        for( ; slot < size; slot = slot + first.getRhythmValue(), first = melody.getNote(slot)){
+//            //first note note rest
+//            if(!first.isRest()){
+//                int slot2 = slot + first.getRhythmValue();
+//                //second note within list
+//                if(slot2 < size){
+//                    Note second = melody.getNote(slot2);
+//                    //second note not rest
+//                    if(!second.isRest()){
+//                        int slot3 = slot2 + second.getRhythmValue();
+//                        //third note within list
+//                        if(slot3 < size){
+//                            Note third = melody.getNote(slot3);
+//                            //third note not rest
+//                            if(!third.isRest()){
+//                                //pitches
+//                                int pitch1 = first.getPitch();
+//                                int pitch2 = second.getPitch();
+//                                int pitch3 = third.getPitch();
+//                                //intervals
+//                                int interval1 = pitch2-pitch1;
+//                                int interval2 = pitch3-pitch2;
+//                                
+//                                //both intervals are in range (less than an octave)
+//                                if(inRange(interval1) && inRange(interval2)){
+//                                    counts[intervalToIndex(interval1)][intervalToIndex(interval2)] ++;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         return counts;
     }

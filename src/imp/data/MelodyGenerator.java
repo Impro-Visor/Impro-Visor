@@ -7,6 +7,7 @@ package imp.data;
 
 import imp.Constants;
 import static imp.Constants.OCTAVE;
+import imp.com.RectifyPitchesCommand;
 import static imp.data.GuideLineGenerator.ASCENDING;
 import static imp.data.GuideLineGenerator.DESCENDING;
 import imp.gui.Notate;
@@ -27,23 +28,25 @@ public class MelodyGenerator {
     private MelodyPart rhythm;
     private ChordPart chords;
     private int [] range;
+    private boolean preRectify;
 
     private static final int NO_DATA = Integer.MAX_VALUE;
     private static final boolean IN_RANGE = true;
     
-    public MelodyGenerator(double[][] probabilities, MelodyPart rhythm, ChordPart chords, int [] range) {
+    public MelodyGenerator(double[][] probabilities, MelodyPart rhythm, ChordPart chords, int [] range, boolean preRectify) {
         this.probabilities = probabilities;
         this.rhythm = rhythm;
         this.chords = chords;
         this.range = range;
+        this.preRectify = preRectify;
     }
     
-    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range){
-        this(probabilities, polylistToMelodyPart(rhythm), chords, range);
+    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range, boolean preRectify){
+        this(probabilities, polylistToMelodyPart(rhythm), chords, range, preRectify);
     }
     
-    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range){
-        this(probabilities, rhythm(notate), chords, range);
+    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range, boolean preRectify){
+        this(probabilities, rhythm(notate), chords, range, preRectify);
     }
     
     public static Polylist rhythm(Notate notate){
@@ -78,6 +81,7 @@ public class MelodyGenerator {
 //        //System.out.println("generated rhythm: "+rhythm);
 //        return rhythm;
 //    }
+
     
     private static Polylist justRhythm(Polylist abstractMelody){
         //System.out.println(abstractMelody);
@@ -181,6 +185,7 @@ public class MelodyGenerator {
                 //System.out.println("prevNote is null or rest");
                 toAdd = new Note(rootPitch(chord), duration);
                 prevInterval = NO_DATA;
+                
             //should only be true for second note (we ignore rests)
             }else if(prevInterval == NO_DATA){
                 //System.out.println("prevInterval is NO_DATA");
@@ -210,7 +215,14 @@ public class MelodyGenerator {
 
             
         }
-        
+        if(!preRectify){
+            //post-rectification to chord, color, and approach tones
+            RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
+                                result.size()-1, chords,
+                                false, false,
+                                true, true, true);
+            cmd.execute();
+        }
         return result;
     }
     
@@ -358,7 +370,8 @@ public class MelodyGenerator {
             double prob = probabilities[sourceIndex][destIndex];
             int pitchToAdd = prevPitch + indexToInterval(destIndex);
             int typeIndex = chord.getTypeIndex(new Note(pitchToAdd));
-            if(prob != 0 && inRange(pitchToAdd) && (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE)){
+            boolean correctType = preRectify ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
+            if(prob != 0 && inRange(pitchToAdd) && correctType){
                 pitches.add(pitchToAdd);
                 pitchProbs.add(prob);
             }
@@ -366,7 +379,7 @@ public class MelodyGenerator {
         
         //if no pitches have nonzero probability, are in range, and are chord/color tones,
         //allow all non chord / color tones
-        if(pitchProbs.isEmpty()){
+        if(pitchProbs.isEmpty()&&preRectify){
             //System.out.println("Allow non chord/color tones");
             for(int destIndex = 0; destIndex < probabilities[sourceIndex].length; destIndex ++){
                 double prob = probabilities[sourceIndex][destIndex];

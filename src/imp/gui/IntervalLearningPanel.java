@@ -29,6 +29,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private JLabel [][] probabilityLabels;
     private double[][] probabilities;
     private int [] range;
+    private boolean preRectify;
 //    private JLabel [] sourceLabels;
 //    private JLabel [] destLabels;
     
@@ -69,6 +70,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
                     probabilityLabels[row][column].setBackground(Color.WHITE);
                 }
                 probabilitiesPanel.add(probabilityLabels[row][column]);
+                preRectify = preRectifyButton.isSelected();
             }
         }
 //        sourceLabels = new JLabel[25];
@@ -97,6 +99,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        preAndPost = new javax.swing.ButtonGroup();
         probabilitiesPanel = new javax.swing.JPanel();
         sourceIntervals = new javax.swing.JLabel();
         destinationIntervals = new javax.swing.JLabel();
@@ -107,6 +110,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         chooseRange = new javax.swing.JButton();
         rhythmSolo = new javax.swing.JButton();
         grammarRhythmSolo = new javax.swing.JButton();
+        preRectifyButton = new javax.swing.JRadioButton();
+        postRectifyButton = new javax.swing.JRadioButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -139,7 +144,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         buttonsPanel.add(learnProbabilitiesButton, gridBagConstraints);
 
         learnFromAll.setText("Learn Interval Probabilities for all Choruses");
@@ -162,7 +166,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 7;
         buttonsPanel.add(QNsoloButton, gridBagConstraints);
 
         chooseRange.setText("Choose Range");
@@ -173,7 +177,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 3;
         buttonsPanel.add(chooseRange, gridBagConstraints);
 
         rhythmSolo.setText("Generate Solo w/ Same Rhythm as Chorus 1");
@@ -185,7 +189,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 8;
         buttonsPanel.add(rhythmSolo, gridBagConstraints);
 
         grammarRhythmSolo.setText("Generate Solo w/ Grammar-Generated Rhythm");
@@ -197,8 +201,33 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 9;
         buttonsPanel.add(grammarRhythmSolo, gridBagConstraints);
+
+        preAndPost.add(preRectifyButton);
+        preRectifyButton.setSelected(true);
+        preRectifyButton.setText("Pre-Rectify");
+        preRectifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                preRectifyButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        buttonsPanel.add(preRectifyButton, gridBagConstraints);
+
+        preAndPost.add(postRectifyButton);
+        postRectifyButton.setText("Post-Rectify");
+        postRectifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                postRectifyButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        buttonsPanel.add(postRectifyButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -255,7 +284,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         ChordPart chords = notate.getChordProg();
         RhythmGenerator rgen = new RhythmGenerator(notate.getScore().getLength());
         MelodyPart rhythm = rgen.rhythm(Constants.EIGHTH);
-        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range);
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range, preRectify);
         MelodyPart result = mgen.melody();
         notate.addChorus(result);
     }//GEN-LAST:event_QNsoloButtonActionPerformed
@@ -270,7 +299,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         //RhythmGenerator rgen = new RhythmGenerator(notate.getScore().getLength());
         //MelodyPart rhythm = rgen.rhythm(Constants.EIGHTH);
         MelodyPart rhythm = notate.getScore().getPart(0);
-        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range);
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range, preRectify);
         MelodyPart result = mgen.melody();
         notate.addChorus(result);
     }//GEN-LAST:event_rhythmSoloActionPerformed
@@ -287,10 +316,18 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
 //        //Polylist rhythm = gen.generateRhythmFromGrammar(0, notate.getScoreLength());
 //        System.out.println(rhythm);
         ChordPart chords = notate.getChordProg();
-        MelodyGenerator mgen = new MelodyGenerator(probabilities, notate, chords, range);
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, notate, chords, range, preRectify);
         MelodyPart result = mgen.melody();
         notate.addChorus(result);
     }//GEN-LAST:event_grammarRhythmSoloActionPerformed
+
+    private void preRectifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preRectifyButtonActionPerformed
+        preRectify = preRectifyButton.isSelected();
+    }//GEN-LAST:event_preRectifyButtonActionPerformed
+
+    private void postRectifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postRectifyButtonActionPerformed
+        preRectify = preRectifyButton.isSelected();
+    }//GEN-LAST:event_postRectifyButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -301,6 +338,9 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JButton grammarRhythmSolo;
     private javax.swing.JButton learnFromAll;
     private javax.swing.JButton learnProbabilitiesButton;
+    private javax.swing.JRadioButton postRectifyButton;
+    private javax.swing.ButtonGroup preAndPost;
+    private javax.swing.JRadioButton preRectifyButton;
     private javax.swing.JPanel probabilitiesPanel;
     private javax.swing.JButton rhythmSolo;
     private javax.swing.JLabel sourceIntervals;
