@@ -2063,6 +2063,7 @@ public Critic getCritic()
         lickGeneratorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         soloGeneratorMI = new javax.swing.JMenuItem();
+        customSoloGeneratorMI = new javax.swing.JMenuItem();
         voicingTestMI = new javax.swing.JMenuItem();
         pianoKeyboardMI = new javax.swing.JMenuItem();
         roadmapMenu = new javax.swing.JMenu();
@@ -9006,6 +9007,15 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(soloGeneratorMI);
+
+        customSoloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_MASK));
+        customSoloGeneratorMI.setText("Custom Theme Weaver");
+        customSoloGeneratorMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customSoloGeneratorMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(customSoloGeneratorMI);
 
         voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         voicingTestMI.setMnemonic('v');
@@ -22794,6 +22804,14 @@ int quantizeResolution = 60;
     private void rememberImprovCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberImprovCheckBoxActionPerformed
         lickgenFrame.setSaveImp(saveImprovCheckBoxMenuItem.isSelected());
     }//GEN-LAST:event_rememberImprovCheckBoxActionPerformed
+
+    private void customSoloGeneratorMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customSoloGeneratorMIActionPerformed
+        if( themeWeaver == null )
+          {
+          themeWeaver = new ThemeWeaver(lickgen, this, cm);
+          }
+        themeWeaver.openCustomizeSoloWindow();
+    }//GEN-LAST:event_customSoloGeneratorMIActionPerformed
 void delAllMelody()
   {
     Trace.log(2, "delete all melody");
@@ -24772,6 +24790,7 @@ private ImageIcon pauseButton =
     private javax.swing.JCheckBoxMenuItem createRoadMapCheckBox;
     private javax.swing.JLabel currDirectoryLabel;
     private javax.swing.JPanel currentStyleTab;
+    private javax.swing.JMenuItem customSoloGeneratorMI;
     private javax.swing.JButton cutBothBtn;
     private javax.swing.JMenuItem cutBothMI;
     private javax.swing.JMenuItem cutBothPMI;
