@@ -4237,31 +4237,29 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         bassAttrPanel.add(BassRange, gridBagConstraints);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("Bass Attributes");
+        jLabel2.setText("Bass Attributes:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         bassAttrPanel.add(jLabel2, gridBagConstraints);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel3.setText("Chord Attributes");
+        jLabel3.setText("Chord Attributes:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -4277,7 +4275,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -4296,7 +4294,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         bassAttrPanel.add(voicingType, gridBagConstraints);
@@ -4307,8 +4305,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -4325,7 +4322,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -4337,7 +4334,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -4354,7 +4351,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         bassAttrPanel.add(swingTextField, gridBagConstraints);
@@ -4370,7 +4367,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         bassAttrPanel.add(accompanimentSwingTextField, gridBagConstraints);
@@ -4380,8 +4377,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         bassAttrPanel.add(jLabel4, gridBagConstraints);
@@ -4391,8 +4387,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         bassAttrPanel.add(jLabel5, gridBagConstraints);
@@ -7777,7 +7772,7 @@ private void openStyleMixer()
         chordHighNoteString = chordHighNoteString.substring(0,chordHighNoteString.length()-1);
         chordLowNoteString = chordLowNoteString.substring(0,chordLowNoteString.length()-1);
         
-        ChordRangeText.setText(chordLowNoteString+"|"+chordHighNoteString);
+        ChordRangeText.setText(chordLowNoteString+" | "+chordHighNoteString);
         
         
     }//GEN-LAST:event_chordRangeActionPerformed
@@ -7797,7 +7792,7 @@ private void openStyleMixer()
         bassHighNoteString = bassHighNoteString.substring(0,bassHighNoteString.length()-1);
         bassLowNoteString = bassLowNoteString.substring(0,bassLowNoteString.length()-1);
         
-        BassRangeText.setText(bassLowNoteString+"|"+bassHighNoteString);
+        BassRangeText.setText(bassLowNoteString+" | "+bassHighNoteString);
     }//GEN-LAST:event_BassRangeActionPerformed
 
     private void BassRangeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BassRangeTextActionPerformed
