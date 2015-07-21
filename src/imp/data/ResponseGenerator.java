@@ -13,12 +13,17 @@ import imp.com.ReverseCommand;
 import static imp.data.AbstractMelodyExtractor.getAbstractMelody;
 import imp.data.Part.PartIterator;
 import imp.gui.Notate;
+import imp.lickgen.LickGen;
 import imp.lickgen.transformations.NoteChordPair;
 import imp.lickgen.transformations.Transform;
 import imp.lickgen.transformations.TransformLearning;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Random;
+import java.util.Vector;
+import polya.Polylist;
 
 /**
  *
@@ -27,24 +32,40 @@ import java.util.Random;
 public class ResponseGenerator {
     
     private MelodyPart response;
+    private MelodyPart grammarSolo;
     private static final int start = 0;
+    private int[] metre;
     private int stop;
+    private int nextSection;
     private ChordPart soloChords;
     private ChordPart responseChords;
     private Notate notate;
+    private LickGen lickGen;
     private final BeatFinder beatFinder;
     private final TransformLearning flattener;
     private static final boolean ONLY_CHORD_TONES = true;
     private static final boolean ALL_TONES = false;
     
-    public ResponseGenerator(MelodyPart response,ChordPart soloChords, ChordPart responseChords, Notate notate, int [] metre){
+    public void showGrammarSolo(){
+        notate.addChorus(grammarSolo);
+    }
+    
+    public ResponseGenerator(Notate notate, int [] metre){
+        this.notate = notate;
+        this.lickGen = notate.getLickGen();
+        this.beatFinder = new BeatFinder(metre);
+        this.flattener = new TransformLearning();
+        this.metre = metre;
+        Polylist rhythm = lickGen.generateRhythmFromGrammar(0, notate.getScoreLength());
+        grammarSolo = notate.generateLick(rhythm, 0, notate.getScoreLength());
+    }
+    
+    public void newResponse(MelodyPart response,ChordPart soloChords, ChordPart responseChords, int nextSection){
         this.response = response;
         this.stop = response.size()-1;
         this.soloChords = soloChords;
         this.responseChords = responseChords;
-        this.notate = notate;
-        this.beatFinder = new BeatFinder(metre);
-        this.flattener = new TransformLearning();
+        this.nextSection = nextSection;
     }
     
     //STEP 0 - load the solo and the chords the response will be played over
@@ -114,6 +135,12 @@ public class ResponseGenerator {
                 break;
         }
     }
+    
+    public MelodyPart extractFromGrammarSolo(int startSlot, int slotLength){
+        MelodyPart mp = new MelodyPart();
+        mp = grammarSolo.extract(startSlot, startSlot + slotLength - 1, true, true);
+        return mp;
+    }
 
     public void abstractify() {
         String abstractMelody = AbstractMelodyExtractor.getAbstractMelody(
@@ -125,6 +152,85 @@ public class ResponseGenerator {
                 soloChords
         );
         response = notate.getLickgenFrame().fillAndReturnMelodyFromText(abstractMelody, responseChords);
+    }
+    
+    public MelodyPart userRhythm(){
+        MelodyPart[] choppedResponse = chopResponse();
+        MelodyPart[] choppedGrammar = chopResponse(grammarSolo, nextSection);
+        
+        return mash(choppedGrammar, choppedResponse);
+        
+        //System.out.println("User chopped: " + Arrays.toString(choppedResponse));
+        //System.out.println("Computer chopped: " + Arrays.toString(choppedGrammar));
+    }
+    
+    public MelodyPart userMelody(){
+        MelodyPart[] choppedResponse = chopResponse();
+        MelodyPart[] choppedGrammar = chopResponse(grammarSolo, nextSection);
+        
+        return mash(choppedResponse, choppedGrammar);
+        
+        //System.out.println("User chopped: " + Arrays.toString(choppedResponse));
+        //System.out.println("Computer chopped: " + Arrays.toString(choppedGrammar));
+    }
+    
+    public MelodyPart mash(MelodyPart[] melody, MelodyPart[] rhythm){
+        Vector<Integer>[] responseMelodies = extractMelodies(melody);
+        MelodyPart mp = new MelodyPart();
+        for(int i = 0; i < rhythm.length; i++){
+            if (!responseMelodies[i].isEmpty()){
+                Vector<Integer> thisMelody = responseMelodies[i];
+                LinkedList<Note> thisRhythm = rhythm[i].getNotes();
+                int nonRestIndex = 0;
+                for(int j = 0; j < thisRhythm.size(); j++){
+                    Note n = thisRhythm.get(j);
+                    if(n.isRest());
+                    else{
+                        int melodyiIndex = nonRestIndex % thisMelody.size();
+                        n.setPitch(thisMelody.get(melodyiIndex));
+                        nonRestIndex++;
+                    }
+                    mp.addNote(n);
+                }
+            }
+        }
+        return mp;
+    }
+    
+    public MelodyPart[] chopResponse(){
+        return chopResponse(response, 0);
+    }
+    
+    public MelodyPart[] chopResponse(MelodyPart mp, int start){
+        int beat = (Constants.WHOLE / metre[1]);
+        int measure = (metre[0] * beat);
+        int numMeasures = (response.getSize() / measure);
+        MelodyPart[] mpa = new MelodyPart[numMeasures];
+        for(int i = 0; i < numMeasures; i++){
+            int measureStartSlot = (start + (i * measure));
+            int measureEndSlot = measureStartSlot + measure - 1;
+            mpa[i] = mp.extract(measureStartSlot, measureEndSlot, true, true);
+        }
+        return mpa;
+    }
+
+    public Vector<Integer>[] extractMelodies(MelodyPart[] mpa) {
+        int beat = (Constants.WHOLE / metre[1]);
+        int measure = (metre[0] * beat);
+        int numMeasures = (response.getSize() / measure);
+        Vector<Integer>[] melodies;
+        melodies = new Vector[numMeasures];
+        for (int i = 0; i < numMeasures; i++) {
+            Vector<Integer> newMelody = new Vector();
+            ArrayList<Note> notes = mpa[i].getNoteList();
+            for (Note n : notes) {
+                if (!n.isRest()) {
+                    newMelody.add(n.getPitch());
+                }
+            }
+            melodies[i] = newMelody;
+        }
+        return melodies;
     }
 
     public void rhythmicGuideLine(boolean generatedContour){
@@ -404,7 +510,15 @@ public class ResponseGenerator {
 //            //use the response as the rhythm
 //            MelodyGenerator mgen = new MelodyGenerator(probabilities, response, responseChords, range);
 //            response = mgen.melody();
+        } else if (tradeMode.equals("Zach 1 - Gen Solo")){
+            response = grammarSolo.extract(nextSection, nextSection + stop, false, true);
+        } else if (tradeMode.equals("Zach 2 - User Melody")){
+            response = userMelody();
+        } else if (tradeMode.equals("Zach 3 - User Rhythm")){
+            response = userRhythm();
         }
+        
+        
         else {
             //System.out.println("did nothing");
         }
