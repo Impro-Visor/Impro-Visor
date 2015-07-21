@@ -71,7 +71,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
            public void actionPerformed(ActionEvent e)
            {
                File openFile=null;
-                JFileChooser chooser = new JFileChooser(ImproVisor.getUserDirectory());
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showOpenDialog(null);
@@ -98,7 +98,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
                 saveSlidersToVariables();
                 
                 File saveFile=null;
-                JFileChooser chooser = new JFileChooser(ImproVisor.getUserDirectory());
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showSaveDialog(null);

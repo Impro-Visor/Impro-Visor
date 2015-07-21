@@ -94,6 +94,11 @@ public static String leadsheetDirName = "leadsheets";
 public static String midiDirName = "midi";
 
 /**
+ * Name of standard sub-directory for voicing files
+ */
+public static String voicingDirName = "voicings";
+
+/**
  * Name of sub-directory stored in "vocab" for
  * neural network training data
  */
