@@ -282,7 +282,6 @@ public void setTableColumnWidths()
         themeNameTextPane = new javax.swing.JTextPane();
         themeNameTextPane.setEditable(false);
         jLabel44 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         soloTableScrollPane = new javax.swing.JScrollPane();
         soloTable = new javax.swing.JTable();
         themeListScrollPane = new javax.swing.JScrollPane();
@@ -1605,9 +1604,6 @@ public void setTableColumnWidths()
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         customizeSolo.getContentPane().add(jPanel13, gridBagConstraints);
-
-        jToggleButton1.setText("jToggleButton1");
-        customizeSolo.getContentPane().add(jToggleButton1, new java.awt.GridBagConstraints());
 
         setLocation(new java.awt.Point(10, 10));
         setLocationByPlatform(true);
@@ -4916,7 +4912,7 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
             endSoloEarly = false;
         }
     }
-    
+    solo.setSize(notate.getScoreLength());
     notate.setCurrentSelectionStart(0); //start selection at beginning
     //rectify pitches in entire solo
     cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false, true, false, false));
@@ -5936,7 +5932,6 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JCheckBox keepEditsFromLeadsheetCheckBox;
     private javax.swing.JMenuItem loadThemesMI;
     private javax.swing.JDialog nameErrorMessage;
