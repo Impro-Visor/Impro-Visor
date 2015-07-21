@@ -6,21 +6,17 @@
 package imp.voicing;
 
 import imp.ImproVisor;
-import imp.voicing.AutomaticVoicingSettings;
-import imp.voicing.AVPFileCreator;
 import imp.data.Note;
 import imp.data.NoteSymbol;
+import imp.gui.RangeChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -47,6 +43,12 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
            public void actionPerformed(ActionEvent e)
            {
+               if(voiceAll)
+                    if(rightHandSpread<12)
+                    {
+                        rightHandSpread=12;
+                        handSpreads[1].setValue(rightHandSpread);
+                    }
                saveSlidersToVariables();
            }
        });  
@@ -69,7 +71,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
            public void actionPerformed(ActionEvent e)
            {
                File openFile=null;
-                JFileChooser chooser = new JFileChooser(ImproVisor.getUserDirectory());
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showOpenDialog(null);
@@ -92,9 +94,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
            public void actionPerformed(ActionEvent e)
            {
+                
                 saveSlidersToVariables();
+                
                 File saveFile=null;
-                JFileChooser chooser = new JFileChooser(ImproVisor.getUserDirectory());
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showSaveDialog(null);
@@ -108,7 +112,42 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
                 
             }
        });
-       for(JSlider slider:handLimits)
+         LHRangeButton.addActionListener(new ActionListener() {
+
+           public void actionPerformed(ActionEvent e)
+           {
+              saveSlidersToVariables();
+              RangeChooser rc=new RangeChooser(null, leftHandLowerLimit,leftHandUpperLimit, 21, 108);
+              int range[]=rc.getRange();
+              System.out.println(leftHandUpperLimit+"limit old");
+              leftHandLowerLimit=range[0];
+              leftHandUpperLimit=range[1];
+              syncToSettings();
+              //LHLLSpinner.setValue(leftHandLowerLimit);
+              //LHULSpinner.setValue(leftHandUpperLimit);
+              //System.out.println(leftHandUpperLimit+"limit set");
+              setSlidersToVariables();
+            }
+       });
+         RHRangeButton.addActionListener(new ActionListener() {
+
+           public void actionPerformed(ActionEvent e)
+           {
+              saveSlidersToVariables();
+              RangeChooser rc=new RangeChooser(null, rightHandLowerLimit,rightHandUpperLimit, 21, 108);
+              int range[]=rc.getRange();
+              //System.out.println(leftHandUpperLimit+"limit old");
+              rightHandLowerLimit=range[0];
+              rightHandUpperLimit=range[1];
+              syncToSettings();
+              //LHLLSpinner.setValue(leftHandLowerLimit);
+              //LHULSpinner.setValue(leftHandUpperLimit);
+              //System.out.println(leftHandUpperLimit+"limit set");
+              setSlidersToVariables();
+            }
+       });
+    
+       for(JSpinner slider:handLimits)
        {
            slider.addChangeListener(new ChangeListener(){
                 public void stateChanged(ChangeEvent e)
@@ -118,6 +157,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
        });
            
        }
+       
     }
 
     public ControlPanelFrame() {
@@ -271,7 +311,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     {
         for(int i=0; i<4; i++)
         {
-            limitLabels[i].setText((NoteSymbol.makeNoteSymbol(new Note(handLimits[i].getValue())).toString()));
+            limitLabels[i].setText((NoteSymbol.makeNoteSymbol(new Note(Integer.parseInt(handLimits[i].getValue().toString()))).toString()));
         }
     }
     /**
@@ -312,20 +352,20 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
      */
      public void associateSliders()
     {
-        handLimits=new JSlider[4];
-        handSpreads=new JSlider[2];
-        handNotes=new JSlider[4];
+        handLimits=new JSpinner[4];
+        handSpreads=new JSpinner[2];
+        handNotes=new JSpinner[4];
         voiceLeadingWeights=new JSlider[3];
-        handLimits[0]=LHLLSlider;
-        handLimits[1]=LHULSlider;
-        handLimits[2]=RHLLSlider;
-        handLimits[3]=RHULSlider;
-        handSpreads[0]=LHStretchSlider;
-        handSpreads[1]=RHStretchSlider;
-        handNotes[0]=LHMinNotesSlider;
-        handNotes[1]=LHMaxNotesSlider;
-        handNotes[2]=RHMinNotesSlider;
-        handNotes[3]=RHMaxNotesSlider;
+        handLimits[0]=LHLLSpinner;
+        handLimits[1]=LHULSpinner;
+        handLimits[2]=RHLLSpinner;
+        handLimits[3]=RHULSpinner;
+        handSpreads[0]=LHStretchSpinner;
+        handSpreads[1]=RHStretchSpinner;
+        handNotes[0]=LHMinNotesSpinner;
+        handNotes[1]=LHMaxNotesSpinner;
+        handNotes[2]=RHMinNotesSpinner;
+        handNotes[3]=RHMaxNotesSpinner;
         
         //voice leading controls
         preferredMotionSlider=PrefMotionDirSlider;
@@ -355,14 +395,14 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
      */
     public void checkSliders()
     {
-       if(handLimits[1].getValue()<handLimits[0].getValue()+handSpreads[0].getValue())
-           handLimits[1].setValue(handLimits[0].getValue()+handSpreads[0].getValue());
-       if(handLimits[3].getValue()<handLimits[2].getValue()+handSpreads[1].getValue())
-           handLimits[3].setValue(handLimits[2].getValue()+handSpreads[1].getValue());
-       if(handNotes[0].getValue()>handNotes[1].getValue())
-           handNotes[0].setValue(handNotes[1].getValue());
-       if(handNotes[2].getValue()>handNotes[3].getValue())
-           handNotes[2].setValue(handNotes[3].getValue());
+       if(Integer.parseInt(handLimits[1].getValue().toString())<Integer.parseInt(handLimits[1].getValue().toString())+Integer.parseInt(handSpreads[0].getValue().toString()))
+           handLimits[1].setValue(Integer.parseInt(handLimits[0].getValue().toString())+Integer.parseInt(handSpreads[0].getValue().toString()));
+       if(Integer.parseInt(handLimits[3].getValue().toString())<Integer.parseInt(handLimits[2].getValue().toString())+Integer.parseInt(handSpreads[1].getValue().toString()))
+           handLimits[3].setValue(Integer.parseInt(handLimits[3].getValue().toString())+Integer.parseInt(handLimits[2].getValue().toString()));
+       if(Integer.parseInt(handNotes[0].getValue().toString())>Integer.parseInt(handNotes[1].getValue().toString()))
+           handNotes[0].setValue(Integer.parseInt(handNotes[1].getValue().toString()));
+       if(Integer.parseInt(handNotes[2].getValue().toString())>Integer.parseInt(handNotes[3].getValue().toString()))
+           handNotes[2].setValue(Integer.parseInt(handNotes[3].getValue().toString()));
        
     }
     /**
@@ -371,16 +411,16 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     public void saveSlidersToVariables()
     {
         checkSliders();
-        leftHandLowerLimit=handLimits[0].getValue();
-        rightHandLowerLimit=handLimits[2].getValue();
-        leftHandUpperLimit=handLimits[1].getValue();
-        rightHandUpperLimit=handLimits[3].getValue();
-        leftHandSpread=handSpreads[0].getValue();
-        rightHandSpread=handSpreads[1].getValue();
-        leftHandMinNotes=handNotes[0].getValue();
-        leftHandMaxNotes=handNotes[1].getValue();
-        rightHandMinNotes=handNotes[2].getValue();
-        rightHandMaxNotes=handNotes[3].getValue();
+        leftHandLowerLimit=Integer.parseInt(handLimits[0].getValue().toString());
+        rightHandLowerLimit=Integer.parseInt(handLimits[2].getValue().toString());
+        leftHandUpperLimit=Integer.parseInt(handLimits[1].getValue().toString());
+        rightHandUpperLimit=Integer.parseInt(handLimits[3].getValue().toString());
+        leftHandSpread=Integer.parseInt(handSpreads[0].getValue().toString());
+        rightHandSpread=Integer.parseInt(handSpreads[1].getValue().toString());
+        leftHandMinNotes=Integer.parseInt(handNotes[0].getValue().toString());
+        leftHandMaxNotes=Integer.parseInt(handNotes[1].getValue().toString());
+        rightHandMinNotes=Integer.parseInt(handNotes[2].getValue().toString());
+        rightHandMaxNotes=Integer.parseInt(handNotes[3].getValue().toString());
         //voice leading controls
         preferredMotion=preferredMotionSlider.getValue();
         preferredMotionRange=motionRange.getValue();
@@ -400,9 +440,9 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         syncToSettings();
         
     }
-    private JSlider handLimits[];
-    private JSlider handSpreads[];
-    private JSlider handNotes[];
+    private JSpinner handLimits[];
+    private JSpinner handSpreads[];
+    private JSpinner handNotes[];
     private JSlider voiceLeadingWeights[];//index=change in half steps
     private JSlider preferredMotionSlider;
     private JSlider motionRange;
@@ -641,30 +681,32 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        LHULSlider = new javax.swing.JSlider();
         LHULNote = new javax.swing.JLabel();
+        LHULSpinner = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
-        LHLLSlider = new javax.swing.JSlider();
         LHLLNote = new javax.swing.JLabel();
+        LHLLSpinner = new javax.swing.JSpinner();
         jPanel5 = new javax.swing.JPanel();
-        LHStretchSlider = new javax.swing.JSlider();
+        LHStretchSpinner = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
-        LHMinNotesSlider = new javax.swing.JSlider();
+        LHMinNotesSpinner = new javax.swing.JSpinner();
         jPanel7 = new javax.swing.JPanel();
-        LHMaxNotesSlider = new javax.swing.JSlider();
+        LHMaxNotesSpinner = new javax.swing.JSpinner();
+        LHRangeButton = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        RHULSlider = new javax.swing.JSlider();
         RHULNote = new javax.swing.JLabel();
+        RHULSpinner = new javax.swing.JSpinner();
         jPanel10 = new javax.swing.JPanel();
-        RHLLSlider = new javax.swing.JSlider();
         RHLLNote = new javax.swing.JLabel();
+        RHLLSpinner = new javax.swing.JSpinner();
         jPanel11 = new javax.swing.JPanel();
-        RHStretchSlider = new javax.swing.JSlider();
+        RHStretchSpinner = new javax.swing.JSpinner();
         jPanel12 = new javax.swing.JPanel();
-        RHMinNotesSlider = new javax.swing.JSlider();
+        RHMinNotesSpinner = new javax.swing.JSpinner();
         jPanel13 = new javax.swing.JPanel();
-        RHMaxNotesSlider = new javax.swing.JSlider();
+        RHMaxNotesSpinner = new javax.swing.JSpinner();
+        RHRangeButton = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         PrevChordPrioritySlider = new javax.swing.JSlider();
@@ -723,28 +765,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel2.setToolTipText("Absolute Upper note limits for voicings in a hand.");
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        LHULSlider.setMajorTickSpacing(12);
-        LHULSlider.setMaximum(108);
-        LHULSlider.setMinimum(21);
-        LHULSlider.setMinorTickSpacing(1);
-        LHULSlider.setPaintTicks(true);
-        LHULSlider.setSnapToTicks(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel2.add(LHULSlider, gridBagConstraints);
-
         LHULNote.setText("A#1");
         LHULNote.setMinimumSize(null);
         LHULNote.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel2.add(LHULNote, gridBagConstraints);
+        jPanel2.add(LHULNote, new java.awt.GridBagConstraints());
+        jPanel2.add(LHULSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -760,27 +785,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel3.setToolTipText("Absolute Lower note limits for voicings in a hand.");
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        LHLLSlider.setMajorTickSpacing(12);
-        LHLLSlider.setMaximum(108);
-        LHLLSlider.setMinimum(21);
-        LHLLSlider.setMinorTickSpacing(1);
-        LHLLSlider.setPaintTicks(true);
-        LHLLSlider.setSnapToTicks(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel3.add(LHLLSlider, gridBagConstraints);
-
         LHLLNote.setText("A#1");
         LHLLNote.setMinimumSize(null);
         LHLLNote.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel3.add(LHLLNote, gridBagConstraints);
+        jPanel3.add(LHLLNote, new java.awt.GridBagConstraints());
+        jPanel3.add(LHLLSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -795,23 +804,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Stretch Limit (Semitones)"));
         jPanel5.setToolTipText("The distance between the lowest and highest note for one voicing in a hand.");
         jPanel5.setLayout(new java.awt.GridBagLayout());
-
-        LHStretchSlider.setMajorTickSpacing(7);
-        LHStretchSlider.setMaximum(19);
-        LHStretchSlider.setMinimum(7);
-        LHStretchSlider.setMinorTickSpacing(1);
-        LHStretchSlider.setPaintLabels(true);
-        LHStretchSlider.setPaintTicks(true);
-        LHStretchSlider.setSnapToTicks(true);
-        LHStretchSlider.setMinimumSize(null);
-        LHStretchSlider.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel5.add(LHStretchSlider, gridBagConstraints);
+        jPanel5.add(LHStretchSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -826,22 +819,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Notes"));
         jPanel6.setToolTipText("Minimum number of notes in the hand's voicing.");
         jPanel6.setLayout(new java.awt.GridBagLayout());
-
-        LHMinNotesSlider.setMajorTickSpacing(5);
-        LHMinNotesSlider.setMaximum(5);
-        LHMinNotesSlider.setMinorTickSpacing(1);
-        LHMinNotesSlider.setPaintLabels(true);
-        LHMinNotesSlider.setPaintTicks(true);
-        LHMinNotesSlider.setSnapToTicks(true);
-        LHMinNotesSlider.setMinimumSize(null);
-        LHMinNotesSlider.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel6.add(LHMinNotesSlider, gridBagConstraints);
+        jPanel6.add(LHMinNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -856,22 +834,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Maximum Notes"));
         jPanel7.setToolTipText("Maximum number of notes in the hand's voicing.");
         jPanel7.setLayout(new java.awt.GridBagLayout());
-
-        LHMaxNotesSlider.setMajorTickSpacing(5);
-        LHMaxNotesSlider.setMaximum(5);
-        LHMaxNotesSlider.setMinorTickSpacing(1);
-        LHMaxNotesSlider.setPaintLabels(true);
-        LHMaxNotesSlider.setPaintTicks(true);
-        LHMaxNotesSlider.setSnapToTicks(true);
-        LHMaxNotesSlider.setMinimumSize(null);
-        LHMaxNotesSlider.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel7.add(LHMaxNotesSlider, gridBagConstraints);
+        jPanel7.add(LHMaxNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -882,6 +845,9 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel4.add(jPanel7, gridBagConstraints);
+
+        LHRangeButton.setText("Choose Range");
+        jPanel4.add(LHRangeButton, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -900,31 +866,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel9.setToolTipText("Absolute Upper note limits for voicings in a hand.");
         jPanel9.setLayout(new java.awt.GridBagLayout());
 
-        RHULSlider.setMajorTickSpacing(12);
-        RHULSlider.setMaximum(108);
-        RHULSlider.setMinimum(21);
-        RHULSlider.setMinorTickSpacing(1);
-        RHULSlider.setPaintTicks(true);
-        RHULSlider.setSnapToTicks(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel9.add(RHULSlider, gridBagConstraints);
-
         RHULNote.setText("A#1");
         RHULNote.setMinimumSize(null);
         RHULNote.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel9.add(RHULNote, gridBagConstraints);
+        jPanel9.add(RHULNote, new java.awt.GridBagConstraints());
+        jPanel9.add(RHULSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -940,31 +886,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel10.setToolTipText("Absolute Lower note limits for voicings in a hand.");
         jPanel10.setLayout(new java.awt.GridBagLayout());
 
-        RHLLSlider.setMajorTickSpacing(12);
-        RHLLSlider.setMaximum(108);
-        RHLLSlider.setMinimum(21);
-        RHLLSlider.setMinorTickSpacing(1);
-        RHLLSlider.setPaintTicks(true);
-        RHLLSlider.setSnapToTicks(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel10.add(RHLLSlider, gridBagConstraints);
-
         RHLLNote.setText("A#1");
         RHLLNote.setMinimumSize(null);
         RHLLNote.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel10.add(RHLLNote, gridBagConstraints);
+        jPanel10.add(RHLLNote, new java.awt.GridBagConstraints());
+        jPanel10.add(RHLLSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -979,23 +905,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Stretch Limit (Semitones)"));
         jPanel11.setToolTipText("The distance between the lowest and highest note for one voicing in a hand.");
         jPanel11.setLayout(new java.awt.GridBagLayout());
-
-        RHStretchSlider.setMajorTickSpacing(5);
-        RHStretchSlider.setMaximum(19);
-        RHStretchSlider.setMinimum(7);
-        RHStretchSlider.setMinorTickSpacing(1);
-        RHStretchSlider.setPaintLabels(true);
-        RHStretchSlider.setPaintTicks(true);
-        RHStretchSlider.setSnapToTicks(true);
-        RHStretchSlider.setMinimumSize(null);
-        RHStretchSlider.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel11.add(RHStretchSlider, gridBagConstraints);
+        jPanel11.add(RHStretchSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1010,22 +920,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Notes"));
         jPanel12.setToolTipText("Minimum number of notes in the hand's voicing.");
         jPanel12.setLayout(new java.awt.GridBagLayout());
-
-        RHMinNotesSlider.setMajorTickSpacing(5);
-        RHMinNotesSlider.setMaximum(5);
-        RHMinNotesSlider.setMinorTickSpacing(1);
-        RHMinNotesSlider.setPaintLabels(true);
-        RHMinNotesSlider.setPaintTicks(true);
-        RHMinNotesSlider.setSnapToTicks(true);
-        RHMinNotesSlider.setMinimumSize(null);
-        RHMinNotesSlider.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel12.add(RHMinNotesSlider, gridBagConstraints);
+        jPanel12.add(RHMinNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1040,22 +935,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Maximum Notes"));
         jPanel13.setToolTipText("Maximum number of notes in the hand's voicing.");
         jPanel13.setLayout(new java.awt.GridBagLayout());
-
-        RHMaxNotesSlider.setMajorTickSpacing(5);
-        RHMaxNotesSlider.setMaximum(5);
-        RHMaxNotesSlider.setMinorTickSpacing(1);
-        RHMaxNotesSlider.setPaintLabels(true);
-        RHMaxNotesSlider.setPaintTicks(true);
-        RHMaxNotesSlider.setSnapToTicks(true);
-        RHMaxNotesSlider.setMinimumSize(null);
-        RHMaxNotesSlider.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanel13.add(RHMaxNotesSlider, gridBagConstraints);
+        jPanel13.add(RHMaxNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1066,6 +946,9 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel8.add(jPanel13, gridBagConstraints);
+
+        RHRangeButton.setText("Choose Range");
+        jPanel8.add(RHRangeButton, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -1237,7 +1120,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel14.add(jPanel19, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1451,7 +1334,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel20.add(jPanel27, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1527,6 +1410,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel28.add(voiceAllNotes);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         getContentPane().add(jPanel28, gridBagConstraints);
 
@@ -1572,6 +1456,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1588,24 +1474,26 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JSlider HalfStepRedSlider;
     private javax.swing.JSlider LHColorPriority;
     private javax.swing.JLabel LHLLNote;
-    private javax.swing.JSlider LHLLSlider;
-    private javax.swing.JSlider LHMaxNotesSlider;
-    private javax.swing.JSlider LHMinNotesSlider;
-    private javax.swing.JSlider LHStretchSlider;
+    private javax.swing.JSpinner LHLLSpinner;
+    private javax.swing.JSpinner LHMaxNotesSpinner;
+    private javax.swing.JSpinner LHMinNotesSpinner;
+    private javax.swing.JButton LHRangeButton;
+    private javax.swing.JSpinner LHStretchSpinner;
     private javax.swing.JLabel LHULNote;
-    private javax.swing.JSlider LHULSlider;
+    private javax.swing.JSpinner LHULSpinner;
     private javax.swing.JSlider PrefMotionDirSlider;
     private javax.swing.JSlider PrefMotionDistSlider;
     private javax.swing.JSlider PrevChordPrioritySlider;
     private javax.swing.JSlider ProbSameNoteTwoOctavesSlider;
     private javax.swing.JSlider RHColorPriority;
     private javax.swing.JLabel RHLLNote;
-    private javax.swing.JSlider RHLLSlider;
-    private javax.swing.JSlider RHMaxNotesSlider;
-    private javax.swing.JSlider RHMinNotesSlider;
-    private javax.swing.JSlider RHStretchSlider;
+    private javax.swing.JSpinner RHLLSpinner;
+    private javax.swing.JSpinner RHMaxNotesSpinner;
+    private javax.swing.JSpinner RHMinNotesSpinner;
+    private javax.swing.JButton RHRangeButton;
+    private javax.swing.JSpinner RHStretchSpinner;
     private javax.swing.JLabel RHULNote;
-    private javax.swing.JSlider RHULSlider;
+    private javax.swing.JSpinner RHULSpinner;
     private javax.swing.JSlider WholeStepAwaySlider;
     private javax.swing.JSlider WholeStepRedSlider;
     private javax.swing.JButton closeB;

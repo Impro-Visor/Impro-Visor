@@ -133,10 +133,16 @@ public class ResponseGenerator {
         //System.out.println(limits[0]+"\t"+limits[1]);
 
         ChordPart rhythmicChords = rhythmicChords();
-        Note lastNote = response.getLastNote();
-        Chord firstChord = rhythmicChords.getChord(0);
-        NoteChordPair ncp = new NoteChordPair(lastNote, firstChord);
-        String startDegree = ncp.getRelativePitch();
+        String startDegree;
+        if(response.getFirstNote()!=null){
+            Note lastNote = response.getLastNote();
+            Chord firstChord = rhythmicChords.getChord(0);
+            NoteChordPair ncp = new NoteChordPair(lastNote, firstChord);
+            startDegree = ncp.getRelativePitch();
+        }else{
+            startDegree = "3";
+        }
+        
         //                                                  chords direction / deg1 deg2 altern / low high / maxdur mix allowColor / alwaysDisallowSame
         //one line starting on three no preferred direction allow color tones. Use range limits of user solo.
         
@@ -198,6 +204,9 @@ public class ResponseGenerator {
      * @return 
      */
     public int direction(){
+        if(response.getFirstNote()==null){
+            return GuideLineGenerator.NOPREFERENCE;
+        }
         int first = response.getFirstNote().getPitch();
         int last = response.getLastNote().getPitch();
         int diff = last-first;
@@ -367,6 +376,34 @@ public class ResponseGenerator {
             rhythmicGuideLine(false);
         }else if(tradeMode.equals("Contour Test")){
             rhythmicGuideLine(true);
+            
+//            //learn from the rest of the choruses
+//            int [][] counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
+//            for(int [] row : counts){
+//                for(int c = 0; c < row.length; c++){
+//                    row[c] = 0;
+//                }
+//            }
+//            //don't include current melodyPart
+//            for(int i = 1; i < notate.getScore().size(); ++i){
+//                MelodyPart learnFromThis = notate.getMelodyPart(notate.getStaveAtTab(i));
+//                IntervalLearner learner = new IntervalLearner(learnFromThis);
+//                int [][] specificCounts = learner.counts();
+//                for(int row = 0; row < counts.length; row++){
+//                    for(int c = 0; c < counts[row].length; c++){
+//                        counts[row][c] += specificCounts[row][c];
+//                    }
+//                }
+//            }
+//            double [] [] probabilities = IntervalLearner.probabilities(counts);
+//            
+//            //RhythmGenerator rgen = new RhythmGenerator(response.size());
+//            //MelodyPart rhythm = rgen.rhythm(Constants.EIGHTH);
+//            int []range = new int[2];
+//            range[0] = Constants.C4; range[1] = Constants.C5;
+//            //use the response as the rhythm
+//            MelodyGenerator mgen = new MelodyGenerator(probabilities, response, responseChords, range);
+//            response = mgen.melody();
         }
         else {
             //System.out.println("did nothing");

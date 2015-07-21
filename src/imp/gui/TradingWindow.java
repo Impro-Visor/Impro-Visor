@@ -20,6 +20,7 @@
  */
 package imp.gui;
 
+import static imp.Constants.BEAT;
 import static imp.Constants.C4;
 import imp.ImproVisor;
 import imp.com.PlayPartCommand;
@@ -36,6 +37,7 @@ import imp.data.Score;
 import imp.gui.Notate;
 import imp.lickgen.transformations.Transform;
 import imp.util.GrammarFilter;
+import imp.util.MidiManager;
 import imp.util.MidiPlayListener;
 import imp.util.TransformFilter;
 import java.awt.event.ActionEvent;
@@ -112,6 +114,7 @@ public class TradingWindow
     private String tradeMode;
     private Transform transform;
     private PlayScoreCommand playCommand;
+    private static MidiManager midiManager;
 
     //magic values
     private int endLimitIndex = -1;
@@ -146,25 +149,28 @@ public class TradingWindow
         //defaults on open
         tradeMode = (String) tradeModeSelector.getSelectedItem();
         firstPlay = true;
+        isTrading = false;
         measures = DEFAULT_TRADE_LENGTH;
         isUserLeading = true;
+        slotsForProcessing = BEAT / 2;
+        midiManager = notate.getMidiManager();
+        midiSynth = new MidiSynth(midiManager);
     }
 
 
     /**
-     * **no longer used, delay is now set automatically.**
      * Method converts a delay given in a factor of beats to delay in slots,
-     * then this delay is saved into the instance variable 'slotDelay'
-     * @param beatDelay delay (given in a factor of a beat) that is
-     *                  incurred by calling the playScoreCommand
+     * @param beatDelay
      */
-    private void setSlotDelay(double beatDelay) {
-        double doubleSlotsPerMeasure = (double) tradeScore.getSlotsPerMeasure();
-        double beatsPerMeasure = (double) tradeScore.getBeatsPerMeasure();
-        double slotsPerBeat = doubleSlotsPerMeasure / beatsPerMeasure;
-
-        long newDelay = Math.round(slotsPerBeat * beatDelay);
-        slotDelay = newDelay;
+    private int beatsToSlots(float beatDelay) {
+        int newDelay = Math.round(BEAT * beatDelay);
+        return newDelay;
+        //System.out.println(slotDelay);
+    }
+    
+    private double slotsToBeats(double slots) {
+        double newDelay = slots/ BEAT;
+        return newDelay;
         //System.out.println(slotDelay);
     }
 
@@ -289,10 +295,9 @@ public class TradingWindow
         transform = new Transform(file);
         
         setIsUserLeading(userFirstButton.isSelected());
-        slotsForProcessing = 240; // TODO, make editable
         startTradingButton.setText("StopTrading");
         isTrading = true;
-        midiSynth = new MidiSynth(notate.getMidiManager());
+        midiSynth = new MidiSynth(midiManager);
         scoreLength = notate.getScoreLength();
         slotsPerMeasure = notate.getScore().getSlotsPerMeasure();
         metre = notate.getScore().getMetre();
@@ -303,6 +308,9 @@ public class TradingWindow
         initDelay();
         //TODO Generate solo if computer goes first
         //make sure to mute chords
+        
+        
+        
         notate.playScore();
         
         if (isUserLeading) {
@@ -325,7 +333,7 @@ public class TradingWindow
         Score soloScore = new Score();
         soloScore.addPart(testSolo);
         
-        MidiSynth testMidiSynth = new MidiSynth(notate.getMidiManager());
+        MidiSynth testMidiSynth = new MidiSynth(midiManager);
         
         testMidiSynth.setMasterVolume(zero);
         
@@ -418,12 +426,15 @@ public class TradingWindow
      * Stops interactive trading
      */
     public void stopTrading() {
-        startTradingButton.setText("StartTrading");
         //System.out.println("hi");
-        isTrading = false;
-        notate.stopRecording();
-        notate.stopPlaying("stop trading");
-        notate.getMidiRecorder().setDestination(null);
+        if (isTrading) {
+            startTradingButton.setText("StartTrading");
+            notate.stopRecording();
+            notate.stopPlaying("stop trading");
+            midiSynth.stop("stop trading");
+            notate.getMidiRecorder().setDestination(null);
+            isTrading = false;
+        }
     }
 
     
@@ -464,6 +475,32 @@ public class TradingWindow
         //System.out.println("USER FIRST: " + isUserLeading);
     }
     
+    public void updateProcessTime(float beats){
+        String lengthString = (String) tradeLenthSelector.getSelectedItem();
+        int length = Integer.parseInt(lengthString);
+        int maxLength = (((notate.getBeatsPerMeasure() * length) * BEAT) / 2);
+        int slotLength = beatsToSlots(beats);
+        //System.out.println("Slot length: " + slotLength);
+        if (slotLength > maxLength){
+            slotsForProcessing = maxLength;
+        } else if (slotLength <= 0){
+            slotsForProcessing = 1;
+        } else {
+            slotsForProcessing = slotLength;
+        }
+        //System.out.println("Slot delay now: " + slotsForProcessing);
+    }
+    
+    public void updateProcessTimeText(){
+        if (slotsForProcessing == 1){
+            ProcessTimeSelector.setText("0.0");
+        }
+        else { 
+            Double newBeatVal = slotsToBeats(slotsForProcessing);
+            ProcessTimeSelector.setText(newBeatVal.toString());
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -486,13 +523,13 @@ public class TradingWindow
         jSeparator1 = new javax.swing.JSeparator();
         musicianChooser = new javax.swing.JComboBox();
         musicianLabel = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        ProcessTimeSelector = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(500, 200));
-        setPreferredSize(new java.awt.Dimension(500, 200));
+        setPreferredSize(new java.awt.Dimension(600, 200));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -600,19 +637,30 @@ public class TradingWindow
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         getContentPane().add(musicianLabel, gridBagConstraints);
 
-        jTextField1.setText("jTextField1");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        ProcessTimeSelector.setText("0.5");
+        ProcessTimeSelector.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                ProcessTimeSelectorCaretUpdate(evt);
+            }
+        });
+        ProcessTimeSelector.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ProcessTimeSelectorFocusLost(evt);
+            }
+        });
+        ProcessTimeSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                ProcessTimeSelectorActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        getContentPane().add(jTextField1, gridBagConstraints);
+        getContentPane().add(ProcessTimeSelector, gridBagConstraints);
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Time for Processing (in Beats) ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -655,7 +703,8 @@ public class TradingWindow
     
     
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        //
+        if (isTrading) stopTrading();
+        notate.destroyTradingWindow();
     }//GEN-LAST:event_formWindowClosed
 
     private void startTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradingButtonActionPerformed
@@ -681,16 +730,38 @@ public class TradingWindow
 
     private void tradeLenthSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeLenthSelectorActionPerformed
         changeTradeLength((String) tradeLenthSelector.getSelectedItem());
+        updateProcessTime(tryFloat(ProcessTimeSelector.getText()));
+        updateProcessTimeText();
     }//GEN-LAST:event_tradeLenthSelectorActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void ProcessTimeSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcessTimeSelectorActionPerformed
+        updateProcessTimeText();
+    }//GEN-LAST:event_ProcessTimeSelectorActionPerformed
+
+    private void ProcessTimeSelectorCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_ProcessTimeSelectorCaretUpdate
+        updateProcessTime(tryFloat(ProcessTimeSelector.getText()));
+    }//GEN-LAST:event_ProcessTimeSelectorCaretUpdate
+
+    private void ProcessTimeSelectorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ProcessTimeSelectorFocusLost
+        updateProcessTimeText();
+    }//GEN-LAST:event_ProcessTimeSelectorFocusLost
 
     private double tryDouble(String number) {
         double newNumber;
         try {
             newNumber = Double.parseDouble(number);
+            isUserInputError = false;
+        } catch (Exception e) {
+            isUserInputError = true;
+            newNumber = 0;
+        }
+        return newNumber;
+    }
+    
+    private float tryFloat(String number) {
+        float newNumber;
+        try {
+            newNumber = Float.parseFloat(number);
             isUserInputError = false;
         } catch (Exception e) {
             isUserInputError = true;
@@ -736,12 +807,12 @@ public class TradingWindow
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ProcessTimeSelector;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.ButtonGroup leadingSelector;
     private javax.swing.JComboBox musicianChooser;
     private javax.swing.JLabel musicianLabel;

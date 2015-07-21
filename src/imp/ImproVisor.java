@@ -555,6 +555,7 @@ public static void establishUserDirectory(File homeDir)
       copyDir(Directories.styleDirName,        homeDir);
       copyDir(Directories.styleExtractDirName, homeDir);
       copyDir(Directories.midiDirName,         homeDir);
+      copyDir(Directories.voicingDirName,      homeDir);
       }
     else
       {
@@ -622,7 +623,10 @@ public static File getStyleDirectory()
   {
    return new File(getUserDirectory(), Directories.styleDirName);
   }
-
+public static File getVoicingDirectory()
+{
+    return new File(getUserDirectory(), Directories.voicingDirName);
+}
 public static File getStyleExtractDirectory()
   {
   return new File(getUserDirectory(), Directories.styleExtractDirName);
