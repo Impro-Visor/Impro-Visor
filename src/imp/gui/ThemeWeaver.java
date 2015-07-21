@@ -315,7 +315,6 @@ public void setTableColumnWidths()
         setProbToZeroButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        customizeSoloButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         rangeChooserButton = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
@@ -2038,22 +2037,6 @@ public void setTableColumnWidths()
         gridBagConstraints.gridy = 1;
         jPanel1.add(jLabel11, gridBagConstraints);
 
-        customizeSoloButton.setText("Customize Solo");
-        customizeSoloButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customizeSoloButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
-        jPanel1.add(customizeSoloButton, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 13;
@@ -3106,7 +3089,8 @@ private void closeWindow()
         setAllProbTo(Double.parseDouble(setAllProbTextField.getText()));
     }//GEN-LAST:event_setAllProbButtonActionPerformed
 
-    private void customizeSoloButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customizeSoloButtonActionPerformed
+    public void openCustomizeSoloWindow()
+    {
         customizeSolo.setVisible(true);
         transposeUpRadioButton.setSelected(true);
         directionOfTransposition = "up";
@@ -3121,8 +3105,8 @@ private void closeWindow()
         shiftForwardRadioButton.setSelected(true);
         directionOfShift = "forwards";
         eighthShiftRadioButton.setSelected(true);
-    }//GEN-LAST:event_customizeSoloButtonActionPerformed
-
+    }
+    
     private void customizeSolowindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_customizeSolowindowClosed
         // TODO add your handling code here:
     }//GEN-LAST:event_customizeSolowindowClosed
@@ -3171,7 +3155,8 @@ private void closeWindow()
         expandButtonPressed = false;
         sideslipButtonPressed = false;
         barlineshiftButtonPressed = false;
-
+        
+        chosenCustomTheme = chosenCustomThemeOriginal.copy();
         transformationsUsedTextArea.setText(null);
     }
     private void barlineshiftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barlineshiftButtonActionPerformed
@@ -4881,7 +4866,7 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
         else
         {
             //doesn't use a theme, use grammar
-            themeUsageTextArea.append("Bar " + bar + ": Used grammar\n");
+            themeUsageTextArea.append("Bar " + bar + ": Generated Solo\n");
             //set size of solo to the existing length of the solo plus the length of the theme
             newMelody = generateFromGrammar(themeIntervalUseIncrement, solo, i); 
             increaseIncrement += themeIntervalUseIncrement;
@@ -5027,8 +5012,7 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
                 for (int i=0; i<nextIndices.size(); i++)
                 {
                     if (div1 <= Math.abs(difference))
-                    {//move note by moveBy
-                        
+                    {//move note by moveBy 
                         next.getNote(nextIndices.get(i)).shiftPitch(nextMoveBy, notate.getScore().getKeySignature());
                         
                         next.setNote(nextIndices.get(i), next.getNote(nextIndices.get(i)));
@@ -5853,7 +5837,6 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.JButton currentSelectionJButton;
     private javax.swing.JFrame customizeSolo;
-    private javax.swing.JButton customizeSoloButton;
     private javax.swing.JButton deleteRowbutton;
     private javax.swing.JDialog deleteThemeDialog;
     private javax.swing.JButton deleteThemebutton;
