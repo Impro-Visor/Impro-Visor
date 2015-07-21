@@ -194,6 +194,9 @@ public class StyleEditor
 
   private String currentCellText = null;
   
+  private int range[] = new int[2];
+  private int range2[] = new int[2];
+  
   ExtractionEditor allExtraction = null;
   
   /* The colors associated with each instrument */
@@ -270,11 +273,11 @@ public class StyleEditor
     initComponents();
     
     // Set combo boxes to avoid scrolling small number of items
-    bassLowNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
-    bassHighNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
-    bassBaseNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
-    chordLowNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
-    chordHighNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
+//    bassLowNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
+//    bassHighNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
+//    bassBaseNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
+//    chordLowNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
+//    chordHighNote.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
     chordPitchComboBox.setMaximumRowCount(NOTE_COMBO_ITEMS_TO_DISPLAY);
     chordTypeComboBox.setMaximumRowCount(CHORD_ITEMS_TO_DISPLAY);
     
@@ -1124,82 +1127,104 @@ public void updateAllDrumPatterns(String name, String rules)
   public String getAttributes()
     {
     String attributes = "";
-    String octaveBH = (String)bassHighOctave.getValue();
-    octaveBH = octaveBH.replaceAll(" -", "-");
-    if( octaveBH.equals(MIDDLE_OCTAVE) )
-      {
-      attributes += "\t(bass-high " + bassHighNote.getSelectedItem() + ")\n";
-      }
-    else
-      {
-      attributes +=
-              "\t(bass-high " + bassHighNote.getSelectedItem() + octaveBH + ")\n";
-      }
-
-    String octaveBL = (String)bassLowOctave.getValue();
-    octaveBL = octaveBL.replaceAll(" -", "-");
-    if( octaveBL.equals(MIDDLE_OCTAVE) )
-      {
-      attributes += "\t(bass-low " + bassLowNote.getSelectedItem() + ")\n";
-      }
-    else
-      {
-      attributes +=
-              "\t(bass-low " + bassLowNote.getSelectedItem() + octaveBL + ")\n";
-      }
-
-    String octaveBB = (String)bassBaseOctave.getValue();
-    octaveBB = octaveBB.replaceAll(" -", "-");
-    if( octaveBB.equals(MIDDLE_OCTAVE) )
-      {
-      attributes += "\t(bass-base " + bassBaseNote.getSelectedItem() + ")\n";
-      }
-    else
-      {
-      attributes +=
-              "\t(bass-base " + bassBaseNote.getSelectedItem() + octaveBB + ")\n";
-      }
+    
+    Note bassHigh = new Note(range2[1]); 
+    Note bassLow = new Note(range2[0]); 
+    Note bassBase = new Note((range2[1]+range2[0])/2);
+    
+    NoteSymbol bassHighNS = NoteSymbol.makeNoteSymbol(bassHigh); 
+    NoteSymbol bassLowNS = NoteSymbol.makeNoteSymbol(bassLow);
+    NoteSymbol bassBaseNS = NoteSymbol.makeNoteSymbol(bassBase);
+    
+    String bassHighNoteString = bassHighNS.toString(); 
+    String bassLowNoteString = bassLowNS.toString();
+    String bassBaseNoteString = bassBaseNS.toString();
+    
+    bassHighNoteString = bassHighNoteString.substring(0,bassHighNoteString.length()-1);
+    bassLowNoteString = bassLowNoteString.substring(0,bassLowNoteString.length()-1);
+    bassBaseNoteString = bassBaseNoteString.substring(0,bassBaseNoteString.length()-1);
+    
+    
+    attributes += "\t(bass-high " + bassHighNoteString + ")\n";
+    attributes += "\t(bass-low " + bassLowNoteString + ")\n";
+    attributes += "\t(bass-base " + bassBaseNoteString + ")\n";
+//    
+//    String octaveBH = (String)bassHighOctave.getValue();
+//    octaveBH = octaveBH.replaceAll(" -", "-");
+//    if( octaveBH.equals(MIDDLE_OCTAVE) )
+//      {
+//      attributes += "\t(bass-high " + bassHighNote.getSelectedItem() + ")\n";
+//      }
+//    else
+//      {
+//      attributes +=
+//              "\t(bass-high " + bassHighNote.getSelectedItem() + octaveBH + ")\n";
+//      }
+//
+//    String octaveBL = (String)bassLowOctave.getValue();
+//    octaveBL = octaveBL.replaceAll(" -", "-");
+//    if( octaveBL.equals(MIDDLE_OCTAVE) )
+//      {
+//      attributes += "\t(bass-low " + bassLowNote.getSelectedItem() + ")\n";
+//      }
+//    else
+//      {
+//      attributes +=
+//              "\t(bass-low " + bassLowNote.getSelectedItem() + octaveBL + ")\n";
+//      }
+//
+//    String octaveBB = (String)bassBaseOctave.getValue();
+//    octaveBB = octaveBB.replaceAll(" -", "-");
+//    if( octaveBB.equals(MIDDLE_OCTAVE) )
+//      {
+//      attributes += "\t(bass-base " + bassBaseNote.getSelectedItem() + ")\n";
+//      }
+//    else
+//      {
+//      attributes +=
+//              "\t(bass-base " + bassBaseNote.getSelectedItem() + octaveBB + ")\n";
+//      }
 
     //error-checking: in case bassHigh lower than the bassLow.
-    if( attrOctaves.indexOf(octaveBH) < attrOctaves.indexOf(octaveBL) )
+    if( range[1] < range[0] )
       {
       MIDIBeast.addSaveError("The Bass High note must be higher than the Bass Low note.");
       }
-    //error-checking: in case bassBase is lower than bassLow.
-    if( attrOctaves.indexOf(octaveBB) < attrOctaves.indexOf(octaveBL) )
-      {
-      MIDIBeast.addSaveError("The Bass Nominal note must be higher than the Bass Low note.");
-      }
-    //error-checking: in case bassBase is higher than bassHigh.
-    if( attrOctaves.indexOf(octaveBH) < attrOctaves.indexOf(octaveBB) )
-      {
-      MIDIBeast.addSaveError("The Bass Nominal note must be lower than the Bass High note.");
-      }
-    //error-checking: in case the octave is the same but the bassHigh pitch is lower than the bassLow pitch.
-    if( attrOctaves.indexOf(octaveBH) == attrOctaves.indexOf(octaveBL) && attrPitches.indexOf(octaveBH) < attrPitches.indexOf(octaveBL) )
-      {
-      MIDIBeast.addSaveError("The Bass High note must be higher than the Bass Low note.");
-      }
-    //error-checking: in case the octave is the same but the bassBase is lower than bassLow.
-    if( attrOctaves.indexOf(octaveBB) == attrOctaves.indexOf(octaveBL) && attrPitches.indexOf(octaveBB) < attrPitches.indexOf(octaveBL) )
-      {
-      MIDIBeast.addSaveError("The Bass Nominal note must be higher than the Bass Low note.");
-      }
-    //error-checking: in case the octave is the same but the bassBase is higher than bassHigh.
-    if( attrOctaves.indexOf(octaveBB) == attrOctaves.indexOf(octaveBH) && attrPitches.indexOf(octaveBH) < attrOctaves.indexOf(octaveBB) )
-      {
-      MIDIBeast.addSaveError("The Bass Nominal note must be lower than the Base High note.");
-      }
-    //error-checking: make sure the bassHigh and the bassLow are at least an octave apart.
-    if( attrOctaves.indexOf(octaveBL) == attrOctaves.indexOf(octaveBH) && attrPitches.indexOf(octaveBL) < attrPitches.indexOf(octaveBH) )
-      {
-      MIDIBeast.addSaveError("The Bass High note and the Bass Low note must be at least an octave apart.");
-      }
-    //error-checking: make sure the bassHigh and the bassLow are at least an octave apart.
-    if( (attrOctaves.indexOf(octaveBH) - attrOctaves.indexOf(octaveBL)) == 1 && attrPitches.indexOf(octaveBH) < attrPitches.indexOf(octaveBL) )
-      {
-      MIDIBeast.addSaveError("The Bass High note and the Bass Low note must be at least an octave apart.");
-      }
+//    //error-checking: in case bassBase is lower than bassLow.
+//    if( attrOctaves.indexOf(octaveBB) < attrOctaves.indexOf(octaveBL) )
+//      {
+//      MIDIBeast.addSaveError("The Bass Nominal note must be higher than the Bass Low note.");
+//      }
+//    //error-checking: in case bassBase is higher than bassHigh.
+//    if( attrOctaves.indexOf(octaveBH) < attrOctaves.indexOf(octaveBB) )
+//      {
+//      MIDIBeast.addSaveError("The Bass Nominal note must be lower than the Bass High note.");
+//      }
+//    //error-checking: in case the octave is the same but the bassHigh pitch is lower than the bassLow pitch.
+//    if( attrOctaves.indexOf(octaveBH) == attrOctaves.indexOf(octaveBL) && attrPitches.indexOf(octaveBH) < attrPitches.indexOf(octaveBL) )
+//      {
+//      MIDIBeast.addSaveError("The Bass High note must be higher than the Bass Low note.");
+//      }
+//    //error-checking: in case the octave is the same but the bassBase is lower than bassLow.
+//    if( attrOctaves.indexOf(octaveBB) == attrOctaves.indexOf(octaveBL) && attrPitches.indexOf(octaveBB) < attrPitches.indexOf(octaveBL) )
+//      {
+//      MIDIBeast.addSaveError("The Bass Nominal note must be higher than the Bass Low note.");
+//      }
+//    //error-checking: in case the octave is the same but the bassBase is higher than bassHigh.
+//    if( attrOctaves.indexOf(octaveBB) == attrOctaves.indexOf(octaveBH) && attrPitches.indexOf(octaveBH) < attrOctaves.indexOf(octaveBB) )
+//      {
+//      MIDIBeast.addSaveError("The Bass Nominal note must be lower than the Base High note.");
+//      }
+//    //error-checking: make sure the bassHigh and the bassLow are at least an octave apart.
+//    if( attrOctaves.indexOf(octaveBL) == attrOctaves.indexOf(octaveBH) && attrPitches.indexOf(octaveBL) < attrPitches.indexOf(octaveBH) )
+//      {
+//      MIDIBeast.addSaveError("The Bass High note and the Bass Low note must be at least an octave apart.");
+//      }
+//    //error-checking: make sure the bassHigh and the bassLow are at least an octave apart.
+//    if( (attrOctaves.indexOf(octaveBH) - attrOctaves.indexOf(octaveBL)) == 1 && attrPitches.indexOf(octaveBH) < attrPitches.indexOf(octaveBL) )
+//      {
+//      MIDIBeast.addSaveError("The Bass High note and the Bass Low note must be at least an octave apart.");
+//      }
 
     String swingVal = swingTextField.getText().trim();
     double swing = Double.parseDouble(swingVal);
@@ -1228,54 +1253,69 @@ public void updateAllDrumPatterns(String name, String rules)
 
     attributes += "\t(voicing-type " + voicingType.getSelectedItem() + ")\n";
     //TODO: Correctly implement voicing type.
-
-    String octaveCH = (String)chordHighOctave.getValue();
-    octaveCH = octaveCH.replaceAll(" -", "-");
-    if( octaveCH.equals(MIDDLE_OCTAVE) )
-      {
-      attributes += "\t(chord-high " + chordHighNote.getSelectedItem() + ")\n";
-      }
-    else
-      {
-      attributes +=
-              "\t(chord-high " + chordHighNote.getSelectedItem() + octaveCH + ")\n";
-      }
-
-    String octaveCL = (String)chordLowOctave.getValue();
-    octaveCL = octaveCL.replaceAll(" -", "-");
-    if( octaveCL.equals(MIDDLE_OCTAVE) )
-      {
-      attributes += "\t(chord-low " + chordLowNote.getSelectedItem() + ")\n";
-      }
-    else
-      {
-      attributes +=
-              "\t(chord-low " + chordLowNote.getSelectedItem() + octaveCL + ")\n";
-      }
-
+    Note chordHigh = new Note(range[1]); 
+    Note chordLow = new Note(range[0]);
+    
+    NoteSymbol chordHighNS = NoteSymbol.makeNoteSymbol(chordHigh); 
+    NoteSymbol chordLowNS = NoteSymbol.makeNoteSymbol(chordLow);
+    
+    String chordHighNoteString = chordHighNS.toString(); 
+    String chordLowNoteString = chordLowNS.toString();
+    
+    chordHighNoteString = chordHighNoteString.substring(0,chordHighNoteString.length()-1);
+    chordLowNoteString = chordLowNoteString.substring(0,chordLowNoteString.length()-1);
+    
+    //System.out.println(chordHighNoteString+" "+chordLowNoteString);
+    
+    attributes += "\t(chord-high " + chordHighNoteString + ")\n";
+    attributes += "\t(chord-low " + chordLowNoteString + ")\n";
+    
+//    String octaveCH = (String)chordHighOctave.getValue();
+//    octaveCH = octaveCH.replaceAll(" -", "-");
+//    if( octaveCH.equals(MIDDLE_OCTAVE) )
+//      {
+//      attributes += "\t(chord-high " + chordHighNote.getSelectedItem() + ")\n";
+//      }
+//    else
+//      {
+//      attributes +=
+//              "\t(chord-high " + chordHighNote.getSelectedItem() + octaveCH + ")\n";
+//      }
+//
+//    String octaveCL = (String)chordLowOctave.getValue();
+//    octaveCL = octaveCL.replaceAll(" -", "-");
+//    if( octaveCL.equals(MIDDLE_OCTAVE) )
+//      {
+//      attributes += "\t(chord-low " + chordLowNote.getSelectedItem() + ")\n";
+//      }
+//    else
+//      {
+//      attributes +=
+//              "\t(chord-low " + chordLowNote.getSelectedItem() + octaveCL + ")\n";
+//      }
+//
     //error-checking: in case chordHigh lower than the chordLow.
-    if( attrOctaves.indexOf(octaveCH) < attrOctaves.indexOf(octaveCL) )
+    if( range[0] > range[1] )
       {
       MIDIBeast.addSaveError("The Chord High note must be higher than the Chord Low note.");
       }
-    //error-checking: in case the octave is the same but the chordHigh pitch is lower than the chordLow pitch.
-    if( attrOctaves.indexOf(octaveCH) == attrOctaves.indexOf(octaveCL) 
-     && attrPitches.indexOf(octaveCH) < attrPitches.indexOf(octaveCL) )
-      {
-      MIDIBeast.addSaveError("The Chord High note must be higher than the Chord Low note.");
-      }
+//    //error-checking: in case the octave is the same but the chordHigh pitch is lower than the chordLow pitch.
+//    if( attrOctaves.indexOf(octaveCH) == attrOctaves.indexOf(octaveCL) 
+//     && attrPitches.indexOf(octaveCH) < attrPitches.indexOf(octaveCL) )
+//      {
+//      MIDIBeast.addSaveError("The Chord High note must be higher than the Chord Low note.");
+//      }
     //error-checking: make sure the chordHigh and the chordLow are at least an octave apart.
-    if( attrOctaves.indexOf(octaveCL) == attrOctaves.indexOf(octaveCH) 
-     && attrPitches.indexOf(octaveCL) < attrPitches.indexOf(octaveCH) )
+    if( Math.abs(range[1]-range[0]) < 8 )
       {
       MIDIBeast.addSaveError("The Chord High note and the Chord Low note must be at least an octave apart.");
       }
-    //error-checking: make sure the chordHigh and the chordLow are at least an octave apart.
-    if( (attrOctaves.indexOf(octaveCH) - attrOctaves.indexOf(octaveCL)) == 1 
-      && attrPitches.indexOf(octaveCH) < attrPitches.indexOf(octaveCL) )
-      {
-      MIDIBeast.addSaveError("The Chord High note and the Chord Low note must be at least an octave apart.");
-      }
+//    //error-checking: make sure the chordHigh and the chordLow are at least an octave apart.
+//    if( (attrOctaves.indexOf(octaveCH) - attrOctaves.indexOf(octaveCL)) == 1 
+//      && attrPitches.indexOf(octaveCH) < attrPitches.indexOf(octaveCL) )
+//      {
+//      MIDIBeast.addSaveError("The Chord High note and the Chord Low note must be at least an octave apart.");
+//      }
 
     attributes += "\t(comments " + commentArea.getText() + ")\n";
 
@@ -1868,131 +1908,146 @@ public void updateAllDrumPatterns(String name, String rules)
   private void loadAttributes(Style style)
     {
     String infoBH = style.getBassHigh().toString();
-    if( infoBH != null )
-      {
-      String note = String.valueOf(infoBH.charAt(0));
-      int octInfo = 1;
-      if( infoBH.length() > 1 && infoBH.charAt(1) == '#' )
-        { //our combo box model does not allow flats
-        note += "#";
-        octInfo = 2;
-        }
-      bassHighNote.setSelectedItem((Object)note);
-      //takes out the 8 that appears at the end of the infoBH.
-      String octaveInfo = infoBH.substring(octInfo, infoBH.length() - 1);
-      octaveInfo = octaveInfo.toString();
-      if( octaveInfo.equals("") )
-        {
-        //if the octave is the middle, puts the default option, which is the * mark.
-        bassHighOctave.setValue(MIDDLE_OCTAVE);
-        }
-      else
-        {
-        octaveInfo = octaveInfo.replaceAll("-", "- ");
-        octaveInfo = octaveInfo.trim();
-        bassHighOctave.setValue(octaveInfo);
-        }
-      }
+    NoteSymbol bhns = NoteSymbol.makeNoteSymbol(infoBH);
+    int bhmidi = bhns.getMIDI();
+//    if( infoBH != null )
+//      {
+//      String note = String.valueOf(infoBH.charAt(0));
+//      int octInfo = 1;
+//      if( infoBH.length() > 1 && infoBH.charAt(1) == '#' )
+//        { //our combo box model does not allow flats
+//        note += "#";
+//        octInfo = 2;
+//        }
+//      bassHighNote.setSelectedItem((Object)note);
+//      //takes out the 8 that appears at the end of the infoBH.
+//      String octaveInfo = infoBH.substring(octInfo, infoBH.length() - 1);
+//      octaveInfo = octaveInfo.toString();
+//      if( octaveInfo.equals("") )
+//        {
+//        //if the octave is the middle, puts the default option, which is the * mark.
+//        bassHighOctave.setValue(MIDDLE_OCTAVE);
+//        }
+//      else
+//        {
+//        octaveInfo = octaveInfo.replaceAll("-", "- ");
+//        octaveInfo = octaveInfo.trim();
+//        bassHighOctave.setValue(octaveInfo);
+//        }
+//      }
 
     String infoBL = style.getBassLow().toString();
-    if( infoBL != null )
-      {
-      String note = String.valueOf(infoBL.charAt(0));
-      int octInfo = 1;
-      if( infoBL.length() > 1 && infoBL.charAt(1) == '#' )
-        { //our combo box model does not allow flats
-        note += "#";
-        octInfo = 2;
-        }
-      bassLowNote.setSelectedItem((Object)note);
-      String octaveInfo = infoBL.substring(octInfo, infoBL.length() - 1);
-      octaveInfo = octaveInfo.toString();
-      if( octaveInfo.equals("") )
-        {
-        bassLowOctave.setValue(MIDDLE_OCTAVE);
-        }
-      else
-        {
-        octaveInfo = octaveInfo.replaceAll("-", "- ");
-        octaveInfo = octaveInfo.trim();
-        bassLowOctave.setValue(octaveInfo);
-        }
-      }
+    NoteSymbol blns = NoteSymbol.makeNoteSymbol(infoBL);
+    int blmidi = blns.getMIDI();
+//    if( infoBL != null )
+//      {
+//      String note = String.valueOf(infoBL.charAt(0));
+//      int octInfo = 1;
+//      if( infoBL.length() > 1 && infoBL.charAt(1) == '#' )
+//        { //our combo box model does not allow flats
+//        note += "#";
+//        octInfo = 2;
+//        }
+//      bassLowNote.setSelectedItem((Object)note);
+//      String octaveInfo = infoBL.substring(octInfo, infoBL.length() - 1);
+//      octaveInfo = octaveInfo.toString();
+//      if( octaveInfo.equals("") )
+//        {
+//        bassLowOctave.setValue(MIDDLE_OCTAVE);
+//        }
+//      else
+//        {
+//        octaveInfo = octaveInfo.replaceAll("-", "- ");
+//        octaveInfo = octaveInfo.trim();
+//        bassLowOctave.setValue(octaveInfo);
+//        }
+//      }
 
-    String infoBB = style.getBassBase().toString();
-    if( infoBB != null )
-      {
-      String note = String.valueOf(infoBB.charAt(0));
-      int octInfo = 1;
-      if( infoBB.length() > 1 && infoBB.charAt(1) == '#' )
-        { //our combo box model does not allow flats
-        note += "#";
-        octInfo = 2;
-        }
-      bassBaseNote.setSelectedItem((Object)note);
-      String octaveInfo = infoBB.substring(octInfo, infoBB.length() - 1);
-      octaveInfo = octaveInfo.toString();
-      if( octaveInfo.equals("") )
-        {
-        bassBaseOctave.setValue(MIDDLE_OCTAVE);
-        }
-      else
-        {
-        octaveInfo = octaveInfo.replaceAll("-", "- ");
-        octaveInfo = octaveInfo.trim();
-        bassBaseOctave.setValue(octaveInfo);
-        }
-      }
+//    String infoBB = style.getBassBase().toString();
+//    if( infoBB != null )
+//      {
+//      String note = String.valueOf(infoBB.charAt(0));
+//      int octInfo = 1;
+//      if( infoBB.length() > 1 && infoBB.charAt(1) == '#' )
+//        { //our combo box model does not allow flats
+//        note += "#";
+//        octInfo = 2;
+//        }
+//      bassBaseNote.setSelectedItem((Object)note);
+//      String octaveInfo = infoBB.substring(octInfo, infoBB.length() - 1);
+//      octaveInfo = octaveInfo.toString();
+//      if( octaveInfo.equals("") )
+//        {
+//        bassBaseOctave.setValue(MIDDLE_OCTAVE);
+//        }
+//      else
+//        {
+//        octaveInfo = octaveInfo.replaceAll("-", "- ");
+//        octaveInfo = octaveInfo.trim();
+//        bassBaseOctave.setValue(octaveInfo);
+//        }
+//      }
+    
+    range2[0]= blmidi;
+    range2[1]= bhmidi;
 
     String infoCH = style.getChordHigh().toString();
-    if( infoCH != null )
-      {
-      String note = String.valueOf(infoCH.charAt(0));
-      int octInfo = 1;
-      if( infoCH.length() > 1 && infoCH.charAt(1) == '#' )
-        { //our combo box model does not allow flats
-        note += "#";
-        octInfo = 2;
-        }
-      chordHighNote.setSelectedItem((Object)note);
-      String octaveInfo = infoCH.substring(octInfo, infoCH.length() - 1);
-      octaveInfo = octaveInfo.toString();
-      if( octaveInfo.equals("") )
-        {
-        chordHighOctave.setValue(MIDDLE_OCTAVE);
-        }
-      else
-        {
-        octaveInfo = octaveInfo.replaceAll("-", "- ");
-        octaveInfo = octaveInfo.trim();
-        chordHighOctave.setValue(octaveInfo);
-        }
-      }
+    NoteSymbol chns = NoteSymbol.makeNoteSymbol(infoCH);
+    int chmidi = chns.getMIDI();
+//    if( infoCH != null )
+//      {
+//      String note = String.valueOf(infoCH.charAt(0));
+//      int octInfo = 1;
+//      if( infoCH.length() > 1 && infoCH.charAt(1) == '#' )
+//        { //our combo box model does not allow flats
+//        note += "#";
+//        octInfo = 2;
+//        }
+//      //chordHighNote.setSelectedItem((Object)note);
+//      
+//      String octaveInfo = infoCH.substring(octInfo, infoCH.length() - 1);
+//      octaveInfo = octaveInfo.toString();
+//      if( octaveInfo.equals("") )
+//        {
+//        chordHighOctave.setValue(MIDDLE_OCTAVE);
+//        }
+//      else
+//        {
+//        octaveInfo = octaveInfo.replaceAll("-", "- ");
+//        octaveInfo = octaveInfo.trim();
+//        chordHighOctave.setValue(octaveInfo);
+//        }
+//      }
 
     String infoCL = style.getChordLow().toString();
-    if( infoCL != null )
-      {
-      String note = String.valueOf(infoCL.charAt(0));
-      int octInfo = 1;
-      if( infoCL.length() > 1 && infoCL.charAt(1) == '#' )
-        { //our combo box model does not allow flats
-        note += "#";
-        octInfo = 2;
-        }
-      chordLowNote.setSelectedItem((Object)note);
-      String octaveInfo = infoCL.substring(octInfo, infoCL.length() - 1);
-      octaveInfo = octaveInfo.toString();
-      if( octaveInfo.equals("") )
-        {
-        chordLowOctave.setValue(MIDDLE_OCTAVE);
-        }
-      else
-        {
-        octaveInfo = octaveInfo.replaceAll("-", "- ");
-        octaveInfo = octaveInfo.trim();
-        chordLowOctave.setValue(octaveInfo);
-        }
-      }
+    NoteSymbol clns = NoteSymbol.makeNoteSymbol(infoCL);
+    int clmidi = clns.getMIDI();
+//    if( infoCL != null )
+//      {
+//      String note = String.valueOf(infoCL.charAt(0));
+//      int octInfo = 1;
+//      if( infoCL.length() > 1 && infoCL.charAt(1) == '#' )
+//        { //our combo box model does not allow flats
+//        note += "#";
+//        octInfo = 2;
+//        }
+//      chordLowNote.setSelectedItem((Object)note);
+//      String octaveInfo = infoCL.substring(octInfo, infoCL.length() - 1);
+//      octaveInfo = octaveInfo.toString();
+//      if( octaveInfo.equals("") )
+//        {
+//        chordLowOctave.setValue(MIDDLE_OCTAVE);
+//        }
+//      else
+//        {
+//        octaveInfo = octaveInfo.replaceAll("-", "- ");
+//        octaveInfo = octaveInfo.trim();
+//        chordLowOctave.setValue(octaveInfo);
+//        }
+//      }
+    
+    range[0]=clmidi;
+    range[1]=chmidi;
 
     String vType = style.getVoicingType();
     voicingType.setSelectedItem(vType);
@@ -2321,17 +2376,17 @@ public void updateAllDrumPatterns(String name, String rules)
     SpinnerListModel chordLowModel  = new SpinnerListModel(octaves);
     SpinnerListModel chordBaseModel = new SpinnerListModel(octaves);
 
-    bassHighModel.setValue("-");
-    bassHighOctave.setModel(bassHighModel);
-    bassLowModel.setValue("- -");
-    bassLowOctave.setModel(bassLowModel);
-    bassBaseModel.setValue("- -");
-    bassBaseOctave.setModel(bassBaseModel);
+//    bassHighModel.setValue("-");
+//    bassHighOctave.setModel(bassHighModel);
+//    bassLowModel.setValue("- -");
+//    bassLowOctave.setModel(bassLowModel);
+//    bassBaseModel.setValue("- -");
+//    bassBaseOctave.setModel(bassBaseModel);
 
     chordHighModel.setValue(MIDDLE_OCTAVE);
-    chordHighOctave.setModel(chordHighModel);
+//    chordHighOctave.setModel(chordHighModel);
     chordLowModel.setValue("-");
-    chordLowOctave.setModel(chordLowModel);
+//    chordLowOctave.setModel(chordLowModel);
 
     swingTextField.setText(String.valueOf(defaultSwing));
     accompanimentSwingTextField.setText(String.valueOf(defaultAccompanimentSwing));
@@ -3634,30 +3689,18 @@ public void updateAllDrumPatterns(String name, String rules)
         useLeadsheetCheckBox = new javax.swing.JCheckBox();
         globalAttrPanel = new javax.swing.JPanel();
         bassAttrPanel = new javax.swing.JPanel();
-        bassHighLabel = new javax.swing.JLabel();
-        bassLowLabel = new javax.swing.JLabel();
-        bassBaseLabel = new javax.swing.JLabel();
-        bassHighNote = new javax.swing.JComboBox();
-        bassLowNote = new javax.swing.JComboBox();
-        bassBaseNote = new javax.swing.JComboBox();
-        bassHighOctave = new javax.swing.JSpinner();
-        bassLowOctave = new javax.swing.JSpinner();
-        bassBaseOctave = new javax.swing.JSpinner();
-        bassOctaveLabel = new javax.swing.JLabel();
-        chordAttrPanel = new javax.swing.JPanel();
-        chordHighLabel = new javax.swing.JLabel();
-        chordLowLabel = new javax.swing.JLabel();
-        chordHighNote = new javax.swing.JComboBox();
-        chordLowNote = new javax.swing.JComboBox();
-        chordHighOctave = new javax.swing.JSpinner();
-        chordLowOctave = new javax.swing.JSpinner();
-        chordOctaveLabel = new javax.swing.JLabel();
-        voicingLabel = new javax.swing.JLabel();
+        BassRange = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        chordRange = new javax.swing.JButton();
         voicingType = new javax.swing.JComboBox();
-        melodySwingPanel = new javax.swing.JPanel();
+        voicingLabel = new javax.swing.JLabel();
+        BassRangeText = new javax.swing.JTextField();
+        ChordRangeText = new javax.swing.JTextField();
         swingTextField = new javax.swing.JTextField();
-        compSwingPanel1 = new javax.swing.JPanel();
         accompanimentSwingTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         chordPanel = new javax.swing.JPanel();
         muteChordToggle = new javax.swing.JToggleButton();
         chordPitchComboBox = new javax.swing.JComboBox();
@@ -4168,8 +4211,8 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.weighty = 0.4;
         getContentPane().add(importInstrumentsPanel, gridBagConstraints);
@@ -4179,238 +4222,55 @@ public void updateAllDrumPatterns(String name, String rules)
         globalAttrPanel.setPreferredSize(new java.awt.Dimension(525, 130));
         globalAttrPanel.setLayout(new java.awt.GridBagLayout());
 
-        bassAttrPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Bass Attributes"));
+        bassAttrPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Attributes"));
         bassAttrPanel.setMinimumSize(new java.awt.Dimension(250, 110));
         bassAttrPanel.setPreferredSize(new java.awt.Dimension(250, 115));
         bassAttrPanel.setLayout(new java.awt.GridBagLayout());
 
-        bassHighLabel.setFont(new java.awt.Font("Lucida Grande", 1, 11)); // NOI18N
-        bassHighLabel.setText("High:");
-        bassHighLabel.setToolTipText("The upper range for the bass part.");
-        bassHighLabel.setMaximumSize(new java.awt.Dimension(64, 14));
-        bassHighLabel.setMinimumSize(new java.awt.Dimension(64, 14));
-        bassHighLabel.setPreferredSize(new java.awt.Dimension(64, 14));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassHighLabel, gridBagConstraints);
-
-        bassLowLabel.setFont(new java.awt.Font("Lucida Grande", 1, 11)); // NOI18N
-        bassLowLabel.setText("Low:");
-        bassLowLabel.setToolTipText("The lower range for the base part.");
-        bassLowLabel.setMaximumSize(new java.awt.Dimension(61, 14));
-        bassLowLabel.setMinimumSize(new java.awt.Dimension(61, 14));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassLowLabel, gridBagConstraints);
-
-        bassBaseLabel.setFont(new java.awt.Font("Lucida Grande", 1, 11)); // NOI18N
-        bassBaseLabel.setText("Nominal:");
-        bassBaseLabel.setToolTipText("The base bass note from which to start a bass line.");
-        bassBaseLabel.setMaximumSize(new java.awt.Dimension(66, 14));
-        bassBaseLabel.setMinimumSize(new java.awt.Dimension(66, 14));
-        bassBaseLabel.setPreferredSize(new java.awt.Dimension(66, 14));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassBaseLabel, gridBagConstraints);
-        bassBaseLabel.getAccessibleContext().setAccessibleName("Bass Nominal:");
-
-        bassHighNote.setMaximumRowCount(12);
-        bassHighNote.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "b", "a#", "a", "g#", "g", "f#", "f", "e", "d#", "d", "c#", "c" }));
-        bassHighNote.setSelectedIndex(11);
-        bassHighNote.setMinimumSize(new java.awt.Dimension(70, 22));
-        bassHighNote.setPreferredSize(new java.awt.Dimension(70, 22));
-        bassHighNote.addActionListener(new java.awt.event.ActionListener() {
+        BassRange.setText("Choose Bass Range");
+        BassRange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bassHighNoteActionPerformed(evt);
+                BassRangeActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassHighNote, gridBagConstraints);
-
-        bassLowNote.setMaximumRowCount(12);
-        bassLowNote.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "b", "a#", "a", "g#", "g", "f#", "f", "e", "d#", "d", "c#", "c" }));
-        bassLowNote.setSelectedIndex(11);
-        bassLowNote.setMinimumSize(new java.awt.Dimension(70, 22));
-        bassLowNote.setPreferredSize(new java.awt.Dimension(70, 22));
-        bassLowNote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bassLowNoteActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassLowNote, gridBagConstraints);
-
-        bassBaseNote.setMaximumRowCount(12);
-        bassBaseNote.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "b", "a#", "a", "g#", "g", "f#", "f", "e", "d#", "d", "c#", "c" }));
-        bassBaseNote.setSelectedItem("g");
-        bassBaseNote.setMinimumSize(new java.awt.Dimension(70, 22));
-        bassBaseNote.setPreferredSize(new java.awt.Dimension(70, 22));
-        bassBaseNote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bassBaseNoteActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassBaseNote, gridBagConstraints);
-
-        bassHighOctave.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        bassHighOctave.setMinimumSize(new java.awt.Dimension(80, 18));
-        bassHighOctave.setPreferredSize(new java.awt.Dimension(80, 18));
-        bassHighOctave.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                bassHighOctaveStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassHighOctave, gridBagConstraints);
-
-        bassLowOctave.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        bassLowOctave.setMinimumSize(new java.awt.Dimension(80, 18));
-        bassLowOctave.setPreferredSize(new java.awt.Dimension(80, 18));
-        bassLowOctave.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                bassLowOctaveStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassLowOctave, gridBagConstraints);
-
-        bassBaseOctave.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        bassBaseOctave.setMinimumSize(new java.awt.Dimension(80, 18));
-        bassBaseOctave.setPreferredSize(new java.awt.Dimension(80, 18));
-        bassBaseOctave.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                bassBaseOctaveStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassBaseOctave, gridBagConstraints);
-
-        bassOctaveLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        bassOctaveLabel.setText("Octave:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33;
-        gridBagConstraints.weighty = 0.25;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(bassOctaveLabel, gridBagConstraints);
+        bassAttrPanel.add(BassRange, gridBagConstraints);
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setText("Bass Attributes");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        globalAttrPanel.add(bassAttrPanel, gridBagConstraints);
+        bassAttrPanel.add(jLabel2, gridBagConstraints);
 
-        chordAttrPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Chord Attributes"));
-        chordAttrPanel.setMinimumSize(new java.awt.Dimension(250, 110));
-        chordAttrPanel.setPreferredSize(new java.awt.Dimension(250, 115));
-        chordAttrPanel.setLayout(new java.awt.GridBagLayout());
-
-        chordHighLabel.setFont(new java.awt.Font("Lucida Grande", 1, 11)); // NOI18N
-        chordHighLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        chordHighLabel.setText("High:");
-        chordHighLabel.setToolTipText("The upper range for the chord part.");
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("Chord Attributes");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.25;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(chordHighLabel, gridBagConstraints);
+        bassAttrPanel.add(jLabel3, gridBagConstraints);
 
-        chordLowLabel.setFont(new java.awt.Font("Lucida Grande", 1, 11)); // NOI18N
-        chordLowLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        chordLowLabel.setText("Low:");
-        chordLowLabel.setToolTipText("The lower range for the chord part.");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(chordLowLabel, gridBagConstraints);
-
-        chordHighNote.setMaximumRowCount(12);
-        chordHighNote.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "b", "a#", "a", "g#", "g", "f#", "f", "e", "d#", "d", "c#", "c" }));
-        chordHighNote.setSelectedIndex(11);
-        chordHighNote.setMinimumSize(new java.awt.Dimension(70, 22));
-        chordHighNote.setPreferredSize(new java.awt.Dimension(70, 22));
-        chordHighNote.addActionListener(new java.awt.event.ActionListener() {
+        chordRange.setText("Choose Chord Range");
+        chordRange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chordHighNoteActionPerformed(evt);
+                chordRangeActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4418,92 +4278,10 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.25;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(chordHighNote, gridBagConstraints);
-
-        chordLowNote.setMaximumRowCount(12);
-        chordLowNote.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "b", "a#", "a", "g#", "g", "f#", "f", "e", "d#", "d", "c#", "c" }));
-        chordLowNote.setSelectedIndex(11);
-        chordLowNote.setMinimumSize(new java.awt.Dimension(52, 22));
-        chordLowNote.setPreferredSize(new java.awt.Dimension(56, 22));
-        chordLowNote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chordLowNoteActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(chordLowNote, gridBagConstraints);
-
-        chordHighOctave.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        chordHighOctave.setMinimumSize(new java.awt.Dimension(80, 18));
-        chordHighOctave.setPreferredSize(new java.awt.Dimension(80, 18));
-        chordHighOctave.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                chordHighOctaveStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(chordHighOctave, gridBagConstraints);
-
-        chordLowOctave.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        chordLowOctave.setMinimumSize(new java.awt.Dimension(80, 18));
-        chordLowOctave.setPreferredSize(new java.awt.Dimension(80, 18));
-        chordLowOctave.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                chordLowOctaveStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(chordLowOctave, gridBagConstraints);
-
-        chordOctaveLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        chordOctaveLabel.setText("Octave:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(chordOctaveLabel, gridBagConstraints);
-
-        voicingLabel.setFont(new java.awt.Font("Lucida Grande", 1, 11)); // NOI18N
-        voicingLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        voicingLabel.setText("Voicing Type:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(voicingLabel, gridBagConstraints);
+        bassAttrPanel.add(chordRange, gridBagConstraints);
 
         voicingType.setMaximumRowCount(10);
         voicingType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "custom", "designer", "any", "closed", "open", "quartal", "shout" }));
@@ -4515,30 +4293,55 @@ public void updateAllDrumPatterns(String name, String rules)
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        chordAttrPanel.add(voicingType, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        globalAttrPanel.add(chordAttrPanel, gridBagConstraints);
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        bassAttrPanel.add(voicingType, gridBagConstraints);
 
-        melodySwingPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Melody Swing"));
-        melodySwingPanel.setMinimumSize(new java.awt.Dimension(100, 60));
-        melodySwingPanel.setPreferredSize(new java.awt.Dimension(100, 60));
+        voicingLabel.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        voicingLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        voicingLabel.setText("Voicing Type:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        bassAttrPanel.add(voicingLabel, gridBagConstraints);
+
+        BassRangeText.setEditable(false);
+        BassRangeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        BassRangeText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BassRangeTextActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.3;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        bassAttrPanel.add(BassRangeText, gridBagConstraints);
+
+        ChordRangeText.setEditable(false);
+        ChordRangeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.3;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        bassAttrPanel.add(ChordRangeText, gridBagConstraints);
 
         swingTextField.setText("0.5");
         swingTextField.setPreferredSize(new java.awt.Dimension(50, 19));
@@ -4547,22 +4350,14 @@ public void updateAllDrumPatterns(String name, String rules)
                 swingTextFieldKeyTyped(evt);
             }
         });
-        melodySwingPanel.add(swingTextField);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        globalAttrPanel.add(melodySwingPanel, gridBagConstraints);
-
-        compSwingPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Comp Swing"));
-        compSwingPanel1.setMinimumSize(new java.awt.Dimension(100, 60));
-        compSwingPanel1.setPreferredSize(new java.awt.Dimension(100, 60));
-        compSwingPanel1.setRequestFocusEnabled(false);
+        bassAttrPanel.add(swingTextField, gridBagConstraints);
 
         accompanimentSwingTextField.setText("0.5");
         accompanimentSwingTextField.setPreferredSize(new java.awt.Dimension(50, 19));
@@ -4571,17 +4366,47 @@ public void updateAllDrumPatterns(String name, String rules)
                 accompanimentSwingTextFieldKeyTyped(evt);
             }
         });
-        compSwingPanel1.add(accompanimentSwingTextField);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
+        bassAttrPanel.add(accompanimentSwingTextField, gridBagConstraints);
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Melody Swing: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        bassAttrPanel.add(jLabel4, gridBagConstraints);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Comp Swing: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        bassAttrPanel.add(jLabel5, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        globalAttrPanel.add(compSwingPanel1, gridBagConstraints);
+        globalAttrPanel.add(bassAttrPanel, gridBagConstraints);
 
         chordPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chord played over pattern", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         chordPanel.setMaximumSize(new java.awt.Dimension(300, 60));
@@ -4599,7 +4424,6 @@ public void updateAllDrumPatterns(String name, String rules)
         muteChordToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         muteChordToggle.setMaximumSize(new java.awt.Dimension(60, 20));
         muteChordToggle.setMinimumSize(new java.awt.Dimension(60, 20));
-        muteChordToggle.setOpaque(true);
         muteChordToggle.setPreferredSize(new java.awt.Dimension(60, 20));
         muteChordToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4648,9 +4472,9 @@ public void updateAllDrumPatterns(String name, String rules)
         chordPanel.add(chordTypeComboBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.5;
@@ -4675,7 +4499,6 @@ public void updateAllDrumPatterns(String name, String rules)
         playToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         playToggle.setMaximumSize(new java.awt.Dimension(60, 20));
         playToggle.setMinimumSize(new java.awt.Dimension(60, 20));
-        playToggle.setOpaque(true);
         playToggle.setPreferredSize(new java.awt.Dimension(60, 20));
         playToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4740,9 +4563,9 @@ public void updateAllDrumPatterns(String name, String rules)
         playPanel.add(bpmLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.5;
@@ -4752,8 +4575,8 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.8;
         gridBagConstraints.weighty = 0.2;
         getContentPane().add(globalAttrPanel, gridBagConstraints);
@@ -4815,7 +4638,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -4893,7 +4716,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.4;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -4981,7 +4804,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -5047,7 +4870,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -5103,7 +4926,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -5182,14 +5005,13 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.4;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         toolbarPanel.add(remotePanel, gridBagConstraints);
 
         styleEditorStatusTF.setEditable(false);
-        styleEditorStatusTF.setBackground(new java.awt.Color(238, 238, 238));
         styleEditorStatusTF.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         styleEditorStatusTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         styleEditorStatusTF.setText("Normal");
@@ -5212,7 +5034,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -5221,8 +5043,8 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.8;
         gridBagConstraints.weighty = 0.1;
         getContentPane().add(toolbarPanel, gridBagConstraints);
@@ -5243,15 +5065,15 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 568;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 9, 13, 9);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         clipboardPanel.add(clipboardTextField, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.8;
         gridBagConstraints.weighty = 0.1;
@@ -6139,12 +5961,12 @@ public void updateAllDrumPatterns(String name, String rules)
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
         });
 
@@ -6173,12 +5995,12 @@ public void updateAllDrumPatterns(String name, String rules)
         styleMixerMenu.setMnemonic('W');
         styleMixerMenu.setText("Style Mixer");
         styleMixerMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                styleMixerMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                styleMixerMenuMenuSelected(evt);
             }
         });
 
@@ -6541,49 +6363,9 @@ public void updateAllDrumPatterns(String name, String rules)
       // Causes false indication. changedSinceLastSave = true;
     }//GEN-LAST:event_commentAreaPropertyChange
 
-    private void bassBaseOctaveStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_bassBaseOctaveStateChanged
-                    changedSinceLastSave = true;
-    }//GEN-LAST:event_bassBaseOctaveStateChanged
-
-    private void bassLowOctaveStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_bassLowOctaveStateChanged
-                    changedSinceLastSave = true;
-    }//GEN-LAST:event_bassLowOctaveStateChanged
-
-    private void bassHighOctaveStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_bassHighOctaveStateChanged
-                   changedSinceLastSave = true;
-    }//GEN-LAST:event_bassHighOctaveStateChanged
-
-    private void bassHighNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bassHighNoteActionPerformed
-                   changedSinceLastSave = true;
-    }//GEN-LAST:event_bassHighNoteActionPerformed
-
-    private void bassLowNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bassLowNoteActionPerformed
-                   changedSinceLastSave = true;
-    }//GEN-LAST:event_bassLowNoteActionPerformed
-
-    private void bassBaseNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bassBaseNoteActionPerformed
-                    changedSinceLastSave = true;
-    }//GEN-LAST:event_bassBaseNoteActionPerformed
-
-    private void chordHighNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordHighNoteActionPerformed
-                   changedSinceLastSave = true;
-    }//GEN-LAST:event_chordHighNoteActionPerformed
-
-    private void chordLowNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordLowNoteActionPerformed
-                   changedSinceLastSave = true;
-    }//GEN-LAST:event_chordLowNoteActionPerformed
-
     private void voicingTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingTypeActionPerformed
                    changedSinceLastSave = true;
     }//GEN-LAST:event_voicingTypeActionPerformed
-
-    private void chordHighOctaveStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chordHighOctaveStateChanged
-                   changedSinceLastSave = true;
-    }//GEN-LAST:event_chordHighOctaveStateChanged
-
-    private void chordLowOctaveStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chordLowOctaveStateChanged
-                    changedSinceLastSave = true;
-    }//GEN-LAST:event_chordLowOctaveStateChanged
 
     private void copyColumnButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_copyColumnButtonActionPerformed
     {//GEN-HEADEREND:event_copyColumnButtonActionPerformed
@@ -7979,6 +7761,52 @@ private void openStyleMixer()
         conPanel.setVisible(true);
     }//GEN-LAST:event_custVoicActionPerformed
 
+    private void chordRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordRangeActionPerformed
+        
+        RangeChooser rc=new RangeChooser(null, true);
+        range=rc.getRange();
+        Note chordHigh = new Note(range[1]); 
+        Note chordLow = new Note(range[0]);
+
+        NoteSymbol chordHighNS = NoteSymbol.makeNoteSymbol(chordHigh); 
+        NoteSymbol chordLowNS = NoteSymbol.makeNoteSymbol(chordLow);
+
+        String chordHighNoteString = chordHighNS.toString(); 
+        String chordLowNoteString = chordLowNS.toString();
+
+        chordHighNoteString = chordHighNoteString.substring(0,chordHighNoteString.length()-1);
+        chordLowNoteString = chordLowNoteString.substring(0,chordLowNoteString.length()-1);
+        
+        ChordRangeText.setText(chordLowNoteString+"|"+chordHighNoteString);
+        
+        
+    }//GEN-LAST:event_chordRangeActionPerformed
+
+    private void BassRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BassRangeActionPerformed
+        RangeChooser rc=new RangeChooser(null, true);
+        range2=rc.getRange();
+        Note bassHigh = new Note(range2[1]); 
+        Note bassLow = new Note(range2[0]); 
+
+        NoteSymbol bassHighNS = NoteSymbol.makeNoteSymbol(bassHigh); 
+        NoteSymbol bassLowNS = NoteSymbol.makeNoteSymbol(bassLow);
+
+        String bassHighNoteString = bassHighNS.toString(); 
+        String bassLowNoteString = bassLowNS.toString();
+
+        bassHighNoteString = bassHighNoteString.substring(0,bassHighNoteString.length()-1);
+        bassLowNoteString = bassLowNoteString.substring(0,bassLowNoteString.length()-1);
+        
+        BassRangeText.setText(bassLowNoteString+"|"+bassHighNoteString);
+    }//GEN-LAST:event_BassRangeActionPerformed
+
+    private void BassRangeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BassRangeTextActionPerformed
+        
+    }//GEN-LAST:event_BassRangeTextActionPerformed
+
+    public int[] getChordRange(){
+        return range;
+    }
     
 private void usePianoRoll()
 {
@@ -8018,19 +7846,12 @@ public void unusePianoRoll()
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BassRange;
+    private javax.swing.JTextField BassRangeText;
+    private javax.swing.JTextField ChordRangeText;
     private javax.swing.JTextField accompanimentSwingTextField;
     private javax.swing.JButton addColumnButton;
     private javax.swing.JPanel bassAttrPanel;
-    private javax.swing.JLabel bassBaseLabel;
-    private javax.swing.JComboBox bassBaseNote;
-    private javax.swing.JSpinner bassBaseOctave;
-    private javax.swing.JLabel bassHighLabel;
-    private javax.swing.JComboBox bassHighNote;
-    private javax.swing.JSpinner bassHighOctave;
-    private javax.swing.JLabel bassLowLabel;
-    private javax.swing.JComboBox bassLowNote;
-    private javax.swing.JSpinner bassLowOctave;
-    private javax.swing.JLabel bassOctaveLabel;
     private javax.swing.JScrollPane bassPane;
     private javax.swing.JList bassPatternList;
     private javax.swing.JTextArea bassText;
@@ -8041,18 +7862,11 @@ public void unusePianoRoll()
     private javax.swing.JLabel bpmLabel;
     private javax.swing.JMenuItem cascadeMI;
     private javax.swing.JPanel cellsPanel;
-    private javax.swing.JPanel chordAttrPanel;
-    private javax.swing.JLabel chordHighLabel;
-    private javax.swing.JComboBox chordHighNote;
-    private javax.swing.JSpinner chordHighOctave;
-    private javax.swing.JLabel chordLowLabel;
-    private javax.swing.JComboBox chordLowNote;
-    private javax.swing.JSpinner chordLowOctave;
-    private javax.swing.JLabel chordOctaveLabel;
     private javax.swing.JScrollPane chordPane;
     private javax.swing.JPanel chordPanel;
     private javax.swing.JList chordPatternList;
     private javax.swing.JComboBox chordPitchComboBox;
+    private javax.swing.JButton chordRange;
     private javax.swing.JTextArea chordText;
     private javax.swing.JCheckBox chordTonesCheckBox;
     private javax.swing.JComboBox chordTypeComboBox;
@@ -8069,7 +7883,6 @@ public void unusePianoRoll()
     private javax.swing.JTextArea commentArea;
     private javax.swing.JScrollPane commentScrollPane;
     private javax.swing.JPanel commentsPanel;
-    private javax.swing.JPanel compSwingPanel1;
     private javax.swing.JLabel contentLabel;
     private javax.swing.JButton copyCellsButton;
     private javax.swing.JMenuItem copyCellsMI;
@@ -8104,6 +7917,10 @@ public void unusePianoRoll()
     private javax.swing.JPanel importInstrumentsPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -8116,7 +7933,6 @@ public void unusePianoRoll()
     private javax.swing.JComboBox maxChordPatternLengthComboBox;
     private javax.swing.JComboBox maxDrumPatternLengthComboBox;
     private javax.swing.JLabel maxPatternLengthLabel;
-    private javax.swing.JPanel melodySwingPanel;
     private javax.swing.JTextArea menuList;
     private javax.swing.JTextArea menuList1;
     private javax.swing.JCheckBox mergeBassRestsCheckBox;
