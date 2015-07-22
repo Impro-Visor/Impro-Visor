@@ -553,6 +553,7 @@ public static void establishUserDirectory(File homeDir)
       copyDir(Directories.leadsheetDirName,    homeDir);
       copyDir(Directories.grammarDirName,      homeDir);
       copyDir(Directories.transformDirName,    homeDir);
+      copyDir(Directories.countsDirName,       homeDir);
       copyDir(Directories.styleDirName,        homeDir);
       copyDir(Directories.styleExtractDirName, homeDir);
       copyDir(Directories.midiDirName,         homeDir);
@@ -648,6 +649,11 @@ public static File getTransformDirectory()
   return new File(getUserDirectory(), Directories.transformDirName);
   }
 
+public static File getCountsDirectory()
+  {
+  return new File(getUserDirectory(), Directories.countsDirName);
+  }
+
 public static File getDictionaryDirectory()
   {
   return new File(getUserDirectory(), Directories.dictionaryDirName);
@@ -683,6 +689,12 @@ public static File getTransformFile()
         filename = Preferences.DVF_TRANSFORM_VAL;
     }
     return new File(getTransformDirectory(), filename); 
+  }
+
+public static File getCountsFile()
+  {
+  return new File(getCountsDirectory(), 
+          Preferences.getPreference(Preferences.DEFAULT_COUNTS_FILE)); 
   }
      
 public static File getRecentFilesFile()

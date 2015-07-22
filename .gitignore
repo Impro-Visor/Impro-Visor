@@ -1,2 +1,4 @@
 *.class
+build/
 .svn/
+nbproject/private/private.xml

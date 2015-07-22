@@ -25,6 +25,8 @@ import static imp.Constants.OCTAVE;
 import static imp.data.NoteSymbol.makeNoteSymbol;
 import java.util.ArrayList;
 import imp.lickgen.NoteConverter;
+import java.util.Random;
+import polya.Polylist;
 import polya.PolylistEnum;
 
 /**
@@ -120,6 +122,21 @@ public class GuideLineGenerator implements Constants {
     {   {0,     0,      1},         //DESCENDING
         {0,     0,      0},         //NOPREFERENCE
         {1,     0,      0}};        //ASCENDING
+    
+    public GuideLineGenerator()
+    {
+        chordPart = new ChordPart();
+        originalDirection = 1;
+        startDegree1 = "1";
+        startDegree2 = "1";
+        mix = true;
+        alternating = true;
+        lowLimit = 0;
+        highLimit = 107;
+        maxDuration = 1;
+        durationSpecified = true;
+        allowColor = true;
+    }
     
     public GuideLineGenerator(ChordPart inputChordPart, int direction, String startDegree1, String startDegree2, boolean alternating, int lowLimit, int highLimit, int maxDuration, boolean mix, boolean allowColor, boolean alwaysDisallowSame, String contour){
      this(inputChordPart, direction, startDegree1, startDegree2, alternating, lowLimit, highLimit, maxDuration, mix, allowColor);
@@ -1076,7 +1093,7 @@ public class GuideLineGenerator implements Constants {
         return getMod(pitch1) == getMod(pitch2);
     }
     
-    public static MelodyPart fractalImprovise(MelodyPart gtl, ChordPart chords)
+    public MelodyPart fractalImprovise(MelodyPart gtl, ChordPart chords)
     {
         for(int i = 0; i < 3; ++i)
         {
@@ -1086,7 +1103,7 @@ public class GuideLineGenerator implements Constants {
         return gtl;
     }
     
-    private static MelodyPart splitSolo(MelodyPart solo, ChordPart chords)
+    private MelodyPart splitSolo(MelodyPart solo, ChordPart chords)
     {
         MelodyPart newSolo = new MelodyPart();
         
@@ -1096,12 +1113,13 @@ public class GuideLineGenerator implements Constants {
             Note second = solo.getNextNote(slot);
             int nextIndex = solo.getNextIndex(slot);
             Chord firstChord = chords.getCurrentChord(slot);
-            Chord secondChord = chords.getCurrentChord(nextIndex);
+            
+            if(second == null)
+                second = first;
             
             ArrayList<Note> newNotes = splitNotes(first,
                                                   second,
-                                                  firstChord,
-                                                  secondChord);
+                                                  firstChord);
             for(Note note : newNotes){
                 newSolo.addNote(note);
             }
@@ -1110,41 +1128,93 @@ public class GuideLineGenerator implements Constants {
         return newSolo;
     }
     
-    private static ArrayList<Note> splitNotes(Note firstNote, 
+    private ArrayList<Note> splitNotes(Note firstNote, 
                                        Note secondNote,
-                                       Chord firstChord,
-                                       Chord secondChord)
+                                       Chord firstChord)
     {
         ArrayList<Note> newNotes = new ArrayList<Note>();
         
-        double randInt = 0.75;
+        Random rand = new Random();
         
-        if(randInt < 0.5){
-            newNotes.add(firstNote);
+        double randDouble = rand.nextDouble();
+        
+        if(randDouble < 0.3){
+            newNotes.add(noSplit(firstNote));
         } else {
             int subdivs = 2;
+            if(firstNote.nonRest()){
             newNotes = getDividedNotes(firstNote,
                                        secondNote,
                                        firstChord,
-                                       secondChord,
                                        subdivs);
+            }
+            else{
+                newNotes.add(firstNote);
+            }
         }
         
         return newNotes;
     }
     
-    private static ArrayList<Note> getDividedNotes(Note firstNote, 
+    private Note noSplit(Note note)
+    {
+        Random rand = new Random();
+        double randDouble = rand.nextDouble();
+        if(randDouble < 0.2){
+            return Note.makeRest(note.getRhythmValue());
+        }
+        else
+            return note;
+    }
+    
+    private ArrayList<Note> getDividedNotes(Note firstNote, 
                                             Note secondNote,
                                             Chord firstChord,
-                                            Chord secondChord,
                                             int subdivs)
     {
-        ArrayList<Note> newNotes = new ArrayList<Note>();
         int rhythmValue = firstNote.getRhythmValue();
-        Note halfNote = new Note(firstNote.getPitch(), rhythmValue/2);
-        for(int i = 0; i < subdivs; ++i){
-            newNotes.add(halfNote);
-        }
-        return newNotes;
+        if(subdivs == 2)
+            return splitNoteInTwo(firstNote, secondNote, rhythmValue);
+        else
+            return splitNoteInThree(firstNote, secondNote, rhythmValue);
     }
+    
+    private ArrayList<Note> splitNoteInTwo(Note firstNote, Note secondNote, int rhythmValue)
+    {
+        ArrayList<Note> notes = new ArrayList<Note>();
+        int firstPitch = firstNote.getPitch();
+        int secondPitch = secondNote.getPitch();
+        if(secondPitch == REST)
+            secondPitch = (firstPitch + 2);
+        
+        int avgPitch = (firstPitch + secondPitch) / 2;
+        
+        if(avgPitch == firstPitch || avgPitch == secondPitch){
+            notes.add(firstNote);
+        }
+        else{
+            notes.add(new Note(firstPitch, rhythmValue/2));
+            notes.add(new Note(avgPitch, rhythmValue/2));
+        }
+        
+        return notes;
+    }
+    
+    private ArrayList<Note> splitNoteInThree(Note firstNote, Note secondNote, int rhythmValue)
+    {
+        ArrayList<Note> notes = new ArrayList<Note>();
+        int firstPitch = firstNote.getPitch();
+        int secondPitch = secondNote.getPitch();
+        
+        int thirdPitch = firstPitch + ((secondPitch-firstPitch) / 3);
+        int fourthPitch = firstPitch + ((secondPitch-firstPitch) * (2/3));
+        
+        notes.add(new Note(firstPitch, rhythmValue/3));
+        notes.add(new Note(thirdPitch, rhythmValue/3));
+        notes.add(new Note(fourthPitch, rhythmValue/3));
+        
+        return notes;
+    }
+    
+
 }

@@ -28,6 +28,7 @@ import static imp.Constants.E5;
 import imp.ImproVisor;
 import imp.com.PasteCommand;
 import imp.com.PlayScoreCommand;
+import imp.com.RectifyPitchesCommand;
 import imp.data.Chord;
 import imp.data.ChordPart;
 import imp.data.GuideLineGenerator;
@@ -880,8 +881,19 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     }//GEN-LAST:event_rangeChooserButtonActionPerformed
 
     private void divideLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideLineActionPerformed
-        MelodyPart fractalSolo = GuideLineGenerator.fractalImprovise(guideToneLine, notate.getChordProg());
-        notate.addChorus(fractalSolo);
+        
+        GuideLineGenerator line = new GuideLineGenerator();
+        MelodyPart fractalSolo = line.fractalImprovise(guideToneLine, notate.getChordProg());
+        notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
+                                                    0,
+                                                    fractalSolo.getSize() - 1,
+                                                    notate.getChordProg(),
+                                                    false,
+                                                    false,
+                                                    true,
+                                                    true,
+                                                    true));
+        notate.addChorus(fractalSolo);      
     }//GEN-LAST:event_divideLineActionPerformed
 
     /**

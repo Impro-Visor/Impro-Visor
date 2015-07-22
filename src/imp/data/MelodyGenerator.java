@@ -28,25 +28,31 @@ public class MelodyGenerator {
     private MelodyPart rhythm;
     private ChordPart chords;
     private int [] range;
-    private boolean preRectify;
+    private String rectification;
+    private boolean merge;
 
     private static final int NO_DATA = Integer.MAX_VALUE;
     private static final boolean IN_RANGE = true;
     
-    public MelodyGenerator(double[][] probabilities, MelodyPart rhythm, ChordPart chords, int [] range, boolean preRectify) {
+    public static final String PRE = "PRE";
+    public static final String POST = "POST";
+    public static final String NONE = "NONE";
+    
+    public MelodyGenerator(double[][] probabilities, MelodyPart rhythm, ChordPart chords, int [] range, String rectification, boolean merge) {
         this.probabilities = probabilities;
         this.rhythm = rhythm;
         this.chords = chords;
         this.range = range;
-        this.preRectify = preRectify;
+        this.rectification = rectification;
+        this.merge = merge;
     }
     
-    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range, boolean preRectify){
-        this(probabilities, polylistToMelodyPart(rhythm), chords, range, preRectify);
+    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range, String rectification, boolean merge){
+        this(probabilities, polylistToMelodyPart(rhythm), chords, range, rectification, merge);
     }
     
-    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range, boolean preRectify){
-        this(probabilities, rhythm(notate), chords, range, preRectify);
+    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range, String rectification, boolean merge){
+        this(probabilities, rhythm(notate), chords, range, rectification, merge);
     }
     
     public static Polylist rhythm(Notate notate){
@@ -183,13 +189,15 @@ public class MelodyGenerator {
             //should only be true for first note
             else if(prevNote == null){
                 //System.out.println("prevNote is null or rest");
-                toAdd = new Note(rootPitch(chord), duration);
+                toAdd = randomChordOrColorTone(chord, duration);
+                //toAdd = new Note(rootPitch(chord), duration);
                 prevInterval = NO_DATA;
                 
             //should only be true for second note (we ignore rests)
             }else if(prevInterval == NO_DATA){
                 //System.out.println("prevInterval is NO_DATA");
-                toAdd = new Note(rootPitch(chord), duration);
+                toAdd = randomChordOrColorTone(chord, duration);
+                //toAdd = new Note(rootPitch(chord), duration);
                 prevInterval = toAdd.getPitch() - prevNote.getPitch();
             }
             else{
@@ -215,7 +223,7 @@ public class MelodyGenerator {
 
             
         }
-        if(!preRectify){
+        if(rectification.equals(PRE) || rectification.equals(POST)){
             //post-rectification to chord, color, and approach tones
             RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
                                 result.size()-1, chords,
@@ -223,7 +231,44 @@ public class MelodyGenerator {
                                 true, true, true);
             cmd.execute();
         }
+        //merge same notes - good idea???
+        if(merge){
+            result = mergeSameNotes(result);
+        }
         return result;
+    }
+    
+    
+    private MelodyPart mergeSameNotes(MelodyPart unmerged){
+        MelodyPart merged = new MelodyPart();
+        //int duration;
+        int duration = unmerged.getNote(0).getRhythmValue();
+        Note toAdd = unmerged.getNote(0);
+        int lastIndex = unmerged.getLastActiveSlot();
+        for(int i = 0; i + duration <= lastIndex; i += duration){
+            
+            Note curr = unmerged.getNote(i);
+            duration = curr.getRhythmValue();
+            Note next = unmerged.getNote(i + duration);
+            try{
+                if(curr.getPitch() == next.getPitch()){
+                    toAdd.setRhythmValue(toAdd.getRhythmValue() + next.getRhythmValue());
+                }else{
+                    merged.addNote(toAdd.copy());
+                    toAdd = next;
+                }
+            }catch(Exception e){
+                System.out.println("Something went wrong. Info below:");
+                System.out.println("i: "+i);
+                System.out.println("duration: "+duration);
+                System.out.println("curr: "+curr);
+                System.out.println("next: "+next);
+            }
+            
+        }
+        //add the last note
+        merged.addNote(toAdd);
+        return merged;
     }
     
     //always start melody on the root of the first chord
@@ -235,6 +280,8 @@ public class MelodyGenerator {
             return closestToMiddle(new Note(Constants.C4 + c.getRootSemitones())).getPitch();
         }
     }
+    
+    
     
         /**
      * middleOfRange
@@ -333,32 +380,41 @@ public class MelodyGenerator {
         return midi%OCTAVE;
     }
     
+    private Note randomChordOrColorTone(Chord chord, int duration){
+        if(chord.isNOCHORD()){
+            return new Note(middleOfRange(), duration);
+        }
+        ArrayList<Note> chordAndColorTones = chordAndColorTones(chord, duration);
+        int size = chordAndColorTones.size();
+        Random r = new Random();
+        int choice = r.nextInt(size);
+        Note toReturn = chordAndColorTones.get(choice);
+        return closestToMiddle(toReturn);
+    }
+    
      /**
      * chordTones
-     * Returns an ArrayList of all the chord tones of a given chord
-     * (includes color tones if allowColor is true)
+     * Returns an ArrayList of all the chord and color tones of a given chord
      * @param chord chord from which chord tones are to be extracted
      * @param duration duration that these notes are to have
      * @return ArrayList of chord tones - NOTE: default pitches used
      */
-//    private ArrayList<Note> chordTones(Chord chord, int duration){
-//        PolylistEnum noteList = chord.getSpell().elements();
-//        ArrayList<Note> chordTones = new ArrayList<Note>();
-//        while(noteList.hasMoreElements()){
-//            Note note = ((NoteSymbol)noteList.nextElement()).toNote();
-//            note.setRhythmValue(duration);
-//            chordTones.add(note);
-//        }
-//        if(allowColor){
-//            PolylistEnum colorList = chord.getColor().elements();
-//            while(colorList.hasMoreElements()){
-//                Note note = ((NoteSymbol)colorList.nextElement()).toNote();
-//                note.setRhythmValue(duration);
-//                chordTones.add(note);
-//            }
-//        }
-//        return chordTones;
-//    }
+    private static ArrayList<Note> chordAndColorTones(Chord chord, int duration){
+        PolylistEnum noteList = chord.getSpell().elements();
+        ArrayList<Note> chordAndColorTones = new ArrayList<Note>();
+        while(noteList.hasMoreElements()){
+            Note note = ((NoteSymbol)noteList.nextElement()).toNote();
+            note.setRhythmValue(duration);
+            chordAndColorTones.add(note);
+        }
+        PolylistEnum colorList = chord.getColor().elements();
+        while(colorList.hasMoreElements()){
+            Note note = ((NoteSymbol)colorList.nextElement()).toNote();
+            note.setRhythmValue(duration);
+            chordAndColorTones.add(note);
+        }
+        return chordAndColorTones;
+    }
 
     private Note bestChoice(int prevInterval, Note prevNote, int duration, Chord chord) {
         int prevPitch = prevNote.getPitch();
@@ -370,7 +426,7 @@ public class MelodyGenerator {
             double prob = probabilities[sourceIndex][destIndex];
             int pitchToAdd = prevPitch + indexToInterval(destIndex);
             int typeIndex = chord.getTypeIndex(new Note(pitchToAdd));
-            boolean correctType = preRectify ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
+            boolean correctType = rectification.equals(PRE) ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
             if(prob != 0 && inRange(pitchToAdd) && correctType){
                 pitches.add(pitchToAdd);
                 pitchProbs.add(prob);
@@ -379,7 +435,7 @@ public class MelodyGenerator {
         
         //if no pitches have nonzero probability, are in range, and are chord/color tones,
         //allow all non chord / color tones
-        if(pitchProbs.isEmpty()&&preRectify){
+        if(pitchProbs.isEmpty() && rectification.equals(PRE)){
             //System.out.println("Allow non chord/color tones");
             for(int destIndex = 0; destIndex < probabilities[sourceIndex].length; destIndex ++){
                 double prob = probabilities[sourceIndex][destIndex];

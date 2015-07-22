@@ -315,7 +315,6 @@ public void setTableColumnWidths()
         setProbToZeroButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        customizeSoloButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         rangeChooserButton = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
@@ -910,16 +909,6 @@ public void setTableColumnWidths()
         barLineShiftPreference.setLocationByPlatform(true);
         barLineShiftPreference.setMinimumSize(new java.awt.Dimension(200, 300));
         barLineShiftPreference.setSize(new java.awt.Dimension(700, 600));
-        barLineShiftPreference.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                barLineShiftPreferencewindowClosed(evt);
-            }
-        });
-        barLineShiftPreference.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                barLineShiftPreferenceformKeyPressed(evt);
-            }
-        });
         barLineShiftPreference.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         SoloGeneratorTitle2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
@@ -1971,11 +1960,6 @@ public void setTableColumnWidths()
 
         setAllProbTextField.setText("0.0");
         setAllProbTextField.setToolTipText("");
-        setAllProbTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                setAllProbTextFieldActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -2037,22 +2021,6 @@ public void setTableColumnWidths()
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         jPanel1.add(jLabel11, gridBagConstraints);
-
-        customizeSoloButton.setText("Customize Solo");
-        customizeSoloButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customizeSoloButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
-        jPanel1.add(customizeSoloButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -2879,6 +2847,7 @@ private void closeWindow()
 
         if( soloPlaying )
           {
+              System.out.println("!!!!!!!!!!!!!!$$$$$@*($&!@$(*@&*(");
             stopPlaytoggle.setText("<html><center>Play Solo</center></html>");
             stopPlaying();
           }
@@ -3079,14 +3048,6 @@ private void closeWindow()
         probSlideUp = probUpOrDown.getValue()/100;
     }//GEN-LAST:event_probUpOrDownMouseDragged
 
-    private void barLineShiftPreferencewindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_barLineShiftPreferencewindowClosed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_barLineShiftPreferencewindowClosed
-
-    private void barLineShiftPreferenceformKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barLineShiftPreferenceformKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_barLineShiftPreferenceformKeyPressed
-
     private void barLineShiftPreferencesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barLineShiftPreferencesButtonActionPerformed
         barLineShiftPreference.setVisible(true);
     }//GEN-LAST:event_barLineShiftPreferencesButtonActionPerformed
@@ -3098,15 +3059,12 @@ private void closeWindow()
         maxPitch = range[1];
     }//GEN-LAST:event_rangeChooserButtonActionPerformed
 
-    private void setAllProbTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setAllProbTextFieldActionPerformed
-        
-    }//GEN-LAST:event_setAllProbTextFieldActionPerformed
-
     private void setAllProbButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setAllProbButtonActionPerformed
         setAllProbTo(Double.parseDouble(setAllProbTextField.getText()));
     }//GEN-LAST:event_setAllProbButtonActionPerformed
 
-    private void customizeSoloButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customizeSoloButtonActionPerformed
+    public void openCustomizeSoloWindow()
+    {
         customizeSolo.setVisible(true);
         transposeUpRadioButton.setSelected(true);
         directionOfTransposition = "up";
@@ -3121,8 +3079,8 @@ private void closeWindow()
         shiftForwardRadioButton.setSelected(true);
         directionOfShift = "forwards";
         eighthShiftRadioButton.setSelected(true);
-    }//GEN-LAST:event_customizeSoloButtonActionPerformed
-
+    }
+    
     private void customizeSolowindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_customizeSolowindowClosed
         // TODO add your handling code here:
     }//GEN-LAST:event_customizeSolowindowClosed
@@ -3171,7 +3129,8 @@ private void closeWindow()
         expandButtonPressed = false;
         sideslipButtonPressed = false;
         barlineshiftButtonPressed = false;
-
+        
+        chosenCustomTheme = chosenCustomThemeOriginal.copy();
         transformationsUsedTextArea.setText(null);
     }
     private void barlineshiftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barlineshiftButtonActionPerformed
@@ -3561,7 +3520,28 @@ private void closeWindow()
                 }
                 else
                 {//add an actual melody to miniMelody and add it to the correct place in the solo
-                    miniMelody = generateFromGrammar(miniMelody.getSize(), miniMelody, startSlot);
+                    MelodyPart prevSection = customSolo.copy();
+                    prevSection = prevSection.extract(0,i);
+                    int min =minPitch;
+                    int max = maxPitch;
+                    if (prevSection.getSize()!=0)
+                    {
+                        Note lastNote = prevSection.getLastNote();
+                        int lastPitch = lastNote.getPitch();
+
+                        min=lastPitch-6;
+                        max=lastPitch+6;//the 6 is kind of arbitrary
+                    }
+                    if (min < minPitch)
+                    {
+                        min = minPitch;
+                    }
+                    if (max > maxPitch)
+                    {
+                        max = maxPitch;
+                    }
+                    
+                    miniMelody = generateFromGrammar(miniMelody.getSize(), miniMelody, startSlot, min, max);
                     System.out.println(miniMelody.toString());
                     customSolo.pasteSlots(miniMelody, startSlot);
 
@@ -4418,7 +4398,7 @@ public void generateTheme()
                 soloTable.setValueAt(BARLINESHIFT_DEFAULT_VALUE,    x, BARLINESHIFT_COLUMN);
 
                 int Length = notate.intFromStringInRange((String) getValueAt(x, LENGTH_COLUMN), 0, 100, themeLength);
-                //get length from tablek
+                //get length from table
                 themeLength = BEAT * Length;
                 Polylist rhythm = lickgen.generateRhythmFromGrammar(0, themeLength);
                 //get rhythm for theme from grammar
@@ -4881,9 +4861,27 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
         else
         {
             //doesn't use a theme, use grammar
-            themeUsageTextArea.append("Bar " + bar + ": Used grammar\n");
+            themeUsageTextArea.append("Bar " + bar + ": Generated Solo\n");
             //set size of solo to the existing length of the solo plus the length of the theme
-            newMelody = generateFromGrammar(themeIntervalUseIncrement, solo, i); 
+            int min =minPitch;
+            int max = maxPitch;
+            if (prevSection.getSize()!=0)
+            {
+                Note lastNote = prevSection.getLastNote();
+                int lastPitch = lastNote.getPitch();
+            
+                min=lastPitch-6;
+                max=lastPitch+6;//the 6 is kind of arbitrary
+            }
+            if (min < minPitch)
+            {
+                min = minPitch;
+            }
+            if (max > maxPitch)
+            {
+                max = maxPitch;
+            }
+            newMelody = generateFromGrammar(themeIntervalUseIncrement, solo, i, min, max); 
             increaseIncrement += themeIntervalUseIncrement;
         }
         
@@ -4911,19 +4909,37 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
             i = notate.getScoreLength();
             endSoloEarly = false;
         }
+        
     }
-    
+    solo.setSize(notate.getScoreLength());
     notate.setCurrentSelectionStart(0); //start selection at beginning
     //rectify pitches in entire solo
     cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false, true, false, false));
     notate.pasteMelody(solo); //paste solo into leadsheet
     imp.ImproVisor.setPlayEntrySounds(true); //play solo
+    System.out.println("*********");
 }
 
 private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
 {// makes a smoother connection between previous and next
     //System.out.println("1 "+previous.toString());
     //System.out.println("1 "+next.toString());
+    MelodyPart solo = new MelodyPart();
+    ArrayList<Note> previousNotes1 = previous.getNoteList();
+    ArrayList<Note> nextNotes1 = next.getNoteList();
+    ArrayList<Integer> prevNotesMidi1 = new ArrayList<Integer>();
+    ArrayList<Integer> nextNotesMidi1 = new ArrayList<Integer>();
+    for (int i=0; i<previousNotes1.size(); i++)
+    {
+        prevNotesMidi1.add(previousNotes1.get(i).getPitch());
+    }
+    for (int i=0; i<nextNotes1.size(); i++)
+    {
+        nextNotesMidi1.add(nextNotes1.get(i).getPitch());
+    }
+    System.out.println("prev 1"+prevNotesMidi1.toString());
+    System.out.println("next 1"+nextNotesMidi1.toString());
+    System.out.println("######");
     if (previous.getSize() != 0 && next.getSize() != 0)
     {
         Note prevNote = previous.getLastNote();
@@ -4932,7 +4948,7 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
         {//check the pitches
             int prevPitch = prevNote.getPitch();
             int nextPitch = nextNote.getPitch();
-            System.out.println(prevPitch + " "+ nextPitch);
+            //System.out.println(prevPitch + " "+ nextPitch);
             int difference = Math.abs(prevPitch - nextPitch);
             if (difference >= 4)
             {
@@ -4955,40 +4971,89 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
                 previous.setNote(getLastNoteIndex(previous), newPrev);
                 next.setNote(next.getFirstIndex(), newNext);*/
                 
-                ArrayList<Note> nextNotes = next.getNoteList();
+                
+                //make array lists of the note indices
+                ArrayList<Integer> previousIndices = new ArrayList<Integer>();
+                if (previous.getNote(previous.getFirstIndex()) != null && !previous.getNote(previous.getFirstIndex()).isRest());
+                {
+                    previousIndices.add(previous.getFirstIndex());
+                }
+                int prevInitialSize = previousIndices.size();
+                for (int i=prevInitialSize; i<previous.size(); i++)
+                {
+                    int nextIndex = previous.getNextIndex(i);
+                    if (previous.getNote(nextIndex)!= null && !previous.getNote(nextIndex).isRest())
+                    {
+                        previousIndices.add(nextIndex);
+                        i=nextIndex;
+                    }
+                }
+                ArrayList<Integer> nextIndices = new ArrayList<Integer>();
+                if (next.getNote(next.getFirstIndex()) != null && !next.getNote(next.getFirstIndex()).isRest());
+                {
+                    nextIndices.add(next.getFirstIndex());
+                }
+                int nextInitialSize = nextIndices.size();
+                for (int i=nextInitialSize; i<previous.size(); i++)
+                {
+                    int nextIndex = next.getNextIndex(i);
+                    if (next.getNote(nextIndex)!= null && !next.getNote(nextIndex).isRest())
+                    {
+                        nextIndices.add(nextIndex);
+                        i=nextIndex;
+                    }
+                }
+                
+                //System.out.println("prev indices*** " + previousIndices.toString());
+                //System.out.println("next indices*** " + nextIndices.toString());
+                
+                
                 int div1 = 4;
                 int nextMoveBy = difference/div1;
-                ArrayList<Note> prevNotes = previous.getNoteList();
                 int div2 = 4;
                 int prevMoveBy = difference/div2;
-                
                 if (prevPitch>nextPitch)
                 {
-                    prevMoveBy = -1*difference/4;
-                    nextMoveBy = difference/4;
+                    prevMoveBy = -1*difference/div2;
+                    nextMoveBy = difference/div1;
                 }
                 else
                 {
-                    prevMoveBy = difference/4;
-                    nextMoveBy = -1*difference/4;
+                    prevMoveBy = difference/div2;
+                    nextMoveBy = -1*difference/div1;
                 }
                 
-                for (int i=0; i<nextNotes.size(); i++)
+                for (int i=0; i<nextIndices.size(); i++)
                 {
-                    if (div1 < difference)
-                    {//move note by moveBy
-                        nextNotes.get(i).shiftPitch(nextMoveBy, notate.getScore().getKeySignature());
+                    if (div1 <= Math.abs(difference))
+                    {//move note by moveBy 
+                        next.getNote(nextIndices.get(i)).shiftPitch(nextMoveBy, notate.getScore().getKeySignature());
+                        
+                        next.setNote(nextIndices.get(i), next.getNote(nextIndices.get(i)));
+                        
+                        
                         div1+=2;
-                        nextMoveBy = difference/div1;
+                        nextMoveBy = difference/div1 ;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                for (int i=0; i<nextNotes.size(); i++)
+                for (int i=previousIndices.size()-1; i>=0; i--)
                 {
-                    if (div2 < difference)
+                    if (div2 <= Math.abs(difference))
                     {//move note by moveBy
-                        nextNotes.get(i).shiftPitch(prevMoveBy, notate.getScore().getKeySignature());
-                        div2+=2;
-                        prevMoveBy = difference/div2;
+                        previous.getNote(previousIndices.get(i)).shiftPitch(prevMoveBy, notate.getScore().getKeySignature());
+                        previous.setNote(previousIndices.get(i), previous.getNote(previousIndices.get(i)));
+                        
+                        
+                        div1+=2;
+                        prevMoveBy = difference/div2 ;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
                 
@@ -4996,8 +5061,22 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
         }
     }
     //System.out.println("2 "+previous.toString());
-   // System.out.println("2 "+next.toString());
-    MelodyPart solo = new MelodyPart(previous.getSize() + next.getSize());
+    //System.out.println("2 "+next.toString());
+    solo = new MelodyPart(previous.getSize() + next.getSize());
+    ArrayList<Note> previousNotes = previous.getNoteList();
+    ArrayList<Note> nextNotes = next.getNoteList();
+    ArrayList<Integer> prevNotesMidi = new ArrayList<Integer>();
+    ArrayList<Integer> nextNotesMidi = new ArrayList<Integer>();
+    for (int i=0; i<previousNotes.size(); i++)
+    {
+        prevNotesMidi.add(previousNotes.get(i).getPitch());
+    }
+    for (int i=0; i<nextNotes.size(); i++)
+    {
+        nextNotesMidi.add(nextNotes.get(i).getPitch());
+    }
+    System.out.println("prev 2"+prevNotesMidi.toString());
+    System.out.println("next 2"+nextNotesMidi.toString());
     solo.pasteSlots(previous, 0);
     solo.pasteSlots(next, previous.getSize());
     return solo;
@@ -5487,12 +5566,14 @@ private boolean transformDoubled(Object[] transforms)
     return false;
 }
 
-public MelodyPart generateFromGrammar(int themeLength, MelodyPart solo, int slotNum)
+public MelodyPart generateFromGrammar(int themeLength, MelodyPart solo, int slotNum, int minPitch, int maxPitch)
   {//generates/returns a MelodyPart using the grammar
     Polylist rhythm = lickgen.generateRhythmFromGrammar(slotNum, themeLength);
     //generate rhythm 
 
-    MelodyPart lick = fillMelody(BEAT, rhythm, notate.getChordProg(), slotNum);
+    MelodyPart lick = lickgen.fillMelody(minPitch, maxPitch, minInterval,
+                                           maxInterval, BEAT, leapProb, rhythm, 
+                                           notate.getChordProg(), slotNum, avoidRepeats);
     //create melody
     return lick;
     
@@ -5772,7 +5853,6 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.JButton currentSelectionJButton;
     private javax.swing.JFrame customizeSolo;
-    private javax.swing.JButton customizeSoloButton;
     private javax.swing.JButton deleteRowbutton;
     private javax.swing.JDialog deleteThemeDialog;
     private javax.swing.JButton deleteThemebutton;
