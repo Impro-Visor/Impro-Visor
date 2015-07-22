@@ -22,6 +22,7 @@ package imp.data;
 
 import imp.Constants;
 import imp.brickdictionary.ChordBlock;
+import static imp.data.Chord.flushChordBuffer;
 import imp.util.Preferences;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -485,6 +486,8 @@ public class Chord implements Constants, Unit, Serializable {
 
         usedTones = usedTones.prefix(LIMIT);
 
+        PolylistEnum tones = usedTones.elements();
+
         int pitch = Key.makeNote(bass.toString(), C2, 0).getPitch();
         //Trace.log(2, "\nrendering chord " + this + ", tones = " + usedTones + " transposition = " + transposition);
 
@@ -493,8 +496,7 @@ public class Chord implements Constants, Unit, Serializable {
         
         if( voicing == null )
           {
-          voicing = ChordPattern.findVoicing(symbol, style.getChordBase(), style);
-          setVoicing(voicing);
+          setVoicing(ChordPattern.findVoicing(symbol, style.getChordBase(), style));
           }
           
         if(voicing != null) {
@@ -524,14 +526,7 @@ public class Chord implements Constants, Unit, Serializable {
     
     public void setVoicing(Polylist voicing)
     {
-    if( voicing.isEmpty() && this.voicing.nonEmpty() )
-      {
-        // Not sure why this can happen. It might be due to sharing the
-        // same Chord at multiple places in the ChordPart
-        // However, it has a bad effect on voicing display.
-        // System.out.println("thwarted attempt to set voicing empty from " + this.voicing);
-        return;
-      }
+    //System.out.println("setting voicing " +  this);
 
     this.voicing = voicing;
     }

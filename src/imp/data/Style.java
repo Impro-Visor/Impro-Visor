@@ -21,6 +21,9 @@
 package imp.data;
 
 import imp.Constants;
+import static imp.Constants.BEAT;
+import static imp.Constants.ENDSCORE;
+import static imp.Constants.MAX_VOLUME;
 import imp.ImproVisor;
 import imp.com.PlayScoreCommand;
 import imp.util.Preferences;
@@ -1184,9 +1187,10 @@ private Polylist makeChordline(
             // render each NoteSymbol in the currentChord
             if( voicing instanceof Polylist )
               {
+                Polylist v = voicing;
                 Polylist filtered = filterOutVolumes(voicing);
                 currentChord.setVoicing(filtered);
-                Polylist L = voicing;
+                Polylist L = v;
                 
                 // All notes in the voicing are rendered at the same start time
                 
@@ -1201,6 +1205,7 @@ private Polylist makeChordline(
                       note = ns.toNote();
                       note.setRhythmValue(dur);
                       note.setVolume(volume);  // note of chord
+//System.out.println("rendering chord note " + note + " with volume " + volume);
                       note.render(ms, seq.getChordTrack(), time, offTime, ImproVisor.getChordChannel(), transposition);
                       }
                     else if( ob instanceof VolumeSymbol )
@@ -1210,6 +1215,8 @@ private Polylist makeChordline(
                     
                     L = L.rest();
                   }
+
+                previousChord = filtered;
               }
 
             time = offTime;
