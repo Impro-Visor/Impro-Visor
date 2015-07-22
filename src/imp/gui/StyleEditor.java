@@ -31,6 +31,7 @@ import imp.com.CommandManager;
 import imp.com.OpenLeadsheetCommand;
 import imp.data.*;
 import imp.util.*;
+import imp.voicing.AVPFileCreator;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.*;
@@ -118,6 +119,16 @@ public class StyleEditor
   boolean changedSinceLastSave = false;
   
   private boolean override;
+  
+  private String voicingFileName="default";
+
+    public String getVoicingFileName() {
+        return voicingFileName;
+    }
+
+    public void setVoicingFileName(String voicingFileName) {
+        this.voicingFileName = voicingFileName;
+    }
 
    /**
    * Standard sub-directory for styles
@@ -1252,6 +1263,7 @@ public void updateAllDrumPatterns(String name, String rules)
       }
 
     attributes += "\t(voicing-type " + voicingType.getSelectedItem() + ")\n";
+    attributes += "\t(voicing-name "+voicingFileName+")";
     //TODO: Correctly implement voicing type.
     Note chordHigh = new Note(range[1]); 
     Note chordLow = new Note(range[0]);
@@ -2054,7 +2066,7 @@ public void updateAllDrumPatterns(String name, String rules)
 
     String swingValue = String.valueOf(style.getSwing());
     swingTextField.setText(swingValue);
-
+    voicingFileName=style.getVoicingFileName();
     String accompanimentSwingValue =
             String.valueOf(style.getAccompanimentSwing());
     accompanimentSwingTextField.setText(accompanimentSwingValue);
@@ -7750,9 +7762,11 @@ private void openStyleMixer()
 
     private void custVoicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custVoicActionPerformed
         AutomaticVoicingSettings avs=ImproVisor.avs;
+        AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),this.voicingFileName), avs);
         VoicingGenerator vgen=new VoicingGenerator();
         HandManager handyMan=new HandManager();
         ControlPanelFrame conPanel=new ControlPanelFrame(avs);
+        conPanel.setStyleEditor(this);
         conPanel.setVisible(true);
     }//GEN-LAST:event_custVoicActionPerformed
 

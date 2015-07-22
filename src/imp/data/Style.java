@@ -102,7 +102,11 @@ public class Style
    * a String determining the voicing type
    */
   private String voicingType = "closed";
-
+  
+  /**
+   * The name of the voicing file to use for the style
+   */  
+  private String voicingFileName = "default";
   /**
    * a boolean that determines whether to automatically extend chords
    */
@@ -191,7 +195,7 @@ public class Style
                                        "use-extensions", "no-style",
                                        "voicing-type", "comments",
                                        "comp-swing", "define-rule", "bass",
-                                       "chord", "drum"
+                                       "chord", "drum", "voicing-file"
   };
 
   // indices into the keyword array
@@ -234,7 +238,8 @@ public class Style
   private static final int CHORD = 18;
   
   private static final int DRUM = 19;
-
+  
+  private static final int VOICING_FILE =20;
 
   public boolean usePreviousStyle()
     {
@@ -463,7 +468,21 @@ public class Style
       return drumDefinedRules;
   }
 
-
+    /**
+     * 
+     * @return voicing file name to search for in voicing directory
+     */
+    public String getVoicingFileName() {
+        return voicingFileName;
+    }
+    /**
+     * 
+     * @param voicingFileName voicing file name to search for in voicing directory
+     */
+    public void setVoicingFileName(String voicingFileName) {
+        this.voicingFileName = voicingFileName;
+    }
+    
   /**
    * Returns the noStyle parameter.
    * @return determines whether this is a "no-Style"
@@ -527,7 +546,7 @@ public class Style
   public static Style makeStyle(Polylist L)
     {
     Style style = new Style();
-
+    style.voicingFileName="default";
     while( L != null && L.nonEmpty() )
       {
 
@@ -613,6 +632,11 @@ public class Style
             case NAME:
               {
               style.name = (String)item.first();
+              break;
+              }
+            case VOICING_FILE:
+              {
+              style.voicingFileName = (String)item.first();
               break;
               }
             default:
@@ -788,6 +812,8 @@ public class Style
     out.write("    (" + keyword[CHORD_HIGH] + " " + chordHigh.toPitchString() + ")");
     out.newLine();
     out.write("    (" + keyword[CHORD_LOW] + " " + chordLow.toPitchString() + ")");
+    out.newLine();
+    out.write("    (" + keyword[VOICING_FILE] + " " + this.voicingFileName + ")");
     out.newLine();
     out.write("    " + NoteSymbol.makePitchStringList(chordBase).cons(keyword[CHORD_BASE]));
     out.newLine();

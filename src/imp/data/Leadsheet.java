@@ -41,7 +41,7 @@ public class Leadsheet
            "stave", "treble", "bass", "grand", "auto", "none", "layout",
            "bass-volume", "drum-volume", "chord-volume", "style", "section",
            "bass-instrument", "playback-transpose", "show", "year",
-           "chord-font-size", "phrase", "roadmap-layout", "roadmap"
+           "chord-font-size", "phrase", "roadmap-layout", "roadmap","voicing-file"
   };
 
   static final int TITLE = 0;
@@ -115,6 +115,8 @@ public class Leadsheet
   static final int ROADMAP_LAYOUT = 34;
 
  static final int ROADMAP = 35;
+ 
+ static final int VOICING_FILE = 36;
 
 static final int UNKNOWN = -1;
 

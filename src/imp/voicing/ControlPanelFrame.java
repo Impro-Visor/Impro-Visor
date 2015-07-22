@@ -9,6 +9,7 @@ import imp.ImproVisor;
 import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.gui.RangeChooser;
+import imp.gui.StyleEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -480,6 +481,15 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private double fullStepReducer;
     private boolean invertM9;
     private boolean voiceAll;
+    private StyleEditor styleEditor;
+
+    public StyleEditor getStyleEditor() {
+        return styleEditor;
+    }
+
+    public void setStyleEditor(StyleEditor styleEditor) {
+        this.styleEditor = styleEditor;
+    }
     private AutomaticVoicingSettings avs;
 
     public AutomaticVoicingSettings getVoicingSettings() {
