@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Vector;
+import javafx.util.Pair;
 import polya.Polylist;
 
 /**
@@ -172,6 +173,32 @@ public class ResponseGenerator {
         
         //System.out.println("User chopped: " + Arrays.toString(choppedResponse));
         //System.out.println("Computer chopped: " + Arrays.toString(choppedGrammar));
+    }
+    
+    public MelodyPart swapMelodyRhythm(){
+        MelodyPart[] choppedResponse = chopResponse();
+        MelodyPart[] choppedGrammar = chopResponse(grammarSolo, nextSection);
+        
+        Pair<MelodyPart[], MelodyPart[]> swappedAndChopped = randomSwap(choppedResponse, choppedGrammar);
+        
+        MelodyPart[] melody = swappedAndChopped.getKey();
+        MelodyPart[] rhythm = swappedAndChopped.getValue();
+                
+        return mash(melody, rhythm);
+    }
+    
+    public Pair<MelodyPart[], MelodyPart[]> randomSwap(MelodyPart[] part1, MelodyPart[] part2) {
+        Random generator = new Random();
+        for (int i = 0; i < part1.length; i++) {
+            int isSwap = generator.nextInt(2);
+            if (isSwap == 1) {
+                MelodyPart savePart1 = part1[i].copy();
+                MelodyPart savePart2 = part2[i].copy();
+                part1[i] = savePart2;
+                part2[i] = savePart1;
+            }
+        }
+        return new Pair(part1, part2);
     }
     
     public MelodyPart mash(MelodyPart[] melody, MelodyPart[] rhythm){
@@ -516,7 +543,10 @@ public class ResponseGenerator {
             response = userMelody();
         } else if (tradeMode.equals("Zach 3 - User Rhythm")){
             response = userRhythm();
+        } else if (tradeMode.equals("Zach 4 - Last Two")){
+            response = swapMelodyRhythm();
         }
+        
         
         
         else {

@@ -233,14 +233,14 @@ public class TradingWindow
             nextSection = triggers.peek() + slotsForProcessing;
         }
         //System.out.println("Chords extracted from chord prog from : " + nextSection + " to " + (nextSection + slotsPerTurn - one));
+        response = new MelodyPart(slotsPerTurn);
+        notate.initTradingRecorder(response);
+        notate.enableRecording();
         soloChords = notate.getScore().getChordProg().extract(nextSection - slotsPerTurn, nextSection - one);
         responseChords = notate.getScore().getChordProg().extract(nextSection, nextSection + slotsPerTurn - one);
-        response = new MelodyPart(slotsPerTurn);
         tradeScore = new Score("trading", notate.getTempo(), zero);
         tradeScore.setChordProg(responseChords);
         tradeScore.addPart(response);
-        notate.initTradingRecorder(response);
-        notate.enableRecording();
     }
 
     public void processInput() {
@@ -592,7 +592,7 @@ public class TradingWindow
         getContentPane().add(startTradingButton, gridBagConstraints);
         startTradingButton.getAccessibleContext().setAccessibleDescription("");
 
-        tradeModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Repeat", "Repeat and Rectify", "Flatten", "Random Modify", "Flatten, Modify, Rectify", "Charlie Parker", "Trade with a Musician", "Abstract", "Rhythmic Response", "Contour Test", "Zach 1 - Gen Solo", "Zach 2 - User Melody", "Zach 3 - User Rhythm" }));
+        tradeModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Repeat", "Repeat and Rectify", "Flatten", "Random Modify", "Flatten, Modify, Rectify", "Charlie Parker", "Trade with a Musician", "Abstract", "Rhythmic Response", "Contour Test", "Zach 1 - Gen Solo", "Zach 2 - User Melody", "Zach 3 - User Rhythm", "Zach 4 - Last Two" }));
         tradeModeSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tradeModeSelectorActionPerformed(evt);
