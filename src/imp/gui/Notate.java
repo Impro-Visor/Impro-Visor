@@ -26112,16 +26112,20 @@ public void actionPerformed(ActionEvent evt) {
     currentPlaybackTab = slotInPlayback / chorusSize;
 
     int tab = currentPlaybackTab;
+    
+    Polylist currentVoicing;
 
     if( currentChord != null 
             && keyboard != null 
             && keyboard.isVisible() 
             && keyboard.isPlaying()
             && !currentChord.equals(previousChord)
-            && !currentChord.getVoicing().equals(previousVoicing))
+            && (currentVoicing = currentChord.getVoicing()) != null
+            && !currentVoicing.equals(previousVoicing)
+            )
       {
         previousChord = currentChord;
-        previousVoicing = currentChord.getVoicing();
+        previousVoicing = currentVoicing;
         keyboardPlayback(currentChord, tab, slotInChorus, slot, totalSlots);
       }
 
