@@ -479,6 +479,8 @@ public int getPasteType()
 public static void main(String[] args) throws InvalidMidiDataException
   {
         //Start up Impro-Visor
+        avs=new AutomaticVoicingSettings();
+        avs.setDefaults(); 
         String leadsheet = null;
         if( args.length > 0 )
             {
@@ -490,8 +492,7 @@ public static void main(String[] args) throws InvalidMidiDataException
         ToolkitImages.getInstance();
         getUserDirectory();
         instance = new ImproVisor(leadsheet);
-        avs=new AutomaticVoicingSettings();
-        avs.setDefaults(); 
+        
         
  
   }

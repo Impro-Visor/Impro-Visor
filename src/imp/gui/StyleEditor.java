@@ -120,7 +120,7 @@ public class StyleEditor
   
   private boolean override;
   
-  private String voicingFileName="default";
+  private String voicingFileName="default.avp";
 
     public String getVoicingFileName() {
         return voicingFileName;

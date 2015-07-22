@@ -1045,17 +1045,17 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeBActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton8">
+        <Component class="javax.swing.JButton" name="loadDefault">
           <Properties>
             <Property name="text" type="java.lang.String" value="Load Style Default"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton6">
+        <Component class="javax.swing.JButton" name="saveToDefault">
           <Properties>
             <Property name="text" type="java.lang.String" value="Save To Style Default"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton7">
+        <Component class="javax.swing.JButton" name="setStyleDefault">
           <Properties>
             <Property name="text" type="java.lang.String" value="Set Style Default"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>

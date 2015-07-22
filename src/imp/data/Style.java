@@ -24,7 +24,9 @@ import imp.Constants;
 import imp.ImproVisor;
 import imp.com.PlayScoreCommand;
 import imp.util.Preferences;
+import imp.voicing.AVPFileCreator;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
@@ -106,7 +108,7 @@ public class Style
   /**
    * The name of the voicing file to use for the style
    */  
-  private String voicingFileName = "default";
+  private String voicingFileName = "default.avp";
   /**
    * a boolean that determines whether to automatically extend chords
    */
@@ -195,7 +197,7 @@ public class Style
                                        "use-extensions", "no-style",
                                        "voicing-type", "comments",
                                        "comp-swing", "define-rule", "bass",
-                                       "chord", "drum", "voicing-file"
+                                       "chord", "drum", "voicing-name"
   };
 
   // indices into the keyword array
@@ -248,7 +250,9 @@ public class Style
   
   public static Style getStyle(String name)
     {
-      return allStyles.get(name);
+      Style s = allStyles.get(name);
+      AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),s.getVoicingFileName()), ImproVisor.avs);
+      return s;
     }
   
   public static void setStyle(String name, Style style)
@@ -527,6 +531,7 @@ public class Style
     style.bassBase = bassBase;
     style.comments = comments;
     style.voicingType = voicingType;
+    style.voicingFileName=voicingFileName;
     style.useExtensions = useExtensions;
 
     style.name = name;
@@ -546,7 +551,7 @@ public class Style
   public static Style makeStyle(Polylist L)
     {
     Style style = new Style();
-    style.voicingFileName="default";
+    style.voicingFileName="default.avp";
     while( L != null && L.nonEmpty() )
       {
 
@@ -637,6 +642,7 @@ public class Style
             case VOICING_FILE:
               {
               style.voicingFileName = (String)item.first();
+              System.out.println("in-switch");
               break;
               }
             default:
@@ -652,7 +658,9 @@ public class Style
         L = L.rest();
         }
       }
-    
+    //if(ImproVisor.avs!=null)
+        //AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),style.getVoicingFileName()), ImproVisor.avs);
+    System.out.println("\n\n____________________________________________________\n"+style.getVoicingFileName()+"\n"+style.getName()+"\n__________________________________");
     return style;
     }
 

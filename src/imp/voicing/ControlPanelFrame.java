@@ -107,6 +107,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
                     saveFile=chooser.getSelectedFile();
                     if(!saveFile.getName().toLowerCase().endsWith(".avp"))
                         saveFile=new File(saveFile.getAbsolutePath()+".avp");
+                    if(saveFile.getName().contains(" "))
+                        saveFile=new File(saveFile.getParent(),saveFile.getName().replaceAll(" ", "-"));
                 }
                 syncToSettings();
                 AVPFileCreator.settingsToFile(avs,saveFile);
@@ -147,7 +149,57 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
               setSlidersToVariables();
             }
        });
-    
+       
+       loadDefault.addActionListener(new ActionListener() {
+
+           public void actionPerformed(ActionEvent e)
+           {
+              File openFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+                AVPFileCreator.fileToSettings( openFile, avs);
+                setSlidersToVariables();
+                setTitle(openFile.getName());
+           }
+       });
+       
+        setStyleDefault.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e)
+           {
+                
+                saveSlidersToVariables();
+                
+                File openFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
+                chooser.setFileFilter(filter);
+                int returnVal = chooser.showSaveDialog(null);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                    openFile=chooser.getSelectedFile();
+                    if(!openFile.getName().toLowerCase().endsWith(".avp"))
+                        openFile=new File(openFile.getAbsolutePath()+".avp");
+                    
+                }
+                //syncToSettings();
+                AVPFileCreator.fileToSettings(openFile,avs);
+                syncFromSettings();
+                styleEditor.setVoicingFileName(openFile.getName());
+                
+            }
+       });
+       saveToDefault.addActionListener(new ActionListener() {
+
+           public void actionPerformed(ActionEvent e)
+           {
+                
+                saveSlidersToVariables();
+                
+                File saveFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
+                
+                syncToSettings();
+                AVPFileCreator.settingsToFile(avs,saveFile);
+                
+            }
+       });
        for(JSpinner slider:handLimits)
        {
            slider.addChangeListener(new ChangeListener(){
@@ -750,9 +802,9 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         closeB = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        loadDefault = new javax.swing.JButton();
+        saveToDefault = new javax.swing.JButton();
+        setStyleDefault = new javax.swing.JButton();
         invertBox = new java.awt.Checkbox();
         voiceAllNotes = new java.awt.Checkbox();
 
@@ -1401,15 +1453,15 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         });
         jPanel28.add(closeB);
 
-        jButton8.setText("Load Style Default");
-        jPanel28.add(jButton8);
+        loadDefault.setText("Load Style Default");
+        jPanel28.add(loadDefault);
 
-        jButton6.setText("Save To Style Default");
-        jPanel28.add(jButton6);
+        saveToDefault.setText("Save To Style Default");
+        jPanel28.add(saveToDefault);
 
-        jButton7.setText("Set Style Default");
-        jButton7.setToolTipText("");
-        jPanel28.add(jButton7);
+        setStyleDefault.setText("Set Style Default");
+        setStyleDefault.setToolTipText("");
+        jPanel28.add(setStyleDefault);
 
         invertBox.setLabel("Invert Minor 9ths");
         invertBox.setName("invertMinorNinth"); // NOI18N
@@ -1514,9 +1566,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1545,6 +1594,9 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JButton loadDefault;
+    private javax.swing.JButton saveToDefault;
+    private javax.swing.JButton setStyleDefault;
     private java.awt.Checkbox voiceAllNotes;
     // End of variables declaration//GEN-END:variables
 }
