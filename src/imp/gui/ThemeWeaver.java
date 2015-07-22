@@ -909,16 +909,6 @@ public void setTableColumnWidths()
         barLineShiftPreference.setLocationByPlatform(true);
         barLineShiftPreference.setMinimumSize(new java.awt.Dimension(200, 300));
         barLineShiftPreference.setSize(new java.awt.Dimension(700, 600));
-        barLineShiftPreference.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                barLineShiftPreferencewindowClosed(evt);
-            }
-        });
-        barLineShiftPreference.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                barLineShiftPreferenceformKeyPressed(evt);
-            }
-        });
         barLineShiftPreference.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         SoloGeneratorTitle2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
@@ -1970,11 +1960,6 @@ public void setTableColumnWidths()
 
         setAllProbTextField.setText("0.0");
         setAllProbTextField.setToolTipText("");
-        setAllProbTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                setAllProbTextFieldActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -2862,6 +2847,7 @@ private void closeWindow()
 
         if( soloPlaying )
           {
+              System.out.println("!!!!!!!!!!!!!!$$$$$@*($&!@$(*@&*(");
             stopPlaytoggle.setText("<html><center>Play Solo</center></html>");
             stopPlaying();
           }
@@ -3062,14 +3048,6 @@ private void closeWindow()
         probSlideUp = probUpOrDown.getValue()/100;
     }//GEN-LAST:event_probUpOrDownMouseDragged
 
-    private void barLineShiftPreferencewindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_barLineShiftPreferencewindowClosed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_barLineShiftPreferencewindowClosed
-
-    private void barLineShiftPreferenceformKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barLineShiftPreferenceformKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_barLineShiftPreferenceformKeyPressed
-
     private void barLineShiftPreferencesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barLineShiftPreferencesButtonActionPerformed
         barLineShiftPreference.setVisible(true);
     }//GEN-LAST:event_barLineShiftPreferencesButtonActionPerformed
@@ -3080,10 +3058,6 @@ private void closeWindow()
         minPitch = range[0];
         maxPitch = range[1];
     }//GEN-LAST:event_rangeChooserButtonActionPerformed
-
-    private void setAllProbTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setAllProbTextFieldActionPerformed
-        
-    }//GEN-LAST:event_setAllProbTextFieldActionPerformed
 
     private void setAllProbButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setAllProbButtonActionPerformed
         setAllProbTo(Double.parseDouble(setAllProbTextField.getText()));
@@ -3546,7 +3520,28 @@ private void closeWindow()
                 }
                 else
                 {//add an actual melody to miniMelody and add it to the correct place in the solo
-                    miniMelody = generateFromGrammar(miniMelody.getSize(), miniMelody, startSlot);
+                    MelodyPart prevSection = customSolo.copy();
+                    prevSection = prevSection.extract(0,i);
+                    int min =minPitch;
+                    int max = maxPitch;
+                    if (prevSection.getSize()!=0)
+                    {
+                        Note lastNote = prevSection.getLastNote();
+                        int lastPitch = lastNote.getPitch();
+
+                        min=lastPitch-6;
+                        max=lastPitch+6;//the 6 is kind of arbitrary
+                    }
+                    if (min < minPitch)
+                    {
+                        min = minPitch;
+                    }
+                    if (max > maxPitch)
+                    {
+                        max = maxPitch;
+                    }
+                    
+                    miniMelody = generateFromGrammar(miniMelody.getSize(), miniMelody, startSlot, min, max);
                     System.out.println(miniMelody.toString());
                     customSolo.pasteSlots(miniMelody, startSlot);
 
@@ -4403,7 +4398,7 @@ public void generateTheme()
                 soloTable.setValueAt(BARLINESHIFT_DEFAULT_VALUE,    x, BARLINESHIFT_COLUMN);
 
                 int Length = notate.intFromStringInRange((String) getValueAt(x, LENGTH_COLUMN), 0, 100, themeLength);
-                //get length from tablek
+                //get length from table
                 themeLength = BEAT * Length;
                 Polylist rhythm = lickgen.generateRhythmFromGrammar(0, themeLength);
                 //get rhythm for theme from grammar
@@ -4868,7 +4863,25 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
             //doesn't use a theme, use grammar
             themeUsageTextArea.append("Bar " + bar + ": Generated Solo\n");
             //set size of solo to the existing length of the solo plus the length of the theme
-            newMelody = generateFromGrammar(themeIntervalUseIncrement, solo, i); 
+            int min =minPitch;
+            int max = maxPitch;
+            if (prevSection.getSize()!=0)
+            {
+                Note lastNote = prevSection.getLastNote();
+                int lastPitch = lastNote.getPitch();
+            
+                min=lastPitch-6;
+                max=lastPitch+6;//the 6 is kind of arbitrary
+            }
+            if (min < minPitch)
+            {
+                min = minPitch;
+            }
+            if (max > maxPitch)
+            {
+                max = maxPitch;
+            }
+            newMelody = generateFromGrammar(themeIntervalUseIncrement, solo, i, min, max); 
             increaseIncrement += themeIntervalUseIncrement;
         }
         
@@ -4896,6 +4909,7 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
             i = notate.getScoreLength();
             endSoloEarly = false;
         }
+        
     }
     solo.setSize(notate.getScoreLength());
     notate.setCurrentSelectionStart(0); //start selection at beginning
@@ -5552,12 +5566,14 @@ private boolean transformDoubled(Object[] transforms)
     return false;
 }
 
-public MelodyPart generateFromGrammar(int themeLength, MelodyPart solo, int slotNum)
+public MelodyPart generateFromGrammar(int themeLength, MelodyPart solo, int slotNum, int minPitch, int maxPitch)
   {//generates/returns a MelodyPart using the grammar
     Polylist rhythm = lickgen.generateRhythmFromGrammar(slotNum, themeLength);
     //generate rhythm 
 
-    MelodyPart lick = fillMelody(BEAT, rhythm, notate.getChordProg(), slotNum);
+    MelodyPart lick = lickgen.fillMelody(minPitch, maxPitch, minInterval,
+                                           maxInterval, BEAT, leapProb, rhythm, 
+                                           notate.getChordProg(), slotNum, avoidRepeats);
     //create melody
     return lick;
     
