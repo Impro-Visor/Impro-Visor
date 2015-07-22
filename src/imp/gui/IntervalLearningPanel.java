@@ -24,9 +24,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractButton;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
 import javax.swing.JLabel;
@@ -44,7 +46,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private JLabel [][] probabilityLabels;
     private double[][] probabilities;
     private int [] range;
-    private boolean preRectify;
     private boolean displayProbabilities;
     private boolean addToRunningTotal;
     int [][] counts;
@@ -108,7 +109,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
             
         }
-        preRectify = preRectifyButton.isSelected();
         displayProbabilities = getDisplayFromButton();
         refreshDisplay();
         addToRunningTotal = addToTotal.isSelected();
@@ -181,18 +181,16 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         resetThenAdd = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        otherOptionsPanel = new javax.swing.JPanel();
-        toggleLabel = new javax.swing.JLabel();
-        toggleView = new javax.swing.JToggleButton();
-        clearAll = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         optionsPanel = new javax.swing.JPanel();
         optionsLabel = new javax.swing.JLabel();
+        rangeAndMerge = new javax.swing.JPanel();
         chooseRange = new javax.swing.JButton();
+        mergeCheckbox = new javax.swing.JCheckBox();
+        rectifyPanel = new javax.swing.JPanel();
+        rectifyLabel = new javax.swing.JLabel();
         preRectifyButton = new javax.swing.JRadioButton();
         postRectifyButton = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        noneButton = new javax.swing.JRadioButton();
         generateButtonsPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -201,19 +199,25 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         GrammarRhythm = new javax.swing.JRadioButton();
         generateSolo = new javax.swing.JButton();
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
         filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
+        filenameLabel = new javax.swing.JLabel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        bottomPanel = new javax.swing.JPanel();
         fileSavePanel = new javax.swing.JPanel();
         saveButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
         loadSaveLabel = new javax.swing.JLabel();
         addFromFile = new javax.swing.JButton();
         newFileButton = new javax.swing.JButton();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
-        filenameLabel = new javax.swing.JLabel();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        otherOptionsPanel = new javax.swing.JPanel();
+        toggleLabel = new javax.swing.JLabel();
+        toggleView = new javax.swing.JToggleButton();
+        clearAll = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
+        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
 
         setMinimumSize(new java.awt.Dimension(800, 300));
         setPreferredSize(new java.awt.Dimension(800, 300));
@@ -316,63 +320,14 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         buttonsPanel.add(learnButtonPanel, gridBagConstraints);
 
-        otherOptionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        otherOptionsPanel.setLayout(new java.awt.GridBagLayout());
-
-        toggleLabel.setText("Toggle View:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        otherOptionsPanel.add(toggleLabel, gridBagConstraints);
-
-        toggleView.setText("Probabilities");
-        toggleView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toggleViewActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        otherOptionsPanel.add(toggleView, gridBagConstraints);
-
-        clearAll.setText("Clear All Probabilities");
-        clearAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearAllActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        otherOptionsPanel.add(clearAll, gridBagConstraints);
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Other Options");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        otherOptionsPanel.add(jLabel6, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        buttonsPanel.add(otherOptionsPanel, gridBagConstraints);
-
         optionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         optionsPanel.setLayout(new java.awt.GridBagLayout());
 
         optionsLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         optionsLabel.setText("Solo Options");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        optionsPanel.add(optionsLabel, gridBagConstraints);
+        optionsPanel.add(optionsLabel, new java.awt.GridBagConstraints());
+
+        rangeAndMerge.setLayout(new java.awt.GridBagLayout());
 
         chooseRange.setText("Choose Range");
         chooseRange.addActionListener(new java.awt.event.ActionListener() {
@@ -381,47 +336,61 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        rangeAndMerge.add(chooseRange, gridBagConstraints);
+
+        mergeCheckbox.setSelected(true);
+        mergeCheckbox.setText("Merge same notes");
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        rangeAndMerge.add(mergeCheckbox, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        optionsPanel.add(chooseRange, gridBagConstraints);
+        optionsPanel.add(rangeAndMerge, gridBagConstraints);
+
+        rectifyPanel.setLayout(new java.awt.GridBagLayout());
+
+        rectifyLabel.setText("Rectification:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        rectifyPanel.add(rectifyLabel, gridBagConstraints);
 
         preAndPost.add(preRectifyButton);
         preRectifyButton.setSelected(true);
-        preRectifyButton.setText("Pre-Rectify");
-        preRectifyButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                preRectifyButtonActionPerformed(evt);
-            }
-        });
+        preRectifyButton.setText("Pre");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        optionsPanel.add(preRectifyButton, gridBagConstraints);
+        gridBagConstraints.gridy = 0;
+        rectifyPanel.add(preRectifyButton, gridBagConstraints);
 
         preAndPost.add(postRectifyButton);
-        postRectifyButton.setText("Post-Rectify");
-        postRectifyButton.addActionListener(new java.awt.event.ActionListener() {
+        postRectifyButton.setText("Post");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        rectifyPanel.add(postRectifyButton, gridBagConstraints);
+
+        preAndPost.add(noneButton);
+        noneButton.setText("None");
+        noneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                postRectifyButtonActionPerformed(evt);
+                noneButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        optionsPanel.add(postRectifyButton, gridBagConstraints);
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        rectifyPanel.add(noneButton, gridBagConstraints);
 
-        jLabel1.setText("Range:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        optionsPanel.add(jLabel1, gridBagConstraints);
-
-        jLabel2.setText("Rectification:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        optionsPanel.add(jLabel2, gridBagConstraints);
+        optionsPanel.add(rectifyPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -463,7 +432,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         generateButtonsPanel.add(Chorus1, gridBagConstraints);
 
         rhythmGroup.add(GrammarRhythm);
-        GrammarRhythm.setText("Grammar-generated");
+        GrammarRhythm.setText("Grammar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
@@ -482,7 +451,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         generateButtonsPanel.add(generateSolo, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
@@ -494,26 +463,24 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        buttonsPanel.add(filler8, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
         buttonsPanel.add(filler9, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
         add(buttonsPanel, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        add(filler1, gridBagConstraints);
+
+        filenameLabel.setText("newFile.counts");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        add(filler2, gridBagConstraints);
+        gridBagConstraints.gridy = 0;
+        add(filenameLabel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        add(filler3, gridBagConstraints);
+
+        bottomPanel.setLayout(new java.awt.GridBagLayout());
 
         fileSavePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         fileSavePanel.setLayout(new java.awt.GridBagLayout());
@@ -525,8 +492,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
         fileSavePanel.add(saveButton, gridBagConstraints);
 
         openButton.setText("Load Saved File");
@@ -545,7 +512,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         fileSavePanel.add(loadSaveLabel, gridBagConstraints);
 
         addFromFile.setText("Add from Saved File");
@@ -555,8 +522,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
         fileSavePanel.add(addFromFile, gridBagConstraints);
 
         newFileButton.setText("New File");
@@ -571,26 +538,80 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         fileSavePanel.add(newFileButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        add(fileSavePanel, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        bottomPanel.add(fileSavePanel, gridBagConstraints);
+
+        otherOptionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        otherOptionsPanel.setLayout(new java.awt.GridBagLayout());
+
+        toggleLabel.setText("Toggle View:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        add(filler4, gridBagConstraints);
+        gridBagConstraints.gridy = 1;
+        otherOptionsPanel.add(toggleLabel, gridBagConstraints);
 
-        filenameLabel.setText("newFile.counts");
+        toggleView.setText("Probabilities");
+        toggleView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toggleViewActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        otherOptionsPanel.add(toggleView, gridBagConstraints);
+
+        clearAll.setText("Clear All Probabilities");
+        clearAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAllActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        otherOptionsPanel.add(clearAll, gridBagConstraints);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Other Options");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(filenameLabel, gridBagConstraints);
+        otherOptionsPanel.add(jLabel6, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        bottomPanel.add(otherOptionsPanel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        bottomPanel.add(filler5, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        add(bottomPanel, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        add(filler3, gridBagConstraints);
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        add(filler6, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        add(filler8, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        add(filler10, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void thisChorusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thisChorusActionPerformed
@@ -678,7 +699,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private void Chorus1Solo(){
         ChordPart chords = notate.getChordProg();
         MelodyPart rhythm = notate.getScore().getPart(0);
-        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range, preRectify);
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
         MelodyPart result = mgen.melody();
         notate.addChorus(result);
     }
@@ -687,14 +708,14 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         ChordPart chords = notate.getChordProg();
         RhythmGenerator rgen = new RhythmGenerator(notate.getScore().getLength());
         MelodyPart rhythm = rgen.rhythm(Constants.EIGHTH);
-        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range, preRectify);
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
         MelodyPart result = mgen.melody();
         notate.addChorus(result);
     }
     
     private void GrammarSolo(){
         ChordPart chords = notate.getChordProg();
-        MelodyGenerator mgen = new MelodyGenerator(probabilities, notate, chords, range, preRectify);
+        MelodyGenerator mgen = new MelodyGenerator(probabilities, notate, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
         MelodyPart result = mgen.melody();
         notate.addChorus(result);
     }
@@ -764,15 +785,26 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         range = chooser.getRange();
     }//GEN-LAST:event_chooseRangeActionPerformed
 
+    private String getRectificationFromButtons(){
+        String selection = "";
+        for(Enumeration<AbstractButton> buttons = preAndPost.getElements(); buttons.hasMoreElements();){
+            AbstractButton button = buttons.nextElement();
+            if(button.isSelected()){
+                selection = button.getText();
+            }
+        }
+        if(selection.equals(preRectifyButton.getText())){
+            return MelodyGenerator.PRE;
+        }else if(selection.equals(postRectifyButton.getText())){
+            return MelodyGenerator.POST;
+        }else if(selection.equals(noneButton.getText())){
+            return MelodyGenerator.NONE;
+        }else{
+            //shouldn't happen
+            return null;
+        }
+    }
     
-    private void preRectifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preRectifyButtonActionPerformed
-        preRectify = preRectifyButton.isSelected();
-    }//GEN-LAST:event_preRectifyButtonActionPerformed
-
-    private void postRectifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postRectifyButtonActionPerformed
-        preRectify = preRectifyButton.isSelected();
-    }//GEN-LAST:event_postRectifyButtonActionPerformed
-
     private void toggleViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleViewActionPerformed
         if(toggleView.getText().equals("Probabilities")){
             toggleView.setText("Counts");
@@ -870,6 +902,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         newFile();
     }//GEN-LAST:event_newFileButtonActionPerformed
 
+    private void noneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noneButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noneButtonActionPerformed
+
     private void newFile(){
         clearAll();
         filename = "newFile.counts";
@@ -948,23 +984,22 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JButton addFromFile;
     private javax.swing.JRadioButton addToTotal;
     private javax.swing.JButton allChoruses;
+    private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton chooseRange;
     private javax.swing.JButton clearAll;
     private javax.swing.JLabel destinationIntervals;
     private javax.swing.JPanel fileSavePanel;
     private javax.swing.JLabel filenameLabel;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
     private javax.swing.Box.Filler filler8;
     private javax.swing.Box.Filler filler9;
     private javax.swing.JPanel generateButtonsPanel;
     private javax.swing.JButton generateSolo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -973,7 +1008,9 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JPanel learnButtonPanel;
     private javax.swing.JLabel learnLabel;
     private javax.swing.JLabel loadSaveLabel;
+    private javax.swing.JCheckBox mergeCheckbox;
     private javax.swing.JButton newFileButton;
+    private javax.swing.JRadioButton noneButton;
     private javax.swing.JButton openButton;
     private javax.swing.JLabel optionsLabel;
     private javax.swing.JPanel optionsPanel;
@@ -982,6 +1019,9 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.ButtonGroup preAndPost;
     private javax.swing.JRadioButton preRectifyButton;
     private javax.swing.JPanel probabilitiesPanel;
+    private javax.swing.JPanel rangeAndMerge;
+    private javax.swing.JLabel rectifyLabel;
+    private javax.swing.JPanel rectifyPanel;
     private javax.swing.JRadioButton resetThenAdd;
     private javax.swing.ButtonGroup rhythmGroup;
     private javax.swing.JButton saveButton;

@@ -28,25 +28,31 @@ public class MelodyGenerator {
     private MelodyPart rhythm;
     private ChordPart chords;
     private int [] range;
-    private boolean preRectify;
+    private String rectification;
+    private boolean merge;
 
     private static final int NO_DATA = Integer.MAX_VALUE;
     private static final boolean IN_RANGE = true;
     
-    public MelodyGenerator(double[][] probabilities, MelodyPart rhythm, ChordPart chords, int [] range, boolean preRectify) {
+    public static final String PRE = "PRE";
+    public static final String POST = "POST";
+    public static final String NONE = "NONE";
+    
+    public MelodyGenerator(double[][] probabilities, MelodyPart rhythm, ChordPart chords, int [] range, String rectification, boolean merge) {
         this.probabilities = probabilities;
         this.rhythm = rhythm;
         this.chords = chords;
         this.range = range;
-        this.preRectify = preRectify;
+        this.rectification = rectification;
+        this.merge = merge;
     }
     
-    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range, boolean preRectify){
-        this(probabilities, polylistToMelodyPart(rhythm), chords, range, preRectify);
+    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range, String rectification, boolean merge){
+        this(probabilities, polylistToMelodyPart(rhythm), chords, range, rectification, merge);
     }
     
-    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range, boolean preRectify){
-        this(probabilities, rhythm(notate), chords, range, preRectify);
+    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range, String rectification, boolean merge){
+        this(probabilities, rhythm(notate), chords, range, rectification, merge);
     }
     
     public static Polylist rhythm(Notate notate){
@@ -217,7 +223,7 @@ public class MelodyGenerator {
 
             
         }
-        if(!preRectify){
+        if(rectification.equals(PRE) || rectification.equals(POST)){
             //post-rectification to chord, color, and approach tones
             RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
                                 result.size()-1, chords,
@@ -226,7 +232,9 @@ public class MelodyGenerator {
             cmd.execute();
         }
         //merge same notes - good idea???
-        result = mergeSameNotes(result);
+        if(merge){
+            result = mergeSameNotes(result);
+        }
         return result;
     }
     
@@ -418,7 +426,7 @@ public class MelodyGenerator {
             double prob = probabilities[sourceIndex][destIndex];
             int pitchToAdd = prevPitch + indexToInterval(destIndex);
             int typeIndex = chord.getTypeIndex(new Note(pitchToAdd));
-            boolean correctType = preRectify ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
+            boolean correctType = rectification.equals(PRE) ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
             if(prob != 0 && inRange(pitchToAdd) && correctType){
                 pitches.add(pitchToAdd);
                 pitchProbs.add(prob);
@@ -427,7 +435,7 @@ public class MelodyGenerator {
         
         //if no pitches have nonzero probability, are in range, and are chord/color tones,
         //allow all non chord / color tones
-        if(pitchProbs.isEmpty()&&preRectify){
+        if(pitchProbs.isEmpty() && rectification.equals(PRE)){
             //System.out.println("Allow non chord/color tones");
             for(int destIndex = 0; destIndex < probabilities[sourceIndex].length; destIndex ++){
                 double prob = probabilities[sourceIndex][destIndex];
