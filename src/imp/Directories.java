@@ -55,6 +55,11 @@ public static String grammarDirName = "grammars"; // was "grammars";
 public static String transformDirName = "transforms";
 
 /**
+ * Standard sub-directory for transforms
+ */
+public static String countsDirName = "counts";
+
+/**
  * Standard sub-directory for soloist files
  */
 public static String soloistDirName = "grammars"; // was "soloists";
