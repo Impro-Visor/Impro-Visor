@@ -274,11 +274,11 @@ public void setTableColumnWidths()
         keepEditsFromLeadsheetCheckBox = new javax.swing.JCheckBox();
         redoEditButton = new javax.swing.JButton();
         pasteToLeadsheetButton = new javax.swing.JButton();
-        jLabel39 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         barNumberTextField = new javax.swing.JTextField();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         themeNameTextPane = new javax.swing.JTextPane();
@@ -1522,7 +1522,7 @@ public void setTableColumnWidths()
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 0);
@@ -1536,24 +1536,10 @@ public void setTableColumnWidths()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.ipady = 25;
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
         jPanel6.add(pasteToLeadsheetButton, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
-        customizeSolo.getContentPane().add(jPanel6, gridBagConstraints);
-
-        jLabel39.setText("Optional: Choose Placement of Theme");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 7);
-        customizeSolo.getContentPane().add(jLabel39, gridBagConstraints);
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
@@ -1576,15 +1562,29 @@ public void setTableColumnWidths()
         jPanel11.add(jLabel40, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
-        customizeSolo.getContentPane().add(jPanel11, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        jPanel6.add(jPanel11, gridBagConstraints);
 
         jLabel41.setText("*Leave Blank To Advance Step by Step*");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        jPanel6.add(jLabel41, gridBagConstraints);
+
+        jLabel39.setText("Optional: Choose Placement of Theme");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        customizeSolo.getContentPane().add(jLabel41, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jPanel6.add(jLabel39, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 7;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
+        customizeSolo.getContentPane().add(jPanel6, gridBagConstraints);
 
         jPanel13.setLayout(new java.awt.GridBagLayout());
 
