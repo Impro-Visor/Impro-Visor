@@ -71,6 +71,7 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Component;
+import java.util.Stack;
 
 /**
  *
@@ -268,15 +269,16 @@ public void setTableColumnWidths()
         jPanel12 = new javax.swing.JPanel();
         resetSoloButton = new javax.swing.JButton();
         rectifySoloButton = new javax.swing.JButton();
-        revertSoloButton = new javax.swing.JButton();
+        undoEditButton = new javax.swing.JButton();
         fillSoloButton = new javax.swing.JButton();
         keepEditsFromLeadsheetCheckBox = new javax.swing.JCheckBox();
+        redoEditButton = new javax.swing.JButton();
         pasteToLeadsheetButton = new javax.swing.JButton();
-        jLabel39 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         barNumberTextField = new javax.swing.JTextField();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         themeNameTextPane = new javax.swing.JTextPane();
@@ -990,6 +992,7 @@ public void setTableColumnWidths()
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 40, 0);
         customizeSolo.getContentPane().add(SoloGeneratorTitle3, gridBagConstraints);
+        SoloGeneratorTitle3.getAccessibleContext().setAccessibleDescription("");
 
         themeListScrollPane1.setMaximumSize(new java.awt.Dimension(0, 0));
         themeListScrollPane1.setMinimumSize(new java.awt.Dimension(0, 0));
@@ -1444,7 +1447,7 @@ public void setTableColumnWidths()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.ipadx = 3;
         gridBagConstraints.ipady = 22;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
@@ -1458,16 +1461,16 @@ public void setTableColumnWidths()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.ipady = 22;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel12.add(rectifySoloButton, gridBagConstraints);
         rectifySoloButton.getAccessibleContext().setAccessibleDescription("Changes pitches so they fit with the corresponding chord on the leadsheet.");
 
-        revertSoloButton.setText("Revert To Last Edit");
-        revertSoloButton.addActionListener(new java.awt.event.ActionListener() {
+        undoEditButton.setText("Undo Edit");
+        undoEditButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                revertSoloButtonActionPerformed(evt);
+                undoEditButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1475,8 +1478,8 @@ public void setTableColumnWidths()
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipady = 22;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
-        jPanel12.add(revertSoloButton, gridBagConstraints);
-        revertSoloButton.getAccessibleContext().setAccessibleDescription("Undo the last added theme. You can only revert by one addition.");
+        jPanel12.add(undoEditButton, gridBagConstraints);
+        undoEditButton.getAccessibleContext().setAccessibleDescription("Undo the last added theme. You can only revert by one addition.");
 
         fillSoloButton.setText("Fill Solo");
         fillSoloButton.addActionListener(new java.awt.event.ActionListener() {
@@ -1504,9 +1507,22 @@ public void setTableColumnWidths()
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         jPanel12.add(keepEditsFromLeadsheetCheckBox, gridBagConstraints);
 
+        redoEditButton.setText("Redo Edit");
+        redoEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redoEditButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipady = 22;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel12.add(redoEditButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 0);
@@ -1520,24 +1536,10 @@ public void setTableColumnWidths()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.ipady = 25;
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
         jPanel6.add(pasteToLeadsheetButton, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
-        customizeSolo.getContentPane().add(jPanel6, gridBagConstraints);
-
-        jLabel39.setText("Optional: Choose Placement of Theme");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 8, 7);
-        customizeSolo.getContentPane().add(jLabel39, gridBagConstraints);
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
@@ -1560,15 +1562,29 @@ public void setTableColumnWidths()
         jPanel11.add(jLabel40, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
-        customizeSolo.getContentPane().add(jPanel11, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        jPanel6.add(jPanel11, gridBagConstraints);
 
         jLabel41.setText("*Leave Blank To Advance Step by Step*");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        jPanel6.add(jLabel41, gridBagConstraints);
+
+        jLabel39.setText("Optional: Choose Placement of Theme");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        customizeSolo.getContentPane().add(jLabel41, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        jPanel6.add(jLabel39, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 7;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
+        customizeSolo.getContentPane().add(jPanel6, gridBagConstraints);
 
         jPanel13.setLayout(new java.awt.GridBagLayout());
 
@@ -3079,6 +3095,8 @@ private void closeWindow()
         shiftForwardRadioButton.setSelected(true);
         directionOfShift = "forwards";
         eighthShiftRadioButton.setSelected(true);
+        
+        customSolo = new MelodyPart();
     }
     
     private void customizeSolowindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_customizeSolowindowClosed
@@ -3386,14 +3404,29 @@ private void closeWindow()
     }//GEN-LAST:event_shiftBackwardRadioButtonActionPerformed
     
     private void pasteToLeadsheetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteToLeadsheetButtonActionPerformed
+        MelodyPart last = customSolo.copy();
+        edits.push(last);
         if (keepEditsFromLeadsheetCheckBox.isSelected())
         {
-            customSolo = notate.getCurrentMelodyPart();
+            notate.selectAll();
+            MelodyPart wholeLeadsheet = notate.getCurrentMelodyPart();
+            
+            int lastIndex = 0;
+            try//make sure lastIndex isn't null
+            {
+                lastIndex = wholeLeadsheet.getLastNoteIndex();
+                customSolo = wholeLeadsheet.extract(0, lastIndex);
+                currentSlotCS = customSolo.getSize();
+            }
+            
+            catch(java.lang.NullPointerException n)
+            {
+                lastIndex = 0;
+            }
+           
         }
-        
-        lastEdit = customSolo.copy();
-        lastSlotCS = currentSlotCS;
-        
+        //keeps there from being tons of tied notes where there should be rests
+        chosenCustomTheme.pasteSlots(new MelodyPart(), chosenCustomTheme.getSize());
         if (!barNumberTextField.getText().equals(""))//see if we need to go to a specific bar or not
         {
             specifiedBar = true;
@@ -3401,6 +3434,7 @@ private void closeWindow()
             {
                 Integer.parseInt(barNumberTextField.getText());
             }
+            
             catch(java.lang.NumberFormatException n)
             {
                 enterAnInteger.setVisible(true);
@@ -3408,28 +3442,24 @@ private void closeWindow()
             }
             int barSlot = 480*(Integer.parseInt(barNumberTextField.getText())-1);
             
-            if (currentSlotCS < barSlot )
+            if (currentSlotCS < barSlot+chosenCustomTheme.getSize())
             {
-                MelodyPart rests = new MelodyPart(barSlot- currentSlotCS);
-                customSolo.pasteSlots(rests, currentSlotCS);
+                int oldLength = customSolo.copy().getSize();
+                MelodyPart rests = new MelodyPart(barSlot-customSolo.getSize());
+                customSolo.setSize(barSlot + chosenCustomTheme.getSize());
+                customSolo.pasteSlots(rests, oldLength);
             }
-            /*if (currentSlotCS < barSlot+chosenCustomTheme.getSize())
-            {
-                customSolo.setSize(customSolo.getSize() + chosenCustomTheme.getSize());
-            }*/
             currentSlotCS = barSlot;
         }
-        /*else
+        else
         {
             customSolo.setSize(customSolo.getSize() + chosenCustomTheme.getSize());
-        }*/
+        }
+        
         customSolo.pasteSlots(chosenCustomTheme, currentSlotCS);
         currentSlotCS += chosenCustomTheme.getSize();
-        
         notate.setCurrentSelectionStart(0); //start selection at beginning
-        
         notate.pasteMelody(customSolo); //paste solo into leadsheet
-        imp.ImproVisor.setPlayEntrySounds(true); //play solo
         specifiedBar = false;
     }//GEN-LAST:event_pasteToLeadsheetButtonActionPerformed
 
@@ -3446,10 +3476,11 @@ private void closeWindow()
     }//GEN-LAST:event_resetSoloButtonActionPerformed
 
     private void YesButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesButton1ActionPerformed
-        customSolo = new MelodyPart(notate.getScoreLength());
+        notate.delAllMelody();
+        customSolo = new MelodyPart(0);
         currentSlotCS = 0;
         notate.pasteMelody(customSolo);
-        lastEdit = customSolo;
+        edits.push(customSolo);
         resetCheck1.setVisible(false);
     }//GEN-LAST:event_YesButton1ActionPerformed
 
@@ -3477,19 +3508,20 @@ private void closeWindow()
         notate.setCurrentSelectionStart(0); //start selection at beginning
         
         notate.pasteMelody(customSolo); //paste solo into leadsheet
+        edits.push(customSolo);
     }//GEN-LAST:event_rectifySoloButtonActionPerformed
 
-    private void revertSoloButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_revertSoloButtonActionPerformed
-        customSolo = new MelodyPart(notate.getScoreLength());
-        customSolo.pasteSlots(lastEdit,0);
+    private void undoEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoEditButtonActionPerformed
+        System.out.println("undo");
+        undos.push(customSolo);
+        customSolo = edits.pop();
         notate.pasteMelody(customSolo);
         
-        customSolo = lastEdit;
-        currentSlotCS = lastSlotCS;
         notate.setCurrentSelectionStart(0); //start selection at beginning
-        
+        notate.delAllMelody();
         notate.pasteMelody(customSolo); //paste solo into leadsheet
-    }//GEN-LAST:event_revertSoloButtonActionPerformed
+        currentSlotCS = customSolo.getSize();
+    }//GEN-LAST:event_undoEditButtonActionPerformed
 
     private void fillSoloButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillSoloButtonActionPerformed
         int measureSize = 480;
@@ -3554,11 +3586,24 @@ private void closeWindow()
         notate.setCurrentSelectionStart(0); //start selection at beginning
         
         notate.pasteMelody(customSolo); //paste solo into leadsheet
+        edits.push(customSolo);
     }//GEN-LAST:event_fillSoloButtonActionPerformed
 
     private void keepEditsFromLeadsheetCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keepEditsFromLeadsheetCheckBoxActionPerformed
         
     }//GEN-LAST:event_keepEditsFromLeadsheetCheckBoxActionPerformed
+
+    private void redoEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoEditButtonActionPerformed
+        System.out.println("redo");
+        customSolo = undos.pop();
+        edits.push(customSolo);
+        notate.pasteMelody(customSolo);
+        
+        notate.setCurrentSelectionStart(0); //start selection at beginning
+        notate.delAllMelody();
+        notate.pasteMelody(customSolo); //paste solo into leadsheet
+        currentSlotCS = customSolo.getSize();
+    }//GEN-LAST:event_redoEditButtonActionPerformed
     
     
     private void setTransformationsTextArea()
@@ -3723,11 +3768,11 @@ private String directionOfShift = "";
 private MelodyPart chosenCustomThemeOriginal = new MelodyPart();//this will keep track of the unmotified melody
 private MelodyPart chosenCustomTheme = new MelodyPart();
 private int currentSlotCS = 0; //the current slot, used for custom solo
-private int lastSlotCS = 0; //keeps track of the slot where the last addition was made
-private MelodyPart customSolo = new MelodyPart(11520);
-private MelodyPart lastEdit = new MelodyPart(11520);
+private MelodyPart customSolo = new MelodyPart(0);
 private String chosenThemeName = "";
 private boolean specifiedBar = false;
+private Stack<MelodyPart> edits = new Stack<MelodyPart>();
+private Stack<MelodyPart> undos = new Stack<MelodyPart>();
 
 Random random;
 File fileName = ImproVisor.getThemesFile();
@@ -5620,41 +5665,41 @@ public boolean inRange(MelodyPart melody)
 private MelodyPart transformTheme(MelodyPart chosenTheme, ArrayList<String> transformations)
 {
     MelodyPart adjustedMelody = chosenTheme.copy();
-    int length = chosenTheme.getSize();
+    
     for (int i=0; i<transformations.size(); i++)
     {
         if (transformations.get(i).equals("Transpose"))
         {
             //transpose
             adjustedMelody = transpose2(adjustedMelody, directionOfTransposition, 
-                    distanceOfTransposition, length);
+                    distanceOfTransposition, adjustedMelody.getSize());
         }
         else if (transformations.get(i).equals("Invert"))
         {
             //invert
-            cm.execute(new InvertCommand(adjustedMelody, 0, length, false));
+            cm.execute(new InvertCommand(adjustedMelody, 0, adjustedMelody.getSize(), false));
         }
         else if (transformations.get(i).equals("Reverse"))
         {
             //reverse
-            cm.execute(new ReverseCommand(adjustedMelody, 0, length, false));
+            cm.execute(new ReverseCommand(adjustedMelody, 0, adjustedMelody.getSize(), false));
         }
         else if  (transformations.get(i).equals("Expand"))
         {
             //expand
             if (expandBy == 2)
             {
-                adjustedMelody = expandBy(adjustedMelody, length, 2);
+                adjustedMelody = expandBy(adjustedMelody, adjustedMelody.getSize(), 2);
             }
             else if (expandBy == 3)
             {
-                adjustedMelody = expandBy(adjustedMelody, length, 3);
+                adjustedMelody = expandBy(adjustedMelody, adjustedMelody.getSize(), 3);
             }
         }
         else if (transformations.get(i).equals("Side Slip"))
         {
             //side slip
-            adjustedMelody = sideslip2(adjustedMelody, directionOfSideslip, distanceOfSideslip, length);
+            adjustedMelody = sideslip2(adjustedMelody, directionOfSideslip, distanceOfSideslip, adjustedMelody.getSize());
         }
         else if (transformations.get(i).equals("Bar Line Shift"))
         {
@@ -5953,12 +5998,12 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JLabel rangeWrong1;
     private javax.swing.JLabel rangeWrong2;
     private javax.swing.JButton rectifySoloButton;
+    private javax.swing.JButton redoEditButton;
     private javax.swing.JDialog resetCheck;
     private javax.swing.JDialog resetCheck1;
     private javax.swing.JButton resetSoloButton;
     private javax.swing.JButton resetTransformationChoicesButton;
     private javax.swing.JToggleButton reverseButton;
-    private javax.swing.JButton revertSoloButton;
     private javax.swing.JMenuBar roadmapMenuBar;
     private javax.swing.JMenuItem saveAsAdvice;
     private javax.swing.JButton setAllProbButton;
@@ -6002,6 +6047,7 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JLabel tryAgain3;
     private javax.swing.JLabel typedWrong;
     private javax.swing.JLabel typedWrong1;
+    private javax.swing.JButton undoEditButton;
     private javax.swing.JRadioButton wholeStepRadioButton;
     private javax.swing.JRadioButton wholeStepRadioButton1;
     private javax.swing.JMenu windowMenu;

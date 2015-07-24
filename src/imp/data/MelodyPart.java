@@ -380,7 +380,7 @@ public Note getFirstNote()
   }
 
 
-private int getLastNoteIndex()
+public int getLastNoteIndex()
 {
     int index = this.getPrevIndex(this.getSize());
 
