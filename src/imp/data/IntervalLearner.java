@@ -42,6 +42,56 @@ public class IntervalLearner {
         return probabilities;
     }
     
+    public static double[][][] probabilities(int [] [] [] counts){
+        
+        //initialize probabilities to zero
+        double [][][] probabilities = new double[intervals][intervals][intervals];
+        for(double[][] x : probabilities){
+            for(double [] y : x){
+                for(int z = 0; z<y.length; z++){
+                    y[z] = 0;
+                }
+            }
+        }
+        
+        //initialize count totals to zero
+        int [][] totals = new int [intervals][intervals];
+        for(int [] x : totals){
+            for(int y = 0; y < x.length; y++){
+                x[y] = 0;
+            }
+        }
+        
+        //fill up totals grid
+        for(int x = 0; x < counts.length; x++){
+            for(int y = 0; y < counts[x].length; y++){
+                for(int z = 0; z < counts[y].length; z++){
+                    totals[x][y] += counts[x][y][z];
+                }
+            }
+        }
+        
+        //fill probability table
+        
+        for(int x = 0; x < probabilities.length; x++){
+            for(int y = 0; y < probabilities[x].length; y++){
+                if(totals[x][y] != 0){
+                    for(int z = 0; z < counts[x][y].length; z++){
+                        probabilities[x][y][z] = (double)counts[x][y][z] / (double)totals[x][y];
+                    }
+                }else{
+                    //no data: make all destination intervals equally likely
+                    for(int z = 0; z < counts[x][y].length; z++){
+                        probabilities[x][y][z] = 1.0/(double)probabilities[x][y].length;
+                    }
+                }
+            }
+        }
+
+        //return probability table
+        return probabilities;
+    }
+    
     public static double[][] probabilities(int [] [] counts){
         
         //initialize probabilities to zero
@@ -72,7 +122,8 @@ public class IntervalLearner {
                 for(int cell = 0; cell<probabilities[row].length; cell++){
                     probabilities[row][cell] = (double)counts[row][cell]/(double)totals[row];
                 }
-            }else{
+            }
+            else{
                 //no data: make all destination intervals equally likely
                 for(int cell = 0; cell<probabilities[row].length; cell++){
                     probabilities[row][cell] = 1.0/(double)probabilities[row].length;
@@ -82,6 +133,45 @@ public class IntervalLearner {
         
         //return probability table
         return probabilities;
+    }
+    
+    //2nd order Markov Chain
+    public int[][][] counts2(){
+        
+        //initialize counts to 0
+        int[][][] counts = new int[intervals][intervals][intervals];
+        for(int [][] x : counts){
+            for(int [] y : x){
+                for(int z = 0; z < y.length; z++){
+                    y[z] = 0;
+                }
+            }
+        }
+        
+        //make list of just notes (no rests)
+        ArrayList<Note> notes = new ArrayList<Note>();
+        for(Note n : melody.getNoteList()){
+            if(!n.isRest()){
+                notes.add(n);
+            }
+        }
+        
+        //stop at fourth note from end
+        for(int i = 0; i<notes.size()-3; i++){
+            int first = notes.get(i).getPitch();
+            int second = notes.get(i+1).getPitch();
+            int third = notes.get(i+2).getPitch();
+            int fourth = notes.get(i+3).getPitch();
+            
+            int x = second-first;
+            int y = third-second;
+            int z = fourth-third;
+            
+            if(inRange(x) && inRange(y) && inRange(z)){
+                counts[intervalToIndex(x)][intervalToIndex(y)][intervalToIndex(z)]++;
+            }
+        }
+        return counts;
     }
     
     public int[][] counts(){
@@ -163,7 +253,7 @@ public class IntervalLearner {
         return Math.abs(interval) <= range;
     }
     
-    private static int intervalToIndex(int interval){
+    public static int intervalToIndex(int interval){
         return interval + range;
     }
     

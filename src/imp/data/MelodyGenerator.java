@@ -25,6 +25,7 @@ import polya.PolylistEnum;
 public class MelodyGenerator {
 
     private double [][] probabilities;
+    private double [][][] probabilities2;
     private MelodyPart rhythm;
     private ChordPart chords;
     private int [] range;
@@ -47,12 +48,29 @@ public class MelodyGenerator {
         this.merge = merge;
     }
     
+    public MelodyGenerator(double[][][] probabilities2, MelodyPart rhythm, ChordPart chords, int [] range, String rectification, boolean merge) {
+        this.probabilities2 = probabilities2;
+        this.rhythm = rhythm;
+        this.chords = chords;
+        this.range = range;
+        this.rectification = rectification;
+        this.merge = merge;
+    }
+    
     public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range, String rectification, boolean merge){
         this(probabilities, polylistToMelodyPart(rhythm), chords, range, rectification, merge);
     }
     
+    public MelodyGenerator(double [][][] probabilities2, Polylist rhythm, ChordPart chords, int [] range, String rectification, boolean merge){
+        this(probabilities2, polylistToMelodyPart(rhythm), chords, range, rectification, merge);
+    }
+    
     public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range, String rectification, boolean merge){
         this(probabilities, rhythm(notate), chords, range, rectification, merge);
+    }
+    
+    public MelodyGenerator(double [][][] probabilities2, Notate notate, ChordPart chords, int [] range, String rectification, boolean merge){
+        this(probabilities2, rhythm(notate), chords, range, rectification, merge);
     }
     
     public static Polylist rhythm(Notate notate){
@@ -170,6 +188,74 @@ public class MelodyGenerator {
         return result;
     }
 
+    public MelodyPart melody2() {
+        MelodyPart result = new MelodyPart();
+        int prevInterval1 = NO_DATA;
+        int prevInterval2 = NO_DATA;
+        Note prevNote = null; //always a note, never a rest
+        int slot = 0;
+        Note n = rhythm.getNote(slot);
+        int duration = n.getRhythmValue();
+        Chord chord = chords.getCurrentChord(slot);
+
+        while(slot < rhythm.size()){
+            Note toAdd;
+            
+            if(n.isRest()){
+                toAdd = n.copy();
+            }
+            //should only be true for first note
+            else if(prevNote == null){
+                toAdd = randomChordOrColorTone(chord, duration);
+                
+            //should only be true for second note (we ignore rests)
+            }else if(prevInterval1 == NO_DATA){
+                //System.out.println("prevInterval is NO_DATA");
+                toAdd = randomChordOrColorTone(chord, duration);
+                //toAdd = new Note(rootPitch(chord), duration);
+                prevInterval1 = toAdd.getPitch() - prevNote.getPitch();
+            //should only be true for third note
+            }else if(prevInterval2 == NO_DATA){
+                toAdd = randomChordOrColorTone(chord, duration);
+                prevInterval2 = toAdd.getPitch() - prevNote.getPitch();
+            }
+            else{
+                toAdd = bestChoice(prevInterval1, prevInterval2, prevNote, duration, chord);
+                prevInterval1 = prevInterval2;
+                prevInterval2 = toAdd.getPitch() - prevNote.getPitch();
+            }
+            
+            //if n is a rest, skip right over it like it was never there
+            if(!n.isRest()){
+               prevNote = toAdd; 
+            }
+            
+            result.addNote(toAdd);
+            
+            slot += duration;
+            if(slot < rhythm.size()){
+                n = rhythm.getNote(slot);
+                duration = n.getRhythmValue();
+                chord = chords.getCurrentChord(slot);
+            }
+
+            
+        }
+        if(rectification.equals(PRE) || rectification.equals(POST)){
+            //post-rectification to chord, color, and approach tones
+            RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
+                                result.size()-1, chords,
+                                false, false,
+                                true, true, true);
+            cmd.execute();
+        }
+        //merge same notes - good idea???
+        if(merge){
+            result = mergeSameNotes(result);
+        }
+        return result;
+    }    
+    
     public MelodyPart melody() {
         MelodyPart result = new MelodyPart();
         int prevInterval = NO_DATA;
@@ -237,6 +323,7 @@ public class MelodyGenerator {
         }
         return result;
     }
+    
     
     
     private MelodyPart mergeSameNotes(MelodyPart unmerged){
@@ -502,6 +589,83 @@ public class MelodyGenerator {
 
     private boolean inRange(int pitchToAdd) {
         return pitchToAdd >= range[0] && pitchToAdd <= range[1];
+    }
+
+    private Note bestChoice(int prevInterval1, int prevInterval2, Note prevNote, int duration, Chord chord) {
+        int prevPitch = prevNote.getPitch();
+        ArrayList<Integer> pitches = new ArrayList<Integer>();
+        ArrayList<Double> pitchProbs = new ArrayList<Double>();
+        
+        int x = intervalToIndex(prevInterval1);
+        int y = intervalToIndex(prevInterval2);
+        for(int z = 0; z < probabilities2[x][y].length; z ++){
+            double prob = probabilities2[x][y][z];
+            int pitchToAdd = prevPitch + indexToInterval(z);
+            int typeIndex = chord.getTypeIndex(new Note(pitchToAdd));
+            boolean correctType = rectification.equals(PRE) ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
+            if(prob != 0 && inRange(pitchToAdd) && correctType){
+                pitches.add(pitchToAdd);
+                pitchProbs.add(prob);
+            }
+        }
+        
+        //if no pitches have nonzero probability, are in range, and are chord/color tones,
+        //allow all non chord / color tones
+        if(pitchProbs.isEmpty() && rectification.equals(PRE)){
+            //System.out.println("Allow non chord/color tones");
+            for(int z = 0; z < probabilities2[x][y].length; z ++){
+                double prob = probabilities2[x][y][z];
+                int pitchToAdd = prevPitch + indexToInterval(z);
+                if(prob != 0 && inRange(pitchToAdd)){
+                    pitches.add(pitchToAdd);
+                    pitchProbs.add(prob);
+                }
+            }
+        }
+        
+        //if there are no intervals that have nonzero probability that are in range,
+        //allow notes out of range
+        if(pitchProbs.isEmpty()){
+            //System.out.println("Allow out of range notes");
+            for(int z = 0; z < probabilities2[x][y].length; z ++){
+                double prob = probabilities2[x][y][z];
+                int pitchToAdd = prevPitch + indexToInterval(z);
+                if(prob != 0){
+                    pitches.add(pitchToAdd);
+                    pitchProbs.add(prob);
+                }
+            }
+        }
+        
+        //readjust probabilities so that they sum to one again
+        //they might not sum to 1 anymore because we eliminated options that were out of range
+        //and options that were'nt chord or color tones
+        //System.out.println("choices: "+pitchProbs.size());
+        double total = 0;
+        for(double prob : pitchProbs){
+            total += prob;
+        }
+        for(int i = 0; i<pitchProbs.size(); i++){
+            pitchProbs.set(i, pitchProbs.get(i)/total);
+        }
+        
+        Random r = new Random();
+        double decision = r.nextDouble();
+        double totalProb = 0;
+        
+        //this'll be unaltered if for some reason the probabilites don't sum
+        //exactly to 1 and the random number generator produce exactly 1 (unlikely)
+        int bestPitch = pitches.get(0);
+        
+        for(int i = 0; i < pitchProbs.size(); i++){
+            totalProb += pitchProbs.get(i);
+            if(totalProb > decision){
+                bestPitch = pitches.get(i);
+                break;
+            }
+        }
+        
+        return new Note(bestPitch, duration);
     }
     
 }
