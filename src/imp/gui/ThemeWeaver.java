@@ -2333,7 +2333,7 @@ private void playSelection()
 
             if( col == THEME_COLUMN && getValueAt(index, THEME_COLUMN) != null )
               {
-                //System.out.println("Theme at row " + index + " entered");
+                
                 MelodyPart melody = new MelodyPart((String) getValueAt(index, THEME_COLUMN));
                 int themeLengthBeats = melody.getSize() / BEAT;
                 soloTable.setValueAt(themeLengthBeats + "", index, LENGTH_COLUMN);
@@ -2656,7 +2656,7 @@ private void closeWindow()
                     && (getValueAt(i, LENGTH_COLUMN) != null) )
               {
                 //if theme cell is empty and length isn't
-                System.out.println("3");
+                
                 enteredIncorrectly.setVisible(true); //show error message
                 break;
               }
@@ -2671,7 +2671,7 @@ private void closeWindow()
                         || (getValueAt(i, BARLINESHIFT_COLUMN) == null))
                 {
                     //if one necessary cell isn't filled
-                    System.out.println("4");
+                    
                     enteredIncorrectly.setVisible(true); //show error message 
                     break;
                 }
@@ -2684,7 +2684,7 @@ private void closeWindow()
                         || !isNumeric((getValueAt(i, BARLINESHIFT_COLUMN).toString())))
                   {
                     //if theme cell not empty but weighted values are entered wrong
-                    System.out.println("5");  
+                    
                     enteredIncorrectly.setVisible(true); //show error message 
                     break;
                   }
@@ -2710,7 +2710,6 @@ private void closeWindow()
           }
         if (themeUses.isEmpty())
         {
-            System.out.println("6");
             enteredIncorrectly.setVisible(true);
             return;
         }
@@ -2754,14 +2753,14 @@ private void closeWindow()
                                               notate.getChordProg(), 
                                               notate.getCurrentSelectionStart());
 
-        System.out.println("FYI: relative pitch melody: "+ relativePitchMelody);
+        //System.out.println("FYI: relative pitch melody: "+ relativePitchMelody);
         
         MelodyPart gen = fillMelody(BEAT, 
                                     relativePitchMelody, 
                                     notate.getChordProg(),  
                                     notate.getCurrentSelectionStart());
         
-        System.out.println("FYI: filled melody: "+ gen);
+        //System.out.println("FYI: filled melody: "+ gen);
 
 
         Part.PartIterator i = sel.iterator();
@@ -2863,7 +2862,7 @@ private void closeWindow()
 
         if( soloPlaying )
           {
-              System.out.println("!!!!!!!!!!!!!!$$$$$@*($&!@$(*@&*(");
+              //System.out.println("!!!!!!!!!!!!!!$$$$$@*($&!@$(*@&*(");
             stopPlaytoggle.setText("<html><center>Play Solo</center></html>");
             stopPlaying();
           }
@@ -3512,20 +3511,25 @@ private void closeWindow()
     }//GEN-LAST:event_rectifySoloButtonActionPerformed
 
     private void undoEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoEditButtonActionPerformed
-        System.out.println("undo");
-        undos.push(customSolo);
-        customSolo = edits.pop();
-        notate.pasteMelody(customSolo);
-        
-        notate.setCurrentSelectionStart(0); //start selection at beginning
-        notate.delAllMelody();
-        notate.pasteMelody(customSolo); //paste solo into leadsheet
-        currentSlotCS = customSolo.getSize();
+        if (!edits.isEmpty())
+        {
+            undos.push(customSolo);
+            customSolo = edits.pop();
+            notate.pasteMelody(customSolo);
+
+            notate.setCurrentSelectionStart(0); //start selection at beginning
+            notate.delAllMelody();
+            notate.pasteMelody(customSolo); //paste solo into leadsheet
+            currentSlotCS = customSolo.getSize();
+        }
     }//GEN-LAST:event_undoEditButtonActionPerformed
 
     private void fillSoloButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillSoloButtonActionPerformed
         int measureSize = 480;
         ArrayList<Integer> emptyStartSlot = new ArrayList<Integer>();
+        
+        //loop through the solo to find the measures that are empty
+        //add them to the array list
         for (int i=0; i<customSolo.getSize(); i+=measureSize)
         {
             MelodyPart tempSolo = customSolo.extract(i, customSolo.getSize());
@@ -3536,11 +3540,10 @@ private void closeWindow()
                 i+= measureSize*(numSlotsToNextNote%measureSize);
             }
         }
-        MelodyPart miniMelody = new MelodyPart(480);
-        emptyStartSlot.add(-1);
-        System.out.println("**" +emptyStartSlot.toString());
+        MelodyPart miniMelody = new MelodyPart(480);//mini melody is the melody that will be
+                                                    //added to the solo
+        emptyStartSlot.add(-1);//this is so it will fill the whole space and wont stop early
         
-        //write isContinuous
         if (emptyStartSlot.size() > 0)
         {
             int startSlot = emptyStartSlot.get(0);
@@ -3552,29 +3555,8 @@ private void closeWindow()
                 }
                 else
                 {//add an actual melody to miniMelody and add it to the correct place in the solo
-                    MelodyPart prevSection = customSolo.copy();
-                    prevSection = prevSection.extract(0,i);
-                    int min =minPitch;
-                    int max = maxPitch;
-                    if (prevSection.getSize()!=0)
-                    {
-                        Note lastNote = prevSection.getLastNote();
-                        int lastPitch = lastNote.getPitch();
-
-                        min=lastPitch-6;
-                        max=lastPitch+6;//the 6 is kind of arbitrary
-                    }
-                    if (min < minPitch)
-                    {
-                        min = minPitch;
-                    }
-                    if (max > maxPitch)
-                    {
-                        max = maxPitch;
-                    }
+                    miniMelody = generateFromGrammar(miniMelody.getSize(), miniMelody, startSlot, minPitch, maxPitch);
                     
-                    miniMelody = generateFromGrammar(miniMelody.getSize(), miniMelody, startSlot, min, max);
-                    System.out.println(miniMelody.toString());
                     customSolo.pasteSlots(miniMelody, startSlot);
 
                     startSlot = emptyStartSlot.get(i);
@@ -3594,15 +3576,17 @@ private void closeWindow()
     }//GEN-LAST:event_keepEditsFromLeadsheetCheckBoxActionPerformed
 
     private void redoEditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoEditButtonActionPerformed
-        System.out.println("redo");
-        customSolo = undos.pop();
-        edits.push(customSolo);
-        notate.pasteMelody(customSolo);
+        if (!undos.isEmpty())
+        {
+            customSolo = undos.pop();
+            edits.push(customSolo);
+            notate.pasteMelody(customSolo);
         
-        notate.setCurrentSelectionStart(0); //start selection at beginning
-        notate.delAllMelody();
-        notate.pasteMelody(customSolo); //paste solo into leadsheet
-        currentSlotCS = customSolo.getSize();
+            notate.setCurrentSelectionStart(0); //start selection at beginning
+            notate.delAllMelody();
+            notate.pasteMelody(customSolo); //paste solo into leadsheet
+            currentSlotCS = customSolo.getSize();
+        }
     }//GEN-LAST:event_redoEditButtonActionPerformed
     
     
@@ -3616,7 +3600,7 @@ private void closeWindow()
     }
     
     private void setAllProb()
-    {
+    {//sets all the probabilites to the same value
         Object probUse = soloTable.getValueAt(0, 3);
         Object probTranpose = soloTable.getValueAt(0, 4);
         Object probInvert = soloTable.getValueAt(0, 5);
@@ -3647,7 +3631,7 @@ private void closeWindow()
     }
     
     private void setAllProbTo(double prob)
-    {
+    {//sets all probabilites to prob
         for (int r=0; r<soloTable.getRowCount(); r++)
         {
             for (int c=4; c<soloTable.getColumnCount(); c++)
@@ -4420,7 +4404,6 @@ public void generateTheme()
         if( (getValueAt(x, LENGTH_COLUMN) != null)
                 && (!isInteger((String) getValueAt(x, LENGTH_COLUMN))) )
           {
-            System.out.println("1");
             enteredIncorrectly.setVisible(true);
           }
         else
@@ -4906,7 +4889,7 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
         else
         {
             //doesn't use a theme, use grammar
-            themeUsageTextArea.append("Bar " + bar + ": Generated Solo\n");
+            themeUsageTextArea.append("Bar " + bar + ": Generated Melody\n");
             //set size of solo to the existing length of the solo plus the length of the theme
             int min =minPitch;
             int max = maxPitch;
@@ -4962,29 +4945,24 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
     cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false, true, false, false));
     notate.pasteMelody(solo); //paste solo into leadsheet
     imp.ImproVisor.setPlayEntrySounds(true); //play solo
-    System.out.println("*********");
 }
 
 private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
 {// makes a smoother connection between previous and next
-    //System.out.println("1 "+previous.toString());
-    //System.out.println("1 "+next.toString());
     MelodyPart solo = new MelodyPart();
     ArrayList<Note> previousNotes1 = previous.getNoteList();
     ArrayList<Note> nextNotes1 = next.getNoteList();
     ArrayList<Integer> prevNotesMidi1 = new ArrayList<Integer>();
     ArrayList<Integer> nextNotesMidi1 = new ArrayList<Integer>();
+    
     for (int i=0; i<previousNotes1.size(); i++)
-    {
+    {//get all the notes in the previous melody, add to array list
         prevNotesMidi1.add(previousNotes1.get(i).getPitch());
     }
     for (int i=0; i<nextNotes1.size(); i++)
-    {
+    {//get all the notes in the next melody, add to array list
         nextNotesMidi1.add(nextNotes1.get(i).getPitch());
     }
-    System.out.println("prev 1"+prevNotesMidi1.toString());
-    System.out.println("next 1"+nextNotesMidi1.toString());
-    System.out.println("######");
     if (previous.getSize() != 0 && next.getSize() != 0)
     {
         Note prevNote = previous.getLastNote();
@@ -5024,6 +5002,8 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
                     previousIndices.add(previous.getFirstIndex());
                 }
                 int prevInitialSize = previousIndices.size();
+                
+                //get the indices of the each note
                 for (int i=prevInitialSize; i<previous.size(); i++)
                 {
                     int nextIndex = previous.getNextIndex(i);
@@ -5053,7 +5033,7 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
                 //System.out.println("next indices*** " + nextIndices.toString());
                 
                 
-                int div1 = 4;
+                int div1 = 4;//the amount by which we'll split the difference
                 int nextMoveBy = difference/div1;
                 int div2 = 4;
                 int prevMoveBy = difference/div2;
@@ -5069,7 +5049,7 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
                 }
                 
                 for (int i=0; i<nextIndices.size(); i++)
-                {
+                {//shift the pitch appropriately and decrease the amount by which you shift
                     if (div1 <= Math.abs(difference))
                     {//move note by moveBy 
                         next.getNote(nextIndices.get(i)).shiftPitch(nextMoveBy, notate.getScore().getKeySignature());
@@ -5120,8 +5100,6 @@ private MelodyPart connectSections(MelodyPart previous, MelodyPart next)
     {
         nextNotesMidi.add(nextNotes.get(i).getPitch());
     }
-    System.out.println("prev 2"+prevNotesMidi.toString());
-    System.out.println("next 2"+nextNotesMidi.toString());
     solo.pasteSlots(previous, 0);
     solo.pasteSlots(next, previous.getSize());
     return solo;
@@ -5436,7 +5414,6 @@ private MelodyPart transpose(MelodyPart melody, int length)
 
 private MelodyPart expandBy(MelodyPart melody, int length, int num)
 {
-    System.out.println(num);
     int newLength = length*num;
     MelodyPart adjustedMelody = melody.copy();
     adjustedMelody.setSize(newLength);
