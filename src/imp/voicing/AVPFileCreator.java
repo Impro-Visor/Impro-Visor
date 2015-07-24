@@ -31,7 +31,7 @@ public class AVPFileCreator
             while(sc.hasNextLine())
             {
                 String line=sc.nextLine();
-                System.out.println(line);
+                //System.out.println(line);
                 if(line.contains("Auto Voicing Preset File."));
                 else if(!line.contains("("))
                     throw new Exception();

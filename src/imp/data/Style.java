@@ -645,7 +645,7 @@ public class Style
             case VOICING_FILE:
               {
               style.voicingFileName = (String)item.first();
-              System.out.println("in-switch");
+              //System.out.println("in-switch");
               break;
               }
             default:
@@ -663,7 +663,7 @@ public class Style
       }
     //if(ImproVisor.avs!=null)
         //AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),style.getVoicingFileName()), ImproVisor.avs);
-    System.out.println("\n\n____________________________________________________\n"+style.getVoicingFileName()+"\n"+style.getName()+"\n__________________________________");
+    //System.out.println("\n\n____________________________________________________\n"+style.getVoicingFileName()+"\n"+style.getName()+"\n__________________________________");
     return style;
     }
 
