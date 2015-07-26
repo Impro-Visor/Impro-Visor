@@ -45,6 +45,7 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 import java.util.Set;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableColumnModel;
 import polya.Polylist;
 import polya.Tokenizer;
@@ -4124,6 +4125,11 @@ public void updateAllDrumPatterns(String name, String rules)
         voicingFilenameTF.setMaximumSize(new java.awt.Dimension(200, 2147483647));
         voicingFilenameTF.setMinimumSize(new java.awt.Dimension(200, 38));
         voicingFilenameTF.setPreferredSize(new java.awt.Dimension(200, 38));
+        voicingFilenameTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                voicingSettingsClicked(evt);
+            }
+        });
         voicingFilenameTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 voicingFilenameTFActionPerformed(evt);
@@ -7658,8 +7664,25 @@ private void openStyleMixer()
     }//GEN-LAST:event_BassRangeTextActionPerformed
 
     private void voicingFilenameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingFilenameTFActionPerformed
-    setVoicingFileName(voicingFilenameTF.getText());
+                File openFile=null;
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
+                chooser.setFileFilter(filter);
+                int returnVal = chooser.showOpenDialog(null);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                    openFile=chooser.getSelectedFile();
+                }
+               if( openFile == null )
+                 {
+                   return; // ignore
+                 }
+               voicingFilenameTF.setText(openFile.getName());
+               setVoicingFileName(openFile.getName());
     }//GEN-LAST:event_voicingFilenameTFActionPerformed
+
+    private void voicingSettingsClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voicingSettingsClicked
+        voicingFilenameTFActionPerformed(null);
+    }//GEN-LAST:event_voicingSettingsClicked
 
     public int[] getChordRange(){
         return range;
