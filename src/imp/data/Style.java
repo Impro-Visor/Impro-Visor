@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,11 +156,6 @@ public class Style
    * a NoteSymbol determining the higher range for bass
    */
   private NoteSymbol bassHigh = NoteSymbol.makeNoteSymbol("g-");
-
-  /**
-   * a NoteSymbol determining the base bass note to start a bassline from
-   */
-  private NoteSymbol bassBase = NoteSymbol.makeNoteSymbol("c--");
 
   /**
    * a ArrayList of this Style's BassPattern objects
@@ -531,7 +526,6 @@ public class Style
     style.chordHigh = chordHigh;
     style.bassLow = bassLow;
     style.bassHigh = bassHigh;
-    style.bassBase = bassBase;
     style.comments = comments;
     style.voicingType = voicingType;
     style.voicingFileName=voicingFileName;
@@ -690,13 +684,7 @@ public class Style
                 NoteSymbol.makeNoteSymbol((String)item.first());
         break;
         }
-      case BASS_BASE:
-        {
-        bassBase =
-                NoteSymbol.makeNoteSymbol((String)item.first());
-        break;
-        }
-      case CHORD_HIGH:
+       case CHORD_HIGH:
         {
         chordHigh =
                 NoteSymbol.makeNoteSymbol((String)item.first());
@@ -818,8 +806,6 @@ public class Style
     out.newLine();
     out.write("    (" + keyword[BASS_LOW] + " " + bassLow.toPitchString() + ")");
     out.newLine();
-    out.write("    (" + keyword[BASS_BASE] + " " + bassBase.toPitchString() + ")");
-    out.newLine();
     out.write("    (" + keyword[CHORD_HIGH] + " " + chordHigh.toPitchString() + ")");
     out.newLine();
     out.write("    (" + keyword[CHORD_LOW] + " " + chordLow.toPitchString() + ")");
@@ -892,15 +878,6 @@ public class Style
   public NoteSymbol getChordLow()
     {
     return chordLow;
-    }
-
-  /**
-   * Gets the base bass note.
-   * @return the bass base
-   */
-  public NoteSymbol getBassBase()
-    {
-    return bassBase;
     }
 
   /**
@@ -1461,10 +1438,9 @@ public long render(MidiSequence seq,
     ChordSymbol chord;
     ChordSymbol nextChord;
     ChordSymbol previousExtension = null;
-    NoteSymbol previousBassNote = bassBase;
-    Polylist previousChord = Polylist.nil; // rk 8/06/07 was: chordBase;
-
-    int numNotes = 1;
+    NoteSymbol previousBassNote = 
+        NoteSymbol.makeNoteSymbol((bassHigh.getMIDI() + bassLow.getMIDI()) / 2);
+    Polylist previousChord = Polylist.nil;
 
     // Iterating over one ChordPart with i
 

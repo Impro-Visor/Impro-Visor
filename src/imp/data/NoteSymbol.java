@@ -144,6 +144,11 @@ public class NoteSymbol extends MelodySymbol
      {
      return makeNoteSymbol(note.toLeadsheet());
      } 
+   
+   public static NoteSymbol makeNoteSymbol(int midiValue)
+     {
+       return makeNoteSymbol(new Note(midiValue));
+     }
 
     public static NoteSymbol makeNoteSymbol(String string, int transposition)
      {
@@ -645,6 +650,15 @@ public class NoteSymbol extends MelodySymbol
    public String getPitchString()
      {
      return pitchClass.toString();
+     }
+   
+   /**
+    * Get pitch, e.g. "a++"
+    * @return 
+    */
+   public String getPitchOnly()
+     {
+     return toPitchStringBuilder(octave).toString();
      }
 
     /**
