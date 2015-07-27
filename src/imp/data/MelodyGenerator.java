@@ -20,7 +20,7 @@ import polya.PolylistEnum;
 
 /**
  *
- * @author muddCS15
+ * @author Mikayla Konst 2015
  */
 public class MelodyGenerator {
 
@@ -75,40 +75,10 @@ public class MelodyGenerator {
     
     public static Polylist rhythm(Notate notate){
         Grammar gram = new Grammar(notate.getGrammarFileName());
-        //System.out.println(gram.getRules());
         return justRhythm(gram.run(0, notate.getScoreLength(), notate, false, notate.getImprovisorTradeFirst(), notate.getTradingQuantum()));
-//        LickGen gen = notate.getLickGen();
-//        Polylist abstractMelody = gen.generateRhythmFromGrammar(0, notate.getScoreLength());
-//        return justRhythm(abstractMelody);
     }
-    
-//    public static Polylist rhythm(Notate notate){
-//        LickGen gen = new LickGen(notate.getGrammarFileName(), notate);
-//        int slots = notate.getScoreLength();
-//        Grammar gram = gen.getGrammar();
-//        ArrayList<Polylist> params = gram.getParams();
-//        int minDur = 0, maxDur = 0;
-//        double restProb = 0;
-//        for(Polylist param : params){
-//            String paramName = (String)param.first();
-//            if(paramName.equals("min-duration")){
-//                minDur = (int)(long)(Long)param.second();
-//            }else if(paramName.equals("max-duration")){
-//                maxDur = (int)(long)(Long)param.second();
-//            }else if(paramName.equals("rest-prob")){
-//                restProb = (Double)param.second();
-//            }
-//        }
-//        minDur = 16; maxDur = 4; restProb = .1;
-//        //System.out.println("slots: "+slots+"; minDur: "+minDur+"; maxDur: "+maxDur+"; restProb: "+restProb);
-//        Polylist rhythm = gen.generateRandomRhythm(slots, minDur, maxDur, restProb);
-//        //System.out.println("generated rhythm: "+rhythm);
-//        return rhythm;
-//    }
 
-    
     private static Polylist justRhythm(Polylist abstractMelody){
-        //System.out.println(abstractMelody);
         PolylistEnum iterator = abstractMelody.elements();
         Polylist justRhythm = new Polylist();
         while(iterator.hasMoreElements()){
@@ -127,15 +97,11 @@ public class MelodyGenerator {
                     while(i.hasMoreElements()){
                         try{
                             String elem = i.nextElement().toString();
-                            //System.out.println("elem: "+elem);
                             if(elem.matches("[A-Z].*")){
-                                //System.out.println("elem matches");
                                 if(elem.charAt(0)=='R'){
                                     justRhythm = justRhythm.addToEnd(elem);
-                                    //System.out.println(justRhythm);
                                 }else{
                                     justRhythm = justRhythm.addToEnd("X"+elem.substring(1));
-                                    //System.out.println(justRhythm);
                                 }
                             }
                         }catch(Exception e){
@@ -148,13 +114,10 @@ public class MelodyGenerator {
                 try{
                     String elem = nextElem.toString();
                     if(elem.matches("[A-Z].*")){
-                        //System.out.println("elem matches");
                         if(elem.charAt(0)=='R'){
                             justRhythm = justRhythm.addToEnd(elem);
-                            //System.out.println(justRhythm);
                         }else{
                             justRhythm = justRhythm.addToEnd("X"+elem.substring(1));
-                            //System.out.println(justRhythm);
                         }
                     }
                 }catch(Exception exp){
@@ -162,7 +125,6 @@ public class MelodyGenerator {
                 }
             }
         }
-        //System.out.println(justRhythm);
         return justRhythm;
     }
     
@@ -171,7 +133,6 @@ public class MelodyGenerator {
         PolylistEnum iterator = rhythm.elements();
         while(iterator.hasMoreElements()){
             String s = (String)iterator.nextElement();
-            //System.out.println(s);
             char restOrNote = s.charAt(0);
             String RorX = Character.toString(restOrNote);
             
@@ -269,26 +230,19 @@ public class MelodyGenerator {
             Note toAdd;
             
             if(n.isRest()){
-                //System.out.println("n is rest");
                 toAdd = n.copy();
             }
             //should only be true for first note
             else if(prevNote == null){
-                //System.out.println("prevNote is null or rest");
                 toAdd = randomChordOrColorTone(chord, duration);
-                //toAdd = new Note(rootPitch(chord), duration);
                 prevInterval = NO_DATA;
                 
             //should only be true for second note (we ignore rests)
             }else if(prevInterval == NO_DATA){
-                //System.out.println("prevInterval is NO_DATA");
                 toAdd = randomChordOrColorTone(chord, duration);
-                //toAdd = new Note(rootPitch(chord), duration);
                 prevInterval = toAdd.getPitch() - prevNote.getPitch();
             }
             else{
-                //System.out.println("in else");
-                //System.out.println(chord + " at slot "+slot);
                 toAdd = bestChoice(prevInterval, prevNote, duration, chord);
                 prevInterval = toAdd.getPitch() - prevNote.getPitch();
             }
@@ -590,7 +544,7 @@ public class MelodyGenerator {
     private boolean inRange(int pitchToAdd) {
         return pitchToAdd >= range[0] && pitchToAdd <= range[1];
     }
-
+ 
     private Note bestChoice(int prevInterval1, int prevInterval2, Note prevNote, int duration, Chord chord) {
         int prevPitch = prevNote.getPitch();
         ArrayList<Integer> pitches = new ArrayList<Integer>();

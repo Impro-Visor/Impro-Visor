@@ -8,10 +8,11 @@ package imp.data;
 import imp.Constants;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
- * @author muddCS15
+ * @author Mikayla Konst 2015
  */
 public class IntervalLearner {
     
@@ -40,6 +41,10 @@ public class IntervalLearner {
         }
         
         return probabilities;
+    }
+    
+    public double[][][] probabilities2(){
+        return probabilities(counts2());
     }
     
     public static double[][][] probabilities(int [] [] [] counts){
@@ -205,47 +210,6 @@ public class IntervalLearner {
                 counts[intervalToIndex(src)][intervalToIndex(dest)]++;
             }
         }
-        
-//        //first note
-//        int slot = melody.getFirstIndex();
-//        Note first = melody.getNote(slot);
-//        int size = melody.size();
-//        
-//        //go through notes, logging a count whenever there's a valid group of three
-//        for( ; slot < size; slot = slot + first.getRhythmValue(), first = melody.getNote(slot)){
-//            //first note note rest
-//            if(!first.isRest()){
-//                int slot2 = slot + first.getRhythmValue();
-//                //second note within list
-//                if(slot2 < size){
-//                    Note second = melody.getNote(slot2);
-//                    //second note not rest
-//                    if(!second.isRest()){
-//                        int slot3 = slot2 + second.getRhythmValue();
-//                        //third note within list
-//                        if(slot3 < size){
-//                            Note third = melody.getNote(slot3);
-//                            //third note not rest
-//                            if(!third.isRest()){
-//                                //pitches
-//                                int pitch1 = first.getPitch();
-//                                int pitch2 = second.getPitch();
-//                                int pitch3 = third.getPitch();
-//                                //intervals
-//                                int interval1 = pitch2-pitch1;
-//                                int interval2 = pitch3-pitch2;
-//                                
-//                                //both intervals are in range (less than an octave)
-//                                if(inRange(interval1) && inRange(interval2)){
-//                                    counts[intervalToIndex(interval1)][intervalToIndex(interval2)] ++;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        
         return counts;
     }
     
@@ -298,6 +262,83 @@ public class IntervalLearner {
             System.out.print(cell+"\t");
         }
         System.out.println();
+    }
+    
+    /**
+     * First Order - best pitch
+     * @param prevInterval
+     * @param prevPitch
+     * @param learner
+     * @return 
+     */
+    public int bestPitch(int prevInterval, int prevPitch){
+        double [][] probs = probabilities();
+        ArrayList<Integer> pitches = new ArrayList<Integer>();
+        ArrayList<Double> pitchProbs = new ArrayList<Double>();
+        
+        int sourceIndex = intervalToIndex(prevInterval);
+        for(int destIndex = 0; destIndex < probs[sourceIndex].length; destIndex ++){
+            double prob = probs[sourceIndex][destIndex];
+            int pitchToAdd = prevPitch + indexToInterval(destIndex);
+            if(prob != 0){
+                pitches.add(pitchToAdd);
+                pitchProbs.add(prob);
+            }
+        }
+
+        Random r = new Random();
+        double decision = r.nextDouble();
+        double totalProb = 0;
+        
+        int bestPitch = pitches.get(0);
+        
+        for(int i = 0; i < pitchProbs.size(); i++){
+            totalProb += pitchProbs.get(i);
+            if(totalProb > decision){
+                bestPitch = pitches.get(i);
+                break;
+            }
+        }
+        
+        return bestPitch;
+    }
+    
+    public int bestPitch(int prevInterval1, int prevInterval2, int prevPitch){
+        double [][][] probs = probabilities2();
+        
+        ArrayList<Integer> pitches = new ArrayList<Integer>();
+        ArrayList<Double> pitchProbs = new ArrayList<Double>();
+        
+        int x = intervalToIndex(prevInterval1);
+        int y = intervalToIndex(prevInterval2);
+        for(int z = 0; z < probs[x][y].length; z ++){
+            double prob = probs[x][y][z];
+            int pitchToAdd = prevPitch + indexToInterval(z);
+            if(prob != 0){
+                pitches.add(pitchToAdd);
+                pitchProbs.add(prob);
+            }
+        }
+        
+        Random r = new Random();
+        double decision = r.nextDouble();
+        double totalProb = 0;
+        
+        int bestPitch = pitches.get(0);
+        
+        for(int i = 0; i < pitchProbs.size(); i++){
+            totalProb += pitchProbs.get(i);
+            if(totalProb > decision){
+                bestPitch = pitches.get(i);
+                break;
+            }
+        }
+        
+        return bestPitch;
+    }
+    
+    private static int indexToInterval(int index){
+        return index - Constants.OCTAVE;
     }
     
 }
