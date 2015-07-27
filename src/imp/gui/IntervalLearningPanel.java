@@ -893,8 +893,15 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         writer.close();
     }
     
+    /**
+     * countsToString
+     * Returns String representation of 1st order and 2nd order counts data
+     * 1st 25X25 array contains the 1st order counts
+     * Next 25 25X25 arrays contain the 2nd order counts
+     * @return 
+     */
     private String countsToString(){
-        return countsToString(counts);
+        return countsToString(counts)+"\n"+countsToString(counts2);
     }
     
     private String countsToString(int [][] array){
@@ -903,6 +910,15 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             for(int count : row){
                 result += count+"\t";
             }
+            result += "\n";
+        }
+        return result;
+    }
+    
+    private String countsToString(int [][][] threeD){
+        String result = "";
+        for(int [][] twoD : threeD){
+            result += countsToString(twoD);
             result += "\n";
         }
         return result;
@@ -1000,13 +1016,26 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_clearAllActionPerformed
 
     private void clearAll(){
-        counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
+        //clear all 1st order counts
+        //counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
         for(int [] row : counts){
             for(int c = 0; c < row.length; c++){
                 row[c] = 0;
             }
         }
+        //update 1st order probabilities
         probabilities = IntervalLearner.probabilities(counts);
+        
+        //clear all 2nd order counts
+        for(int [][] twoD : counts2){
+            for(int [] y : twoD){
+                for(int z = 0; z < y.length; z++){
+                    y[z] = 0;
+                }
+            }
+        }
+        //update 2nd order probabilities
+        probabilities2 = IntervalLearner.probabilities(counts2);
         refreshDisplay();
     }
     
@@ -1092,13 +1121,25 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     
     private void addToCountsAndUpdateProbabilities(File f) throws FileNotFoundException{
         Scanner scan = new Scanner(f);
+        //add to 1st order counts
         for(int [] row : counts){
             for(int column = 0; column < row.length; column++){
                 row[column] += scan.nextInt();
             }
         }
+        //add to 2nd order counts
+        for(int [][] twoD : counts2){
+            for(int [] y : twoD){
+                for(int z = 0; z < y.length; z++){
+                    y[z] += scan.nextInt();
+                }
+            }
+        }
         scan.close();
+        //update 1st order probabilities
         probabilities = IntervalLearner.probabilities(counts);
+        //update 2nd order probabilities
+        probabilities2 = IntervalLearner.probabilities(counts2);
         refreshDisplay();
     }
     
@@ -1114,13 +1155,25 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     
     private void updateCountsAndProbabilities(File f) throws FileNotFoundException{
         Scanner scan = new Scanner(f);
+        //update 1st order counts
         for(int [] row : counts){
             for(int column = 0; column < row.length; column++){
                 row[column] = scan.nextInt();
             }
         }
+        //update 2nd order counts
+        for(int [][] twoD : counts2){
+            for(int [] y : twoD){
+                for(int z = 0; z < y.length; z++){
+                    y[z] = scan.nextInt();
+                }
+            }
+        }
         scan.close();
+        //update 1st order probabilities
         probabilities = IntervalLearner.probabilities(counts);
+        //update 2nd order probabilities
+        probabilities2 = IntervalLearner.probabilities(counts2);
         refreshDisplay();
     }
     
