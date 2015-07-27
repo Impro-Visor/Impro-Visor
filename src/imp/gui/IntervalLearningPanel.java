@@ -44,18 +44,19 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
 
     private Notate notate;
     private JLabel [][] probabilityLabels;
-    private double[][] probabilities;
-    private double [][][] probabilities2;
+    //private double[][] probabilities;
+    //private double [][][] probabilities2;
     private int [] range;
     private boolean displayProbabilities;
     private boolean displayOrder;
     private boolean addToRunningTotal;
-    int [][] counts;
-    int [][][] counts2;
-    private JFileChooser chooser;
+    //int [][] counts;
+    //int [][][] counts2;
+    private final JFileChooser chooser;
     private String EXTENSION = ".counts";
     private String filename;
     private int interval1;
+    private IntervalLearner learner;
     
     private static final boolean FIRST = true;
     private static final boolean SECOND = false;
@@ -67,27 +68,28 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
      * Creates new form IntervalLearningPanel
      */
     public IntervalLearningPanel(Notate notate) {
+        learner = new IntervalLearner();
         //unsavedChanges = false;
         filename = "newFile.counts";
         this.notate = notate;
         initComponents();
         filenameLabel.setText(filename);
-        counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
-        for(int [] row : counts){
-            for(int c = 0; c < row.length; c++){
-                row[c] = 0;
-            }
-        }
-        probabilities = IntervalLearner.probabilities(counts);
-        counts2 = new int[IntervalLearner.intervals][IntervalLearner.intervals][IntervalLearner.intervals];
-        for(int [][] x : counts2){
-            for(int [] y : x){
-                for(int z = 0; z < y.length; z++){
-                    y[z] = 0;
-                }
-            }
-        }
-        probabilities2 = IntervalLearner.probabilities(counts2);
+//        counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
+//        for(int [] row : counts){
+//            for(int c = 0; c < row.length; c++){
+//                row[c] = 0;
+//            }
+//        }
+//        probabilities = IntervalLearner.probabilities(counts);
+//        counts2 = new int[IntervalLearner.intervals][IntervalLearner.intervals][IntervalLearner.intervals];
+//        for(int [][] x : counts2){
+//            for(int [] y : x){
+//                for(int z = 0; z < y.length; z++){
+//                    y[z] = 0;
+//                }
+//            }
+//        }
+//        probabilities2 = IntervalLearner.probabilities(counts2);
         range = new int [2];
         //default
         range[0] = Constants.G3;
@@ -732,6 +734,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
                 clearAll();
             }
             addThisToTotal();
+            //learner.printTotals();
             //refreshDisplay();
             //probabilitiesPanel.repaint();
 //        if(!addToRunningTotal){
@@ -809,10 +812,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         MelodyGenerator mgen;
         MelodyPart result = null;
         if(firstOrderButton.isSelected()){
-            mgen = new MelodyGenerator(probabilities, rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
+            mgen = new MelodyGenerator(learner.getDeg1Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
             result = mgen.melody();
         }else{
-            mgen = new MelodyGenerator(probabilities2, rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
+            mgen = new MelodyGenerator(learner.getDeg2Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
             result = mgen.melody2();
         }
         notate.addChorus(result);
@@ -825,10 +828,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         MelodyGenerator mgen;
         MelodyPart result = null;
         if(firstOrderButton.isSelected()){
-            mgen = new MelodyGenerator(probabilities, rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
+            mgen = new MelodyGenerator(learner.getDeg1Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
             result = mgen.melody();
         }else{
-            mgen = new MelodyGenerator(probabilities2, rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
+            mgen = new MelodyGenerator(learner.getDeg2Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
             result = mgen.melody2();
         }
         notate.addChorus(result);
@@ -839,10 +842,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         MelodyGenerator mgen;
         MelodyPart result = null;
         if(firstOrderButton.isSelected()){
-            mgen = new MelodyGenerator(probabilities, notate, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
+            mgen = new MelodyGenerator(learner.getDeg1Probs(), notate, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
             result = mgen.melody();
         }else{
-            mgen = new MelodyGenerator(probabilities2, notate, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
+            mgen = new MelodyGenerator(learner.getDeg2Probs(), notate, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
             result = mgen.melody2();
         }
         notate.addChorus(result);
@@ -901,7 +904,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
      * @return 
      */
     private String countsToString(){
-        return countsToString(counts)+"\n"+countsToString(counts2);
+        return countsToString(learner.getDeg1Counts())+"\n"+countsToString(learner.getDeg2Counts());
     }
     
     private String countsToString(int [][] array){
@@ -964,50 +967,55 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private void addAllToTotal(){
         for(int i = 0; i < notate.getScore().size(); ++i){
             MelodyPart learnFromThis = notate.getMelodyPart(notate.getStaveAtTab(i));
-            IntervalLearner learner = new IntervalLearner(learnFromThis);
-            //1st Order Markov Chain
-            int [][] countsToAdd = learner.counts();
-            for(int row = 0; row < counts.length; row++){
-                for(int c = 0; c < counts[row].length; c++){
-                    counts[row][c] += countsToAdd[row][c];
-                }
-            }
-            //2nd Order Markov Chain
-            int [][][] counts2ToAdd = learner.counts2();
-            for(int x = 0; x < counts2.length; x++){
-                for(int y = 0; y < counts2[x].length; y++){
-                    for(int z = 0; z < counts2[x][y].length; z++){
-                        counts2[x][y][z] += counts2ToAdd[x][y][z];
-                    }
-                }
-            }
+            //IntervalLearner learner = new IntervalLearner(learnFromThis);
+            //IntervalLearner learner = new IntervalLearner();
+            learner.learnFrom(learnFromThis);
+            
+//            //1st Order Markov Chain
+//            int [][] countsToAdd = learner.counts();
+//            for(int row = 0; row < counts.length; row++){
+//                for(int c = 0; c < counts[row].length; c++){
+//                    counts[row][c] += countsToAdd[row][c];
+//                }
+//            }
+//            //2nd Order Markov Chain
+//            int [][][] counts2ToAdd = learner.counts2();
+//            for(int x = 0; x < counts2.length; x++){
+//                for(int y = 0; y < counts2[x].length; y++){
+//                    for(int z = 0; z < counts2[x][y].length; z++){
+//                        counts2[x][y][z] += counts2ToAdd[x][y][z];
+//                    }
+//                }
+//            }
+            
         }
-        probabilities = IntervalLearner.probabilities(counts);
-        probabilities2 = IntervalLearner.probabilities(counts2);
+//        probabilities = IntervalLearner.probabilities(counts);
+//        probabilities2 = IntervalLearner.probabilities(counts2);
         refreshDisplay();
     }
     
     private void addThisToTotal(){
-        IntervalLearner learner = new IntervalLearner(notate.getCurrentMelodyPart());
-        //1st Order Markov Chain
-        int [][] countsToAdd = learner.counts();
-       
-        for(int i = 0; i < counts.length; i++){
-            for(int j = 0; j < counts.length; j++){
-                counts[i][j] += countsToAdd[i][j];
-            }
-        }
-        //2nd Order Markov Chain
-        int [][][] counts2ToAdd = learner.counts2();
-        for(int x = 0; x < counts2.length; x++){
-            for(int y = 0; y < counts2[x].length; y++){
-                for(int z = 0; z < counts2[x][y].length; z++){
-                    counts2[x][y][z] += counts2ToAdd[x][y][z];
-                }
-            }
-        }
-        probabilities = IntervalLearner.probabilities(counts);
-        probabilities2 = IntervalLearner.probabilities(counts2);
+//        IntervalLearner learner = new IntervalLearner(notate.getCurrentMelodyPart());
+//        //1st Order Markov Chain
+//        int [][] countsToAdd = learner.counts();
+//       
+//        for(int i = 0; i < counts.length; i++){
+//            for(int j = 0; j < counts.length; j++){
+//                counts[i][j] += countsToAdd[i][j];
+//            }
+//        }
+//        //2nd Order Markov Chain
+//        int [][][] counts2ToAdd = learner.counts2();
+//        for(int x = 0; x < counts2.length; x++){
+//            for(int y = 0; y < counts2[x].length; y++){
+//                for(int z = 0; z < counts2[x][y].length; z++){
+//                    counts2[x][y][z] += counts2ToAdd[x][y][z];
+//                }
+//            }
+//        }
+//        probabilities = IntervalLearner.probabilities(counts);
+//        probabilities2 = IntervalLearner.probabilities(counts2);
+        learner.learnFrom(notate.getCurrentMelodyPart());
         refreshDisplay();
     }
     
@@ -1016,26 +1024,27 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_clearAllActionPerformed
 
     private void clearAll(){
-        //clear all 1st order counts
-        //counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
-        for(int [] row : counts){
-            for(int c = 0; c < row.length; c++){
-                row[c] = 0;
-            }
-        }
-        //update 1st order probabilities
-        probabilities = IntervalLearner.probabilities(counts);
-        
-        //clear all 2nd order counts
-        for(int [][] twoD : counts2){
-            for(int [] y : twoD){
-                for(int z = 0; z < y.length; z++){
-                    y[z] = 0;
-                }
-            }
-        }
-        //update 2nd order probabilities
-        probabilities2 = IntervalLearner.probabilities(counts2);
+//        //clear all 1st order counts
+//        //counts = new int[IntervalLearner.intervals][IntervalLearner.intervals];
+//        for(int [] row : counts){
+//            for(int c = 0; c < row.length; c++){
+//                row[c] = 0;
+//            }
+//        }
+//        //update 1st order probabilities
+//        probabilities = IntervalLearner.probabilities(counts);
+//        
+//        //clear all 2nd order counts
+//        for(int [][] twoD : counts2){
+//            for(int [] y : twoD){
+//                for(int z = 0; z < y.length; z++){
+//                    y[z] = 0;
+//                }
+//            }
+//        }
+//        //update 2nd order probabilities
+//        probabilities2 = IntervalLearner.probabilities(counts2);
+        learner.clearAll();
         refreshDisplay();
     }
     
@@ -1120,26 +1129,27 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     }
     
     private void addToCountsAndUpdateProbabilities(File f) throws FileNotFoundException{
-        Scanner scan = new Scanner(f);
-        //add to 1st order counts
-        for(int [] row : counts){
-            for(int column = 0; column < row.length; column++){
-                row[column] += scan.nextInt();
-            }
-        }
-        //add to 2nd order counts
-        for(int [][] twoD : counts2){
-            for(int [] y : twoD){
-                for(int z = 0; z < y.length; z++){
-                    y[z] += scan.nextInt();
-                }
-            }
-        }
-        scan.close();
-        //update 1st order probabilities
-        probabilities = IntervalLearner.probabilities(counts);
-        //update 2nd order probabilities
-        probabilities2 = IntervalLearner.probabilities(counts2);
+//        Scanner scan = new Scanner(f);
+//        //add to 1st order counts
+//        for(int [] row : counts){
+//            for(int column = 0; column < row.length; column++){
+//                row[column] += scan.nextInt();
+//            }
+//        }
+//        //add to 2nd order counts
+//        for(int [][] twoD : counts2){
+//            for(int [] y : twoD){
+//                for(int z = 0; z < y.length; z++){
+//                    y[z] += scan.nextInt();
+//                }
+//            }
+//        }
+//        scan.close();
+//        //update 1st order probabilities
+//        probabilities = IntervalLearner.probabilities(counts);
+//        //update 2nd order probabilities
+//        probabilities2 = IntervalLearner.probabilities(counts2);
+        learner.learnFrom(f);
         refreshDisplay();
     }
     
@@ -1154,26 +1164,28 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     }
     
     private void updateCountsAndProbabilities(File f) throws FileNotFoundException{
-        Scanner scan = new Scanner(f);
-        //update 1st order counts
-        for(int [] row : counts){
-            for(int column = 0; column < row.length; column++){
-                row[column] = scan.nextInt();
-            }
-        }
-        //update 2nd order counts
-        for(int [][] twoD : counts2){
-            for(int [] y : twoD){
-                for(int z = 0; z < y.length; z++){
-                    y[z] = scan.nextInt();
-                }
-            }
-        }
-        scan.close();
-        //update 1st order probabilities
-        probabilities = IntervalLearner.probabilities(counts);
-        //update 2nd order probabilities
-        probabilities2 = IntervalLearner.probabilities(counts2);
+//        Scanner scan = new Scanner(f);
+//        //update 1st order counts
+//        for(int [] row : counts){
+//            for(int column = 0; column < row.length; column++){
+//                row[column] = scan.nextInt();
+//            }
+//        }
+//        //update 2nd order counts
+//        for(int [][] twoD : counts2){
+//            for(int [] y : twoD){
+//                for(int z = 0; z < y.length; z++){
+//                    y[z] = scan.nextInt();
+//                }
+//            }
+//        }
+//        scan.close();
+//        //update 1st order probabilities
+//        probabilities = IntervalLearner.probabilities(counts);
+//        //update 2nd order probabilities
+//        probabilities2 = IntervalLearner.probabilities(counts2);
+        clearAll();
+        learner.learnFrom(f);
         refreshDisplay();
     }
     
@@ -1182,12 +1194,14 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         DecimalFormat df = new DecimalFormat("#.##");
         if(displayProbabilities){
             if(displayOrder == FIRST){
+                double [][] probabilities = learner.getDeg1Probs();
                 for(int row = 0; row < probabilities.length; row++){
                     for(int column = 0; column < probabilities[row].length; column++){
                         probabilityLabels[row+1][column+1].setText(df.format(probabilities[row][column]));
                     }
                 }
             }else{
+                double [][][] probabilities2 = learner.getDeg2Probs();
                 for(int y = 0; y < probabilities2[x].length; y++){
                     for(int z = 0; z < probabilities2[x][y].length; z++){
                         probabilityLabels[y+1][z+1].setText(df.format(probabilities2[x][y][z]));
@@ -1197,12 +1211,14 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
             
         }else{
             if(displayOrder == FIRST){
+                int [][] counts = learner.getDeg1Counts();
                 for(int row = 0; row < counts.length; row++){
                     for(int column = 0; column < counts[row].length; column++){
                         probabilityLabels[row+1][column+1].setText(Integer.toString(counts[row][column]));
                     }
                 }
             }else{
+                int [][][] counts2 = learner.getDeg2Counts();
                 for(int y = 0; y < counts2[x].length; y++){
                     for(int z = 0; z < counts2[x][y].length; z++){
                         probabilityLabels[y+1][z+1].setText(df.format(counts2[x][y][z]));
