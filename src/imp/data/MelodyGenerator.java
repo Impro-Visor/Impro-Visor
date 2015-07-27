@@ -30,6 +30,11 @@ public class MelodyGenerator {
     private ChordPart chords;
     private int [] range;
     private String rectification;
+    //whether to rectify
+    //private boolean rectify;
+    //types of notes to allow in rectification
+    //private boolean chord, color, approach;
+    //whether to merge same notes
     private boolean merge;
 
     private static final int NO_DATA = Integer.MAX_VALUE;
