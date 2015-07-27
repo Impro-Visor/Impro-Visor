@@ -81,6 +81,8 @@ public class StyleEditor
   static public final String VOLUME_STRING = "V";
 
   static public final String BASS_STRING = "B";
+  
+  static public final String CUSTOM = "custom";
 
   int nextPattern = 0;
   
@@ -1240,7 +1242,7 @@ public void updateAllDrumPatterns(String name, String rules)
       attributes += "\t(comp-swing 0.5)\n";
       }
 
-    attributes += "\t(voicing-type " + voicingType.getSelectedItem() + ")\n";
+    attributes += "\t(voicing-type " + voicingTypeChoice.getSelectedItem() + ")\n";
     attributes += "\t(voicing-name " + voicingFileName + ")\n";
     //TODO: Correctly implement voicing type.
 
@@ -1842,7 +1844,7 @@ public void updateAllDrumPatterns(String name, String rules)
     setChordRangeText(clmidi, chmidi);
     
     String vType = style.getVoicingType();
-    voicingType.setSelectedItem(vType);
+    voicingTypeChoice.setSelectedItem(vType);
 
     String swingValue = String.valueOf(style.getSwing());
     swingTextField.setText(swingValue);
@@ -3461,15 +3463,15 @@ public void updateAllDrumPatterns(String name, String rules)
         importBassCheckBox1 = new javax.swing.JCheckBox();
         globalAttrPanel = new javax.swing.JPanel();
         bassAttrPanel = new javax.swing.JPanel();
-        BassRange = new javax.swing.JButton();
+        bassRangeChoice = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        chordRange = new javax.swing.JButton();
-        voicingType = new javax.swing.JComboBox();
+        chordRangeChoice = new javax.swing.JButton();
+        voicingTypeChoice = new javax.swing.JComboBox();
         voicingFilenameTF = new javax.swing.JTextField();
         voicingLabel = new javax.swing.JLabel();
-        BassRangeText = new javax.swing.JTextField();
-        ChordRangeText = new javax.swing.JTextField();
+        bassRangeText = new javax.swing.JTextField();
+        chordRangeText = new javax.swing.JTextField();
         swingTextField = new javax.swing.JTextField();
         accompanimentSwingTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -4039,13 +4041,13 @@ public void updateAllDrumPatterns(String name, String rules)
         bassAttrPanel.setPreferredSize(new java.awt.Dimension(250, 115));
         bassAttrPanel.setLayout(new java.awt.GridBagLayout());
 
-        BassRange.setText("Choose Bass Range");
-        BassRange.setMaximumSize(new java.awt.Dimension(150, 29));
-        BassRange.setMinimumSize(new java.awt.Dimension(150, 29));
-        BassRange.setPreferredSize(new java.awt.Dimension(150, 29));
-        BassRange.addActionListener(new java.awt.event.ActionListener() {
+        bassRangeChoice.setText("Choose Bass Range");
+        bassRangeChoice.setMaximumSize(new java.awt.Dimension(150, 29));
+        bassRangeChoice.setMinimumSize(new java.awt.Dimension(150, 29));
+        bassRangeChoice.setPreferredSize(new java.awt.Dimension(150, 29));
+        bassRangeChoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BassRangeActionPerformed(evt);
+                bassRangeChoiceActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4056,7 +4058,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.weighty = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(BassRange, gridBagConstraints);
+        bassAttrPanel.add(bassRangeChoice, gridBagConstraints);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Bass Range:");
@@ -4080,13 +4082,14 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         bassAttrPanel.add(jLabel3, gridBagConstraints);
 
-        chordRange.setText("Choose Chord Range");
-        chordRange.setMaximumSize(new java.awt.Dimension(150, 29));
-        chordRange.setMinimumSize(new java.awt.Dimension(150, 29));
-        chordRange.setPreferredSize(new java.awt.Dimension(150, 29));
-        chordRange.addActionListener(new java.awt.event.ActionListener() {
+        chordRangeChoice.setText("Choose Chord Range");
+        chordRangeChoice.setToolTipText("Press this to set the lowest and highest note for chord voicings. Extensions for shout voicings are not included in the range limit. If using custom voicings, this will have no effect, as the range is determined from voicing settings.");
+        chordRangeChoice.setMaximumSize(new java.awt.Dimension(150, 29));
+        chordRangeChoice.setMinimumSize(new java.awt.Dimension(150, 29));
+        chordRangeChoice.setPreferredSize(new java.awt.Dimension(150, 29));
+        chordRangeChoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chordRangeActionPerformed(evt);
+                chordRangeChoiceActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4097,16 +4100,16 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(chordRange, gridBagConstraints);
+        bassAttrPanel.add(chordRangeChoice, gridBagConstraints);
 
-        voicingType.setMaximumRowCount(10);
-        voicingType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "custom", "designer", "any", "closed", "open", "quartal", "shout" }));
-        voicingType.setMaximumSize(new java.awt.Dimension(150, 32767));
-        voicingType.setMinimumSize(new java.awt.Dimension(150, 22));
-        voicingType.setPreferredSize(new java.awt.Dimension(150, 22));
-        voicingType.addActionListener(new java.awt.event.ActionListener() {
+        voicingTypeChoice.setMaximumRowCount(10);
+        voicingTypeChoice.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "custom", "designer", "any", "closed", "open", "quartal", "shout" }));
+        voicingTypeChoice.setMaximumSize(new java.awt.Dimension(150, 32767));
+        voicingTypeChoice.setMinimumSize(new java.awt.Dimension(150, 22));
+        voicingTypeChoice.setPreferredSize(new java.awt.Dimension(150, 22));
+        voicingTypeChoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                voicingTypeActionPerformed(evt);
+                voicingTypeChoiceActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4116,7 +4119,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
-        bassAttrPanel.add(voicingType, gridBagConstraints);
+        bassAttrPanel.add(voicingTypeChoice, gridBagConstraints);
 
         voicingFilenameTF.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         voicingFilenameTF.setText("default.avp");
@@ -4154,14 +4157,14 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         bassAttrPanel.add(voicingLabel, gridBagConstraints);
 
-        BassRangeText.setEditable(false);
-        BassRangeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        BassRangeText.setMaximumSize(new java.awt.Dimension(100, 2147483647));
-        BassRangeText.setMinimumSize(new java.awt.Dimension(100, 28));
-        BassRangeText.setPreferredSize(new java.awt.Dimension(100, 28));
-        BassRangeText.addActionListener(new java.awt.event.ActionListener() {
+        bassRangeText.setEditable(false);
+        bassRangeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        bassRangeText.setMaximumSize(new java.awt.Dimension(100, 2147483647));
+        bassRangeText.setMinimumSize(new java.awt.Dimension(100, 28));
+        bassRangeText.setPreferredSize(new java.awt.Dimension(100, 28));
+        bassRangeText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BassRangeTextActionPerformed(evt);
+                bassRangeTextActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4172,13 +4175,13 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(BassRangeText, gridBagConstraints);
+        bassAttrPanel.add(bassRangeText, gridBagConstraints);
 
-        ChordRangeText.setEditable(false);
-        ChordRangeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ChordRangeText.setMaximumSize(new java.awt.Dimension(100, 2147483647));
-        ChordRangeText.setMinimumSize(new java.awt.Dimension(100, 28));
-        ChordRangeText.setPreferredSize(new java.awt.Dimension(100, 28));
+        chordRangeText.setEditable(false);
+        chordRangeText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        chordRangeText.setMaximumSize(new java.awt.Dimension(100, 2147483647));
+        chordRangeText.setMinimumSize(new java.awt.Dimension(100, 28));
+        chordRangeText.setPreferredSize(new java.awt.Dimension(100, 28));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
@@ -4187,7 +4190,7 @@ public void updateAllDrumPatterns(String name, String rules)
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        bassAttrPanel.add(ChordRangeText, gridBagConstraints);
+        bassAttrPanel.add(chordRangeText, gridBagConstraints);
 
         swingTextField.setText("0.5");
         swingTextField.setPreferredSize(new java.awt.Dimension(50, 19));
@@ -6214,9 +6217,14 @@ public void updateAllDrumPatterns(String name, String rules)
       // Causes false indication. changedSinceLastSave = true;
     }//GEN-LAST:event_commentAreaPropertyChange
 
-    private void voicingTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingTypeActionPerformed
-                   changedSinceLastSave = true;
-    }//GEN-LAST:event_voicingTypeActionPerformed
+    private void voicingTypeChoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingTypeChoiceActionPerformed
+      changedSinceLastSave = true;
+      // If custom voicing, disable the button and grey the text
+      boolean customVoicing = voicingTypeChoice.getSelectedItem().equals(CUSTOM);
+      voicingFilenameTF.setEnabled(customVoicing);
+      chordRangeChoice.setEnabled(!customVoicing);
+      chordRangeText.setEnabled(!customVoicing);
+    }//GEN-LAST:event_voicingTypeChoiceActionPerformed
 
     private void copyColumnButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_copyColumnButtonActionPerformed
     {//GEN-HEADEREND:event_copyColumnButtonActionPerformed
@@ -7614,19 +7622,24 @@ private void openStyleMixer()
         conPanel.setVisible(true);
     }//GEN-LAST:event_custVoicActionPerformed
 
-    private void chordRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordRangeActionPerformed
+    private void chordRangeChoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordRangeChoiceActionPerformed
         
-        RangeChooser rc=new RangeChooser(null, chordLow.getPitch(), chordHigh.getPitch(), 12, true);
+        if( voicingTypeChoice.equals(CUSTOM) ) 
+        {
+            return; // no effect for custom
+        }
+
+        RangeChooser rc = new RangeChooser(null, chordLow.getPitch(), chordHigh.getPitch(), 12, true);
         int range[] = rc.getRange();
         clmidi = range[0];
         chmidi = range[1];
         chordLow = new Note(clmidi);
-        chordHigh = new Note(chmidi); 
-        
-        setChordRangeText(chordLow.getPitch(), chordHigh.getPitch());
-    }//GEN-LAST:event_chordRangeActionPerformed
+        chordHigh = new Note(chmidi);
 
-    private void BassRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BassRangeActionPerformed
+        setChordRangeText(chordLow.getPitch(), chordHigh.getPitch());
+    }//GEN-LAST:event_chordRangeChoiceActionPerformed
+
+    private void bassRangeChoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bassRangeChoiceActionPerformed
         RangeChooser rc=new RangeChooser(null, bassLow.getPitch(), bassHigh.getPitch(), 12, true);
         int range[] = rc.getRange();
         blmidi = range[0];
@@ -7635,7 +7648,7 @@ private void openStyleMixer()
         bassHigh = new Note(bhmidi); 
         
         setBassRangeText(bassLow.getPitch(), bassHigh.getPitch());
-    }//GEN-LAST:event_BassRangeActionPerformed
+    }//GEN-LAST:event_bassRangeChoiceActionPerformed
 
     private void setBassRangeText(int low, int high)
     {
@@ -7645,7 +7658,7 @@ private void openStyleMixer()
         bassHighNoteString = bassHighNS.getPitchOnly(); 
         bassLowNoteString = bassLowNS.getPitchOnly();
         
-        BassRangeText.setText(bassLowNoteString + " to " + bassHighNoteString);
+        bassRangeText.setText(bassLowNoteString + " to " + bassHighNoteString);
     }
     
     private void setChordRangeText(int low, int high)
@@ -7656,12 +7669,12 @@ private void openStyleMixer()
         chordHighNoteString = chordHighNS.getPitchOnly(); 
         chordLowNoteString = chordLowNS.getPitchOnly();
 
-        ChordRangeText.setText(chordLowNoteString + " to " + chordHighNoteString);
+        chordRangeText.setText(chordLowNoteString + " to " + chordHighNoteString);
     }
     
-    private void BassRangeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BassRangeTextActionPerformed
+    private void bassRangeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bassRangeTextActionPerformed
         
-    }//GEN-LAST:event_BassRangeTextActionPerformed
+    }//GEN-LAST:event_bassRangeTextActionPerformed
 
     private void voicingFilenameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingFilenameTFActionPerformed
                 File openFile=null;
@@ -7726,15 +7739,14 @@ public void unusePianoRoll()
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BassRange;
-    private javax.swing.JTextField BassRangeText;
-    private javax.swing.JTextField ChordRangeText;
     private javax.swing.JTextField accompanimentSwingTextField;
     private javax.swing.JButton addColumnButton;
     private javax.swing.JPanel bassAttrPanel;
     private javax.swing.JLabel bassLabel;
     private javax.swing.JScrollPane bassPane;
     private javax.swing.JList bassPatternList;
+    private javax.swing.JButton bassRangeChoice;
+    private javax.swing.JTextField bassRangeText;
     private javax.swing.JTextArea bassText;
     private javax.swing.JTextField beatsField0;
     private javax.swing.JTextField beatsField1;
@@ -7748,7 +7760,8 @@ public void unusePianoRoll()
     private javax.swing.JPanel chordPanel;
     private javax.swing.JList chordPatternList;
     private javax.swing.JComboBox chordPitchComboBox;
-    private javax.swing.JButton chordRange;
+    private javax.swing.JButton chordRangeChoice;
+    private javax.swing.JTextField chordRangeText;
     private javax.swing.JTextArea chordText;
     private javax.swing.JCheckBox chordTonesCheckBox;
     private javax.swing.JComboBox chordTypeComboBox;
@@ -7892,7 +7905,7 @@ public void unusePianoRoll()
     private javax.swing.JCheckBox useLeadsheetCheckBox;
     private javax.swing.JTextField voicingFilenameTF;
     private javax.swing.JLabel voicingLabel;
-    private javax.swing.JComboBox voicingType;
+    private javax.swing.JComboBox voicingTypeChoice;
     private javax.swing.JLabel volLabel;
     private javax.swing.JTextField weightField0;
     private javax.swing.JTextField weightField1;
