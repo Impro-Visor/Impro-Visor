@@ -34,6 +34,7 @@ public class ResponseGenerator {
     
     private MelodyPart response;
     private MelodyPart grammarSolo;
+    private MelodyPart originalMelody;
     private static final int start = 0;
     private int[] metre;
     private int stop;
@@ -46,6 +47,8 @@ public class ResponseGenerator {
     private final TransformLearning flattener;
     private static final boolean ONLY_CHORD_TONES = true;
     private static final boolean ALL_TONES = false;
+    //HAS NOTHING TO DO WITH PHRASE CLASS
+    private PhraseTable phrases;
     
     public void showGrammarSolo(){
         notate.addChorus(grammarSolo);
@@ -59,10 +62,12 @@ public class ResponseGenerator {
         this.metre = metre;
         Polylist rhythm = lickGen.generateRhythmFromGrammar(0, notate.getScoreLength());
         grammarSolo = notate.generateLick(rhythm, 0, notate.getScoreLength());
+        phrases = new PhraseTable(notate);
     }
     
     public void newResponse(MelodyPart response,ChordPart soloChords, ChordPart responseChords, int nextSection){
         this.response = response;
+        this.originalMelody = response.copy();
         this.stop = response.size()-1;
         this.soloChords = soloChords;
         this.responseChords = responseChords;
@@ -153,6 +158,23 @@ public class ResponseGenerator {
                 soloChords
         );
         response = notate.getLickgenFrame().fillAndReturnMelodyFromText(abstractMelody, responseChords);
+    }
+
+    public MelodyPart lookupAndPlay() {
+        MelodyPart[] parts = chopResponse();
+        MelodyPart finalMelody = new MelodyPart();
+        for (MelodyPart mp: parts ) {
+            phrases.addPhrase(mp);
+            MelodyPart nextPhrase = phrases.getNextPhrase(mp);
+            if (nextPhrase == null) {
+                nextPhrase = mp;
+            }
+            ArrayList<Note> notes = nextPhrase.getNoteList();
+            for(Note n : notes){
+                finalMelody.addNote(n);
+            }
+        }
+        return finalMelody;
     }
     
     public MelodyPart userRhythm(){
@@ -545,6 +567,9 @@ public class ResponseGenerator {
             response = userRhythm();
         } else if (tradeMode.equals("Zach 4 - Last Two")){
             response = swapMelodyRhythm();
+        } else if (tradeMode.equals("Zach 5 - Store")){
+            System.out.println("probe");
+            response = lookupAndPlay();
         }
         
         

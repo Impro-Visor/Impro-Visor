@@ -27,6 +27,8 @@ import imp.com.PlayPartCommand;
 import imp.com.PlayScoreCommand;
 import imp.com.RectifyPitchesCommand;
 import imp.data.ChordPart;
+import imp.data.IntervalLearner;
+import static imp.data.IntervalLearner.intervals;
 import java.util.ArrayList;
 import imp.data.MelodyPart;
 import imp.data.MidiSynth;
@@ -65,6 +67,7 @@ import jm.midi.event.Event;
  * by dispatching events based upon the position of the play head in said
  * chorus. Events are scheduled in three main phases, each phase with
  * its respective method:
+ * 
  * User turn - When the user plays. During this phase,
  * the user input is recorded into
  * the instance variable 'tradeScore'.
@@ -592,7 +595,7 @@ public class TradingWindow
         getContentPane().add(startTradingButton, gridBagConstraints);
         startTradingButton.getAccessibleContext().setAccessibleDescription("");
 
-        tradeModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Repeat", "Repeat and Rectify", "Flatten", "Random Modify", "Flatten, Modify, Rectify", "Charlie Parker", "Trade with a Musician", "Abstract", "Rhythmic Response", "Contour Test", "Zach 1 - Gen Solo", "Zach 2 - User Melody", "Zach 3 - User Rhythm", "Zach 4 - Last Two" }));
+        tradeModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Repeat", "Repeat and Rectify", "Flatten", "Random Modify", "Flatten, Modify, Rectify", "Charlie Parker", "Trade with a Musician", "Abstract", "Rhythmic Response", "Contour Test", "Zach 1 - Gen Solo", "Zach 2 - User Melody", "Zach 3 - User Rhythm", "Zach 4 - Last Two", "Zach 5 - Store" }));
         tradeModeSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tradeModeSelectorActionPerformed(evt);

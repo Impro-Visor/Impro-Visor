@@ -57,7 +57,7 @@
     <Component class="javax.swing.JComboBox" name="tradeModeSelector">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="14">
+          <StringArray count="15">
             <StringItem index="0" value="Repeat"/>
             <StringItem index="1" value="Repeat and Rectify"/>
             <StringItem index="2" value="Flatten"/>
@@ -72,6 +72,7 @@
             <StringItem index="11" value="Zach 2 - User Melody"/>
             <StringItem index="12" value="Zach 3 - User Rhythm"/>
             <StringItem index="13" value="Zach 4 - Last Two"/>
+            <StringItem index="14" value="Zach 5 - Store"/>
           </StringArray>
         </Property>
       </Properties>

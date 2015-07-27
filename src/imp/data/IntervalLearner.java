@@ -8,6 +8,7 @@ package imp.data;
 import imp.Constants;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -262,6 +263,21 @@ public class IntervalLearner {
             System.out.print(cell+"\t");
         }
         System.out.println();
+    }
+    
+    public int bestPitch(LinkedList<Integer> notes){
+        if (notes.size() < 2){
+            return 0;
+        } else if (notes.size() > 2){
+            int note3 = notes.removeLast();
+            int note2 = notes.removeLast();
+            int note1 = notes.removeLast();
+            return bestPitch((note3 - note2), (note2 - note1), note3);
+        } else {
+            int note2 = notes.removeLast();
+            int note1 = notes.removeLast();
+            return bestPitch((note2 - note1), note2);
+        }
     }
     
     /**
