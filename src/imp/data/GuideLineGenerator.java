@@ -1093,17 +1093,76 @@ public class GuideLineGenerator implements Constants {
         return getMod(pitch1) == getMod(pitch2);
     }
     
-    public MelodyPart fractalImprovise(MelodyPart gtl, ChordPart chords)
+/**
+     * Returns the number of times a line can be divided based on the max note
+     * duration
+     * @param rhythmValue
+     * @return 
+     */
+    private int getDivisionNumber(int rhythmValue)
     {
-        for(int i = 0; i < 3; ++i)
+        switch(rhythmValue){
+            case WHOLE:
+                return 4;
+            case HALF:
+                return 3;
+            case QUARTER:
+                return 2;
+            case EIGHTH:
+                return 1;
+            default:
+                return 3;
+        }
+    }
+    
+    /**
+     * Returns a double that can be used 
+     * @param rhythmValue
+     * @return 
+     */
+    private double getProbability(int divNumber)
+    {
+        switch(divNumber){
+            case 4:
+                return 0.15;
+            case 3:
+                return 0.25;
+            case 2:
+                return 0.35;
+            case 1:
+                return 0.45;
+            default:
+                return 0.35;
+        }
+    }
+    
+    /**
+     * Recursively divides a guide tone line to create a fractal melody
+     * @param gtl
+     * @param chords
+     * @param rhythmValue
+     * @return MelodyPart that is the new melody
+     */
+    public MelodyPart fractalImprovise(MelodyPart gtl, ChordPart chords, int rhythmValue)
+    {
+        int divNum = getDivisionNumber(rhythmValue);
+        for(int i = divNum; i > 0 ; --i)
         {
-            gtl = splitSolo(gtl, chords);
+            gtl = splitSolo(gtl, i);
         }
         
         return gtl;
     }
     
-    private MelodyPart splitSolo(MelodyPart solo, ChordPart chords)
+    /**
+     * Used by fractalImprovise to get a note to be divided, and adds the new
+     * notes to the melody part
+     * @param solo
+     * @param chords
+     * @param rhythmValue
+     * @return MelodyPart with all the added notes
+     */
+    private MelodyPart splitSolo(MelodyPart solo, int divisionNumber)
     {
         MelodyPart newSolo = new MelodyPart();
         
@@ -1112,14 +1171,13 @@ public class GuideLineGenerator implements Constants {
             Note first = solo.getCurrentNote(slot);
             Note second = solo.getNextNote(slot);
             int nextIndex = solo.getNextIndex(slot);
-            Chord firstChord = chords.getCurrentChord(slot);
             
             if(second == null)
                 second = first;
             
             ArrayList<Note> newNotes = splitNotes(first,
                                                   second,
-                                                  firstChord);
+                                                  divisionNumber);
             for(Note note : newNotes){
                 newSolo.addNote(note);
             }
@@ -1128,35 +1186,104 @@ public class GuideLineGenerator implements Constants {
         return newSolo;
     }
     
+    /**
+     * Probabilistically divides a note 
+     * @param firstNote
+     * @param secondNote
+     * @param rhythmValue
+     * @return The notes to replace the first note passed in
+     */
     private ArrayList<Note> splitNotes(Note firstNote, 
                                        Note secondNote,
-                                       Chord firstChord)
+                                       int divisionNumber)
     {
         ArrayList<Note> newNotes = new ArrayList<Note>();
-        
         Random rand = new Random();
-        
+
         double randDouble = rand.nextDouble();
+        double divDouble = 0.5; //rand.nextDouble();
         
-        if(randDouble < 0.3){
-            newNotes.add(noSplit(firstNote));
+        if(dist(firstNote, secondNote) < 4){
+            if(randDouble < 0.3){
+                newNotes.add(noSplit(firstNote, divisionNumber));
+            } else {
+
+                if(firstNote.nonRest()){
+                newNotes = getDividedNotes(firstNote,
+                                           secondNote,
+                                           2);
+                }
+                else{
+                    newNotes.add(firstNote);
+                }
+            }
+        } else if(firstNote.getRhythmValue() <= THIRTYSECOND) {
+            newNotes.add(firstNote);
+        } else if(isTriplet(firstNote)) {
+            if(randDouble < 0.3){
+                newNotes.add(noSplit(firstNote, divisionNumber));
+            } else {
+
+                if(firstNote.nonRest()){
+                newNotes = getDividedNotes(firstNote,
+                                           secondNote,
+                                           2);
+                }
+                else{
+                    newNotes.add(firstNote);
+                }
+            }
         } else {
             int subdivs = 2;
-            if(firstNote.nonRest()){
-            newNotes = getDividedNotes(firstNote,
-                                       secondNote,
-                                       firstChord,
-                                       subdivs);
+            if(divDouble < 0.2){
+                subdivs = 3;
+            } 
+
+            if(randDouble < 0.3){
+                newNotes.add(noSplit(firstNote, divisionNumber));
+            } else {
+
+                if(firstNote.nonRest()){
+                newNotes = getDividedNotes(firstNote,
+                                           secondNote,
+                                           subdivs);
+                }
+                else{
+                    newNotes.add(firstNote);
+                }
             }
-            else{
-                newNotes.add(firstNote);
-            }
-        }
-        
+        } 
         return newNotes;
     }
     
-    private Note noSplit(Note note)
+    /**
+     * Used by splitNotes to determine if a note can be divided into
+     * shorter notes
+     * @param firstNote
+     * @param secondNote
+     * @return 
+     */
+    private boolean canSplit(Note firstNote, Note secondNote)
+    {
+        int rhythmValue = firstNote.getRhythmValue();
+        int pitch1 = firstNote.getPitch();
+        int pitch2 = secondNote.getPitch();
+        if(rhythmValue <= THIRTYSECOND)
+            return false;
+        else if(pitch1 == pitch2)
+            return false;
+        else
+            return true;
+    }
+    
+    /**
+     * Used by splitNotes, if a note is not going to be split, probabilistically
+     * determines whether it will remain as a note or become a rest of the same
+     * duration
+     * @param note
+     * @return Note/rest to be added to the melody
+     */
+    private Note noSplit(Note note, int divisionNumber)
     {
         Random rand = new Random();
         double randDouble = rand.nextDouble();
@@ -1167,9 +1294,17 @@ public class GuideLineGenerator implements Constants {
             return note;
     }
     
+    /**
+     * Used by splitNotes, if a note is going to be split, it divides it into
+     * either two or three new notes
+     * @param firstNote
+     * @param secondNote
+     * @param subdivs
+     * @param rhythmValue
+     * @return ArrayList of notes to be added to the melody
+     */
     private ArrayList<Note> getDividedNotes(Note firstNote, 
                                             Note secondNote,
-                                            Chord firstChord,
                                             int subdivs)
     {
         int rhythmValue = firstNote.getRhythmValue();
@@ -1179,6 +1314,14 @@ public class GuideLineGenerator implements Constants {
             return splitNoteInThree(firstNote, secondNote, rhythmValue);
     }
     
+    /**
+     * Used by getDividedNotes to split one note into two new notes half the 
+     * length of the original
+     * @param firstNote
+     * @param secondNote
+     * @param rhythmValue
+     * @return ArrayList of notes to be added
+     */
     private ArrayList<Note> splitNoteInTwo(Note firstNote, Note secondNote, int rhythmValue)
     {
         ArrayList<Note> notes = new ArrayList<Note>();
@@ -1189,7 +1332,7 @@ public class GuideLineGenerator implements Constants {
         
         int avgPitch = (firstPitch + secondPitch) / 2;
         
-        if(avgPitch == firstPitch || avgPitch == secondPitch){
+        if((avgPitch == firstPitch || avgPitch == secondPitch) && rhythmValue <= THIRTYSECOND){
             notes.add(firstNote);
         }
         else{
@@ -1200,6 +1343,14 @@ public class GuideLineGenerator implements Constants {
         return notes;
     }
     
+    /**
+     * Used by getDividedNotes to split one note into three new notes, each a 
+     * third the length of the original
+     * @param firstNote
+     * @param secondNote
+     * @param rhythmValue
+     * @return ArrayList of the new notes to be added
+     */
     private ArrayList<Note> splitNoteInThree(Note firstNote, Note secondNote, int rhythmValue)
     {
         ArrayList<Note> notes = new ArrayList<Note>();
@@ -1214,6 +1365,17 @@ public class GuideLineGenerator implements Constants {
         notes.add(new Note(fourthPitch, rhythmValue/3));
         
         return notes;
+    }
+    
+    private boolean isTriplet(Note note)
+    {
+        int noteLength = note.getRhythmValue();
+        
+        return (noteLength == HALF_TRIPLET ||
+           noteLength == QUARTER_TRIPLET ||
+           noteLength == EIGHTH_TRIPLET ||
+           noteLength == SIXTEENTH_TRIPLET ||
+           noteLength == THIRTYSECOND_TRIPLET)? true : false;
     }
     
 
