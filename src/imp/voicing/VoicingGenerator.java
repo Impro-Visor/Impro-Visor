@@ -59,7 +59,7 @@ public class VoicingGenerator {
         
         if(voiceAll)
         {
-            System.out.println("Driving VAN");
+            //System.out.println("Driving VAN");
             //enable only chord notes
             for(int i=0; i<allMidiValues.length; i++)
             {
@@ -69,7 +69,8 @@ public class VoicingGenerator {
             {
                 setupNote(priority[p], (int)(maxPriority*10-p*10*priorityMultiplier));
             }
-            
+            if(rootless)
+                setupNote(root,0);
             
             //do usual calculations, modded to ensure all notes happen
             for(int i=0; i<priority.length; i++)
@@ -121,6 +122,8 @@ public class VoicingGenerator {
         }
         //begin normal algorithm
         initAllMidiValues();
+        if(rootless)
+                setupNote(root,0);
         for(int i:leftHand)
             allMidiValues[i]=0;
         for(int i:rightHand)
@@ -553,7 +556,25 @@ public class VoicingGenerator {
     public void setInvertM9(boolean invertM9) {
         this.invertM9 = invertM9;
     }
+
+    public int getRoot() {
+        return root;
+    }
+
+    public void setRoot(int root) {
+        this.root = root;
+    }
+
+    public boolean isRootless() {
+        return rootless;
+    }
+
+    public void setRootless(boolean rootless) {
+        this.rootless = rootless;
+    }
+    
     private int allMidiValues[]= new int[128];
+    private int root;
     private int color[];
     private int priority[];
     private ArrayList<Integer> leftHand;
@@ -578,6 +599,7 @@ public class VoicingGenerator {
     private double halfStepReducer;
     private double fullStepReducer;
     private boolean voiceAll;
+    private boolean rootless;
 
     
     

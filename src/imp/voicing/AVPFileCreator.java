@@ -160,6 +160,13 @@ public class AVPFileCreator
                     if(line.contains("off"))
                         settings.setVoiceAll(false);
                 }
+                else if(line.contains("rootless"))
+                {
+                    if(line.contains("on"))
+                        settings.setRootless(true);
+                    if(line.contains("off"))
+                        settings.setRootless(false);
+                }
             }
         } catch (Exception ex) {
             Logger.getLogger(AVPFileCreator.class.getName()).log(Level.SEVERE, null, ex);
@@ -209,6 +216,10 @@ public class AVPFileCreator
                         writer.println("(voice-all on)");
                     else
                         writer.println("(voice-all off)");
+                    if(settings.getRootless())
+                        writer.println("(rootless on)");
+                    else
+                        writer.println("(rootless off)");
                     writer.close();
                 }
                 catch(Exception f)

@@ -40,7 +40,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         setLabels();
         System.out.println("Lower Left hand: "+avs.getLeftHandLowerLimit());
         this.setTitle("Automated Voicing Generator Settings Editor");
-        jButton1.addActionListener(new ActionListener() {
+        /*jButton1.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
            {
@@ -59,7 +59,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
            {
                setSlidersToVariables();
            }
-       });
+       });*/
         jButton3.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -67,7 +67,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
               resetValues();
            }
        }); 
-       jButton4.addActionListener(new ActionListener() {
+       loadFile.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
            {
@@ -83,6 +83,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
                 AVPFileCreator.fileToSettings( openFile, avs);
                 setSlidersToVariables();
                 setTitle(openFile.getName());
+                styleEditor.setVoicingFileName(openFile.getName());
                 
        
                  
@@ -91,6 +92,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
             
            }
        });
+       /*
         jButton5.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -114,7 +116,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
                 AVPFileCreator.settingsToFile(avs,saveFile);
                 
             }
-       });
+       });*/
          LHRangeButton.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -162,28 +164,30 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
            }
        });
        
-        setStyleDefault.addActionListener(new ActionListener() {
+        saveToNew.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e)
            {
                 
                 saveSlidersToVariables();
-                
-                File openFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
+                syncToSettings();
+                File saveFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
                 JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showSaveDialog(null);
                 if(returnVal == JFileChooser.APPROVE_OPTION) {
-                    openFile=chooser.getSelectedFile();
-                    if(!openFile.getName().toLowerCase().endsWith(".avp"))
-                        openFile=new File(openFile.getAbsolutePath()+".avp");
-                    
+                    saveFile=chooser.getSelectedFile();
+                    if(!saveFile.getName().toLowerCase().endsWith(".avp"))
+                        saveFile=new File(saveFile.getAbsolutePath()+".avp");   
+                    if(saveFile.getName().contains(" "))
+                        saveFile=new File(saveFile.getParent(),saveFile.getName().replaceAll(" ", "-"));
                 }
                 //syncToSettings();
-                AVPFileCreator.fileToSettings(openFile,avs);
+                //AVPFileCreator.fileToSettings(openFile,avs);
+                AVPFileCreator.settingsToFile(avs,saveFile);
                 syncFromSettings();
-                styleEditor.setVoicingFileName(openFile.getName());
-                
+                styleEditor.setVoicingFileName(saveFile.getName());
+                setTitle(saveFile.getName());
             }
        });
        saveToDefault.addActionListener(new ActionListener() {
@@ -283,6 +287,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         avs.setFullStepReducer(fullStepReducer);
         avs.setInvertM9(invertM9);
         avs.setVoiceAll(voiceAll);
+        avs.setRootless(rootless);
     }
     /**
      * sets the variables to the values in the settings object
@@ -315,6 +320,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         fullStepReducer=avs.getFullStepReducer();
         invertM9=avs.getInvertM9();
         voiceAll=avs.getVoiceAll();
+        rootless=avs.getRootless();
     }
         /*
     private void setupHandParams()
@@ -399,6 +405,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         closeNoteReducer[1].setValue((int)(fullStepReducer*10));
         invertBox.setState(invertM9);
         voiceAllNotes.setState(voiceAll);
+        rootlessBox.setState(rootless);
     }
     /**
      * points sliders we declared and named to auto-created sliders from gui designer.
@@ -490,6 +497,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         fullStepReducer=closeNoteReducer[1].getValue()/10.0;
         invertM9=invertBox.getState();
         voiceAll=voiceAllNotes.getState();
+        rootless=rootlessBox.getState();
         syncToSettings();
         
     }
@@ -531,8 +539,19 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private double repeatMultiplier;
     private double halfStepReducer;
     private double fullStepReducer;
-    private boolean invertM9;
-    private boolean voiceAll;
+    private boolean invertM9;//true if minor ninths should be inverted to major sevenths
+    private boolean voiceAll;// ensures all notes are voiced at least once
+    private boolean rootless;// omits root note from voicing.
+
+    public boolean isRootless() {
+        return rootless;
+    }
+    public boolean getRootless() {
+        return rootless;
+    }
+    public void setRootless(boolean rootless) {
+        this.rootless = rootless;
+    }
     private StyleEditor styleEditor;
 
     public StyleEditor getStyleEditor() {
@@ -796,17 +815,15 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel27 = new javax.swing.JPanel();
         WholeStepRedSlider = new javax.swing.JSlider();
         jPanel28 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        closeB = new javax.swing.JButton();
+        loadFile = new javax.swing.JButton();
         loadDefault = new javax.swing.JButton();
         saveToDefault = new javax.swing.JButton();
-        setStyleDefault = new javax.swing.JButton();
+        saveToNew = new javax.swing.JButton();
+        closeB = new javax.swing.JButton();
         invertBox = new java.awt.Checkbox();
         voiceAllNotes = new java.awt.Checkbox();
+        rootlessBox = new java.awt.Checkbox();
 
         setBounds(new java.awt.Rectangle(0, 0, 1300, 500));
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -1408,24 +1425,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         jPanel28.setLayout(new java.awt.GridLayout(15, 1));
 
-        jButton1.setText("Apply");
-        jButton1.setMinimumSize(null);
-        jButton1.setPreferredSize(null);
-        jPanel28.add(jButton1);
-
-        jButton2.setText("Cancel");
-        jButton2.setMinimumSize(null);
-        jButton2.setPreferredSize(null);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel28.add(jButton2);
-
-        jButton3.setText("Reset Defaults");
-        jButton3.setMinimumSize(null);
-        jButton3.setPreferredSize(null);
+        jButton3.setText("Go To Factory Default");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -1433,15 +1433,24 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         });
         jPanel28.add(jButton3);
 
-        jButton4.setText("Load Preset");
-        jButton4.setMinimumSize(null);
-        jButton4.setPreferredSize(null);
-        jPanel28.add(jButton4);
+        loadFile.setText("Load A File");
+        jPanel28.add(loadFile);
 
-        jButton5.setText("Save Settings");
-        jButton5.setMinimumSize(null);
-        jButton5.setPreferredSize(null);
-        jPanel28.add(jButton5);
+        loadDefault.setText("Revert to Saved Settings");
+        jPanel28.add(loadDefault);
+
+        saveToDefault.setText("Save To Current File");
+        saveToDefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveToDefaultActionPerformed(evt);
+            }
+        });
+        jPanel28.add(saveToDefault);
+
+        saveToNew.setText("Save to a Different File");
+        saveToNew.setToolTipText("");
+        saveToNew.setActionCommand("Save to a Different File");
+        jPanel28.add(saveToNew);
 
         closeB.setText("Close");
         closeB.setMinimumSize(null);
@@ -1453,16 +1462,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         });
         jPanel28.add(closeB);
 
-        loadDefault.setText("Load Style Default");
-        jPanel28.add(loadDefault);
-
-        saveToDefault.setText("Save To Style Default");
-        jPanel28.add(saveToDefault);
-
-        setStyleDefault.setText("Set Style Default");
-        setStyleDefault.setToolTipText("");
-        jPanel28.add(setStyleDefault);
-
         invertBox.setLabel("Invert Minor 9ths");
         invertBox.setName("invertMinorNinth"); // NOI18N
         jPanel28.add(invertBox);
@@ -1470,6 +1469,9 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         voiceAllNotes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         voiceAllNotes.setLabel("Voice All Notes");
         jPanel28.add(voiceAllNotes);
+
+        rootlessBox.setLabel("Rootless Voicings");
+        jPanel28.add(rootlessBox);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -1479,10 +1481,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -1490,6 +1488,10 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private void closeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeBActionPerformed
+
+    private void saveToDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveToDefaultActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveToDefaultActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1561,11 +1563,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JButton closeB;
     private javax.swing.Box.Filler filler1;
     private java.awt.Checkbox invertBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1595,8 +1593,10 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JButton loadDefault;
+    private javax.swing.JButton loadFile;
+    private java.awt.Checkbox rootlessBox;
     private javax.swing.JButton saveToDefault;
-    private javax.swing.JButton setStyleDefault;
+    private javax.swing.JButton saveToNew;
     private java.awt.Checkbox voiceAllNotes;
     // End of variables declaration//GEN-END:variables
 }

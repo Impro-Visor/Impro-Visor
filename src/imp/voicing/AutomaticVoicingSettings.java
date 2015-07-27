@@ -220,6 +220,7 @@ public class AutomaticVoicingSettings {
         fullStepReducer=.7;
         invertM9=false;
         voiceAll=false;
+        rootless=false;
     }
     
     private int leftHandLowerLimit;
@@ -248,6 +249,17 @@ public class AutomaticVoicingSettings {
     private double fullStepReducer;
     private boolean invertM9;
     private boolean voiceAll;
+    private boolean rootless;
+    
+    public boolean isRootless() {
+        return rootless;
+    }
+    public boolean getRootless() {
+        return rootless;
+    }
+    public void setRootless(boolean rootless) {
+        this.rootless = rootless;
+    }
 
     public boolean isVoiceAll() {
         return voiceAll;

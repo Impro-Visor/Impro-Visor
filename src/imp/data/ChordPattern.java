@@ -834,6 +834,8 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         vgen.setFullStepReducer(avs.getFullStepReducer());
         vgen.setInvertM9(avs.getInvertM9());
         vgen.setVoiceAll(avs.getVoiceAll());
+        vgen.setRootless(avs.getRootless());
+        
 
         /*get values from the user*/
 
@@ -877,6 +879,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         vgen.setNumNotesRight(handyMan.getNumRightNotes());
         vgen.setColor(color);
         vgen.setPriority(priority);
+        vgen.setRoot(chord1.getRootSemitones());
 
         System.out.println("Did settings");
 
