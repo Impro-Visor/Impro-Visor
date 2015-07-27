@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 package imp.data;
 
 import imp.voicing.AutomaticVoicingSettings;
-import imp.voicing.ControlPanelFrame;
 import imp.voicing.HandManager;
 import imp.ImproVisor;
 import imp.voicing.VoicingGenerator;

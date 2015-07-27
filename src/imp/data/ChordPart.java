@@ -679,12 +679,9 @@ public void addFromRoadMapFrame(RoadMapFrame roadmap)
         return sectionInfo.getSectionRecordStyleNames();
     }
     
-//    public void resetStylesInRecords (ArrayList<SectionRecord> secRecs)
-//    {
-//        sectionInfo.resetStylesInRecords(secRecs);
-//    }
-//    public void setStyleNamesFromBlocks (ArrayList<Block> blocks)
-//    {
-//        sectionInfo.setStyleNamesFromBlocks(blocks);
-//    }
+    public void reloadStyles()
+    {
+        sectionInfo.reloadStyles();
+    }
+
 }

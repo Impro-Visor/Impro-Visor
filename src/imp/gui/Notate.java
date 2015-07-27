@@ -9479,7 +9479,7 @@ public void updatePhiAndDelta(boolean phi, boolean delta)
 
 public void reCaptureCurrentStyle()
   {
-    score.getChordProg().getSectionInfo().reloadStyles();
+    score.reloadStyles();
   }
 
     private void helpAboutMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpAboutMIActionPerformed

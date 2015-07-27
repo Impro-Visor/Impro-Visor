@@ -945,7 +945,7 @@ public class Score implements Constants, Serializable {
         // to trace sequencing
         //System.out.println("Score: render, start 0, endLimitIndex = " + endLimitIndex);
         MidiSequence seq = new MidiSequence(ppqn);
-
+        reloadStyles();
         long time = 0;
         
         if( countInProg != null )
@@ -1278,4 +1278,8 @@ public Note getFirstNote()
     return null;  // TEMP!
   }
 
+public void reloadStyles()
+  {
+    chordProg.reloadStyles();
+  }
 }

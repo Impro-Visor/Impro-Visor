@@ -22,6 +22,7 @@ package imp.data;
 
 import imp.Constants;
 import static imp.Constants.BEAT;
+import static imp.Constants.CUSTOM;
 import static imp.Constants.ENDSCORE;
 import static imp.Constants.MAX_VOLUME;
 import imp.ImproVisor;
@@ -248,8 +249,11 @@ public class Style
   
   public static Style getStyle(String name)
     {
-      Style s = allStyles.get(name);
-      AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),s.getVoicingFileName()), ImproVisor.avs);
+    //System.out.println("getStyle " + name);
+     Style s = allStyles.get(name);
+     AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),
+                                            s.getVoicingFileName()), 
+                                   ImproVisor.avs);
       return s;
     }
   
@@ -298,6 +302,11 @@ public class Style
     return voicingType;
     }
 
+  public boolean hasCustomVoicing()
+    {
+      return voicingType.equals(CUSTOM);
+    }
+  
   public ArrayList<BassPattern> getBP()
     {
     return bassPatterns;
@@ -551,7 +560,6 @@ public class Style
     style.voicingFileName="default.avp";
     while( L != null && L.nonEmpty() )
       {
-
       if( (L.first() instanceof Polylist) )
         {
         Polylist item = (Polylist)L.first();
@@ -655,10 +663,7 @@ public class Style
         L = L.rest();
         }
       }
-    //if(ImproVisor.avs!=null)
-        //AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),style.getVoicingFileName()), ImproVisor.avs);
-    //System.out.println("\n\n____________________________________________________\n"+style.getVoicingFileName()+"\n"+style.getName()+"\n__________________________________");
-    return style;
+     return style;
     }
 
   /**
@@ -674,26 +679,22 @@ public class Style
       {
       case BASS_HIGH:
         {
-        bassHigh =
-                NoteSymbol.makeNoteSymbol((String)item.first());
+        bassHigh = NoteSymbol.makeNoteSymbol((String)item.first());
         break;
         }
       case BASS_LOW:
         {
-        bassLow =
-                NoteSymbol.makeNoteSymbol((String)item.first());
+        bassLow = NoteSymbol.makeNoteSymbol((String)item.first());
         break;
         }
        case CHORD_HIGH:
         {
-        chordHigh =
-                NoteSymbol.makeNoteSymbol((String)item.first());
+        chordHigh = NoteSymbol.makeNoteSymbol((String)item.first());
         break;
         }
       case CHORD_LOW:
         {
-        chordLow =
-                NoteSymbol.makeNoteSymbol((String)item.first());
+        chordLow = NoteSymbol.makeNoteSymbol((String)item.first());
         break;
         }
       case CHORD_BASE:
@@ -741,8 +742,7 @@ public class Style
    */
   public void makeDefinedRules(Polylist L)
   {
-      Polylist original = L;
-      //e.g. (drum name (rules X4 R4 X4 R4))
+      //e.g. L is (drum name (rules X4 R4 X4 R4))
       
       if( L.nonEmpty() )
       {

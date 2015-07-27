@@ -44,6 +44,13 @@ public interface Constants {
     public static final int BEAT = 120;
     
     
+    /**
+     * CUSTOM is used to indicate custom voicings
+     */
+    
+    public static final String CUSTOM = "custom";
+    
+    
     /** Note: All of the following must have no fractional remainder,
      *  Hence no SIXTYFOURTH for example. SIXTYFOURTH_TRIPLET is possible
      *  in principle, but we don't have an image for it yet.
