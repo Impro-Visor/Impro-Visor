@@ -2059,8 +2059,8 @@ public Critic getCritic()
         utilitiesMenu = new javax.swing.JMenu();
         stepKeyboardMI = new javax.swing.JMenuItem();
         guideToneLine = new javax.swing.JMenuItem();
-        openLeadsheetEditorMI = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
+        openLeadsheetEditorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         soloGeneratorMI = new javax.swing.JMenuItem();
         customSoloGeneratorMI = new javax.swing.JMenuItem();
@@ -8965,6 +8965,17 @@ public Critic getCritic()
         });
         utilitiesMenu.add(guideToneLine);
 
+        lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        lickGeneratorMI.setMnemonic('g');
+        lickGeneratorMI.setText("Grammar & Transform Control Panels");
+        lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
+        lickGeneratorMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lickGeneratorMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(lickGeneratorMI);
+
         openLeadsheetEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         openLeadsheetEditorMI.setMnemonic('l');
         openLeadsheetEditorMI.setText("Leadsheet Textual Editor");
@@ -8975,17 +8986,6 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(openLeadsheetEditorMI);
-
-        lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        lickGeneratorMI.setMnemonic('g');
-        lickGeneratorMI.setText("Lick Generator");
-        lickGeneratorMI.setToolTipText("Control panel for lick generation");
-        lickGeneratorMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lickGeneratorMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(lickGeneratorMI);
 
         styleGenerator1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         styleGenerator1.setMnemonic('S');
@@ -9000,7 +9000,7 @@ public Critic getCritic()
 
         soloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         soloGeneratorMI.setText("Theme Weaver");
-        soloGeneratorMI.setToolTipText("Control panel for solo generation");
+        soloGeneratorMI.setToolTipText("Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation.");
         soloGeneratorMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 soloGeneratorMIActionPerformed(evt);
@@ -9009,7 +9009,8 @@ public Critic getCritic()
         utilitiesMenu.add(soloGeneratorMI);
 
         customSoloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_MASK));
-        customSoloGeneratorMI.setText("Custom Theme Weaver");
+        customSoloGeneratorMI.setText("Theme Weaver - Custom");
+        customSoloGeneratorMI.setToolTipText("Opens a version of Theme Weaver in which position of each theme is specified by the user.");
         customSoloGeneratorMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customSoloGeneratorMIActionPerformed(evt);

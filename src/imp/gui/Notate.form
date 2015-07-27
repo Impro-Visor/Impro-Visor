@@ -8501,6 +8501,19 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guideToneLineActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+G"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="103"/>
+                <Property name="text" type="java.lang.String" value="Grammar &amp; Transform Control Panels"/>
+                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lickGeneratorMIActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="openLeadsheetEditorMI">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
@@ -8516,19 +8529,6 @@
               <AuxValues>
                 <AuxValue name="generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
               </AuxValues>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+G"/>
-                </Property>
-                <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Lick Generator"/>
-                <Property name="toolTipText" type="java.lang.String" value="Control panel for lick generation"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lickGeneratorMIActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="styleGenerator1">
               <Properties>
@@ -8549,7 +8549,7 @@
                   <KeyStroke key="Ctrl+H"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Theme Weaver"/>
-                <Property name="toolTipText" type="java.lang.String" value="Control panel for solo generation"/>
+                <Property name="toolTipText" type="java.lang.String" value="Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soloGeneratorMIActionPerformed"/>
@@ -8560,7 +8560,8 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+H"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Custom Theme Weaver"/>
+                <Property name="text" type="java.lang.String" value="Theme Weaver - Custom"/>
+                <Property name="toolTipText" type="java.lang.String" value="Opens a version of Theme Weaver in which position of each theme is specified by the user."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customSoloGeneratorMIActionPerformed"/>
