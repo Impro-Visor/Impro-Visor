@@ -20,10 +20,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.AbstractButton;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
 import javax.swing.JLabel;
@@ -49,6 +45,9 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     
     private static final boolean FIRST = true;
     private static final boolean SECOND = false;
+    
+    private static final Color cold = Color.white;
+    private static final Color hot = Color.red;
     
     /**
      * IntervalLearningPanel constructor
@@ -82,7 +81,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
                 
                 if(row == 0 || column == 0){
                     probabilityLabels[row][column].setOpaque(true);
-                    probabilityLabels[row][column].setBackground(Color.MAGENTA);
+                    probabilityLabels[row][column].setBackground(Color.GREEN);
                 }
                 else if(row == Constants.OCTAVE+1 || column == Constants.OCTAVE+1){
                     probabilityLabels[row][column].setOpaque(true);
@@ -137,6 +136,20 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     }
 
     /**
+     * color
+     * Returns a color based on a probability
+     * Used to create a heat map
+     * @param probability - probability to find a color for
+     * @return a color corresponding to the probability - more red for higher, more blue for lower
+     */
+    private static Color color(double probability){
+        int r = cold.getRed() + (int)(probability*(hot.getRed()-cold.getRed()));
+        int g = cold.getGreen() + (int)(probability*(hot.getGreen()-cold.getGreen()));
+        int b = cold.getBlue() + (int)(probability*(hot.getBlue()-cold.getBlue()));
+        return new Color(r, g, b);
+    }
+    
+    /**
      * getDisplayFromButton
      * @return - true for probabilities, false for counts
      */
@@ -158,19 +171,43 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         yesNo = new javax.swing.ButtonGroup();
         rhythmGroup = new javax.swing.ButtonGroup();
         orderGroup = new javax.swing.ButtonGroup();
+        learnFromGroup = new javax.swing.ButtonGroup();
         probabilitiesPanel = new javax.swing.JPanel();
         sourceIntervals = new javax.swing.JLabel();
         destinationIntervals = new javax.swing.JLabel();
-        buttonsPanel = new javax.swing.JPanel();
-        learnButtonPanel = new javax.swing.JPanel();
-        thisChorus = new javax.swing.JButton();
-        allChoruses = new javax.swing.JButton();
+        topPanel = new javax.swing.JPanel();
+        learnIntervalProbabilities = new javax.swing.JPanel();
         learnLabel = new javax.swing.JLabel();
+        addToTotalPanel = new javax.swing.JPanel();
+        addToTotalLabel = new javax.swing.JLabel();
         addToTotal = new javax.swing.JRadioButton();
         resetThenAdd = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        optionsPanel = new javax.swing.JPanel();
+        learnButtonsPanel = new javax.swing.JPanel();
+        learnButton = new javax.swing.JButton();
+        clearAll = new javax.swing.JButton();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        learnFromPanel = new javax.swing.JPanel();
+        learnFromLabel = new javax.swing.JLabel();
+        thisChorusOption = new javax.swing.JRadioButton();
+        allChorusesOption = new javax.swing.JRadioButton();
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        viewOptions = new javax.swing.JPanel();
+        OrderPanelLabel = new javax.swing.JLabel();
+        togglePanel = new javax.swing.JPanel();
+        orderViewLabel = new javax.swing.JLabel();
+        toggleView = new javax.swing.JToggleButton();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        orderViewToggle = new javax.swing.JToggleButton();
+        filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        firstIntervalPanel = new javax.swing.JPanel();
+        interval1Label = new javax.swing.JLabel();
+        interval1Slider = new javax.swing.JSlider();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        filenameLabel = new javax.swing.JLabel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        bottomPanel = new javax.swing.JPanel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
+        soloOptions = new javax.swing.JPanel();
         optionsLabel = new javax.swing.JLabel();
         rangeAndMerge = new javax.swing.JPanel();
         chooseRange = new javax.swing.JButton();
@@ -180,7 +217,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         chordBox = new javax.swing.JCheckBox();
         colorBox = new javax.swing.JCheckBox();
         approachBox = new javax.swing.JCheckBox();
-        generateButtonsPanel = new javax.swing.JPanel();
+        generateSoloPanel = new javax.swing.JPanel();
         generatePanelLabel = new javax.swing.JLabel();
         rhythmLabel = new javax.swing.JLabel();
         Eighth = new javax.swing.JRadioButton();
@@ -190,25 +227,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         orderLabel = new javax.swing.JLabel();
         firstOrderButton = new javax.swing.JRadioButton();
         secondOrderButton = new javax.swing.JRadioButton();
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
-        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
-        filenameLabel = new javax.swing.JLabel();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
-        bottomPanel = new javax.swing.JPanel();
-        otherOptionsPanel = new javax.swing.JPanel();
-        toggleLabel = new javax.swing.JLabel();
-        toggleView = new javax.swing.JToggleButton();
-        clearAll = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
-        OrderPanel = new javax.swing.JPanel();
-        OrderPanelLabel = new javax.swing.JLabel();
-        orderViewLabel = new javax.swing.JLabel();
-        orderViewToggle = new javax.swing.JToggleButton();
-        interval1Slider = new javax.swing.JSlider();
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
         filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
         filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
 
         setMinimumSize(new java.awt.Dimension(800, 300));
         setPreferredSize(new java.awt.Dimension(800, 300));
@@ -216,7 +238,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
 
         probabilitiesPanel.setLayout(new java.awt.GridLayout(26, 26, 5, 5));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
         add(probabilitiesPanel, gridBagConstraints);
 
@@ -224,48 +246,34 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(sourceIntervals, gridBagConstraints);
 
         destinationIntervals.setText("Destination Intervals");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
         add(destinationIntervals, gridBagConstraints);
 
-        buttonsPanel.setLayout(new java.awt.GridBagLayout());
+        topPanel.setLayout(new java.awt.GridBagLayout());
 
-        learnButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        learnButtonPanel.setLayout(new java.awt.GridBagLayout());
-
-        thisChorus.setText("This Chorus");
-        thisChorus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                thisChorusActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        learnButtonPanel.add(thisChorus, gridBagConstraints);
-
-        allChoruses.setText("All Choruses");
-        allChoruses.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allChorusesActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        learnButtonPanel.add(allChoruses, gridBagConstraints);
+        learnIntervalProbabilities.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        learnIntervalProbabilities.setLayout(new java.awt.GridBagLayout());
 
         learnLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         learnLabel.setText("Learn Interval Probabilities");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        learnButtonPanel.add(learnLabel, gridBagConstraints);
+        learnIntervalProbabilities.add(learnLabel, gridBagConstraints);
+
+        addToTotalPanel.setLayout(new java.awt.GridBagLayout());
+
+        addToTotalLabel.setText("Add to total?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        addToTotalPanel.add(addToTotalLabel, gridBagConstraints);
 
         yesNo.add(addToTotal);
         addToTotal.setSelected(true);
@@ -277,8 +285,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        learnButtonPanel.add(addToTotal, gridBagConstraints);
+        gridBagConstraints.gridy = 2;
+        addToTotalPanel.add(addToTotal, gridBagConstraints);
 
         yesNo.add(resetThenAdd);
         resetThenAdd.setText("No");
@@ -289,34 +297,213 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        learnButtonPanel.add(resetThenAdd, gridBagConstraints);
+        gridBagConstraints.gridy = 2;
+        addToTotalPanel.add(resetThenAdd, gridBagConstraints);
 
-        jLabel5.setText("Add to total?");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        learnButtonPanel.add(jLabel5, gridBagConstraints);
+        learnIntervalProbabilities.add(addToTotalPanel, gridBagConstraints);
 
-        jLabel7.setText("Learn from:");
+        learnButtonsPanel.setLayout(new java.awt.GridBagLayout());
+
+        learnButton.setText("Learn!");
+        learnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                learnButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        learnButtonsPanel.add(learnButton, gridBagConstraints);
+
+        clearAll.setText("Start Over");
+        clearAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAllActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        learnButtonsPanel.add(clearAll, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        learnButtonsPanel.add(filler2, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        learnIntervalProbabilities.add(learnButtonsPanel, gridBagConstraints);
+
+        learnFromPanel.setLayout(new java.awt.GridBagLayout());
+
+        learnFromLabel.setText("Learn from:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        learnFromPanel.add(learnFromLabel, gridBagConstraints);
+
+        learnFromGroup.add(thisChorusOption);
+        thisChorusOption.setSelected(true);
+        thisChorusOption.setText("This Chorus");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        learnFromPanel.add(thisChorusOption, gridBagConstraints);
+
+        learnFromGroup.add(allChorusesOption);
+        allChorusesOption.setText("All Choruses");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        learnFromPanel.add(allChorusesOption, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        learnButtonPanel.add(jLabel7, gridBagConstraints);
+        learnIntervalProbabilities.add(learnFromPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        buttonsPanel.add(learnButtonPanel, gridBagConstraints);
+        topPanel.add(learnIntervalProbabilities, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        topPanel.add(filler7, gridBagConstraints);
 
-        optionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        optionsPanel.setLayout(new java.awt.GridBagLayout());
+        viewOptions.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        viewOptions.setLayout(new java.awt.GridBagLayout());
+
+        OrderPanelLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        OrderPanelLabel.setText("View Options");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        viewOptions.add(OrderPanelLabel, gridBagConstraints);
+
+        togglePanel.setLayout(new java.awt.GridBagLayout());
+
+        orderViewLabel.setText("Toggle View:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        togglePanel.add(orderViewLabel, gridBagConstraints);
+
+        toggleView.setText("Probabilities");
+        toggleView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toggleViewActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        togglePanel.add(toggleView, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        togglePanel.add(filler4, gridBagConstraints);
+
+        orderViewToggle.setText("First Order");
+        orderViewToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderViewToggleActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        togglePanel.add(orderViewToggle, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        togglePanel.add(filler11, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        viewOptions.add(togglePanel, gridBagConstraints);
+
+        firstIntervalPanel.setLayout(new java.awt.GridBagLayout());
+
+        interval1Label.setText("1st Source Interval:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        firstIntervalPanel.add(interval1Label, gridBagConstraints);
+
+        interval1Slider.setMajorTickSpacing(3);
+        interval1Slider.setMaximum(12);
+        interval1Slider.setMinimum(-12);
+        interval1Slider.setMinorTickSpacing(1);
+        interval1Slider.setPaintLabels(true);
+        interval1Slider.setPaintTicks(true);
+        interval1Slider.setSnapToTicks(true);
+        interval1Slider.setToolTipText("");
+        interval1Slider.setValue(0);
+        interval1Slider.setEnabled(false);
+        interval1Slider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                interval1SliderMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        firstIntervalPanel.add(interval1Slider, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        firstIntervalPanel.add(filler5, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        viewOptions.add(firstIntervalPanel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        topPanel.add(viewOptions, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        add(topPanel, gridBagConstraints);
+
+        filenameLabel.setText("newFile.counts");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        add(filenameLabel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        add(filler3, gridBagConstraints);
+
+        bottomPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        bottomPanel.add(filler1, gridBagConstraints);
+
+        soloOptions.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        soloOptions.setLayout(new java.awt.GridBagLayout());
 
         optionsLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         optionsLabel.setText("Solo Options");
-        optionsPanel.add(optionsLabel, new java.awt.GridBagConstraints());
+        soloOptions.add(optionsLabel, new java.awt.GridBagConstraints());
 
         rangeAndMerge.setLayout(new java.awt.GridBagLayout());
 
@@ -341,7 +528,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        optionsPanel.add(rangeAndMerge, gridBagConstraints);
+        soloOptions.add(rangeAndMerge, gridBagConstraints);
 
         rectifyPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -381,17 +568,15 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        optionsPanel.add(rectifyPanel, gridBagConstraints);
+        soloOptions.add(rectifyPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        buttonsPanel.add(optionsPanel, gridBagConstraints);
+        bottomPanel.add(soloOptions, gridBagConstraints);
 
-        generateButtonsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        generateButtonsPanel.setLayout(new java.awt.GridBagLayout());
+        generateSoloPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        generateSoloPanel.setLayout(new java.awt.GridBagLayout());
 
         generatePanelLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         generatePanelLabel.setText("Generate Solo");
@@ -399,13 +584,13 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 4;
-        generateButtonsPanel.add(generatePanelLabel, gridBagConstraints);
+        generateSoloPanel.add(generatePanelLabel, gridBagConstraints);
 
         rhythmLabel.setText("Rhythm:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        generateButtonsPanel.add(rhythmLabel, gridBagConstraints);
+        generateSoloPanel.add(rhythmLabel, gridBagConstraints);
 
         rhythmGroup.add(Eighth);
         Eighth.setSelected(true);
@@ -413,21 +598,21 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        generateButtonsPanel.add(Eighth, gridBagConstraints);
+        generateSoloPanel.add(Eighth, gridBagConstraints);
 
         rhythmGroup.add(Chorus1);
         Chorus1.setText("Chorus 1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        generateButtonsPanel.add(Chorus1, gridBagConstraints);
+        generateSoloPanel.add(Chorus1, gridBagConstraints);
 
         rhythmGroup.add(GrammarRhythm);
         GrammarRhythm.setText("Grammar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        generateButtonsPanel.add(GrammarRhythm, gridBagConstraints);
+        generateSoloPanel.add(GrammarRhythm, gridBagConstraints);
 
         generateSolo.setText("Generate Solo");
         generateSolo.addActionListener(new java.awt.event.ActionListener() {
@@ -438,13 +623,13 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
-        generateButtonsPanel.add(generateSolo, gridBagConstraints);
+        generateSoloPanel.add(generateSolo, gridBagConstraints);
 
         orderLabel.setText("Order:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        generateButtonsPanel.add(orderLabel, gridBagConstraints);
+        generateSoloPanel.add(orderLabel, gridBagConstraints);
 
         orderGroup.add(firstOrderButton);
         firstOrderButton.setSelected(true);
@@ -452,187 +637,48 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        generateButtonsPanel.add(firstOrderButton, gridBagConstraints);
+        generateSoloPanel.add(firstOrderButton, gridBagConstraints);
 
         orderGroup.add(secondOrderButton);
         secondOrderButton.setText("Second");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
-        generateButtonsPanel.add(secondOrderButton, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        buttonsPanel.add(generateButtonsPanel, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        buttonsPanel.add(filler7, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        buttonsPanel.add(filler9, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        add(buttonsPanel, gridBagConstraints);
-
-        filenameLabel.setText("newFile.counts");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        add(filenameLabel, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        add(filler3, gridBagConstraints);
-
-        bottomPanel.setLayout(new java.awt.GridBagLayout());
-
-        otherOptionsPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        otherOptionsPanel.setLayout(new java.awt.GridBagLayout());
-
-        toggleLabel.setText("Toggle View:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        otherOptionsPanel.add(toggleLabel, gridBagConstraints);
-
-        toggleView.setText("Probabilities");
-        toggleView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toggleViewActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        otherOptionsPanel.add(toggleView, gridBagConstraints);
-
-        clearAll.setText("Clear All Probabilities");
-        clearAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearAllActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        otherOptionsPanel.add(clearAll, gridBagConstraints);
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Other Options");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        otherOptionsPanel.add(jLabel6, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        bottomPanel.add(otherOptionsPanel, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        bottomPanel.add(filler1, gridBagConstraints);
-
-        OrderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        OrderPanel.setLayout(new java.awt.GridBagLayout());
-
-        OrderPanelLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        OrderPanelLabel.setText("View Options");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        OrderPanel.add(OrderPanelLabel, gridBagConstraints);
-
-        orderViewLabel.setText("Toggle View:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        OrderPanel.add(orderViewLabel, gridBagConstraints);
-
-        orderViewToggle.setText("First Order");
-        orderViewToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                orderViewToggleActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        OrderPanel.add(orderViewToggle, gridBagConstraints);
-
-        interval1Slider.setMajorTickSpacing(3);
-        interval1Slider.setMaximum(12);
-        interval1Slider.setMinimum(-12);
-        interval1Slider.setMinorTickSpacing(1);
-        interval1Slider.setPaintLabels(true);
-        interval1Slider.setPaintTicks(true);
-        interval1Slider.setSnapToTicks(true);
-        interval1Slider.setToolTipText("");
-        interval1Slider.setValue(0);
-        interval1Slider.setEnabled(false);
-        interval1Slider.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                interval1SliderMouseReleased(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        OrderPanel.add(interval1Slider, gridBagConstraints);
+        generateSoloPanel.add(secondOrderButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        bottomPanel.add(OrderPanel, gridBagConstraints);
+        bottomPanel.add(generateSoloPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
         add(bottomPanel, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(filler6, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         add(filler8, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         add(filler10, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        add(filler9, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void thisChorusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thisChorusActionPerformed
-        if(!addToRunningTotal){
-            clearAll();
-        }
-        addThisToTotal();
-    }//GEN-LAST:event_thisChorusActionPerformed
-
-    private void allChorusesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allChorusesActionPerformed
-        if(!addToRunningTotal){
-            clearAll();
-        }
-        addAllToTotal();
-    }//GEN-LAST:event_allChorusesActionPerformed
 
     /**
      * generateSolo
@@ -891,6 +937,17 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_rectifyCheckboxActionPerformed
 
+    private void learnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnButtonActionPerformed
+        if(!addToRunningTotal){
+            clearAll();
+        }
+        if(thisChorusOption.isSelected()){
+            addThisToTotal();
+        }else{
+            addAllToTotal();
+        }
+    }//GEN-LAST:event_learnButtonActionPerformed
+
     /**
      * enableOptions
      * enable or disable the chord, color, and approach check boxes
@@ -975,6 +1032,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
                 for(int row = 0; row < probabilities.length; row++){
                     for(int column = 0; column < probabilities[row].length; column++){
                         probabilityLabels[row+1][column+1].setText(df.format(probabilities[row][column]));
+                        probabilityLabels[row+1][column+1].setBackground(color(probabilities[row][column]));
                     }
                 }
             }else{
@@ -982,6 +1040,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
                 for(int y = 0; y < crossSection.length; y++){
                     for(int z = 0; z < crossSection[y].length; z++){
                         probabilityLabels[y+1][z+1].setText(df.format(crossSection[y][z]));
+                        probabilityLabels[y+1][z+1].setBackground(color(crossSection[y][z]));
                     }
                 }
             }
@@ -989,16 +1048,20 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         }else{
             if(displayOrder == FIRST){
                 int [][] counts = learner.getDeg1Counts();
+                double [][] probabilities = learner.getDeg1Probs();
                 for(int row = 0; row < counts.length; row++){
                     for(int column = 0; column < counts[row].length; column++){
                         probabilityLabels[row+1][column+1].setText(Integer.toString(counts[row][column]));
+                        probabilityLabels[row+1][column+1].setBackground(color(probabilities[row][column]));
                     }
                 }
             }else{
                 int [][] crossSection = learner.getCountsCrossSection(interval1);
+                double [][] probsCrossSection = learner.getProbsCrossSection(interval1);
                 for(int y = 0; y < crossSection.length; y++){
                     for(int z = 0; z < crossSection[y].length; z++){
                         probabilityLabels[y+1][z+1].setText(Integer.toString(crossSection[y][z]));
+                        probabilityLabels[y+1][z+1].setBackground(color(probsCrossSection[y][z]));
                     }
                 }
             }
@@ -1010,13 +1073,13 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton Chorus1;
     private javax.swing.JRadioButton Eighth;
     private javax.swing.JRadioButton GrammarRhythm;
-    private javax.swing.JPanel OrderPanel;
     private javax.swing.JLabel OrderPanelLabel;
     private javax.swing.JRadioButton addToTotal;
-    private javax.swing.JButton allChoruses;
+    private javax.swing.JLabel addToTotalLabel;
+    private javax.swing.JPanel addToTotalPanel;
+    private javax.swing.JRadioButton allChorusesOption;
     private javax.swing.JCheckBox approachBox;
     private javax.swing.JPanel bottomPanel;
-    private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton chooseRange;
     private javax.swing.JCheckBox chordBox;
     private javax.swing.JButton clearAll;
@@ -1025,29 +1088,35 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JLabel filenameLabel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler10;
+    private javax.swing.Box.Filler filler11;
+    private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
     private javax.swing.Box.Filler filler8;
     private javax.swing.Box.Filler filler9;
+    private javax.swing.JPanel firstIntervalPanel;
     private javax.swing.JRadioButton firstOrderButton;
-    private javax.swing.JPanel generateButtonsPanel;
     private javax.swing.JLabel generatePanelLabel;
     private javax.swing.JButton generateSolo;
+    private javax.swing.JPanel generateSoloPanel;
+    private javax.swing.JLabel interval1Label;
     private javax.swing.JSlider interval1Slider;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel learnButtonPanel;
+    private javax.swing.JButton learnButton;
+    private javax.swing.JPanel learnButtonsPanel;
+    private javax.swing.ButtonGroup learnFromGroup;
+    private javax.swing.JLabel learnFromLabel;
+    private javax.swing.JPanel learnFromPanel;
+    private javax.swing.JPanel learnIntervalProbabilities;
     private javax.swing.JLabel learnLabel;
     private javax.swing.JCheckBox mergeCheckbox;
     private javax.swing.JLabel optionsLabel;
-    private javax.swing.JPanel optionsPanel;
     private javax.swing.ButtonGroup orderGroup;
     private javax.swing.JLabel orderLabel;
     private javax.swing.JLabel orderViewLabel;
     private javax.swing.JToggleButton orderViewToggle;
-    private javax.swing.JPanel otherOptionsPanel;
     private javax.swing.ButtonGroup preAndPost;
     private javax.swing.JPanel probabilitiesPanel;
     private javax.swing.JPanel rangeAndMerge;
@@ -1057,10 +1126,13 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.ButtonGroup rhythmGroup;
     private javax.swing.JLabel rhythmLabel;
     private javax.swing.JRadioButton secondOrderButton;
+    private javax.swing.JPanel soloOptions;
     private javax.swing.JLabel sourceIntervals;
-    private javax.swing.JButton thisChorus;
-    private javax.swing.JLabel toggleLabel;
+    private javax.swing.JRadioButton thisChorusOption;
+    private javax.swing.JPanel togglePanel;
     private javax.swing.JToggleButton toggleView;
+    private javax.swing.JPanel topPanel;
+    private javax.swing.JPanel viewOptions;
     private javax.swing.ButtonGroup yesNo;
     // End of variables declaration//GEN-END:variables
 
