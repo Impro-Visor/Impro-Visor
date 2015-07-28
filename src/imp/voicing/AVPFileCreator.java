@@ -24,8 +24,10 @@ public class AVPFileCreator
      * @param file file to read
      * @param settings settings object to populate
      */
+    private static String lastFileName="";
     public static void fileToSettings(File file, AutomaticVoicingSettings settings)
     {
+        lastFileName=file.getName();
         try {
             Scanner sc = new Scanner(file);
             while(sc.hasNextLine())
@@ -173,6 +175,10 @@ public class AVPFileCreator
             JOptionPane.showMessageDialog(null,"An error was encountered while reading the file.");
             
         }
+    }
+
+    public static String getLastFileName() {
+        return lastFileName;
     }
     /**
      * saves settings object to a file
