@@ -8507,7 +8507,7 @@
                   <KeyStroke key="Ctrl+G"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Grammar &amp; Transform Control Panels"/>
+                <Property name="text" type="java.lang.String" value="Grammar Control Panel"/>
                 <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
               </Properties>
               <Events>
@@ -8565,6 +8565,15 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customSoloGeneratorMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="transformMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Transform Control Panel"/>
+                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transformMIActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="voicingTestMI">

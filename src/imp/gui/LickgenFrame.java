@@ -150,14 +150,6 @@ public class LickgenFrame
      */
     private static int numCritics = 22;
     /**
-     * Create the panel for the transform
-     */
-    private TransformPanel transformTab;
-    /**
-     * Create the panel for flatten
-     */
-    private TransformLearningPanel transformLearningTab;
-    /**
      * Create IntervalLearningPanel
      */
     private IntervalLearningPanel intervalLearningTab;    
@@ -177,19 +169,10 @@ public class LickgenFrame
         critic = notate.getCritic();
         initComponents();
 
-        transformTab = new TransformPanel(notate);
-        transformPanel.add(transformTab, new GridLayout(1, 1, 1, 1));
-        
-        transformLearningTab = new TransformLearningPanel(notate, transformTab);
-        transformLearningPanel.add(transformLearningTab, new GridLayout(1, 1, 1, 1));
-        
         intervalLearningTab = new IntervalLearningPanel(notate);
         intervalLearningPanel.add(intervalLearningTab, new GridLayout(1, 1, 1, 1));
     }
 
-    public void applySubstitutions(MelodyPart melody, ChordPart chords) {
-        transformTab.applySubstitutionsToPart(melody, chords);
-    }
 
     /**
      * Initializes the solo profile file choosers.
@@ -337,7 +320,6 @@ public class LickgenFrame
         criticGradeLabel = new javax.swing.JLabel();
         counterForCriticLabel = new javax.swing.JLabel();
         loadRandomGrammarButton = new javax.swing.JButton();
-        transformPanel = new javax.swing.JPanel();
         grammarLearningPanel = new javax.swing.JPanel();
         finalLabel = new javax.swing.JLabel();
         windowParametersPanel = new javax.swing.JPanel();
@@ -362,7 +344,6 @@ public class LickgenFrame
         toGrammarBtn = new javax.swing.JButton();
         learningStep0Label = new javax.swing.JLabel();
         testGeneration = new javax.swing.JButton();
-        transformLearningPanel = new javax.swing.JPanel();
         neuralNetworkPanel = new javax.swing.JPanel();
         nnetOutputPanel = new javax.swing.JPanel();
         nnetScrollPane = new javax.swing.JScrollPane();
@@ -1982,11 +1963,6 @@ public class LickgenFrame
 
         generatorPane.addTab("Lick Generator", lickGenPanel);
 
-        transformPanel.setMinimumSize(new java.awt.Dimension(32767, 32767));
-        transformPanel.setPreferredSize(new java.awt.Dimension(0, 0));
-        transformPanel.setLayout(new java.awt.GridLayout(1, 0));
-        generatorPane.addTab("Transform", transformPanel);
-
         grammarLearningPanel.setBackground(new java.awt.Color(218, 215, 215));
         grammarLearningPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Learning", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         grammarLearningPanel.setMinimumSize(new java.awt.Dimension(500, 300));
@@ -2419,9 +2395,6 @@ public class LickgenFrame
         grammarLearningPanel.add(testGeneration, gridBagConstraints);
 
         generatorPane.addTab("Grammar Learning", grammarLearningPanel);
-
-        transformLearningPanel.setLayout(new java.awt.GridLayout(1, 0));
-        generatorPane.addTab("Transform Learning", transformLearningPanel);
 
         neuralNetworkPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -6358,8 +6331,6 @@ private void updateUseSoloist()
     private javax.swing.JLabel totalBeatsLabel;
     private javax.swing.JButton trainingFileButton;
     private javax.swing.JTextField trainingFileTextField;
-    private javax.swing.JPanel transformLearningPanel;
-    private javax.swing.JPanel transformPanel;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JCheckBox useAbstractBricksCheckbox;
     private javax.swing.JCheckBox useAbstractWindowsCheckbox;
@@ -6533,16 +6504,6 @@ public void redoScales()
 
         File f = new File(outFile);
 
-//        String inFile = f.getParentFile().getPath() + File.separator + Directories.accumulatedProductions;
-//
-//        File in = new File(inFile);
-//
-//        if (!in.exists()) {
-//            System.out.println("File does not exist");
-//            setLickGenStatus("Can't do this step as " + inFile + " does not exist.");
-//            return;
-//        }
-
         setLickGenStatus("Writing productions to grammar file: " + outFile);
         
         if (getUseBricks()) {
@@ -6589,8 +6550,4 @@ public void setLickGenStatus(String string)
       }
   }
 
-public TransformPanel getTransformPanel()
-{
-    return transformTab;
-}
 }

@@ -90,7 +90,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         this.setTitle("Generate Guide Tone Line");
         this.setResizable(true);
         notate = (Notate)this.getParent();
-        transformationPanel = notate.lickgenFrame.getTransformPanel();
+        transformationPanel = new TransformPanel(notate);
         initComponents();
 
         //updates scale Degree buttons based on first chord of leadsheet
@@ -811,6 +811,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     }//GEN-LAST:event_allowColorBoxActionPerformed
 
     public void updateTransformButtons(){
+    if( transformationPanel == null )
+      {
+        return;
+      }
         revertLine.setEnabled(transformationPanel.getRevertEnabled());
         reapplyTransform.setEnabled(transformationPanel.getReapplyEnabled());
     }

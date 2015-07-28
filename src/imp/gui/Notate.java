@@ -28,7 +28,6 @@ import static imp.ImproVisor.getStyleDirectory;
 import imp.RecentFiles;
 import imp.audio.AudioSettings;
 import imp.audio.PitchExtractor;
-import imp.audio.SCDelayOffsetter;
 import imp.audio.SCHandler;
 import imp.brickdictionary.Block;
 import imp.com.*;
@@ -90,6 +89,7 @@ private static final long serialVersionUID = 1L;
 private int DEFAULT_SLIDER_VOLUME = 80;
 RoadMapFrame roadmapFrame = null;
 LickgenFrame lickgenFrame;
+TransformFrame transformFrame;
 MidiImportFrame midiImportFrame = null;
 MidiImport midiImport;
 PitchExtractor extractor;
@@ -127,13 +127,11 @@ private boolean noteColoration = true;
 // Determines whether or not notes are rectified
 // based on the current chord
 private boolean smartEntry = true;
-private int parallax = 0;
 public static final char TRUE_CHECK_BOX = 'y';
 public static final char FALSE_CHECK_BOX = 'n';
 private static final int ALWAYS_USE_BASS_INDEX = 0;
 private static final int ALWAYS_USE_CHORD_INDEX = 1;
 private static final int ALWAYS_USE_MELODY_INDEX = 2;
-private static final int ALWAYS_USE_STAVE_INDEX = 3;
 public static final int MIN_TEMPO = 30;
 public static final int MAX_TEMPO = 300;
 private static int aboutDialogWidth = 600;
@@ -916,6 +914,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     critic = new Critic();
     lickgenFrame = new LickgenFrame(this, lickgen, cm);
+    transformFrame = new TransformFrame(this, lickgen, cm);
 
     populateTradingMenu();
     populateNotateGrammarMenu();
@@ -2064,6 +2063,7 @@ public Critic getCritic()
         styleGenerator1 = new javax.swing.JMenuItem();
         soloGeneratorMI = new javax.swing.JMenuItem();
         customSoloGeneratorMI = new javax.swing.JMenuItem();
+        transformMI = new javax.swing.JMenuItem();
         voicingTestMI = new javax.swing.JMenuItem();
         pianoKeyboardMI = new javax.swing.JMenuItem();
         roadmapMenu = new javax.swing.JMenu();
@@ -8967,7 +8967,7 @@ public Critic getCritic()
 
         lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         lickGeneratorMI.setMnemonic('g');
-        lickGeneratorMI.setText("Grammar & Transform Control Panels");
+        lickGeneratorMI.setText("Grammar Control Panel");
         lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
         lickGeneratorMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -9017,6 +9017,15 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(customSoloGeneratorMI);
+
+        transformMI.setText("Transform Control Panel");
+        transformMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
+        transformMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transformMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(transformMI);
 
         voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         voicingTestMI.setMnemonic('v');
@@ -11000,11 +11009,6 @@ private void recordFromMidi()
         windowMenu.repaint();
     }//GEN-LAST:event_windowMenuMenuSelected
 
-private void chordToneWeightFieldFocusLost(java.awt.event.FocusEvent evt)
-  {
-    verifyAndFill();
-  }
-
 void FillProbsButtonActionPerformed(java.awt.event.ActionEvent evt)
   {
     verifyAndFill();
@@ -11040,6 +11044,13 @@ public void openLickGenerator()
 
     entryMuteActionPerformed(null);
   }
+
+private void openTransformFrame()
+{
+    transformFrame.setSize(lickGenFrameDimension);
+    transformFrame.setVisible(true);
+    WindowRegistry.registerWindow(transformFrame);
+}
 
     private void contourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contourBtnActionPerformed
 
@@ -16185,7 +16196,7 @@ private void setLayoutPreference(Polylist layout)
           }
         
         //UPDATE TRANSFORM BUTTONS IN TRANSFORM PANEL AND GUIDETONELINEDIALOG
-        this.lickgenFrame.getTransformPanel().updateButtons();
+        this.transformFrame.getTransformPanel().updateButtons();
         if(guideToneLineDialog!=null){
             guideToneLineDialog.updateTransformButtons();
         }
@@ -21145,7 +21156,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
               {
                 ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                           improviseEndSlot);
-                lickgenFrame.applySubstitutions(solo, chords);
+                transformFrame.applySubstitutions(solo, chords);
               }
             else
               {
@@ -21205,7 +21216,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                       {
                         ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                                   improviseEndSlot);
-                        lickgenFrame.applySubstitutions(lick, chords);
+                        transformFrame.applySubstitutions(lick, chords);
                       }
                     else
                       {
@@ -21222,7 +21233,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                       {
                         ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                                   improviseEndSlot);
-                        lickgenFrame.applySubstitutions(lick, chords);
+                        transformFrame.applySubstitutions(lick, chords);
                       }
                     else
                       {
@@ -21285,7 +21296,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
               {
                 ChordPart chords = getChordProg().extract(improviseStartSlot,
                                                           improviseEndSlot);
-                lickgenFrame.applySubstitutions(lick, chords);
+                transformFrame.applySubstitutions(lick, chords);
               }
             else
               {
@@ -22813,6 +22824,10 @@ int quantizeResolution = 60;
           }
         themeWeaver.openCustomizeSoloWindow();
     }//GEN-LAST:event_customSoloGeneratorMIActionPerformed
+
+    private void transformMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformMIActionPerformed
+                openTransformFrame();
+    }//GEN-LAST:event_transformMIActionPerformed
 void delAllMelody()
   {
     Trace.log(2, "delete all melody");
@@ -25294,6 +25309,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenu tradingMenu;
     private javax.swing.JMenuItem tradingWindow;
     private javax.swing.JCheckBoxMenuItem transformCheckBoxMenuItem;
+    private javax.swing.JMenuItem transformMI;
     private javax.swing.JMenuItem transposeBothDownSemitone;
     private javax.swing.JMenuItem transposeBothUpSemitone;
     private javax.swing.JMenuItem transposeChordsDownSemitone;

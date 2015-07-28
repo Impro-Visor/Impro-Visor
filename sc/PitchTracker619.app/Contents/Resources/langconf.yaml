@@ -2,7 +2,7 @@ includePaths:
     - overwrites
     - SCClassLibrary
 excludePaths:
-    - /Users/muddCS15/Library/Application Support/SuperCollider/Extensions
+    - /Users/keller/Library/Application Support/SuperCollider/Extensions
     - /Library/Application Support/SuperCollider/Extensions
     - /Applications/SuperCollider.app/Contents/Resources/SCClassLibrary
 postInlineWarnings: false
