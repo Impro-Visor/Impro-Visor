@@ -31,6 +31,8 @@ import imp.lickgen.LickGen;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import polya.Polylist;
 import polya.Tokenizer;
@@ -129,12 +131,11 @@ public class IntervalLearningFrame
         transformPane = new javax.swing.JTabbedPane();
         intervalLearningPanelHolder = new javax.swing.JPanel();
         transformMenuBar = new javax.swing.JMenuBar();
-        grammarMenu1 = new javax.swing.JMenu();
-        openGrammarMI1 = new javax.swing.JMenuItem();
-        showLogMI1 = new javax.swing.JMenuItem();
-        saveGrammarMI1 = new javax.swing.JMenuItem();
-        editGrammarMI1 = new javax.swing.JMenuItem();
-        useGrammarMI1 = new javax.swing.JCheckBoxMenuItem();
+        fileMenu = new javax.swing.JMenu();
+        newFile = new javax.swing.JMenuItem();
+        openFile = new javax.swing.JMenuItem();
+        addFromFile = new javax.swing.JMenuItem();
+        saveFile = new javax.swing.JMenuItem();
         generatorWindowMenu1 = new javax.swing.JMenu();
         closeWindowMI2 = new javax.swing.JMenuItem();
         cascadeMI2 = new javax.swing.JMenuItem();
@@ -154,7 +155,7 @@ public class IntervalLearningFrame
         transformPane.setMinimumSize(new java.awt.Dimension(1200, 700));
         transformPane.setPreferredSize(new java.awt.Dimension(1200, 700));
 
-        intervalLearningPanelHolder.setLayout(new java.awt.GridLayout());
+        intervalLearningPanelHolder.setLayout(new java.awt.GridLayout(1, 0));
         transformPane.addTab("Interval Learning", intervalLearningPanelHolder);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -169,69 +170,61 @@ public class IntervalLearningFrame
 
         transformMenuBar.setMinimumSize(new java.awt.Dimension(115, 23));
 
-        grammarMenu1.setMnemonic('G');
-        grammarMenu1.setText("Grammar Options");
-        grammarMenu1.setToolTipText("Edit or change the current grammar file.");
-        grammarMenu1.addActionListener(new java.awt.event.ActionListener() {
+        fileMenu.setMnemonic('G');
+        fileMenu.setText("File");
+        fileMenu.setToolTipText("Edit or change the current counts file.");
+        fileMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                grammarMenu1ActionPerformed(evt);
+                fileMenuActionPerformed(evt);
             }
         });
 
-        openGrammarMI1.setText("Load Grammar");
-        openGrammarMI1.setToolTipText("Selects which grammar file to used.");
-        openGrammarMI1.addActionListener(new java.awt.event.ActionListener() {
+        newFile.setText("New");
+        newFile.setToolTipText("Create a new counts file.");
+        newFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openGrammarMI1ActionPerformed(evt);
+                newFileActionPerformed(evt);
             }
         });
-        grammarMenu1.add(openGrammarMI1);
+        fileMenu.add(newFile);
 
-        showLogMI1.setText("Show Log");
-        showLogMI1.addActionListener(new java.awt.event.ActionListener() {
+        openFile.setText("Open");
+        openFile.setToolTipText("Load a counts file.");
+        openFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showLogMI1ActionPerformed(evt);
+                openFileActionPerformed(evt);
             }
         });
-        grammarMenu1.add(showLogMI1);
+        fileMenu.add(openFile);
 
-        saveGrammarMI1.setText("Save Grammar As ...");
-        saveGrammarMI1.setToolTipText("Saves the grammar file under a specified name.");
-        saveGrammarMI1.addActionListener(new java.awt.event.ActionListener() {
+        addFromFile.setText("Add From...");
+        addFromFile.setToolTipText("Add from a counts file.");
+        addFromFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveGrammarMI1ActionPerformed(evt);
+                addFromFileActionPerformed(evt);
             }
         });
-        grammarMenu1.add(saveGrammarMI1);
+        fileMenu.add(addFromFile);
 
-        editGrammarMI1.setText("Edit Grammar");
-        editGrammarMI1.setToolTipText("Edit the current grammar using a text editor.");
-        editGrammarMI1.addActionListener(new java.awt.event.ActionListener() {
+        saveFile.setText("Save");
+        saveFile.setToolTipText("Save the current counts file.");
+        saveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editGrammarMI1ActionPerformed(evt);
+                saveFileActionPerformed(evt);
             }
         });
-        grammarMenu1.add(editGrammarMI1);
+        fileMenu.add(saveFile);
 
-        useGrammarMI1.setText("Use Grammar");
-        useGrammarMI1.setToolTipText("Indicates whether or not a grammar should be used in lick generation. Without this, generation will be governed only by probabilities set in the fields below.");
-        useGrammarMI1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useGrammarMI1ActionPerformed(evt);
-            }
-        });
-        grammarMenu1.add(useGrammarMI1);
-
-        transformMenuBar.add(grammarMenu1);
+        transformMenuBar.add(fileMenu);
 
         generatorWindowMenu1.setLabel("Window");
         generatorWindowMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                generatorWindowMenu1MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                generatorWindowMenu1MenuSelected(evt);
             }
         });
 
@@ -297,25 +290,9 @@ public class IntervalLearningFrame
         notate.stopPlaying();
     }
 
-                        private void showLogMI1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLogMI1ActionPerformed
- 
-                        }//GEN-LAST:event_showLogMI1ActionPerformed
-
-                        private void saveGrammarMI1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGrammarMI1ActionPerformed
-                            notate.saveGrammarAs();
-                        }//GEN-LAST:event_saveGrammarMI1ActionPerformed
-
-                        private void editGrammarMI1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editGrammarMI1ActionPerformed
-                            notate.editGrammar();
-                        }//GEN-LAST:event_editGrammarMI1ActionPerformed
-
-                        private void useGrammarMI1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useGrammarMI1ActionPerformed
-                            
-                        }//GEN-LAST:event_useGrammarMI1ActionPerformed
-
-                        private void grammarMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grammarMenu1ActionPerformed
+                        private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
                             // TODO add your handling code here:
-                        }//GEN-LAST:event_grammarMenu1ActionPerformed
+                        }//GEN-LAST:event_fileMenuActionPerformed
 
                         private void closeWindowMI2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowMI2ActionPerformed
                             closeWindow();
@@ -354,9 +331,33 @@ public class IntervalLearningFrame
                             closeWindow();
                         }//GEN-LAST:event_closeWindow
 
-    private void openGrammarMI1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openGrammarMI1ActionPerformed
-        notate.openGrammar();
-    }//GEN-LAST:event_openGrammarMI1ActionPerformed
+    private void newFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFileActionPerformed
+        intervalLearningTab.newFile();
+    }//GEN-LAST:event_newFileActionPerformed
+
+    private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
+        try {
+            intervalLearningTab.open();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(IntervalLearningPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_openFileActionPerformed
+
+    private void addFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFromFileActionPerformed
+        try {
+            intervalLearningTab.addFromFile();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(IntervalLearningPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_addFromFileActionPerformed
+
+    private void saveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileActionPerformed
+        try {
+            intervalLearningTab.saveCounts();
+        } catch (IOException ex) {
+            Logger.getLogger(IntervalLearningPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_saveFileActionPerformed
 
 /**
  * Fill an abstract or relative-pitch melody from text, such as acquired from
@@ -453,18 +454,17 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addFromFile;
     private javax.swing.JMenuItem cascadeMI2;
     private javax.swing.JMenuItem closeWindowMI2;
-    private javax.swing.JMenuItem editGrammarMI1;
+    private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu generatorWindowMenu1;
-    private javax.swing.JMenu grammarMenu1;
     private javax.swing.JPanel intervalLearningPanelHolder;
-    private javax.swing.JMenuItem openGrammarMI1;
-    private javax.swing.JMenuItem saveGrammarMI1;
-    private javax.swing.JMenuItem showLogMI1;
+    private javax.swing.JMenuItem newFile;
+    private javax.swing.JMenuItem openFile;
+    private javax.swing.JMenuItem saveFile;
     private javax.swing.JMenuBar transformMenuBar;
     private javax.swing.JTabbedPane transformPane;
-    private javax.swing.JCheckBoxMenuItem useGrammarMI1;
     private javax.swing.JSeparator windowMenuSeparator2;
     // End of variables declaration//GEN-END:variables
 
