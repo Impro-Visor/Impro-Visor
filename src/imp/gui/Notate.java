@@ -90,6 +90,7 @@ private int DEFAULT_SLIDER_VOLUME = 80;
 RoadMapFrame roadmapFrame = null;
 LickgenFrame lickgenFrame;
 TransformFrame transformFrame;
+IntervalLearningFrame intervalLearningFrame;
 MidiImportFrame midiImportFrame = null;
 MidiImport midiImport;
 PitchExtractor extractor;
@@ -915,6 +916,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     critic = new Critic();
     lickgenFrame = new LickgenFrame(this, lickgen, cm);
     transformFrame = new TransformFrame(this, lickgen, cm);
+    intervalLearningFrame = new IntervalLearningFrame(this);
 
     populateTradingMenu();
     populateNotateGrammarMenu();
@@ -2059,6 +2061,7 @@ public Critic getCritic()
         stepKeyboardMI = new javax.swing.JMenuItem();
         guideToneLine = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
+        intervalLearningMI = new javax.swing.JMenuItem();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         soloGeneratorMI = new javax.swing.JMenuItem();
@@ -8976,6 +8979,16 @@ public Critic getCritic()
         });
         utilitiesMenu.add(lickGeneratorMI);
 
+        intervalLearningMI.setMnemonic('g');
+        intervalLearningMI.setText("Interval Learning Panel");
+        intervalLearningMI.setToolTipText("Improvisation using interval learning");
+        intervalLearningMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intervalLearningMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(intervalLearningMI);
+
         openLeadsheetEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         openLeadsheetEditorMI.setMnemonic('l');
         openLeadsheetEditorMI.setText("Leadsheet Textual Editor");
@@ -11050,6 +11063,13 @@ private void openTransformFrame()
     transformFrame.setSize(lickGenFrameDimension);
     transformFrame.setVisible(true);
     WindowRegistry.registerWindow(transformFrame);
+}
+
+private void openIntervalLearningFrame()
+{
+    intervalLearningFrame.setSize(lickGenFrameDimension);
+    intervalLearningFrame.setVisible(true);
+    WindowRegistry.registerWindow(intervalLearningFrame);
 }
 
     private void contourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contourBtnActionPerformed
@@ -22828,6 +22848,10 @@ int quantizeResolution = 60;
     private void transformMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformMIActionPerformed
                 openTransformFrame();
     }//GEN-LAST:event_transformMIActionPerformed
+
+    private void intervalLearningMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalLearningMIActionPerformed
+        openIntervalLearningFrame();
+    }//GEN-LAST:event_intervalLearningMIActionPerformed
 void delAllMelody()
   {
     Trace.log(2, "delete all melody");
@@ -24933,6 +24957,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem insertSectionAfterPMI;
     private javax.swing.JMenuItem insertSectionBeforePMI;
     private javax.swing.JButton insertVoicingButton;
+    private javax.swing.JMenuItem intervalLearningMI;
     private javax.swing.JMenuItem invertMelody;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
