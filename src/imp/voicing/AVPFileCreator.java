@@ -151,7 +151,7 @@ public class AVPFileCreator
                  else if(line.contains("min-interval"))
                 {
                     line=line.substring(line.indexOf("min-interval")+"min-interval".length()+1,line.indexOf(")"));
-                    settings.setFullStepReducer(Integer.parseInt(line));
+                    settings.setMinInterval(Integer.parseInt(line));
                 }
                 else if(line.contains("invert-9th"))
                 {
@@ -219,7 +219,7 @@ public class AVPFileCreator
                     writer.println("(repeat-multiplier "+(int)(settings.getRepeatMultiplier()*10)+")");
                     writer.println("(half-step-reducer "+(int)(settings.getHalfStepReducer()*10)+")");
                     writer.println("(full-step-reducer "+(int)(settings.getFullStepReducer()*10)+")");
-                    writer.println("(min-interval "+(int)(settings.getMinInterval()*10)+")");
+                    writer.println("(min-interval "+(int)(settings.getMinInterval())+")");
                     if(settings.getInvertM9())
                         writer.println("(invert-9th on)");
                     else
