@@ -250,6 +250,15 @@ public class AutomaticVoicingSettings {
     private boolean invertM9;
     private boolean voiceAll;
     private boolean rootless;
+    private int minInterval;//minimum distance between chord tones
+
+    public int getMinInterval() {
+        return minInterval;
+    }
+
+    public void setMinInterval(int minInterval) {
+        this.minInterval = minInterval;
+    }
     
     public boolean isRootless() {
         return rootless;

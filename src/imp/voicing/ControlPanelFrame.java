@@ -40,8 +40,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         setLabels();
         System.out.println("Lower Left hand: "+avs.getLeftHandLowerLimit());
         this.setTitle("Automated Voicing Generator Settings Editor");
-        if(!AVPFileCreator.getLastFileName().isEmpty())
-            setTitle(AVPFileCreator.getLastFileName());
         /*jButton1.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -408,6 +406,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertBox.setState(invertM9);
         voiceAllNotes.setState(voiceAll);
         rootlessBox.setState(rootless);
+        spinInterval.setValue(minInterval);
     }
     /**
      * points sliders we declared and named to auto-created sliders from gui designer.
@@ -500,6 +499,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertM9=invertBox.getState();
         voiceAll=voiceAllNotes.getState();
         rootless=rootlessBox.getState();
+        minInterval=Integer.parseInt(spinInterval.getValue().toString());
         syncToSettings();
         
     }
@@ -544,6 +544,15 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private boolean invertM9;//true if minor ninths should be inverted to major sevenths
     private boolean voiceAll;// ensures all notes are voiced at least once
     private boolean rootless;// omits root note from voicing.
+    private int minInterval;//minimum distance between chord tones
+
+    public int getMinInterval() {
+        return minInterval;
+    }
+
+    public void setMinInterval(int minInterval) {
+        this.minInterval = minInterval;
+    }
 
     public boolean isRootless() {
         return rootless;
@@ -818,14 +827,16 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         WholeStepRedSlider = new javax.swing.JSlider();
         jPanel28 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        loadFile = new javax.swing.JButton();
         loadDefault = new javax.swing.JButton();
+        loadFile = new javax.swing.JButton();
         saveToDefault = new javax.swing.JButton();
         saveToNew = new javax.swing.JButton();
         closeB = new javax.swing.JButton();
         invertBox = new java.awt.Checkbox();
         voiceAllNotes = new java.awt.Checkbox();
         rootlessBox = new java.awt.Checkbox();
+        jPanel29 = new javax.swing.JPanel();
+        spinInterval = new javax.swing.JSpinner();
 
         setBounds(new java.awt.Rectangle(0, 0, 1300, 500));
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -1435,13 +1446,13 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         });
         jPanel28.add(jButton3);
 
-        loadFile.setText("Load A File");
-        jPanel28.add(loadFile);
-
         loadDefault.setText("Revert to Saved Settings");
         jPanel28.add(loadDefault);
 
-        saveToDefault.setText("Save To Current File");
+        loadFile.setText("Open");
+        jPanel28.add(loadFile);
+
+        saveToDefault.setText("Save");
         saveToDefault.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveToDefaultActionPerformed(evt);
@@ -1449,7 +1460,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         });
         jPanel28.add(saveToDefault);
 
-        saveToNew.setText("Save to a Different File");
+        saveToNew.setText("Save As");
         saveToNew.setToolTipText("");
         jPanel28.add(saveToNew);
 
@@ -1473,6 +1484,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         rootlessBox.setLabel("Rootless Voicings");
         jPanel28.add(rootlessBox);
+
+        jPanel29.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
+        jPanel29.add(spinInterval);
+
+        jPanel28.add(jPanel29);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -1586,6 +1602,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1598,6 +1615,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private java.awt.Checkbox rootlessBox;
     private javax.swing.JButton saveToDefault;
     private javax.swing.JButton saveToNew;
+    private javax.swing.JSpinner spinInterval;
     private java.awt.Checkbox voiceAllNotes;
     // End of variables declaration//GEN-END:variables
 }

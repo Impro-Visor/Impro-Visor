@@ -145,8 +145,12 @@ public class VoicingGenerator {
                     allMidiValues[noteToAdd+2]*=fullStepReducer;
                     allMidiValues[noteToAdd-2]*=fullStepReducer;
                     multiplyNotes(noteToAdd,repeatMultiplier);
-                                     
+                    for(int j=0; j<minInterval; j++)
+                    {
+                        allMidiValues[noteToAdd+i]=0;
+                        allMidiValues[noteToAdd-i]=0;
                 }
+            }
             }
             setupAllRightValues();
             if(!allRightValues.isEmpty())
@@ -161,7 +165,11 @@ public class VoicingGenerator {
                     allMidiValues[noteToAdd+2]*=fullStepReducer;
                     allMidiValues[noteToAdd-2]*=fullStepReducer;
                     multiplyNotes(noteToAdd,repeatMultiplier);
-                    
+                    for(int j=0; j<minInterval; j++)
+                    {
+                        allMidiValues[noteToAdd+i]=0;
+                        allMidiValues[noteToAdd-i]=0;
+                    }
                 }
             
             }
@@ -535,6 +543,13 @@ public class VoicingGenerator {
         return chord;
         
     }
+     public int getMinInterval() {
+        return minInterval;
+    }
+
+    public void setMinInterval(int minInterval) {
+        this.minInterval = minInterval;
+    }
     public boolean isVoiceAll() {
         return voiceAll;
     }
@@ -600,6 +615,7 @@ public class VoicingGenerator {
     private double fullStepReducer;
     private boolean voiceAll;
     private boolean rootless;
+    private int minInterval;
 
     
     
