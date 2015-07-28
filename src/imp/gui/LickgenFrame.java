@@ -168,9 +168,6 @@ public class LickgenFrame
 
         critic = notate.getCritic();
         initComponents();
-
-        intervalLearningTab = new IntervalLearningPanel(notate);
-        intervalLearningPanel.add(intervalLearningTab, new GridLayout(1, 1, 1, 1));
     }
 
 
@@ -377,7 +374,6 @@ public class LickgenFrame
         moveLayerUpTableButton = new javax.swing.JButton();
         moveLayerDownTableButton = new javax.swing.JButton();
         weightFileButton = new javax.swing.JButton();
-        intervalLearningPanel = new javax.swing.JPanel();
         generatorMenuBar1 = new javax.swing.JMenuBar();
         grammarMenu1 = new javax.swing.JMenu();
         openGrammarMI1 = new javax.swing.JMenuItem();
@@ -1961,7 +1957,7 @@ public class LickgenFrame
         gridBagConstraints.weighty = 0.1;
         lickGenPanel.add(soloCorrectionPanel, gridBagConstraints);
 
-        generatorPane.addTab("Lick Generator", lickGenPanel);
+        generatorPane.addTab("Melody Generator", lickGenPanel);
 
         grammarLearningPanel.setBackground(new java.awt.Color(218, 215, 215));
         grammarLearningPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Learning", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
@@ -2278,6 +2274,7 @@ public class LickgenFrame
         loadBaseGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         loadBaseGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
         loadBaseGrammarBtn.setMinimumSize(new java.awt.Dimension(105, 60));
+        loadBaseGrammarBtn.setOpaque(true);
         loadBaseGrammarBtn.setPreferredSize(new java.awt.Dimension(173, 60));
         loadBaseGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2298,6 +2295,7 @@ public class LickgenFrame
         saveGrammarAsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saveGrammarAsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         saveGrammarAsButton.setMaximumSize(new java.awt.Dimension(9999, 9999));
+        saveGrammarAsButton.setOpaque(true);
         saveGrammarAsButton.setPreferredSize(new java.awt.Dimension(173, 60));
         saveGrammarAsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2320,6 +2318,7 @@ public class LickgenFrame
         openCorpusBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         openCorpusBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
         openCorpusBtn.setMinimumSize(new java.awt.Dimension(240, 75));
+        openCorpusBtn.setOpaque(true);
         openCorpusBtn.setPreferredSize(new java.awt.Dimension(240, 75));
         openCorpusBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2341,6 +2340,7 @@ public class LickgenFrame
         toGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         toGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 70));
         toGrammarBtn.setMinimumSize(new java.awt.Dimension(240, 75));
+        toGrammarBtn.setOpaque(true);
         toGrammarBtn.setPreferredSize(new java.awt.Dimension(240, 75));
         toGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2380,6 +2380,7 @@ public class LickgenFrame
         testGeneration.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         testGeneration.setMaximumSize(new java.awt.Dimension(9999, 9999));
         testGeneration.setMinimumSize(new java.awt.Dimension(240, 29));
+        testGeneration.setOpaque(true);
         testGeneration.setPreferredSize(new java.awt.Dimension(240, 29));
         testGeneration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2865,10 +2866,7 @@ public class LickgenFrame
         gridBagConstraints.weightx = 0.7;
         neuralNetworkPanel.add(nnetParametersPanel, gridBagConstraints);
 
-        generatorPane.addTab("Neural Network", neuralNetworkPanel);
-
-        intervalLearningPanel.setLayout(new java.awt.GridLayout(1, 0));
-        generatorPane.addTab("Interval Learning", intervalLearningPanel);
+        generatorPane.addTab("Neural Network Learning", neuralNetworkPanel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -6239,7 +6237,6 @@ private void updateUseSoloist()
     private javax.swing.JPanel grammarLearningPanel;
     private javax.swing.JMenu grammarMenu1;
     private javax.swing.JLabel intervalLabel;
-    private javax.swing.JPanel intervalLearningPanel;
     private javax.swing.JTable layerDataTable;
     private javax.swing.JScrollPane layerInfoScrollPane;
     private javax.swing.JTextField leapProbField;
