@@ -40,6 +40,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         setLabels();
         System.out.println("Lower Left hand: "+avs.getLeftHandLowerLimit());
         this.setTitle("Automated Voicing Generator Settings Editor");
+        setTitle(AVPFileCreator.getLastFileName());
         /*jButton1.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -288,6 +289,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         avs.setInvertM9(invertM9);
         avs.setVoiceAll(voiceAll);
         avs.setRootless(rootless);
+        avs.setMinInterval(minInterval);
     }
     /**
      * sets the variables to the values in the settings object
@@ -321,6 +323,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertM9=avs.getInvertM9();
         voiceAll=avs.getVoiceAll();
         rootless=avs.getRootless();
+        minInterval=avs.getMinInterval();
     }
         /*
     private void setupHandParams()
