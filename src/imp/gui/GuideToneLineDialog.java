@@ -888,7 +888,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         
         GuideLineGenerator line = new GuideLineGenerator();
         int rhythmValue = buttonToDuration(getSelected(maxDurationButtons));
-        MelodyPart fractalSolo = line.fractalImprovise(guideToneLine, 
+        MelodyPart fractalSolo = line.fractalImprovise(notate.getCurrentMelodyPart(), 
                                                        notate.getChordProg(), 
                                                        rhythmValue);
         notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
