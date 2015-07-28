@@ -1000,7 +1000,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Save to a Different File"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="actionCommand" type="java.lang.String" value="Save to a Different File"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="closeB">

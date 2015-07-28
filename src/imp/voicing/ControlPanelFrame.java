@@ -40,6 +40,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         setLabels();
         System.out.println("Lower Left hand: "+avs.getLeftHandLowerLimit());
         this.setTitle("Automated Voicing Generator Settings Editor");
+        if(!AVPFileCreator.getLastFileName().isEmpty())
+            setTitle(AVPFileCreator.getLastFileName());
         /*jButton1.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -1449,7 +1451,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         saveToNew.setText("Save to a Different File");
         saveToNew.setToolTipText("");
-        saveToNew.setActionCommand("Save to a Different File");
         jPanel28.add(saveToNew);
 
         closeB.setText("Close");

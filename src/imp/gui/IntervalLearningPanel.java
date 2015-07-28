@@ -176,6 +176,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         chooseRange = new javax.swing.JButton();
         mergeCheckbox = new javax.swing.JCheckBox();
         rectifyPanel = new javax.swing.JPanel();
+        rectifyLabel = new javax.swing.JLabel();
+        preRectifyButton = new javax.swing.JRadioButton();
+        postRectifyButton = new javax.swing.JRadioButton();
+        noneButton = new javax.swing.JRadioButton();
         rectifyCheckbox = new javax.swing.JCheckBox();
         chordBox = new javax.swing.JCheckBox();
         colorBox = new javax.swing.JCheckBox();
@@ -383,6 +387,39 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
+        rectifyPanel.add(noneButton, gridBagConstraints);
+
+        rectifyCheckbox.setSelected(true);
+        rectifyCheckbox.setText("Rectify");
+        rectifyCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rectifyCheckboxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        rectifyPanel.add(rectifyCheckbox, gridBagConstraints);
+
+        chordBox.setSelected(true);
+        chordBox.setText("Chord");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        rectifyPanel.add(chordBox, gridBagConstraints);
+
+        colorBox.setSelected(true);
+        colorBox.setText("Color");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        rectifyPanel.add(colorBox, gridBagConstraints);
+
+        approachBox.setSelected(true);
+        approachBox.setText("Approach");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
         rectifyPanel.add(approachBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1158,6 +1195,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JPanel probabilitiesPanel;
     private javax.swing.JPanel rangeAndMerge;
     private javax.swing.JCheckBox rectifyCheckbox;
+    private javax.swing.JLabel rectifyLabel;
     private javax.swing.JPanel rectifyPanel;
     private javax.swing.JRadioButton resetThenAdd;
     private javax.swing.ButtonGroup rhythmGroup;
