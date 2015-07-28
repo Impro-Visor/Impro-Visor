@@ -180,6 +180,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         preRectifyButton = new javax.swing.JRadioButton();
         postRectifyButton = new javax.swing.JRadioButton();
         noneButton = new javax.swing.JRadioButton();
+        rectifyCheckbox = new javax.swing.JCheckBox();
+        chordBox = new javax.swing.JCheckBox();
+        colorBox = new javax.swing.JCheckBox();
+        approachBox = new javax.swing.JCheckBox();
         generateButtonsPanel = new javax.swing.JPanel();
         generatePanelLabel = new javax.swing.JLabel();
         rhythmLabel = new javax.swing.JLabel();
@@ -379,6 +383,39 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         rectifyPanel.add(noneButton, gridBagConstraints);
+
+        rectifyCheckbox.setSelected(true);
+        rectifyCheckbox.setText("Rectify");
+        rectifyCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rectifyCheckboxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        rectifyPanel.add(rectifyCheckbox, gridBagConstraints);
+
+        chordBox.setSelected(true);
+        chordBox.setText("Chord");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        rectifyPanel.add(chordBox, gridBagConstraints);
+
+        colorBox.setSelected(true);
+        colorBox.setText("Color");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        rectifyPanel.add(colorBox, gridBagConstraints);
+
+        approachBox.setSelected(true);
+        approachBox.setText("Approach");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        rectifyPanel.add(approachBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -724,14 +761,11 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         ChordPart chords = notate.getChordProg();
         MelodyPart rhythm = notate.getScore().getPart(0);
         MelodyGenerator mgen;
-        MelodyPart result = null;
-        if(firstOrderButton.isSelected()){
-            mgen = new MelodyGenerator(learner.getDeg1Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
-            result = mgen.melody();
-        }else{
-            mgen = new MelodyGenerator(learner.getDeg2Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
-            result = mgen.melody2();
-        }
+        MelodyPart result;
+        boolean rectify = rectifyCheckbox.isSelected();
+        boolean [] include = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
+        mgen = new MelodyGenerator(learner, rhythm, chords, range, mergeCheckbox.isSelected(), rectify, include);
+        result = firstOrderButton.isSelected() ? mgen.melody() : mgen.melody2();
         notate.addChorus(result);
     }
     
@@ -745,13 +779,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         MelodyPart rhythm = rgen.rhythm(Constants.EIGHTH);
         MelodyGenerator mgen;
         MelodyPart result;
-        if(firstOrderButton.isSelected()){
-            mgen = new MelodyGenerator(learner.getDeg1Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
-            result = mgen.melody();
-        }else{
-            mgen = new MelodyGenerator(learner.getDeg2Probs(), rhythm, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
-            result = mgen.melody2();
-        }
+        boolean rectify = rectifyCheckbox.isSelected();
+        boolean [] include = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
+        mgen = new MelodyGenerator(learner, rhythm, chords, range, mergeCheckbox.isSelected(), rectify, include);
+        result = firstOrderButton.isSelected() ? mgen.melody() : mgen.melody2();
         notate.addChorus(result);
     }
     
@@ -765,13 +796,10 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         ChordPart chords = notate.getChordProg();
         MelodyGenerator mgen;
         MelodyPart result;
-        if(firstOrderButton.isSelected()){
-            mgen = new MelodyGenerator(learner.getDeg1Probs(), notate, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
-            result = mgen.melody();
-        }else{
-            mgen = new MelodyGenerator(learner.getDeg2Probs(), notate, chords, range, getRectificationFromButtons(), mergeCheckbox.isSelected());
-            result = mgen.melody2();
-        }
+        boolean rectify = rectifyCheckbox.isSelected();
+        boolean [] include = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
+        mgen = new MelodyGenerator(learner, notate, chords, range, mergeCheckbox.isSelected(), rectify, include);
+        result = firstOrderButton.isSelected() ? mgen.melody() : mgen.melody2();
         notate.addChorus(result);
     }
 
@@ -1011,6 +1039,25 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         refreshDisplay();
     }//GEN-LAST:event_interval1SliderMouseReleased
 
+    private void rectifyCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rectifyCheckboxActionPerformed
+        if(rectifyCheckbox.isSelected()){
+            enableOptions(true);
+        }else{
+            enableOptions(false);
+        }
+    }//GEN-LAST:event_rectifyCheckboxActionPerformed
+
+    /**
+     * enableOptions
+     * enable or disable the chord, color, and approach check boxes
+     * @param enable - true to enable, false to disable
+     */
+    private void enableOptions(boolean enable){
+        chordBox.setEnabled(enable);
+        colorBox.setEnabled(enable);
+        approachBox.setEnabled(enable);
+    }
+    
     /**
      * newFile
      * Clear All data, set file name to newFile
@@ -1124,10 +1171,13 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JButton addFromFile;
     private javax.swing.JRadioButton addToTotal;
     private javax.swing.JButton allChoruses;
+    private javax.swing.JCheckBox approachBox;
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton chooseRange;
+    private javax.swing.JCheckBox chordBox;
     private javax.swing.JButton clearAll;
+    private javax.swing.JCheckBox colorBox;
     private javax.swing.JLabel destinationIntervals;
     private javax.swing.JPanel fileSavePanel;
     private javax.swing.JLabel filenameLabel;
@@ -1166,6 +1216,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton preRectifyButton;
     private javax.swing.JPanel probabilitiesPanel;
     private javax.swing.JPanel rangeAndMerge;
+    private javax.swing.JCheckBox rectifyCheckbox;
     private javax.swing.JLabel rectifyLabel;
     private javax.swing.JPanel rectifyPanel;
     private javax.swing.JRadioButton resetThenAdd;

@@ -8,11 +8,8 @@ package imp.data;
 import imp.Constants;
 import static imp.Constants.OCTAVE;
 import imp.com.RectifyPitchesCommand;
-import static imp.data.GuideLineGenerator.ASCENDING;
-import static imp.data.GuideLineGenerator.DESCENDING;
 import imp.gui.Notate;
 import imp.lickgen.Grammar;
-import imp.lickgen.LickGen;
 import java.util.ArrayList;
 import java.util.Random;
 import polya.Polylist;
@@ -29,11 +26,10 @@ public class MelodyGenerator {
     private MelodyPart rhythm;
     private ChordPart chords;
     private int [] range;
-    private String rectification;
     //whether to rectify
-    //private boolean rectify;
+    private boolean rectify;
     //types of notes to allow in rectification
-    //private boolean chord, color, approach;
+    private boolean includeChord, includeColor, includeApproach;
     //whether to merge same notes
     private boolean merge;
 
@@ -44,38 +40,19 @@ public class MelodyGenerator {
     public static final String POST = "POST";
     public static final String NONE = "NONE";
     
-    public MelodyGenerator(double[][] probabilities, MelodyPart rhythm, ChordPart chords, int [] range, String rectification, boolean merge) {
-        this.probabilities = probabilities;
+    public MelodyGenerator(IntervalLearner learner, MelodyPart rhythm, ChordPart chords, int [] range, boolean merge, boolean rectify, boolean [] include){
+        probabilities = learner.getDeg1Probs();
+        probabilities2 = learner.getDeg2Probs();
         this.rhythm = rhythm;
         this.chords = chords;
         this.range = range;
-        this.rectification = rectification;
         this.merge = merge;
+        this.rectify = rectify;
+        this.includeChord = include[0]; this.includeColor = include[1]; this.includeApproach = include[2];
     }
     
-    public MelodyGenerator(double[][][] probabilities2, MelodyPart rhythm, ChordPart chords, int [] range, String rectification, boolean merge) {
-        this.probabilities2 = probabilities2;
-        this.rhythm = rhythm;
-        this.chords = chords;
-        this.range = range;
-        this.rectification = rectification;
-        this.merge = merge;
-    }
-    
-    public MelodyGenerator(double [][] probabilities, Polylist rhythm, ChordPart chords, int [] range, String rectification, boolean merge){
-        this(probabilities, polylistToMelodyPart(rhythm), chords, range, rectification, merge);
-    }
-    
-    public MelodyGenerator(double [][][] probabilities2, Polylist rhythm, ChordPart chords, int [] range, String rectification, boolean merge){
-        this(probabilities2, polylistToMelodyPart(rhythm), chords, range, rectification, merge);
-    }
-    
-    public MelodyGenerator(double [][] probabilities, Notate notate, ChordPart chords, int [] range, String rectification, boolean merge){
-        this(probabilities, rhythm(notate), chords, range, rectification, merge);
-    }
-    
-    public MelodyGenerator(double [][][] probabilities2, Notate notate, ChordPart chords, int [] range, String rectification, boolean merge){
-        this(probabilities2, rhythm(notate), chords, range, rectification, merge);
+    public MelodyGenerator(IntervalLearner learner, Notate notate, ChordPart chords, int [] range, boolean merge, boolean rectify, boolean [] include){
+        this(learner, polylistToMelodyPart(rhythm(notate)), chords, range, merge, rectify, include);
     }
     
     public static Polylist rhythm(Notate notate){
@@ -176,9 +153,7 @@ public class MelodyGenerator {
                 
             //should only be true for second note (we ignore rests)
             }else if(prevInterval1 == NO_DATA){
-                //System.out.println("prevInterval is NO_DATA");
                 toAdd = randomChordOrColorTone(chord, duration);
-                //toAdd = new Note(rootPitch(chord), duration);
                 prevInterval1 = toAdd.getPitch() - prevNote.getPitch();
             //should only be true for third note
             }else if(prevInterval2 == NO_DATA){
@@ -207,12 +182,12 @@ public class MelodyGenerator {
 
             
         }
-        if(rectification.equals(PRE) || rectification.equals(POST)){
+        if(rectify){
             //post-rectification to chord, color, and approach tones
             RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
                                 result.size()-1, chords,
                                 false, false,
-                                true, true, true);
+                                includeChord, includeColor, includeApproach);
             cmd.execute();
         }
         //merge same notes - good idea???
@@ -268,12 +243,12 @@ public class MelodyGenerator {
 
             
         }
-        if(rectification.equals(PRE) || rectification.equals(POST)){
+        if(rectify){
             //post-rectification to chord, color, and approach tones
             RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
                                 result.size()-1, chords,
                                 false, false,
-                                true, true, true);
+                                includeChord, includeColor, includeApproach);
             cmd.execute();
         }
         //merge same notes - good idea???
@@ -287,7 +262,6 @@ public class MelodyGenerator {
     
     private MelodyPart mergeSameNotes(MelodyPart unmerged){
         MelodyPart merged = new MelodyPart();
-        //int duration;
         int duration = unmerged.getNote(0).getRhythmValue();
         Note toAdd = unmerged.getNote(0);
         int lastIndex = unmerged.getLastActiveSlot();
@@ -317,19 +291,7 @@ public class MelodyGenerator {
         return merged;
     }
     
-    //always start melody on the root of the first chord
-    //specifically, the one that lies closest to the middle of the range
-    private int rootPitch(Chord c){
-        if(c.isNOCHORD()){
-            return middleOfRange();
-        }else{
-            return closestToMiddle(new Note(Constants.C4 + c.getRootSemitones())).getPitch();
-        }
-    }
-    
-    
-    
-        /**
+    /**
      * middleOfRange
      * returns the midi value located at the middle of the range
      * (rounds down)
@@ -467,36 +429,20 @@ public class MelodyGenerator {
         ArrayList<Integer> pitches = new ArrayList<Integer>();
         ArrayList<Double> pitchProbs = new ArrayList<Double>();
         
+        //include only those notes that are in range and have nonzero probabilities
         int sourceIndex = intervalToIndex(prevInterval);
         for(int destIndex = 0; destIndex < probabilities[sourceIndex].length; destIndex ++){
             double prob = probabilities[sourceIndex][destIndex];
             int pitchToAdd = prevPitch + indexToInterval(destIndex);
-            int typeIndex = chord.getTypeIndex(new Note(pitchToAdd));
-            boolean correctType = rectification.equals(PRE) ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
-            if(prob != 0 && inRange(pitchToAdd) && correctType){
+            if(prob != 0 && inRange(pitchToAdd)){
                 pitches.add(pitchToAdd);
                 pitchProbs.add(prob);
             }
         }
-        
-        //if no pitches have nonzero probability, are in range, and are chord/color tones,
-        //allow all non chord / color tones
-        if(pitchProbs.isEmpty() && rectification.equals(PRE)){
-            //System.out.println("Allow non chord/color tones");
-            for(int destIndex = 0; destIndex < probabilities[sourceIndex].length; destIndex ++){
-                double prob = probabilities[sourceIndex][destIndex];
-                int pitchToAdd = prevPitch + indexToInterval(destIndex);
-                if(prob != 0 && inRange(pitchToAdd)){
-                    pitches.add(pitchToAdd);
-                    pitchProbs.add(prob);
-                }
-            }
-        }
-        
+
         //if there are no intervals that have nonzero probability that are in range,
         //allow notes out of range
         if(pitchProbs.isEmpty()){
-            //System.out.println("Allow out of range notes");
             for(int destIndex = 0; destIndex < probabilities[sourceIndex].length; destIndex ++){
                 double prob = probabilities[sourceIndex][destIndex];
                 int pitchToAdd = prevPitch + indexToInterval(destIndex);
@@ -509,8 +455,6 @@ public class MelodyGenerator {
         
         //readjust probabilities so that they sum to one again
         //they might not sum to 1 anymore because we eliminated options that were out of range
-        //and options that were'nt chord or color tones
-        //System.out.println("choices: "+pitchProbs.size());
         double total = 0;
         for(double prob : pitchProbs){
             total += prob;
@@ -560,32 +504,15 @@ public class MelodyGenerator {
         for(int z = 0; z < probabilities2[x][y].length; z ++){
             double prob = probabilities2[x][y][z];
             int pitchToAdd = prevPitch + indexToInterval(z);
-            int typeIndex = chord.getTypeIndex(new Note(pitchToAdd));
-            boolean correctType = rectification.equals(PRE) ? (typeIndex == Constants.CHORD_TONE || typeIndex == Constants.COLOR_TONE) : true;
-            if(prob != 0 && inRange(pitchToAdd) && correctType){
+            if(prob != 0 && inRange(pitchToAdd)){
                 pitches.add(pitchToAdd);
                 pitchProbs.add(prob);
             }
         }
-        
-        //if no pitches have nonzero probability, are in range, and are chord/color tones,
-        //allow all non chord / color tones
-        if(pitchProbs.isEmpty() && rectification.equals(PRE)){
-            //System.out.println("Allow non chord/color tones");
-            for(int z = 0; z < probabilities2[x][y].length; z ++){
-                double prob = probabilities2[x][y][z];
-                int pitchToAdd = prevPitch + indexToInterval(z);
-                if(prob != 0 && inRange(pitchToAdd)){
-                    pitches.add(pitchToAdd);
-                    pitchProbs.add(prob);
-                }
-            }
-        }
-        
+
         //if there are no intervals that have nonzero probability that are in range,
         //allow notes out of range
         if(pitchProbs.isEmpty()){
-            //System.out.println("Allow out of range notes");
             for(int z = 0; z < probabilities2[x][y].length; z ++){
                 double prob = probabilities2[x][y][z];
                 int pitchToAdd = prevPitch + indexToInterval(z);
@@ -598,8 +525,6 @@ public class MelodyGenerator {
         
         //readjust probabilities so that they sum to one again
         //they might not sum to 1 anymore because we eliminated options that were out of range
-        //and options that were'nt chord or color tones
-        //System.out.println("choices: "+pitchProbs.size());
         double total = 0;
         for(double prob : pitchProbs){
             total += prob;
