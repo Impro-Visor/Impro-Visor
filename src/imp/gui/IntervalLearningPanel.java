@@ -177,9 +177,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         mergeCheckbox = new javax.swing.JCheckBox();
         rectifyPanel = new javax.swing.JPanel();
         rectifyLabel = new javax.swing.JLabel();
-        preRectifyButton = new javax.swing.JRadioButton();
-        postRectifyButton = new javax.swing.JRadioButton();
-        noneButton = new javax.swing.JRadioButton();
         rectifyCheckbox = new javax.swing.JCheckBox();
         chordBox = new javax.swing.JCheckBox();
         colorBox = new javax.swing.JCheckBox();
@@ -387,7 +384,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        rectifyPanel.add(noneButton, gridBagConstraints);
 
         rectifyCheckbox.setSelected(true);
         rectifyCheckbox.setText("Rectify");
