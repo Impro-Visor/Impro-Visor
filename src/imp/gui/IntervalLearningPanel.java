@@ -276,7 +276,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         addToTotalPanel.add(addToTotalLabel, gridBagConstraints);
 
         yesNo.add(addToTotal);
-        addToTotal.setSelected(true);
         addToTotal.setText("Yes");
         addToTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,6 +288,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         addToTotalPanel.add(addToTotal, gridBagConstraints);
 
         yesNo.add(resetThenAdd);
+        resetThenAdd.setSelected(true);
         resetThenAdd.setText("No");
         resetThenAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,7 +350,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         learnFromPanel.add(learnFromLabel, gridBagConstraints);
 
         learnFromGroup.add(thisChorusOption);
-        thisChorusOption.setSelected(true);
         thisChorusOption.setText("This Chorus");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -358,6 +357,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         learnFromPanel.add(thisChorusOption, gridBagConstraints);
 
         learnFromGroup.add(allChorusesOption);
+        allChorusesOption.setSelected(true);
         allChorusesOption.setText("All Choruses");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -551,7 +551,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         rectifyPanel.add(chordBox, gridBagConstraints);
 
-        colorBox.setSelected(true);
         colorBox.setText("Color");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;

@@ -14259,6 +14259,27 @@ public void closeWindow()
       {
         midiImportFrame.dispose();
       }
+    
+    //dispose some windows that weren't being disposed
+//    if(stepKeyboard != null){
+//        stepKeyboard.dispose();
+//    }
+    
+    if(lickgenFrame != null){
+        lickgenFrame.dispose();
+    }
+    
+    if(intervalLearningFrame != null){
+        intervalLearningFrame.dispose();
+    }
+    
+    if(transformFrame != null){
+        transformFrame.dispose();
+    }
+    
+    if(styleEditor != null){
+        styleEditor.dispose();
+    }
 
     WindowRegistry.unregisterWindow(this);
   }
