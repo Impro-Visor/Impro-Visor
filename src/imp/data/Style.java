@@ -661,7 +661,8 @@ public class Style
         style.handyMan.getSettings(av);
         
         style.vgen = new VoicingGenerator();
-        style.vgen.getSettings(style.handyMan);
+        style.vgen.getVoicingSettings(av);
+        style.vgen.getHandSettings(style.handyMan);
         }
     
      return style;

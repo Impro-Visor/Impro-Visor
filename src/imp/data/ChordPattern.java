@@ -22,8 +22,6 @@ package imp.data;
 
 import imp.util.ErrorLog;
 import imp.voicing.HandManager;
-import imp.ImproVisor;
-import imp.voicing.AutomaticVoicingSettings;
 import imp.voicing.VoicingGenerator;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -87,7 +85,7 @@ private static final String VOLUME_STRING = ruleTypes[VOLUME];
 /**
  * array containing ChordPattern keywords
  */
-private static String keyword[] =
+private static final String keyword[] =
   {
   "rules", "weight", "push", "name", "use"
   };
@@ -805,38 +803,19 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
     
     /*Init Dan's Classes*/
     if(style.hasCustomVoicing()){
-        AutomaticVoicingSettings avs= ImproVisor.avs;
-        VoicingGenerator vgen=new VoicingGenerator();
-        HandManager handyMan=new HandManager();
+        //AutomaticVoicingSettings avs= ImproVisor.avs;
+        //VoicingGenerator vgen=new VoicingGenerator();
+        //HandManager handyMan=new HandManager();
+        VoicingGenerator vgen = style.getVoicingGenerator();
+        HandManager handyMan = style.getHandManager();
         //avs.setLeftHandLowerLimit(style.getChordLow().getMIDI());
         //avs.setRightHandUpperLimit(style.getChordHigh().getMIDI());
-        handyMan.setLeftHandLowerLimit(avs.getLeftHandLowerLimit());
-        handyMan.setLeftHandUpperLimit(avs.getLeftHandUpperLimit());
-        handyMan.setLeftHandSpread(avs.getLeftHandSpread());
-        handyMan.setRightHandLowerLimit(avs.getRightHandLowerLimit());
-        handyMan.setRightHandUpperLimit(avs.getRightHandUpperLimit());
-        handyMan.setRightHandSpread(avs.getRightHandSpread());
-        handyMan.setLeftHandMinNotes(avs.getLeftHandMinNotes());
-        handyMan.setLeftHandMaxNotes(avs.getLeftHandMaxNotes());
-        handyMan.setRightHandMinNotes(avs.getRightHandMinNotes());
-        handyMan.setRightHandMaxNotes(avs.getRightHandMaxNotes());
-        handyMan.setPreferredMotion(avs.getPreferredMotion());
-        handyMan.setPreferredMotionRange(avs.getPreferredMotionRange());
-        handyMan.resetHands();
-        vgen.setFullStepAwayMultiplier(avs.getFullStepAwayMultiplier());
-        vgen.setHalfStepAwayMultiplier(avs.getHalfStepAwayMultiplier());
-        vgen.setMaxPriority(avs.getMaxPriority());
-        vgen.setLeftColorPriority(avs.getLeftColorPriority());
-        vgen.setRightColorPriority(avs.getRightColorPriority());
-        vgen.setPreviousVoicingMultiplier(avs.getPreviousVoicingMultiplier());
-        vgen.setRepeatMultiplier(avs.getRepeatMultiplier());
-        vgen.setHalfStepReducer(avs.getHalfStepReducer());
-        vgen.setFullStepReducer(avs.getFullStepReducer());
-        vgen.setInvertM9(avs.getInvertM9());
-        vgen.setVoiceAll(avs.getVoiceAll());
-        vgen.setRootless(avs.getRootless());
-        vgen.setMinInterval(avs.getMinInterval());
         
+        //handyMan.getSettings(avs);
+        //handyMan.resetHands();
+      
+        //vgen.getVoicingSettings(avs);
+        vgen.getHandSettings(handyMan);
 
         /*get values from the user*/
 
@@ -846,7 +825,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         ArrayList<int[]>progressionVoicings=new ArrayList<int[]>();
         ArrayList<Integer> bassList=new ArrayList<Integer>();
 
-        System.out.println("---------");
+        System.out.println("----------");
         System.out.println("chord: "+chord.toString());    //trace
         Chord chord1 = new Chord(chord.getName());
         Polylist spelling;                             //create voicing variable for first chord
@@ -871,13 +850,13 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         System.out.println();
         System.out.println("New voicing:");
         //settings
-        handyMan.repositionHands();
-        vgen.setLowerLeftBound(handyMan.getLeftHandLowestNote());
-        vgen.setUpperLeftBound(handyMan.getLeftHandLowestNote()+handyMan.getLeftHandSpread());
-        vgen.setLowerRightBound(handyMan.getRightHandLowestNote());
-        vgen.setUpperRightBound(handyMan.getRightHandLowestNote()+handyMan.getRightHandSpread());
-        vgen.setNumNotesLeft(handyMan.getNumLeftNotes());
-        vgen.setNumNotesRight(handyMan.getNumRightNotes());
+        //handyMan.repositionHands();
+//        vgen.setLowerLeftBound(handyMan.getLeftHandLowestNote());
+//        vgen.setUpperLeftBound(handyMan.getLeftHandLowestNote()+handyMan.getLeftHandSpread());
+//        vgen.setLowerRightBound(handyMan.getRightHandLowestNote());
+//        vgen.setUpperRightBound(handyMan.getRightHandLowestNote()+handyMan.getRightHandSpread());
+//        vgen.setNumNotesLeft(handyMan.getNumLeftNotes());
+//        vgen.setNumNotesRight(handyMan.getNumRightNotes());
         vgen.setColor(color);
         vgen.setPriority(priority);
         vgen.setRoot(chord1.getRootSemitones());

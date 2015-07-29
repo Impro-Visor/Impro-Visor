@@ -45,7 +45,24 @@ public class VoicingGenerator {
         this.invertM9=invertM9;
     }
         
-    public void getSettings(HandManager hm)
+    public void getVoicingSettings(AutomaticVoicingSettings avs)
+    {
+        setFullStepAwayMultiplier(avs.getFullStepAwayMultiplier());
+        setHalfStepAwayMultiplier(avs.getHalfStepAwayMultiplier());
+        setMaxPriority(avs.getMaxPriority());
+        setLeftColorPriority(avs.getLeftColorPriority());
+        setRightColorPriority(avs.getRightColorPriority());
+        setPreviousVoicingMultiplier(avs.getPreviousVoicingMultiplier());
+        setRepeatMultiplier(avs.getRepeatMultiplier());
+        setHalfStepReducer(avs.getHalfStepReducer());
+        setFullStepReducer(avs.getFullStepReducer());
+        setInvertM9(avs.getInvertM9());
+        setVoiceAll(avs.getVoiceAll());
+        setRootless(avs.getRootless());
+        setMinInterval(avs.getMinInterval());
+    }
+    
+    public void getHandSettings(HandManager hm)
     {
         setLowerLeftBound(hm.getLeftHandLowestNote());
         setUpperLeftBound(hm.getLeftHandLowestNote() + hm.getLeftHandSpread());
