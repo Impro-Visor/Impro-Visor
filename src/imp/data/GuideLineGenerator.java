@@ -112,6 +112,11 @@ public class GuideLineGenerator implements Constants {
     private boolean contourBased;
     int contourIndex;
     
+    //Constants used for fractally dividing a line
+    private static final int TUPLE = 2;
+    private static final int TRIPLET = 3;
+    private static final int QUINTUPLET = 5;
+    
     //a score for each of the 6 possbile distances (same note through tritone)
     private static final int distanceScores[] = 
     //  same note   half step   whole step  minor 3rd   major 3rd   tritone
@@ -1093,28 +1098,6 @@ public class GuideLineGenerator implements Constants {
         return getMod(pitch1) == getMod(pitch2);
     }
     
-/**
-     * Returns the number of times a line can be divided based on the max note
-     * duration
-     * @param rhythmValue
-     * @return 
-     */
-    private int getDivisionNumber(int rhythmValue)
-    {
-        switch(rhythmValue){
-            case WHOLE:
-                return 4;
-            case HALF:
-                return 3;
-            case QUARTER:
-                return 2;
-            case EIGHTH:
-                return 1;
-            default:
-                return 3;
-        }
-    }
-    
     /**
      * Returns a double that can be used to determine probability of events
      * happening
@@ -1123,6 +1106,10 @@ public class GuideLineGenerator implements Constants {
      */
     private double getProbability(int rhythmValue)
     {
+        // These are randomly chosen probabilities, there could be better options
+        
+        // The double is used as a threshold for splitting a note. If a random 
+        // double is less than the returned value, a note will not be divided.
         switch(rhythmValue){
             case WHOLE:
                 return 0.15;
@@ -1139,8 +1126,20 @@ public class GuideLineGenerator implements Constants {
         }
     }
     
+    /**
+     * Returns a double that can be used to determine probability of 
+     * transforming a note into a rest
+     * @param rhythmValue
+     * @return 
+     */
     private double getRestProbability(int rhythmValue)
     {
+        // Again, these are randomly chosen probabilites and there are 
+        // probably better options
+        
+        // These values are used to determine whether a note will turn into 
+        // a rest or not. If a random double is less than the return value, a 
+        // note will turn into a rest.
         switch(rhythmValue){
             case WHOLE:
                 return 0.05;
@@ -1153,26 +1152,18 @@ public class GuideLineGenerator implements Constants {
             case SIXTEENTH:
                 return 0.05;
             default:
-                return 0;
+                return 0.05;
         }
     }
     
     /**
      * Recursively divides a guide tone line to create a fractal melody
      * @param gtl
-     * @param chords
-     * @param rhythmValue
      * @return MelodyPart that is the new melody
      */
-    public MelodyPart fractalImprovise(MelodyPart gtl, ChordPart chords, int rhythmValue)
+    public MelodyPart fractalImprovise(MelodyPart gtl)
     {
-        //int divNum = getDivisionNumber(rhythmValue);
-        //for(int i = divNum; i > divNum-1 ; --i)
-        //{
-            gtl = splitSolo(gtl);
-        //}
-        
-        return gtl;
+        return splitSolo(gtl);
     }
     
     /**
@@ -1186,7 +1177,10 @@ public class GuideLineGenerator implements Constants {
     private MelodyPart splitSolo(MelodyPart solo)
     {
         MelodyPart newSolo = new MelodyPart();
+        Note prevNote = Note.makeRest(WHOLE);
         
+        // iterate through the existing melody part and add notes that are
+        // either the same or divided to the new melody part
         int slot = 0;
         while(slot < solo.getSize()){
             Note first = solo.getCurrentNote(slot);
@@ -1199,10 +1193,12 @@ public class GuideLineGenerator implements Constants {
             
             ArrayList<Note> newNotes = splitNotes(first,
                                                   second,
+                                                  prevNote,
                                                   rhythmValue);
             for(Note note : newNotes){
                 newSolo.addNote(note);
             }
+            prevNote = first;
             slot = nextIndex;
         }
         return newSolo;
@@ -1217,40 +1213,75 @@ public class GuideLineGenerator implements Constants {
      */
     private ArrayList<Note> splitNotes(Note firstNote, 
                                        Note secondNote,
+                                       Note prevNote,
                                        int rhythmValue)
     {
         ArrayList<Note> newNotes = new ArrayList<Note>();
+        
+        if(firstNote.isRest()) {        
+            newNotes.add(firstNote);
+        }  else if(firstNote.getRhythmValue() <= THIRTYSECOND) {            
+            newNotes.add(firstNote);
+        } else {
+            newNotes = determineNewNotes(firstNote,
+                                         secondNote,
+                                         prevNote,
+                                         rhythmValue);
+        }
+        return newNotes;
+    }
+    
+    /**
+     * Used by split notes to determine how and when it should split a note
+     * @param firstNote
+     * @param secondNote
+     * @param prevNote
+     * @param rhythmValue
+     * @return 
+     */
+    private ArrayList<Note> determineNewNotes(Note firstNote, 
+                                          Note secondNote,
+                                          Note prevNote,
+                                          int rhythmValue)
+    {
+        ArrayList<Note> newNotes = new ArrayList<Note>();
         Random rand = new Random();
+        int subdivs = TUPLE;
 
         double randDouble = rand.nextDouble();
         double divDouble = rand.nextDouble();
         double probability = getProbability(rhythmValue);
         
-        if(firstNote.isRest()) {        
-                    newNotes.add(firstNote);
-            //System.out.println("Rest: " + firstNote.getPitch());
-        }  else if(firstNote.getRhythmValue() <= THIRTYSECOND) {            
-            newNotes.add(firstNote);
-            //System.out.println("Too short: " + firstNote.getPitch());
-        } else if(isTriplet(firstNote)) {
-            newNotes.add(noSplit(firstNote, rhythmValue));
-            //System.out.println("Triplet: " + newNotes);
-            } else {
-            int subdivs = 2;
-            if(divDouble < 0.2){
-                subdivs = 3;
-            } 
-
-            if(randDouble < probability){                
-                newNotes.add(noSplit(firstNote, rhythmValue));
-                //System.out.println("No split: " + newNotes);
+        if(isTriplet(firstNote)) {
+            if(randDouble < probability){
+                newNotes.add(noSplit(firstNote, prevNote, rhythmValue));
             } else {
                 newNotes = getDividedNotes(firstNote,
                                            secondNote,
                                            subdivs);
-                //System.out.println("Split: " + newNotes);
-                }
             }
+        } else if(isDotted(firstNote)) {
+            subdivs = TRIPLET;
+            if(randDouble < probability){
+                newNotes.add(noSplit(firstNote, prevNote, rhythmValue));
+            } else {
+                newNotes = getDividedNotes(firstNote,
+                                           secondNote,
+                                           subdivs);
+            }
+        } else {
+            if(divDouble < 0.2){
+                subdivs = TRIPLET;
+            } 
+
+            if(randDouble < probability){                
+                newNotes.add(noSplit(firstNote, prevNote, rhythmValue));
+            } else {
+                newNotes = getDividedNotes(firstNote,
+                                           secondNote,
+                                           subdivs);
+            }
+        }
         return newNotes;
     }
     
@@ -1261,11 +1292,14 @@ public class GuideLineGenerator implements Constants {
      * @param note
      * @return Note/rest to be added to the melody
      */
-    private Note noSplit(Note note, int rhythmValue)
+    private Note noSplit(Note note, Note prevNote, int rhythmValue)
     {
         Random rand = new Random();
         double randDouble = rand.nextDouble();
+            
         double probability = getRestProbability(rhythmValue);
+        if(prevNote.isRest())
+            probability = getRestProbability(WHOLE);
         
         if(randDouble < probability){
             return Note.makeRest(note.getRhythmValue());
@@ -1273,34 +1307,7 @@ public class GuideLineGenerator implements Constants {
         else
             return note;
     }
-    
-    /**
-     * Used by splitNtoes to split notes that are close together
-     * @param firstNote
-     * @param secondNote
-     * @return 
-     */
-    private ArrayList<Note> getCloseNotes(Note firstNote,
-                                          Note secondNote)
-    {
-        ArrayList<Note> newNotes = new ArrayList<Note>();
-        int firstPitch = firstNote.getPitch();
-        int secondPitch = secondNote.getPitch();
-        int rhythmValue = firstNote.getRhythmValue();
-
-        rhythmValue = rhythmValue / 2;
-        int diff = firstPitch - secondPitch;
-        if(firstPitch == secondPitch){
-            diff = 2; //move the note a whole step away
-        }
-        Note newFirstNote = new Note(firstPitch, rhythmValue);
-        Note newSecondNote = new Note(firstPitch + diff, rhythmValue);
-        newNotes.add(newFirstNote);
-        newNotes.add(newSecondNote);
-
         
-        return newNotes;
-    }
     /**
      * Used by splitNotes, if a note is going to be split, it divides it into
      * either two or three new notes
@@ -1325,6 +1332,41 @@ public class GuideLineGenerator implements Constants {
     }
     
     /**
+     * Used by splitNtoes to split notes that are close together
+     * @param firstNote
+     * @param secondNote
+     * @return 
+     */
+    private ArrayList<Note> getCloseNotes(Note firstNote,
+                                          Note secondNote)
+    {
+        ArrayList<Note> newNotes = new ArrayList<Note>();
+        int firstPitch = firstNote.getPitch();
+        int secondPitch = secondNote.getPitch();
+        int rhythmValue = firstNote.getRhythmValue();
+
+        rhythmValue = rhythmValue / 2;
+        int diff = firstPitch - secondPitch;
+        
+        if(firstPitch == secondPitch){
+            Random rand = new Random();
+            Boolean ranBool = rand.nextBoolean();
+            
+            if(ranBool)
+                diff = 2; //move the note a whole step up
+            else
+                diff = -2; //move the note a whole step down
+        }
+        Note newFirstNote = new Note(firstPitch, rhythmValue);
+        Note newSecondNote = new Note(firstPitch + diff, rhythmValue);
+        newNotes.add(newFirstNote);
+        newNotes.add(newSecondNote);
+
+        
+        return newNotes;
+    }
+    
+    /**
      * Used by getDividedNotes to split one note into two new notes half the 
      * length of the original
      * @param firstNote
@@ -1342,13 +1384,8 @@ public class GuideLineGenerator implements Constants {
         
         int avgPitch = (firstPitch + secondPitch) / 2;
         
-        if((avgPitch == firstPitch || avgPitch == secondPitch) && rhythmValue <= THIRTYSECOND){
-            notes.add(firstNote);
-        }
-        else{
-            notes.add(new Note(firstPitch, rhythmValue/2));
-            notes.add(new Note(avgPitch, rhythmValue/2));
-        }
+        notes.add(new Note(firstPitch, rhythmValue/2));
+        notes.add(new Note(avgPitch, rhythmValue/2));
         
         return notes;
     }
@@ -1379,6 +1416,12 @@ public class GuideLineGenerator implements Constants {
         return notes;
     }
     
+    /**
+     * Returns a boolean of whether or not a note has a length equal to a
+     * triplet
+     * @param note
+     * @return 
+     */
     private boolean isTriplet(Note note)
     {
         int noteLength = note.getRhythmValue();
@@ -1388,5 +1431,21 @@ public class GuideLineGenerator implements Constants {
                 noteLength == EIGHTH_TRIPLET ||
                 noteLength == SIXTEENTH_TRIPLET ||
                 noteLength == THIRTYSECOND_TRIPLET);
+    }
+    
+    /**
+     * Returns a boolean of whether or not a note has a note that is a 
+     * dotted length
+     * @param note
+     * @return 
+     */
+    private boolean isDotted(Note note)
+    {
+        int noteLength = note.getRhythmValue();
+        
+        return (noteLength == DOTTED_HALF ||
+                noteLength == DOTTED_QUARTER ||
+                noteLength == DOTTED_EIGHTH ||
+                noteLength == DOTTED_SIXTEENTH);
     }
 }

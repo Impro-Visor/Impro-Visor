@@ -887,10 +887,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     private void divideLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideLineActionPerformed
         
         GuideLineGenerator line = new GuideLineGenerator();
-        int rhythmValue = buttonToDuration(getSelected(maxDurationButtons));
-        MelodyPart fractalSolo = line.fractalImprovise(notate.getCurrentMelodyPart(), 
-                                                       notate.getChordProg(), 
-                                                       rhythmValue);
+        MelodyPart fractalSolo = line.fractalImprovise(notate.getCurrentMelodyPart());
         notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
                                                     0,
                                                     fractalSolo.getSize() - 1,
@@ -900,7 +897,12 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
                                                     true,
                                                     true,
                                                     true));
-        notate.addChorus(fractalSolo);      
+        notate.addChorus(fractalSolo); 
+        notate.playCurrentSelection(true, 
+                                    0, 
+                                    true, 
+                                    "Playing divided guide tone line");
+        updatePlayButtons();
     }//GEN-LAST:event_divideLineActionPerformed
 
     /**
