@@ -39,6 +39,7 @@ public class ResponseGenerator {
     private int[] metre;
     private int stop;
     private int nextSection;
+    private int tradeLength;
     private ChordPart soloChords;
     private ChordPart responseChords;
     private Notate notate;
@@ -54,14 +55,14 @@ public class ResponseGenerator {
         notate.addChorus(grammarSolo);
     }
     
-    public ResponseGenerator(Notate notate, int [] metre){
+    public ResponseGenerator(Notate notate, int [] metre, int tradeLength){
         this.notate = notate;
         this.lickGen = notate.getLickGen();
         this.beatFinder = new BeatFinder(metre);
         this.flattener = new TransformLearning();
         this.metre = metre;
-        Polylist rhythm = lickGen.generateRhythmFromGrammar(0, notate.getScoreLength());
-        grammarSolo = notate.generateLick(rhythm, 0, notate.getScoreLength());
+        this.tradeLength = tradeLength;
+        grammarSolo = notate.genSolo(0, notate.getScoreLength());
         phrases = new PhraseTable(notate);
     }
     
@@ -140,6 +141,12 @@ public class ResponseGenerator {
                 //original
                 break;
         }
+    }
+    
+    public MelodyPart genSolo(){
+        MelodyPart mp = notate.genSolo(nextSection, nextSection + tradeLength);
+        System.out.println("MELODY " + mp);
+        return mp;
     }
     
     public MelodyPart extractFromGrammarSolo(int startSlot, int slotLength){
@@ -560,7 +567,7 @@ public class ResponseGenerator {
 //            MelodyGenerator mgen = new MelodyGenerator(probabilities, response, responseChords, range);
 //            response = mgen.melody();
         } else if (tradeMode.equals("Zach 1 - Gen Solo")){
-            response = grammarSolo.extract(nextSection, nextSection + stop, false, true);
+            response = genSolo();
         } else if (tradeMode.equals("Zach 2 - User Melody")){
             response = userMelody();
         } else if (tradeMode.equals("Zach 3 - User Rhythm")){

@@ -94,7 +94,8 @@ public class TradingWindow
     private ArrayList<MelodyPart> melodies = new ArrayList<MelodyPart>();
     private LinkedList<MelodyPart> hotswapper = new LinkedList<MelodyPart>();
     private Score tradeScore;
-    private Stack<Integer> triggers = new Stack();
+    private LinkedList<Integer> triggers = new LinkedList();
+    private int triggerIndex;
     private ResponseGenerator responseGenerator;
 
     private Integer scoreLength;
@@ -105,6 +106,7 @@ public class TradingWindow
     private Integer numberOfTurns;
     private Integer measures;
     private Integer nextSection;
+    private long lastPosition;
     private int[] metre;
     private ChordPart soloChords;
     private ChordPart responseChords;
@@ -115,12 +117,14 @@ public class TradingWindow
     private boolean isUserInputError;
     private boolean firstPlay;
     private boolean isUserLeading;
+    private boolean isLoop;
+    //TODO ADD COMMENT:
+    private boolean loopLock;
     private TradePhase phase;
     private String tradeMode;
     private Transform transform;
     private PlayScoreCommand playCommand;
     private static MidiManager midiManager;
-
     //magic values
     private int endLimitIndex = -1;
     private boolean isSwing = false;
@@ -163,6 +167,7 @@ public class TradingWindow
         midiSynth = new MidiSynth(midiManager);
         midiSynth.setMasterVolume(volumeSlider.getValue());
         notate.setEnabled(false);
+        setLoop();
     }
 
     /**
@@ -193,16 +198,25 @@ public class TradingWindow
         long currentPosition = notate.getSlotInPlayback();
         //System.out.println(currentPosition);
 
-        if (triggers.isEmpty() || currentPosition == scoreLength) {
-            stopTrading();
-        } else {
-            long nextTrig = (long) triggers.peek();
-            if (nextTrig <= currentPosition) {
-                //System.out.println("long: " + nextTrig);
-                triggers.pop();
+        //TODO : EXPLAIN THIS
+        if (loopLock) {
+            if (currentPosition < lastPosition) {
+                loopLock = false;
+            }
+            lastPosition = currentPosition;
+        }
+
+            if ((triggers.isEmpty() || currentPosition == scoreLength) && !isLoop) {
+                stopTrading();
+            } else {
+            long nextTrig = (long) triggers.get(triggerIndex);
+            if (nextTrig <= currentPosition && !loopLock) {
+                //System.out.println("Increment to trig: " + nextTrig);
+                triggerIndex = nextTriggerIndex();
+                //System.out.println("Trigs: " + triggers);
                 switchTurn();
             }
-            //else System.out.println(triggers);
+            
         }
     }
 
@@ -225,6 +239,7 @@ public class TradingWindow
                 break;
 
         }
+        
     }
 
     public void userTurn() {
@@ -233,7 +248,8 @@ public class TradingWindow
         if (triggers.isEmpty()) {
             nextSection = adjustedLength;
         } else {
-            nextSection = triggers.peek() + slotsForProcessing;
+            nextSection = (triggers.get(triggerIndex) + slotsForProcessing) % adjustedLength;
+            
         }
         //System.out.println("Chords extracted from chord prog from : " + nextSection + " to " + (nextSection + slotsPerTurn - one));
         response = new MelodyPart(slotsPerTurn);
@@ -260,7 +276,8 @@ public class TradingWindow
         tradeScore.deleteChords();
 
         Long delayCopy = new Long(slotDelay);
-        response = response.extract(delayCopy.intValue(), slotsPerTurn - one, true, true);
+        response = response.extract(delayCopy.intValue(), slotsPerTurn - 3, true, true);
+        //System.out.println(response);
         tradeScore.addPart(response);
 
         playCommand = new PlayScoreCommand(
@@ -302,20 +319,30 @@ public class TradingWindow
         //File file = new File(dir + "/transforms/"+musician+".transform");
         transform = new Transform(file);
 
+        lastPosition = 0;
+        loopLock = false;
         setIsUserLeading(userFirstButton.isSelected());
-        startTradingButton.setText("StopTrading");
+        startTradingButton.setText("Stop Trading");
         isTrading = true;
         midiSynth = new MidiSynth(midiManager);
         scoreLength = notate.getScoreLength();
         slotsPerMeasure = notate.getScore().getSlotsPerMeasure();
         metre = notate.getScore().getMetre();
-        responseGenerator = new ResponseGenerator(notate, metre);
         slotsPerTurn = measures * slotsPerMeasure;
+        responseGenerator = new ResponseGenerator(notate, metre, slotsPerTurn);
         adjustedLength = scoreLength - (scoreLength % slotsPerTurn);
+        if (!(adjustedLength == scoreLength)) {
+            while (adjustedLength < scoreLength) {
+                adjustedLength = adjustedLength + slotsPerTurn;
+            }
+            notate.getScore().setLength(adjustedLength);
+            scoreLength = notate.getScoreLength();
+        }
         numberOfTurns = adjustedLength / slotsPerTurn;
         notate.getCurrentStave().setSelection(0, scoreLength);
         notate.pasteMelody(new MelodyPart(scoreLength));
         notate.getCurrentStave().unselectAll();
+        triggerIndex = 0;
         populateTriggers();
         initDelay();
 
@@ -438,7 +465,15 @@ public class TradingWindow
                 computerTurnNext = false;
             }
         }
-        for (int trigSlot = adjustedLength; trigSlot >= zero; trigSlot = trigSlot - slotsPerTurn) {
+        int length = adjustedLength;
+        if (isLoop) {
+            if ((numberOfTurns % 2) == 1) {
+                //do this to deal with scores that have odd trading parts
+                length = adjustedLength * 2;
+                computerTurnNext = !computerTurnNext;
+            }
+        }
+        for (int trigSlot = length; trigSlot >= zero; trigSlot = trigSlot - slotsPerTurn) {
             triggers.push(trigSlot);
             if (computerTurnNext) {
                 computerTurnNext = false;
@@ -448,6 +483,14 @@ public class TradingWindow
             } else {
                 computerTurnNext = true;
             }
+        }
+        if(isLoop){
+            triggers.removeLast();
+            for (int i = 0; i < triggers.size(); i++){
+                int trig = triggers.get(i) % adjustedLength;
+                triggers.set(i, trig);
+            }
+            //System.out.println(triggers);
         }
         //System.out.println(triggers);
     }
@@ -477,8 +520,8 @@ public class TradingWindow
         tradeMode = (String) tradeModeSelector.getSelectedItem();
         responseGenerator.newResponse(response, soloChords, responseChords, nextSection);
         response = responseGenerator.response(transform, tradeMode);
-        notate.getCurrentMelodyPart().altPasteOver(response, triggers.peek());
-        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn), triggers.peek() + slotsPerTurn);
+        notate.getCurrentMelodyPart().altPasteOver(response, triggers.get(triggerIndex));
+        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn), triggers.get(triggerIndex) + slotsPerTurn);
 //        switch (tradeMode) {
 //            case REPEAT_AND_RECTIFY:
 //                repeatAndRectify();
@@ -486,6 +529,18 @@ public class TradingWindow
 //            default:
 //                break;
 //        }
+    }
+    
+    private int nextTriggerIndex(){
+        int nextIndex = triggerIndex + 1;
+        if(nextIndex >= triggers.size()){
+            nextIndex = 0;
+        }
+        if(triggers.get(nextIndex) == 0){
+            loopLock = true;
+            //System.out.println("Setting lock on");
+        }
+        return nextIndex;
     }
 
 //    private void changeTradeMode(String newMode) {
@@ -538,6 +593,11 @@ public class TradingWindow
         Integer newVol = volumeSlider.getValue();
         volume.setText("Volume of Response: " + newVol.toString());
     }
+    
+    public void setLoop(){
+        this.isLoop = loopToggle.isSelected();
+        notate.setLoop(isLoop);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -567,6 +627,7 @@ public class TradingWindow
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        loopToggle = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -751,6 +812,19 @@ public class TradingWindow
         gridBagConstraints.ipady = 18;
         getContentPane().add(filler1, gridBagConstraints);
 
+        loopToggle.setText("Loop");
+        loopToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loopToggleActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 1);
+        getContentPane().add(loopToggle, gridBagConstraints);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -832,6 +906,10 @@ public class TradingWindow
         setVolume();
     }//GEN-LAST:event_volumeSliderStateChanged
 
+    private void loopToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToggleActionPerformed
+        setLoop();
+    }//GEN-LAST:event_loopToggleActionPerformed
+
     private double tryDouble(String number) {
         double newNumber;
         try {
@@ -902,6 +980,7 @@ public class TradingWindow
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.ButtonGroup leadingSelector;
+    private javax.swing.JCheckBox loopToggle;
     private javax.swing.JComboBox musicianChooser;
     private javax.swing.JLabel musicianLabel;
     private javax.swing.JButton startTradingButton;

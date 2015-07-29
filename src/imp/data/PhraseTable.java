@@ -42,8 +42,7 @@ public class PhraseTable {
         phrases = new HashMap<Integer, LinkedList<MelodyPart>>();
         this.notate = notate;
         this.lickGen = notate.getLickGen();
-        Polylist intervalRhythm = lickGen.generateRhythmFromGrammar(0, notate.getScoreLength() * intervalSoloLength);
-        MelodyPart intervalSolo = notate.generateLick(intervalRhythm, 0, notate.getScoreLength() * intervalSoloLength);
+        MelodyPart intervalSolo = notate.genSolo(0, notate.getScoreLength() * intervalSoloLength);
         intervals = new IntervalLearner();
         intervals.learnFrom(intervalSolo);
     }

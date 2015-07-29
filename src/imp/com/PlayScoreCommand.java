@@ -219,6 +219,15 @@ public final void preExecute()
     startTime = startTime == 0 ? 0 : startTime + offset;
 
     endLimitIndex = endLimitIndex == ENDSCORE ? ENDSCORE : endLimitIndex + offset; // unsure about this!
+    try
+      {
+        ms.prePlay(score, startTime, loopCount, transposition, useDrums,
+                endLimitIndex, offset);
+      }
+    catch( Exception e )
+      {
+        //e.printStackTrace();
+      }
   }
 
 public final void preExecute(Style style)
@@ -277,14 +286,22 @@ public final void preExecute(Style style)
     startTime = startTime == 0 ? 0 : startTime + offset;
 
     endLimitIndex = endLimitIndex == ENDSCORE ? ENDSCORE : endLimitIndex + offset; // unsure about this!
+    try
+      {
+        ms.prePlay(score, startTime, loopCount, transposition, useDrums,
+                endLimitIndex, offset);
+      }
+    catch( Exception e )
+      {
+        //e.printStackTrace();
+      }
   }
 
 public void execute()
   {
     try
       {
-        ms.play(score, startTime, loopCount, transposition, useDrums,
-                endLimitIndex, offset);
+        ms.actualPlay(transposition);
       }
     catch( Exception e )
       {
