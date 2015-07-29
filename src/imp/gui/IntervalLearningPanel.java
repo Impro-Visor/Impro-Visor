@@ -684,7 +684,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
      * generateSolo
      * Generate a solo in a new chorus based on transition probabilities
      */
-    private void generateSolo(){
+    public void generateSolo(){
         if(Chorus1.isSelected()){
             Chorus1Solo();
         }else if(Eighth.isSelected()){

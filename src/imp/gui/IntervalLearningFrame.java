@@ -24,8 +24,6 @@
  * Created on July 27, 2015, 4:57:53 PM
  */
 package imp.gui;
-
-import imp.com.*;
 import imp.data.*;
 import imp.lickgen.LickGen;
 import java.awt.*;
@@ -44,76 +42,20 @@ public class IntervalLearningFrame
         extends javax.swing.JFrame
         implements imp.Constants {
 
-    private int themeLength = 8;
-    private double themeProb = 0.4;
-    private double transposeProb = 0.5;
-    private double invertProb = 0.1;
-    private double reverseProb = 0.1;
+    
     private Notate notate;
-    private ArrayList<String> melodyData = new ArrayList<String>();
-    private int minPitch = 60;
-    private int maxPitch = 82;
-    private int minInterval = 0;
-    private int maxInterval = 6;
-    private int minDuration = 8;
-    private int maxDuration = 8;
-    private double totalBeats = 8;
-    private double restProb = 0.1;
-    private double leapProb = 0.2;
-    private double chordToneWeight = 0.7;
-    private double scaleToneWeight = 0.1;
-    private double colorToneWeight = 0.05;
-    private double chordToneDecayRate = 0.1;
-    private boolean avoidRepeats = true;
-    private boolean useGrammar = true;
-    private boolean autoFill = true;
-    private int recurrentIteration = 1;
-    private LickGen lickgen;
-    private CommandManager cm;
-
-    /**
-     * Number of beats per measure in the piece
-     */
-    private int beatsPerBar;
-    /**
-     * Total number of beats to represent in the solo curve graph
-     */
-    private int attrTotal;
-    /**
-     * Granularity at which to look at the bars, i.e. how many beats per
-     * division
-     */
-    private int attrGranularity;
-    /**
- 
- 
-    /**
-     * ArrayList of JTextField arrays, used to display probabilities used in
-     * lick generation
-     */
-    private ArrayList<JTextField[]> lickPrefs = new ArrayList<JTextField[]>();
-    /**
-     * this will be set to true during extraction of all measures in a corpus
-     */
-    private boolean allMeasures = false;
-
-
+    
     private IntervalLearningPanel intervalLearningTab;
     /**
      * Creates new LickgenFrame
      */
     public IntervalLearningFrame(Notate notate) {
         this.notate = notate;
-
-        beatsPerBar = notate.getBeatsPerMeasure();
-        attrTotal = 288; //max size of a selection (one chorus)
-        attrGranularity = 1; //default
-
         initComponents();
 
         intervalLearningTab = new IntervalLearningPanel(notate);
         intervalLearningPanelHolder.add(intervalLearningTab, new GridLayout(1, 1, 1, 1));
-        }
+    }
 
 
     
@@ -255,37 +197,6 @@ public class IntervalLearningFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    /**
-     * Interface to fillMelody in LickGen
-     * @param beatValue
-     * @param rhythmString
-     * @param chordProg
-     * @param start
-     * @return 
-     */
-    public MelodyPart fillMelody(int beatValue,
-                                 Polylist rhythmString,
-                                 ChordPart chordProg,
-                                 int start) 
-      {
-        //debug System.out.println("LickgenFrame: fillMelody");
-
-        MelodyPart result = lickgen.fillMelody(minPitch,
-                maxPitch,
-                minInterval,
-                maxInterval,
-                beatValue,
-                leapProb,
-                rhythmString,
-                chordProg,
-                start,
-                avoidRepeats);
-
-        //debug System.out.println("fillMelody returns");
-        return result;
-    }
-
     public void stopPlaying() {
         notate.stopPlaying();
     }
@@ -359,6 +270,10 @@ public class IntervalLearningFrame
         }
     }//GEN-LAST:event_saveFileActionPerformed
 
+    public void intervalImprovise(){
+        intervalLearningTab.generateSolo();
+    }
+    
 /**
  * Fill an abstract or relative-pitch melody from text, such as acquired from
  * either abstract melody or relative pitch melody field.
@@ -442,17 +357,6 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
         return saveImp;
     }
 
-    // Return min duration text field
-    public int getMinDuration() {
-        return minDuration;
-    }
-
-    // Return max duration text field
-    public int getMaxDuration() {
-        return maxDuration;
-    }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addFromFile;
     private javax.swing.JMenuItem cascadeMI2;
@@ -467,13 +371,5 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
     private javax.swing.JTabbedPane transformPane;
     private javax.swing.JSeparator windowMenuSeparator2;
     // End of variables declaration//GEN-END:variables
-
-
-
-    public void setTotalBeats(double beats) {
-        totalBeats = beats;
-        String b = Integer.toString((int) beats);
-
-    }
 
 }
