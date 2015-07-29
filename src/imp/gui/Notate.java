@@ -17798,17 +17798,18 @@ public void playScore()
 
     improvMelodyIndex = 0;
     if( improvisationOn ){
-        if (themeWeaveRadio.isSelected()){   
-            if (themeWeaver == null){
-                themeWeaver = new ThemeWeaver(lickgen, this, cm);
-            }
-            themeWeaver.generateThemeWovenSolo();
-        }else if(intervalsRadio.isSelected()){
-            intervalLearningFrame.intervalImprovise();
-        }
-        else{
-            improviseContinuously();
-        }
+        improviseContinuously();
+//        if (themeWeaveRadio.isSelected()){   
+//            if (themeWeaver == null){
+//                themeWeaver = new ThemeWeaver(lickgen, this, cm);
+//            }
+//            themeWeaver.generateThemeWovenSolo();
+//        }else if(intervalsRadio.isSelected()){
+//            intervalLearningFrame.intervalImprovise();
+//        }
+//        else{
+//            improviseContinuously();
+//        }
     }
     else{
         establishCountIn();
@@ -21079,6 +21080,10 @@ int instr;
  */
 public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improviseEndSlot)
   {
+   
+      
+
+      
     instr = getCurrentMelodyPart().getInstrument();
     if (ifCycle){
         String temp;
@@ -21154,6 +21159,19 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     final int criticLimit = 999;
     long currTime = System.currentTimeMillis();
     long totalTime = currTime + 20000;
+    
+    if (themeWeaveRadio.isSelected()) {
+          if (themeWeaver == null) {
+              themeWeaver = new ThemeWeaver(lickgen, this, cm);
+          }
+          themeWeaver.generateThemeWovenSolo();
+          return;
+      }
+      
+      if (intervalsRadio.isSelected()) {
+          intervalLearningFrame.intervalImprovise();
+          return;
+      }
 
     // outLines is the same as soloist
     if( useOutlines )
