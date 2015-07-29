@@ -57,7 +57,7 @@ public class MelodyGenerator {
     
     public static Polylist rhythm(Notate notate){
         Grammar gram = new Grammar(notate.getGrammarFileName());
-        return justRhythm(gram.run(0, notate.getScoreLength(), notate, false, notate.getImprovisorTradeFirst(), notate.getTradingQuantum()));
+        return justRhythm(gram.run(0, notate.getScoreLength(), notate, false, false, -1));
     }
 
     private static Polylist justRhythm(Polylist abstractMelody){

@@ -1084,12 +1084,16 @@ private void accumulateProbs(Polylist tones, double categoryProb, double p[])
 
 public Polylist generateRhythmFromGrammar(int startSlot, int slots)
   {
+    //TEMPORARY FIX - never trade. Trading is handled differently now.
     return grammar.run(startSlot, 
                        slots, 
                        notate, 
-                       notate.getWhetherToTrade(),
-                       notate.getImprovisorTradeFirst(),
-                       notate.getTradingQuantum());
+                       //notate.getWhetherToTrade()
+                       false,
+                       //notate.getImprovisorTradeFirst()
+                       false,
+                       //notate.getTradingQuantum()
+                       -1);
 
   }
 
