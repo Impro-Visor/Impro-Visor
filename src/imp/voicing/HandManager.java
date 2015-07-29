@@ -41,6 +41,24 @@ public class HandManager {
     private int rightHandLowestNote;//used for calculating the limits for current chord
     private int preferredMotion;//set positive for moving up when possible, negative for moving down when possible, zero to keep the hands in the same place
     private int preferredMotionRange;//this is the plus/minus for preferred motion
+    
+    public void getSettings(AutomaticVoicingSettings av)
+    {
+        setLeftHandLowerLimit(av.getLeftHandLowerLimit());
+        setLeftHandUpperLimit(av.getLeftHandUpperLimit());
+        setLeftHandSpread(av.getLeftHandSpread());
+        setRightHandLowerLimit(av.getRightHandLowerLimit());
+        setRightHandUpperLimit(av.getRightHandUpperLimit());
+        setRightHandSpread(av.getRightHandSpread());
+        setLeftHandMinNotes(av.getLeftHandMinNotes());
+        setLeftHandMaxNotes(av.getLeftHandMaxNotes());
+        setRightHandMinNotes(av.getRightHandMinNotes());
+        setRightHandMaxNotes(av.getRightHandMaxNotes());
+        setPreferredMotion(av.getPreferredMotion());
+        setPreferredMotionRange(av.getPreferredMotionRange());
+        resetHands();
+    }
+    
     /**
      * randomly generates a number of notes for the LH to play within range
      * @return a number of notes

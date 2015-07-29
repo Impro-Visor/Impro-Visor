@@ -20,11 +20,11 @@
 
 package imp.data;
 
-import imp.voicing.AutomaticVoicingSettings;
+import imp.util.ErrorLog;
 import imp.voicing.HandManager;
 import imp.ImproVisor;
+import imp.voicing.AutomaticVoicingSettings;
 import imp.voicing.VoicingGenerator;
-import imp.util.ErrorLog;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +66,7 @@ private LinkedHashMap<String, Polylist> definedRules =
 /**
  * array containing the types of rules
  */
-private static String ruleTypes[] =
+private static final String ruleTypes[] =
   {
   "X", "R", "V", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"
   };
@@ -796,14 +796,15 @@ public static Polylist findFirstVoicingAndExtension(ChordSymbol chord,
  */
 public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
                                                   Polylist lastChord,
-                                                  Style style, boolean verbose)
+                                                  Style style, 
+                                                  boolean verbose)
   {
     //Form Chord Voicing
     //Start
     //---------------------------------------------------------------------------------------------//
     
     /*Init Dan's Classes*/
-    if(style.getVoicingType().equals("custom")){
+    if(style.hasCustomVoicing()){
         AutomaticVoicingSettings avs= ImproVisor.avs;
         VoicingGenerator vgen=new VoicingGenerator();
         HandManager handyMan=new HandManager();
@@ -848,7 +849,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         System.out.println("---------");
         System.out.println("chord: "+chord.toString());    //trace
         Chord chord1 = new Chord(chord.getName());
-        Polylist spelling = new Polylist();              //create voicing variable for first chord
+        Polylist spelling;                             //create voicing variable for first chord
         spelling = chord1.getSpell();                  //get chord1 voicing; assign to voicing
         System.out.println("spelling: " + spelling.toString());    //trace
         bassList.add(((NoteSymbol)spelling.first()).getMIDI()); //gets a list of bass notes
@@ -894,9 +895,9 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
 
         vgen.setPreviousVoicing(lastVoicing);
         vgen.calculate();
-        lastVoicing=vgen.getChord();
+        lastVoicing = vgen.getChord();
         progressionVoicings.add(lastVoicing);
-        Polylist midiL = new Polylist();
+        Polylist midiL;
 
 
         Integer[] lastVoicingObj=new Integer[lastVoicing.length];
@@ -913,7 +914,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         }
 
         chord.setVoicing(buffer.toPolylist());
-        System.out.println("Voicing: "+buffer.toPolylist().toString());
+        System.out.println("Voicing: " + buffer.toPolylist().toString());
         System.out.println("----------");
         System.out.println();
     }

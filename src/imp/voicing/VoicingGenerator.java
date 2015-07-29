@@ -44,6 +44,16 @@ public class VoicingGenerator {
         this.fullStepReducer = fullStepReducer;
         this.invertM9=invertM9;
     }
+        
+    public void getSettings(HandManager hm)
+    {
+        setLowerLeftBound(hm.getLeftHandLowestNote());
+        setUpperLeftBound(hm.getLeftHandLowestNote() + hm.getLeftHandSpread());
+        setLowerRightBound(hm.getRightHandLowestNote());
+        setUpperRightBound(hm.getRightHandLowestNote() + hm.getRightHandSpread());
+        setNumNotesLeft(hm.getNumLeftNotes());
+        setNumNotesRight(hm.getNumRightNotes());
+    }
     /**
      * generates a voicing based on current parameters and stores it in the chord array accessible by get chord. 
      */
@@ -311,15 +321,16 @@ public class VoicingGenerator {
      * @param list2 
      */
     private void invertM9th(ArrayList<Integer> list1, ArrayList<Integer> list2)
-    {   System.out.println("invm9");
+    {   
+//        System.out.println("invm9");
         ArrayList<Integer> list3=new ArrayList<Integer>();
         ArrayList<Integer> list4;
-        for(int i: list1)
-            System.out.print(i+" ");
-        System.out.println("list1orig");
-        for(int j: list2)
-            System.out.print(j+" ");
-        System.out.println("list2orig");
+//        for(int i: list1)
+//            System.out.print(i+" ");
+//        System.out.println("list1orig");
+//        for(int j: list2)
+//            System.out.print(j+" ");
+//        System.out.println("list2orig");
         for(int i:list1)
         {
             boolean added=false;
@@ -350,12 +361,12 @@ public class VoicingGenerator {
         }
         list1=list3;
         
-        for(int i: list1)
-            System.out.print(i+" ");
-        System.out.println("list1");
-        for(int j: list2)
-            System.out.print(j+" ");
-        System.out.println("list2");
+//        for(int i: list1)
+//            System.out.print(i+" ");
+//        System.out.println("list1");
+//        for(int j: list2)
+//            System.out.print(j+" ");
+//        System.out.println("list2");
     }
     public int[] getColor() {
         return color;

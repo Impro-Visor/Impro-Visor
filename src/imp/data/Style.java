@@ -29,6 +29,9 @@ import imp.ImproVisor;
 import imp.com.PlayScoreCommand;
 import imp.util.Preferences;
 import imp.voicing.AVPFileCreator;
+import imp.voicing.AutomaticVoicingSettings;
+import imp.voicing.HandManager;
+import imp.voicing.VoicingGenerator;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +70,11 @@ public class Style
   
   private static int defaultDrumPatternDuration = 480;
   
-  private static boolean override;
+  private AutomaticVoicingSettings avs;
+
+  private VoicingGenerator vgen;
+  
+  private HandManager handyMan;
 
   /**
    * the random number generator for styles
@@ -240,7 +247,7 @@ public class Style
   
   private static final int DRUM = 19;
   
-  private static final int VOICING_FILE =20;
+  private static final int VOICING_FILE = 20;
 
   public boolean usePreviousStyle()
     {
@@ -251,9 +258,10 @@ public class Style
     {
     //System.out.println("getStyle " + name);
      Style s = allStyles.get(name);
-     AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),
-                                            s.getVoicingFileName()), 
-                                   ImproVisor.avs);
+// Not good: This sets every style to use the default settings
+//     AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),
+//                                            s.getVoicingFileName()), 
+//                                   ImproVisor.avs);
       return s;
     }
   
@@ -557,7 +565,7 @@ public class Style
   public static Style makeStyle(Polylist L)
     {
     Style style = new Style();
-    style.voicingFileName="default.avp";
+    //style.voicingFileName="default.avp";
     while( L != null && L.nonEmpty() )
       {
       if( (L.first() instanceof Polylist) )
@@ -583,15 +591,7 @@ public class Style
                   cp.setStyle(style);
                   cp.setDefinedRules(cp.getStyle().getChordDefinedRules());
                   cp.makePattern(item);
-              if( cp != null )
-                {
-                //cp.setStyle(style);
                 style.chordPatterns.add(cp);
-                }
-              else
-                {
-                return null;
-                }
               break;
               }
             case DRUM_PATTERN:
@@ -600,15 +600,7 @@ public class Style
               dp.setStyle(style);
               dp.setDefinedRules(dp.getStyle().getDrumDefinedRules());
               dp.makePattern(item);
-              if( dp != null )
-                {
-                //dp.setStyle(style);
                 style.drumPatterns.add(dp);
-                }
-              else
-                {
-                return null;
-                }
               break;
               }
             case BASS_PATTERN:
@@ -617,15 +609,7 @@ public class Style
                   bp.setStyle(style);
                   bp.setDefinedRules(bp.getStyle().getBassDefinedRules());
                   bp.makePattern(item);
-              if( bp != null )
-                {
-                //bp.setStyle(style);
                 style.bassPatterns.add(bp);
-                }
-              else
-                {
-                return null;
-                }
               break;
               }
             case VOICING_TYPE:
@@ -647,7 +631,6 @@ public class Style
             case VOICING_FILE:
               {
               style.voicingFileName = (String)item.first();
-              //System.out.println("in-switch");
               break;
               }
             default:
@@ -663,9 +646,37 @@ public class Style
         L = L.rest();
         }
       }
+    
+    if( style.hasCustomVoicing() )
+        {
+        String vfn = ImproVisor.getVoicingDirectory() + File.separator + style.voicingFileName;
+    //System.out.println("\ncustom voicing settings in " + style.name + " to " + vfn);
+        // initialize automatic voicing settings
+        AutomaticVoicingSettings av = new AutomaticVoicingSettings();
+        AVPFileCreator.fileToSettings(new File(vfn), av);
+        style.avs = av;
+     //System.out.println("settings = " + av);
+        
+        style.handyMan = new HandManager();
+        style.handyMan.getSettings(av);
+        
+        style.vgen = new VoicingGenerator();
+        style.vgen.getSettings(style.handyMan);
+        }
+    
      return style;
     }
 
+  public HandManager getHandManager()
+  {
+      return handyMan;
+  }
+  
+  public VoicingGenerator getVoicingGenerator()
+  {
+      return vgen;
+  }
+  
   /**
    * A method to change parameters of an already constructed Style
    * from text specification.
@@ -1758,7 +1769,7 @@ public long render(MidiSequence seq,
             return false;
           }
         final Style other = (Style) obj;
-        if( (this.name == null) ? (other.name != null) : !this.name.equals(other.name) )
+        if( (name == null && other.name != null) || !name.equals(other.name) )
           {
             return false;
           }

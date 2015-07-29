@@ -12,7 +12,7 @@ package imp.voicing;
 public class AutomaticVoicingSettings {
     
     public AutomaticVoicingSettings(){
-        
+        setDefaults();
     }
 
     public int getLeftHandLowerLimit() {
@@ -192,6 +192,16 @@ public class AutomaticVoicingSettings {
         this.fullStepReducer = fullStepReducer;
     }
     
+    public int getMinInterval()
+    {
+        return minInterval;
+    }
+    
+    public void setMinInterval(int minInterval)
+    {
+        this.minInterval = minInterval;
+    }
+    
     public void setDefaults()
     {
         leftHandLowerLimit=46;
@@ -250,15 +260,7 @@ public class AutomaticVoicingSettings {
     private boolean invertM9;
     private boolean voiceAll;
     private boolean rootless;
-    private int minInterval;//minimum distance between chord tones
-
-    public int getMinInterval() {
-        return minInterval;
-    }
-
-    public void setMinInterval(int minInterval) {
-        this.minInterval = minInterval;
-    }
+    private int minInterval;
     
     public boolean isRootless() {
         return rootless;
@@ -289,5 +291,49 @@ public class AutomaticVoicingSettings {
     }
     public boolean getInvertM9(){
         return invertM9;
+    }
+    
+       @Override
+    public String toString()
+      {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("(LH-lower-limit " + getLeftHandLowerLimit() + ")\n");
+        buffer.append("(RH-lower-limit " + getRightHandLowerLimit() + ")\n");
+        buffer.append("(LH-upper-limit " + getLeftHandUpperLimit() + ")\n");
+        buffer.append("(RH-upper-limit " + getRightHandUpperLimit() + ")\n");
+        buffer.append("(LH-spread " + getLeftHandSpread() + ")\n");
+        buffer.append("(RH-spread " + getRightHandSpread() + ")\n");
+        buffer.append("(LH-min-notes " + getLeftHandMinNotes() + ")\n");
+        buffer.append("(LH-max-notes " + getLeftHandMaxNotes() + ")\n");
+        buffer.append("(RH-min-notes " + getRightHandMinNotes() + ")\n");
+        buffer.append("(RH-max-notes " + getRightHandMaxNotes() + ")\n");
+                    //voice leading controls
+        buffer.append("(pref-motion " + getPreferredMotion() + ")\n");
+        buffer.append("(pref-motion-range " + getPreferredMotionRange() + ")\n");
+        buffer.append("(prev-voicing-multiplier "+(int)(getPreviousVoicingMultiplier()*10) + ")\n");// multiplier for notes used in previous voicing
+        buffer.append("(half-step-multiplier "+(int)(getHalfStepAwayMultiplier()*10) + ")\n");
+        buffer.append("(full-step-multiplier "+(int)(getFullStepAwayMultiplier()*10) + ")\n");
+                    //voicing control
+        buffer.append("(LH-color-priority " + getLeftColorPriority() + ")\n");//priority of any color note
+        buffer.append("(RH-color-priority " + getRightColorPriority() + ")\n");//priority of any color note
+        buffer.append("(max-priority " + getMaxPriority() + ")\n");//max priority a note in the priority array can have
+        buffer.append("(priority-multiplier "+(int)( + getPriorityMultiplier()*10) + ")\n");//should be between 0 and 1, multiply this by the index in priority array, subtract result from max priority to get note priority
+        buffer.append("(repeat-multiplier "+(int)(getRepeatMultiplier()*10) + ")\n");
+        buffer.append("(half-step-reducer "+(int)(getHalfStepReducer()*10) + ")\n");
+        buffer.append("(full-step-reducer "+(int)(getFullStepReducer()*10) + ")\n");
+                    if(getInvertM9())
+            buffer.append("(invert-9th on)\n");
+                    else
+            buffer.append("(invert-9th off)\n");
+                    if(getVoiceAll())
+            buffer.append("(voice-all on)\n");
+                    else
+            buffer.append("(voice-all off)");
+                    if(getRootless())
+            buffer.append("(rootless on)");
+                    else
+            buffer.append("(rootless off)");
+
+    return buffer.toString();
     }
 }
