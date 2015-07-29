@@ -708,7 +708,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         boolean [] include = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
         mgen = new MelodyGenerator(learner, rhythm, chords, range, mergeCheckbox.isSelected(), rectify, include);
         result = firstOrderButton.isSelected() ? mgen.melody() : mgen.melody2();
-        notate.addChorus(result);
+        notate.getCurrentMelodyPart().newPasteOver(result, 0);
+        //notate.addChorus(result);
     }
     
     /**
@@ -725,7 +726,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         boolean [] include = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
         mgen = new MelodyGenerator(learner, rhythm, chords, range, mergeCheckbox.isSelected(), rectify, include);
         result = firstOrderButton.isSelected() ? mgen.melody() : mgen.melody2();
-        notate.addChorus(result);
+        notate.getCurrentMelodyPart().newPasteOver(result, 0);
+        //notate.addChorus(result);
     }
     
     /**
@@ -742,7 +744,8 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         boolean [] include = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
         mgen = new MelodyGenerator(learner, notate, chords, range, mergeCheckbox.isSelected(), rectify, include);
         result = firstOrderButton.isSelected() ? mgen.melody() : mgen.melody2();
-        notate.addChorus(result);
+        notate.getCurrentMelodyPart().newPasteOver(result, 0);
+        //notate.addChorus(result);
     }
 
     /**
