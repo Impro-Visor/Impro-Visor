@@ -56,7 +56,6 @@ public class HandManager {
         setRightHandMaxNotes(av.getRightHandMaxNotes());
         setPreferredMotion(av.getPreferredMotion());
         setPreferredMotionRange(av.getPreferredMotionRange());
-        resetHands();
     }
     
     /**

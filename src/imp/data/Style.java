@@ -258,10 +258,7 @@ public class Style
     {
     //System.out.println("getStyle " + name);
      Style s = allStyles.get(name);
-// Not good: This sets every style to use the default settings
-//     AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),
-//                                            s.getVoicingFileName()), 
-//                                   ImproVisor.avs);
+
       return s;
     }
   
@@ -650,19 +647,15 @@ public class Style
     if( style.hasCustomVoicing() )
         {
         String vfn = ImproVisor.getVoicingDirectory() + File.separator + style.voicingFileName;
-    //System.out.println("\ncustom voicing settings in " + style.name + " to " + vfn);
-        // initialize automatic voicing settings
         AutomaticVoicingSettings av = new AutomaticVoicingSettings();
         AVPFileCreator.fileToSettings(new File(vfn), av);
         style.avs = av;
-     //System.out.println("settings = " + av);
         
         style.handyMan = new HandManager();
         style.handyMan.getSettings(av);
         
         style.vgen = new VoicingGenerator();
         style.vgen.getVoicingSettings(av);
-        style.vgen.getHandSettings(style.handyMan);
         }
     
      return style;
@@ -1113,6 +1106,11 @@ private Polylist makeChordline(
 
     // The while loop is in case one pattern does not fill
     // the required duration. We may need multiple patterns.
+    
+    if( hasCustomVoicing() )
+    {
+        handyMan.resetHands();
+    }
     
     boolean beginning = true;
     while( duration > 0 && limitNotReached(time, endLimitIndex) )

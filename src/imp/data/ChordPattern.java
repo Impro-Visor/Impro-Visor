@@ -803,27 +803,16 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
     
     /*Init Dan's Classes*/
     if(style.hasCustomVoicing()){
-        //AutomaticVoicingSettings avs= ImproVisor.avs;
-        //VoicingGenerator vgen=new VoicingGenerator();
-        //HandManager handyMan=new HandManager();
+
         VoicingGenerator vgen = style.getVoicingGenerator();
         HandManager handyMan = style.getHandManager();
-        //avs.setLeftHandLowerLimit(style.getChordLow().getMIDI());
-        //avs.setRightHandUpperLimit(style.getChordHigh().getMIDI());
-        
-        //handyMan.getSettings(avs);
-        //handyMan.resetHands();
-      
-        //vgen.getVoicingSettings(avs);
         vgen.getHandSettings(handyMan);
-
-        /*get values from the user*/
 
         /*process values*/
         //while loop with first item
         int[] lastVoicing=null;
-        ArrayList<int[]>progressionVoicings=new ArrayList<int[]>();
-        ArrayList<Integer> bassList=new ArrayList<Integer>();
+        //ArrayList<int[]>progressionVoicings = new ArrayList<int[]>();
+        //ArrayList<Integer> bassList = new ArrayList<Integer>();
 
         System.out.println("----------");
         System.out.println("chord: "+chord.toString());    //trace
@@ -831,7 +820,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         Polylist spelling;                             //create voicing variable for first chord
         spelling = chord1.getSpell();                  //get chord1 voicing; assign to voicing
         System.out.println("spelling: " + spelling.toString());    //trace
-        bassList.add(((NoteSymbol)spelling.first()).getMIDI()); //gets a list of bass notes
+        //bassList.add(((NoteSymbol)spelling.first()).getMIDI()); //gets a list of bass notes
         Polylist priorityPoly=chord1.getPriority();     //create a polylist for chord priority notes
         Polylist colorPoly=chord1.getColor();           //create a polylist for chord color notes
         int[] color=new int[colorPoly.length()];        //array for color notes' midi values
@@ -849,19 +838,15 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         }
         System.out.println();
         System.out.println("New voicing:");
-        //settings
-        //handyMan.repositionHands();
-//        vgen.setLowerLeftBound(handyMan.getLeftHandLowestNote());
-//        vgen.setUpperLeftBound(handyMan.getLeftHandLowestNote()+handyMan.getLeftHandSpread());
-//        vgen.setLowerRightBound(handyMan.getRightHandLowestNote());
-//        vgen.setUpperRightBound(handyMan.getRightHandLowestNote()+handyMan.getRightHandSpread());
-//        vgen.setNumNotesLeft(handyMan.getNumLeftNotes());
-//        vgen.setNumNotesRight(handyMan.getNumRightNotes());
+
+        handyMan.repositionHands();
+
+        // revisit
         vgen.setColor(color);
         vgen.setPriority(priority);
         vgen.setRoot(chord1.getRootSemitones());
-
-        System.out.println("Did settings");
+        
+        vgen.getHandSettings(handyMan);
 
         int index=0;
         if(lastVoicing!=null){
@@ -875,13 +860,13 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         vgen.setPreviousVoicing(lastVoicing);
         vgen.calculate();
         lastVoicing = vgen.getChord();
-        progressionVoicings.add(lastVoicing);
+        //progressionVoicings.add(lastVoicing);
         Polylist midiL;
 
 
         Integer[] lastVoicingObj=new Integer[lastVoicing.length];
         for(int i=0; i<lastVoicing.length; i++)
-            lastVoicingObj[i]=new Integer(lastVoicing[i]);
+            lastVoicingObj[i] = lastVoicing[i];
         midiL=Polylist.PolylistFromArray(lastVoicingObj);       //creates polylist from lastVoicingObj to assign to a midi value list midiL
         System.out.println("midiL: "+midiL.toString());   //trace
 
