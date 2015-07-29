@@ -459,7 +459,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
      */
     public void checkSliders()
     {
-       if(Integer.parseInt(handLimits[1].getValue().toString())<Integer.parseInt(handLimits[1].getValue().toString())+Integer.parseInt(handSpreads[0].getValue().toString()))
+       if(Integer.parseInt(handLimits[1].getValue().toString())<Integer.parseInt(handLimits[0].getValue().toString())+Integer.parseInt(handSpreads[0].getValue().toString()))
            handLimits[1].setValue(Integer.parseInt(handLimits[0].getValue().toString())+Integer.parseInt(handSpreads[0].getValue().toString()));
        if(Integer.parseInt(handLimits[3].getValue().toString())<Integer.parseInt(handLimits[2].getValue().toString())+Integer.parseInt(handSpreads[1].getValue().toString()))
            handLimits[3].setValue(Integer.parseInt(handLimits[3].getValue().toString())+Integer.parseInt(handLimits[2].getValue().toString()));
