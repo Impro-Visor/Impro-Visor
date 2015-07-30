@@ -1013,7 +1013,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         MelodyPart outline = notate.getCurrentMelodyPart();
         ChordPart chords = notate.getChordProg();
         int res = getResolution(windowResolutionComboBox.getSelectedItem().toString());
-        Transform transform = 
+        Transform result = 
                 transformLearning.createBlockTransform(outline, 
                                                                      original.copy(),
                                                                      chords,
@@ -1021,7 +1021,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
                                                                      stop,
                                                                      res);
 
-        return transform;
+        return result;
     }
     /**
      * Learns transforms using windowing from all the choruses
@@ -1030,6 +1030,9 @@ public class TransformLearningPanel extends javax.swing.JPanel {
      */
     private Transform learnAllByWindowing()
     {
+        //important fix!!!
+        Transform result = new Transform();
+        //
         notate.selectAll2();
         notate.adjustSelection();
         
@@ -1040,16 +1043,16 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         
         for(int i = 0; i < notate.getScore().size(); ++i){
             MelodyPart outline = notate.getMelodyPart(notate.getStaveAtTab(i));
-            MelodyPart original = originalList.get(i);
+            MelodyPart originalPart = originalList.get(i);
             Transform trans = transformLearning.createBlockTransform(outline,
-                                                                     original.copy(),
+                                                                     originalPart.copy(),
                                                                      chords,
                                                                      start,
                                                                      stop,
                                                                      res);
-            transform = transformLearning.merge(transform, trans);
+            result = transformLearning.merge(result, trans);
         }
-        return transform;
+        return result;
     }
     /**
      * Learns transformations by going through the notes in a melody
@@ -1064,14 +1067,14 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         int stop = notate.getCurrentSelectionEnd();
         MelodyPart outline = notate.getCurrentMelodyPart();
         ChordPart chords = notate.getChordProg();
-        Transform transform = 
+        Transform result = 
                 transformLearning.createTrendTransform(outline, 
                                                        original.copy(), 
                                                        chords, 
                                                        start, 
                                                        stop);
         
-        return transform;
+        return result;
     }
     /**
      * Learns transforms using trend detection from all the choruses
@@ -1080,6 +1083,8 @@ public class TransformLearningPanel extends javax.swing.JPanel {
      */
     private Transform learnAllByTrendDetection()
     {
+        //important fix!!!
+        Transform result = new Transform();
         notate.selectAll2();
         notate.adjustSelection();
         
@@ -1089,15 +1094,15 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         
         for(int i = 0; i < notate.getScore().size(); ++i){
             MelodyPart outline = notate.getMelodyPart(notate.getStaveAtTab(i));
-            MelodyPart original = originalList.get(i);
+            MelodyPart originalPart = originalList.get(i);
             Transform trans = transformLearning.createTrendTransform(outline,
-                                                                     original.copy(),
+                                                                     originalPart.copy(),
                                                                      chords,
                                                                      start,
                                                                      stop);
-            transform = transformLearning.merge(transform, trans);
+            result = transformLearning.merge(result, trans);
         }
-        return transform;
+        return result;
     }
     
     private Transform learnByNewTrendDetection(){
