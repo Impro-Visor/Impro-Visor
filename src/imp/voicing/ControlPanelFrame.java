@@ -68,7 +68,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
               resetValues();
            }
        }); 
-       loadFile.addActionListener(new ActionListener() {
+       /*loadFile.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
            {
@@ -92,7 +92,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
             //setSlidersToVariables();
             
            }
-       });
+       });*/
        /*
         jButton5.addActionListener(new ActionListener() {
 
@@ -165,7 +165,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
            }
        });
        
-        saveToNew.addActionListener(new ActionListener() {
+       /* saveToNew.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e)
            {
                 
@@ -204,7 +204,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
                 AVPFileCreator.settingsToFile(avs,saveFile);
                 
             }
-       });
+       });*/
        for(JSpinner slider:handLimits)
        {
            slider.addChangeListener(new ChangeListener(){
@@ -409,7 +409,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertBox.setState(invertM9);
         voiceAllNotes.setState(voiceAll);
         rootlessBox.setState(rootless);
-        spinInterval.setValue(minInterval);
+        rightMinInterval.setValue(minInterval);
     }
     /**
      * points sliders we declared and named to auto-created sliders from gui designer.
@@ -420,10 +420,14 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         handSpreads=new JSpinner[2];
         handNotes=new JSpinner[4];
         voiceLeadingWeights=new JSlider[3];
-        handLimits[0]=LHLLSpinner;
-        handLimits[1]=LHULSpinner;
-        handLimits[2]=RHLLSpinner;
-        handLimits[3]=RHULSpinner;
+        //handLimits[0]=LHLLSpinner;
+        //handLimits[1]=LHULSpinner;
+        //handLimits[2]=RHLLSpinner;
+        //handLimits[3]=RHULSpinner;
+        handLimits[0]=new JSpinner();
+        handLimits[1]=new JSpinner();
+        handLimits[2]=new JSpinner();
+        handLimits[3]=new JSpinner();
         handSpreads[0]=LHStretchSpinner;
         handSpreads[1]=RHStretchSpinner;
         handNotes[0]=LHMinNotesSpinner;
@@ -502,7 +506,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertM9=invertBox.getState();
         voiceAll=voiceAllNotes.getState();
         rootless=rootlessBox.getState();
-        minInterval=Integer.parseInt(spinInterval.getValue().toString());
+        minInterval=Integer.parseInt(rightMinInterval.getValue().toString());
         syncToSettings();
         
     }
@@ -777,10 +781,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         LHULNote = new javax.swing.JLabel();
-        LHULSpinner = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
         LHLLNote = new javax.swing.JLabel();
-        LHLLSpinner = new javax.swing.JSpinner();
         jPanel5 = new javax.swing.JPanel();
         LHStretchSpinner = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
@@ -788,19 +790,21 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel7 = new javax.swing.JPanel();
         LHMaxNotesSpinner = new javax.swing.JSpinner();
         LHRangeButton = new javax.swing.JButton();
+        jPanel30 = new javax.swing.JPanel();
+        leftMinInterval = new javax.swing.JSpinner();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         RHULNote = new javax.swing.JLabel();
-        RHULSpinner = new javax.swing.JSpinner();
         jPanel10 = new javax.swing.JPanel();
         RHLLNote = new javax.swing.JLabel();
-        RHLLSpinner = new javax.swing.JSpinner();
         jPanel11 = new javax.swing.JPanel();
         RHStretchSpinner = new javax.swing.JSpinner();
         jPanel12 = new javax.swing.JPanel();
         RHMinNotesSpinner = new javax.swing.JSpinner();
         jPanel13 = new javax.swing.JPanel();
         RHMaxNotesSpinner = new javax.swing.JSpinner();
+        jPanel29 = new javax.swing.JPanel();
+        rightMinInterval = new javax.swing.JSpinner();
         RHRangeButton = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
@@ -831,15 +835,16 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel28 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         loadDefault = new javax.swing.JButton();
-        loadFile = new javax.swing.JButton();
-        saveToDefault = new javax.swing.JButton();
-        saveToNew = new javax.swing.JButton();
         closeB = new javax.swing.JButton();
         invertBox = new java.awt.Checkbox();
         voiceAllNotes = new java.awt.Checkbox();
         rootlessBox = new java.awt.Checkbox();
-        jPanel29 = new javax.swing.JPanel();
-        spinInterval = new javax.swing.JSpinner();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setBounds(new java.awt.Rectangle(0, 0, 1300, 500));
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -864,11 +869,10 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         LHULNote.setMinimumSize(null);
         LHULNote.setPreferredSize(null);
         jPanel2.add(LHULNote, new java.awt.GridBagConstraints());
-        jPanel2.add(LHULSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -884,11 +888,10 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         LHLLNote.setMinimumSize(null);
         LHLLNote.setPreferredSize(null);
         jPanel3.add(LHLLNote, new java.awt.GridBagConstraints());
-        jPanel3.add(LHLLSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -903,7 +906,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -918,7 +921,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -933,7 +936,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -944,9 +947,21 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         LHRangeButton.setText("Choose Range");
         jPanel4.add(LHRangeButton, new java.awt.GridBagConstraints());
 
+        jPanel30.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
+        jPanel30.add(leftMinInterval);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = 7;
+        gridBagConstraints.ipadx = 80;
+        jPanel4.add(jPanel30, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -965,11 +980,10 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         RHULNote.setMinimumSize(null);
         RHULNote.setPreferredSize(null);
         jPanel9.add(RHULNote, new java.awt.GridBagConstraints());
-        jPanel9.add(RHULSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -985,11 +999,10 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         RHLLNote.setMinimumSize(null);
         RHLLNote.setPreferredSize(null);
         jPanel10.add(RHLLNote, new java.awt.GridBagConstraints());
-        jPanel10.add(RHLLSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -1004,7 +1017,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -1019,7 +1032,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -1034,7 +1047,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -1042,8 +1055,18 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel8.add(jPanel13, gridBagConstraints);
 
+        jPanel29.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
+        jPanel29.add(rightMinInterval);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = 80;
+        jPanel8.add(jPanel29, gridBagConstraints);
+
         RHRangeButton.setText("Choose Range");
-        jPanel8.add(RHRangeButton, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 0;
+        jPanel8.add(RHRangeButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -1247,15 +1270,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.weightx = 1.0;
         jPanel21.add(ChordToneMaxPrioritySlider, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        jPanel20.add(jPanel21, gridBagConstraints);
+        jPanel20.add(jPanel21, new java.awt.GridBagConstraints());
 
         jPanel22.setBorder(javax.swing.BorderFactory.createTitledBorder("Chord Tone Priority Weighting"));
         jPanel22.setToolTipText("Desired weighting for priority notes in a chord");
@@ -1431,8 +1446,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridheight = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -1451,21 +1466,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         loadDefault.setText("Revert to Saved Settings");
         jPanel28.add(loadDefault);
-
-        loadFile.setText("Open");
-        jPanel28.add(loadFile);
-
-        saveToDefault.setText("Save");
-        saveToDefault.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveToDefaultActionPerformed(evt);
-            }
-        });
-        jPanel28.add(saveToDefault);
-
-        saveToNew.setText("Save As");
-        saveToNew.setToolTipText("");
-        jPanel28.add(saveToNew);
 
         closeB.setText("Close");
         closeB.setMinimumSize(null);
@@ -1488,15 +1488,43 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         rootlessBox.setLabel("Rootless Voicings");
         jPanel28.add(rootlessBox);
 
-        jPanel29.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
-        jPanel29.add(spinInterval);
-
-        jPanel28.add(jPanel29);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         getContentPane().add(jPanel28, gridBagConstraints);
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("Open");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Save");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Save As...");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1509,9 +1537,53 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         this.dispose();
     }//GEN-LAST:event_closeBActionPerformed
 
-    private void saveToDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveToDefaultActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveToDefaultActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       File openFile=null;
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
+                chooser.setFileFilter(filter);
+                int returnVal = chooser.showOpenDialog(null);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                    openFile=chooser.getSelectedFile();
+                }
+                
+                AVPFileCreator.fileToSettings( openFile, avs);
+                setSlidersToVariables();
+                setTitle(openFile.getName());
+                styleEditor.setVoicingFileName(openFile.getName());
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+         saveSlidersToVariables();
+                syncToSettings();
+                File saveFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
+                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
+                chooser.setFileFilter(filter);
+                int returnVal = chooser.showSaveDialog(null);
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                    saveFile=chooser.getSelectedFile();
+                    if(!saveFile.getName().toLowerCase().endsWith(".avp"))
+                        saveFile=new File(saveFile.getAbsolutePath()+".avp");   
+                    if(saveFile.getName().contains(" "))
+                        saveFile=new File(saveFile.getParent(),saveFile.getName().replaceAll(" ", "-"));
+                }
+                //syncToSettings();
+                //AVPFileCreator.fileToSettings(openFile,avs);
+                AVPFileCreator.settingsToFile(avs,saveFile);
+                syncFromSettings();
+                styleEditor.setVoicingFileName(saveFile.getName());
+                setTitle(saveFile.getName());
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        saveSlidersToVariables();
+                
+                File saveFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
+                
+                syncToSettings();
+                AVPFileCreator.settingsToFile(avs,saveFile);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1558,32 +1630,34 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JSlider HalfStepRedSlider;
     private javax.swing.JSlider LHColorPriority;
     private javax.swing.JLabel LHLLNote;
-    private javax.swing.JSpinner LHLLSpinner;
     private javax.swing.JSpinner LHMaxNotesSpinner;
     private javax.swing.JSpinner LHMinNotesSpinner;
     private javax.swing.JButton LHRangeButton;
     private javax.swing.JSpinner LHStretchSpinner;
     private javax.swing.JLabel LHULNote;
-    private javax.swing.JSpinner LHULSpinner;
     private javax.swing.JSlider PrefMotionDirSlider;
     private javax.swing.JSlider PrefMotionDistSlider;
     private javax.swing.JSlider PrevChordPrioritySlider;
     private javax.swing.JSlider ProbSameNoteTwoOctavesSlider;
     private javax.swing.JSlider RHColorPriority;
     private javax.swing.JLabel RHLLNote;
-    private javax.swing.JSpinner RHLLSpinner;
     private javax.swing.JSpinner RHMaxNotesSpinner;
     private javax.swing.JSpinner RHMinNotesSpinner;
     private javax.swing.JButton RHRangeButton;
     private javax.swing.JSpinner RHStretchSpinner;
     private javax.swing.JLabel RHULNote;
-    private javax.swing.JSpinner RHULSpinner;
     private javax.swing.JSlider WholeStepAwaySlider;
     private javax.swing.JSlider WholeStepRedSlider;
     private javax.swing.JButton closeB;
     private javax.swing.Box.Filler filler1;
     private java.awt.Checkbox invertBox;
     private javax.swing.JButton jButton3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1607,18 +1681,17 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JSpinner leftMinInterval;
     private javax.swing.JButton loadDefault;
-    private javax.swing.JButton loadFile;
+    private javax.swing.JSpinner rightMinInterval;
     private java.awt.Checkbox rootlessBox;
-    private javax.swing.JButton saveToDefault;
-    private javax.swing.JButton saveToNew;
-    private javax.swing.JSpinner spinInterval;
     private java.awt.Checkbox voiceAllNotes;
     // End of variables declaration//GEN-END:variables
 }
