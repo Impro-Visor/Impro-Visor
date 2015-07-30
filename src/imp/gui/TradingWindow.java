@@ -67,7 +67,7 @@ import jm.midi.event.Event;
  * by dispatching events based upon the position of the play head in said
  * chorus. Events are scheduled in three main phases, each phase with
  * its respective method:
- * 
+ *
  * User turn - When the user plays. During this phase,
  * the user input is recorded into
  * the instance variable 'tradeScore'.
@@ -126,8 +126,8 @@ public class TradingWindow
     private PlayScoreCommand playCommand;
     private static MidiManager midiManager;
     //magic values
-    private int endLimitIndex = -1;
-    private boolean isSwing = false;
+    private int endLimitIndex = 1;
+    private boolean isSwing = true;
     private Integer snapResolution = 2;
     public static final int zero = 0;
     public static final int one = 1;
@@ -198,25 +198,36 @@ public class TradingWindow
         long currentPosition = notate.getSlotInPlayback();
         //System.out.println(currentPosition);
 
+        if ((triggers.isEmpty() || currentPosition == scoreLength) && !isLoop) {
+            stopTrading();
+        } else {
+            long nextTrig = (long) triggers.get(triggerIndex);
+            if (nextTrig <= currentPosition && !loopLock) {
+                //System.out.println("Increment to trig: " + nextTrig);
+                int nextIndex = triggerIndex + 1;
+                if (nextIndex >= triggers.size()) {
+                    if (!isLoop) {
+                        stopTrading();
+                    }
+                    nextIndex = 0;
+                }
+                if (triggers.get(nextIndex) == 0) {
+                    loopLock = true;
+                    //System.out.println("Setting lock on");
+                } else {
+                    loopLock = false;
+                }
+                triggerIndex = nextIndex;
+                //System.out.println("Trigs: " + triggers);
+                switchTurn();
+            }
+        }
         //TODO : EXPLAIN THIS
         if (loopLock) {
             if (currentPosition < lastPosition) {
                 loopLock = false;
             }
             lastPosition = currentPosition;
-        }
-
-            if ((triggers.isEmpty() || currentPosition == scoreLength) && !isLoop) {
-                stopTrading();
-            } else {
-            long nextTrig = (long) triggers.get(triggerIndex);
-            if (nextTrig <= currentPosition && !loopLock) {
-                //System.out.println("Increment to trig: " + nextTrig);
-                triggerIndex = nextTriggerIndex();
-                //System.out.println("Trigs: " + triggers);
-                switchTurn();
-            }
-            
         }
     }
 
@@ -239,7 +250,7 @@ public class TradingWindow
                 break;
 
         }
-        
+
     }
 
     public void userTurn() {
@@ -249,7 +260,7 @@ public class TradingWindow
             nextSection = adjustedLength;
         } else {
             nextSection = (triggers.get(triggerIndex) + slotsForProcessing) % adjustedLength;
-            
+
         }
         //System.out.println("Chords extracted from chord prog from : " + nextSection + " to " + (nextSection + slotsPerTurn - one));
         response = new MelodyPart(slotsPerTurn);
@@ -276,9 +287,18 @@ public class TradingWindow
         tradeScore.deleteChords();
 
         Long delayCopy = new Long(slotDelay);
-        response = response.extract(delayCopy.intValue(), slotsPerTurn - 3, true, true);
+        response = response.extract(delayCopy.intValue(), slotsPerTurn - one, true, true);
         //System.out.println(response);
         tradeScore.addPart(response);
+        //System.out.println("TRADE SCORE" + tradeScore);
+        //System.out.println("NOTATE SCORE" + notate.getScore());
+        
+        midiSynth = new MidiSynth(midiManager);
+        midiSynth.setMasterVolume(volumeSlider.getValue());
+        //System.out.println("NOTATE: " + notate.getMidiSynth().getSequencer());
+        //System.out.println("TRADING WINDOW: " + midiSynth.getSequencer());
+        
+        
 
         playCommand = new PlayScoreCommand(
                 tradeScore,
@@ -289,22 +309,24 @@ public class TradingWindow
                 zero,
                 notate.getTransposition(),
                 false,
-                endLimitIndex
+                slotsPerTurn - endLimitIndex,
+                true
         );
     }
 
     public void computerTurn() {
 
         long slotsBefore = notate.getSlotInPlayback();
-
+        
+        midiSynth.setSlot(notate.getSlotInPlayback() % slotsPerTurn);
         playCommand.execute();
-
         long slotsAfter = notate.getSlotInPlayback();
 
         //update delay
         slotDelay = (slotDelay + (slotsAfter - slotsBefore)) / 2;
 
         phase = TradePhase.COMPUTER_TURN;
+        
     }
 
     /**
@@ -344,7 +366,7 @@ public class TradingWindow
         notate.getCurrentStave().unselectAll();
         triggerIndex = 0;
         populateTriggers();
-        initDelay();
+        //initDelay();
 
         //if computer is leading, generate a solo via selected grammar
         if (!isUserLeading) {
@@ -365,7 +387,8 @@ public class TradingWindow
                     zero,
                     notate.getTransposition(),
                     false,
-                    endLimitIndex
+                    slotsPerTurn - endLimitIndex,
+                    true
             );
         }
 
@@ -381,6 +404,7 @@ public class TradingWindow
         }
     }
 
+    //NO LONGER USED
     private void initDelay() {
         ChordPart testChords = notate.getScore().copy().getChordProg().extract(zero, slotsPerMeasure - one);
         MelodyPart testMelody = new MelodyPart(slotsPerMeasure);
@@ -406,7 +430,8 @@ public class TradingWindow
                 zero,
                 notate.getTransposition(),
                 false,
-                endLimitIndex
+                slotsPerTurn - endLimitIndex,
+                true
         );
 
         testCommand.execute();
@@ -420,9 +445,9 @@ public class TradingWindow
                 zero,
                 notate.getTransposition(),
                 false,
-                endLimitIndex
+                slotsPerTurn - endLimitIndex,
+                true
         ).execute();
-
 
         midiSynth.setMasterVolume(zero);
 
@@ -484,9 +509,9 @@ public class TradingWindow
                 computerTurnNext = true;
             }
         }
-        if(isLoop){
+        if (isLoop) {
             triggers.removeLast();
-            for (int i = 0; i < triggers.size(); i++){
+            for (int i = 0; i < triggers.size(); i++) {
                 int trig = triggers.get(i) % adjustedLength;
                 triggers.set(i, trig);
             }
@@ -529,18 +554,6 @@ public class TradingWindow
 //            default:
 //                break;
 //        }
-    }
-    
-    private int nextTriggerIndex(){
-        int nextIndex = triggerIndex + 1;
-        if(nextIndex >= triggers.size()){
-            nextIndex = 0;
-        }
-        if(triggers.get(nextIndex) == 0){
-            loopLock = true;
-            //System.out.println("Setting lock on");
-        }
-        return nextIndex;
     }
 
 //    private void changeTradeMode(String newMode) {
@@ -587,16 +600,16 @@ public class TradingWindow
             ProcessTimeSelector.setText(newBeatVal.toString());
         }
     }
-    
-    public void setVolume(){
+
+    public void setVolume() {
         midiSynth.setMasterVolume(volumeSlider.getValue());
         Integer newVol = volumeSlider.getValue();
         volume.setText("Volume of Response: " + newVol.toString());
     }
-    
-    public void setLoop(){
+
+    public void setLoop() {
         this.isLoop = loopToggle.isSelected();
-        notate.setLoop(isLoop);
+        notate.setLoop(true);
     }
 
     /**
@@ -834,7 +847,7 @@ public class TradingWindow
         if (directory.isDirectory()) {
             String fileName[] = directory.list();
 
-        // 6-25-13 Hayden Blauzvern
+            // 6-25-13 Hayden Blauzvern
             // Fix for Linux, where the file list is not in alphabetic order
             Arrays.sort(fileName, new Comparator<String>() {
                 public int compare(String s1, String s2) {
@@ -861,6 +874,7 @@ public class TradingWindow
         }
         notate.setEnabled(true);
         notate.destroyTradingWindow();
+        notate.setLoop(false);
     }//GEN-LAST:event_formWindowClosed
 
     private void startTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradingButtonActionPerformed

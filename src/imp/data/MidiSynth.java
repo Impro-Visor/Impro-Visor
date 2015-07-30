@@ -96,6 +96,8 @@ private long playbackStartTime;
 
 ArrayList<MidiNoteListener> noteListeners = new ArrayList<MidiNoteListener>();
 
+private boolean isTradingMelody;
+
 
 public MidiSynth(MidiManager midiManager)
   {
@@ -576,6 +578,27 @@ public void play(Score score,
     
     actualPlay(transposition);
   }
+
+public void prePlay(Score score,
+                    long startIndex,
+                    int loopCount,
+                    int transposition,
+                    boolean useDrums,
+                    int endLimitIndex,
+                    int countInOffset)
+        throws InvalidMidiDataException
+  {
+      prePlay(score,
+              startIndex,
+              loopCount,
+              transposition,
+              useDrums,
+              endLimitIndex,
+              countInOffset,
+              false);
+  }
+
+
 /**
  * Does most of what's in play(...) except for starting the sequencer.
  * This is so priming can take place, and start will have less latency.
@@ -588,13 +611,17 @@ public void prePlay(Score score,
                     int transposition,
                     boolean useDrums,
                     int endLimitIndex,
-                    int countInOffset)
+                    int countInOffset,
+                    boolean isTradingMelody)
         throws InvalidMidiDataException
   {
+      //System.out.println("MidiSynth: isTradingMelody = " + isTradingMelody);
 //   Trace.log(0,
 //              (++playCounter) + ": Starting MIDI sequencer, startTime = "
 //              + startIndex + " loopCount = " + loopCount + " endIndex = "
 //              + endLimitIndex);
+      
+    this.isTradingMelody = isTradingMelody;
 
     if( sequencer == null )
       {
@@ -607,7 +634,7 @@ public void prePlay(Score score,
 
     tempo = (float) score.getTempo();
 
-    Sequence seq = score.render(m_ppqn, transposition, useDrums, endLimitIndex);
+    Sequence seq = score.render(m_ppqn, transposition, useDrums, endLimitIndex, isTradingMelody);
 
     int magicFactor = Style.getMagicFactor();
 
@@ -876,6 +903,13 @@ protected static MidiEvent createNoteOffEvent(int channel,
     return evt;
   }
 
+    protected static MidiEvent createBankSelectEventMSB(int bankMSB,
+            long tick)
+            throws InvalidMidiDataException {
+        return createBankSelectEventMSB(bankMSB,
+                tick,
+                false);
+    }
 
 /**
  * Not sure this is correct:
@@ -885,13 +919,22 @@ protected static MidiEvent createNoteOffEvent(int channel,
  * @param tick     the time this event occurs
  */
 protected static MidiEvent createBankSelectEventMSB(int bankMSB,
-                                                    long tick)
+                                                    long tick,
+                                                    boolean isTradingMelody)
     throws InvalidMidiDataException
   {
     // Bank change is accomplished through control change, using controller
     // 32 for MSB, and controller 0 for LSB
-    return createCChangeEvent(0, 32, bankMSB, tick);
+    return createCChangeEvent(0, 32, bankMSB, tick, isTradingMelody);
   }
+
+protected static MidiEvent createBankSelectEventLSB(int bankLSB,
+            long tick)
+            throws InvalidMidiDataException {
+        return createBankSelectEventLSB(bankLSB,
+                tick,
+                false);
+    }
 
 /**
  * Not sure this is correct:
@@ -901,12 +944,13 @@ protected static MidiEvent createBankSelectEventMSB(int bankMSB,
  * @param tick     the time this event occurs
  */
 protected static MidiEvent createBankSelectEventLSB(int bankLSB,
-                                                    long tick)
+                                                    long tick,
+                                                    boolean isTradingMelody)
     throws InvalidMidiDataException
   {
     // Bank change is accomplished through control change, using controller
     // 32 for MSB, and controller 0 for LSB
-    return createCChangeEvent(0, 0, bankLSB, tick);
+    return createCChangeEvent(0, 0, bankLSB, tick, isTradingMelody);
   }
 
 
@@ -929,6 +973,19 @@ protected static MidiEvent createProgramChangeEvent(int channel,
     return evt;
   }
 
+protected static MidiEvent createCChangeEvent(int channel,
+                                              int controlNum,
+                                              int value,
+                                              long tick)
+    throws InvalidMidiDataException
+  {
+      return createCChangeEvent(channel,
+              controlNum,
+              value,
+              tick,
+              false);
+  }
+
 
 /**
  * Create a Control Change event
@@ -940,14 +997,17 @@ protected static MidiEvent createProgramChangeEvent(int channel,
 protected static MidiEvent createCChangeEvent(int channel,
                                               int controlNum,
                                               int value,
-                                              long tick)
+                                              long tick, 
+                                              boolean isTradingMelody)
     throws InvalidMidiDataException
   {
-
+    if(isTradingMelody) return null;
+    else{
     ShortMessage msg = new ShortMessage();
     msg.setMessage(0xB0 + channel, controlNum, value);
     MidiEvent evt = new MidiEvent(msg, tick);
     return evt;
+    }
   }
 
 
@@ -1109,15 +1169,15 @@ public void send(MidiMessage message, long timeStamp)
   {
     byte[] msg = message.getMessage();
     int highNibble = (msg[0] & 0xF0) >> 4;
-
-    // process note on events only
+    
     if( highNibble == 9 )
       {
         int channel = msg[0] & 0x0F;
         int note = msg[1];
         int velocity = (int) (msg[2] * channelVolume[channel] * volume);
 
-        //DEBUG: System.out.println(note + " " + channel + " " + msg[2] + " -> " + velocity);
+        //DEBUG: 
+        //System.out.println(note + " " + channel + " " + msg[2] + " -> " + velocity);
 
         ShortMessage newMsg = new ShortMessage();
         try
@@ -1134,21 +1194,23 @@ public void send(MidiMessage message, long timeStamp)
          * should be ok...
          */
         for( MidiNoteListener n: noteListeners )
-          {
-            n.noteOn(note, channel);
-          }
-      }
-    else
-      {
-        try
-          {
-            receiver.send(message, timeStamp);
-          }
-        catch( Exception e )
-          {
-          }
-      }
-  } // end of inner class Mixer
+            {
+                n.noteOn(note, channel);
+            }
+        } else {
+            if (highNibble == 11) {
+                //IMPORTANT NOTE!!! THIS DISABLES CC MIDI MESSAGES!!!!!!!!!!
+                //ignore control messages. this is to prevent autogenerated 
+                //messages such as "all notes off"
+            } // process note on events only
+            else {
+                try {
+                    receiver.send(message, timeStamp);
+                } catch (Exception e) {
+                }
+            }
+        }
+    } // end of inner class Mixer
 
 
 public void close()

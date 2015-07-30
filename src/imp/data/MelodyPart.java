@@ -1092,6 +1092,22 @@ public MelodyPart copy(int startingIndex, int endingIndex)
         }
       }
     }
+  
+    public long render(MidiSequence seq,
+            int ch,
+            long time,
+            Track track,
+            int transposition,
+            int endLimitIndex)
+            throws InvalidMidiDataException {
+        return render(seq,
+                ch,
+                time,
+                track,
+                transposition,
+                endLimitIndex,
+                false);
+    }
 
   /**
    * Creates a new Track for this Part on the specified channel, and adds
@@ -1104,13 +1120,15 @@ public MelodyPart copy(int startingIndex, int endingIndex)
                      long time,
                      Track track,
                      int transposition,
-                     int endLimitIndex)
+                     int endLimitIndex,
+                     boolean isTradingMelody)
           throws InvalidMidiDataException
     {
 
     boolean sendBankSelect = Preferences.getMidiSendBankSelect();
     // to trace sequencing:
     //System.out.println("Sequencing MelodyPart on track " + track + " time = " + time + " endLimitIndex = " + endLimitIndex);
+    //System.out.println("MelodyPart: rendering - isTradingMelody = "+ isTradingMelody);
 
     PartIterator i = iterator();
 
@@ -1131,8 +1149,8 @@ public MelodyPart copy(int startingIndex, int endingIndex)
 
     if( sendBankSelect )
       {
-      track.add(MidiSynth.createBankSelectEventMSB(0, time));
-      track.add(MidiSynth.createBankSelectEventLSB(0, time));
+      track.add(MidiSynth.createBankSelectEventMSB(0, time, isTradingMelody));
+      track.add(MidiSynth.createBankSelectEventLSB(0, time, isTradingMelody));
       }
 
     // the absolute time is advanced and returned by the next render

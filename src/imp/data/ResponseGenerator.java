@@ -145,7 +145,7 @@ public class ResponseGenerator {
     
     public MelodyPart genSolo(){
         MelodyPart mp = notate.genSolo(nextSection, nextSection + tradeLength);
-        System.out.println("MELODY " + mp);
+        //System.out.println("MELODY " + mp);
         return mp;
     }
     

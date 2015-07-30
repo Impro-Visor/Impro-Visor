@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.ListIterator;
 import javax.sound.midi.InvalidMidiDataException;
@@ -926,6 +927,26 @@ public class Score implements Constants, Serializable {
                       true, 
                       endIndex);
     }
+    
+    /**
+     * Creates and returns a MIDI sequence from the Score.
+     * Calls Part.render on each Part and (for now) creates a new channel
+     * for each Part.  This means that you can only have 16 Parts, which
+     * should be changed in the future.
+     * @param ppqn       the resolution for the Sequence
+     * @return Sequence  the MIDI render
+     */
+    public Sequence render(short ppqn,
+            int transposition,
+            boolean useDrums,
+            int endLimitIndex)
+            throws InvalidMidiDataException {
+        return render(ppqn,
+                transposition,
+                useDrums,
+                endLimitIndex,
+                false);
+    }
 
 
    /**
@@ -940,63 +961,78 @@ public class Score implements Constants, Serializable {
     public Sequence render(short ppqn, 
                            int transposition, 
                            boolean useDrums, 
-                           int endLimitIndex)
+                           int endLimitIndex,
+                           boolean isTradingMelody)
                     throws InvalidMidiDataException {
         // to trace sequencing
         //System.out.println("Score: render, start 0, endLimitIndex = " + endLimitIndex);
         MidiSequence seq = new MidiSequence(ppqn);
         reloadStyles();
         long time = 0;
-        
-        if( countInProg != null )
-        {
-        // Handle count-in render
 
-        int len = getCountInOffset();
-        if( endLimitIndex != ENDSCORE )
-          {
-            endLimitIndex += len;
-          }
+        if (isTradingMelody) {
+            //System.out.println("TRADING (coming from score.java; method render)");
+            ListIterator<MelodyPart> i = partList.listIterator();
+            while (i.hasNext() && Style.limitNotReached(time, endLimitIndex)) {
 
-        time = countInProg.render(seq,  
-                                  time, 
-                                  seq.getChordTrack(), 
-                                  0, 
-                                  true, 
-                                  endLimitIndex);
-        }
+                time = i.next().render(seq,
+                        ImproVisor.getMelodyChannel(),
+                        time,
+                        seq.getMelodyTrack(),
+                        transposition,
+                        endLimitIndex,
+                        isTradingMelody);
+            }
+            //MidiSynth.endSequence(seq.getSequence());
+            //System.out.println("Score: trading sequence \n" + seq.getSequence().getTracks()[0]);
+            return seq.getSequence();
+        } else {
+            //System.out.println("NOT TRADING (coming from score.java; method render)");
+            if (countInProg != null) {
+                // Handle count-in render
+
+                int len = getCountInOffset();
+                if (endLimitIndex != ENDSCORE) {
+                    endLimitIndex += len;
+                }
+
+                time = countInProg.render(seq,
+                        time,
+                        seq.getChordTrack(),
+                        0,
+                        true,
+                        endLimitIndex);
+            }
 
         //System.out.println("time = " + time);
-
-        ListIterator<MelodyPart> i = partList.listIterator();
-        while(i.hasNext() && Style.limitNotReached(time, endLimitIndex) )
-        {
+            ListIterator<MelodyPart> i = partList.listIterator();
+            while (i.hasNext() && Style.limitNotReached(time, endLimitIndex)) {
             // render the chord progression in parallel with each melody chorus
-            
-            long melTime = i.next().render(seq, 
-                                           ImproVisor.getMelodyChannel(),
-                                           time, 
-                                           seq.getMelodyTrack(), 
-                                           transposition, 
-                                           endLimitIndex);
-            
-            long chTime = chordProg.render(seq, 
-                                           time, 
-                                           seq.getChordTrack(), 
-                                           transposition, 
-                                           useDrums, 
-                                           endLimitIndex);
-            time = Math.max(melTime, chTime);
-       }
-        
-        //System.out.println("seq = " + seq);
 
-        // Find the longest track, and put a Stop event at the end of it
-        MidiSynth.endSequence(seq.getSequence());
+                long melTime = i.next().render(seq,
+                        ImproVisor.getMelodyChannel(),
+                        time,
+                        seq.getMelodyTrack(),
+                        transposition,
+                        endLimitIndex);
+
+                long chTime = chordProg.render(seq,
+                        time,
+                        seq.getChordTrack(),
+                        transposition,
+                        useDrums,
+                        endLimitIndex);
+                time = Math.max(melTime, chTime);
+            }
+
+        //System.out.println("seq = " + seq);
+            // Find the longest track, and put a Stop event at the end of it
+            MidiSynth.endSequence(seq.getSequence());
         //Trace.log(0, "done rendering, tickLength = " + seq.getSequence().getTickLength());
 
-        //System.out.println("countIn size = " + getCountInOffset());
-        return seq.getSequence();
+            //System.out.println("countIn size = " + getCountInOffset());
+            return seq.getSequence();
+        }
     }
 
     public int getCountInOffset()

@@ -490,7 +490,6 @@ public class MidiSynth implements JMC, MetaEventListener {
             MidiEvent evt = new MidiEvent(msg, (long)longestTime); //+ 100 if you want leave some space for reverb tail
             longestTrack.add(evt);
         }
-
         return sequence;
     }
 
