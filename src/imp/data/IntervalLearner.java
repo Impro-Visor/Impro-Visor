@@ -133,6 +133,10 @@ public final class IntervalLearner {
      */
     public void learnFrom(MelodyPart melody){
         
+        if(melody == null){
+            return;
+        }
+        
         //make list of just notes (no rests)
         ArrayList<Note> notes = new ArrayList<Note>();
         for(Note n : melody.getNoteList()){
