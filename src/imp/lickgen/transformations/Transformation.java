@@ -75,6 +75,22 @@ public Transformation(String transString)
 }
 
 /**
+ * Returns true if the transformations are the same, false otherwise
+ * (Same defined to mean same description, source notes, target notes, condition guard, AND enabled - good idea???)
+ * (IMPORTANT: Does not take debug or weight into account)
+ * (This method is used when combining two transformations and adding their weights)
+ * @param other the transformation to compare this to
+ * @return true/false
+ */
+public boolean sameAs(Transformation other){
+    return description.equals(other.getDescription()) 
+            && sourceNotes.toString().equals(other.sourceNotes.toString()) 
+            && targetNotes.toString().equals(other.targetNotes.toString())
+            && conditionGuard.toString().equals(other.conditionGuard.toString())
+            && enabled == other.enabled;
+}
+
+/**
  * Creates a transformation from a polylist containing a transformation grammar
  * @param trans 
  */
