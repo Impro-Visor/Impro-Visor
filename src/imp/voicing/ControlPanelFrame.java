@@ -1159,10 +1159,10 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel18.setToolTipText("Preferred direction of chord progression");
         jPanel18.setLayout(new java.awt.GridBagLayout());
 
+        PrefMotionDirSlider.setMajorTickSpacing(5);
         PrefMotionDirSlider.setMaximum(5);
         PrefMotionDirSlider.setMinimum(-5);
         PrefMotionDirSlider.setMinorTickSpacing(1);
-        PrefMotionDirSlider.setPaintLabels(true);
         PrefMotionDirSlider.setPaintTicks(true);
         PrefMotionDirSlider.setSnapToTicks(true);
         PrefMotionDirSlider.setMinimumSize(null);

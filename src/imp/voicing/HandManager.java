@@ -64,7 +64,7 @@ public class HandManager {
      */
     public int getNumLeftNotes()
     {
-        return (int)Math.round(Math.random()*(leftHandMaxNotes-leftHandMinNotes) + leftHandMinNotes);
+        return (int)Math.round(Math.random()*(leftHandMaxNotes-leftHandMinNotes)) + leftHandMinNotes;
     }
     /**
      * randomly generate a number of notes for the RH to play within range
@@ -72,7 +72,7 @@ public class HandManager {
      */
     public int getNumRightNotes()
     {
-        return (int)Math.round(Math.random()*(rightHandMaxNotes-rightHandMinNotes) + rightHandMinNotes);
+        return (int)Math.round(Math.random()*(rightHandMaxNotes-rightHandMinNotes)) + rightHandMinNotes;
     }
 
     public int getLeftHandLowerLimit() {
@@ -194,12 +194,16 @@ public class HandManager {
       //System.out.println("lll "+this.leftHandLowerLimit+"rll "+this.rightHandLowerLimit);
       //System.out.println("lul "+this.leftHandUpperLimit+"rul "+this.rightHandUpperLimit);
       //System.out.println("ll "+this.leftHandLowestNote+"rl "+this.rightHandLowestNote);
-       leftHandLowestNote=(int)Math.round(leftHandLowestNote+((Math.random()*2*preferredMotionRange)-preferredMotionRange)+preferredMotion);
-       rightHandLowestNote=(int)Math.round(rightHandLowestNote+((Math.random()*2*preferredMotionRange)-preferredMotionRange)+preferredMotion);
-       if(leftHandLowestNote<leftHandLowerLimit || rightHandLowestNote<rightHandLowerLimit)
-           resetHands();
-       if(leftHandLowestNote+leftHandSpread>leftHandUpperLimit || rightHandLowestNote+rightHandSpread>rightHandUpperLimit)
-           resetHands();
+       leftHandLowestNote=(int)Math.round(leftHandLowestNote+((Math.random()*2.0*preferredMotionRange)-preferredMotionRange)+preferredMotion);
+       rightHandLowestNote=(int)Math.round(rightHandLowestNote+((Math.random()*2.0*preferredMotionRange)-preferredMotionRange)+preferredMotion);
+       if(leftHandLowestNote<leftHandLowerLimit)
+           resetLH();
+       if(rightHandLowestNote<rightHandLowerLimit)
+           resetRH();
+       if(leftHandLowestNote+leftHandSpread>leftHandUpperLimit)
+           resetLH();
+       if(rightHandLowestNote+rightHandSpread>rightHandUpperLimit)
+           resetRH();
        
     }
     /**
@@ -220,6 +224,42 @@ public class HandManager {
         else //start in the middle to be able to go both ways
         {
             leftHandLowestNote=(leftHandUpperLimit-leftHandSpread+leftHandLowerLimit)/2;
+            rightHandLowestNote=(rightHandUpperLimit-rightHandSpread+rightHandLowerLimit)/2;
+        }
+    }
+    public void resetLH()
+    {
+        if(preferredMotion>0)//to allow motion up
+        {
+            leftHandLowestNote=leftHandLowerLimit;
+            //rightHandLowestNote=rightHandLowerLimit;
+        }
+        else if(preferredMotion<0)//to allow motion down
+        {
+            leftHandLowestNote=leftHandUpperLimit-leftHandSpread;
+            //rightHandLowestNote=rightHandUpperLimit-rightHandSpread;
+        }
+        else //start in the middle to be able to go both ways
+        {
+            leftHandLowestNote=(leftHandUpperLimit-leftHandSpread+leftHandLowerLimit)/2;
+            //rightHandLowestNote=(rightHandUpperLimit-rightHandSpread+rightHandLowerLimit)/2;
+        }
+    }
+    public void resetRH()
+    {
+        if(preferredMotion>0)//to allow motion up
+        {
+            //leftHandLowestNote=leftHandLowerLimit;
+            rightHandLowestNote=rightHandLowerLimit;
+        }
+        else if(preferredMotion<0)//to allow motion down
+        {
+            //leftHandLowestNote=leftHandUpperLimit-leftHandSpread;
+            rightHandLowestNote=rightHandUpperLimit-rightHandSpread;
+        }
+        else //start in the middle to be able to go both ways
+        {
+            //leftHandLowestNote=(leftHandUpperLimit-leftHandSpread+leftHandLowerLimit)/2;
             rightHandLowestNote=(rightHandUpperLimit-rightHandSpread+rightHandLowerLimit)/2;
         }
     }

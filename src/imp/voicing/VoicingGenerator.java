@@ -157,6 +157,8 @@ public class VoicingGenerator {
             allMidiValues[i]=0;
         if(previousVoicing!=null)
             weightPreviousVoicing();
+        VoicingDebug.println((numNotesLeft+numNotesRight)+" #notes exp.");
+        VoicingDebug.println(lowerRightBound+" lower right bound");
         for(int i = start; i<numNotesLeft || i<numNotesRight; i++)
         {
             setupAllLeftValues();   
@@ -178,6 +180,9 @@ public class VoicingGenerator {
                         allMidiValues[noteToAdd-i]=0;
                 }
             }
+            else
+                VoicingDebug.println("LH EMPTY: Req:"+this.numNotesLeft+" act:");
+                
             }
             setupAllRightValues();
             if(!allRightValues.isEmpty())
@@ -200,6 +205,8 @@ public class VoicingGenerator {
                 }
             
             }
+            else
+                VoicingDebug.println("RH EMPTY");
            // System.out.println("calculate called");
             if(invertM9)
             {
@@ -362,7 +369,7 @@ public class VoicingGenerator {
                     list3.add(i+1);
                     added=true;
                     list4.add(j-1);
-                    System.out.println("Inverted m9 i"+i+" "+j);
+                    VoicingDebug.println("Inverted m9 i"+i+" "+j);
                 }
                 else{
                     list4.add(j);

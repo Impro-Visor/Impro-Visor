@@ -22,6 +22,7 @@ package imp.data;
 
 import imp.util.ErrorLog;
 import imp.voicing.HandManager;
+import imp.voicing.VoicingDebug;
 import imp.voicing.VoicingGenerator;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -814,12 +815,12 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         //ArrayList<int[]>progressionVoicings = new ArrayList<int[]>();
         //ArrayList<Integer> bassList = new ArrayList<Integer>();
 
-        System.out.println("----------");
-        System.out.println("chord: "+chord.toString());    //trace
+        VoicingDebug.println("----------");
+        VoicingDebug.println("chord: "+chord.toString());    //trace
         Chord chord1 = new Chord(chord.getName());
         Polylist spelling;                             //create voicing variable for first chord
         spelling = chord1.getSpell();                  //get chord1 voicing; assign to voicing
-        System.out.println("spelling: " + spelling.toString());    //trace
+        VoicingDebug.println("spelling: " + spelling.toString());    //trace
         //bassList.add(((NoteSymbol)spelling.first()).getMIDI()); //gets a list of bass notes
         Polylist priorityPoly=chord1.getPriority();     //create a polylist for chord priority notes
         Polylist colorPoly=chord1.getColor();           //create a polylist for chord color notes
@@ -836,8 +837,8 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
             priority[i]=((NoteSymbol)priorityPoly.nth(i)).getMIDI();
             //System.out.println("priority num:" +priority[i]);
         }
-        System.out.println();
-        System.out.println("New voicing:");
+        VoicingDebug.println("");
+        VoicingDebug.println("New voicing:");
 
         handyMan.repositionHands();
 
@@ -853,7 +854,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
             for(Polylist a = lastChord; a.nonEmpty(); a=a.rest()){
             lastVoicing[index] = ((NoteSymbol)a.first()).getMIDI();
             index++;
-            System.out.println(Arrays.toString(lastVoicing));
+            VoicingDebug.println(Arrays.toString(lastVoicing));
             }
         }
 
@@ -868,7 +869,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         for(int i=0; i<lastVoicing.length; i++)
             lastVoicingObj[i] = lastVoicing[i];
         midiL=Polylist.PolylistFromArray(lastVoicingObj);       //creates polylist from lastVoicingObj to assign to a midi value list midiL
-        System.out.println("midiL: "+midiL.toString());   //trace
+        VoicingDebug.println("midiL: "+midiL.toString());   //trace
 
         PolylistBuffer buffer = new PolylistBuffer();
         for( Polylist M = midiL; M.nonEmpty(); M = M.rest() )
@@ -878,9 +879,9 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
         }
 
         chord.setVoicing(buffer.toPolylist());
-        System.out.println("Voicing: " + buffer.toPolylist().toString());
-        System.out.println("----------");
-        System.out.println();
+        VoicingDebug.println("Voicing: " + buffer.toPolylist().toString());
+        VoicingDebug.println("----------");
+        VoicingDebug.println("");
     }
 /*End*/
 //----------------------------------------------------------------------------------------------------//
