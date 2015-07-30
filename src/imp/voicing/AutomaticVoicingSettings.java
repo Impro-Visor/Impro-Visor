@@ -192,15 +192,7 @@ public class AutomaticVoicingSettings {
         this.fullStepReducer = fullStepReducer;
     }
     
-    public int getMinInterval()
-    {
-        return minInterval;
-    }
-    
-    public void setMinInterval(int minInterval)
-    {
-        this.minInterval = minInterval;
-    }
+ 
     
     public void setDefaults()
     {
@@ -231,6 +223,8 @@ public class AutomaticVoicingSettings {
         invertM9=false;
         voiceAll=false;
         rootless=false;
+        leftMinInterval=0;
+        rightMinInterval=0;
     }
     
     private int leftHandLowerLimit;
@@ -260,7 +254,24 @@ public class AutomaticVoicingSettings {
     private boolean invertM9;
     private boolean voiceAll;
     private boolean rootless;
-    private int minInterval;
+    private int leftMinInterval;
+    private int rightMinInterval;
+
+    public int getLeftMinInterval() {
+        return leftMinInterval;
+    }
+
+    public void setLeftMinInterval(int leftMinInterval) {
+        this.leftMinInterval = leftMinInterval;
+    }
+
+    public int getRightMinInterval() {
+        return rightMinInterval;
+    }
+
+    public void setRightMinInterval(int rightMinInterval) {
+        this.rightMinInterval = rightMinInterval;
+    }
     
     public boolean isRootless() {
         return rootless;
@@ -321,6 +332,8 @@ public class AutomaticVoicingSettings {
         buffer.append("(repeat-multiplier "+(int)(getRepeatMultiplier()*10) + ")\n");
         buffer.append("(half-step-reducer "+(int)(getHalfStepReducer()*10) + ")\n");
         buffer.append("(full-step-reducer "+(int)(getFullStepReducer()*10) + ")\n");
+        buffer.append("(left-min-interval "+(int)(getLeftMinInterval())+")");
+        buffer.append("(right-min-interval "+(int)(getRightMinInterval())+")");
                     if(getInvertM9())
             buffer.append("(invert-9th on)\n");
                     else

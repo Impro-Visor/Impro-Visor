@@ -41,6 +41,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         System.out.println("Lower Left hand: "+avs.getLeftHandLowerLimit());
         this.setTitle("Automated Voicing Generator Settings Editor");
         setTitle(AVPFileCreator.getLastFileName());
+        File openFile=new File(ImproVisor.getVoicingDirectory(),AVPFileCreator.getLastFileName());
+                //JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+                AVPFileCreator.fileToSettings( openFile, avs);
+                setSlidersToVariables();
+                setTitle(openFile.getName());
         /*jButton1.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -289,7 +294,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         avs.setInvertM9(invertM9);
         avs.setVoiceAll(voiceAll);
         avs.setRootless(rootless);
-        avs.setMinInterval(minInterval);
+        avs.setLeftMinInterval(leftMinInterval);
+        avs.setRightMinInterval(rightMinInterval);
     }
     /**
      * sets the variables to the values in the settings object
@@ -323,7 +329,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertM9=avs.getInvertM9();
         voiceAll=avs.getVoiceAll();
         rootless=avs.getRootless();
-        minInterval=avs.getMinInterval();
+        leftMinInterval=avs.getLeftMinInterval();
+        rightMinInterval=avs.getRightMinInterval();
     }
         /*
     private void setupHandParams()
@@ -373,7 +380,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     {
         for(int i=0; i<4; i++)
         {
-            limitLabels[i].setText((NoteSymbol.makeNoteSymbol(new Note(Integer.parseInt(handLimits[i].getValue().toString()))).toString()));
+            limitLabels[i].setText((NoteSymbol.makeNoteSymbol(new Note(Integer.parseInt(handLimits[i].getValue().toString()))).toString().replaceAll("4", "")));
         }
     }
     /**
@@ -409,7 +416,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertBox.setState(invertM9);
         voiceAllNotes.setState(voiceAll);
         rootlessBox.setState(rootless);
-        rightMinInterval.setValue(minInterval);
+        leftMinIntervalSpinner.setValue(leftMinInterval);
+        rightMinIntervalSpinner.setValue(rightMinInterval);
     }
     /**
      * points sliders we declared and named to auto-created sliders from gui designer.
@@ -506,7 +514,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         invertM9=invertBox.getState();
         voiceAll=voiceAllNotes.getState();
         rootless=rootlessBox.getState();
-        minInterval=Integer.parseInt(rightMinInterval.getValue().toString());
+        leftMinInterval=Integer.parseInt(leftMinIntervalSpinner.getValue().toString());
+        rightMinInterval=Integer.parseInt(rightMinIntervalSpinner.getValue().toString());
         syncToSettings();
         
     }
@@ -551,14 +560,23 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private boolean invertM9;//true if minor ninths should be inverted to major sevenths
     private boolean voiceAll;// ensures all notes are voiced at least once
     private boolean rootless;// omits root note from voicing.
-    private int minInterval;//minimum distance between chord tones
+    private int leftMinInterval;
+    private int rightMinInterval;
 
-    public int getMinInterval() {
-        return minInterval;
+    public int getLeftMinInterval() {
+        return leftMinInterval;
     }
 
-    public void setMinInterval(int minInterval) {
-        this.minInterval = minInterval;
+    public void setLeftMinInterval(int leftMinInterval) {
+        this.leftMinInterval = leftMinInterval;
+    }
+
+    public int getRightMinInterval() {
+        return rightMinInterval;
+    }
+
+    public void setRightMinInterval(int rightMinInterval) {
+        this.rightMinInterval = rightMinInterval;
     }
 
     public boolean isRootless() {
@@ -781,8 +799,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         LHULNote = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         LHLLNote = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         LHStretchSpinner = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
@@ -791,12 +809,13 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         LHMaxNotesSpinner = new javax.swing.JSpinner();
         LHRangeButton = new javax.swing.JButton();
         jPanel30 = new javax.swing.JPanel();
-        leftMinInterval = new javax.swing.JSpinner();
+        leftMinIntervalSpinner = new javax.swing.JSpinner();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         RHULNote = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
         RHLLNote = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         RHStretchSpinner = new javax.swing.JSpinner();
         jPanel12 = new javax.swing.JPanel();
@@ -804,7 +823,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel13 = new javax.swing.JPanel();
         RHMaxNotesSpinner = new javax.swing.JSpinner();
         jPanel29 = new javax.swing.JPanel();
-        rightMinInterval = new javax.swing.JSpinner();
+        rightMinIntervalSpinner = new javax.swing.JSpinner();
         RHRangeButton = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
@@ -861,43 +880,39 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel4.setName(""); // NOI18N
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Upper Limit"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Range"));
         jPanel2.setToolTipText("Absolute Upper note limits for voicings in a hand.");
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         LHULNote.setText("A#1");
         LHULNote.setMinimumSize(null);
         LHULNote.setPreferredSize(null);
-        jPanel2.add(LHULNote, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        jPanel2.add(LHULNote, gridBagConstraints);
+
+        LHLLNote.setText("A#1");
+        LHLLNote.setMinimumSize(null);
+        LHLLNote.setPreferredSize(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        jPanel2.add(LHLLNote, gridBagConstraints);
+
+        jLabel1.setText(" to ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        jPanel2.add(jLabel1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel4.add(jPanel2, gridBagConstraints);
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lower Limit"));
-        jPanel3.setToolTipText("Absolute Lower note limits for voicings in a hand.");
-        jPanel3.setLayout(new java.awt.GridBagLayout());
-
-        LHLLNote.setText("A#1");
-        LHLLNote.setMinimumSize(null);
-        LHLLNote.setPreferredSize(null);
-        jPanel3.add(LHLLNote, new java.awt.GridBagConstraints());
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 25;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        jPanel4.add(jPanel3, gridBagConstraints);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Stretch Limit (Semitones)"));
         jPanel5.setToolTipText("The distance between the lowest and highest note for one voicing in a hand.");
@@ -948,7 +963,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel4.add(LHRangeButton, new java.awt.GridBagConstraints());
 
         jPanel30.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
-        jPanel30.add(leftMinInterval);
+        jPanel30.add(leftMinIntervalSpinner);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -979,11 +994,24 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         RHULNote.setText("A#1");
         RHULNote.setMinimumSize(null);
         RHULNote.setPreferredSize(null);
-        jPanel9.add(RHULNote, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        jPanel9.add(RHULNote, gridBagConstraints);
+
+        RHLLNote.setText("A#1");
+        RHLLNote.setMinimumSize(null);
+        RHLLNote.setPreferredSize(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        jPanel9.add(RHLLNote, gridBagConstraints);
+
+        jLabel2.setText(" to");
+        jPanel9.add(jLabel2, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -994,12 +1022,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Lower Limit"));
         jPanel10.setToolTipText("Absolute Lower note limits for voicings in a hand.");
         jPanel10.setLayout(new java.awt.GridBagLayout());
-
-        RHLLNote.setText("A#1");
-        RHLLNote.setMinimumSize(null);
-        RHLLNote.setPreferredSize(null);
-        jPanel10.add(RHLLNote, new java.awt.GridBagConstraints());
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -1056,7 +1078,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel8.add(jPanel13, gridBagConstraints);
 
         jPanel29.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
-        jPanel29.add(rightMinInterval);
+        jPanel29.add(rightMinIntervalSpinner);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 7;
@@ -1652,6 +1674,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.Box.Filler filler1;
     private java.awt.Checkbox invertBox;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -1680,7 +1704,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1688,9 +1711,9 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JSpinner leftMinInterval;
+    private javax.swing.JSpinner leftMinIntervalSpinner;
     private javax.swing.JButton loadDefault;
-    private javax.swing.JSpinner rightMinInterval;
+    private javax.swing.JSpinner rightMinIntervalSpinner;
     private java.awt.Checkbox rootlessBox;
     private java.awt.Checkbox voiceAllNotes;
     // End of variables declaration//GEN-END:variables

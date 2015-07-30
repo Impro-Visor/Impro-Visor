@@ -59,7 +59,8 @@ public class VoicingGenerator {
         setInvertM9(avs.getInvertM9());
         setVoiceAll(avs.getVoiceAll());
         setRootless(avs.getRootless());
-        setMinInterval(avs.getMinInterval());
+        setLeftMinInterval(avs.getLeftMinInterval());
+        setRightMinInterval(avs.getRightMinInterval());
     }
     
     public void getHandSettings(HandManager hm)
@@ -128,6 +129,7 @@ public class VoicingGenerator {
                     if(i<priority.length)
                     {
                         noteToAdd=allRightValues.get((int)(Math.random()*allRightValues.size()));
+                        
                         rightHand.add(noteToAdd);
                         allMidiValues[noteToAdd]=0;
                         if(allMidiValues[noteToAdd+1]*halfStepReducer>0)
@@ -168,16 +170,17 @@ public class VoicingGenerator {
                 {
                     noteToAdd=allLeftValues.get((int)(Math.random()*allLeftValues.size()));
                     leftHand.add(noteToAdd);
+                    
                     allMidiValues[noteToAdd]=0;
                     allMidiValues[noteToAdd+1]*=halfStepReducer;
                     allMidiValues[noteToAdd-1]*=halfStepReducer;
                     allMidiValues[noteToAdd+2]*=fullStepReducer;
                     allMidiValues[noteToAdd-2]*=fullStepReducer;
                     multiplyNotes(noteToAdd,repeatMultiplier);
-                    for(int j=0; j<minInterval; j++)
+                    for(int j=0; j<leftMinInterval; j++)
                     {
-                        allMidiValues[noteToAdd+i]=0;
-                        allMidiValues[noteToAdd-i]=0;
+                        allMidiValues[noteToAdd+j]=0;
+                        allMidiValues[noteToAdd-j]=0;
                 }
             }
             else
@@ -190,6 +193,7 @@ public class VoicingGenerator {
                 if(i<numNotesRight)
                 {
                     noteToAdd=allRightValues.get((int)(Math.random()*allRightValues.size()));
+                    
                     rightHand.add(noteToAdd);
                     allMidiValues[noteToAdd]=0;
                     allMidiValues[noteToAdd+1]*=halfStepReducer;
@@ -197,10 +201,11 @@ public class VoicingGenerator {
                     allMidiValues[noteToAdd+2]*=fullStepReducer;
                     allMidiValues[noteToAdd-2]*=fullStepReducer;
                     multiplyNotes(noteToAdd,repeatMultiplier);
-                    for(int j=0; j<minInterval; j++)
+                    for(int j=0; j<rightMinInterval; j++)
                     {
-                        allMidiValues[noteToAdd+i]=0;
-                        allMidiValues[noteToAdd-i]=0;
+                        allMidiValues[noteToAdd+j]=0;
+                        VoicingDebug.println("noteToAdd+i: "+(noteToAdd+i));
+                        allMidiValues[noteToAdd-j]=0;
                     }
                 }
             
@@ -578,12 +583,20 @@ public class VoicingGenerator {
         return chord;
         
     }
-     public int getMinInterval() {
-        return minInterval;
+     public int getLeftMinInterval() {
+        return leftMinInterval;
     }
 
-    public void setMinInterval(int minInterval) {
-        this.minInterval = minInterval;
+    public void setLeftMinInterval(int leftMinInterval) {
+        this.leftMinInterval = leftMinInterval;
+    }
+
+    public int getRightMinInterval() {
+        return rightMinInterval;
+    }
+
+    public void setRightMinInterval(int rightMinInterval) {
+        this.rightMinInterval = rightMinInterval;
     }
     public boolean isVoiceAll() {
         return voiceAll;
@@ -650,7 +663,10 @@ public class VoicingGenerator {
     private double fullStepReducer;
     private boolean voiceAll;
     private boolean rootless;
-    private int minInterval;
+    private int leftMinInterval;
+    private int rightMinInterval;
+
+   
 
     
     

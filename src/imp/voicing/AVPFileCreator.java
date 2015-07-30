@@ -148,10 +148,15 @@ public class AVPFileCreator
                     line=line.substring(line.indexOf("full-step-reducer")+"full-step-reducer".length()+1,line.indexOf(")"));
                     settings.setFullStepReducer(Integer.parseInt(line));
                 }
-                 else if(line.contains("min-interval"))
+                 else if(line.contains("left-min-interval"))
                 {
                     line=line.substring(line.indexOf("min-interval")+"min-interval".length()+1,line.indexOf(")"));
-                    settings.setMinInterval(Integer.parseInt(line));
+                    settings.setLeftMinInterval(Integer.parseInt(line));
+                }
+                  else if(line.contains("right-min-interval"))
+                {
+                    line=line.substring(line.indexOf("min-interval")+"min-interval".length()+1,line.indexOf(")"));
+                    settings.setRightMinInterval(Integer.parseInt(line));
                 }
                 else if(line.contains("invert-9th"))
                 {
@@ -219,7 +224,8 @@ public class AVPFileCreator
                     writer.println("(repeat-multiplier "+(int)(settings.getRepeatMultiplier()*10)+")");
                     writer.println("(half-step-reducer "+(int)(settings.getHalfStepReducer()*10)+")");
                     writer.println("(full-step-reducer "+(int)(settings.getFullStepReducer()*10)+")");
-                    writer.println("(min-interval "+(int)(settings.getMinInterval())+")");
+                    writer.println("(left-min-interval "+(int)(settings.getLeftMinInterval())+")");
+                    writer.println("(right-min-interval "+(int)(settings.getRightMinInterval())+")");
                     if(settings.getInvertM9())
                         writer.println("(invert-9th on)");
                     else
