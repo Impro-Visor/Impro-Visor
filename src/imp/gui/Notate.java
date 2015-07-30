@@ -14262,6 +14262,7 @@ public void closeWindow()
     
     //dispose some windows that weren't being disposed
 //    if(stepKeyboard != null){
+//        System.out.println("disposing step keyboard");
 //        stepKeyboard.dispose();
 //    }
     
@@ -14280,7 +14281,23 @@ public void closeWindow()
     if(styleEditor != null){
         styleEditor.dispose();
     }
-
+    
+//    if(keyboard != null){
+//        keyboard.dispose();
+//    }
+    
+    if(voicingTestFrame != null){
+        voicingTestFrame.dispose();
+    }
+    
+    if(themeWeaver != null){
+        themeWeaver.dispose();
+    }
+    
+//    if(roadmapFrame != null){
+//        roadmapFrame.dispose();
+//    }
+    
     WindowRegistry.unregisterWindow(this);
   }
 
