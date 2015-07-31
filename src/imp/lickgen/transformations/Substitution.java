@@ -280,28 +280,18 @@ public void addNewTransformation()
  */
 public void addTransformation(Transformation trans)
 {
+    int index = transformations.indexOf(trans);
     int newWeight = trans.getWeight();
-    ArrayList<Integer> indices = new ArrayList<Integer>();
-    for(Transformation t : transformations){
-        if(t.sameAs(trans)){
-            indices.add(transformations.indexOf(t));
-            newWeight += t.getWeight();
-        }
+    while(transformations.contains(trans)){
+        int transIndex = transformations.indexOf(trans);
+        Transformation copy = transformations.remove(transIndex);
+        newWeight += copy.getWeight();
+        hasChanged = true;
     }
-    
-    if(!indices.isEmpty()){
-        int indexOfFirstDuplicate = indices.get(0);
-        while(!indices.isEmpty()){
-            int index = indices.remove(0);
-            transformations.remove(index);
-            for(int i = 0; i < indices.size(); i++){
-                indices.set(i, indices.get(i)-1);
-            }
-        }
-        trans.setWeight(newWeight);
-        transformations.add(indexOfFirstDuplicate, trans);
+    trans.setWeight(newWeight);
+    if(index>0){
+        transformations.add(index, trans); 
     }else{
-        trans.setWeight(newWeight);
         transformations.add(trans);
     }
 }
@@ -430,6 +420,7 @@ public boolean hasChanged()
 
 /**
  * Check if this substitution has the same type and transformations as another
+ * IMPORTANT: This overrides the usual equals method
  * substitution
  * @param ob
  * @return 
@@ -440,7 +431,7 @@ public boolean equals(Object ob)
         return false;
     
     Substitution other = (Substitution)ob;
-    
+  
     if(!type.equals(other.getType()))
         return false;
     
@@ -451,6 +442,15 @@ public boolean equals(Object ob)
         return false;
     
     return true;
+}
+
+/**
+ * Returns true if this substitution has the same name as another substitution
+ * @param other
+ * @return 
+ */
+public boolean sameName(Substitution other){
+    return getName().equals(other.getName());
 }
 
 /** 

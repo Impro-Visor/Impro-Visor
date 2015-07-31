@@ -128,24 +128,25 @@ public static Transform makeTransformWithIdentities()
 
 /**
  * Adds a substitution to the list of substitutions
+ * If a substitution has the same name as another substitution,
+ * combine their transformations together into one substitution
  * @param sub
  */
 public void addSubstitution(Substitution sub)
 {
-    
-    String name = sub.getName();
-    int index = indexOf(name);
-    if(index<0){
-        //if there isn't another sub with that name, add to the end
-        substitutions.add(sub); 
+    int i = firstIndexOf(sub.getName());
+    while(containsSubWithSameName(substitutions, sub))
+        {
+            int subIndex = firstIndexOf(sub.getName());
+            Substitution sameName = substitutions.remove(subIndex);
+            sub = Transform.merge(sub, sameName);
+            hasChanged = true;
+        }
+    if(i < 0){
+        substitutions.add(sub);
     }else{
-        //remove old sub
-        Substitution oldSub = substitutions.remove(index);
-        Substitution merged = merge(oldSub, sub);
-        merged.setName(name);
-        substitutions.add(index, merged);
+        substitutions.add(i, sub);
     }
-    
 }
 
 public static Substitution merge(Substitution s1, Substitution s2){
@@ -162,10 +163,12 @@ public static Substitution merge(Substitution s1, Substitution s2){
         merged.addTransformation(t);
     }
     
+    merged.setName(s1.getName());
+    
     return merged;
 }
 
-public int indexOf(String name){
+public int firstIndexOf(String name){
     for(int i = 0; i<substitutions.size(); i++){
         if(substitutions.get(i).getName().equals(name)){
             return i;
@@ -421,6 +424,7 @@ private boolean applicable(Substitution sub, MelodyPart notes, ChordPart chords,
 
 
 /**
+ * NO LONGER USED
  * Find substitutions that have the same type and transformations, and delete
  * all but one, adding all of their weights together. Basically just combines
  * all substitutions that do the same thing. 
@@ -444,6 +448,51 @@ public void findDuplicatesAndAddToWeight()
     }
 }
 
+/**
+ * combineSubsWithSameName
+ * Combines all subs in this Transform that have the same name
+ * into one big substitution that contains all the transformations
+ * of the subs it was formed from
+ * (The weight of the first sub in the list with that name is used as the
+ * weight of the resulting sub).
+ */
+public void combineSubsWithSameName(){
+    for(int i = 0; i < substitutions.size(); i++)
+    {
+        Substitution sub = substitutions.get(i);
+        substitutions.remove(sub);
+        
+        while(containsSubWithSameName(substitutions, sub))
+        {
+            int subIndex = substitutions.indexOf(sub);
+            Substitution sameName = substitutions.remove(subIndex);
+            sub = Transform.merge(sub, sameName);
+            hasChanged = true;
+        }
+        substitutions.add(i, sub);
+    }
+}
+
+/**
+ * containsSubWithSameName
+ * Returns true if the list contains a substitution with the same name as sub
+ * @param subs - list to search
+ * @param sub - substitution whose name we're searching for
+ * @return true if sub with that name is found, false otherwise
+ */
+private boolean containsSubWithSameName(ArrayList<Substitution> subs, Substitution sub){
+    for(Substitution s : subs){
+        if(s.getName().equals(sub.getName())){
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * cleanSubs
+ * Goes through the list of substitutions, cleaning each one
+ */
 public void cleanSubs(){
     for(Substitution s : substitutions){
         s.clean();
