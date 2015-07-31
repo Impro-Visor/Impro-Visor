@@ -20,6 +20,7 @@
 package imp.data;
 
 import imp.Constants;
+import imp.ImproVisor;
 import imp.gui.GuideToneLineDialog;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,6 +59,7 @@ public class Fractal implements Constants{
     private double sixteenthRestProb;
     private double defaultRestProb;
     
+    // Keywords used in the file parser to set probabilities
     private static String keyword[] = {"dividing-iterations",
                                        "dividing-probabilities",
                                        "rest-probabilities",
@@ -83,9 +85,15 @@ public class Fractal implements Constants{
     private static final int TRIPLET = 3;
     private static final int QUINTUPLET = 5;
     
+    public Fractal()
+    {
+        this(ImproVisor.getFractalFile());
+    }
+    
     public Fractal(String probs)
     {
         setProbabilities(probs);
+        //debug();
     }
     
     public Fractal(File file)
@@ -103,6 +111,25 @@ public class Fractal implements Constants{
     return probStr;
     }
     
+    private void debug()
+    {
+        System.out.println("Iterations: " + dividingIterations);
+        System.out.println("Triplet prob: " + tripletProb);
+        System.out.println("Quintuplet prob: " + quintupletProb);
+        System.out.println("Whole div prob: " + wholeDivProb);
+        System.out.println("Half div prob: " + halfDivProb);
+        System.out.println("Quarter div prob: " + quarterDivProb);
+        System.out.println("Eighth div prob: " + eighthDivProb);
+        System.out.println("Sixteenth div prob: " + sixteenthDivProb);
+        System.out.println("Default div prob: " + defaultDivProb);
+        System.out.println("Whole rest prob: " + wholeRestProb);
+        System.out.println("Half rest prob: " + halfRestProb);
+        System.out.println("Quarter rest prob: " + quarterRestProb);
+        System.out.println("Eighth rest prob: " + eighthRestProb);
+        System.out.println("Sixteenth rest prob: " + sixteenthRestProb);
+        System.out.println("Default rest prob: " + defaultRestProb);
+    }
+    
     private void setProbabilities(String probs)
     {
         Polylist polyProbs = Polylist.PolylistFromString(probs);
@@ -113,8 +140,8 @@ public class Fractal implements Constants{
             String category = (String)dispatcher.first();
             switch(Leadsheet.lookup(category, keyword)){
                 case ITERATIONS:
-                    Long iterInt = (Long)dispatcher.second();
-                    dividingIterations = (Integer)iterInt.intValue();
+                    int iterInt = ((Number)dispatcher.second()).intValue();
+                    dividingIterations = iterInt;
                     break;
                 case DIVIDING_PROB:
                     setDividingProbs((Polylist)dispatcher.second());
@@ -123,10 +150,12 @@ public class Fractal implements Constants{
                     setRestProbs((Polylist)dispatcher.second());
                     break;
                 case TRIPLET_PROB:
-                    tripletProb = (Double)dispatcher.second();
+                    Double tripDouble = ((Number)dispatcher.second()).doubleValue();
+                    tripletProb = tripDouble;
                     break;
                 case QUINTUPLET_PROB:
-                    quintupletProb = (Double)dispatcher.second();
+                    Double quintDoub = ((Number)dispatcher.second()).doubleValue();
+                    quintupletProb = quintDoub;
                     break;
                 default:
                     break;
@@ -138,64 +167,79 @@ public class Fractal implements Constants{
     
     private void setDividingProbs(Polylist divProbs)
     {
-        Polylist noteValList = (Polylist)divProbs.first();
-        
-        String noteVal = (String)noteValList.first();
-        switch(Leadsheet.lookup(noteVal, noteWords)){
-            case WHOLE_NOTE:
-                wholeDivProb = (Double)noteValList.second();
-                break;
-            case HALF_NOTE:
-                halfDivProb = (Double)noteValList.second();
-                break;
-            case QUARTER_NOTE:
-                quarterDivProb = (Double)noteValList.second();
-                break;
-            case EIGHTH_NOTE:
-                eighthDivProb = (Double)noteValList.second();
-                break;
-            case SIXTEENTH_NOTE:
-                sixteenthDivProb = (Double)noteValList.second();
-                break;
-            case DEFAULT_NOTE:
-                defaultDivProb = (Double)noteValList.second();
-                break;
-            default:
-                break;
-        }
-        
+
+        while(divProbs.nonEmpty()){
+            Polylist noteValList = (Polylist)divProbs.first();
+            String noteVal = (String)noteValList.first();
+            
+            switch(Leadsheet.lookup(noteVal, noteWords)){
+                case WHOLE_NOTE:
+                    Double prob = ((Number)noteValList.second()).doubleValue();
+                    wholeDivProb = prob;
+                    break;
+                case HALF_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    halfDivProb = prob;
+                    break;
+                case QUARTER_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    quarterDivProb = prob;
+                    break;
+                case EIGHTH_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    eighthDivProb = prob;
+                    break;
+                case SIXTEENTH_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    sixteenthDivProb = prob;
+                    break;
+                case DEFAULT_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    defaultDivProb = prob;
+                    break;
+                default:
+                    break;
+            }
         divProbs = divProbs.rest();
+        }       
     }
     
     private void setRestProbs(Polylist restProbs)
     {
-        Polylist noteValList = (Polylist)restProbs.first();
-        
-        String noteVal = (String)noteValList.first();
-        switch(Leadsheet.lookup(noteVal, noteWords)){
-            case WHOLE_NOTE:
-                wholeRestProb = (Double)noteValList.second();
-                break;
-            case HALF_NOTE:
-                halfRestProb = (Double)noteValList.second();
-                break;
-            case QUARTER_NOTE:
-                quarterRestProb = (Double)noteValList.second();
-                break;
-            case EIGHTH_NOTE:
-                eighthRestProb = (Double)noteValList.second();
-                break;
-            case SIXTEENTH_NOTE:
-                sixteenthRestProb = (Double)noteValList.second();
-                break;
-            case DEFAULT_NOTE:
-                defaultRestProb = (Double)noteValList.second();
-                break;
-            default:
-                break;
+        while(restProbs.nonEmpty()){
+            Polylist noteValList = (Polylist)restProbs.first();
+            String noteVal = (String)noteValList.first();
+            
+            switch(Leadsheet.lookup(noteVal, noteWords)){
+                case WHOLE_NOTE:
+                    Double prob = ((Number)noteValList.second()).doubleValue();
+                    wholeRestProb = prob;
+                    break;
+                case HALF_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    halfRestProb = prob;
+                    break;
+                case QUARTER_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    quarterRestProb = prob;
+                    break;
+                case EIGHTH_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    eighthRestProb = prob;
+                    break;
+                case SIXTEENTH_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    sixteenthRestProb = prob;
+                    break;
+                case DEFAULT_NOTE:
+                    prob = ((Number)noteValList.second()).doubleValue();
+                    defaultRestProb = prob;
+                    break;
+                default:
+                    break;
+            }
+            restProbs = restProbs.rest();
         }
-        
-        restProbs = restProbs.rest();
     }
     
     /**
@@ -365,7 +409,7 @@ public class Fractal implements Constants{
         double probability = getProbability(rhythmValue);
         
         if(isTriplet(firstNote)) {
-            if(randDouble < probability){
+            if(randDouble > probability){
                 newNotes.add(noSplit(firstNote, prevNote, rhythmValue));
             } else {
                 newNotes = getDividedNotes(firstNote,
@@ -374,7 +418,7 @@ public class Fractal implements Constants{
             }
         } else if(isDotted(firstNote)) {
             subdivs = TRIPLET;
-            if(randDouble < probability){
+            if(randDouble > probability){
                 newNotes.add(noSplit(firstNote, prevNote, rhythmValue));
             } else {
                 newNotes = getDividedNotes(firstNote,
@@ -382,11 +426,11 @@ public class Fractal implements Constants{
                                            subdivs);
             }
         } else {
-            if(divDouble < 0.2){
+            if(divDouble < tripletProb){
                 subdivs = TRIPLET;
             } 
 
-            if(randDouble < probability){                
+            if(randDouble > probability){                
                 newNotes.add(noSplit(firstNote, prevNote, rhythmValue));
             } else {
                 newNotes = getDividedNotes(firstNote,
