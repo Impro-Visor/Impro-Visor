@@ -1228,10 +1228,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
             return Constants.EIGHTH;
 //        else if(flattenValue.equals("Sixteenth Note"))
 //            return 30;
-//        else if(flattenValue.equals("Flatten Resolution"))
-//            return getResolution((String)flattenValueComboBox.getSelectedItem());
-//        else if(flattenValue.equals("Double Flatten Resolution"))
-//            return 2 * getResolution((String)flattenValueComboBox.getSelectedItem());
+        else if(flattenValue.equals("Flatten Resolution"))
+            return getResolution((String)flattenValueComboBox.getSelectedItem());
+        else if(flattenValue.equals("Double Flatten Resolution"))
+            return 2 * getResolution((String)flattenValueComboBox.getSelectedItem());
 //        else if(flattenValue.equals("Every Beat"))
 //            return beatLength(metre);
 //        else if(flattenValue.equals("Measure Length"))
