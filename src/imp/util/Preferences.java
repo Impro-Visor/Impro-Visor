@@ -143,6 +143,10 @@ public class Preferences implements imp.Constants
 
   public static final String DVF_TRANSFORM_VAL = "My.transform";
   
+  public static final String DEFAULT_FRACTAL_FILE = "default-fractal-file";
+  
+  public static final String DVF_FRACTAL_VAL = "My.fractal";
+  
   public static final String DEFAULT_COUNTS_FILE = "default-counts-file";
 
   public static final String DVF_COUNTS_VAL = "My.counts";  

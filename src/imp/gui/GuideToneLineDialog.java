@@ -31,6 +31,7 @@ import imp.com.PlayScoreCommand;
 import imp.com.RectifyPitchesCommand;
 import imp.data.Chord;
 import imp.data.ChordPart;
+import imp.data.Fractal;
 import imp.data.GuideLineGenerator;
 import imp.data.MelodyInContext;
 import imp.data.MelodyPart;
@@ -45,8 +46,12 @@ import imp.lickgen.transformations.Transform;
 import imp.util.Preferences;
 import imp.util.TransformFilter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import polya.Polylist;
 
@@ -60,6 +65,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     private final Notate notate;
     private final TransformPanel transformationPanel;
     private Transform transform;
+    private Fractal divider;
     
     //the default keys that are initially clicked
     //only used once, in the constructor
@@ -101,6 +107,8 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         updateTransformButtons();
         
         updateRange();
+        
+        divider = new Fractal(ImproVisor.getFractalFile());
         
         String musician = (String)musicianChooser.getSelectedItem();
         File dir = ImproVisor.getTransformDirectory();
@@ -557,6 +565,11 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         getContentPane().add(jLabel1, gridBagConstraints);
 
         populateMusicianList();
+        musicianChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                musicianChooserActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 21;
@@ -886,8 +899,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
 
     private void divideLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideLineActionPerformed
         
-        GuideLineGenerator line = new GuideLineGenerator();
-        MelodyPart fractalSolo = line.fractalImprovise(notate.getCurrentMelodyPart());
+        MelodyPart fractalSolo = divider.fractalImprovise(notate.getCurrentMelodyPart());
         notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
                                                     0,
                                                     fractalSolo.getSize() - 1,
@@ -904,6 +916,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
                                     "Playing divided guide tone line");
         updatePlayButtons();
     }//GEN-LAST:event_divideLineActionPerformed
+
+    private void musicianChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicianChooserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_musicianChooserActionPerformed
 
     /**
      * returns which JRadioButton in a ButtonGroup is selected
@@ -1130,5 +1146,14 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         }
     }
 
-    
+//    private String getFractalString()
+//    {
+//        String probString = "";
+//        try {
+//            probString = new Scanner(ImproVisor.getFractalFile()).useDelimiter("\\Z").next();
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(TransformPanel.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return probString;
+//    }
 }

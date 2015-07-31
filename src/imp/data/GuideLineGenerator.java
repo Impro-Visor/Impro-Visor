@@ -1156,6 +1156,15 @@ public class GuideLineGenerator implements Constants {
         }
     }
     
+    public void getFractalProbabilities(String probs)
+    {
+        Polylist polyProbs = Polylist.PolylistFromString(probs);
+        
+        while(polyProbs.nonEmpty()){
+            
+        }
+    }
+    
     /**
      * Recursively divides a guide tone line to create a fractal melody
      * @param gtl
@@ -1163,6 +1172,7 @@ public class GuideLineGenerator implements Constants {
      */
     public MelodyPart fractalImprovise(MelodyPart gtl)
     {
+            
         return splitSolo(gtl);
     }
     

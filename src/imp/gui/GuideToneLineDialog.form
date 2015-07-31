@@ -812,6 +812,9 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JComboBox" name="musicianChooser">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="musicianChooserActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="populateMusicianList();"/>
       </AuxValues>

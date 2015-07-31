@@ -553,6 +553,7 @@ public static void establishUserDirectory(File homeDir)
       copyDir(Directories.leadsheetDirName,    homeDir);
       copyDir(Directories.grammarDirName,      homeDir);
       copyDir(Directories.transformDirName,    homeDir);
+      //copyDir(Directories.fractalDirName,      homeDir);
       copyDir(Directories.countsDirName,       homeDir);
       copyDir(Directories.styleDirName,        homeDir);
       copyDir(Directories.styleExtractDirName, homeDir);
@@ -649,6 +650,11 @@ public static File getTransformDirectory()
   return new File(getUserDirectory(), Directories.transformDirName);
   }
 
+public static File getFractalDirectory()
+  {
+  return new File(getUserDirectory(), Directories.fractalDirName);
+  }
+
 public static File getCountsDirectory()
   {
   return new File(getUserDirectory(), Directories.countsDirName);
@@ -689,6 +695,12 @@ public static File getTransformFile()
         filename = Preferences.DVF_TRANSFORM_VAL;
     }
     return new File(getTransformDirectory(), filename); 
+  }
+
+public static File getFractalFile()
+  {
+  return new File(getFractalDirectory(), 
+                  Preferences.getPreference(Preferences.DEFAULT_FRACTAL_FILE));
   }
 
 public static File getCountsFile()

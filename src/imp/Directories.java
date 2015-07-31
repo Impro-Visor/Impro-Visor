@@ -57,6 +57,11 @@ public static String transformDirName = "transforms";
 /**
  * Standard sub-directory for transforms
  */
+public static String fractalDirName = "fractals";
+
+/**
+ * Standard sub-directory for transforms
+ */
 public static String countsDirName = "counts";
 
 /**
