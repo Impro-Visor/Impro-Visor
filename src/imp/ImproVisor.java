@@ -553,7 +553,7 @@ public static void establishUserDirectory(File homeDir)
       copyDir(Directories.leadsheetDirName,    homeDir);
       copyDir(Directories.grammarDirName,      homeDir);
       copyDir(Directories.transformDirName,    homeDir);
-      //copyDir(Directories.fractalDirName,      homeDir);
+      copyDir(Directories.fractalDirName,      homeDir);
       copyDir(Directories.countsDirName,       homeDir);
       copyDir(Directories.styleDirName,        homeDir);
       copyDir(Directories.styleExtractDirName, homeDir);
