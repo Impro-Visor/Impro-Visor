@@ -22,12 +22,9 @@
 package imp.lickgen.transformations;
 
 import imp.Constants;
-import imp.data.Chord;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.data.Note;
-import imp.data.NoteSymbol;
-import imp.gui.Notate;
 import imp.gui.TransformPanel;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,6 +36,7 @@ import java.util.logging.Logger;
  * Holds an entire grammar for a transform
  * 
  * @author Alex Putman
+ * @author Mikayla Konst
  */
 public class Transform 
 {
@@ -48,9 +46,15 @@ public ArrayList<Substitution> substitutions;
 public boolean debug;
 public boolean hasChanged;
 
+//Prefix indicates relative pitch of note learned from
+//Any substitution containing this prefix is a learned subsitution
 public static final String firstRelPitchPrefix = "first-rel-pitch-";
+
+//Prefix indicates duration of note learned from
+public static final String wholePrefix = "whole-";
 public static final String halfPrefix = "half-";
 public static final String quarterPrefix = "quarter-";
+public static final String eighthPrefix = "eighth-";
 public static final String otherPrefix = "other-";
 
 private static final boolean timer = false; // for debugging
@@ -246,8 +250,7 @@ public MelodyPart applySubstitutionsToMelodyPart(MelodyPart melody, ChordPart ch
         }
         
     }
-    
-            
+      
     //TIMING
     if(timer){
         long stopTime = System.currentTimeMillis();
@@ -299,21 +302,11 @@ private MelodyPart applySubstitutionType(ArrayList<Substitution> substitutions,
             if(sub.getEnabled() && applicable(sub, transNotes, chords, startingSlot[0]))
             {
                 int weight = sub.getWeight();
-                if(exactMatch(sub, transNotes, startingSlot[0])){
-                    weight *= 2;
-                }
                 for(int i = 0; i < weight; i++)
                     full.add(sub);
             }
         }
-        
-        
-//        if(full.size() < 1){
-//            System.out.println("No subs are applicable to this note");
-//            //return transNotes;
-//        }
-            
-        
+
         Collections.shuffle(full);
 
         ArrayList<Substitution> sortedSubs = new ArrayList<Substitution>();
@@ -334,8 +327,7 @@ private MelodyPart applySubstitutionType(ArrayList<Substitution> substitutions,
             {
                 System.out.println("\t\tTrying sub: " + sub.getName());
             }
-            //SORT THE TRANSFORMATIONS, PUT THEM IN THE SUB'S TRANSFORM
-            //sub.categorizeTransformations();
+            
             substituted = sub.apply(transNotes, chords, startingSlot, enforceDuration);
             if(substituted != null)
             {
@@ -368,60 +360,44 @@ private MelodyPart applySubstitutionType(ArrayList<Substitution> substitutions,
     return transNotes;
 }
 
-private boolean exactMatch(Substitution sub, MelodyPart notes, int startSlot){
-    String subName = sub.getName();
-    //learned substitution
-    int duration = notes.getCurrentNote(startSlot).getRhythmValue();
-    if(subName.contains(firstRelPitchPrefix)){
-        if(subName.contains(halfPrefix) && duration == Constants.HALF){
-            return true;
-        }else if(subName.contains(quarterPrefix) && duration == Constants.QUARTER){
-            return true;
-        }else{
-            return false;
-        }
+private boolean exactMatch(String subName, int duration){
+    
+    boolean exactMatch;
+
+    if(subName.contains(wholePrefix) && duration == Constants.WHOLE){
+        exactMatch = true;
+    }else if(subName.contains(halfPrefix) && duration == Constants.HALF){
+        exactMatch = true;
+    }else if(subName.contains(quarterPrefix) && duration == Constants.QUARTER){
+        exactMatch = true;
+    }else if(subName.contains(eighthPrefix) && duration == Constants.EIGHTH){
+        exactMatch = true;
     }else{
-        return false;
+        exactMatch = false;
     }
+    
+    return exactMatch;
 }
 
 private boolean applicable(Substitution sub, MelodyPart notes, ChordPart chords, int startSlot){
-    //if it's a sub named after the rel pitch condition, check sub name first
+    
     String subName = sub.getName();
 
-    //learned substitution
+    //Detect a learned substitution by whether or not it contains the firstRelPitch prefix
     if(subName.contains(firstRelPitchPrefix)){
-        //check rel pitch
+        //Relative pitch must match
         String relPitch = subName.substring(subName.indexOf(firstRelPitchPrefix)+firstRelPitchPrefix.length());
         NoteChordPair ncp = new NoteChordPair(notes.getCurrentNote(startSlot), chords.getCurrentChord(startSlot));
         if(!ncp.getRelativePitch().equals(relPitch)){
             return false;
         }
-        //check duration
+        //Duration must match
         int duration = ncp.getDuration();
-//        boolean enforceStrictEquality = false;
-//        if(duration == Constants.HALF || duration == Constants.QUARTER){
-//            enforceStrictEquality = true;
-//        }
-        if(subName.contains(halfPrefix)){
-            if(duration < Constants.HALF){
-                return false;
-            }
-//            else if(enforceStrictEquality && duration != Constants.HALF){
-//                return false;
-//            }
-        }else if(subName.contains(quarterPrefix)){
-            if(duration < Constants.QUARTER){
-                return false;
-            }
-//            else if(enforceStrictEquality && duration != Constants.QUARTER){
-//                return false;
-//            }
-        }
+        return exactMatch(subName, duration);
     }
+    //if the substitution was not learned, assume it is applicable
     return true;
 }
-
 
 /**
  * NO LONGER USED
@@ -450,6 +426,7 @@ public void findDuplicatesAndAddToWeight()
 
 /**
  * combineSubsWithSameName
+ * Now used instead of findDuplicatesAndAddToWeight
  * Combines all subs in this Transform that have the same name
  * into one big substitution that contains all the transformations
  * of the subs it was formed from
@@ -574,7 +551,6 @@ public void scaleEmbWeights(double scale)
  */
 public Polylist melodyPartToNoteList(MelodyPart melody)
 {
-    int slotvalue = 0;
     MelodyPart.PartIterator it = melody.iterator();
     Polylist nList = new Polylist();
     while(it.hasNext())

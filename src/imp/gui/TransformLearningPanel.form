@@ -340,15 +340,11 @@
             <Component class="javax.swing.JComboBox" name="flattenValueComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="8">
+                  <StringArray count="4">
                     <StringItem index="0" value="Whole Note"/>
                     <StringItem index="1" value="Half Note"/>
                     <StringItem index="2" value="Quarter Note"/>
-                    <StringItem index="3" value="Eight Note"/>
-                    <StringItem index="4" value="Sixteenth Note"/>
-                    <StringItem index="5" value="Measure Length"/>
-                    <StringItem index="6" value="Strong Beats"/>
-                    <StringItem index="7" value="Every Beat"/>
+                    <StringItem index="3" value="Eighth Note"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="select the resolution to flatten at"/>

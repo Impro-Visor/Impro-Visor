@@ -384,10 +384,15 @@ public Transform createBlockTransform(MelodyPart outline,
         StringBuilder subName = new StringBuilder();
         
         //make duration of note learned from the start of the sub name
-        if(origNote.getRhythmValue()==Constants.HALF){
+        int duration = origNote.getRhythmValue();
+        if(duration == Constants.WHOLE){
+            subName.append(Transform.wholePrefix);
+        }else if(duration == Constants.HALF){
             subName.append(Transform.halfPrefix);
-        }else if(origNote.getRhythmValue()==Constants.QUARTER){
+        }else if(duration == Constants.QUARTER){
             subName.append(Transform.quarterPrefix);
+        }else if(duration == Constants.EIGHTH){
+            subName.append(Transform.eighthPrefix);
         }else{
             subName.append(Transform.otherPrefix);
         }
@@ -402,32 +407,15 @@ public Transform createBlockTransform(MelodyPart outline,
         
         Substitution substitution = new Substitution();
         substitution.setName(nameString);
-        //look for a sub in the transform with the same name
-//        int index = transform.indexOf(nameString);
-//        
-//        //if you found one, remove it
-//        if(index != -1){
-//            substitution = transform.substitutions.remove(index);
-//        }else{
-//            //if not, make a new sub with that name
-//            substitution = new Substitution();
-//            substitution.setName(nameString);
-//        }
-//        //pass in old substitution to add new transformations to
+
+        //pass in empty substitution with relevant name to add new transformations to
         substitution = createBlockSubstitution(substitution,
                                                             outlinePart, 
                                                             transPart, 
                                                             chord,
                                                             chordPart);
         transform.addSubstitution(substitution);
-        //if it was in the list, put the sub back where you found it
-        //if(index != -1){
-        //    transform.substitutions.add(index, substitution);
-        //}else{
-            //add it to the end
-            //transform.addSubstitution(substitution);
-        //}
-        
+
         slot = nextSlot;
     }
     
@@ -745,8 +733,6 @@ private Polylist getTransposeDiatonicFunction(Note outlineNote,
     Evaluate eval = new Evaluate(new Polylist());
     eval.setNoteVar("n1", outlineNote, chord);
     eval.setNoteVar("n2", transNote, chord);
-    Polylist subHelper;
-    subHelper = Polylist.PolylistFromString("pitch- (relative-pitch n2) n1");
     Object result = eval.absoluteRelPitchDiff(transNote, outlineNote, chord);
     if(transNote.isRest())
         return Polylist.PolylistFromString("make-rest "+var);

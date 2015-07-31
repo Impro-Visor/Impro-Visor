@@ -362,7 +362,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         flattenPanel.setBackground(new java.awt.Color(252, 196, 80));
         flattenPanel.setLayout(new java.awt.GridBagLayout());
 
-        flattenValueComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Whole Note", "Half Note", "Quarter Note", "Eight Note", "Sixteenth Note", "Measure Length", "Strong Beats", "Every Beat" }));
+        flattenValueComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Whole Note", "Half Note", "Quarter Note", "Eighth Note" }));
         flattenValueComboBox.setToolTipText("select the resolution to flatten at");
         flattenValueComboBox.setMinimumSize(new java.awt.Dimension(165, 25));
         flattenValueComboBox.setPreferredSize(new java.awt.Dimension(165, 25));
@@ -1217,27 +1217,27 @@ public class TransformLearningPanel extends javax.swing.JPanel {
      */
     private int getResolution(String flattenValue)
     {
-        int [] metre = this.notate.getScore().getMetre();
+//        int [] metre = this.notate.getScore().getMetre();
         if(flattenValue.equals("Whole Note"))
-            return 480;
+            return Constants.WHOLE;
         else if(flattenValue.equals("Half Note"))
-            return 240;
+            return Constants.HALF;
         else if(flattenValue.equals("Quarter Note"))
-            return 120;
-        else if(flattenValue.equals("Eight Note"))
-            return 60;
-        else if(flattenValue.equals("Sixteenth Note"))
-            return 30;
-        else if(flattenValue.equals("Flatten Resolution"))
-            return getResolution((String)flattenValueComboBox.getSelectedItem());
-        else if(flattenValue.equals("Double Flatten Resolution"))
-            return 2 * getResolution((String)flattenValueComboBox.getSelectedItem());
-        else if(flattenValue.equals("Every Beat"))
-            return beatLength(metre);
-        else if(flattenValue.equals("Measure Length"))
-            return measureLength(metre);
-        else if(flattenValue.equals("Strong Beats"))
-            return timeBetweenStrongBeats(metre);
+            return Constants.QUARTER;
+        else if(flattenValue.equals("Eighth Note"))
+            return Constants.EIGHTH;
+//        else if(flattenValue.equals("Sixteenth Note"))
+//            return 30;
+//        else if(flattenValue.equals("Flatten Resolution"))
+//            return getResolution((String)flattenValueComboBox.getSelectedItem());
+//        else if(flattenValue.equals("Double Flatten Resolution"))
+//            return 2 * getResolution((String)flattenValueComboBox.getSelectedItem());
+//        else if(flattenValue.equals("Every Beat"))
+//            return beatLength(metre);
+//        else if(flattenValue.equals("Measure Length"))
+//            return measureLength(metre);
+//        else if(flattenValue.equals("Strong Beats"))
+//            return timeBetweenStrongBeats(metre);
         else
             return 480;
     }
