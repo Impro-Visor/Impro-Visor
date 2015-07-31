@@ -1109,7 +1109,7 @@ private Polylist makeChordline(
     
     if( hasCustomVoicing() )
     {
-        handyMan.resetHands();
+        //handyMan.resetHands();
     }
     
     boolean beginning = true;

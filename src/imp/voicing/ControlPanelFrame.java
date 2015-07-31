@@ -42,10 +42,11 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         this.setTitle("Automated Voicing Generator Settings Editor");
         setTitle(AVPFileCreator.getLastFileName());
         File openFile=new File(ImproVisor.getVoicingDirectory(),AVPFileCreator.getLastFileName());
-                //JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
-                AVPFileCreator.fileToSettings( openFile, avs);
-                setSlidersToVariables();
-                setTitle(openFile.getName());
+        //JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+        AVPFileCreator.fileToSettings( openFile, avs);
+        setSlidersToVariables();
+        setTitle(openFile.getName());
+        setLabels();
         /*jButton1.addActionListener(new ActionListener() {
 
            public void actionPerformed(ActionEvent e)
@@ -815,7 +816,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         RHULNote = new javax.swing.JLabel();
         RHLLNote = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         RHStretchSpinner = new javax.swing.JSpinner();
         jPanel12 = new javax.swing.JPanel();
@@ -898,7 +898,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.gridx = 0;
         jPanel2.add(LHLLNote, gridBagConstraints);
 
-        jLabel1.setText(" to ");
+        jLabel1.setText("  to  ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         jPanel2.add(jLabel1, gridBagConstraints);
@@ -987,7 +987,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel8.setName(""); // NOI18N
         jPanel8.setLayout(new java.awt.GridBagLayout());
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Upper Limit"));
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Range"));
         jPanel9.setToolTipText("Absolute Upper note limits for voicings in a hand.");
         jPanel9.setLayout(new java.awt.GridBagLayout());
 
@@ -1005,7 +1005,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.gridx = 0;
         jPanel9.add(RHLLNote, gridBagConstraints);
 
-        jLabel2.setText(" to");
+        jLabel2.setText("  to  ");
         jPanel9.add(jLabel2, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1018,19 +1018,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel8.add(jPanel9, gridBagConstraints);
-
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Lower Limit"));
-        jPanel10.setToolTipText("Absolute Lower note limits for voicings in a hand.");
-        jPanel10.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 25;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        jPanel8.add(jPanel10, gridBagConstraints);
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Stretch Limit (Semitones)"));
         jPanel11.setToolTipText("The distance between the lowest and highest note for one voicing in a hand.");
@@ -1100,7 +1087,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel1.add(jPanel8, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1260,7 +1247,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel14.add(jPanel19, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -1466,7 +1453,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel20.add(jPanel27, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
@@ -1511,7 +1498,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel28.add(rootlessBox);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         getContentPane().add(jPanel28, gridBagConstraints);
 
@@ -1683,7 +1670,6 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;

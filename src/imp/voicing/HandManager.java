@@ -19,8 +19,9 @@ public class HandManager {
     private int leftHandMinNotes;
 
     public HandManager() {
+        resetHands();
     }
-
+    /*
     public HandManager(int leftHandLowerLimit, int rightHandLowerLimit, int leftHandUpperLimit, int rightHandUpperLimit, int leftHandSpread, int rightHandSpread, int leftHandMinNotes, int leftHandMaxNotes, int rightHandMinNotes, int preferredMotion, int preferredMotionRange) {
         this.leftHandLowerLimit = leftHandLowerLimit;
         this.rightHandLowerLimit = rightHandLowerLimit;
@@ -33,7 +34,7 @@ public class HandManager {
         this.rightHandMinNotes = rightHandMinNotes;
         this.preferredMotion = preferredMotion;
         this.preferredMotionRange = preferredMotionRange;
-    }
+    }*/
     private int leftHandMaxNotes;
     private int rightHandMinNotes;
     private int rightHandMaxNotes;
@@ -226,6 +227,7 @@ public class HandManager {
             leftHandLowestNote=(leftHandUpperLimit-leftHandSpread+leftHandLowerLimit)/2;
             rightHandLowestNote=(rightHandUpperLimit-rightHandSpread+rightHandLowerLimit)/2;
         }
+        VoicingDebug.println("Both Hands Reset");
     }
     public void resetLH()
     {
@@ -262,6 +264,7 @@ public class HandManager {
             //leftHandLowestNote=(leftHandUpperLimit-leftHandSpread+leftHandLowerLimit)/2;
             rightHandLowestNote=(rightHandUpperLimit-rightHandSpread+rightHandLowerLimit)/2;
         }
+        VoicingDebug.println("RH Reset");
     }
     public int getLeftLowerBound()
     {
