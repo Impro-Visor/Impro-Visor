@@ -93,7 +93,7 @@ public class ResponseGenerator {
     //Flatten a solo to the default resolution
     //currently flatten to every beat
     public void flattenSolo(){
-        flattenSolo(beatFinder.EVERY_BEAT);
+        flattenSolo(Constants.QUARTER);
     }
 
     //Flatten solo to a specified resolution
@@ -507,8 +507,8 @@ public class ResponseGenerator {
         //STEP 1
         flattenSolo();
         //STEP 2
-        modifySolo();
-        rectifySolo(ONLY_CHORD_TONES);
+        //modifySolo();
+        //rectifySolo(ONLY_CHORD_TONES);
         //STEP 3
         transformSolo(musician);
         //STEP 4
