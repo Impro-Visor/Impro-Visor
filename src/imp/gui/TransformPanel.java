@@ -1025,7 +1025,10 @@ public class TransformPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_cleanTransformButtonActionPerformed
 
     private void openSubstitutionsFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openSubstitutionsFileButtonActionPerformed
-        
+        open();
+    }//GEN-LAST:event_openSubstitutionsFileButtonActionPerformed
+
+    public void open(){
         if( chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION )
         {
             String newFilename = chooser.getSelectedFile().getName();
@@ -1041,8 +1044,8 @@ public class TransformPanel extends javax.swing.JPanel {
                 changeTransform(newTrans, newFilename);
             }
         }
-    }//GEN-LAST:event_openSubstitutionsFileButtonActionPerformed
-
+    }
+    
     private void substitutorRectifyCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_substitutorRectifyCheckBoxActionPerformed
 
     }//GEN-LAST:event_substitutorRectifyCheckBoxActionPerformed
@@ -1168,12 +1171,20 @@ public class TransformPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_saveSubstitutionsButtonActionPerformed
 
     private void createNewSubstitutionsFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewSubstitutionsFileButtonActionPerformed
+        newFile();
+    }//GEN-LAST:event_createNewSubstitutionsFileButtonActionPerformed
+
+    public void newFile(){
         Transform newTrans = Transform.makeTransformWithIdentities();
         String newFilename = "newTransformFile.transform";
         changeTransform(newTrans, newFilename);
-    }//GEN-LAST:event_createNewSubstitutionsFileButtonActionPerformed
-
+    }
+    
     private void addSubsFromOtherFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSubsFromOtherFileButtonActionPerformed
+        addSubs();
+    }//GEN-LAST:event_addSubsFromOtherFileButtonActionPerformed
+
+    public void addSubs(){
         if( chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION )
         {
             String transformStr = "";
@@ -1194,8 +1205,8 @@ public class TransformPanel extends javax.swing.JPanel {
                 redrawTransformationsList();
             }
         }
-    }//GEN-LAST:event_addSubsFromOtherFileButtonActionPerformed
-
+    }
+    
     private void reapplySubstitutionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reapplySubstitutionsButtonActionPerformed
         revertSubs();
         applySubstitutions();
@@ -1391,7 +1402,7 @@ public class TransformPanel extends javax.swing.JPanel {
      * Tries to save the current transform by bringing up a file saver dialogue
      * @return whether the save went through or not
      */
-    private boolean saveCurrentTransform()
+    public boolean saveCurrentTransform()
     {
         chooser.setSelectedFile(new File(filename));
         
