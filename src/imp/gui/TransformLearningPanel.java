@@ -731,6 +731,8 @@ public class TransformLearningPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_allowRepeatsCheckBoxActionPerformed
 
     private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllButtonActionPerformed
+        originalList = new PartList(0);
+        
         notate.selectAll2();
         notate.adjustSelection();
         
@@ -810,6 +812,8 @@ public class TransformLearningPanel extends javax.swing.JPanel {
     }
     
     private void saveAll(){
+        originalList = new PartList(0);
+        
         notate.selectAll2();
         notate.adjustSelection();
         
