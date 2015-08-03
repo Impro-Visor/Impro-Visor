@@ -90,6 +90,7 @@ private int DEFAULT_SLIDER_VOLUME = 80;
 RoadMapFrame roadmapFrame = null;
 LickgenFrame lickgenFrame;
 TransformFrame transformFrame;
+FractalFrame fractalFrame;
 IntervalLearningFrame intervalLearningFrame;
 MidiImportFrame midiImportFrame = null;
 MidiImport midiImport;
@@ -916,6 +917,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     critic = new Critic();
     lickgenFrame = new LickgenFrame(this, lickgen, cm);
     transformFrame = new TransformFrame(this, lickgen, cm);
+    fractalFrame = new FractalFrame(this, cm);
     intervalLearningFrame = new IntervalLearningFrame(this);
     
     //OLD TRADING CODE
@@ -2061,6 +2063,7 @@ public Critic getCritic()
         useAudioInputMI = new javax.swing.JCheckBoxMenuItem();
         utilitiesMenu = new javax.swing.JMenu();
         stepKeyboardMI = new javax.swing.JMenuItem();
+        fractalMI = new javax.swing.JMenuItem();
         guideToneLine = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
         intervalLearningMI = new javax.swing.JMenuItem();
@@ -6995,11 +6998,11 @@ public Critic getCritic()
             }
         });
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                notateWIndowClosed(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                notateWIndowClosed(evt);
             }
         });
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -8071,17 +8074,17 @@ public Critic getCritic()
             }
         });
         scoreTab.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                scoreTabMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                mouseEnteredTabPanel(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 scoreTabMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 scoreTabMouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                scoreTabMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mouseEnteredTabPanel(evt);
             }
         });
         scoreTab.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -8138,12 +8141,12 @@ public Critic getCritic()
 
         openRecentLeadsheetMenu.setText("Open Recent Leadsheet (same window)");
         openRecentLeadsheetMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                populateRecentFileMenu(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                populateRecentFileMenu(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -8159,12 +8162,12 @@ public Critic getCritic()
 
         openRecentLeadsheetNewWindowMenu.setText("Open Recent Leadsheet (new window)");
         openRecentLeadsheetNewWindowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                populateRecentLeadsheetNewWindow(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                populateRecentLeadsheetNewWindow(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -8958,6 +8961,14 @@ public Critic getCritic()
         });
         utilitiesMenu.add(stepKeyboardMI);
 
+        fractalMI.setText("Fractal Improvisation");
+        fractalMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fractalMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(fractalMI);
+
         guideToneLine.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         guideToneLine.setText("Guide Tone Line");
         guideToneLine.addActionListener(new java.awt.event.ActionListener() {
@@ -9154,12 +9165,12 @@ public Critic getCritic()
             }
         });
         notateGrammarMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                notateGrammarMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                notateGrammarMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
         notateGrammarMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -9177,12 +9188,12 @@ public Critic getCritic()
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -11072,6 +11083,12 @@ private void openTransformFrame()
     transformFrame.setSize(lickGenFrameDimension);
     transformFrame.setVisible(true);
     WindowRegistry.registerWindow(transformFrame);
+}
+
+private void openFractalFrame()
+{
+    fractalFrame.setVisible(true);
+    WindowRegistry.registerWindow(fractalFrame);
 }
 
 private void openIntervalLearningFrame()
@@ -14277,6 +14294,10 @@ public void closeWindow()
     if(transformFrame != null){
         transformFrame.dispose();
     }
+    
+//    if(fractalFrame != null){
+//        fractalFrame.dispose();
+//    }
     
     if(styleEditor != null){
         styleEditor.dispose();
@@ -23019,6 +23040,10 @@ int quantizeResolution = 60;
     private void intervalLearningMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalLearningMIActionPerformed
         openIntervalLearningFrame();
     }//GEN-LAST:event_intervalLearningMIActionPerformed
+
+    private void fractalMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fractalMIActionPerformed
+        openFractalFrame();
+    }//GEN-LAST:event_fractalMIActionPerformed
 void delAllMelody()
   {
     Trace.log(2, "delete all melody");
@@ -25079,6 +25104,7 @@ private ImageIcon pauseButton =
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.JMenuItem firstTimePrefsMI;
+    private javax.swing.JMenuItem fractalMI;
     private javax.swing.JComboBox frameSizeComboBox1;
     private javax.swing.JToggleButton freezeLayoutButton;
     private javax.swing.JPanel generalContourTab;

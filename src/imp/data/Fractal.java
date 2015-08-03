@@ -130,7 +130,7 @@ public class Fractal implements Constants{
         System.out.println("Default rest prob: " + defaultRestProb);
     }
     
-    private void setProbabilities(String probs)
+    public void setProbabilities(String probs)
     {
         Polylist polyProbs = Polylist.PolylistFromString(probs);
         
@@ -311,14 +311,27 @@ public class Fractal implements Constants{
         }
     }
     
-    /**
-     * Recursively divides a guide tone line to create a fractal melody
+    /** 
+     * Divides a guide tone line to create a fractal melody multiple times
+     * @param gtl
+     * @return MelodyPart that is the new melody
+     */
+    public MelodyPart multipleFractal(MelodyPart gtl, int numTimes)
+    {
+        dividingIterations = numTimes;
+        for(int i = 0; i < numTimes; ++i){
+            gtl = fractalImprovise(gtl);
+        }
+        return gtl;
+    }
+    
+    /** 
+     * Divides a guide tone line to create a fractal melody
      * @param gtl
      * @return MelodyPart that is the new melody
      */
     public MelodyPart fractalImprovise(MelodyPart gtl)
-    {
-            
+    {   
         return splitSolo(gtl);
     }
     
@@ -603,5 +616,150 @@ public class Fractal implements Constants{
                 noteLength == DOTTED_QUARTER ||
                 noteLength == DOTTED_EIGHTH ||
                 noteLength == DOTTED_SIXTEENTH);
+    }
+    
+    public void setDividingIterations(int div)
+    {
+        dividingIterations = div;
+    }
+    
+    public void setTripletProb(double prob)
+    {
+        tripletProb = prob;
+    }
+    
+    public double getTripletProb()
+    {
+        return tripletProb;
+    }
+    
+    public void setQuintupletProb(double prob)
+    {
+        quintupletProb = prob;
+    }
+    
+    public double getQuintupletProb()
+    {
+        return quintupletProb;
+    }
+    
+    public void setWholeDivProb(double prob)
+    {
+        wholeDivProb = prob;
+    }
+    
+    public double getWholeDivProb()
+    {
+        return wholeDivProb;
+    }
+    
+    public void setHalfDivProb(double prob)
+    {
+        halfDivProb = prob;
+    }
+    
+    public double getHalfDivProb()
+    {
+        return halfDivProb;
+    }
+    
+    public void setQuarterDivProb(double prob)
+    {
+        quarterDivProb = prob;
+    }
+    
+    public double getQuarterDivProb()
+    {
+        return quarterDivProb;
+    }
+    
+    public void setEighthDivProb(double prob)
+    {
+        eighthDivProb = prob;
+    }
+    
+    public double getEighthDivProb()
+    {
+        return eighthDivProb;
+    }
+    
+    public void setSixteenthDivProb(double prob)
+    {
+        sixteenthDivProb = prob;
+    }
+    
+    public double getSixteenthDivProb()
+    {
+        return sixteenthDivProb;
+    }
+    
+    public void setDefaultDivProb(double prob)
+    {
+        defaultDivProb = prob;
+    }
+    
+    public double getDefaultDivProb()
+    {
+        return defaultDivProb;
+    }
+    
+    public void setWholeRestProb(double prob)
+    {
+        wholeRestProb = prob;
+    }
+    
+    public double getWholeRestProb()
+    {
+        return wholeRestProb;
+    }
+    
+    public void setHalfRestProb(double prob)
+    {
+        halfRestProb = prob;
+    }
+    
+    public double getHalfRestProb()
+    {
+        return halfRestProb;
+    }
+    
+    public void setQuarterRestProb(double prob)
+    {
+        quarterRestProb = prob;
+    }
+    
+    public double getQuarterRestProb()
+    {
+        return quarterRestProb;
+    }
+    
+    public void setEighthRestProb(double prob)
+    {
+        eighthRestProb = prob;
+    }
+    
+    public double getEighthRestProb()
+    {
+        return eighthRestProb;
+    }
+    
+    public void setSixteenthRestProb(double prob)
+    {
+        sixteenthRestProb = prob;
+    }
+    
+    public double getSixteenthRestProb()
+    {
+        return sixteenthRestProb;
+    }
+    
+    public void setDefaultRestProb(double prob)
+    {
+        defaultRestProb = prob;
+    }
+    
+    public double getDefaultRestProb()
+    {
+        return defaultRestProb;
     }
 }
