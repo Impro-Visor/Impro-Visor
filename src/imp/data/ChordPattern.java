@@ -23,6 +23,7 @@ package imp.data;
 import imp.util.ErrorLog;
 import imp.voicing.HandManager;
 import imp.voicing.VoicingDebug;
+import imp.voicing.VoicingDistanceCalculator;
 import imp.voicing.VoicingGenerator;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -784,6 +785,7 @@ public static Polylist findFirstVoicingAndExtension(ChordSymbol chord,
   }
 
 
+static int[] lastVoicing=null;//needs to be static to improve voice leading.
 /**
  * Returns a list of acceptable voicings for a chord, separating out the voicing and its 
  * extension.
@@ -811,7 +813,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
 
         /*process values*/
         //while loop with first item
-        int[] lastVoicing=null;
+        
         //ArrayList<int[]>progressionVoicings = new ArrayList<int[]>();
         //ArrayList<Integer> bassList = new ArrayList<Integer>();
 
@@ -854,12 +856,16 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
             for(Polylist a = lastChord; a.nonEmpty(); a=a.rest()){
             lastVoicing[index] = ((NoteSymbol)a.first()).getMIDI();
             index++;
-            VoicingDebug.println(Arrays.toString(lastVoicing));
+            VoicingDebug.println("last voicing "+Arrays.toString(lastVoicing));
             }
         }
 
         vgen.setPreviousVoicing(lastVoicing);
         vgen.calculate();
+        int[] chordArray=vgen.getChord();
+        //User Doesn't need to see this, comment out next line if desired
+        if(lastVoicing!=null)
+            VoicingDebug.println("Custom Voicing Analytics:,,,,NumNotesOld,"+lastVoicing.length+",NumNotesNew,"+chordArray.length+" ,Distance,"+VoicingDistanceCalculator.calculateDistance(lastVoicing,chordArray)+", NotesChanged,"+VoicingDistanceCalculator.calculateNotesChanged(lastVoicing,chordArray));
         lastVoicing = vgen.getChord();
         //progressionVoicings.add(lastVoicing);
         Polylist midiL;
