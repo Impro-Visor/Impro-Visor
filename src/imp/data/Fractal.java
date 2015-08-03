@@ -38,7 +38,6 @@ import polya.Polylist;
  * @author Carli Lessard
  */
 public class Fractal implements Constants{
-    private int dividingIterations;
     
     private double tripletProb;
     private double quintupletProb;
@@ -113,7 +112,6 @@ public class Fractal implements Constants{
     
     private void debug()
     {
-        System.out.println("Iterations: " + dividingIterations);
         System.out.println("Triplet prob: " + tripletProb);
         System.out.println("Quintuplet prob: " + quintupletProb);
         System.out.println("Whole div prob: " + wholeDivProb);
@@ -139,10 +137,6 @@ public class Fractal implements Constants{
 
             String category = (String)dispatcher.first();
             switch(Leadsheet.lookup(category, keyword)){
-                case ITERATIONS:
-                    int iterInt = ((Number)dispatcher.second()).intValue();
-                    dividingIterations = iterInt;
-                    break;
                 case DIVIDING_PROB:
                     setDividingProbs((Polylist)dispatcher.second());
                     break;
@@ -242,6 +236,75 @@ public class Fractal implements Constants{
         }
     }
     
+    public String probsToString()
+    {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("(dividing-probabilities (");
+        buffer.append(divProbstoString());
+        buffer.append(")) \n");
+        buffer.append("(rest-probabilities (");
+        buffer.append(restProbstoString());
+        buffer.append(")) \n");
+        buffer.append("(triplet-probability ");
+        buffer.append(tripletProb);
+        buffer.append(") \n");
+        buffer.append("(quintuplet-probability ");
+        buffer.append(quintupletProb);
+        buffer.append(")");
+        
+        return buffer.toString();
+    }
+    
+    private String divProbstoString()
+    {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("(whole ");
+        buffer.append(wholeDivProb);
+        buffer.append(") \n");
+        buffer.append("\t (half ");
+        buffer.append(halfDivProb);
+        buffer.append(") \n");
+        buffer.append("\t (quarter ");
+        buffer.append(quarterDivProb);
+        buffer.append(") \n");
+        buffer.append("\t (eighth ");
+        buffer.append(eighthDivProb);
+        buffer.append(") \n");
+        buffer.append("\t (sixteenth ");
+        buffer.append(sixteenthDivProb);
+        buffer.append(") \n");
+        buffer.append("\t (default ");
+        buffer.append(defaultDivProb);
+        buffer.append(")");
+        
+        return buffer.toString();
+    }
+    
+    private String restProbstoString()
+    {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("(whole ");
+        buffer.append(wholeRestProb);
+        buffer.append(") \n");
+        buffer.append("\t (half ");
+        buffer.append(halfRestProb);
+        buffer.append(") \n");
+        buffer.append("\t (quarter ");
+        buffer.append(quarterRestProb);
+        buffer.append(") \n");
+        buffer.append("\t (eighth ");
+        buffer.append(eighthRestProb);
+        buffer.append(") \n");
+        buffer.append("\t (sixteenth ");
+        buffer.append(sixteenthRestProb);
+        buffer.append(") \n");
+        buffer.append("\t (default ");
+        buffer.append(defaultRestProb);
+        buffer.append(")");
+        
+        return buffer.toString();
+    }
+    
     /**
      * dist
      * returns the absolute distance between two notes' midi values
@@ -312,27 +375,16 @@ public class Fractal implements Constants{
     }
     
     /** 
-     * Divides a guide tone line to create a fractal melody multiple times
-     * @param gtl
-     * @return MelodyPart that is the new melody
-     */
-    public MelodyPart multipleFractal(MelodyPart gtl, int numTimes)
-    {
-        dividingIterations = numTimes;
-        for(int i = 0; i < numTimes; ++i){
-            gtl = fractalImprovise(gtl);
-        }
-        return gtl;
-    }
-    
-    /** 
      * Divides a guide tone line to create a fractal melody
      * @param gtl
      * @return MelodyPart that is the new melody
      */
-    public MelodyPart fractalImprovise(MelodyPart gtl)
+    public MelodyPart fractalImprovise(MelodyPart gtl, int numTimes)
     {   
-        return splitSolo(gtl);
+        for(int i = 0; i < numTimes; ++i){
+            gtl = splitSolo(gtl);
+        }
+        return gtl;
     }
     
     /**
@@ -616,11 +668,6 @@ public class Fractal implements Constants{
                 noteLength == DOTTED_QUARTER ||
                 noteLength == DOTTED_EIGHTH ||
                 noteLength == DOTTED_SIXTEENTH);
-    }
-    
-    public void setDividingIterations(int div)
-    {
-        dividingIterations = div;
     }
     
     public void setTripletProb(double prob)

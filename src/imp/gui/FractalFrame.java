@@ -11,11 +11,18 @@ import imp.com.RectifyPitchesCommand;
 import imp.data.Fractal;
 import imp.data.Leadsheet;
 import imp.data.MelodyPart;
+import imp.util.ErrorLog;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.SAVE_DIALOG;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import polya.Polylist;
 
 /**
@@ -26,6 +33,10 @@ public class FractalFrame extends javax.swing.JFrame {
     private final Notate notate;
     private final CommandManager cm;
     
+    private String EXTENSION = ".fractal";
+    private JFileChooser chooser;
+    private String filename;
+    
     private Fractal fractal;
     
     /**
@@ -34,7 +45,47 @@ public class FractalFrame extends javax.swing.JFrame {
     public FractalFrame(Notate notate, CommandManager cm) {
         this.notate = notate;
         this.cm = cm;
+        
+        this.setTitle("Fractal Improvisation");
+        
         initComponents();
+        
+        // set the file chooser and add the detection of overriding a file
+        chooser = new JFileChooser(){
+            @Override
+            public void approveSelection(){
+                File f = getSelectedFile();
+                if(!f.getAbsolutePath().endsWith(EXTENSION))
+                    f = new File(f.getAbsolutePath()+EXTENSION);
+                if(f.exists() && getDialogType() == SAVE_DIALOG){
+                    int result = JOptionPane.showConfirmDialog(this,
+                                                               "The file exists, overwrite?",
+                                                               "Existing file",
+                                                               JOptionPane.YES_NO_CANCEL_OPTION);
+                    switch(result){
+                        case JOptionPane.YES_OPTION:
+                            super.approveSelection();
+                            return;
+                        case JOptionPane.NO_OPTION:
+                            return;
+                        case JOptionPane.CLOSED_OPTION:
+                            return;
+                        case JOptionPane.CANCEL_OPTION:
+                            cancelSelection();
+                            return;
+                    }
+                }
+                super.approveSelection();
+            }        
+        };
+        
+        chooser.setCurrentDirectory(ImproVisor.getFractalDirectory());
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Fractal Files",
+                                                                     "fractal");
+        chooser.setFileFilter(filter);
+        
+        filename = "My.fractal";
        
         this.fractal = new Fractal(ImproVisor.getFractalFile());
         setTextBoxes();
@@ -90,8 +141,8 @@ public class FractalFrame extends javax.swing.JFrame {
         singleDivideButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openFile = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
+        openFileMI = new javax.swing.JMenuItem();
+        saveFileMI = new javax.swing.JMenuItem();
 
         setMinimumSize(new java.awt.Dimension(700, 400));
         setPreferredSize(new java.awt.Dimension(800, 400));
@@ -355,18 +406,23 @@ public class FractalFrame extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        openFile.setText("Open Fractal File");
-        openFile.addActionListener(new java.awt.event.ActionListener() {
+        openFileMI.setText("Open Fractal File");
+        openFileMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openFileActionPerformed(evt);
+                openFileMIActionPerformed(evt);
             }
         });
-        fileMenu.add(openFile);
+        fileMenu.add(openFileMI);
+
+        saveFileMI.setText("Save Fractal File");
+        saveFileMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveFileMIActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveFileMI);
 
         menuBar.add(fileMenu);
-
-        editMenu.setText("Edit");
-        menuBar.add(editMenu);
 
         setJMenuBar(menuBar);
 
@@ -377,7 +433,7 @@ public class FractalFrame extends javax.swing.JFrame {
         setProbabilities();
         
         int numTimes = (Integer)numDivisionsSpinner.getValue();
-        MelodyPart fractalSolo = fractal.multipleFractal(notate.getCurrentMelodyPart(), numTimes);
+        MelodyPart fractalSolo = fractal.fractalImprovise(notate.getCurrentMelodyPart(), numTimes);
         notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
                                                     0,
                                                     fractalSolo.getSize() - 1,
@@ -397,7 +453,7 @@ public class FractalFrame extends javax.swing.JFrame {
     private void singleDivideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singleDivideButtonActionPerformed
         setProbabilities();
         
-        MelodyPart fractalSolo = fractal.fractalImprovise(notate.getCurrentMelodyPart());
+        MelodyPart fractalSolo = fractal.fractalImprovise(notate.getCurrentMelodyPart(), 1);
         notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
                                                     0,
                                                     fractalSolo.getSize() - 1,
@@ -414,9 +470,15 @@ public class FractalFrame extends javax.swing.JFrame {
                                     "Playing fractal line");
     }//GEN-LAST:event_singleDivideButtonActionPerformed
 
-    private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_openFileActionPerformed
+    private void openFileMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMIActionPerformed
+        open();
+        setTextBoxes();
+    }//GEN-LAST:event_openFileMIActionPerformed
+
+    private void saveFileMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileMIActionPerformed
+        setProbabilities();
+        saveCurrentFractal();
+    }//GEN-LAST:event_saveFileMIActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel defaultDivLabel;
@@ -427,7 +489,6 @@ public class FractalFrame extends javax.swing.JFrame {
     private javax.swing.JPanel dividingPanel;
     private javax.swing.JLabel doubleLabel;
     private javax.swing.JTextField doubleText;
-    private javax.swing.JMenu editMenu;
     private javax.swing.JLabel eighthDivLabel;
     private javax.swing.JTextField eighthDivText;
     private javax.swing.JLabel eighthRestLabel;
@@ -443,13 +504,14 @@ public class FractalFrame extends javax.swing.JFrame {
     private javax.swing.JButton multDivideButton;
     private javax.swing.JPanel numDivPanel;
     private javax.swing.JSpinner numDivisionsSpinner;
-    private javax.swing.JMenuItem openFile;
+    private javax.swing.JMenuItem openFileMI;
     private javax.swing.JPanel probabilitiesPanel;
     private javax.swing.JLabel quarterDivLabel;
     private javax.swing.JTextField quarterDivText;
     private javax.swing.JLabel quarterRestLabel;
     private javax.swing.JTextField quarterRestText;
     private javax.swing.JPanel restProbPanel;
+    private javax.swing.JMenuItem saveFileMI;
     private javax.swing.JButton singleDivideButton;
     private javax.swing.JLabel sixteenthDivLabel;
     private javax.swing.JTextField sixteenthDivText;
@@ -463,6 +525,67 @@ public class FractalFrame extends javax.swing.JFrame {
     private javax.swing.JTextField wholeRestText;
     // End of variables declaration//GEN-END:variables
 
+    public void open(){
+        if( chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION )
+        {
+            String newFilename = chooser.getSelectedFile().getName();
+            String fractalStr = "";
+            try {
+                fractalStr = new Scanner(chooser.getSelectedFile()).useDelimiter("\\Z").next();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(TransformPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(fractalStr.length() > 0)
+            {
+                fractal = new Fractal(fractalStr);
+                setTextBoxes();
+            }
+        }
+    }
+    
+    public boolean saveCurrentFractal()
+    {
+        chooser.setSelectedFile(new File(filename));
+        
+        if( chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION )
+          {
+            if( chooser.getSelectedFile().getName().endsWith(
+                EXTENSION) )
+              {
+                filename = chooser.getSelectedFile().getName();
+
+                saveFractalFile(chooser.getSelectedFile().getAbsolutePath());
+              }
+            else
+              {
+                filename = chooser.getSelectedFile().getName() + EXTENSION;
+
+                saveFractalFile(chooser.getSelectedFile().getAbsolutePath() + EXTENSION);
+              }
+            return true;
+          }
+        else
+        {
+            return false;
+        }
+    }
+    
+        private int saveFractalFile(String filepath) {
+        try
+        {
+            String content = fractal.probsToString();
+            FileWriter out = new FileWriter(new File(filepath));
+            out.write(content);
+            out.close();
+            return 0;
+        }
+        catch( IOException e )
+        {
+            ErrorLog.log(ErrorLog.WARNING, "Error saving to " + filename);
+            return -1;
+        }
+    }
+    
     private String loadProbabilities(File file)
     {
         String probString = fileToString(file);
@@ -508,10 +631,13 @@ public class FractalFrame extends javax.swing.JFrame {
     
     private void setProbabilities()
     {
-        fractal.setDividingIterations((Integer)numDivisionsSpinner.getValue());
+        double triplet = Double.parseDouble(tripleText.getText());
+        double quintuplet = Double.parseDouble(fiveText.getText());
         
-        fractal.setTripletProb(Double.parseDouble(tripleText.getText()));
-        fractal.setQuintupletProb(Double.parseDouble(fiveText.getText()));
+        doubleText.setText(String.valueOf(1.0 - (triplet + quintuplet)));
+                
+        fractal.setTripletProb(triplet);
+        fractal.setQuintupletProb(quintuplet);
         
         fractal.setWholeDivProb(Double.parseDouble(wholeDivText.getText()));
         fractal.setHalfDivProb(Double.parseDouble(halfDivText.getText()));
