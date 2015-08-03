@@ -341,6 +341,7 @@ public class TradingWindow
         //File file = new File(dir + "/transforms/"+musician+".transform");
         transform = new Transform(file);
 
+        notate.setFirstTab();
         lastPosition = 0;
         loopLock = false;
         setIsUserLeading(userFirstButton.isSelected());
@@ -392,7 +393,7 @@ public class TradingWindow
             );
         }
 
-        notate.playScore();
+        notate.playFirstChorus();
 
         if (isUserLeading) {
             phase = TradePhase.COMPUTER_TURN;
@@ -623,6 +624,7 @@ public class TradingWindow
         java.awt.GridBagConstraints gridBagConstraints;
 
         leadingSelector = new javax.swing.ButtonGroup();
+        modeSelector = new javax.swing.ButtonGroup();
         startTradingButton = new javax.swing.JButton();
         tradeModeSelector = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
@@ -641,6 +643,10 @@ public class TradingWindow
         jSeparator3 = new javax.swing.JSeparator();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         loopToggle = new javax.swing.JCheckBox();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        modeMenu = new javax.swing.JMenu();
+        tradeRepeat = new javax.swing.JRadioButtonMenuItem();
+        tradeRepeatAndRectify = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -838,6 +844,21 @@ public class TradingWindow
         gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 1);
         getContentPane().add(loopToggle, gridBagConstraints);
 
+        modeMenu.setText("Trading Mode");
+
+        modeSelector.add(tradeRepeat);
+        tradeRepeat.setSelected(true);
+        tradeRepeat.setText("Repeat");
+        modeMenu.add(tradeRepeat);
+
+        modeSelector.add(tradeRepeatAndRectify);
+        tradeRepeatAndRectify.setText("Repeat and Rectify");
+        modeMenu.add(tradeRepeatAndRectify);
+
+        jMenuBar1.add(modeMenu);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -989,17 +1010,22 @@ public class TradingWindow
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.ButtonGroup leadingSelector;
     private javax.swing.JCheckBox loopToggle;
+    private javax.swing.JMenu modeMenu;
+    private javax.swing.ButtonGroup modeSelector;
     private javax.swing.JComboBox musicianChooser;
     private javax.swing.JLabel musicianLabel;
     private javax.swing.JButton startTradingButton;
     private javax.swing.JComboBox tradeLenthSelector;
     private javax.swing.JComboBox tradeModeSelector;
+    private javax.swing.JRadioButtonMenuItem tradeRepeat;
+    private javax.swing.JRadioButtonMenuItem tradeRepeatAndRectify;
     private javax.swing.JRadioButton userFirstButton;
     private javax.swing.JLabel volume;
     private javax.swing.JSlider volumeSlider;

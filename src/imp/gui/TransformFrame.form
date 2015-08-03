@@ -12,55 +12,43 @@
         <Menu class="javax.swing.JMenu" name="grammarMenu1">
           <Properties>
             <Property name="mnemonic" type="int" value="71"/>
-            <Property name="text" type="java.lang.String" value="Grammar Options"/>
+            <Property name="text" type="java.lang.String" value="File"/>
             <Property name="toolTipText" type="java.lang.String" value="Edit or change the current grammar file."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="grammarMenu1ActionPerformed"/>
           </Events>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="openGrammarMI1">
+            <MenuItem class="javax.swing.JMenuItem" name="openMI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Load Grammar"/>
-                <Property name="toolTipText" type="java.lang.String" value="Selects which grammar file to used."/>
+                <Property name="text" type="java.lang.String" value="Open"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openGrammarMI1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="showLogMI1">
+            <MenuItem class="javax.swing.JMenuItem" name="newMI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Show Log"/>
+                <Property name="text" type="java.lang.String" value="New"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showLogMI1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="saveGrammarMI1">
+            <MenuItem class="javax.swing.JMenuItem" name="saveMI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Save Grammar As ..."/>
-                <Property name="toolTipText" type="java.lang.String" value="Saves the grammar file under a specified name."/>
+                <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveGrammarMI1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="editGrammarMI1">
+            <MenuItem class="javax.swing.JMenuItem" name="addFromMI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Edit Grammar"/>
-                <Property name="toolTipText" type="java.lang.String" value="Edit the current grammar using a text editor."/>
+                <Property name="text" type="java.lang.String" value="Add From..."/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editGrammarMI1ActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="useGrammarMI1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Use Grammar"/>
-                <Property name="toolTipText" type="java.lang.String" value="Indicates whether or not a grammar should be used in lick generation. Without this, generation will be governed only by probabilities set in the fields below."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="useGrammarMI1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addFromMIActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

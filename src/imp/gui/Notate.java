@@ -17840,6 +17840,26 @@ int slotDelay;
 boolean continuousImprovisation = true; // Box is initially checked.
 
 /**
+ * same as playScore(), but only plays firstChorus, and will never call improviseContinuously().
+ * Added by Zach Kondak to be called from class TradingWindow.
+ */
+public void playFirstChorus(){
+    this.setFirstTab();
+    slotDelay =
+            (int) (midiSynth.getTotalSlots() * (1e6 * trackerDelay / midiSynth.getTotalMicroseconds()));
+
+    totalSlots = midiSynth.getTotalSlots();
+
+    //System.out.println("slotDelay = " + slotDelay + ", totalSlots = " + totalSlots);
+    totalSlotsElapsed = 0;
+    previousSynthSlot = 0;
+
+    improvMelodyIndex = 0;
+    establishCountIn();
+    playScoreBody(0, false);
+}
+
+/**
  * playScore() calls either improviseContinuously() or playScoreBody(0)
  * depending on whether improvisation is on.
  */
@@ -17905,6 +17925,12 @@ public void playScore(int startAt)
     playScoreBody(startAt);
   }
 
+
+public void playScoreBody(int startAt)
+  {
+      playScoreBody(startAt, true);
+  }
+
 /**
  * playScoreBody plays the Score at a designated starting point. It calls
  * playSelection in the current Stave. which executes a PlayScore command. The
@@ -17914,7 +17940,7 @@ public void playScore(int startAt)
  *
  * @param startAt
  */
-public void playScoreBody(int startAt)
+public void playScoreBody(int startAt, boolean allChoruses)
   {
     if( playingPaused() )
       {
@@ -17952,7 +17978,16 @@ public void playScoreBody(int startAt)
 //            System.out.println("Capture timer started.");
           }
 
-        getStaveAtTab(0).playSelection(startAt, score.getTotalLength() - 1, getLoopCount(), true, "playScoreBody");
+        
+        int stopPlayingAt;
+        if(allChoruses){
+            //ending is after all choruses
+            stopPlayingAt = score.getTotalLength() - 1;
+        }else{
+            //ending is after first chorus
+            stopPlayingAt = getScoreLength() - 1;
+        }
+        getStaveAtTab(0).playSelection(startAt, stopPlayingAt, getLoopCount(), true, "playScoreBody");
         //getCurrentStave().play(startAt);
       }
     setMode(Mode.PLAYING);
@@ -18209,6 +18244,15 @@ public void initCurrentPlaybackTab(int offset, int tab)
 
     currentPlaybackTab = tab;
   }
+
+public void setFirstTab(){
+    autoScrollOnPlayback = true;
+    skippedBack = true;
+    initCurrentPlaybackTab(0, 0);
+    this.currTabIndex = 0;
+    this.setFirstChorus(true);
+    playbackGoToTab(0);
+}
 
 public void enableStopButton(boolean enabled)
   {

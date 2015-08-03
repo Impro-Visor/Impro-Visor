@@ -101,17 +101,17 @@ public class AVPFileCreator
                 else if(line.contains("prev-voicing-multiplier"))
                 {
                     line=line.substring(line.indexOf("prev-voicing-multiplier")+"prev-voicing-multiplier".length()+1,line.indexOf(")"));
-                    settings.setPreviousVoicingMultiplier(Integer.parseInt(line));
+                    settings.setPreviousVoicingMultiplier(Integer.parseInt(line)/10.0);
                 }
                 else if(line.contains("half-step-multiplier"))
                 {
                     line=line.substring(line.indexOf("half-step-multiplier")+"half-step-multiplier".length()+1,line.indexOf(")"));
-                    settings.setHalfStepAwayMultiplier(Integer.parseInt(line));
+                    settings.setHalfStepAwayMultiplier(Integer.parseInt(line)/10.0);
                 }
                 else if(line.contains("full-step-multiplier"))
                 {
                     line=line.substring(line.indexOf("full-step-multiplier")+"full-step-multiplier".length()+1,line.indexOf(")"));
-                    settings.setFullStepAwayMultiplier(Integer.parseInt(line));
+                    settings.setFullStepAwayMultiplier(Integer.parseInt(line)/10.0);
                 }
                 else if(line.contains("LH-color-priority"))
                 {
@@ -131,22 +131,22 @@ public class AVPFileCreator
                 else if(line.contains("priority-multiplier"))
                 {
                     line=line.substring(line.indexOf("priority-multiplier")+"priority-multiplier".length()+1,line.indexOf(")"));
-                    settings.setPriorityMultiplier(Integer.parseInt(line));
+                    settings.setPriorityMultiplier(Integer.parseInt(line)/10.0);
                 }
                 else if(line.contains("repeat-multiplier"))
                 {
                     line=line.substring(line.indexOf("repeat-multiplier")+"repeat-multiplier".length()+1,line.indexOf(")"));
-                    settings.setRepeatMultiplier(Integer.parseInt(line));
+                    settings.setRepeatMultiplier(Integer.parseInt(line)/10.0);
                 }
                 else if(line.contains("half-step-reducer"))
                 {
                     line=line.substring(line.indexOf("half-step-reducer")+"half-step-reducer".length()+1,line.indexOf(")"));
-                    settings.setHalfStepReducer(Integer.parseInt(line));
+                    settings.setHalfStepReducer(Integer.parseInt(line)/10.0);
                 }
                 else if(line.contains("full-step-reducer"))
                 {
                     line=line.substring(line.indexOf("full-step-reducer")+"full-step-reducer".length()+1,line.indexOf(")"));
-                    settings.setFullStepReducer(Integer.parseInt(line));
+                    settings.setFullStepReducer(Integer.parseInt(line)/10.0);
                 }
                  else if(line.contains("left-min-interval"))
                 {

@@ -253,6 +253,10 @@ public class LickgenFrame
         styleRecognitionButton = new javax.swing.JButton();
         saveImpCheckbox = new javax.swing.JCheckBox();
         minLabel = new javax.swing.JLabel();
+        rectifyPanel = new javax.swing.JPanel();
+        chordBox = new javax.swing.JCheckBox();
+        colorBox = new javax.swing.JCheckBox();
+        approachBox = new javax.swing.JCheckBox();
         toneProbabilityPanel = new javax.swing.JPanel();
         chordToneProbLabel = new javax.swing.JLabel();
         colorToneProbLabel = new javax.swing.JLabel();
@@ -1208,6 +1212,28 @@ public class LickgenFrame
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         lickgenParametersPanel.add(minLabel, gridBagConstraints);
+
+        rectifyPanel.setLayout(new java.awt.GridBagLayout());
+
+        chordBox.setSelected(true);
+        chordBox.setText("Chord");
+        rectifyPanel.add(chordBox, new java.awt.GridBagConstraints());
+
+        colorBox.setSelected(true);
+        colorBox.setText("Color");
+        rectifyPanel.add(colorBox, new java.awt.GridBagConstraints());
+
+        approachBox.setSelected(true);
+        approachBox.setText("Approach");
+        rectifyPanel.add(approachBox, new java.awt.GridBagConstraints());
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        lickgenParametersPanel.add(rectifyPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -2274,7 +2300,6 @@ public class LickgenFrame
         loadBaseGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         loadBaseGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
         loadBaseGrammarBtn.setMinimumSize(new java.awt.Dimension(105, 60));
-        loadBaseGrammarBtn.setOpaque(true);
         loadBaseGrammarBtn.setPreferredSize(new java.awt.Dimension(173, 60));
         loadBaseGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2295,7 +2320,6 @@ public class LickgenFrame
         saveGrammarAsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         saveGrammarAsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         saveGrammarAsButton.setMaximumSize(new java.awt.Dimension(9999, 9999));
-        saveGrammarAsButton.setOpaque(true);
         saveGrammarAsButton.setPreferredSize(new java.awt.Dimension(173, 60));
         saveGrammarAsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2318,7 +2342,6 @@ public class LickgenFrame
         openCorpusBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         openCorpusBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
         openCorpusBtn.setMinimumSize(new java.awt.Dimension(240, 75));
-        openCorpusBtn.setOpaque(true);
         openCorpusBtn.setPreferredSize(new java.awt.Dimension(240, 75));
         openCorpusBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2340,7 +2363,6 @@ public class LickgenFrame
         toGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         toGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 70));
         toGrammarBtn.setMinimumSize(new java.awt.Dimension(240, 75));
-        toGrammarBtn.setOpaque(true);
         toGrammarBtn.setPreferredSize(new java.awt.Dimension(240, 75));
         toGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2380,7 +2402,6 @@ public class LickgenFrame
         testGeneration.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         testGeneration.setMaximumSize(new java.awt.Dimension(9999, 9999));
         testGeneration.setMinimumSize(new java.awt.Dimension(240, 29));
-        testGeneration.setOpaque(true);
         testGeneration.setPreferredSize(new java.awt.Dimension(240, 29));
         testGeneration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2964,12 +2985,12 @@ public class LickgenFrame
 
         generatorWindowMenu1.setLabel("Window");
         generatorWindowMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                generatorWindowMenu1MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                generatorWindowMenu1MenuSelected(evt);
             }
         });
 
@@ -4754,6 +4775,9 @@ public class LickgenFrame
     private void rectifyCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_rectifyCheckBoxActionPerformed
     {//GEN-HEADEREND:event_rectifyCheckBoxActionPerformed
         rectify = rectifyCheckBox.isSelected();
+        chordBox.setEnabled(rectifyCheckBox.isSelected());
+        colorBox.setEnabled(rectifyCheckBox.isSelected());
+        approachBox.setEnabled(rectifyCheckBox.isSelected());
     }//GEN-LAST:event_rectifyCheckBoxActionPerformed
 
     private void gapFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_gapFieldActionPerformed
@@ -6179,10 +6203,12 @@ private void updateUseSoloist()
     private javax.swing.JTextField MarkovLengthField;
     private javax.swing.JPanel ProbFillClearPanel;
     private javax.swing.JButton addLayerToTableButton;
+    private javax.swing.JCheckBox approachBox;
     private javax.swing.JCheckBox autoFillCheckBox;
     private javax.swing.JCheckBox avoidRepeatsCheckbox;
     private javax.swing.JButton backwardGradeSoloButton;
     private javax.swing.JMenuItem cascadeMI2;
+    private javax.swing.JCheckBox chordBox;
     private javax.swing.JPanel chordProbPanel;
     private javax.swing.JTextField chordToneDecayField;
     private javax.swing.JLabel chordToneDecayRateLabel;
@@ -6191,6 +6217,7 @@ private void updateUseSoloist()
     private javax.swing.JButton clearProbsButton;
     private javax.swing.JButton clearWeightFileButton;
     private javax.swing.JMenuItem closeWindowMI2;
+    private javax.swing.JCheckBox colorBox;
     private javax.swing.JLabel colorToneProbLabel;
     private javax.swing.JTextField colorToneWeightField;
     private javax.swing.JCheckBox continuallyGenerateCheckBox;
@@ -6285,6 +6312,7 @@ private void updateUseSoloist()
     private javax.swing.JPanel pitchProbabilitiesPanel;
     private javax.swing.JButton playLickButton;
     private javax.swing.JCheckBox rectifyCheckBox;
+    private javax.swing.JPanel rectifyPanel;
     private javax.swing.JCheckBox recurrentCheckbox;
     private javax.swing.JButton regenerateHeadDataBtn;
     private javax.swing.JButton regenerateLickForSoloButton;
@@ -6397,6 +6425,11 @@ private void updateUseSoloist()
 
     public boolean rectifySelected() {
         return rectifyCheckBox.isSelected();
+    }
+    
+    public boolean [] getRectifyOptions(){
+        boolean [] options = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
+        return options;
     }
 
     public boolean useCriticSelected() {

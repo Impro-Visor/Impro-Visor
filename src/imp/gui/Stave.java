@@ -5313,13 +5313,15 @@ public void shiftPitch(int startIndex, int endIndex, boolean up,
 
 public void rectifySelection(int startIndex, int endIndex, boolean directional, boolean direction)
   {
+    boolean [] options = notate.getLickgenFrame().getRectifyOptions();
     notate.cm.execute(
             new RectifyPitchesCommand(getMelodyPart(),
                                       startIndex,
                                       endIndex,
                                       getChordProg(),
                                       directional,
-                                      direction));
+                                      direction,
+                                      options[0], options[1], options[2]));
 
     if( startIndex == endIndex )
       {

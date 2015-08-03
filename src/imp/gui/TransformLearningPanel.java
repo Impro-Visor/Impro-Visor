@@ -72,6 +72,8 @@ public class TransformLearningPanel extends javax.swing.JPanel {
      */
     private PartList originalList;
     
+    private ArrayList<MelodyPart> flatList;
+    
     /**
      * The melody result after flattening that is used in subtracting and 
      * learning
@@ -108,6 +110,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         transformLearning = new TransformLearning();
         original = new MelodyPart();
         originalList = new PartList(1);
+        flatList = new ArrayList<MelodyPart>();
         flattened = new MelodyPart();
         resolution = 120;
         transform = new Transform();
@@ -124,7 +127,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLabel1 = new javax.swing.JLabel();
+        shortcutPanel = new javax.swing.JPanel();
+        instructionsLabel = new javax.swing.JLabel();
+        shortcutLabel = new javax.swing.JLabel();
+        learnAllButton = new javax.swing.JButton();
         step1Panel = new javax.swing.JPanel();
         step1Label1 = new javax.swing.JLabel();
         step1Label3 = new javax.swing.JLabel();
@@ -163,28 +169,48 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         step4Label2 = new javax.swing.JLabel();
         step4Label1 = new javax.swing.JLabel();
         showTransformButton = new javax.swing.JButton();
-        printTrendPanel = new javax.swing.JPanel();
-        trendChooser = new javax.swing.JComboBox();
-        printTrendsButton = new javax.swing.JButton();
 
         setAlignmentX(0.0F);
         setMinimumSize(new java.awt.Dimension(270, 200));
         setPreferredSize(new java.awt.Dimension(270, 200));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("Follow every step to learn a transform for a solo. The comments labeled important are the strictly required instructions to generate a learned transform.");
-        jLabel1.setAlignmentY(0.0F);
-        jLabel1.setMaximumSize(new java.awt.Dimension(1000, 15));
-        jLabel1.setMinimumSize(new java.awt.Dimension(1000, 15));
-        jLabel1.setPreferredSize(new java.awt.Dimension(1000, 15));
+        shortcutPanel.setLayout(new java.awt.GridBagLayout());
+
+        instructionsLabel.setText("Follow every step to learn a transform for a solo. The comments labeled important are the strictly required instructions to generate a learned transform.");
+        instructionsLabel.setAlignmentY(0.0F);
+        instructionsLabel.setMaximumSize(new java.awt.Dimension(1000, 15));
+        instructionsLabel.setMinimumSize(new java.awt.Dimension(1000, 15));
+        instructionsLabel.setPreferredSize(new java.awt.Dimension(1000, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        shortcutPanel.add(instructionsLabel, gridBagConstraints);
+
+        shortcutLabel.setText("Alternatively, click this button to learn every possible transform from this solo and place the result in the Transform Tab:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        shortcutPanel.add(shortcutLabel, gridBagConstraints);
+
+        learnAllButton.setText("Learn All!");
+        learnAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                learnAllButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 9, 4, 0);
-        add(jLabel1, gridBagConstraints);
+        shortcutPanel.add(learnAllButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        add(shortcutPanel, gridBagConstraints);
 
         step1Panel.setBackground(new java.awt.Color(252, 110, 90));
         step1Panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Step 1", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
@@ -291,7 +317,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -407,7 +433,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weighty = 1.0;
         add(step2Panel, gridBagConstraints);
@@ -548,7 +574,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weighty = 1.0;
         add(step3Panel, gridBagConstraints);
@@ -622,34 +648,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weighty = 1.0;
         add(step4Panel, gridBagConstraints);
-
-        printTrendPanel.setLayout(new java.awt.GridBagLayout());
-
-        trendChooser.setModel(new javax.swing.DefaultComboBoxModel(trendNames));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        printTrendPanel.add(trendChooser, gridBagConstraints);
-
-        printTrendsButton.setText("Create Trend Transform");
-        printTrendsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printTrendsButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        printTrendPanel.add(printTrendsButton, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        add(printTrendPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveOriginalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveOriginalButtonActionPerformed
@@ -728,17 +730,9 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_allowRepeatsCheckBoxActionPerformed
 
-    private void printTrendsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTrendsButtonActionPerformed
-        Transform newTransform = learnByNewTrendDetection();
-                
-        transform = newTransform;
-        
-        transform.hasChanged = true;
-        showTransformButton.setEnabled(true);
-        setTransformButton.setEnabled(true);    
-    }//GEN-LAST:event_printTrendsButtonActionPerformed
-
     private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllButtonActionPerformed
+        originalList = new PartList(0);
+        
         notate.selectAll2();
         notate.adjustSelection();
         
@@ -800,6 +794,67 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         subtractAllOutline();
     }//GEN-LAST:event_subAllFlatFromOriginalActionPerformed
 
+    private void learnAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnAllButtonActionPerformed
+        learnAll();
+    }//GEN-LAST:event_learnAllButtonActionPerformed
+
+    private void learnAll(){
+        transform = new Transform();
+        saveAll();
+        int [] resolutions = {Constants.WHOLE, Constants.HALF, Constants.QUARTER, Constants.EIGHTH};
+        for(int res : resolutions){
+            shortcutFlattenAll(res);
+            extractFromAll(res);
+            extractFromAll(res*2);
+        }
+        
+        transformPanel.setTransform(transform);
+    }
+    
+    private void saveAll(){
+        originalList = new PartList(0);
+        
+        notate.selectAll2();
+        notate.adjustSelection();
+        
+        PartList list = notate.getScore().getPartList();
+        for(int i = 0; i < list.size(); ++i){
+            MelodyPart part = list.get(i).copy();
+            originalList.add(part);
+        }
+        notate.repaint();
+    }
+    
+    private void shortcutFlattenAll(int resolution){
+        flatList.clear();
+        boolean allowRepeats = allowRepeatsCheckBox.isSelected();
+        for(int i = 0; i < notate.getScore().size(); ++i){
+            MelodyPart current = notate.getMelodyPart(notate.getStaveAtTab(i));
+            MelodyPart result = flattenPartByResolution(current,
+                                                resolution, 
+                                                !allowRepeats, 
+                                                0, 
+                                                current.size()-1);
+            flatList.add(result);
+        }
+    }
+    
+    private void extractFromAll(int res){
+        Transform result = new Transform();
+        for(int i = 0; i < originalList.size(); i++){
+            MelodyPart orig = originalList.get(i).copy();
+            int start = 0, stop = orig.getSize();
+            Transform trans = transformLearning.createBlockTransform(flatList.get(i).copy(),
+                                                                     originalList.get(i).copy(),
+                                                                     notate.getChordProg(),
+                                                                     start,
+                                                                     stop,
+                                                                     res);
+            result = transformLearning.merge(result, trans);
+        }
+        transform = transformLearning.merge(transform, result);
+    }
+    
     private static Trend getTrend(String s){
         if(s.equals("Arpeggio")){
             return new ArpeggioTrend();
@@ -828,10 +883,9 @@ public class TransformLearningPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox flattenValueComboBox;
     private javax.swing.JComboBox generateTransformMethodComboBox;
     private javax.swing.JPanel generateTransformPanel;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel instructionsLabel;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel printTrendPanel;
-    private javax.swing.JButton printTrendsButton;
+    private javax.swing.JButton learnAllButton;
     private javax.swing.JButton replaceAllWithOriginalButton;
     private javax.swing.JButton replaceWithOriginalButton;
     private javax.swing.JPanel restorePanel;
@@ -839,6 +893,8 @@ public class TransformLearningPanel extends javax.swing.JPanel {
     private javax.swing.JButton saveOriginalButton;
     private javax.swing.JPanel savePanel;
     private javax.swing.JButton setTransformButton;
+    private javax.swing.JLabel shortcutLabel;
+    private javax.swing.JPanel shortcutPanel;
     private javax.swing.JButton showTransformButton;
     private javax.swing.JLabel step1Label1;
     private javax.swing.JLabel step1Label2;
@@ -859,7 +915,6 @@ public class TransformLearningPanel extends javax.swing.JPanel {
     private javax.swing.JButton subAllFlatFromOriginal;
     private javax.swing.JButton subFlatFromOrigButton;
     private javax.swing.JPanel subFlatteningPanel;
-    private javax.swing.JComboBox trendChooser;
     private javax.swing.JComboBox windowResolutionComboBox;
     // End of variables declaration//GEN-END:variables
 
@@ -1054,6 +1109,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         }
         return result;
     }
+    
     /**
      * Learns transformations by going through the notes in a melody
      * sequentially and detecting sections that contain a trend. Then a
@@ -1105,36 +1161,36 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         return result;
     }
     
-    private Transform learnByNewTrendDetection(){
-        String trendString = (String) trendChooser.getSelectedItem();
-        Trend trend = getTrend(trendString);
-        
-        notate.adjustSelection();
-        notate.repaint();
-        int start = notate.getCurrentSelectionStart();
-        int stop = notate.getCurrentSelectionEnd();
-        MelodyPart melodyPart = notate.getCurrentMelodyPart().copy().extract(start, stop);
-        ChordPart chordPart = notate.getChordProg();
-        int [] metre = notate.getScore().getMetre();
-        
-        Transform newTransform = new Transform();
-        
-        if(trend == null){
-            for (String trendName : trendNames) {
-                Trend t = getTrend(trendName);
-                if(t!=null){
-                    Transform currTransform = transformLearning.trendTransform(melodyPart, chordPart, metre, getTrend(trendName));
-                    newTransform = transformLearning.merge(newTransform, currTransform);
-                }
-
-            }
-        }else{
-            newTransform = transformLearning.trendTransform(melodyPart, chordPart, metre, trend);
-        }
-        
-        return newTransform;
-
-    }
+//    private Transform learnByNewTrendDetection(){
+//        String trendString = (String) trendChooser.getSelectedItem();
+//        Trend trend = getTrend(trendString);
+//        
+//        notate.adjustSelection();
+//        notate.repaint();
+//        int start = notate.getCurrentSelectionStart();
+//        int stop = notate.getCurrentSelectionEnd();
+//        MelodyPart melodyPart = notate.getCurrentMelodyPart().copy().extract(start, stop);
+//        ChordPart chordPart = notate.getChordProg();
+//        int [] metre = notate.getScore().getMetre();
+//        
+//        Transform newTransform = new Transform();
+//        
+//        if(trend == null){
+//            for (String trendName : trendNames) {
+//                Trend t = getTrend(trendName);
+//                if(t!=null){
+//                    Transform currTransform = transformLearning.trendTransform(melodyPart, chordPart, metre, getTrend(trendName));
+//                    newTransform = transformLearning.merge(newTransform, currTransform);
+//                }
+//
+//            }
+//        }else{
+//            newTransform = transformLearning.trendTransform(melodyPart, chordPart, metre, trend);
+//        }
+//        
+//        return newTransform;
+//
+//    }
     /**
      * Goes through each note in the original melody and if it equals the note 
      * at the same place in the flattened melody, turn it into a rest. This 
