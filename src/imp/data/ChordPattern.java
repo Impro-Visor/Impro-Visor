@@ -884,10 +884,16 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
             buffer.append(n);
         }
 
-        chord.setVoicing(buffer.toPolylist());
-        VoicingDebug.println("Voicing: " + buffer.toPolylist().toString());
+        Polylist customVoicing = buffer.toPolylist();
+        //chord.setVoicing(buffer.toPolylist());
+        VoicingDebug.println("Voicing: " + customVoicing);
         VoicingDebug.println("----------");
         VoicingDebug.println("");
+        
+        // Return a list of a single voicing with an empty extension
+        
+        Polylist extension = Polylist.nil;
+        return Polylist.list(Polylist.list(customVoicing, extension));
     }
 /*End*/
 //----------------------------------------------------------------------------------------------------//
