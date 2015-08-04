@@ -244,7 +244,6 @@ public class LickgenFrame
         recurrentCheckbox = new javax.swing.JCheckBox();
         generationGapLabel = new javax.swing.JLabel();
         gapField = new javax.swing.JTextField();
-        rectifyCheckBox = new javax.swing.JCheckBox();
         useSoloistCheckBox = new javax.swing.JCheckBox();
         useHeadCheckBox = new javax.swing.JCheckBox();
         regenerateHeadDataBtn = new javax.swing.JButton();
@@ -254,6 +253,7 @@ public class LickgenFrame
         saveImpCheckbox = new javax.swing.JCheckBox();
         minLabel = new javax.swing.JLabel();
         rectifyPanel = new javax.swing.JPanel();
+        rectifyCheckBox = new javax.swing.JCheckBox();
         chordBox = new javax.swing.JCheckBox();
         colorBox = new javax.swing.JCheckBox();
         approachBox = new javax.swing.JCheckBox();
@@ -394,7 +394,7 @@ public class LickgenFrame
         windowMenuSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Lick Generator Controls");
+        setTitle("Grammar Controls");
         setMinimumSize(new java.awt.Dimension(1000, 850));
         setPreferredSize(new java.awt.Dimension(1250, 850));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1085,26 +1085,6 @@ public class LickgenFrame
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 10);
         lickgenParametersPanel.add(gapField, gridBagConstraints);
 
-        rectifyCheckBox.setSelected(true);
-        rectifyCheckBox.setText("Rectify\n");
-        rectifyCheckBox.setToolTipText("Rectify the generated melody.\n");
-        rectifyCheckBox.setMaximumSize(new java.awt.Dimension(160, 23));
-        rectifyCheckBox.setMinimumSize(new java.awt.Dimension(160, 23));
-        rectifyCheckBox.setPreferredSize(new java.awt.Dimension(160, 23));
-        rectifyCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rectifyCheckBoxActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.1;
-        lickgenParametersPanel.add(rectifyCheckBox, gridBagConstraints);
-
         useSoloistCheckBox.setText("Use Soloist");
         useSoloistCheckBox.setMaximumSize(new java.awt.Dimension(150, 23));
         useSoloistCheckBox.setMinimumSize(new java.awt.Dimension(150, 23));
@@ -1122,9 +1102,9 @@ public class LickgenFrame
         lickgenParametersPanel.add(useSoloistCheckBox, gridBagConstraints);
 
         useHeadCheckBox.setLabel("Use Head");
-        useHeadCheckBox.setMaximumSize(new java.awt.Dimension(140, 23));
-        useHeadCheckBox.setMinimumSize(new java.awt.Dimension(140, 23));
-        useHeadCheckBox.setPreferredSize(new java.awt.Dimension(140, 23));
+        useHeadCheckBox.setMaximumSize(new java.awt.Dimension(100, 23));
+        useHeadCheckBox.setMinimumSize(new java.awt.Dimension(100, 23));
+        useHeadCheckBox.setPreferredSize(new java.awt.Dimension(100, 23));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
@@ -1132,9 +1112,9 @@ public class LickgenFrame
         lickgenParametersPanel.add(useHeadCheckBox, gridBagConstraints);
 
         regenerateHeadDataBtn.setText("Regenerate Head Data");
-        regenerateHeadDataBtn.setMaximumSize(new java.awt.Dimension(180, 29));
-        regenerateHeadDataBtn.setMinimumSize(new java.awt.Dimension(180, 29));
-        regenerateHeadDataBtn.setPreferredSize(new java.awt.Dimension(180, 29));
+        regenerateHeadDataBtn.setMaximumSize(new java.awt.Dimension(100, 29));
+        regenerateHeadDataBtn.setMinimumSize(new java.awt.Dimension(100, 29));
+        regenerateHeadDataBtn.setPreferredSize(new java.awt.Dimension(100, 29));
         regenerateHeadDataBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regenerateHeadDataBtnActionPerformed(evt);
@@ -1213,24 +1193,67 @@ public class LickgenFrame
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         lickgenParametersPanel.add(minLabel, gridBagConstraints);
 
+        rectifyPanel.setMinimumSize(new java.awt.Dimension(400, 23));
+        rectifyPanel.setOpaque(false);
+        rectifyPanel.setPreferredSize(new java.awt.Dimension(400, 23));
         rectifyPanel.setLayout(new java.awt.GridBagLayout());
+
+        rectifyCheckBox.setSelected(true);
+        rectifyCheckBox.setText("Rectify\n");
+        rectifyCheckBox.setToolTipText("Rectify the generated melody.\n");
+        rectifyCheckBox.setMaximumSize(new java.awt.Dimension(200, 25));
+        rectifyCheckBox.setMinimumSize(new java.awt.Dimension(90, 25));
+        rectifyCheckBox.setPreferredSize(new java.awt.Dimension(90, 25));
+        rectifyCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rectifyCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        rectifyPanel.add(rectifyCheckBox, gridBagConstraints);
 
         chordBox.setSelected(true);
         chordBox.setText("Chord");
-        rectifyPanel.add(chordBox, new java.awt.GridBagConstraints());
+        chordBox.setMaximumSize(new java.awt.Dimension(200, 25));
+        chordBox.setMinimumSize(new java.awt.Dimension(90, 25));
+        chordBox.setPreferredSize(new java.awt.Dimension(90, 25));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.2;
+        rectifyPanel.add(chordBox, gridBagConstraints);
 
         colorBox.setSelected(true);
         colorBox.setText("Color");
-        rectifyPanel.add(colorBox, new java.awt.GridBagConstraints());
+        colorBox.setMaximumSize(new java.awt.Dimension(200, 25));
+        colorBox.setMinimumSize(new java.awt.Dimension(90, 25));
+        colorBox.setPreferredSize(new java.awt.Dimension(90, 25));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.2;
+        rectifyPanel.add(colorBox, gridBagConstraints);
 
         approachBox.setSelected(true);
         approachBox.setText("Approach");
-        rectifyPanel.add(approachBox, new java.awt.GridBagConstraints());
+        approachBox.setMaximumSize(new java.awt.Dimension(200, 25));
+        approachBox.setMinimumSize(new java.awt.Dimension(90, 25));
+        approachBox.setPreferredSize(new java.awt.Dimension(90, 25));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.2;
+        rectifyPanel.add(approachBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickgenParametersPanel.add(rectifyPanel, gridBagConstraints);
@@ -2985,12 +3008,12 @@ public class LickgenFrame
 
         generatorWindowMenu1.setLabel("Window");
         generatorWindowMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                generatorWindowMenu1MenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                generatorWindowMenu1MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
