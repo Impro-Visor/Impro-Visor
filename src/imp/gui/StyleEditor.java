@@ -82,7 +82,7 @@ public class StyleEditor
 
   static public final String BASS_STRING = "B";
   
-  static public final String CUSTOM = "custom";
+  static public final String CUSTOM = "fluid";
 
   int nextPattern = 0;
   
@@ -123,7 +123,7 @@ public class StyleEditor
   
   private boolean override;
   
-  private String voicingFileName="default.fv";
+  private String voicingFileName="default.avp";
 
     public String getVoicingFileName() {
         return voicingFileName;
@@ -4122,7 +4122,7 @@ public void updateAllDrumPatterns(String name, String rules)
         bassAttrPanel.add(voicingTypeChoice, gridBagConstraints);
 
         voicingFilenameTF.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        voicingFilenameTF.setText("default.fv");
+        voicingFilenameTF.setText("default.avp");
         voicingFilenameTF.setToolTipText("If custom voicing is used, this is the name of the settings file.\n");
         voicingFilenameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Voicing settings file, if custom type", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         voicingFilenameTF.setMaximumSize(new java.awt.Dimension(200, 2147483647));
@@ -7677,7 +7677,7 @@ private void openStyleMixer()
     private void voicingFilenameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingFilenameTFActionPerformed
                 File openFile=null;
                 JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fluid Voicing Files", "fv");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showOpenDialog(null);
                 if(returnVal == JFileChooser.APPROVE_OPTION) {
