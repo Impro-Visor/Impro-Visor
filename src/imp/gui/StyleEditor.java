@@ -7612,9 +7612,6 @@ private void openStyleMixer()
 
     private void custVoicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custVoicActionPerformed
         AutomaticVoicingSettings avs=ImproVisor.avs;
-        //AVPFileCreator.fileToSettings(new File(ImproVisor.getVoicingDirectory(),this.voicingFileName), avs);
-        VoicingGenerator vgen=new VoicingGenerator();
-        HandManager handyMan=new HandManager();
         ControlPanelFrame conPanel=new ControlPanelFrame(avs);
         conPanel.setStyleEditor(this);
         conPanel.setVisible(true);
