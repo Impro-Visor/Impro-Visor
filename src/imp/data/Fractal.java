@@ -40,7 +40,6 @@ import polya.Polylist;
 public class Fractal implements Constants{
     
     private double tripletProb;
-    private double quintupletProb;
     
     // Dividing Probabilities
     private double wholeDivProb;
@@ -59,16 +58,14 @@ public class Fractal implements Constants{
     private double defaultRestProb;
     
     // Keywords used in the file parser to set probabilities
-    private static String keyword[] = {"dividing-iterations",
-                                       "dividing-probabilities",
+    private static String keyword[] = {"dividing-probabilities",
                                        "rest-probabilities",
                                        "triplet-probability",
                                        "quintuplet-probability"};
-    private static final int ITERATIONS = 0;
-    private static final int DIVIDING_PROB = 1;
-    private static final int REST_PROB = 2;
-    private static final int TRIPLET_PROB = 3;
-    private static final int QUINTUPLET_PROB = 4;
+    private static final int DIVIDING_PROB = 0;
+    private static final int REST_PROB = 1;
+    private static final int TRIPLET_PROB = 2;
+    private static final int QUINTUPLET_PROB = 3;
     
     private static String noteWords[] = {"whole", "half", "quarter", 
                                          "eighth", "sixteenth", "default"};
@@ -82,7 +79,6 @@ public class Fractal implements Constants{
     //Constants used for fractally dividing a line
     private static final int TUPLE = 2;
     private static final int TRIPLET = 3;
-    private static final int QUINTUPLET = 5;
     
     public Fractal()
     {
@@ -113,7 +109,6 @@ public class Fractal implements Constants{
     private void debug()
     {
         System.out.println("Triplet prob: " + tripletProb);
-        System.out.println("Quintuplet prob: " + quintupletProb);
         System.out.println("Whole div prob: " + wholeDivProb);
         System.out.println("Half div prob: " + halfDivProb);
         System.out.println("Quarter div prob: " + quarterDivProb);
@@ -146,10 +141,6 @@ public class Fractal implements Constants{
                 case TRIPLET_PROB:
                     Double tripDouble = ((Number)dispatcher.second()).doubleValue();
                     tripletProb = tripDouble;
-                    break;
-                case QUINTUPLET_PROB:
-                    Double quintDoub = ((Number)dispatcher.second()).doubleValue();
-                    quintupletProb = quintDoub;
                     break;
                 default:
                     break;
@@ -247,9 +238,6 @@ public class Fractal implements Constants{
         buffer.append(")) \n");
         buffer.append("(triplet-probability ");
         buffer.append(tripletProb);
-        buffer.append(") \n");
-        buffer.append("(quintuplet-probability ");
-        buffer.append(quintupletProb);
         buffer.append(")");
         
         return buffer.toString();
@@ -678,16 +666,6 @@ public class Fractal implements Constants{
     public double getTripletProb()
     {
         return tripletProb;
-    }
-    
-    public void setQuintupletProb(double prob)
-    {
-        quintupletProb = prob;
-    }
-    
-    public double getQuintupletProb()
-    {
-        return quintupletProb;
     }
     
     public void setWholeDivProb(double prob)

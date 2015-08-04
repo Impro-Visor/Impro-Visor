@@ -1,7 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This Java Class is part of the Impro-Visor Application
+ *
+ * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ *
+ * Impro-Visor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Impro-Visor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * merchantability or fitness for a particular purpose.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Impro-Visor; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package imp.gui;
 
@@ -9,7 +23,6 @@ import imp.ImproVisor;
 import imp.com.CommandManager;
 import imp.com.RectifyPitchesCommand;
 import imp.data.Fractal;
-import imp.data.Leadsheet;
 import imp.data.MelodyPart;
 import imp.util.ErrorLog;
 import java.io.File;
@@ -23,11 +36,11 @@ import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import polya.Polylist;
 
 /**
- *
- * @author clessard
+ * A frame for fractally improvising over an existing melody part
+ * Accessible through notate
+ * @author Carli Lessard
  */
 public class FractalFrame extends javax.swing.JFrame {
     private final Notate notate;
@@ -102,19 +115,7 @@ public class FractalFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         probabilitiesPanel = new javax.swing.JPanel();
-        divProbPanel = new javax.swing.JPanel();
-        wholeDivLabel = new javax.swing.JLabel();
-        halfDivLabel = new javax.swing.JLabel();
-        quarterDivLabel = new javax.swing.JLabel();
-        eighthDivLabel = new javax.swing.JLabel();
-        sixteenthDivLabel = new javax.swing.JLabel();
-        defaultDivLabel = new javax.swing.JLabel();
-        wholeDivText = new javax.swing.JTextField();
-        halfDivText = new javax.swing.JTextField();
-        quarterDivText = new javax.swing.JTextField();
-        eighthDivText = new javax.swing.JTextField();
-        sixteenthDivText = new javax.swing.JTextField();
-        defaultDivText = new javax.swing.JTextField();
+        containerPanel = new javax.swing.JPanel();
         restProbPanel = new javax.swing.JPanel();
         wholeRestLabel = new javax.swing.JLabel();
         halfRestLabel = new javax.swing.JLabel();
@@ -131,10 +132,31 @@ public class FractalFrame extends javax.swing.JFrame {
         numDivPanel = new javax.swing.JPanel();
         doubleLabel = new javax.swing.JLabel();
         tripleLabel = new javax.swing.JLabel();
-        fiveLabel = new javax.swing.JLabel();
         doubleText = new javax.swing.JTextField();
         tripleText = new javax.swing.JTextField();
-        fiveText = new javax.swing.JTextField();
+        infoPanel = new javax.swing.JPanel();
+        infoLabel1 = new javax.swing.JLabel();
+        infoLabel2 = new javax.swing.JLabel();
+        infoLabel3 = new javax.swing.JLabel();
+        infoLabel4 = new javax.swing.JLabel();
+        infoLabel5 = new javax.swing.JLabel();
+        infoLabel6 = new javax.swing.JLabel();
+        divProbPanel = new javax.swing.JPanel();
+        wholeDivLabel = new javax.swing.JLabel();
+        halfDivLabel = new javax.swing.JLabel();
+        quarterDivLabel = new javax.swing.JLabel();
+        eighthDivLabel = new javax.swing.JLabel();
+        sixteenthDivLabel = new javax.swing.JLabel();
+        defaultDivLabel = new javax.swing.JLabel();
+        wholeDivText = new javax.swing.JTextField();
+        halfDivText = new javax.swing.JTextField();
+        quarterDivText = new javax.swing.JTextField();
+        eighthDivText = new javax.swing.JTextField();
+        sixteenthDivText = new javax.swing.JTextField();
+        defaultDivText = new javax.swing.JTextField();
+        descriptionPanel = new javax.swing.JPanel();
+        descriptionLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         dividingPanel = new javax.swing.JPanel();
         numDivisionsSpinner = new javax.swing.JSpinner();
         multDivideButton = new javax.swing.JButton();
@@ -144,100 +166,18 @@ public class FractalFrame extends javax.swing.JFrame {
         openFileMI = new javax.swing.JMenuItem();
         saveFileMI = new javax.swing.JMenuItem();
 
+        setMaximumSize(new java.awt.Dimension(700, 400));
         setMinimumSize(new java.awt.Dimension(700, 400));
-        setPreferredSize(new java.awt.Dimension(800, 400));
-        setSize(new java.awt.Dimension(800, 400));
+        setPreferredSize(new java.awt.Dimension(700, 400));
+        setSize(new java.awt.Dimension(700, 400));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         probabilitiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Probabilities"));
-        probabilitiesPanel.setPreferredSize(new java.awt.Dimension(700, 266));
+        probabilitiesPanel.setMinimumSize(new java.awt.Dimension(1334, 300));
+        probabilitiesPanel.setPreferredSize(new java.awt.Dimension(600, 300));
         probabilitiesPanel.setLayout(new java.awt.GridBagLayout());
 
-        divProbPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Division"));
-        divProbPanel.setLayout(new java.awt.GridBagLayout());
-
-        wholeDivLabel.setText("Whole Note");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        divProbPanel.add(wholeDivLabel, gridBagConstraints);
-
-        halfDivLabel.setText("Half Note");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        divProbPanel.add(halfDivLabel, gridBagConstraints);
-
-        quarterDivLabel.setText("Quarter Note");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        divProbPanel.add(quarterDivLabel, gridBagConstraints);
-
-        eighthDivLabel.setText("Eighth Note");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        divProbPanel.add(eighthDivLabel, gridBagConstraints);
-
-        sixteenthDivLabel.setText("Sixteenth Note");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        divProbPanel.add(sixteenthDivLabel, gridBagConstraints);
-
-        defaultDivLabel.setText("Default");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        divProbPanel.add(defaultDivLabel, gridBagConstraints);
-
-        wholeDivText.setMinimumSize(new java.awt.Dimension(50, 28));
-        wholeDivText.setPreferredSize(new java.awt.Dimension(50, 28));
-        divProbPanel.add(wholeDivText, new java.awt.GridBagConstraints());
-
-        halfDivText.setMinimumSize(new java.awt.Dimension(50, 28));
-        halfDivText.setPreferredSize(new java.awt.Dimension(50, 28));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        divProbPanel.add(halfDivText, gridBagConstraints);
-
-        quarterDivText.setMinimumSize(new java.awt.Dimension(50, 28));
-        quarterDivText.setPreferredSize(new java.awt.Dimension(50, 28));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        divProbPanel.add(quarterDivText, gridBagConstraints);
-
-        eighthDivText.setMinimumSize(new java.awt.Dimension(50, 28));
-        eighthDivText.setPreferredSize(new java.awt.Dimension(50, 28));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        divProbPanel.add(eighthDivText, gridBagConstraints);
-
-        sixteenthDivText.setMinimumSize(new java.awt.Dimension(50, 28));
-        sixteenthDivText.setPreferredSize(new java.awt.Dimension(50, 28));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        divProbPanel.add(sixteenthDivText, gridBagConstraints);
-
-        defaultDivText.setMinimumSize(new java.awt.Dimension(50, 28));
-        defaultDivText.setPreferredSize(new java.awt.Dimension(50, 28));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        divProbPanel.add(defaultDivText, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 50);
-        probabilitiesPanel.add(divProbPanel, gridBagConstraints);
+        containerPanel.setLayout(new java.awt.GridBagLayout());
 
         restProbPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Rest"));
         restProbPanel.setLayout(new java.awt.GridBagLayout());
@@ -321,56 +261,199 @@ public class FractalFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 50);
-        probabilitiesPanel.add(restProbPanel, gridBagConstraints);
+        containerPanel.add(restProbPanel, gridBagConstraints);
 
         numDivPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Ways to Divide"));
+        numDivPanel.setMinimumSize(new java.awt.Dimension(155, 192));
+        numDivPanel.setPreferredSize(new java.awt.Dimension(155, 192));
         numDivPanel.setLayout(new java.awt.GridBagLayout());
 
-        doubleLabel.setText("Two");
-        numDivPanel.add(doubleLabel, new java.awt.GridBagConstraints());
+        doubleLabel.setText("Duplet");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        numDivPanel.add(doubleLabel, gridBagConstraints);
 
         tripleLabel.setText("Triplet");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
         numDivPanel.add(tripleLabel, gridBagConstraints);
-
-        fiveLabel.setText("Quintuplet");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        numDivPanel.add(fiveLabel, gridBagConstraints);
 
         doubleText.setEditable(false);
         doubleText.setMinimumSize(new java.awt.Dimension(50, 28));
         doubleText.setPreferredSize(new java.awt.Dimension(50, 28));
-        numDivPanel.add(doubleText, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        numDivPanel.add(doubleText, gridBagConstraints);
 
         tripleText.setMinimumSize(new java.awt.Dimension(50, 28));
         tripleText.setPreferredSize(new java.awt.Dimension(50, 28));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
         numDivPanel.add(tripleText, gridBagConstraints);
 
-        fiveText.setMinimumSize(new java.awt.Dimension(50, 28));
-        fiveText.setPreferredSize(new java.awt.Dimension(50, 28));
+        infoPanel.setLayout(new java.awt.GridBagLayout());
+
+        infoLabel1.setText("*Note these values");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridwidth = 2;
+        infoPanel.add(infoLabel1, gridBagConstraints);
+
+        infoLabel2.setText("should sum to 1.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        infoPanel.add(infoLabel2, gridBagConstraints);
+
+        infoLabel3.setText("The duplet value will");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        numDivPanel.add(fiveText, gridBagConstraints);
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        infoPanel.add(infoLabel3, gridBagConstraints);
+
+        infoLabel4.setText("automatically be set");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        infoPanel.add(infoLabel4, gridBagConstraints);
+
+        infoLabel5.setText("once the triplet value");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        infoPanel.add(infoLabel5, gridBagConstraints);
+
+        infoLabel6.setText("is changed.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        infoPanel.add(infoLabel6, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        numDivPanel.add(infoPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
+        containerPanel.add(numDivPanel, gridBagConstraints);
+
+        divProbPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Division"));
+        divProbPanel.setLayout(new java.awt.GridBagLayout());
+
+        wholeDivLabel.setText("Whole Note");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 50);
-        probabilitiesPanel.add(numDivPanel, gridBagConstraints);
+        divProbPanel.add(wholeDivLabel, gridBagConstraints);
+
+        halfDivLabel.setText("Half Note");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        divProbPanel.add(halfDivLabel, gridBagConstraints);
+
+        quarterDivLabel.setText("Quarter Note");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        divProbPanel.add(quarterDivLabel, gridBagConstraints);
+
+        eighthDivLabel.setText("Eighth Note");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        divProbPanel.add(eighthDivLabel, gridBagConstraints);
+
+        sixteenthDivLabel.setText("Sixteenth Note");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        divProbPanel.add(sixteenthDivLabel, gridBagConstraints);
+
+        defaultDivLabel.setText("Default");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        divProbPanel.add(defaultDivLabel, gridBagConstraints);
+
+        wholeDivText.setMinimumSize(new java.awt.Dimension(50, 28));
+        wholeDivText.setPreferredSize(new java.awt.Dimension(50, 28));
+        divProbPanel.add(wholeDivText, new java.awt.GridBagConstraints());
+
+        halfDivText.setMinimumSize(new java.awt.Dimension(50, 28));
+        halfDivText.setPreferredSize(new java.awt.Dimension(50, 28));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        divProbPanel.add(halfDivText, gridBagConstraints);
+
+        quarterDivText.setMinimumSize(new java.awt.Dimension(50, 28));
+        quarterDivText.setPreferredSize(new java.awt.Dimension(50, 28));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        divProbPanel.add(quarterDivText, gridBagConstraints);
+
+        eighthDivText.setMinimumSize(new java.awt.Dimension(50, 28));
+        eighthDivText.setPreferredSize(new java.awt.Dimension(50, 28));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        divProbPanel.add(eighthDivText, gridBagConstraints);
+
+        sixteenthDivText.setMinimumSize(new java.awt.Dimension(50, 28));
+        sixteenthDivText.setPreferredSize(new java.awt.Dimension(50, 28));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        divProbPanel.add(sixteenthDivText, gridBagConstraints);
+
+        defaultDivText.setMinimumSize(new java.awt.Dimension(50, 28));
+        defaultDivText.setPreferredSize(new java.awt.Dimension(50, 28));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        divProbPanel.add(defaultDivText, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        containerPanel.add(divProbPanel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        probabilitiesPanel.add(containerPanel, gridBagConstraints);
+
+        descriptionPanel.setLayout(new java.awt.GridBagLayout());
+
+        descriptionLabel.setText("These values give the probability of an event happening for the given length of note.");
+        descriptionLabel.setMaximumSize(new java.awt.Dimension(532, 20));
+        descriptionLabel.setMinimumSize(new java.awt.Dimension(532, 20));
+        descriptionLabel.setPreferredSize(new java.awt.Dimension(532, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        descriptionPanel.add(descriptionLabel, gridBagConstraints);
+
+        jLabel1.setText("The value in each box should stay between 0 and 1.");
+        jLabel1.setMaximumSize(new java.awt.Dimension(325, 20));
+        jLabel1.setMinimumSize(new java.awt.Dimension(325, 20));
+        jLabel1.setPreferredSize(new java.awt.Dimension(325, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        descriptionPanel.add(jLabel1, gridBagConstraints);
+
+        probabilitiesPanel.add(descriptionPanel, new java.awt.GridBagConstraints());
 
         getContentPane().add(probabilitiesPanel, new java.awt.GridBagConstraints());
 
@@ -431,7 +514,7 @@ public class FractalFrame extends javax.swing.JFrame {
 
     private void multDivideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multDivideButtonActionPerformed
         setProbabilities();
-        
+        setTextBoxes();
         int numTimes = (Integer)numDivisionsSpinner.getValue();
         MelodyPart fractalSolo = fractal.fractalImprovise(notate.getCurrentMelodyPart(), numTimes);
         notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
@@ -452,7 +535,7 @@ public class FractalFrame extends javax.swing.JFrame {
 
     private void singleDivideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singleDivideButtonActionPerformed
         setProbabilities();
-        
+        setTextBoxes();
         MelodyPart fractalSolo = fractal.fractalImprovise(notate.getCurrentMelodyPart(), 1);
         notate.cm.execute(new RectifyPitchesCommand(fractalSolo,
                                                     0,
@@ -481,10 +564,13 @@ public class FractalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveFileMIActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel containerPanel;
     private javax.swing.JLabel defaultDivLabel;
     private javax.swing.JTextField defaultDivText;
     private javax.swing.JLabel defaultRestLabel;
     private javax.swing.JTextField defaultRestText;
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JPanel descriptionPanel;
     private javax.swing.JPanel divProbPanel;
     private javax.swing.JPanel dividingPanel;
     private javax.swing.JLabel doubleLabel;
@@ -494,12 +580,18 @@ public class FractalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel eighthRestLabel;
     private javax.swing.JTextField eighthRestText;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JLabel fiveLabel;
-    private javax.swing.JTextField fiveText;
     private javax.swing.JLabel halfDivLabel;
     private javax.swing.JTextField halfDivText;
     private javax.swing.JLabel halfRestLabel;
     private javax.swing.JTextField halfRestText;
+    private javax.swing.JLabel infoLabel1;
+    private javax.swing.JLabel infoLabel2;
+    private javax.swing.JLabel infoLabel3;
+    private javax.swing.JLabel infoLabel4;
+    private javax.swing.JLabel infoLabel5;
+    private javax.swing.JLabel infoLabel6;
+    private javax.swing.JPanel infoPanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton multDivideButton;
     private javax.swing.JPanel numDivPanel;
@@ -608,10 +700,7 @@ public class FractalFrame extends javax.swing.JFrame {
         double tripletProb = fractal.getTripletProb();
         tripleText.setText(String.valueOf(tripletProb));
         
-        double fiveProb = fractal.getQuintupletProb();
-        fiveText.setText(String.valueOf(fiveProb));
-        
-        double twoProb = 1.0 - (tripletProb + fiveProb);
+        double twoProb = 1.0 - tripletProb;
         doubleText.setText(String.valueOf(twoProb));
         
         wholeDivText.setText(String.valueOf(fractal.getWholeDivProb()));
@@ -631,26 +720,33 @@ public class FractalFrame extends javax.swing.JFrame {
     
     private void setProbabilities()
     {
-        double triplet = Double.parseDouble(tripleText.getText());
-        double quintuplet = Double.parseDouble(fiveText.getText());
+        double triplet = parseProb(tripleText.getText());
         
-        doubleText.setText(String.valueOf(1.0 - (triplet + quintuplet)));
+        doubleText.setText(String.valueOf(1.0 - triplet));
                 
         fractal.setTripletProb(triplet);
-        fractal.setQuintupletProb(quintuplet);
         
-        fractal.setWholeDivProb(Double.parseDouble(wholeDivText.getText()));
-        fractal.setHalfDivProb(Double.parseDouble(halfDivText.getText()));
-        fractal.setQuarterDivProb(Double.parseDouble(quarterDivText.getText()));
-        fractal.setEighthDivProb(Double.parseDouble(eighthDivText.getText()));
-        fractal.setSixteenthDivProb(Double.parseDouble(sixteenthDivText.getText()));
-        fractal.setDefaultDivProb(Double.parseDouble(defaultDivText.getText()));
+        fractal.setWholeDivProb(parseProb(wholeDivText.getText()));
+        fractal.setHalfDivProb(parseProb(halfDivText.getText()));
+        fractal.setQuarterDivProb(parseProb(quarterDivText.getText()));
+        fractal.setEighthDivProb(parseProb(eighthDivText.getText()));
+        fractal.setSixteenthDivProb(parseProb(sixteenthDivText.getText()));
+        fractal.setDefaultDivProb(parseProb(defaultDivText.getText()));
         
-        fractal.setWholeRestProb(Double.parseDouble(wholeRestText.getText()));
-        fractal.setHalfRestProb(Double.parseDouble(halfRestText.getText()));
-        fractal.setQuarterRestProb(Double.parseDouble(quarterRestText.getText()));
-        fractal.setEighthRestProb(Double.parseDouble(eighthRestText.getText()));
-        fractal.setSixteenthRestProb(Double.parseDouble(sixteenthRestText.getText()));
-        fractal.setDefaultRestProb(Double.parseDouble(defaultRestText.getText()));
+        fractal.setWholeRestProb(parseProb(wholeRestText.getText()));
+        fractal.setHalfRestProb(parseProb(halfRestText.getText()));
+        fractal.setQuarterRestProb(parseProb(quarterRestText.getText()));
+        fractal.setEighthRestProb(parseProb(eighthRestText.getText()));
+        fractal.setSixteenthRestProb(parseProb(sixteenthRestText.getText()));
+        fractal.setDefaultRestProb(parseProb(defaultRestText.getText()));
+    }
+    
+    private double parseProb(String text)
+    {
+        if(text.isEmpty()){
+            return 0.0;
+        } else {
+            return Double.parseDouble(text);
+        }
     }
 }
