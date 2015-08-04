@@ -7677,7 +7677,7 @@ private void openStyleMixer()
     private void voicingFilenameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingFilenameTFActionPerformed
                 File openFile=null;
                 JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fluid Voicing Files", "fv");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showOpenDialog(null);
                 if(returnVal == JFileChooser.APPROVE_OPTION) {

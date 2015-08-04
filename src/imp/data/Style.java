@@ -119,7 +119,7 @@ public class Style
   /**
    * The name of the voicing file to use for the style
    */  
-  private String voicingFileName = "default.avp";
+  private String voicingFileName = "default.fv";
   /**
    * a boolean that determines whether to automatically extend chords
    */

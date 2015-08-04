@@ -1158,7 +1158,7 @@
             <Component class="javax.swing.JTextField" name="voicingFilenameTF">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="default.avp"/>
+                <Property name="text" type="java.lang.String" value="default.fv"/>
                 <Property name="toolTipText" type="java.lang.String" value="If custom voicing is used, this is the name of the settings file.&#xa;"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
