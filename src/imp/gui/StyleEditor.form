@@ -446,7 +446,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="custVoic">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Custom Voicings"/>
+                <Property name="text" type="java.lang.String" value="Fluid Voicings"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="custVoicMouseClicked"/>
@@ -1127,7 +1127,7 @@
                 <Property name="maximumRowCount" type="int" value="10"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="7">
-                    <StringItem index="0" value="custom"/>
+                    <StringItem index="0" value="fluid"/>
                     <StringItem index="1" value="designer"/>
                     <StringItem index="2" value="any"/>
                     <StringItem index="3" value="closed"/>
@@ -1346,7 +1346,6 @@
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 20]"/>
                 </Property>
-                <Property name="opaque" type="boolean" value="true"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 20]"/>
                 </Property>
@@ -1472,7 +1471,6 @@
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 20]"/>
                 </Property>
-                <Property name="opaque" type="boolean" value="true"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[60, 20]"/>
                 </Property>

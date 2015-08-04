@@ -4103,7 +4103,7 @@ public void updateAllDrumPatterns(String name, String rules)
         bassAttrPanel.add(chordRangeChoice, gridBagConstraints);
 
         voicingTypeChoice.setMaximumRowCount(10);
-        voicingTypeChoice.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "custom", "designer", "any", "closed", "open", "quartal", "shout" }));
+        voicingTypeChoice.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "fluid", "designer", "any", "closed", "open", "quartal", "shout" }));
         voicingTypeChoice.setMaximumSize(new java.awt.Dimension(150, 32767));
         voicingTypeChoice.setMinimumSize(new java.awt.Dimension(150, 22));
         voicingTypeChoice.setPreferredSize(new java.awt.Dimension(150, 22));
@@ -4271,7 +4271,6 @@ public void updateAllDrumPatterns(String name, String rules)
         muteChordToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         muteChordToggle.setMaximumSize(new java.awt.Dimension(60, 20));
         muteChordToggle.setMinimumSize(new java.awt.Dimension(60, 20));
-        muteChordToggle.setOpaque(true);
         muteChordToggle.setPreferredSize(new java.awt.Dimension(60, 20));
         muteChordToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4347,7 +4346,6 @@ public void updateAllDrumPatterns(String name, String rules)
         playToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         playToggle.setMaximumSize(new java.awt.Dimension(60, 20));
         playToggle.setMinimumSize(new java.awt.Dimension(60, 20));
-        playToggle.setOpaque(true);
         playToggle.setPreferredSize(new java.awt.Dimension(60, 20));
         playToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -5754,7 +5752,7 @@ public void updateAllDrumPatterns(String name, String rules)
             }
         });
 
-        custVoic.setText("Custom Voicings");
+        custVoic.setText("Fluid Voicings");
         custVoic.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 custVoicMouseClicked(evt);
@@ -5815,12 +5813,12 @@ public void updateAllDrumPatterns(String name, String rules)
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
         });
 
@@ -5849,12 +5847,12 @@ public void updateAllDrumPatterns(String name, String rules)
         styleMixerMenu.setMnemonic('W');
         styleMixerMenu.setText("Style Mixer");
         styleMixerMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                styleMixerMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                styleMixerMenuMenuSelected(evt);
             }
         });
 

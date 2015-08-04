@@ -48,7 +48,7 @@ public interface Constants {
      * CUSTOM is used to indicate custom voicings
      */
     
-    public static final String CUSTOM = "custom";
+    public static final String CUSTOM = "fluid";
     
     
     /** Note: All of the following must have no fractional remainder,
