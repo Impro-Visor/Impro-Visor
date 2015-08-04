@@ -10,6 +10,7 @@ import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.gui.RangeChooser;
 import imp.gui.StyleEditor;
+import imp.gui.WindowRegistry;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -32,6 +33,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
      * Creates new form ControlPanelFrame
      */
     public ControlPanelFrame(AutomaticVoicingSettings avs1) {
+        WindowRegistry.registerWindow(this);
         this.avs=avs1;
         initComponents();
         associateSliders();
@@ -1614,7 +1616,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        File openFile=null;
                 JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fluid Voicings", "fv");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showOpenDialog(null);
                 if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1632,13 +1634,13 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
                 syncToSettings();
                 File saveFile=new File(ImproVisor.getVoicingDirectory(),styleEditor.getVoicingFileName());
                 JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Auto Voicing Preset Files", "avp");
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fluid Voicings", "fv");
                 chooser.setFileFilter(filter);
                 int returnVal = chooser.showSaveDialog(null);
                 if(returnVal == JFileChooser.APPROVE_OPTION) {
                     saveFile=chooser.getSelectedFile();
-                    if(!saveFile.getName().toLowerCase().endsWith(".avp"))
-                        saveFile=new File(saveFile.getAbsolutePath()+".avp");   
+                    if(!saveFile.getName().toLowerCase().endsWith(".fv"))
+                        saveFile=new File(saveFile.getAbsolutePath()+".fv");   
                     if(saveFile.getName().contains(" "))
                         saveFile=new File(saveFile.getParent(),saveFile.getName().replaceAll(" ", "-"));
                 }
