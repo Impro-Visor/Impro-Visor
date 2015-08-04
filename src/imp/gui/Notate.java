@@ -432,6 +432,7 @@ private MidiRecorder midiRecorder = null; // action handler for recording from m
 private MidiStepEntryActionHandler midiStepInput = null; // action handler for step input from midi
 private MidiStepEntryActionHandler voicingInput = null;
 private boolean stepInputActive = false;
+
 /**
  * Stores the index of stave tab where the playback indicator is currently
  *
@@ -568,6 +569,8 @@ private MidiLatencyMeasurementTool midiLatencyMeasurement = new MidiLatencyMeasu
  * Trading prefs
  */
 TradingWindow trader;
+
+private boolean isActiveTrading = false;
 
 /**
  * If playback indicator goes off the screen, autoscroll to show it again
@@ -10553,6 +10556,10 @@ public void pauseScore()
           }
     }//GEN-LAST:event_tempoSliderStateChanged
 
+public void changeTempo(int newTemp){
+    tempoSlider.setValue(newTemp);
+}
+    
 private void setPlaybackManagerTime()
   {
     establishCountIn();
@@ -23056,8 +23063,13 @@ int quantizeResolution = 60;
 
     private void tradingWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradingWindowActionPerformed
         // Open New Trading window
-        trader = new TradingWindow(this);
+        isActiveTrading = true;
         this.setToNotLoop();
+        if (trader == null) {
+        trader = new TradingWindow(this);
+        } else {
+            trader.setNotateDefaults();
+        }
         trader.setVisible(true);
     }//GEN-LAST:event_tradingWindowActionPerformed
 
@@ -23660,6 +23672,9 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     JMenuItem item = (JMenuItem) evt.getSource();
     String stem = item.getText();
     notateGrammarMenu.setText(stem);
+    if(trader != null){
+        trader.refreshSelectedGrammar(stem);
+    }
     fullName = stem + GrammarFilter.EXTENSION;
     grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + fullName;
     lickgen.loadGrammar(grammarFilename);
@@ -23671,6 +23686,10 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
         shufCount = 0;
     }
   }
+
+public String getSelectedGrammar(){
+    return notateGrammarMenu.getText();
+}
 
 
 
@@ -23918,6 +23937,60 @@ private void populateNotateGrammarMenu()
           }
       }
   }
+
+public void populateGenericGrammarMenu(JMenu menu){
+    File directory = ImproVisor.getGrammarDirectory();
+    //System.out.println("populating from " + directory);
+    if( directory.isDirectory() )
+      {
+        String fileName[] = directory.list();
+
+        // 6-25-13 Hayden Blauzvern
+        // Fix for Linux, where the file list is not in alphabetic order
+        Arrays.sort(fileName, new Comparator<String>()
+        {
+        public int compare(String s1, String s2)
+          {
+            return s1.toUpperCase().compareTo(s2.toUpperCase());
+          }
+
+        });
+
+        // Setup grammar menu items involving trading
+        menu.removeAll();
+        menu.add(new JLabel("Grammar"));
+        
+       
+        // Add names of grammar files
+
+        for( int i = 0; i < fileName.length; i++ )
+          {
+            String name = fileName[i];
+
+            if( name.endsWith(GrammarFilter.EXTENSION) )
+              {
+                if( !name.startsWith("_")){
+                    gramList.add(name);
+                    shufGramList.add(name);
+                }
+                  
+                int len = name.length();
+                String stem = name.substring(0, len - GrammarFilter.EXTENSION.length());
+                JMenuItem item = new JMenuItem(stem);
+                menu.add(item);
+                item.addActionListener(new java.awt.event.ActionListener()
+                {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                  {
+                    notateGrammarMenuAction(evt);
+                  }
+
+                });
+                
+              }
+          }
+      }
+}
 
 
 
@@ -26233,8 +26306,8 @@ public void setLayoutTF(String text)
     layoutTF.setText(text);
   }
 
-public void destroyTradingWindow(){
-    trader = null;
+public void tradingWindowClosed(){
+    isActiveTrading = false;
 }
 
 public boolean getUseNoteCursor()
@@ -26315,7 +26388,7 @@ class PlayActionListener implements ActionListener
 public void actionPerformed(ActionEvent evt) {
 
         //this is used to pass info for interactive trading
-        if (Notate.this.trader != null) {
+        if (isActiveTrading) {
             Notate.this.trader.trackPlay(evt);
         }
 

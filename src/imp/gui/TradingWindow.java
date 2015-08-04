@@ -42,6 +42,7 @@ import imp.util.GrammarFilter;
 import imp.util.MidiManager;
 import imp.util.MidiPlayListener;
 import imp.util.TransformFilter;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -52,8 +53,13 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Stack;
+import javax.swing.ButtonModel;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JToggleButton;
+import javax.swing.JToggleButton.ToggleButtonModel;
 import jm.midi.event.Event;
 
 /**
@@ -72,16 +78,19 @@ import jm.midi.event.Event;
  * the user input is recorded into
  * the instance variable 'tradeScore'.
  *                                      * associated method: .userTurn()
+ * 
  * Processing - When processing takes place. During this
  * phase, user input is no longer recorded.
  * TradeScore is manipulated to produce a
  * finalized response for the computer to play.
  *                                      * associated method: .processInput()
+ * 
  * Computer Turn - When the computer plays. During this phase,
  * the response finalized in processing phase
  * is played. When the computer is first,
  * some solo pre-generated solo is used.
  *                                      * associated method: .computerTurn()
+ * 
  *
  * @author Zachary Kondak
  */
@@ -106,6 +115,7 @@ public class TradingWindow
     private Integer numberOfTurns;
     private Integer measures;
     private Integer nextSection;
+    private String musician;
     private long lastPosition;
     private int[] metre;
     private ChordPart soloChords;
@@ -155,9 +165,15 @@ public class TradingWindow
         initComponents();
         this.notate = notate;
         tradeScore = new Score();
+        notate.populateGenericGrammarMenu(tradeGrammarMenu);
 
         //defaults on open
-        tradeMode = (String) tradeModeSelector.getSelectedItem();
+        updateTradeMode();
+        populateMusicianList();
+        updateMusician();
+        updateTradeLength("4");
+        updateTradeLengthText();
+        updateTradeMode();
         firstPlay = true;
         isTrading = false;
         measures = DEFAULT_TRADE_LENGTH;
@@ -168,6 +184,18 @@ public class TradingWindow
         midiSynth.setMasterVolume(volumeSlider.getValue());
         notate.setEnabled(false);
         setLoop();
+        Double newTempo = notate.getTempo();
+        this.tempoSlider.setValue(newTempo.intValue());
+    }
+    
+    public void setNotateDefaults() {
+        notate.populateGenericGrammarMenu(tradeGrammarMenu);
+        firstPlay = true;
+        isTrading = false;
+        notate.setEnabled(false);
+        setLoop();
+        Double newTempo = notate.getTempo();
+        this.tempoSlider.setValue(newTempo.intValue());
     }
 
     /**
@@ -292,13 +320,11 @@ public class TradingWindow
         tradeScore.addPart(response);
         //System.out.println("TRADE SCORE" + tradeScore);
         //System.out.println("NOTATE SCORE" + notate.getScore());
-        
+
         midiSynth = new MidiSynth(midiManager);
         midiSynth.setMasterVolume(volumeSlider.getValue());
         //System.out.println("NOTATE: " + notate.getMidiSynth().getSequencer());
         //System.out.println("TRADING WINDOW: " + midiSynth.getSequencer());
-        
-        
 
         playCommand = new PlayScoreCommand(
                 tradeScore,
@@ -317,7 +343,7 @@ public class TradingWindow
     public void computerTurn() {
 
         long slotsBefore = notate.getSlotInPlayback();
-        
+
         midiSynth.setSlot(notate.getSlotInPlayback() % slotsPerTurn);
         playCommand.execute();
         long slotsAfter = notate.getSlotInPlayback();
@@ -326,7 +352,6 @@ public class TradingWindow
         slotDelay = (slotDelay + (slotsAfter - slotsBefore)) / 2;
 
         phase = TradePhase.COMPUTER_TURN;
-        
     }
 
     /**
@@ -334,7 +359,9 @@ public class TradingWindow
      */
     public void startTrading() {
         //make this more general
-        String musician = (String) musicianChooser.getSelectedItem();
+        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
+        updateMusician();
+        updateTradeMode();
         File directory = ImproVisor.getTransformDirectory();
         File file = new File(directory, musician + TransformFilter.EXTENSION);
         //String dir = System.getProperty("user.dir");
@@ -526,6 +553,7 @@ public class TradingWindow
      */
     public void stopTrading() {
         //System.out.println("hi");
+        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif")));
         if (isTrading) {
             startTradingButton.setText("StartTrading");
             isTrading = false;
@@ -543,7 +571,7 @@ public class TradingWindow
     }
 
     private void applyTradingMode() {
-        tradeMode = (String) tradeModeSelector.getSelectedItem();
+        updateTradeMode();
         responseGenerator.newResponse(response, soloChords, responseChords, nextSection);
         response = responseGenerator.response(transform, tradeMode);
         notate.getCurrentMelodyPart().altPasteOver(response, triggers.get(triggerIndex));
@@ -578,7 +606,7 @@ public class TradingWindow
     }
 
     public void updateProcessTime(float beats) {
-        String lengthString = (String) tradeLenthSelector.getSelectedItem();
+        String lengthString = tradeLengthField.getText();
         int length = Integer.parseInt(lengthString);
         int maxLength = (((notate.getBeatsPerMeasure() * length) * BEAT) / 2);
         int slotLength = beatsToSlots(beats);
@@ -602,15 +630,101 @@ public class TradingWindow
         }
     }
 
+    public void updateTradeLength(String newLength) {
+        int length = 1;
+        try {
+            length = Integer.parseInt(newLength);
+        } catch (Exception e) {
+        }
+
+        int numOfMeasuresInScore = notate.getScoreLength() / notate.getScore().getSlotsPerMeasure();
+        if (length > numOfMeasuresInScore) {
+            length = numOfMeasuresInScore;
+        } else if (length < 1) {
+            length = 1;
+        } else {
+            int mod = numOfMeasuresInScore % length;
+            if (mod != 0) {
+                int highLength = length;
+                int lowLength = length;
+                while (true) {
+                    if (highLength >= numOfMeasuresInScore) {
+                        length = numOfMeasuresInScore;
+                        break;
+                    } else if (lowLength <= 1) {
+                        length = 1;
+                        break;
+                    } else if ((numOfMeasuresInScore % highLength) == 0) {
+                        length = highLength;
+                        break;
+                    } else if ((numOfMeasuresInScore % lowLength) == 0) {
+                        length = lowLength;
+                        break;
+                    } else {
+                        lowLength--;
+                        highLength++;
+                    }
+                }
+            }
+        }
+        measures = length;
+    }
+
+    public void updateTradeLengthText() {
+        Integer newLength = new Integer(measures);
+        tradeLengthField.setText(newLength.toString());
+
+        updateProcessTime(tryFloat(ProcessTimeSelector.getText()));
+        updateProcessTimeText();
+    }
+
     public void setVolume() {
         midiSynth.setMasterVolume(volumeSlider.getValue());
         Integer newVol = volumeSlider.getValue();
-        volume.setText("Volume of Response: " + newVol.toString());
+        volume.setText(newVol.toString() + "%");
+    }
+    
+    public void setTempo(){
+        notate.changeTempo(tempoSlider.getValue());
+        Integer newTemp = tempoSlider.getValue();
+        tempoLabel.setText(newTemp.toString());
+        midiSynth.setTempo(newTemp.floatValue());
     }
 
     public void setLoop() {
         this.isLoop = loopToggle.isSelected();
         notate.setLoop(true);
+    }
+
+    private void updateTradeMode() {
+        tradeMode = updateFromDropDown(modeMenu);
+    }
+
+    private void updateMusician() {
+        musician = updateFromDropDown(tradeMusicianMenu);
+    }
+
+    private String updateFromDropDown(JMenu menu) {
+        Component[] modes = menu.getMenuComponents();
+        String selection = "";
+        for (Component mode : modes) {
+            JRadioButtonMenuItem modeButton = (JRadioButtonMenuItem) mode;
+            if (modeButton.isSelected()) {
+                selection = modeButton.getText();
+                //System.out.println(selection);
+                return selection;
+            }
+        }
+        return selection;
+    }
+    
+    private void tradingWindowClosed(){
+        if (isTrading) {
+            stopTrading();
+        }
+        notate.setEnabled(true);
+        notate.setLoop(false);
+        notate.tradingWindowClosed();
     }
 
     /**
@@ -625,34 +739,76 @@ public class TradingWindow
 
         leadingSelector = new javax.swing.ButtonGroup();
         modeSelector = new javax.swing.ButtonGroup();
-        startTradingButton = new javax.swing.JButton();
-        tradeModeSelector = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        tradeLenthSelector = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
-        userFirstButton = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        musicianChooser = new javax.swing.JComboBox();
-        musicianLabel = new javax.swing.JLabel();
-        ProcessTimeSelector = new javax.swing.JTextField();
+        transformFileSelector = new javax.swing.ButtonGroup();
+        grammarGroup = new javax.swing.ButtonGroup();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
+        colorRight = new javax.swing.JPanel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        colorLeft = new javax.swing.JPanel();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        mainStuff = new javax.swing.JPanel();
+        tradeLengthPanel = new javax.swing.JPanel();
+        tradeLengthField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        ProcessTimeSelector = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
+        volumePanel = new javax.swing.JPanel();
         volumeSlider = new javax.swing.JSlider();
         volume = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        leadSelectors = new javax.swing.JPanel();
+        userFirstButton = new javax.swing.JRadioButton();
+        improvisorFirstButton = new javax.swing.JRadioButton();
+        playbackControls = new javax.swing.JPanel();
+        startTradingButton = new javax.swing.JButton();
         loopToggle = new javax.swing.JCheckBox();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        tempoPanel = new javax.swing.JPanel();
+        tempoSlider = new javax.swing.JSlider();
+        tempoLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        mainTradeMenuBar = new javax.swing.JMenuBar();
         modeMenu = new javax.swing.JMenu();
         tradeRepeat = new javax.swing.JRadioButtonMenuItem();
         tradeRepeatAndRectify = new javax.swing.JRadioButtonMenuItem();
+        tradeFlatten = new javax.swing.JRadioButtonMenuItem();
+        tradeRandomModify = new javax.swing.JRadioButtonMenuItem();
+        tradeFMR = new javax.swing.JRadioButtonMenuItem();
+        tradeWithAMusician = new javax.swing.JRadioButtonMenuItem();
+        tradeAbstract = new javax.swing.JRadioButtonMenuItem();
+        tradeRhythmicResponse = new javax.swing.JRadioButtonMenuItem();
+        tradeContourTest = new javax.swing.JRadioButtonMenuItem();
+        tradeGrammarSolo = new javax.swing.JRadioButtonMenuItem();
+        tradeUserMelody = new javax.swing.JRadioButtonMenuItem();
+        tradeUserRhythm = new javax.swing.JRadioButtonMenuItem();
+        tradeUserMelodyOrRhythm = new javax.swing.JRadioButtonMenuItem();
+        tradeStore = new javax.swing.JRadioButtonMenuItem();
+        tradeMusicianMenu = new javax.swing.JMenu();
+        tradeGrammarMenu = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jScrollPane1.setViewportView(jEditorPane1);
+
+        setTitle("Active Trading - Impro-Visor");
         setAlwaysOnTop(true);
-        setMinimumSize(new java.awt.Dimension(650, 250));
-        setPreferredSize(new java.awt.Dimension(600, 200));
+        setBackground(new java.awt.Color(153, 153, 255));
+        setMaximumSize(new java.awt.Dimension(600, 362));
+        setMinimumSize(new java.awt.Dimension(600, 362));
+        setPreferredSize(new java.awt.Dimension(600, 362));
         setResizable(false);
+        setSize(new java.awt.Dimension(600, 362));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                formComponentHidden(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -660,105 +816,118 @@ public class TradingWindow
         });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        startTradingButton.setLabel("Start Trading");
-        startTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startTradingButtonActionPerformed(evt);
+        colorRight.setBackground(new java.awt.Color(153, 153, 255));
+        colorRight.setMinimumSize(new java.awt.Dimension(100, 0));
+
+        javax.swing.GroupLayout colorRightLayout = new javax.swing.GroupLayout(colorRight);
+        colorRight.setLayout(colorRightLayout);
+        colorRightLayout.setHorizontalGroup(
+            colorRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(colorRightLayout.createSequentialGroup()
+                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+        colorRightLayout.setVerticalGroup(
+            colorRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(colorRightLayout.createSequentialGroup()
+                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(340, Short.MAX_VALUE))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        getContentPane().add(colorRight, gridBagConstraints);
+
+        colorLeft.setBackground(new java.awt.Color(153, 153, 255));
+        colorLeft.setMinimumSize(new java.awt.Dimension(100, 0));
+
+        javax.swing.GroupLayout colorLeftLayout = new javax.swing.GroupLayout(colorLeft);
+        colorLeft.setLayout(colorLeftLayout);
+        colorLeftLayout.setHorizontalGroup(
+            colorLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(colorLeftLayout.createSequentialGroup()
+                .addComponent(filler4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+        colorLeftLayout.setVerticalGroup(
+            colorLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(colorLeftLayout.createSequentialGroup()
+                .addComponent(filler4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(340, Short.MAX_VALUE))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        getContentPane().add(colorLeft, gridBagConstraints);
+
+        mainStuff.setBackground(new java.awt.Color(255, 255, 255));
+        mainStuff.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        mainStuff.setForeground(new java.awt.Color(255, 255, 255));
+        mainStuff.setMaximumSize(new java.awt.Dimension(500, 340));
+        mainStuff.setMinimumSize(new java.awt.Dimension(500, 340));
+        mainStuff.setPreferredSize(new java.awt.Dimension(500, 340));
+        mainStuff.setSize(new java.awt.Dimension(500, 340));
+        mainStuff.setLayout(new java.awt.GridBagLayout());
+
+        tradeLengthPanel.setBackground(new java.awt.Color(255, 255, 255));
+        tradeLengthPanel.setMaximumSize(new java.awt.Dimension(200, 123));
+        tradeLengthPanel.setMinimumSize(new java.awt.Dimension(200, 123));
+        tradeLengthPanel.setPreferredSize(new java.awt.Dimension(200, 123));
+        tradeLengthPanel.setLayout(new java.awt.GridBagLayout());
+
+        tradeLengthField.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        tradeLengthField.setText("1");
+        tradeLengthField.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                tradeLengthFieldCaretUpdate(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 38;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 10);
-        getContentPane().add(startTradingButton, gridBagConstraints);
-        startTradingButton.getAccessibleContext().setAccessibleDescription("");
-
-        tradeModeSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Repeat", "Repeat and Rectify", "Flatten", "Random Modify", "Flatten, Modify, Rectify", "Charlie Parker", "Trade with a Musician", "Abstract", "Rhythmic Response", "Contour Test", "Zach 1 - Gen Solo", "Zach 2 - User Melody", "Zach 3 - User Rhythm", "Zach 4 - Last Two", "Zach 5 - Store" }));
-        tradeModeSelector.addActionListener(new java.awt.event.ActionListener() {
+        tradeLengthField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tradeLengthFieldFocusLost(evt);
+            }
+        });
+        tradeLengthField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tradeModeSelectorActionPerformed(evt);
+                tradeLengthFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(tradeModeSelector, gridBagConstraints);
-
-        jLabel1.setText("Mode:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        getContentPane().add(jLabel1, gridBagConstraints);
-
-        tradeLenthSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "4", "8", "16" }));
-        tradeLenthSelector.setSelectedIndex(2);
-        tradeLenthSelector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tradeLenthSelectorActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(tradeLenthSelector, gridBagConstraints);
-
-        jLabel2.setText("Length:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        getContentPane().add(jLabel2, gridBagConstraints);
-
-        leadingSelector.add(userFirstButton);
-        userFirstButton.setSelected(true);
-        userFirstButton.setText("User First");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        getContentPane().add(userFirstButton, gridBagConstraints);
-
-        leadingSelector.add(jRadioButton2);
-        jRadioButton2.setText("Impro-Visor First");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        getContentPane().add(jRadioButton2, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 396;
-        gridBagConstraints.ipady = 1;
-        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 14);
-        getContentPane().add(jSeparator1, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        tradeLengthPanel.add(tradeLengthField, gridBagConstraints);
 
-        populateMusicianList();
-        musicianChooser.setVisible(false);
+        jLabel5.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        jLabel5.setText("Measures");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(musicianChooser, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        tradeLengthPanel.add(jLabel5, gridBagConstraints);
 
-        musicianLabel.setText("Musician:");
-        musicianLabel.setVisible(false);
+        jLabel3.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        jLabel3.setText("Processing Time");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        getContentPane().add(musicianLabel, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
+        tradeLengthPanel.add(jLabel3, gridBagConstraints);
 
+        ProcessTimeSelector.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
         ProcessTimeSelector.setText("0.5");
+        ProcessTimeSelector.setMaximumSize(new java.awt.Dimension(50, 2147483647));
+        ProcessTimeSelector.setMinimumSize(new java.awt.Dimension(50, 28));
         ProcessTimeSelector.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 ProcessTimeSelectorCaretUpdate(evt);
@@ -775,62 +944,124 @@ public class TradingWindow
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        getContentPane().add(ProcessTimeSelector, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        tradeLengthPanel.add(ProcessTimeSelector, gridBagConstraints);
 
-        jLabel3.setText("Time for Processing (in Beats) ");
+        jLabel4.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        jLabel4.setText("Beats");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
-        getContentPane().add(jLabel3, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        tradeLengthPanel.add(jLabel4, gridBagConstraints);
 
+        jLabel2.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        jLabel2.setText("Length");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        tradeLengthPanel.add(jLabel2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        tradeLengthPanel.add(filler9, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        mainStuff.add(tradeLengthPanel, gridBagConstraints);
+
+        volumePanel.setBackground(new java.awt.Color(255, 255, 255));
+        volumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume of Response", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
+        volumePanel.setMaximumSize(new java.awt.Dimension(200, 76));
+        volumePanel.setMinimumSize(new java.awt.Dimension(200, 76));
+        volumePanel.setPreferredSize(new java.awt.Dimension(200, 76));
+        volumePanel.setLayout(new java.awt.GridBagLayout());
+
+        volumeSlider.setMaximumSize(new java.awt.Dimension(150, 29));
+        volumeSlider.setMinimumSize(new java.awt.Dimension(150, 29));
         volumeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 volumeSliderStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(volumeSlider, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        volumePanel.add(volumeSlider, gridBagConstraints);
 
-        volume.setText("Volume of Response: 50");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
-        getContentPane().add(volume, gridBagConstraints);
+        volume.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        volume.setText("50%");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 10;
-        gridBagConstraints.ipady = 1;
-        getContentPane().add(jSeparator2, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        volumePanel.add(volume, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 10;
-        gridBagConstraints.ipady = 1;
-        getContentPane().add(jSeparator3, gridBagConstraints);
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        mainStuff.add(volumePanel, gridBagConstraints);
+
+        leadSelectors.setBackground(new java.awt.Color(255, 255, 255));
+        leadSelectors.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        leadSelectors.setMaximumSize(new java.awt.Dimension(200, 76));
+        leadSelectors.setMinimumSize(new java.awt.Dimension(200, 76));
+        leadSelectors.setPreferredSize(new java.awt.Dimension(200, 76));
+        leadSelectors.setLayout(new java.awt.GridBagLayout());
+
+        leadingSelector.add(userFirstButton);
+        userFirstButton.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        userFirstButton.setSelected(true);
+        userFirstButton.setText("User First");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        leadSelectors.add(userFirstButton, gridBagConstraints);
+
+        leadingSelector.add(improvisorFirstButton);
+        improvisorFirstButton.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        improvisorFirstButton.setText("Impro-Visor First");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 18;
-        getContentPane().add(filler1, gridBagConstraints);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        leadSelectors.add(improvisorFirstButton, gridBagConstraints);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        mainStuff.add(leadSelectors, gridBagConstraints);
+
+        playbackControls.setBackground(new java.awt.Color(255, 255, 255));
+        playbackControls.setLayout(new java.awt.GridBagLayout());
+
+        startTradingButton.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
+        startTradingButton.setLabel("Start Trading");
+        startTradingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startTradingButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 38;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 10);
+        playbackControls.add(startTradingButton, gridBagConstraints);
+        startTradingButton.getAccessibleContext().setAccessibleDescription("");
+
+        loopToggle.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
         loopToggle.setText("Loop");
         loopToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -838,13 +1069,117 @@ public class TradingWindow
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 1);
-        getContentPane().add(loopToggle, gridBagConstraints);
+        playbackControls.add(loopToggle, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        mainStuff.add(playbackControls, gridBagConstraints);
+
+        tempoPanel.setBackground(new java.awt.Color(255, 255, 255));
+        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (Beats/Minute)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
+        tempoPanel.setMaximumSize(new java.awt.Dimension(200, 76));
+        tempoPanel.setMinimumSize(new java.awt.Dimension(200, 76));
+        tempoPanel.setPreferredSize(new java.awt.Dimension(200, 76));
+        tempoPanel.setLayout(new java.awt.GridBagLayout());
+
+        tempoSlider.setMaximum(300);
+        tempoSlider.setMinimum(40);
+        tempoSlider.setValue(120);
+        tempoSlider.setMaximumSize(new java.awt.Dimension(150, 29));
+        tempoSlider.setMinimumSize(new java.awt.Dimension(150, 29));
+        tempoSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tempoSliderStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        tempoPanel.add(tempoSlider, gridBagConstraints);
+
+        tempoLabel.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        tempoLabel.setText("120");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        tempoPanel.add(tempoLabel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 1;
+        mainStuff.add(tempoPanel, gridBagConstraints);
+        tempoPanel.getAccessibleContext().setAccessibleName("Tempo (Beats/Minute)");
+
+        jSeparator1.setPreferredSize(new java.awt.Dimension(12, 12));
+        jSeparator1.setSize(new java.awt.Dimension(12, 12));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 300;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.insets = new java.awt.Insets(20, 12, 0, 14);
+        mainStuff.add(jSeparator1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        mainStuff.add(filler2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        mainStuff.add(filler5, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        mainStuff.add(filler6, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        mainStuff.add(filler7, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        mainStuff.add(filler8, gridBagConstraints);
+
+        getContentPane().add(mainStuff, new java.awt.GridBagConstraints());
+
+        mainTradeMenuBar.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
 
         modeMenu.setText("Trading Mode");
+        modeSelector.add(modeMenu);
+        modeMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modeMenuActionPerformed(evt);
+            }
+        });
 
         modeSelector.add(tradeRepeat);
         tradeRepeat.setSelected(true);
@@ -855,9 +1190,63 @@ public class TradingWindow
         tradeRepeatAndRectify.setText("Repeat and Rectify");
         modeMenu.add(tradeRepeatAndRectify);
 
-        jMenuBar1.add(modeMenu);
+        modeSelector.add(tradeFlatten);
+        tradeFlatten.setText("Flatten");
+        modeMenu.add(tradeFlatten);
 
-        setJMenuBar(jMenuBar1);
+        modeSelector.add(tradeRandomModify);
+        tradeRandomModify.setText("Random Modify");
+        modeMenu.add(tradeRandomModify);
+
+        modeSelector.add(tradeFMR);
+        tradeFMR.setText("Flatten, Modify, Rectify");
+        modeMenu.add(tradeFMR);
+
+        modeSelector.add(tradeWithAMusician);
+        tradeWithAMusician.setText("Trade with a Musician (Use Transforms)");
+        modeMenu.add(tradeWithAMusician);
+
+        modeSelector.add(tradeAbstract);
+        tradeAbstract.setText("Abstract");
+        modeMenu.add(tradeAbstract);
+
+        modeSelector.add(tradeRhythmicResponse);
+        tradeRhythmicResponse.setText("Rhythmic Response");
+        modeMenu.add(tradeRhythmicResponse);
+
+        modeSelector.add(tradeContourTest);
+        tradeContourTest.setText("Contour Test");
+        modeMenu.add(tradeContourTest);
+
+        modeSelector.add(tradeGrammarSolo);
+        tradeGrammarSolo.setText("Zach 1 - Grammar Solo");
+        modeMenu.add(tradeGrammarSolo);
+
+        modeSelector.add(tradeUserMelody);
+        tradeUserMelody.setText("Zach 2 - User Melody");
+        modeMenu.add(tradeUserMelody);
+
+        modeSelector.add(tradeUserRhythm);
+        tradeUserRhythm.setText("Zach 3 - User Rhythm");
+        modeMenu.add(tradeUserRhythm);
+
+        modeSelector.add(tradeUserMelodyOrRhythm);
+        tradeUserMelodyOrRhythm.setText("Zach 4 - Last Two");
+        modeMenu.add(tradeUserMelodyOrRhythm);
+
+        modeSelector.add(tradeStore);
+        tradeStore.setText("Zach 5 - Store");
+        modeMenu.add(tradeStore);
+
+        mainTradeMenuBar.add(modeMenu);
+
+        tradeMusicianMenu.setText("Transform File");
+        mainTradeMenuBar.add(tradeMusicianMenu);
+
+        tradeGrammarMenu.setText("Grammar");
+        mainTradeMenuBar.add(tradeGrammarMenu);
+
+        setJMenuBar(mainTradeMenuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -882,7 +1271,11 @@ public class TradingWindow
                 if (name.endsWith(TransformFilter.EXTENSION)) {
                     int len = name.length();
                     String stem = name.substring(0, len - TransformFilter.EXTENSION.length());
-                    musicianChooser.addItem(stem);
+                    JRadioButtonMenuItem newMusician = new JRadioButtonMenuItem();
+                    newMusician.setText(stem);
+                    newMusician.setSelected(true);
+                    transformFileSelector.add(newMusician);
+                    tradeMusicianMenu.add(newMusician);
                 }
             }
         }
@@ -890,12 +1283,7 @@ public class TradingWindow
 
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        if (isTrading) {
-            stopTrading();
-        }
-        notate.setEnabled(true);
-        notate.destroyTradingWindow();
-        notate.setLoop(false);
+        tradingWindowClosed();
     }//GEN-LAST:event_formWindowClosed
 
     private void startTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradingButtonActionPerformed
@@ -907,23 +1295,6 @@ public class TradingWindow
             }
         }
     }//GEN-LAST:event_startTradingButtonActionPerformed
-
-    private void tradeModeSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeModeSelectorActionPerformed
-        //changeTradeMode((String)tradeModeSelector.getSelectedItem());
-        if (((String) tradeModeSelector.getSelectedItem()).equals("Trade with a Musician")) {
-            musicianLabel.setVisible(true);
-            musicianChooser.setVisible(true);
-        } else {
-            musicianLabel.setVisible(false);
-            musicianChooser.setVisible(false);
-        }
-    }//GEN-LAST:event_tradeModeSelectorActionPerformed
-
-    private void tradeLenthSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeLenthSelectorActionPerformed
-        changeTradeLength((String) tradeLenthSelector.getSelectedItem());
-        updateProcessTime(tryFloat(ProcessTimeSelector.getText()));
-        updateProcessTimeText();
-    }//GEN-LAST:event_tradeLenthSelectorActionPerformed
 
     private void ProcessTimeSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcessTimeSelectorActionPerformed
         updateProcessTimeText();
@@ -941,9 +1312,37 @@ public class TradingWindow
         setVolume();
     }//GEN-LAST:event_volumeSliderStateChanged
 
+    private void tradeLengthFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeLengthFieldActionPerformed
+        updateTradeLengthText();
+    }//GEN-LAST:event_tradeLengthFieldActionPerformed
+
+    private void tradeLengthFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tradeLengthFieldCaretUpdate
+        updateTradeLength(tradeLengthField.getText());
+    }//GEN-LAST:event_tradeLengthFieldCaretUpdate
+
+    private void tradeLengthFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tradeLengthFieldFocusLost
+        updateTradeLengthText();
+    }//GEN-LAST:event_tradeLengthFieldFocusLost
+
+    private void modeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modeMenuActionPerformed
+        updateTradeMode();
+    }//GEN-LAST:event_modeMenuActionPerformed
+
     private void loopToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToggleActionPerformed
         setLoop();
     }//GEN-LAST:event_loopToggleActionPerformed
+
+    private void tempoSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tempoSliderStateChanged
+        setTempo();
+    }//GEN-LAST:event_tempoSliderStateChanged
+
+    private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
+        tradingWindowClosed();
+    }//GEN-LAST:event_formComponentHidden
+
+    public void refreshSelectedGrammar(String gram) {
+        this.tradeGrammarMenu.setText(gram);
+    }
 
     private double tryDouble(String number) {
         double newNumber;
@@ -1006,28 +1405,60 @@ public class TradingWindow
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ProcessTimeSelector;
+    private javax.swing.JPanel colorLeft;
+    private javax.swing.JPanel colorRight;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
+    private javax.swing.Box.Filler filler9;
+    private javax.swing.ButtonGroup grammarGroup;
+    private javax.swing.JRadioButton improvisorFirstButton;
+    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JPanel leadSelectors;
     private javax.swing.ButtonGroup leadingSelector;
     private javax.swing.JCheckBox loopToggle;
+    private javax.swing.JPanel mainStuff;
+    private javax.swing.JMenuBar mainTradeMenuBar;
     private javax.swing.JMenu modeMenu;
     private javax.swing.ButtonGroup modeSelector;
-    private javax.swing.JComboBox musicianChooser;
-    private javax.swing.JLabel musicianLabel;
+    private javax.swing.JPanel playbackControls;
     private javax.swing.JButton startTradingButton;
-    private javax.swing.JComboBox tradeLenthSelector;
-    private javax.swing.JComboBox tradeModeSelector;
+    private javax.swing.JLabel tempoLabel;
+    private javax.swing.JPanel tempoPanel;
+    private javax.swing.JSlider tempoSlider;
+    private javax.swing.JRadioButtonMenuItem tradeAbstract;
+    private javax.swing.JRadioButtonMenuItem tradeContourTest;
+    private javax.swing.JRadioButtonMenuItem tradeFMR;
+    private javax.swing.JRadioButtonMenuItem tradeFlatten;
+    private javax.swing.JMenu tradeGrammarMenu;
+    private javax.swing.JRadioButtonMenuItem tradeGrammarSolo;
+    private javax.swing.JTextField tradeLengthField;
+    private javax.swing.JPanel tradeLengthPanel;
+    private javax.swing.JMenu tradeMusicianMenu;
+    private javax.swing.JRadioButtonMenuItem tradeRandomModify;
     private javax.swing.JRadioButtonMenuItem tradeRepeat;
     private javax.swing.JRadioButtonMenuItem tradeRepeatAndRectify;
+    private javax.swing.JRadioButtonMenuItem tradeRhythmicResponse;
+    private javax.swing.JRadioButtonMenuItem tradeStore;
+    private javax.swing.JRadioButtonMenuItem tradeUserMelody;
+    private javax.swing.JRadioButtonMenuItem tradeUserMelodyOrRhythm;
+    private javax.swing.JRadioButtonMenuItem tradeUserRhythm;
+    private javax.swing.JRadioButtonMenuItem tradeWithAMusician;
+    private javax.swing.ButtonGroup transformFileSelector;
     private javax.swing.JRadioButton userFirstButton;
     private javax.swing.JLabel volume;
+    private javax.swing.JPanel volumePanel;
     private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables
 
