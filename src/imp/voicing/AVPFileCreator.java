@@ -37,7 +37,7 @@ public class AVPFileCreator
      * @param file file to read
      * @param settings settings object to populate
      */
-    private static String lastFileName="";
+    private static String lastFileName="default.fv";
     public static void fileToSettings(File file, AutomaticVoicingSettings settings)
     {
         lastFileName=file.getName();

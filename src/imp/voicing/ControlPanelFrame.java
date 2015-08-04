@@ -229,6 +229,15 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     public ControlPanelFrame() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    @Override
+        public void dispose()
+          {
+
+
+
+          WindowRegistry.unregisterWindow(this);
+          super.dispose();
+          }
     private void setVoicingFile(File file)
     { AVPFileCreator.settingsToFile(avs, file);
                 setSlidersToVariables();
