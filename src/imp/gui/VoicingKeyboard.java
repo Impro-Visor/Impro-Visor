@@ -26,6 +26,8 @@ import imp.com.PlayScoreCommand;
 import imp.data.Advisor;
 import imp.data.NoteSymbol;
 import imp.data.PianoKey;
+import imp.voicing.VoicingDebug;
+import imp.voicing.VoicingDistanceCalculator;
 
 import java.io.StringReader;
 import javax.swing.Icon;
@@ -1361,6 +1363,7 @@ public void setKeyboard(String mod, int midiValue)
             String s = notate.voicingEntryTFText();
             String c = notate.getChordRootTFText();
             notate.constructAndPlayChord(c,s);
+            //voicingPrintDistanceMetrics();
         }
 }
 
@@ -2005,6 +2008,7 @@ public void showVoicingOnKeyboard(String v)
         pressKey(key);
         voicing = voicing.rest();
     }
+    voicingPrintDistanceMetrics();
 }
 
 /**
@@ -2242,6 +2246,28 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         saveChord();
     }//GEN-LAST:event_jButton2ActionPerformed
+    /**
+     * For Voicing Data/info
+     */
+    private static int[] lastChord=null;
+    public void voicingPrintDistanceMetrics()
+    {
+        String v = notate.voicingEntryTFText();
+        String chordName=this.getPresentChordDisplayText();
+        Polylist chordList=notate.voicingToList(v);
+        Object chordNotes[]=  chordList.array();
+        int[] chordMidi=new int[chordNotes.length];
+          for(int i=0; i<chordNotes.length; i++)
+        {
+            NoteSymbol ns=(NoteSymbol)chordNotes[i];
+            chordMidi[i]=ns.getMIDI();
+            //ns=ns.transpose(distance);
+            //chordString+=ns.toPitchString()+"8 ";
+        }
+          if(lastChord!=null)
+            VoicingDebug.println("Keyboard Voicing Analytics:,,,,NumNotesOld,"+lastChord.length+",NumNotesNew,"+chordMidi.length+" ,Distance,"+VoicingDistanceCalculator.calculateDistance(lastChord,chordMidi)+", NotesChanged,"+VoicingDistanceCalculator.calculateNotesChanged(lastChord,chordMidi));
+        lastChord=chordMidi;
+    }
     /**
      * saves current voicing in the Advisor which makes its way to My.voc eventually
      */
