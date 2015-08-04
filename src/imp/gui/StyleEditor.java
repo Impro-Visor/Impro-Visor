@@ -82,7 +82,7 @@ public class StyleEditor
 
   static public final String BASS_STRING = "B";
   
-  static public final String CUSTOM = "custom";
+  static public final String CUSTOM = "fluid";
 
   int nextPattern = 0;
   
