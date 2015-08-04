@@ -7478,6 +7478,10 @@
     </Container>
     <Component class="javax.swing.ButtonGroup" name="improvButtonGroup">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="whoPlaysFirstGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="numberOfBarsGroup">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="fileMenu">
@@ -8485,6 +8489,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stepKeyboardMIActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="fluidVoicings">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fluid Voicings"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fluidVoicingsActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="fractalMI">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fractal Improvisation"/>
@@ -8712,6 +8724,14 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator1">
             </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Trade"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeCheckboxActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="saveImprovCheckBoxMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save Improvisation"/>
@@ -8722,9 +8742,88 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator2">
             </MenuItem>
+            <Menu class="javax.swing.JMenu" name="passiveTradingOptions">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Passive Trading Options"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="improvisorFirst">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="whoPlaysFirstGroup"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Impro-Visor First"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="userFirst">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="whoPlaysFirstGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="User First"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JPopupMenu$Separator" name="passiveOptionsSeparator">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem1">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="numberOfBarsGroup"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="one"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem2">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="numberOfBarsGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="two"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem3">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="numberOfBarsGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="four"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem4">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="numberOfBarsGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="eight"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem5">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="numberOfBarsGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="twelve"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem6">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="numberOfBarsGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="sixteen"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="tradingWindow">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Open Trading Window"/>
+                <Property name="text" type="java.lang.String" value="Open Active Trading"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradingWindowActionPerformed"/>

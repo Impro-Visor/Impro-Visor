@@ -1088,12 +1088,12 @@ public Polylist generateRhythmFromGrammar(int startSlot, int slots)
     return grammar.run(startSlot, 
                        slots, 
                        notate, 
-                       //notate.getWhetherToTrade()
-                       false,
-                       //notate.getImprovisorTradeFirst()
-                       false,
-                       //notate.getTradingQuantum()
-                       -1);
+                       notate.getWhetherToTrade(),
+                       //false,
+                       notate.getImprovisorTradeFirst(),
+                       //false,
+                       notate.getTradingQuantum());
+                       //-1);
 
   }
 
