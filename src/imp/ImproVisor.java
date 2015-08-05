@@ -705,8 +705,16 @@ public static File getFractalFile()
 
 public static File getCountsFile()
   {
-  return new File(getCountsDirectory(), 
-          Preferences.getPreference(Preferences.DEFAULT_COUNTS_FILE)); 
+      String filename = Preferences.getPreference(Preferences.DEFAULT_COUNTS_FILE);
+    if (filename == null)
+    {
+        System.out.println("filename was null");
+        Preferences.setPreference(Preferences.DEFAULT_COUNTS_FILE, Preferences.DVF_COUNTS_VAL);
+        filename = Preferences.DVF_COUNTS_VAL;
+    }
+    return new File(getCountsDirectory(), filename);
+//  return new File(getCountsDirectory(), 
+//          Preferences.getPreference(Preferences.DEFAULT_COUNTS_FILE)); 
   }
      
 public static File getRecentFilesFile()

@@ -14,12 +14,16 @@ import imp.data.MelodyGenerator;
 import imp.data.MelodyPart;
 import imp.data.RhythmGenerator;
 import imp.util.CountsFilter;
+import imp.util.Preferences;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
 import javax.swing.JLabel;
@@ -54,7 +58,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
      * Creates new form IntervalLearningPanel
      * @param notate - notate that this interval learning panel was spawned from
      */
-    public IntervalLearningPanel(Notate notate) {
+    public IntervalLearningPanel(Notate notate) throws FileNotFoundException {
         learner = new IntervalLearner();
         filename = "newFile.counts";
         this.notate = notate;
@@ -132,9 +136,14 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         
         chooser.setCurrentDirectory(ImproVisor.getCountsDirectory());
         chooser.setFileFilter(new CountsFilter());
-        
+        setDefaultCounts();
     }
 
+    private void setDefaultCounts() throws FileNotFoundException{
+        File f = ImproVisor.getCountsFile();
+        open(f);
+    }
+    
     /**
      * color
      * Returns a color based on a probability
@@ -592,7 +601,6 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         generateSoloPanel.add(rhythmLabel, gridBagConstraints);
 
         rhythmGroup.add(Eighth);
-        Eighth.setSelected(true);
         Eighth.setText("Eighths");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -607,6 +615,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         generateSoloPanel.add(Chorus1, gridBagConstraints);
 
         rhythmGroup.add(GrammarRhythm);
+        GrammarRhythm.setSelected(true);
         GrammarRhythm.setText("Grammar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -1003,10 +1012,14 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         if( chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION )
         {
             File f = chooser.getSelectedFile();
-            filename = f.getName();
-            filenameLabel.setText(filename);
-            updateCountsAndProbabilities(f);
+            open(f);
         }
+    }
+    
+    public void open(File f) throws FileNotFoundException{
+        filename = f.getName();
+        filenameLabel.setText(filename);
+        updateCountsAndProbabilities(f);
     }
     
     /**

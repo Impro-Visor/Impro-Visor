@@ -15,6 +15,7 @@
 (default-vocab-file My.voc)
 (default-grammar-file chord.grammar)
 (default-transform-file My.transform)
+(default-counts-file ALL_MUSICIANS.counts)
 (default-fractal-file My.fractal)
 (default-style-directory styles)
 (visible-advice-components 1023)

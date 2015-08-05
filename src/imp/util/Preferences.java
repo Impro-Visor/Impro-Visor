@@ -149,7 +149,7 @@ public class Preferences implements imp.Constants
   
   public static final String DEFAULT_COUNTS_FILE = "default-counts-file";
 
-  public static final String DVF_COUNTS_VAL = "My.counts";  
+  public static final String DVF_COUNTS_VAL = "ALL_MUSICIANS.counts";  
 
   public static final String DEFAULT_STYLE_DIRECTORY = "default-style-directory";
 
@@ -608,6 +608,8 @@ public static boolean getAlwaysUse(int index)
       out.println("(" + DEFAULT_VOCAB_FILE + " " + DVF_VAL + ")");
       out.println("(" + DEFAULT_GRAMMAR_FILE + " " + DVF_GRAMMAR_VAL + ")");
       out.println("(" + DEFAULT_TRANSFORM_FILE + " " + DVF_TRANSFORM_VAL + ")");
+      out.println("(" + DEFAULT_COUNTS_FILE + " " + DVF_COUNTS_VAL + ")");
+      out.println("(" + DEFAULT_FRACTAL_FILE + " " + DVF_FRACTAL_VAL + ")");
       out.println("(" + DEFAULT_STYLE_DIRECTORY + " " + DSD_VAL + ")");
       out.println("(" + VIS_ADV_COMPONENTS + " " + VAC_VAL + ")");
       out.println("(" + CHORD_DIST_ABOVE_ROOT + " " + CDAR_VAL + ")");
