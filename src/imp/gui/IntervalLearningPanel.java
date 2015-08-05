@@ -58,7 +58,7 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
      * Creates new form IntervalLearningPanel
      * @param notate - notate that this interval learning panel was spawned from
      */
-    public IntervalLearningPanel(Notate notate) throws FileNotFoundException {
+    public IntervalLearningPanel(Notate notate){
         learner = new IntervalLearner();
         filename = "newFile.counts";
         this.notate = notate;
@@ -136,7 +136,12 @@ public class IntervalLearningPanel extends javax.swing.JPanel {
         
         chooser.setCurrentDirectory(ImproVisor.getCountsDirectory());
         chooser.setFileFilter(new CountsFilter());
-        setDefaultCounts();
+        try{
+            setDefaultCounts();
+        }catch(FileNotFoundException e){
+            
+        }
+        
     }
 
     private void setDefaultCounts() throws FileNotFoundException{

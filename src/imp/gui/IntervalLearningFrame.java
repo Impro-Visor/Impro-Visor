@@ -49,7 +49,7 @@ public class IntervalLearningFrame
     /**
      * Creates new LickgenFrame
      */
-    public IntervalLearningFrame(Notate notate) {
+    public IntervalLearningFrame(Notate notate){
         this.notate = notate;
         initComponents();
 
