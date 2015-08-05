@@ -1709,7 +1709,7 @@ public MelodyPart fillPartOfMelody(int minPitch,
         //when trying multiple times, we need to preserve the value of oldPitch
         oldPitch = previousPitch;
 
-        fillMelody(lick, 
+        fillMelodyHelper(lick, 
                    minPitch, 
                    maxPitch, 
                    minInterval, 
@@ -1747,6 +1747,10 @@ public MelodyPart fillPartOfMelody(int minPitch,
      */
     Note prevNote = null;
 
+public void initializeAdditionOfNotes()
+{
+    prevNote = null;
+}
 /**
  * A single method for note insertion into a lick. Can be traced by setting
  * traceLickGen true or false.
@@ -1849,10 +1853,10 @@ private void addNote(Note note,
 
 /**
  * Fill in a given abstract melody with notes.
- * This fillMelody is called from LickGen once only.
+ * fillMelodyHelper is called from LickGen once only.
  */
 
-public boolean fillMelody(MelodyPart lick, 
+private boolean fillMelodyHelper(MelodyPart lick, 
                           int minPitch, 
                           int maxPitch,
                           int minInterval, 
@@ -1868,7 +1872,7 @@ public boolean fillMelody(MelodyPart lick,
       {
         System.out.println("\nrhythmString: " + rhythmString);
       }
-    
+    initializeAdditionOfNotes();
     int quarter = 0;
     int[] quarterLevel = new int[4];
     double highestExpectancy = 0;
