@@ -84,6 +84,7 @@ public class Notate
         extends javax.swing.JFrame
         implements Constants, MidiPlayListener
 {
+private PassiveTradingWindow passiveTradingWindow;
 public GuideToneLineDialog guideToneLineDialog;
 public static int midiImportXoffset = 200;
 public static int midiImportYoffset = 200;
@@ -693,9 +694,12 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
   {
     super();
     
-    for(int i = 0; i < tradingOption.length; i++){
-        wordToNumber.put(tradingOption[i], tradingQuantum[i]);
-    }
+    passiveTradingWindow = new PassiveTradingWindow(this);
+    passiveTradingWindow.setVisible(false);
+    
+//    for(int i = 0; i < tradingOption.length; i++){
+//        wordToNumber.put(tradingOption[i], tradingQuantum[i]);
+//    }
     
     setTitle(score.getTitle());
 
@@ -2103,17 +2107,8 @@ public Critic getCritic()
         tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
         saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         improvSeparator2 = new javax.swing.JPopupMenu.Separator();
-        passiveTradingOptions = new javax.swing.JMenu();
-        improvisorFirst = new javax.swing.JRadioButtonMenuItem();
-        userFirst = new javax.swing.JRadioButtonMenuItem();
-        passiveOptionsSeparator = new javax.swing.JPopupMenu.Separator();
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem3 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem4 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem5 = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem6 = new javax.swing.JRadioButtonMenuItem();
         tradingWindow = new javax.swing.JMenuItem();
+        passiveTradingMI = new javax.swing.JMenuItem();
         notateGrammarMenu = new javax.swing.JMenu();
         windowMenu = new javax.swing.JMenu();
         closeWindowMI = new javax.swing.JMenuItem();
@@ -8099,17 +8094,17 @@ public Critic getCritic()
             }
         });
         scoreTab.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                scoreTabMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                scoreTabMouseReleased(evt);
-            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 scoreTabMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 mouseEnteredTabPanel(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                scoreTabMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                scoreTabMouseReleased(evt);
             }
         });
         scoreTab.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -9173,11 +9168,6 @@ public Critic getCritic()
         improvMenu.add(improvSeparator1);
 
         tradeCheckbox.setText("Trade");
-        tradeCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tradeCheckboxActionPerformed(evt);
-            }
-        });
         improvMenu.add(tradeCheckbox);
 
         saveImprovCheckBoxMenuItem.setText("Save Improvisation");
@@ -9189,48 +9179,6 @@ public Critic getCritic()
         improvMenu.add(saveImprovCheckBoxMenuItem);
         improvMenu.add(improvSeparator2);
 
-        passiveTradingOptions.setText("Passive Trading Options");
-        passiveTradingOptions.setEnabled(false);
-
-        whoPlaysFirstGroup.add(improvisorFirst);
-        improvisorFirst.setSelected(true);
-        improvisorFirst.setText("Impro-Visor First");
-        passiveTradingOptions.add(improvisorFirst);
-
-        whoPlaysFirstGroup.add(userFirst);
-        userFirst.setText("User First");
-        passiveTradingOptions.add(userFirst);
-
-        passiveOptionsSeparator.setName(""); // NOI18N
-        passiveTradingOptions.add(passiveOptionsSeparator);
-
-        numberOfBarsGroup.add(jRadioButtonMenuItem1);
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("one");
-        passiveTradingOptions.add(jRadioButtonMenuItem1);
-
-        numberOfBarsGroup.add(jRadioButtonMenuItem2);
-        jRadioButtonMenuItem2.setText("two");
-        passiveTradingOptions.add(jRadioButtonMenuItem2);
-
-        numberOfBarsGroup.add(jRadioButtonMenuItem3);
-        jRadioButtonMenuItem3.setText("four");
-        passiveTradingOptions.add(jRadioButtonMenuItem3);
-
-        numberOfBarsGroup.add(jRadioButtonMenuItem4);
-        jRadioButtonMenuItem4.setText("eight");
-        passiveTradingOptions.add(jRadioButtonMenuItem4);
-
-        numberOfBarsGroup.add(jRadioButtonMenuItem5);
-        jRadioButtonMenuItem5.setText("twelve");
-        passiveTradingOptions.add(jRadioButtonMenuItem5);
-
-        numberOfBarsGroup.add(jRadioButtonMenuItem6);
-        jRadioButtonMenuItem6.setText("sixteen");
-        passiveTradingOptions.add(jRadioButtonMenuItem6);
-
-        improvMenu.add(passiveTradingOptions);
-
         tradingWindow.setText("Open Active Trading");
         tradingWindow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -9238,6 +9186,14 @@ public Critic getCritic()
             }
         });
         improvMenu.add(tradingWindow);
+
+        passiveTradingMI.setText("Open Passive Trading");
+        passiveTradingMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passiveTradingMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(passiveTradingMI);
 
         menuBar.add(improvMenu);
 
@@ -23179,16 +23135,16 @@ int quantizeResolution = 60;
         openFractalFrame();
     }//GEN-LAST:event_fractalMIActionPerformed
 
-    private void tradeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeCheckboxActionPerformed
-        passiveTradingOptions.setEnabled(tradeCheckbox.isSelected());
-    }//GEN-LAST:event_tradeCheckboxActionPerformed
-
     private void fluidVoicingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fluidVoicingsActionPerformed
         AutomaticVoicingSettings avs=ImproVisor.avs;
         ControlPanelFrame conPanel=new ControlPanelFrame(avs);
         conPanel.setStyleEditor(getStyleEditor());
         conPanel.setVisible(true);
     }//GEN-LAST:event_fluidVoicingsActionPerformed
+
+    private void passiveTradingMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passiveTradingMIActionPerformed
+        passiveTradingWindow.setVisible(true);
+    }//GEN-LAST:event_passiveTradingMIActionPerformed
 void delAllMelody()
   {
     Trace.log(2, "delete all melody");
@@ -23820,20 +23776,20 @@ public void openCorpus()
 // * Textual representations for the number of bars to be traded.
 // * The suffix "bar" is added later.
 // */
-private static String tradingOption[] =
-  {
-    "one", "two", "four", "eight", "twelve", "sixteen"
-  };
-//
-///**
-// * The numeric values of the bars to be traded.
-// */
-private static int tradingQuantum[] =
-  {
-    1, 2, 4, 8, 12, 16
-  };
+//private static String tradingOption[] =
+//  {
+//    "one", "two", "four", "eight", "twelve", "sixteen"
+//  };
+////
+/////**
+//// * The numeric values of the bars to be traded.
+//// */
+//private static int tradingQuantum[] =
+//  {
+//    1, 2, 4, 8, 12, 16
+//  };
 
-private HashMap wordToNumber = new HashMap();
+//private HashMap wordToNumber = new HashMap();
 //
 ///**
 // * Checkboxes that will be placed in the grammar menu at run time
@@ -23875,7 +23831,8 @@ public boolean getWhetherToTrade()
 // */
 public boolean getImprovisorTradeFirst()
   {
-    return improvisorFirst.isSelected();
+    return passiveTradingWindow.getImprovisorTradeFirst();
+    //return improvisorFirst.isSelected();
   }
 //
 ///**
@@ -23884,14 +23841,16 @@ public boolean getImprovisorTradeFirst()
 // */
 public int getTradingQuantum()
   {
-      Enumeration<AbstractButton> bars = numberOfBarsGroup.getElements();
-      for(int i = 0; i < numberOfBarsGroup.getButtonCount(); i++){
-          JRadioButtonMenuItem button = (JRadioButtonMenuItem) bars.nextElement();
-          if(button.isSelected()){
-              return ((Integer)wordToNumber.get(button.getText()))*score.getSlotsPerMeasure();
-          }
-      }
-      return score.getSlotsPerMeasure(); // default
+      return passiveTradingWindow.getTradingQuantum();
+//      Enumeration<AbstractButton> bars = numberOfBarsGroup.getElements();
+//      for(int i = 0; i < numberOfBarsGroup.getButtonCount(); i++){
+//          JRadioButtonMenuItem button = (JRadioButtonMenuItem) bars.nextElement();
+//          if(button.isSelected()){
+//              return tradingQuantum[i];
+//              //return ((Integer)wordToNumber.get(button.getText()))*score.getSlotsPerMeasure();
+//          }
+//      }
+//      return score.getSlotsPerMeasure(); // default
   }
 //
 //
@@ -25356,7 +25315,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPopupMenu.Separator improvSeparator1;
     private javax.swing.JPopupMenu.Separator improvSeparator2;
     private javax.swing.JToggleButton improviseButton;
-    private javax.swing.JRadioButtonMenuItem improvisorFirst;
     private javax.swing.JMenuItem insertChorusTabMI;
     private javax.swing.JMenuItem insertPhraseAfterPMI;
     private javax.swing.JMenuItem insertPhraseBeforePMI;
@@ -25428,12 +25386,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem4;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem5;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -25591,8 +25543,7 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField partComposerTF;
     private javax.swing.JLabel partTitleLabel;
     private javax.swing.JTextField partTitleTF;
-    private javax.swing.JPopupMenu.Separator passiveOptionsSeparator;
-    private javax.swing.JMenu passiveTradingOptions;
+    private javax.swing.JMenuItem passiveTradingMI;
     private javax.swing.JButton pasteBothBtn;
     private javax.swing.JMenuItem pasteBothMI;
     private javax.swing.JMenuItem pasteBothPMI;
@@ -25776,7 +25727,6 @@ private ImageIcon pauseButton =
     private javax.swing.JCheckBoxMenuItem useBeamsMI;
     private javax.swing.JButton usePreviousStyleButton;
     private javax.swing.JLabel useSuperColliderCheckboxText;
-    private javax.swing.JRadioButtonMenuItem userFirst;
     private javax.swing.JMenu utilitiesMenu;
     private javax.swing.JMenu viewMenu;
     private javax.swing.JLabel visAdviceLabel;
