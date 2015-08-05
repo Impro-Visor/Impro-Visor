@@ -121,6 +121,9 @@ public ThemeWeaver(LickGen lickgen, Notate notate, CommandManager cm)
     setTableColumnWidths();
     themesfc = new JFileChooser();
     loadFromFile(fileName);
+    //added code to fill up theme weaver with one of each them by default
+    ensureThemeArray();
+    fillWithOneOfEachTheme();
 
   }
 
@@ -418,7 +421,6 @@ public void setTableColumnWidths()
         nameErrorMessage.getContentPane().add(chooseName, gridBagConstraints);
 
         enteredIncorrectly.setAlwaysOnTop(true);
-        enteredIncorrectly.setMinimumSize(new java.awt.Dimension(400, 300));
         enteredIncorrectly.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         typedWrong.setText("You have either typed information into a cell incorrectly,");
@@ -602,7 +604,6 @@ public void setTableColumnWidths()
         resetCheck1.getContentPane().add(NoButton1, gridBagConstraints);
 
         deleteThemeDialog.setAlwaysOnTop(true);
-        deleteThemeDialog.setMinimumSize(new java.awt.Dimension(900, 500));
         deleteThemeDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         areYouSure.setText("Are you sure you want to continue?");
@@ -646,7 +647,6 @@ public void setTableColumnWidths()
         deleteThemeDialog.getContentPane().add(rangeWrong1, gridBagConstraints);
 
         noRowSelected.setAlwaysOnTop(true);
-        noRowSelected.setMinimumSize(new java.awt.Dimension(900, 500));
         noRowSelected.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         tryAgain2.setText("Please select a row and try again.");
@@ -1389,7 +1389,6 @@ public void setTableColumnWidths()
         transformationsUsedTextArea.setRows(70);
         transformationsUsedTextArea.setPreferredSize(new java.awt.Dimension(240, 200));
         transformationsUsedTextArea.setRequestFocusEnabled(false);
-        transformationsUsedTextArea.setSize(new java.awt.Dimension(200, 200));
         transformationsUsed.setViewportView(transformationsUsedTextArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1631,7 +1630,6 @@ public void setTableColumnWidths()
         soloTableScrollPane.setMaximumSize(new java.awt.Dimension(32767, 400));
         soloTableScrollPane.setMinimumSize(new java.awt.Dimension(23, 350));
         soloTableScrollPane.setPreferredSize(new java.awt.Dimension(0, 0));
-        soloTableScrollPane.setRowHeaderView(null);
 
         soloTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1664,7 +1662,6 @@ public void setTableColumnWidths()
         soloTable.setGridColor(new java.awt.Color(0, 0, 0));
         soloTable.setPreferredSize(new java.awt.Dimension(675, 600));
         soloTable.setSelectionBackground(javax.swing.UIManager.getDefaults().getColor("CheckBoxMenuItem.selectionBackground"));
-        soloTable.setShowGrid(true);
         soloTable.getTableHeader().setReorderingAllowed(false);
         soloTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1692,10 +1689,6 @@ public void setTableColumnWidths()
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, -38, 0);
         getContentPane().add(soloTableScrollPane, gridBagConstraints);
-
-        themeListScrollPane.setMaximumSize(new java.awt.Dimension(0, 0));
-        themeListScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
-        themeListScrollPane.setPreferredSize(new java.awt.Dimension(100, 100));
 
         themeList.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         themeList.setModel(themeListModel);
@@ -1730,8 +1723,6 @@ public void setTableColumnWidths()
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
         getContentPane().add(themeListScrollPane, gridBagConstraints);
 
-        themeUsageScrollPane.setMinimumSize(new java.awt.Dimension(300, 100));
-
         themeUsageTextArea.setColumns(20);
         themeUsageTextArea.setRows(70);
         themeUsageScrollPane.setViewportView(themeUsageTextArea);
@@ -1758,8 +1749,6 @@ public void setTableColumnWidths()
         getContentPane().add(SoloGeneratorTitle, gridBagConstraints);
 
         themeIntervalTextField.setText("8");
-        themeIntervalTextField.setMaximumSize(new java.awt.Dimension(50, 2147483647));
-        themeIntervalTextField.setMinimumSize(new java.awt.Dimension(50, 28));
         themeIntervalTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 themeIntervalTextFieldActionPerformed(evt);
@@ -2262,12 +2251,12 @@ public void setTableColumnWidths()
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window"); // NOI18N
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
         });
 
@@ -2363,6 +2352,107 @@ private void playSelection()
           }
     }//GEN-LAST:event_soloTableMouseClicked
 
+    private void fillWithOneOfEachTheme(){
+        for(int i = 0; i < orderedThemes.size(); i++){
+            for( int j = 0; j < soloTable.getRowCount(); j++ )
+          {//loop through table
+
+            if( //themeList.isSelectedIndex(i)&& 
+                        (getValueAt(j, NAME_COLUMN) == null)
+                    && (getValueAt(j, THEME_COLUMN) == null)
+                    && (getValueAt(j, LENGTH_COLUMN) == null) )
+              {
+                //if a theme in the Themes scroll box is clicked and a theme
+                //cell is selected and there is an empty row
+
+                if( (getValueAt(j, USE_COLUMN) == null)
+                        && (getValueAt(j, TRANSPOSE_COLUMN) == null)
+                        && (getValueAt(j, INVERT_COLUMN) == null)
+                        && (getValueAt(j, REVERSE_COLUMN) == null) 
+                        && (getValueAt(j, EXPAND_COLUMN) == null)
+                        && (getValueAt(j, SIDESLIP_COLUMN) == null)
+                        && (getValueAt(j, BARLINESHIFT_COLUMN) == null))
+                  {
+                    // if the weighted value cells are null
+                    //set default values for weighted values
+                    soloTable.setValueAt(USE_DEFAULT_VALUE, j, USE_COLUMN);
+                    soloTable.setValueAt(TRANSPOSE_DEFAULT_VALUE, j, TRANSPOSE_COLUMN);
+                    soloTable.setValueAt(INVERT_DEFAULT_VALUE, j, INVERT_COLUMN);
+                    soloTable.setValueAt(REVERSE_DEFAULT_VALUE, j, REVERSE_COLUMN);
+                    soloTable.setValueAt(EXPAND_DEFAULT_VALUE, j, EXPAND_COLUMN);
+                    soloTable.setValueAt(SIDESLIP_DEFAULT_VALUE, j, SIDESLIP_COLUMN);
+                    soloTable.setValueAt(BARLINESHIFT_DEFAULT_VALUE, j, BARLINESHIFT_COLUMN);
+                  }
+
+                String name = orderedThemes.get(i);
+                //String name = (String) themeList.getSelectedValue();
+                //set name equal to the one clicked in the scroll box
+
+                for( Map.Entry pair : allThemes.entrySet() )
+                  {
+                    //loop through entries in allThemes
+
+                    if( name == pair.getValue() )
+                      { //if the name in the themeList is equal to the name in the entry
+                        Theme theme = (Theme) pair.getKey();
+                        //set theme equal to the corresponding theme in that entry
+                        MelodyPart melody = theme.melody; //get the melody of the theme
+                        Part.PartIterator k = melody.iterator(); //iterate over melody
+                        String themestring = ""; //set theme as empty to start
+
+                        while( k.hasNext() ) //while you can still iterate through the melody
+                          {
+                            Unit unit = k.next();
+                            if( unit != null ) //if next isn't empty
+                              {
+                                themestring += unit.toLeadsheet() + " ";
+                                //add it to the theme in leadsheet notation
+                              }
+                          }
+
+                        setValueAt(name, j, NAME_COLUMN);
+                        //paste in the name of theme to the table
+                        setValueAt(melody.size() / BEAT + "", j, LENGTH_COLUMN);
+                        //paste in the theme length
+                        setValueAt(themestring, j, THEME_COLUMN);
+                        //paste in the theme in leadsheet notation
+
+                        //in case the length is different than the one typed by the user 
+                        int n = 0;
+
+                        for( int x = 0; x < soloTable.getRowCount(); x++ )
+                          { //loop through table
+                            if( (getValueAt(x, NAME_COLUMN) != null)
+                                    && ((((String) getValueAt(x, NAME_COLUMN)).equals(name))
+                                    || ((String) getValueAt(x, NAME_COLUMN)).equals(name + "- " + n))
+                                    && (x != j)
+                                    && (((String) getValueAt(x, THEME_COLUMN)).equals(themestring)) )
+                              {
+
+                                n += 1; //add one to n so if the same theme 
+                                //is already in the table it will be differentiated from it
+                                //if the names are the same, the rows are different,
+                                //the themes are the same, the lengths are different
+                                setValueAt(melody.size() / BEAT + "", x, LENGTH_COLUMN);
+                                //make the lengths the same 
+                                setValueAt(name + "- " + n, j, NAME_COLUMN);
+
+                                //make a copy of the theme and add it to the file and scroll box
+                                Theme copy = Theme.makeTheme(name + "- " + n, melody);
+                                addTheme(copy);
+                                saveRules(fileName);
+                                break;
+                              }
+                          }
+                        break;
+                      }
+                  }
+                break;
+              }
+          }        
+        }
+    }
+    
     private void themeListClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_themeListClicked
         if( !evt.isShiftDown() )
           {
@@ -2658,6 +2748,7 @@ private void closeWindow()
                 //if theme cell is empty and length isn't
                 
                 enteredIncorrectly.setVisible(true); //show error message
+                
                 break;
               }
             else if( getValueAt(i, THEME_COLUMN) != null )
