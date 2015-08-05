@@ -20,6 +20,7 @@
 
 package imp.data;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import polya.Polylist;
 
@@ -48,4 +49,22 @@ public class ChordPatternVoiced
       {
         return durations;
       }
+    
+    @Override
+    public String toString()
+    {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("(pattern (slots voicing) ");
+        Iterator<Note> it = durations.iterator();
+        for( Polylist v: voicings )
+        {
+            buffer.append("(");
+            buffer.append(it.next().rhythmValue);
+            buffer.append(" ");
+            buffer.append(v);
+            buffer.append(") ");
+        }
+        buffer.append(")");
+        return buffer.toString();
+    }
 }
