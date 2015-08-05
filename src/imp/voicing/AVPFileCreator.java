@@ -194,7 +194,7 @@ public class AVPFileCreator
                 }
             }
         } catch (Exception ex) {
-            ErrorLog.log(ErrorLog.SEVERE, "Error inding or reading Voicing File: " + lastFileName);
+            ErrorLog.log(ErrorLog.SEVERE, "Error finding or reading Voicing File: " + lastFileName);
             
         }
     }

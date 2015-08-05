@@ -6,6 +6,7 @@
 package imp.voicing;
 
 import imp.ImproVisor;
+import imp.data.Advisor;
 import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.gui.RangeChooser;
@@ -1619,6 +1620,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void closeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeBActionPerformed
+        Advisor.readStyles();
         this.dispose();
     }//GEN-LAST:event_closeBActionPerformed
 

@@ -7672,20 +7672,20 @@ private void openStyleMixer()
     }//GEN-LAST:event_bassRangeTextActionPerformed
 
     private void voicingFilenameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingFilenameTFActionPerformed
-                File openFile=null;
-                JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Fluid Voicing Files", "fv");
-                chooser.setFileFilter(filter);
-                int returnVal = chooser.showOpenDialog(null);
-                if(returnVal == JFileChooser.APPROVE_OPTION) {
-                    openFile=chooser.getSelectedFile();
-                }
-               if( openFile == null )
-                 {
-                   return; // ignore
-                 }
-               voicingFilenameTF.setText(openFile.getName());
-               setVoicingFileName(openFile.getName());
+        File openFile=null;
+        JFileChooser chooser = new JFileChooser(ImproVisor.getVoicingDirectory());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Fluid Voicing Files", "fv");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            openFile=chooser.getSelectedFile();
+        }
+        if( openFile == null )
+        {
+            return; // ignore
+        }
+        voicingFilenameTF.setText(openFile.getName());
+        setVoicingFileName(openFile.getName());
     }//GEN-LAST:event_voicingFilenameTFActionPerformed
 
     private void voicingSettingsClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voicingSettingsClicked
