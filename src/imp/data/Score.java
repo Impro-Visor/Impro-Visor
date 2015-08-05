@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,12 +49,13 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.ListIterator;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.Sequence;
 import polya.Polylist;
+import polya.PolylistEnum;
+import polya.PolylistBuffer;
 
 /**
  * The Score class is representative of a musical score, containing several
@@ -177,6 +178,12 @@ public class Score implements Constants, Serializable {
     private int chordFontSize = 16; // Default
 
     private String voicingType = "";
+    
+    /**
+     * A list of voicings for the chords, for stepping purposes
+     */
+    
+    private PolylistBuffer voicingListBuffer;
 
     /**
      * The layout, if any. This can be null if no layout specified.
@@ -909,7 +916,8 @@ public class Score implements Constants, Serializable {
     }
     
     /**
-     * Creates and returns a MIDI render out of the Score.
+     * Creates and returns a MIDI sequence out of the Score.
+     * Level 0 (top level)
      * Calls Part.render on each Part and (for now) creates a new channel
      * for each Part.  This means that you can only have 16 Parts, which
      * should be changed in the future.
@@ -930,6 +938,7 @@ public class Score implements Constants, Serializable {
     
     /**
      * Creates and returns a MIDI sequence from the Score.
+     * Level 1
      * Calls Part.render on each Part and (for now) creates a new channel
      * for each Part.  This means that you can only have 16 Parts, which
      * should be changed in the future.
@@ -951,6 +960,7 @@ public class Score implements Constants, Serializable {
 
    /**
      * Creates and returns a MIDI sequence from the Score.
+     * Level 2
      * Calls Part.render on each Part and (for now) creates a new channel
      * for each Part.  This means that you can only have 16 Parts, which
      * should be changed in the future.
@@ -1001,10 +1011,14 @@ public class Score implements Constants, Serializable {
                         seq.getChordTrack(),
                         0,
                         true,
-                        endLimitIndex);
+                        endLimitIndex,
+                        voicingListBuffer);
             }
 
         //System.out.println("time = " + time);
+            // Save voicings for subsequent stepping.
+            voicingListBuffer = new PolylistBuffer();
+            
             ListIterator<MelodyPart> i = partList.listIterator();
             while (i.hasNext() && Style.limitNotReached(time, endLimitIndex)) {
             // render the chord progression in parallel with each melody chorus
@@ -1021,7 +1035,8 @@ public class Score implements Constants, Serializable {
                         seq.getChordTrack(),
                         transposition,
                         useDrums,
-                        endLimitIndex);
+                        endLimitIndex,
+                        voicingListBuffer);
                 time = Math.max(melTime, chTime);
             }
 
@@ -1031,7 +1046,32 @@ public class Score implements Constants, Serializable {
         //Trace.log(0, "done rendering, tickLength = " + seq.getSequence().getTickLength());
 
             //System.out.println("countIn size = " + getCountInOffset());
+            
+            // Uncomment to see voicing list by chord
+            
+            //showVoicingList();
+            
             return seq.getSequence();
+        }
+    }
+    
+/**
+ * Return list of first voicing used for each chord, for purposes of stepping.
+ * @return 
+ */
+public Polylist getVoicingList()
+  {
+    return voicingListBuffer.toPolylist();
+  }
+
+    public void showVoicingList() 
+    {
+        Polylist voicingList = getVoicingList();
+        System.out.println("in Score render: voicingList length " + voicingList.length() + ": ");
+        for (PolylistEnum e = new PolylistEnum(voicingList); e.hasMoreElements();) 
+        {
+            Polylist v = (Polylist) e.nextElement();
+            System.out.println(v);
         }
     }
 
@@ -1318,4 +1358,6 @@ public void reloadStyles()
   {
     chordProg.reloadStyles();
   }
+
+
 }

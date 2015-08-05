@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2013 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ import java.util.Iterator;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.Track;
 import polya.Polylist;
+import polya.PolylistBuffer;
 
 /**
  * An extension of the Part class that contains only Chord objects.
@@ -410,13 +411,20 @@ public long render(MidiSequence seq,
                    Track track,
                    int transposition,
                    boolean useDrums,
-                   int endLimitIndex)
+                   int endLimitIndex,
+                   PolylistBuffer voicingListBuffer)
         throws InvalidMidiDataException
   {
     // to trace sequencing info:
     // System.out.println("ChordPart time = " + time + ", endLimitIndex = " + endLimitIndex);
-
-    return sectionInfo.render(seq, time, track, transposition, useDrums, endLimitIndex);
+    long result = sectionInfo.render(seq, 
+                                     time, 
+                                     track, 
+                                     transposition, 
+                                     useDrums, 
+                                     endLimitIndex, 
+                                     voicingListBuffer);
+    return result;
   }
 
 

@@ -13,6 +13,6 @@ public class VoicingDebug {
     public static void println(String s)
     {
         //comment line below out to remove print messages.
-        System.out.println("Voicing Debug:   "+s);
+        //System.out.println("Voicing Debug:   "+s);
     }
 }

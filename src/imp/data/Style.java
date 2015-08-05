@@ -1077,7 +1077,8 @@ private Polylist makeChordline(
         Polylist previousChord,
         int duration,
         int transposition,
-        int endLimitIndex)
+        int endLimitIndex,
+        PolylistBuffer voicingListBuffer)
         throws InvalidMidiDataException
   {
     // To trace rendering info:
@@ -1107,11 +1108,6 @@ private Polylist makeChordline(
     // The while loop is in case one pattern does not fill
     // the required duration. We may need multiple patterns.
     
-    if( hasCustomVoicing() )
-    {
-        //handyMan.resetHands();
-    }
-    
     boolean beginning = true;
     while( duration > 0 && limitNotReached(time, endLimitIndex) )
       {
@@ -1128,6 +1124,8 @@ private Polylist makeChordline(
             // if there's no pattern, and we haven't used a previous
             // pattern on this currentChord, then just play the currentChord for the 
             // duration
+            //System.out.println("pattern == null case in Style");
+              
             if( !beginning )
               {
                 break;
@@ -1166,8 +1164,14 @@ private Polylist makeChordline(
             // the durations of each currentChord
             c = pattern.applyRules(symbol, previousChord);
           }
-
-        //System.out.println("result of applying, c (chords, duration melody) = " + c);
+        
+        voicingListBuffer.append(Polylist.list(currentChord.getName(),
+                                               currentChord.getRhythmValue(),
+                                               currentChord.getVoicing()));
+        
+        // Uncomment to show how chord patterns are voiced:
+        
+        // System.out.println("chord " + currentChord.getName() + ": " + c);
         
         // since we can't run the swing algorithm on a Polylist of 
         // NoteSymbols, we can use this "duration melody" which
@@ -1193,6 +1197,7 @@ private Polylist makeChordline(
 
         int volume = 127;
         
+        //System.out.println("voicings for " + currentChord.getName() + ": " + voicings + ", durationMelody = " + durationMelody);
         for( Polylist voicing: voicings )
           {
           // Note that voicing should be a Polylist, and may contain volume
@@ -1379,7 +1384,8 @@ System.out.println("mystery code on bassline " + bassline);
                      int startIndex, 
                      int endIndex, 
                      int transposition, 
-                     int endLimitIndex)
+                     int endLimitIndex,
+                     PolylistBuffer voicingListBuffer)
           throws InvalidMidiDataException
   {
       // refactored to direct to the method that follows with hasStyle parameter
@@ -1391,7 +1397,8 @@ System.out.println("mystery code on bassline " + bassline);
                     endIndex, 
                     transposition, 
                     PlayScoreCommand.USEDRUMS, 
-                    endLimitIndex);
+                    endLimitIndex,
+                    voicingListBuffer);
   }
 
 
@@ -1416,7 +1423,8 @@ public long render(MidiSequence seq,
                    int endIndex,
                    int transposition,
                    boolean useDrums,
-                   int endLimitIndex)
+                   int endLimitIndex,
+                   PolylistBuffer voicingListBuffer)
         throws InvalidMidiDataException
   {
     boolean hasStyle = !noStyle();
@@ -1537,7 +1545,8 @@ public long render(MidiSequence seq,
                                           previousChord,
                                           rhythmValue,
                                           transposition,
-                                          endLimitIndex);
+                                          endLimitIndex,
+                                          voicingListBuffer);
           }
         //System.out.println("previousBassNote " + previousBassNote + " low = " + getBassLow() + " high = " + getBassHigh());
         // adjust bass octave between patterns only, not within

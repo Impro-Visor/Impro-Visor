@@ -17909,7 +17909,6 @@ public void playAll()
       }
     setFirstChorus(true);
     playScore();
-
   }
 
 public void establishCountIn()
@@ -18348,7 +18347,6 @@ public void enableStopButton(boolean enabled)
 
 public void setPlaying(MidiPlayListener.Status playing, int transposition)
   {
-
     Trace.log(2, "Notate: Play Status Changed to " + playing);
 
     // update the playbackManager

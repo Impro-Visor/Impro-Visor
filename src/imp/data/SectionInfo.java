@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2013 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,8 @@
 package imp.data;
 
 import imp.Constants;
-import imp.ImproVisor;
 import imp.brickdictionary.Block;
 import imp.brickdictionary.ChordBlock;
-import imp.gui.Notate;
 import imp.util.Preferences;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,9 +30,7 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.Track;
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
-
+import polya.PolylistBuffer;
 /**
  * SectionInfo was originally done by Stephen Jones when sections were
  * first added to the software. On July 27, 2011, Robert Keller refactored
@@ -652,7 +648,8 @@ public long render(MidiSequence seq,
                    Track track,
                    int transposition, 
                    boolean useDrums, 
-                   int endLimitIndex)
+                   int endLimitIndex,
+                   PolylistBuffer voicingListBuffer)
     throws InvalidMidiDataException
   {
     // to trace sequencing info:
@@ -705,7 +702,8 @@ public long render(MidiSequence seq,
                               endIndex, 
                               transposition, 
                               useDrums, 
-                              endLimitIndex);
+                              endLimitIndex,
+                              voicingListBuffer);
           }
        }
     return time;

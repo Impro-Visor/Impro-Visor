@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.Track;
@@ -496,10 +497,11 @@ public class Chord implements Constants, Unit, Serializable {
         
         if( voicing == null )
           {
-          setVoicing(ChordPattern.findVoicing(symbol, style.getChordBase(), style));
+          voicing = ChordPattern.findVoicing(symbol, style.getChordBase(), style);
+          setVoicing(voicing);
           }
-          
-        if(voicing != null) {
+        
+         if(voicing != null) {
             PolylistEnum notes = voicing.elements();
             while( notes.hasMoreElements() ) {
                 NoteSymbol ns = (NoteSymbol)notes.nextElement();

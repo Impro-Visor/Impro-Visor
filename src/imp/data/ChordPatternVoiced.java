@@ -45,6 +45,11 @@ public class ChordPatternVoiced
         return voicings;
       }
     
+    public Polylist getFirstVoicing()
+      {
+        return voicings.get(0);
+      }
+    
     public MelodyPart getDurations()
       {
         return durations;
