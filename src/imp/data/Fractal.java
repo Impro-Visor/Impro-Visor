@@ -38,7 +38,7 @@ import polya.Polylist;
  * @author Carli Lessard
  */
 public class Fractal implements Constants{
-    
+    // Probability of making a note a triplet
     private double tripletProb;
     
     // Dividing Probabilities
@@ -123,6 +123,11 @@ public class Fractal implements Constants{
         System.out.println("Default rest prob: " + defaultRestProb);
     }
     
+    /**
+     * Parser that reads in a string from a file and sets the probabilities
+     * accordingly
+     * @param probs 
+     */
     public void setProbabilities(String probs)
     {
         Polylist polyProbs = Polylist.PolylistFromString(probs);
@@ -150,6 +155,10 @@ public class Fractal implements Constants{
         }
     }
     
+    /**
+     * Used by setProbabilities to parse the dividing probabilities
+     * @param divProbs 
+     */
     private void setDividingProbs(Polylist divProbs)
     {
 
@@ -189,6 +198,10 @@ public class Fractal implements Constants{
         }       
     }
     
+    /**
+     * Used by setProbabilities to parse the rest probabilities
+     * @param restProbs 
+     */
     private void setRestProbs(Polylist restProbs)
     {
         while(restProbs.nonEmpty()){
@@ -227,7 +240,11 @@ public class Fractal implements Constants{
         }
     }
     
-    public String probsToString()
+    /**
+     * Converts the current probabilities into a string
+     * @return 
+     */
+    public String toString()
     {
         StringBuilder buffer = new StringBuilder();
         buffer.append("(dividing-probabilities (");
@@ -657,6 +674,8 @@ public class Fractal implements Constants{
                 noteLength == DOTTED_EIGHTH ||
                 noteLength == DOTTED_SIXTEENTH);
     }
+    
+    // Getters and setters for all the probabilities stores in Fractal
     
     public void setTripletProb(double prob)
     {

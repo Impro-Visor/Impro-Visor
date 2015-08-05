@@ -165,6 +165,10 @@ public class FractalFrame extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         openFileMI = new javax.swing.JMenuItem();
         saveFileMI = new javax.swing.JMenuItem();
+        windowMenu = new javax.swing.JMenu();
+        closeWindowMI = new javax.swing.JMenuItem();
+        cascadeMI = new javax.swing.JMenuItem();
+        windowMenuSeparator = new javax.swing.JPopupMenu.Separator();
 
         setMaximumSize(new java.awt.Dimension(700, 400));
         setMinimumSize(new java.awt.Dimension(700, 400));
@@ -507,6 +511,36 @@ public class FractalFrame extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
+        windowMenu.setText("Window");
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+        });
+
+        closeWindowMI.setText("Close Window");
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeWindowMIActionPerformed(evt);
+            }
+        });
+        windowMenu.add(closeWindowMI);
+
+        cascadeMI.setText("Cascade Windows");
+        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cascadeMIActionPerformed(evt);
+            }
+        });
+        windowMenu.add(cascadeMI);
+        windowMenu.add(windowMenuSeparator);
+
+        menuBar.add(windowMenu);
+
         setJMenuBar(menuBar);
 
         pack();
@@ -563,7 +597,34 @@ public class FractalFrame extends javax.swing.JFrame {
         saveCurrentFractal();
     }//GEN-LAST:event_saveFileMIActionPerformed
 
+    private void closeWindowMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowMIActionPerformed
+        closeWindow();
+    }//GEN-LAST:event_closeWindowMIActionPerformed
+
+    private void cascadeMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cascadeMIActionPerformed
+        WindowRegistry.cascadeWindows(this);
+    }//GEN-LAST:event_cascadeMIActionPerformed
+
+    private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_windowMenuMenuSelected
+        windowMenu.removeAll();
+
+        windowMenu.add(closeWindowMI);
+
+        windowMenu.add(cascadeMI);
+
+        windowMenu.add(windowMenuSeparator);
+
+        for (WindowMenuItem w : WindowRegistry.getWindows()) {
+
+            windowMenu.add(w.getMI(this));      // these are static, and calling getMI updates the name on them too in case the window title changed
+        }
+
+        windowMenu.repaint();
+    }//GEN-LAST:event_windowMenuMenuSelected
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem cascadeMI;
+    private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.JPanel containerPanel;
     private javax.swing.JLabel defaultDivLabel;
     private javax.swing.JTextField defaultDivText;
@@ -615,8 +676,13 @@ public class FractalFrame extends javax.swing.JFrame {
     private javax.swing.JTextField wholeDivText;
     private javax.swing.JLabel wholeRestLabel;
     private javax.swing.JTextField wholeRestText;
+    private javax.swing.JMenu windowMenu;
+    private javax.swing.JPopupMenu.Separator windowMenuSeparator;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Opens the open file dialog
+     */
     public void open(){
         if( chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION )
         {
@@ -635,6 +701,10 @@ public class FractalFrame extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Opens the file chooser to save a new/existing file
+     * @return 
+     */
     public boolean saveCurrentFractal()
     {
         chooser.setSelectedFile(new File(filename));
@@ -662,10 +732,15 @@ public class FractalFrame extends javax.swing.JFrame {
         }
     }
     
-        private int saveFractalFile(String filepath) {
+    /**
+     * Saves a file
+     * @param filepath
+     * @return 
+     */
+    private int saveFractalFile(String filepath) {
         try
         {
-            String content = fractal.probsToString();
+            String content = fractal.toString();
             FileWriter out = new FileWriter(new File(filepath));
             out.write(content);
             out.close();
@@ -678,6 +753,11 @@ public class FractalFrame extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Loads the probabilities from a file
+     * @param file
+     * @return 
+     */
     private String loadProbabilities(File file)
     {
         String probString = fileToString(file);
@@ -685,6 +765,11 @@ public class FractalFrame extends javax.swing.JFrame {
         return probString;
     }
     
+    /**
+     * Converts a file to a string that can be parsed
+     * @param file
+     * @return 
+     */
     private static String fileToString(File file){
         String probStr = "";
         try {
@@ -695,6 +780,10 @@ public class FractalFrame extends javax.swing.JFrame {
         return probStr;
     }
     
+    /**
+     * Gets the probabilities stored in Fractal and puts them into the
+     * text boxes
+     */
     private void setTextBoxes()
     {
         double tripletProb = fractal.getTripletProb();
@@ -718,6 +807,9 @@ public class FractalFrame extends javax.swing.JFrame {
         defaultRestText.setText(String.valueOf(fractal.getDefaultRestProb()));
     }
     
+    /**
+     * Gets the values from the text boxes and sets the probabilities in Fractal
+     */
     private void setProbabilities()
     {
         double triplet = parseProb(tripleText.getText());
@@ -741,6 +833,12 @@ public class FractalFrame extends javax.swing.JFrame {
         fractal.setDefaultRestProb(parseProb(defaultRestText.getText()));
     }
     
+    /**
+     * Converts a string to a double.
+     * If it is empty, returns 0.0
+     * @param text
+     * @return 
+     */
     private double parseProb(String text)
     {
         if(text.isEmpty()){
@@ -749,4 +847,14 @@ public class FractalFrame extends javax.swing.JFrame {
             return Double.parseDouble(text);
         }
     }
+    
+    /**
+     * Closes the Fractal Frame
+     */
+    public void closeWindow() {
+        this.setVisible(false);
+
+        WindowRegistry.unregisterWindow(this);
+    }
+
 }
