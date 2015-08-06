@@ -2101,6 +2101,11 @@ public Critic getCritic()
         improvMenu = new javax.swing.JMenu();
         grammarRadio = new javax.swing.JRadioButtonMenuItem();
         transformRadio = new javax.swing.JRadioButtonMenuItem();
+        grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
+        afterGrammarSeparator = new javax.swing.JPopupMenu.Separator();
+        guideToneTransformRadio = new javax.swing.JRadioButtonMenuItem();
+        guideToneDivideRadio = new javax.swing.JRadioButtonMenuItem();
+        afterGuideToneSeparator = new javax.swing.JPopupMenu.Separator();
         themeWeaveRadio = new javax.swing.JRadioButtonMenuItem();
         intervalsRadio = new javax.swing.JRadioButtonMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -9158,6 +9163,20 @@ public Critic getCritic()
         transformRadio.setText("Use Grammar & Transform");
         improvMenu.add(transformRadio);
 
+        improvButtonGroup.add(grammarDivideRadio);
+        grammarDivideRadio.setText("Use Grammar & Divide");
+        improvMenu.add(grammarDivideRadio);
+        improvMenu.add(afterGrammarSeparator);
+
+        improvButtonGroup.add(guideToneTransformRadio);
+        guideToneTransformRadio.setText("Guide Tone & Transform");
+        improvMenu.add(guideToneTransformRadio);
+
+        improvButtonGroup.add(guideToneDivideRadio);
+        guideToneDivideRadio.setText("Guide Tone & Divide");
+        improvMenu.add(guideToneDivideRadio);
+        improvMenu.add(afterGuideToneSeparator);
+
         improvButtonGroup.add(themeWeaveRadio);
         themeWeaveRadio.setText("Theme Weave");
         improvMenu.add(themeWeaveRadio);
@@ -14356,6 +14375,10 @@ public void closeWindow()
     
     if(themeWeaver != null){
         themeWeaver.dispose();
+    }
+    
+    if(fractalFrame != null){
+        fractalFrame.dispose();
     }
     
 //    if(roadmapFrame != null){
@@ -25064,6 +25087,8 @@ private ImageIcon pauseButton =
     private javax.swing.JList adviceScrollListScales;
     private javax.swing.JTabbedPane adviceTabbedPane;
     protected javax.swing.JTree adviceTree;
+    private javax.swing.JPopupMenu.Separator afterGrammarSeparator;
+    private javax.swing.JPopupMenu.Separator afterGuideToneSeparator;
     private javax.swing.JCheckBox allMuteMixerBtn;
     private javax.swing.JToggleButton allMuteToolBarBtn;
     private javax.swing.JPanel allPanel;
@@ -25291,6 +25316,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton globalPreferencesBtn;
     private javax.swing.JMenuItem globalPrefsMI;
     private javax.swing.JTabbedPane globalTabs;
+    private javax.swing.JRadioButtonMenuItem grammarDivideRadio;
     private javax.swing.ButtonGroup grammarExtractionButtonGroup;
     private javax.swing.JRadioButtonMenuItem grammarRadio;
     private javax.swing.JRadioButton grandStave;
@@ -25300,7 +25326,9 @@ private ImageIcon pauseButton =
     private javax.swing.JRadioButton greenColorBtn;
     private javax.swing.JLabel greenLabel;
     private javax.swing.JRadioButton greenOtherBtn;
+    private javax.swing.JRadioButtonMenuItem guideToneDivideRadio;
     private javax.swing.JMenuItem guideToneLine;
+    private javax.swing.JRadioButtonMenuItem guideToneTransformRadio;
     private javax.swing.JMenuItem helpAboutMI;
     private javax.swing.JMenuItem helpMI;
     private javax.swing.JMenu helpMenu;

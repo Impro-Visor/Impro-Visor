@@ -165,10 +165,16 @@ public class FractalFrame extends javax.swing.JFrame {
         cascadeMI = new javax.swing.JMenuItem();
         windowMenuSeparator = new javax.swing.JPopupMenu.Separator();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(700, 400));
         setMinimumSize(new java.awt.Dimension(600, 350));
         setPreferredSize(new java.awt.Dimension(650, 375));
         setSize(new java.awt.Dimension(650, 375));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         probabilitiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Probabilities"));
@@ -426,6 +432,8 @@ public class FractalFrame extends javax.swing.JFrame {
         getContentPane().add(probabilitiesPanel, new java.awt.GridBagConstraints());
 
         dividingPanel.setLayout(new java.awt.GridBagLayout());
+
+        numDivisionsSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(0), null, Integer.valueOf(1)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -477,12 +485,12 @@ public class FractalFrame extends javax.swing.JFrame {
 
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
         });
 
@@ -590,6 +598,11 @@ public class FractalFrame extends javax.swing.JFrame {
         double doubleProb = 1.0 - parseProb(tripleText.getText());
         doubleText.setText(String.valueOf(doubleProb));
     }//GEN-LAST:event_tripleTextActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.out.println("here");
+        closeWindow();
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cascadeMI;

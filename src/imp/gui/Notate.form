@@ -8706,6 +8706,34 @@
                 <Property name="text" type="java.lang.String" value="Use Grammar &amp; Transform"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="grammarDivideRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="improvButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Use Grammar &amp; Divide"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterGrammarSeparator">
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="guideToneTransformRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="improvButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Guide Tone &amp; Transform"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="guideToneDivideRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="improvButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Guide Tone &amp; Divide"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterGuideToneSeparator">
+            </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="themeWeaveRadio">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
