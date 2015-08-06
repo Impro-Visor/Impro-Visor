@@ -1,5 +1,5 @@
 /**
- * This Java Class is part of the Impro-Visor Application
+ * This Java Class is part of the Impro-Visor Application v. 8.0
  *
  * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
  *
@@ -25,14 +25,11 @@ import imp.com.LoadAdviceCommand;
 import imp.data.*;
 import imp.gui.FirstTimeDialog;
 import imp.gui.Notate;
-import imp.gui.StyleEditor;
 import imp.gui.ToolkitImages;
 import imp.util.*;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javax.sound.midi.InvalidMidiDataException;
 import polya.*;
 
@@ -40,12 +37,12 @@ import polya.*;
  * Impro-Visor main class
  *
  * @author Stephen Jones, Aaron Wolin, Robert Keller
- * @version 7.0
+ * @version 8.0
  */
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "7.0";
+    public static final String version = "8.0";
     
     private static boolean firstTime = false;
     
@@ -66,7 +63,6 @@ public class ImproVisor implements Constants {
     private static String prefsFileName = "My.prefs";
     private static String themesFileName = "My.themes";
     private static MidiManager midiManager;
-    private static MidiSynth midiSynth;
     public static AutomaticVoicingSettings avs;
     public static boolean override;
     
@@ -223,6 +219,7 @@ public class ImproVisor implements Constants {
 
     /**
      * Set the indication of whether to play insertions.
+     * @param x
      */
 
     public static void setPlayEntrySounds(boolean x)
@@ -241,6 +238,7 @@ public class ImproVisor implements Constants {
 
     /**
      * Set the indication of whether to show advice.
+     * @param x
      */
 
     public static void setShowAdvice(boolean x)
@@ -313,12 +311,11 @@ private ImproVisor(String leadsheet)
     
     loadAdvice = new LoadAdviceCommand(ruleFile, advisor, null, true, false);
 
-   if( loadAdvice != null )
-      {
-        loadAdvice.setLoadDialogText("Loading Vocabulary ...");
-        loadAdvice.execute();
 
-        synchronized(loadAdvice)
+    loadAdvice.setLoadDialogText("Loading Vocabulary ...");
+    loadAdvice.execute();
+
+    synchronized(loadAdvice)
           {
             while( !loadAdvice.hasLoaded() )
               {
@@ -331,8 +328,6 @@ private ImproVisor(String leadsheet)
                   }
               }
           }
-
-      }
     
     // First open a blank Notate window
 
@@ -341,7 +336,7 @@ private ImproVisor(String leadsheet)
 
     String fontSizePref = Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE);
 
-    score.setChordFontSize(Integer.valueOf(fontSizePref).intValue());
+    score.setChordFontSize(Integer.valueOf(fontSizePref));
 
     // Create notate frame.
     
@@ -360,10 +355,8 @@ private ImproVisor(String leadsheet)
     
     // Close the splash window.
 
-    if( loadAdvice != null )
-      {
-        loadAdvice.hideLoadDialog();
-      }    
+    loadAdvice.hideLoadDialog();
+   
     
     // Load most recent file, if there is one.
 
@@ -475,7 +468,9 @@ public int getPasteType()
 /**
  * Main Impro-Visor program. Creates an ImproVisor instance, which will 
  * initialize the array of Notate frames.
+ * @param args
  */
+
 public static void main(String[] args) throws InvalidMidiDataException
   {
         //Start up Impro-Visor
@@ -492,10 +487,7 @@ public static void main(String[] args) throws InvalidMidiDataException
         ToolkitImages.getInstance();
         getUserDirectory();
         instance = new ImproVisor(leadsheet);
-        
-        
- 
-  }
+   }
 
 public void setAVS(AutomaticVoicingSettings avs){
     this.avs = avs;
@@ -569,8 +561,8 @@ public static void establishUserDirectory(File homeDir)
 
 /**
  * Copy master sub-directory into users home directory.
+ * @param subDirName
  * @param homeDir
- * @param name 
  */
 
 public static void copyDir(String subDirName, File homeDir)
@@ -579,8 +571,6 @@ public static void copyDir(String subDirName, File homeDir)
 
     File userDir = new File(homeDir, subDirName);
 
-    if( masterDir != null )
-      {
         try
           {
             FileUtilities.copyDirectory(masterDir, userDir);
@@ -590,7 +580,6 @@ public static void copyDir(String subDirName, File homeDir)
             ErrorLog.log(ErrorLog.SEVERE, "Error in copying folder " 
                            + subDirName + " to user directory.");
           }
-      }
   }
 
 
@@ -626,10 +615,12 @@ public static File getStyleDirectory()
   {
    return new File(getUserDirectory(), Directories.styleDirName);
   }
+
 public static File getVoicingDirectory()
-{
+  {
     return new File(getUserDirectory(), Directories.voicingDirName);
-}
+  }
+
 public static File getStyleExtractDirectory()
   {
   return new File(getUserDirectory(), Directories.styleExtractDirName);
@@ -747,6 +738,10 @@ public static String getLastLeadsheetFileStem()
     return lastLeadsheetFileStem;
   }
 
+/*
+* Note that these channel numbers are 1 less than what they appear as
+* to the user.
+*/
 private static int melodyChannel = 0;
 
 private static int chordChannel = 3;

@@ -1,6 +1,6 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 7.0,
-from Prof. Bob Keller at Harvey Mudd College, 27 May 2015.
+Welcome to Impro-Visor (Improvisation Advisor) Version 8.0,
+from Prof. Bob Keller at Harvey Mudd College, August 2015.
 
 Release notes for this version may be found at the end.
 
@@ -12,11 +12,11 @@ From the group, you may also obtain The Imaginary Book which contains a
 large number of chords-only leadsheets, as well as other useful
 resources.
 
-Impro-Visor is free and runs on any platform that supports Java 1.6 or
+Impro-Visor is free and runs on any platform that supports Java 1.7 or
 later, including:
  
-    Windows (XP, 2000, Vista, 7, 8)
-    MacOSX (Snow Leopard 10.6 or later needed for Java 1.6)
+    Windows (XP, 2000, Vista, 7, 8, 10)
+    MacOSX (Lion 10.7.3 or later needed for Java 1.7)
     Linux 
 
 The official information site for Impro-Visor is:
@@ -81,6 +81,8 @@ I am pleased to acknowledge contributions from the following developers:
  Caitlin Chen, Nicolas Chung, Anna Turner, Hayden Blauzvern, 
  Nate Tarrh, Brian Kwak, Kelly Lee, Willem Engen, Eric Chicot,
  Mark Heimann, Nava Dallal, Carli Lessard, Alex Putman, Becki Yukman
+ Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst, Baunnee Martinez,
+ Daniel Scanteianu, Amelia Sheppard, and David Siah
 
 We hope you enjoy using the program. 
 
@@ -92,6 +94,11 @@ Harvey Mudd College
 Claremont, CA 91711
 
 keller@cs.hmc.edu
+
+===============================================================================
+Release notes for Impro-Visor 8.0
+
+To be added
 
 ===============================================================================
 Release notes for Impro-Visor 7.0

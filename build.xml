@@ -1,7 +1,7 @@
 <project name="Impro-Visor" default="compile" basedir=".">
 
 <description>
-Build-file for Impro-Visor 7.0
+Build-file for Impro-Visor 8.0
 
 Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
 
@@ -22,11 +22,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     
 <target name="init">
     <property name="appName"                value="Impro-Visor"              />
-    <property name="distDir"                value="improvisor700"            />
-    <property name="dist-mac"               value="improvisor700-mac"        />
-    <property name="dist-win"               value="improvisor700-win"        />
-    <property name="zipName"                value="improvisor700.zip"        />
-    <property name="zipMacName"             value="improvisor700mac.zip"     />
+    <property name="distDir"                value="improvisor800"            />
+    <property name="dist-mac"               value="improvisor800-mac"        />
+    <property name="dist-win"               value="improvisor800-win"        />
+    <property name="zipName"                value="improvisor800.zip"        />
+    <property name="zipMacName"             value="improvisor800mac.zip"     />
     <property name="miscDir"                value="improvisor"               />
     <property name="srcDir"                 value="src"                      />
     <property name="impDir"                 value="src/imp"                  />
@@ -41,6 +41,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="styleExtractDir"        value="styleExtract"             />
     <property name="midiDir"                value="midi"                     />
     <property name="scDir"                  value="sc"                       />
+    <property name="countsDir"              value="counts"                   />
+    <property name="fractalsDir"            value="fractals"                 />
+    <property name="transformsDir"          value="transforms"               />
+    <property name="voicingsDir"            value="voicings"                 />
     <property name="packagingDir"           value="packaging"                />
     <property name="javadocDir"             value="javadoc"                  />
 
@@ -201,6 +205,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <copy todir="${distDir}/sc">
         <fileset dir="${scDir}" includes="**/*.*" />
     </copy>
+    <copy todir="${distDir}/counts">
+        <fileset dir="${countsDir}" includes="**/*.counts" />
+    </copy>
+    <copy todir="${distDir}/fractals">
+        <fileset dir="${fractalsDir}" includes="**/*.fractal" />
+    </copy>
+    <copy todir="${distDir}/transforms">
+        <fileset dir="${transformsDir}" includes="**/*.transform" />
+    </copy>
+    <copy todir="${distDir}/voicings">
+        <fileset dir="${voicingssDir}" includes="**/*." />
+    </copy>
     <copy todir="${distDir}">
         <fileset dir="${miscDir}" includes="**/*.*" />
     </copy>
@@ -313,7 +329,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 </target>
 
 <target name="zipSrc" depends="cleanSrc" description="zips up the source">
-    <zip destfile="improvisor700-src.zip" basedir="${srcDir}" />
+    <zip destfile="improvisor800-src.zip" basedir="${srcDir}" />
 </target>
 
 <target name="cleanJavadoc" depends="init" description="">
