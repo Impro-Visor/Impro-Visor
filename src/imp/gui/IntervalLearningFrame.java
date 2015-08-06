@@ -19,46 +19,35 @@
  */
 
 /*
- * TransformFrame.java
- *
+ * IntervalLearningFrame.java
+ *@author Mikayla Konst 2015
  * Created on July 27, 2015, 4:57:53 PM
  */
+
 package imp.gui;
-import imp.data.*;
-import imp.lickgen.LickGen;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
-import polya.Polylist;
-import polya.Tokenizer;
 
-/**
- * @author Alex Putman
-  */
 public class IntervalLearningFrame
         extends javax.swing.JFrame
         implements imp.Constants {
 
     
-    private Notate notate;
+    private final Notate notate;
     
-    private IntervalLearningPanel intervalLearningTab;
+    private final IntervalLearningPanel intervalLearningTab;
     /**
      * Creates new LickgenFrame
+     * @param notate The notate this interval learning frame was spawned from
      */
     public IntervalLearningFrame(Notate notate){
         this.notate = notate;
         initComponents();
-
         intervalLearningTab = new IntervalLearningPanel(notate);
         intervalLearningPanelHolder.add(intervalLearningTab, new GridLayout(1, 1, 1, 1));
     }
-
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -211,10 +200,6 @@ public class IntervalLearningFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void stopPlaying() {
-        notate.stopPlaying();
-    }
-
                         private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
                             // TODO add your handling code here:
                         }//GEN-LAST:event_fileMenuActionPerformed
@@ -227,8 +212,6 @@ public class IntervalLearningFrame
 
         WindowRegistry.unregisterWindow(this);
     }
-
-
                         private void cascadeMI2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cascadeMI2ActionPerformed
                             WindowRegistry.cascadeWindows(this);
                         }//GEN-LAST:event_cascadeMI2ActionPerformed
@@ -287,90 +270,7 @@ public class IntervalLearningFrame
     public void intervalImprovise(){
         intervalLearningTab.generateSolo();
     }
-    
-/**
- * Fill an abstract or relative-pitch melody from text, such as acquired from
- * either abstract melody or relative pitch melody field.
- * If the text is not already a Polylist, this will first make a Polylist
- * out of it.
- *
- * @param r
- */
-public void fillMelodyFromText(String r)
-  {
-    r = r.trim();
-    if( r.equals("") )
-      {
-        return; // no text specified
-      }
-    if( r.charAt(0) != '(' )
-      {
-        r = "(".concat(r);
-      }
-
-    if( r.charAt(r.length() - 1) != ')' )
-      {
-        r = r.concat(")");
-      }
-
-    Polylist rhythm = new Polylist();
-    StringReader rhythmReader = new StringReader(r);
-    Tokenizer in = new Tokenizer(rhythmReader);
-    Object ob;
-
-    while( (ob = in.nextSexp()) != Tokenizer.eof )
-      {
-        if( ob instanceof Polylist )
-          {
-            rhythm = (Polylist) ob;
-          }
-      }
-
-    notate.generateAndPutLick(rhythm);
-  }
-
-public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
-  {
-    r = r.trim();
-    if( r.equals("") )
-      {
-        return new MelodyPart(); // no text specified
-      }
-    if( r.charAt(0) != '(' )
-      {
-        r = "(".concat(r);
-      }
-
-    if( r.charAt(r.length() - 1) != ')' )
-      {
-        r = r.concat(")");
-      }
-
-    Polylist rhythm = new Polylist();
-    StringReader rhythmReader = new StringReader(r);
-    Tokenizer in = new Tokenizer(rhythmReader);
-    Object ob;
-
-    while( (ob = in.nextSexp()) != Tokenizer.eof )
-      {
-        if( ob instanceof Polylist )
-          {
-            rhythm = (Polylist) ob;
-          }
-      }
-
-    return notate.generateLick(rhythm, chordPart);
-  }
-
-    private boolean saveImp = false;
-    public void setSaveImp(boolean value)
-    {
-        saveImp = value;
-    }
-    public boolean shouldSaveImp(){
-        return saveImp;
-    }
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addFromFile;
     private javax.swing.JMenuItem cascadeMI2;
