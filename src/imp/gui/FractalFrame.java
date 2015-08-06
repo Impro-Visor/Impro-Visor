@@ -165,7 +165,7 @@ public class FractalFrame extends javax.swing.JFrame {
         cascadeMI = new javax.swing.JMenuItem();
         windowMenuSeparator = new javax.swing.JPopupMenu.Separator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(700, 400));
         setMinimumSize(new java.awt.Dimension(600, 350));
         setPreferredSize(new java.awt.Dimension(650, 375));
@@ -600,7 +600,7 @@ public class FractalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tripleTextActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        System.out.println("here");
+        
         closeWindow();
     }//GEN-LAST:event_formWindowClosed
 
