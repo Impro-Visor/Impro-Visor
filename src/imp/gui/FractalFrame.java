@@ -139,8 +139,6 @@ public class FractalFrame extends javax.swing.JFrame {
         infoLabel2 = new javax.swing.JLabel();
         infoLabel3 = new javax.swing.JLabel();
         infoLabel4 = new javax.swing.JLabel();
-        infoLabel5 = new javax.swing.JLabel();
-        infoLabel6 = new javax.swing.JLabel();
         divProbPanel = new javax.swing.JPanel();
         wholeDivLabel = new javax.swing.JLabel();
         halfDivLabel = new javax.swing.JLabel();
@@ -154,9 +152,6 @@ public class FractalFrame extends javax.swing.JFrame {
         eighthDivText = new javax.swing.JTextField();
         sixteenthDivText = new javax.swing.JTextField();
         defaultDivText = new javax.swing.JTextField();
-        descriptionPanel = new javax.swing.JPanel();
-        descriptionLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         dividingPanel = new javax.swing.JPanel();
         numDivisionsSpinner = new javax.swing.JSpinner();
         multDivideButton = new javax.swing.JButton();
@@ -171,14 +166,14 @@ public class FractalFrame extends javax.swing.JFrame {
         windowMenuSeparator = new javax.swing.JPopupMenu.Separator();
 
         setMaximumSize(new java.awt.Dimension(700, 400));
-        setMinimumSize(new java.awt.Dimension(700, 400));
-        setPreferredSize(new java.awt.Dimension(700, 400));
-        setSize(new java.awt.Dimension(700, 400));
+        setMinimumSize(new java.awt.Dimension(600, 350));
+        setPreferredSize(new java.awt.Dimension(650, 375));
+        setSize(new java.awt.Dimension(650, 375));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         probabilitiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Probabilities"));
-        probabilitiesPanel.setMinimumSize(new java.awt.Dimension(1334, 300));
-        probabilitiesPanel.setPreferredSize(new java.awt.Dimension(600, 300));
+        probabilitiesPanel.setMinimumSize(new java.awt.Dimension(550, 250));
+        probabilitiesPanel.setPreferredSize(new java.awt.Dimension(550, 250));
         probabilitiesPanel.setLayout(new java.awt.GridBagLayout());
 
         containerPanel.setLayout(new java.awt.GridBagLayout());
@@ -293,6 +288,11 @@ public class FractalFrame extends javax.swing.JFrame {
 
         tripleText.setMinimumSize(new java.awt.Dimension(50, 28));
         tripleText.setPreferredSize(new java.awt.Dimension(50, 28));
+        tripleText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tripleTextActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         numDivPanel.add(tripleText, gridBagConstraints);
@@ -319,26 +319,12 @@ public class FractalFrame extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         infoPanel.add(infoLabel3, gridBagConstraints);
 
-        infoLabel4.setText("automatically be set");
+        infoLabel4.setText("automatically be set.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         infoPanel.add(infoLabel4, gridBagConstraints);
-
-        infoLabel5.setText("once the triplet value");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        infoPanel.add(infoLabel5, gridBagConstraints);
-
-        infoLabel6.setText("is changed.");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
-        infoPanel.add(infoLabel6, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -436,28 +422,6 @@ public class FractalFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         probabilitiesPanel.add(containerPanel, gridBagConstraints);
-
-        descriptionPanel.setLayout(new java.awt.GridBagLayout());
-
-        descriptionLabel.setText("These values give the probability of an event happening for the given length of note.");
-        descriptionLabel.setMaximumSize(new java.awt.Dimension(532, 20));
-        descriptionLabel.setMinimumSize(new java.awt.Dimension(532, 20));
-        descriptionLabel.setPreferredSize(new java.awt.Dimension(532, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        descriptionPanel.add(descriptionLabel, gridBagConstraints);
-
-        jLabel1.setText("The value in each box should stay between 0 and 1.");
-        jLabel1.setMaximumSize(new java.awt.Dimension(325, 20));
-        jLabel1.setMinimumSize(new java.awt.Dimension(325, 20));
-        jLabel1.setPreferredSize(new java.awt.Dimension(325, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        descriptionPanel.add(jLabel1, gridBagConstraints);
-
-        probabilitiesPanel.add(descriptionPanel, new java.awt.GridBagConstraints());
 
         getContentPane().add(probabilitiesPanel, new java.awt.GridBagConstraints());
 
@@ -622,6 +586,11 @@ public class FractalFrame extends javax.swing.JFrame {
         windowMenu.repaint();
     }//GEN-LAST:event_windowMenuMenuSelected
 
+    private void tripleTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tripleTextActionPerformed
+        double doubleProb = 1.0 - parseProb(tripleText.getText());
+        doubleText.setText(String.valueOf(doubleProb));
+    }//GEN-LAST:event_tripleTextActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cascadeMI;
     private javax.swing.JMenuItem closeWindowMI;
@@ -630,8 +599,6 @@ public class FractalFrame extends javax.swing.JFrame {
     private javax.swing.JTextField defaultDivText;
     private javax.swing.JLabel defaultRestLabel;
     private javax.swing.JTextField defaultRestText;
-    private javax.swing.JLabel descriptionLabel;
-    private javax.swing.JPanel descriptionPanel;
     private javax.swing.JPanel divProbPanel;
     private javax.swing.JPanel dividingPanel;
     private javax.swing.JLabel doubleLabel;
@@ -649,10 +616,7 @@ public class FractalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel infoLabel2;
     private javax.swing.JLabel infoLabel3;
     private javax.swing.JLabel infoLabel4;
-    private javax.swing.JLabel infoLabel5;
-    private javax.swing.JLabel infoLabel6;
     private javax.swing.JPanel infoPanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton multDivideButton;
     private javax.swing.JPanel numDivPanel;
