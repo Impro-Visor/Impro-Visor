@@ -21396,6 +21396,11 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                                                           improviseEndSlot);
                 transformFrame.applySubstitutions(solo, chords);
               }
+            else if(grammarDivideRadio.isSelected()){
+                getCurrentMelodyPart().newPasteOver(solo, 0);
+                fractalFrame.dividePastePlay();
+            }
+            
             else
               {
                 putLick(solo);
@@ -21457,6 +21462,10 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                                                                   improviseEndSlot);
                         transformFrame.applySubstitutions(lick, chords);
                       }
+                    else if(grammarDivideRadio.isSelected()){
+                        getCurrentMelodyPart().newPasteOver(lick, 0);
+                        fractalFrame.dividePastePlay();
+                    }
                     else
                       {
                         putLick(lick);
@@ -21475,6 +21484,10 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                                                                   improviseEndSlot);
                         transformFrame.applySubstitutions(lick, chords);
                       }
+                      else if(grammarDivideRadio.isSelected()){
+                        getCurrentMelodyPart().newPasteOver(lick, 0);
+                        fractalFrame.dividePastePlay();
+                    }
                     else
                       {
                         putLick(lick);
@@ -21539,6 +21552,10 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                                                           improviseEndSlot);
                 transformFrame.applySubstitutions(lick, chords);
               }
+            else if(grammarDivideRadio.isSelected()){
+                        getCurrentMelodyPart().newPasteOver(lick, 0);
+                        fractalFrame.dividePastePlay();
+            }
             else
               {
                 putLick(lick);
@@ -21612,6 +21629,10 @@ public MelodyPart genSolo(int improviseStartSlot, int improviseEndSlot){
                                                           improviseEndSlot);
                 transformFrame.applySubstitutions(solo, chords);
               }
+            else if(grammarDivideRadio.isSelected()){
+                        getCurrentMelodyPart().newPasteOver(solo, 0);
+                        fractalFrame.dividePastePlay();
+            }
             else
               {
                 finalMelodyPart = solo;
@@ -21662,6 +21683,10 @@ public MelodyPart genSolo(int improviseStartSlot, int improviseEndSlot){
                                                           improviseEndSlot);
                 transformFrame.applySubstitutions(lick, chords);
               }
+            else if(grammarDivideRadio.isSelected()){
+                getCurrentMelodyPart().newPasteOver(lick, 0);
+                fractalFrame.dividePastePlay();
+            }
             else
               {
                 finalMelodyPart = lick;
