@@ -1239,8 +1239,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel14.add(jPanel18, gridBagConstraints);
 
-        jPanel19.setBorder(javax.swing.BorderFactory.createTitledBorder("Preferred Motion Distance"));
-        jPanel19.setToolTipText("Preferred distance of chord progression");
+        jPanel19.setBorder(javax.swing.BorderFactory.createTitledBorder("Preferred Motion Variation"));
+        jPanel19.setToolTipText("Preferred amount of position variation of chord progression");
         jPanel19.setLayout(new java.awt.GridBagLayout());
 
         PrefMotionDistSlider.setMaximum(5);
@@ -1423,7 +1423,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel20.add(jPanel25, gridBagConstraints);
 
-        jPanel26.setBorder(javax.swing.BorderFactory.createTitledBorder("Half Step Reduction"));
+        jPanel26.setBorder(javax.swing.BorderFactory.createTitledBorder("Half Step Allowance"));
         jPanel26.setToolTipText("Probability that two notes a half-step apart will be played.");
         jPanel26.setLayout(new java.awt.GridBagLayout());
 
@@ -1451,7 +1451,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel20.add(jPanel26, gridBagConstraints);
 
-        jPanel27.setBorder(javax.swing.BorderFactory.createTitledBorder("Whole Step Reduction"));
+        jPanel27.setBorder(javax.swing.BorderFactory.createTitledBorder("Whole Step Allowance"));
         jPanel27.setToolTipText("Probability that two notes a whole-step apart will be played.");
         jPanel27.setLayout(new java.awt.GridBagLayout());
 
@@ -1581,6 +1581,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
 
         jMenu1.setText("File");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Open");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1589,6 +1590,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Save");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1597,6 +1599,7 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setText("Save As...");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
