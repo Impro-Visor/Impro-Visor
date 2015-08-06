@@ -147,7 +147,10 @@ public class VoicingGenerator {
                 }
                 
             }
-            start=priority.length;
+            if(rightHand.size()<leftHand.size())
+                start=rightHand.size();
+            else
+                start=leftHand.size();
         }
         //begin normal algorithm
         initAllMidiValues();
@@ -166,7 +169,7 @@ public class VoicingGenerator {
             setupAllLeftValues();   
             if(!allLeftValues.isEmpty())
             {
-                if(i<numNotesLeft)
+                if(leftHand.size()<numNotesLeft)
                 {
                     noteToAdd=allLeftValues.get((int)(Math.random()*allLeftValues.size()));
                     leftHand.add(noteToAdd);
@@ -190,7 +193,7 @@ public class VoicingGenerator {
             setupAllRightValues();
             if(!allRightValues.isEmpty())
             {
-                if(i<numNotesRight)
+                if(rightHand.size()<numNotesRight)
                 {
                     noteToAdd=allRightValues.get((int)(Math.random()*allRightValues.size()));
                     
