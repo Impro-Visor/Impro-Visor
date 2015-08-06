@@ -922,6 +922,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Stretch Limit (Semitones)"));
         jPanel5.setToolTipText("The distance between the lowest and highest note for one voicing in a hand.");
         jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        LHStretchSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel5.add(LHStretchSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -937,6 +939,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Notes"));
         jPanel6.setToolTipText("Minimum number of notes in the hand's voicing.");
         jPanel6.setLayout(new java.awt.GridBagLayout());
+
+        LHMinNotesSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel6.add(LHMinNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -952,6 +956,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Maximum Notes"));
         jPanel7.setToolTipText("Maximum number of notes in the hand's voicing.");
         jPanel7.setLayout(new java.awt.GridBagLayout());
+
+        LHMaxNotesSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel7.add(LHMaxNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -974,6 +980,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel4.add(LHRangeButton, gridBagConstraints);
 
         jPanel30.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
+
+        leftMinIntervalSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel30.add(leftMinIntervalSpinner);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1035,6 +1043,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Stretch Limit (Semitones)"));
         jPanel11.setToolTipText("The distance between the lowest and highest note for one voicing in a hand.");
         jPanel11.setLayout(new java.awt.GridBagLayout());
+
+        RHStretchSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel11.add(RHStretchSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1050,6 +1060,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Notes"));
         jPanel12.setToolTipText("Minimum number of notes in the hand's voicing.");
         jPanel12.setLayout(new java.awt.GridBagLayout());
+
+        RHMinNotesSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel12.add(RHMinNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1065,6 +1077,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Maximum Notes"));
         jPanel13.setToolTipText("Maximum number of notes in the hand's voicing.");
         jPanel13.setLayout(new java.awt.GridBagLayout());
+
+        RHMaxNotesSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel13.add(RHMaxNotesSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1078,6 +1092,8 @@ public class ControlPanelFrame extends javax.swing.JFrame implements Serializabl
         jPanel8.add(jPanel13, gridBagConstraints);
 
         jPanel29.setBorder(javax.swing.BorderFactory.createTitledBorder("Minimum Interval"));
+
+        rightMinIntervalSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         jPanel29.add(rightMinIntervalSpinner);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
