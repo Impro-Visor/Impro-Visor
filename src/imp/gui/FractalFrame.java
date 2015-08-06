@@ -519,6 +519,12 @@ public class FractalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void multDivideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multDivideButtonActionPerformed
+        MelodyPart fractalSolo = fractalSolo();
+        putSoloInNewChorus(fractalSolo);
+        playCurrentSelection();
+    }//GEN-LAST:event_multDivideButtonActionPerformed
+
+    private MelodyPart fractalSolo(){
         setProbabilities();
         setTextBoxes();
         int numTimes = (Integer)numDivisionsSpinner.getValue();
@@ -532,13 +538,30 @@ public class FractalFrame extends javax.swing.JFrame {
                                                     true,
                                                     true,
                                                     true));
+        return fractalSolo;
+    }
+    
+    private void putSoloInNewChorus(MelodyPart fractalSolo){
         notate.addChorus(fractalSolo);
+    }
+    
+    private void putSoloInCurrentChorus(MelodyPart fractalSolo){
+        notate.getCurrentMelodyPart().newPasteOver(fractalSolo, 0);
+    }
+    
+    private void playCurrentSelection(){
         notate.playCurrentSelection(true, 
                                     0, 
                                     true, 
                                     "Playing fractal line");
-    }//GEN-LAST:event_multDivideButtonActionPerformed
-
+    }
+    //for use in trading
+    public void dividePastePlay(){
+        MelodyPart fractalSolo = fractalSolo();
+        putSoloInCurrentChorus(fractalSolo);
+        playCurrentSelection();
+    }
+    
     private void singleDivideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singleDivideButtonActionPerformed
         setProbabilities();
         setTextBoxes();

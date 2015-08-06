@@ -114,6 +114,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         File dir = ImproVisor.getTransformDirectory();
         File file = new File(dir, musician+TransformFilter.EXTENSION);
         transform = new Transform(file);
+        guideToneLine = new MelodyPart();
     }
 
     /**
@@ -612,6 +613,11 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
   }
     
     private void generateLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateLineActionPerformed
+        generateLine();
+        putLineInNewChorus();
+    }//GEN-LAST:event_generateLineActionPerformed
+
+    private void generateLine(){
         //Get which options are selected
         JRadioButton direction = getSelected(directionButtons);
         JRadioButton scaleDeg = getSelected(scaleDegreeButtons);
@@ -643,7 +649,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
 
 
         //construct a guide tone line generator, make a guide tone line (melody part), then add it as a new chorus
-        
+        guideToneLine = new MelodyPart();
         if(!notate.getChordProg().getChords().isEmpty()){
             GuideLineGenerator guideLine = new GuideLineGenerator(notate.getChordProg(), 
                                                               buttonToDirection(direction), 
@@ -655,13 +661,49 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
                                                               mix,
                                                               allowColor);
             guideToneLine = guideLine.makeGuideLine();
-            notate.addChorus(guideToneLine);
         }
         
         updatePlayButtons();
-
-    }//GEN-LAST:event_generateLineActionPerformed
-
+    }
+    
+    private void putLineInNewChorus(){
+        if(guideToneLine != null && guideToneLine.getSize() != 0){
+            notate.addChorus(guideToneLine);
+        }
+    }
+    
+    private void putLineInCurrentChorus(){
+        if(guideToneLine != null && guideToneLine.getSize() != 0){
+            notate.getCurrentMelodyPart().newPasteOver(guideToneLine, 0);
+        }
+    }
+    
+    //used in trading
+    public void generatePastePlay(){
+        generateLine();
+        putLineInCurrentChorus();
+        play();
+    }
+    
+    //used in trading w transform / fractal division
+    public void generatePaste(){
+        generateLine();
+        putLineInCurrentChorus();
+    }
+    
+     /**
+     * play
+     * play the melody in the current chorus
+     */
+    private void play(){
+        notate.selectAll();
+        notate.playCurrentSelection(true, 
+                                        0, 
+                                        PlayScoreCommand.USEDRUMS, 
+                                        "guide tone line");
+        ImproVisor.setPlayEntrySounds(true);
+    }
+    
     private int buttonToDuration(JRadioButton b){
         if(b.equals(noPref)){
             return 0;

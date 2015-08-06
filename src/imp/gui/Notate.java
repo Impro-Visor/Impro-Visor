@@ -2103,6 +2103,7 @@ public Critic getCritic()
         transformRadio = new javax.swing.JRadioButtonMenuItem();
         grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
         afterGrammarSeparator = new javax.swing.JPopupMenu.Separator();
+        guideToneRadio = new javax.swing.JRadioButtonMenuItem();
         guideToneTransformRadio = new javax.swing.JRadioButtonMenuItem();
         guideToneDivideRadio = new javax.swing.JRadioButtonMenuItem();
         afterGuideToneSeparator = new javax.swing.JPopupMenu.Separator();
@@ -9167,6 +9168,10 @@ public Critic getCritic()
         grammarDivideRadio.setText("Use Grammar & Divide");
         improvMenu.add(grammarDivideRadio);
         improvMenu.add(afterGrammarSeparator);
+
+        improvButtonGroup.add(guideToneRadio);
+        guideToneRadio.setText("Guide Tone Line");
+        improvMenu.add(guideToneRadio);
 
         improvButtonGroup.add(guideToneTransformRadio);
         guideToneTransformRadio.setText("Guide Tone & Transform");
@@ -21339,6 +21344,25 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
           intervalLearningFrame.intervalImprovise();
           return;
       }
+      
+      if(guideToneRadio.isSelected()){
+          guideToneLineDialog.generatePastePlay();
+          return;
+      }
+      
+      if(guideToneDivideRadio.isSelected()){
+          guideToneLineDialog.generatePaste();
+          fractalFrame.dividePastePlay();
+          return;
+      }
+      
+      if(guideToneTransformRadio.isSelected()){
+          guideToneLineDialog.generatePaste();
+          ChordPart chords = getChordProg().extract(improviseStartSlot,
+                                                          improviseEndSlot);
+          transformFrame.applySubstitutions(getCurrentMelodyPart(), chords);
+          return;
+      }
 
     // outLines is the same as soloist
     if( useOutlines )
@@ -25328,6 +25352,7 @@ private ImageIcon pauseButton =
     private javax.swing.JRadioButton greenOtherBtn;
     private javax.swing.JRadioButtonMenuItem guideToneDivideRadio;
     private javax.swing.JMenuItem guideToneLine;
+    private javax.swing.JRadioButtonMenuItem guideToneRadio;
     private javax.swing.JRadioButtonMenuItem guideToneTransformRadio;
     private javax.swing.JMenuItem helpAboutMI;
     private javax.swing.JMenuItem helpMI;
