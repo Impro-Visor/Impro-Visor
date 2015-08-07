@@ -542,7 +542,7 @@ public class ActiveTrading {
         try {
             tradeResponseController.updateResponse(response, soloChords, responseChords, nextSection, transform);
             response = tradeResponseController.response(tradeMode);
-            System.out.println(response);
+            //System.out.println(response);
             notate.getCurrentMelodyPart().altPasteOver(response, (triggers.get(triggerIndex) % adjustedLength));
             notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn), triggers.get(triggerIndex) + slotsPerTurn);
         } catch (ExceptionTradeModeNotFound ex) {

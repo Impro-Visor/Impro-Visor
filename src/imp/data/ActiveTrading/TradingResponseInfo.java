@@ -34,6 +34,7 @@ import imp.data.GuideLineGenerator;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.gui.Notate;
+import imp.lickgen.Grammar;
 import imp.lickgen.LickGen;
 import imp.lickgen.transformations.NoteChordPair;
 import imp.lickgen.transformations.Transform;
@@ -79,7 +80,8 @@ public class TradingResponseInfo {
         this.flattener = new TransformLearning();
         this.metre = metre;
         this.tradeLength = tradeLength;
-        grammarSolo = notate.genSolo(0, notate.getScoreLength());
+        //grammarSolo = notate.genSolo(0, notate.getScoreLength());
+        grammarSolo = generateFromGrammar(notate.getScoreLength(), notate.getChordProg());
         phrases = new PhraseTable(notate);
     }
     
@@ -151,8 +153,21 @@ public class TradingResponseInfo {
     }
     
     public void genSolo(){
-        response = notate.genSolo(nextSection, nextSection + tradeLength);
+        response = generateFromGrammar(tradeLength, responseChords);
+        //response = notate.genSolo(nextSection, nextSection + tradeLength);
         //System.out.println("MELODY " + mp);
+    }
+    
+    private MelodyPart generateFromGrammar(int length, ChordPart chords){
+        return generateFromGrammar(length, chords, notate);
+    }
+    
+    public  static MelodyPart generateFromGrammar(int length, ChordPart chords, Notate notate){
+        Grammar gram = new Grammar(notate.getGrammarFileName());
+        MelodyPart generated = notate.getLickgenFrame().fillMelody(BEAT, gram.run(0, length, notate, false, false, -1), chords, 0);
+        RectifyPitchesCommand cmd = new RectifyPitchesCommand(generated, 0, generated.size()-1, chords, false, false, true, true, true);
+        cmd.execute();
+        return generated;
     }
     
     public MelodyPart extractFromGrammarSolo(int startSlot, int slotLength){

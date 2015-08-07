@@ -36,6 +36,7 @@ public class GrammarTRM extends TradingResponseMode{
     @Override
     public MelodyPart generateResponse(){
         responseInfo.genSolo();
+        //responseInfo.rectifySolo(); - now in generateFromGrammar
         return responseInfo.getResponse();
     }
     

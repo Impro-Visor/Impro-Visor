@@ -21609,120 +21609,120 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     } 
   }
 
-public MelodyPart genSolo(int improviseStartSlot, int improviseEndSlot){
-    totalSlots = improviseEndSlot - improviseStartSlot + 1;
-
-    int beatsRequested = totalSlots / BEAT;
-
-    Polylist rhythm = null;
-    
-    MelodyPart finalMelodyPart = null;
-
-    boolean useOutlines = lickgenFrame.useSoloistSelected();
-    
-    // outLines is the same as soloist
-    if( useOutlines )
-      {
-        // was new lickgenFrame.fillMelody(BEAT, rhythm, chordProg, 0);
-        // was commented out:
-        lickgen.getFillMelodyParameters(minPitch,
-                                        maxPitch,
-                                        minInterval,
-                                        maxInterval,
-                                        BEAT,
-                                        leapProb,
-                                        chordProg,
-                                        0,
-                                        avoidRepeats);
-
-        MelodyPart solo = lickgen.generateSoloFromOutline(totalSlots);
-        pointr = solo; //TEST
-        if( solo != null )
-          {
-            rhythm = lickgen.getRhythmFromSoloist(); //get the abstract melody for display
-            if( lickgenFrame.useHeadSelected() )
-              {
-                adjustLickToHead(solo);
-              }
-
-            if( transformRadio.isSelected() )
-              {
-                ChordPart chords = getChordProg().extract(improviseStartSlot,
-                                                          improviseEndSlot);
-                transformFrame.applySubstitutions(solo, chords);
-              }
-            else if(grammarDivideRadio.isSelected()){
-                        getCurrentMelodyPart().newPasteOver(solo, 0);
-                        fractalFrame.dividePastePlay();
-            }
-            else
-              {
-                finalMelodyPart = solo;
-              }
-          }
-      }
-    
-    if( rhythm == null || !useOutlines )
-      {
-        if( lickgenFrame.getUseGrammar() )
-          {
-            rhythm = lickgen.generateRhythmFromGrammar(improviseStartSlot, totalSlots);
-          }
-        else
-          {
-            rhythm = lickgen.generateRandomRhythm(totalSlots,
-                                                  lickgenFrame.getMinDuration(),
-                                                  lickgenFrame.getMaxDuration(),
-                                                  lickgenFrame.getRestProb());
-          }
-
-        MelodyPart lick = generateLick(rhythm, improviseStartSlot, improviseEndSlot);
-        pointr = lick; //test
-
-        // Critical point for recurrent generation
-        if( lick != null )
-          {
-            int beatsGenerated = lick.size() / BEAT;
-
-            if( beatsGenerated > beatsRequested )
-              {
-                //debug
-                //System.out.println("generated " + beatsGenerated
-                //             + " beats, but " + beatsRequested + " requested (fewer)");
-
-                lick = lick.extract(0, BEAT * beatsRequested - 1, true);
-              }
-            else if( beatsGenerated < beatsRequested )
-              {
-                //debug
-                //System.out.println("generated " + beatsGenerated
-                //             + " beats, but " + beatsRequested + " requested (more)");
-              }
-
-            if( transformRadio.isSelected() )
-              {
-                ChordPart chords = getChordProg().extract(improviseStartSlot,
-                                                          improviseEndSlot);
-                transformFrame.applySubstitutions(lick, chords);
-              }
-            else if(grammarDivideRadio.isSelected()){
-                getCurrentMelodyPart().newPasteOver(lick, 0);
-                fractalFrame.dividePastePlay();
-            }
-            else
-              {
-                finalMelodyPart = lick;
-              }
-            //System.out.println("lick = " + lick);
-          }
-        else
-          {
-            //debug System.out.println("panic: generated null lick");
-            setMode(Mode.GENERATION_FAILED);
-          }
-      }
-    return finalMelodyPart;
-}
+//public MelodyPart genSolo(int improviseStartSlot, int improviseEndSlot){
+//    totalSlots = improviseEndSlot - improviseStartSlot + 1;
+//
+//    int beatsRequested = totalSlots / BEAT;
+//
+//    Polylist rhythm = null;
+//    
+//    MelodyPart finalMelodyPart = null;
+//
+//    boolean useOutlines = lickgenFrame.useSoloistSelected();
+//    
+//    // outLines is the same as soloist
+//    if( useOutlines )
+//      {
+//        // was new lickgenFrame.fillMelody(BEAT, rhythm, chordProg, 0);
+//        // was commented out:
+//        lickgen.getFillMelodyParameters(minPitch,
+//                                        maxPitch,
+//                                        minInterval,
+//                                        maxInterval,
+//                                        BEAT,
+//                                        leapProb,
+//                                        chordProg,
+//                                        0,
+//                                        avoidRepeats);
+//
+//        MelodyPart solo = lickgen.generateSoloFromOutline(totalSlots);
+//        pointr = solo; //TEST
+//        if( solo != null )
+//          {
+//            rhythm = lickgen.getRhythmFromSoloist(); //get the abstract melody for display
+//            if( lickgenFrame.useHeadSelected() )
+//              {
+//                adjustLickToHead(solo);
+//              }
+//
+//            if( transformRadio.isSelected() )
+//              {
+//                ChordPart chords = getChordProg().extract(improviseStartSlot,
+//                                                          improviseEndSlot);
+//                transformFrame.applySubstitutions(solo, chords);
+//              }
+//            else if(grammarDivideRadio.isSelected()){
+//                        getCurrentMelodyPart().newPasteOver(solo, 0);
+//                        fractalFrame.dividePastePlay();
+//            }
+//            else
+//              {
+//                finalMelodyPart = solo;
+//              }
+//          }
+//      }
+//    
+//    if( rhythm == null || !useOutlines )
+//      {
+//        if( lickgenFrame.getUseGrammar() )
+//          {
+//            rhythm = lickgen.generateRhythmFromGrammar(improviseStartSlot, totalSlots);
+//          }
+//        else
+//          {
+//            rhythm = lickgen.generateRandomRhythm(totalSlots,
+//                                                  lickgenFrame.getMinDuration(),
+//                                                  lickgenFrame.getMaxDuration(),
+//                                                  lickgenFrame.getRestProb());
+//          }
+//
+//        MelodyPart lick = generateLick(rhythm, improviseStartSlot, improviseEndSlot);
+//        pointr = lick; //test
+//
+//        // Critical point for recurrent generation
+//        if( lick != null )
+//          {
+//            int beatsGenerated = lick.size() / BEAT;
+//
+//            if( beatsGenerated > beatsRequested )
+//              {
+//                //debug
+//                //System.out.println("generated " + beatsGenerated
+//                //             + " beats, but " + beatsRequested + " requested (fewer)");
+//
+//                lick = lick.extract(0, BEAT * beatsRequested - 1, true);
+//              }
+//            else if( beatsGenerated < beatsRequested )
+//              {
+//                //debug
+//                //System.out.println("generated " + beatsGenerated
+//                //             + " beats, but " + beatsRequested + " requested (more)");
+//              }
+//
+//            if( transformRadio.isSelected() )
+//              {
+//                ChordPart chords = getChordProg().extract(improviseStartSlot,
+//                                                          improviseEndSlot);
+//                transformFrame.applySubstitutions(lick, chords);
+//              }
+//            else if(grammarDivideRadio.isSelected()){
+//                getCurrentMelodyPart().newPasteOver(lick, 0);
+//                fractalFrame.dividePastePlay();
+//            }
+//            else
+//              {
+//                finalMelodyPart = lick;
+//              }
+//            //System.out.println("lick = " + lick);
+//          }
+//        else
+//          {
+//            //debug System.out.println("panic: generated null lick");
+//            setMode(Mode.GENERATION_FAILED);
+//          }
+//      }
+//    return finalMelodyPart;
+//}
 
 /**
  * Rectify the current selection, aligning pitches to harmony.

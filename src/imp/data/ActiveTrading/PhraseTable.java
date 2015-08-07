@@ -20,14 +20,18 @@
  */
 package imp.data.ActiveTrading;
 
+import imp.ImproVisor;
 import imp.data.IntervalLearner;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.gui.Notate;
 import imp.lickgen.LickGen;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import polya.Polylist;
 
 /**
@@ -46,9 +50,19 @@ public class PhraseTable {
         phrases = new HashMap<Integer, LinkedList<MelodyPart>>();
         this.notate = notate;
         this.lickGen = notate.getLickGen();
-        MelodyPart intervalSolo = notate.genSolo(0, notate.getScoreLength() * intervalSoloLength);
+        
         intervals = new IntervalLearner();
-        intervals.learnFrom(intervalSolo);
+//        for (int i = 0; i < intervalSoloLength; i++) {
+//            //MelodyPart intervalSolo = notate.genSolo(0, notate.getScoreLength() * intervalSoloLength);
+//            MelodyPart intervalSolo = TradingResponseInfo.generateFromGrammar(notate.getScoreLength(), notate.getChordProg(), notate);
+//
+//            intervals.learnFrom(intervalSolo);
+//        }
+        try {
+            intervals.learnFrom(ImproVisor.getCountsFile());
+        } catch (FileNotFoundException ex) {
+            //Logger.getLogger(PhraseTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void addPhrase(MelodyPart phraseToAdd){

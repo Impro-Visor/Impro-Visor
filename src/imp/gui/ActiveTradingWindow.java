@@ -397,7 +397,6 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         mainStuff.setMaximumSize(new java.awt.Dimension(500, 340));
         mainStuff.setMinimumSize(new java.awt.Dimension(500, 340));
         mainStuff.setPreferredSize(new java.awt.Dimension(500, 340));
-        mainStuff.setSize(new java.awt.Dimension(500, 340));
         mainStuff.setLayout(new java.awt.GridBagLayout());
 
         tradeLengthPanel.setBackground(new java.awt.Color(255, 255, 255));
