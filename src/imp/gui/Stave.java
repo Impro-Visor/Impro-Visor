@@ -5162,7 +5162,7 @@ private Image chooseImage(int pitch, int rhythmValue, int color, boolean beamed,
     return unitImage;
   }  // end chooseImage
 
-void unselectAll()
+public void unselectAll()
   {
     Trace.log(2, "unselect all");
     setSelection(OUT_OF_BOUNDS);

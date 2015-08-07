@@ -573,7 +573,7 @@ private MidiLatencyMeasurementTool midiLatencyMeasurement = new MidiLatencyMeasu
 /**
  * Trading prefs
  */
-TradingWindow trader;
+ActiveTradingWindow trader;
 
 private boolean isActiveTrading = false;
 
@@ -10963,7 +10963,9 @@ void stopPlaying()
   }
 
 int savNum = 1;
-void stopPlaying(String reason)
+
+//made public for active trading - zach
+public void stopPlaying(String reason)
   {
     //System.out.println("stopPlaying called in Notate for reason: " + reason);
     midiSynth.stop("stop in Notate: " + reason);
@@ -17925,7 +17927,7 @@ boolean continuousImprovisation = true; // Box is initially checked.
 
 /**
  * same as playScore(), but only plays firstChorus, and will never call improviseContinuously().
- * Added by Zach Kondak to be called from class TradingWindow.
+ * Added by Zach Kondak to be called from class ActiveTradingWindow.
  */
 public void playFirstChorus(){
     this.setFirstTab();
@@ -23203,9 +23205,9 @@ int quantizeResolution = 60;
         isActiveTrading = true;
         this.setToNotLoop();
         if (trader == null) {
-        trader = new TradingWindow(this);
+        trader = new ActiveTradingWindow(this);
         } else {
-            trader.setNotateDefaults();
+            trader.tradingWindowOpened();
         }
         trader.setVisible(true);
     }//GEN-LAST:event_tradingWindowActionPerformed
