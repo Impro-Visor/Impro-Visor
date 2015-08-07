@@ -24,6 +24,7 @@ import imp.Constants;
 import static imp.Constants.ExtractMode.BRICK;
 import static imp.Constants.ExtractMode.QUOTE;
 import imp.brickdictionary.Block;
+import imp.com.MergeSameNotesCommand;
 import imp.com.PlayScoreCommand;
 import imp.com.RectifyPitchesCommand;
 import imp.com.ShiftChordsCommand;
@@ -5330,6 +5331,15 @@ public void rectifySelection(int startIndex, int endIndex, boolean directional, 
 
     repaint();
   }
+
+public void mergeSelection(int startIndex, int endIndex){
+    notate.cm.execute(new MergeSameNotesCommand(getMelodyPart(), startIndex, endIndex));
+    if( startIndex == endIndex )
+      {
+        redoAdvice();
+      }
+    repaint();
+}
 
 
 

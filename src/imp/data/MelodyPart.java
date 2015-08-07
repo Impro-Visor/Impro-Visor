@@ -1770,6 +1770,16 @@ public int getInitialBeatsRest()
   return buffer.toString();
   }
 
+ public void printNotesAtSlots(){
+     int n = slots.size();
+     for(int i = 0; i < n; i++){
+         Note note = (Note) slots.get(i);
+         if(note != null){
+             System.out.println("Slot: "+i+" contains "+note);
+         }
+     }
+ }
+ 
  /**
   * Get the melody as a list of just note symbols in leadsheet notation
   * @return 

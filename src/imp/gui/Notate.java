@@ -2045,6 +2045,7 @@ public Critic getCritic()
         insertRestMeasure = new javax.swing.JMenuItem();
         addRestMI = new javax.swing.JMenuItem();
         resolvePitches = new javax.swing.JMenuItem();
+        mergeSamePitches = new javax.swing.JMenuItem();
         transposeMenu = new javax.swing.JMenu();
         transposeMelodyUpSemitone = new javax.swing.JMenuItem();
         transposeChordsUpSemitone = new javax.swing.JMenuItem();
@@ -8674,6 +8675,14 @@ public Critic getCritic()
         });
         editMenu.add(resolvePitches);
 
+        mergeSamePitches.setText("Merge Consecutive Same Notes");
+        mergeSamePitches.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mergeSamePitchesActionPerformed(evt);
+            }
+        });
+        editMenu.add(mergeSamePitches);
+
         menuBar.add(editMenu);
 
         transposeMenu.setText("Transpose");
@@ -9192,6 +9201,11 @@ public Critic getCritic()
         improvMenu.add(improvSeparator1);
 
         tradeCheckbox.setText("Trade");
+        tradeCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tradeCheckboxActionPerformed(evt);
+            }
+        });
         improvMenu.add(tradeCheckbox);
 
         saveImprovCheckBoxMenuItem.setText("Save Improvisation");
@@ -19665,6 +19679,12 @@ public void rectifySelection()
     stave.playSelection(false, 0, PlayScoreCommand.USEDRUMS, "Notate rectifySelection");
   }
 
+public void mergeSelection(){
+    Stave stave = getCurrentStave();
+    mergeSelection(stave, getCurrentSelectionStart(), getCurrentSelectionEnd());
+    stave.playSelection(false, 0, PlayScoreCommand.USEDRUMS, "Notate mergeSelection");
+}
+
     private void defaultTempoTFActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_defaultTempoTFActionPerformed
     {//GEN-HEADEREND:event_defaultTempoTFActionPerformed
         double tempo = doubleFromTextField(defaultTempoTF, MIN_TEMPO, MAX_TEMPO, getDefaultTempo());
@@ -21715,6 +21735,17 @@ public void rectifySelection(Stave stave, int selectionStart, int selectionEnd)
     stave.rectifySelection(selectionStart, selectionEnd, false, false);
   }
 
+/**
+ * Merge consecutive same notes in the current selection.
+ * 
+ * @param stave
+ * @param selectionStart
+ * @param selectionEnd 
+ */
+public void mergeSelection(Stave stave, int selectionStart, int selectionEnd){
+    stave.mergeSelection(selectionStart, selectionEnd);
+}
+
 private void lowRangeTF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowRangeTF2ActionPerformed
 
     String lowNote = lowRangeTF2.getText();//GEN-LAST:event_lowRangeTF2ActionPerformed
@@ -23217,7 +23248,37 @@ int quantizeResolution = 60;
     private void passiveTradingMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passiveTradingMIActionPerformed
         passiveTradingWindow.setVisible(true);
     }//GEN-LAST:event_passiveTradingMIActionPerformed
-void delAllMelody()
+
+    private void tradeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeCheckboxActionPerformed
+        if(tradeCheckbox.isSelected()){
+            if(!selectedModeCanTrade()){
+                grammarRadio.setSelected(true);
+            }
+            setModesThatCantTrade(false);
+        }else{
+            setModesThatCantTrade(true);
+        }
+    }//GEN-LAST:event_tradeCheckboxActionPerformed
+
+    private void mergeSamePitchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mergeSamePitchesActionPerformed
+        mergeSelection();
+    }//GEN-LAST:event_mergeSamePitchesActionPerformed
+
+    private void setModesThatCantTrade(boolean enabled){
+        guideToneRadio.setEnabled(enabled);
+        guideToneTransformRadio.setEnabled(enabled);
+        guideToneDivideRadio.setEnabled(enabled);
+        themeWeaveRadio.setEnabled(enabled);
+        intervalsRadio.setEnabled(enabled);
+    }
+    
+    private boolean selectedModeCanTrade(){
+        return grammarRadio.isSelected() 
+                || transformRadio.isSelected() 
+                || grammarDivideRadio.isSelected();
+    }
+    
+    void delAllMelody()
   {
     Trace.log(2, "delete all melody");
     
@@ -25541,6 +25602,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel melodyPanel;
     private javax.swing.JSlider melodyVolume;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem mergeSamePitches;
     private javax.swing.JMenuItem mergeSectionFollowingPMI;
     private javax.swing.JMenuItem mergeSectionPreviousPMI;
     private javax.swing.JToggleButton midiBtn;
