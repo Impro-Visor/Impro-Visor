@@ -39,8 +39,6 @@ import imp.roadmap.RoadMapFrame;
 import imp.util.*;
 import imp.voicing.AutomaticVoicingSettings;
 import imp.voicing.ControlPanelFrame;
-import imp.voicing.HandManager;
-import imp.voicing.VoicingGenerator;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -599,7 +597,6 @@ int recurrentIteration = 1;
  * accessed from inner class
  */
 final int earlyScrollMargin = 160;
-private String improvMenuSelection;
 // Initializes a network, specific to one leadsheet.
 private Critic critic;
 
@@ -953,8 +950,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setupArrays();
 
-    setTempo(score.getTempo());
-
     // set the menu and button states
 
     setItemStates();
@@ -965,17 +960,9 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setDefaultButton(duplicateLickDialog, ignoreDuplicate);
 
-    /* Why is this here? I don't know. It resets the section info of the score,
-     * which seems dumb. I commented it out so that scores can retain their sections
-     *
-     * Answer: Without this, new leadsheets open with Style: unknown, which is not good.
-     *
-     * See Score.setStyle() for an attempted fix.
-     */
-
-    //score.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
-
     sectionInfo = score.getChordProg().getSectionInfo().copy();
+
+    setTempo(score.getTempo());
 
     showAdviceButton.setSelected(adviceInitiallyOpen);
 
@@ -1060,15 +1047,15 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setAutoImprovisation(false);
 
-    try
-      {
-        improvMenuSelection =
-                Preferences.getPreferenceQuietly(Preferences.IMPROV_MENU_SETTING);
-      }
-    catch( NonExistentParameterException e )
-      {
-        setUseImproviseCheckBox(); // DEFAULT
-      }
+//    try
+//      {
+//        improvMenuSelection =
+//                Preferences.getPreferenceQuietly(Preferences.IMPROV_MENU_SETTING);
+//      }
+//    catch( NonExistentParameterException e )
+//      {
+//        setUseImproviseCheckBox(); // DEFAULT
+//      }
 
     audioSettings = new AudioSettings(this);
     guideToneLineDialog = new GuideToneLineDialog(this, false);
@@ -1078,30 +1065,30 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 boolean showConstructionLinesAndBoxes = true;
 boolean saveConstructionLineState;
 
-private int setMenuSelection(JMenu jMenu, String string)
-  {
-    int n = jMenu.getItemCount();
-
-    for( int i = 0; i < n; i++ )
-      {
-        JMenuItem item = jMenu.getItem(i);
-        if( item != null )
-          {
-            item.setSelected(false);
-          }
-      }
-
-    for( int i = 0; i < n; i++ )
-      {
-        JMenuItem item = jMenu.getItem(i);
-        if( item != null && item.getText().equals(string) )
-          {
-            item.setSelected(true);
-            return i;
-          }
-      }
-    return -1;
-  }
+//private int setMenuSelection(JMenu jMenu, String string)
+//  {
+//    int n = jMenu.getItemCount();
+//
+//    for( int i = 0; i < n; i++ )
+//      {
+//        JMenuItem item = jMenu.getItem(i);
+//        if( item != null )
+//          {
+//            item.setSelected(false);
+//          }
+//      }
+//
+//    for( int i = 0; i < n; i++ )
+//      {
+//        JMenuItem item = jMenu.getItem(i);
+//        if( item != null && item.getText().equals(string) )
+//          {
+//            item.setSelected(true);
+//            return i;
+//          }
+//      }
+//    return -1;
+//  }
 
 public boolean getShowConstructionLinesAndBoxes()
   {
@@ -4568,6 +4555,7 @@ public Critic getCritic()
         cancelLickTitle.setText("Cancel");
         cancelLickTitle.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cancelLickTitle.setDefaultCapable(false);
+        cancelLickTitle.setOpaque(true);
         cancelLickTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelLickTitleActionPerformed(evt);
@@ -4587,6 +4575,7 @@ public Critic getCritic()
         okSaveButton.setText("Save This");
         okSaveButton.setToolTipText("Saves the item in the vocabulary file.");
         okSaveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        okSaveButton.setOpaque(true);
         okSaveButton.setSelected(true);
         okSaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6552,6 +6541,7 @@ public Critic getCritic()
         cancelTruncate.setText("Cancel truncation");
         cancelTruncate.setToolTipText("Do not truncate the part.");
         cancelTruncate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelTruncate.setOpaque(true);
         cancelTruncate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelTruncateActionPerformed(evt);
@@ -6574,6 +6564,7 @@ public Critic getCritic()
         acceptTruncate.setToolTipText("Truncates the part as specified.");
         acceptTruncate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         acceptTruncate.setDefaultCapable(false);
+        acceptTruncate.setOpaque(true);
         acceptTruncate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 acceptTruncateActionPerformed(evt);
@@ -8168,12 +8159,12 @@ public Critic getCritic()
 
         openRecentLeadsheetMenu.setText("Open Recent Leadsheet (same window)");
         openRecentLeadsheetMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                populateRecentFileMenu(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                populateRecentFileMenu(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -8189,12 +8180,12 @@ public Critic getCritic()
 
         openRecentLeadsheetNewWindowMenu.setText("Open Recent Leadsheet (new window)");
         openRecentLeadsheetNewWindowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                populateRecentLeadsheetNewWindow(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                populateRecentLeadsheetNewWindow(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -9242,12 +9233,12 @@ public Critic getCritic()
             }
         });
         notateGrammarMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                notateGrammarMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                notateGrammarMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
         notateGrammarMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -9265,12 +9256,12 @@ public Critic getCritic()
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -10981,65 +10972,48 @@ public void stopPlaying(String reason)
     //requestFocusInWindow();
     
     //from here end enables saving improv in the lickgenframe
-    if(lickgenFrame.shouldSaveImp() && improvOn){
-        Notate savNot = cloneLS();
-        while (!melodyList.isEmpty())
-        {
-            melodyList.get(0).setInstrument(instr);
-            savNot.addChorus(melodyList.get(0));
-            melodyList.remove(0);
-        }
-        savNot.score.delPart(0);
-        String point = ImproVisor.getLastLeadsheetFileStem();
-        String fin = point.substring(0, point.length()-3);
-        String secFin = fin;
-        //if -1 already
-        if (Character.isDigit(fin.charAt(fin.length()-1))){
-            savNum = Character.getNumericValue(fin.charAt(fin.length()-1));
-            if (fin.endsWith("-"+savNum)){
-                while (fin.endsWith("-"+savNum)){savNum++;}
-                if (savNum > 9){secFin = fin.substring(0, fin.length()-3);}
-                else if (savNum > 99){savNum = 1; secFin = fin.substring(0, fin.length()-2);}
-                else{secFin = fin.substring(0, fin.length()-2);}
-            }
-            else if (fin.endsWith("- "+savNum)){
-                while (fin.endsWith("- "+savNum)){savNum++;}
-                if (savNum > 9){secFin = fin.substring(0, fin.length()-4);}
-                else if (savNum > 99){savNum = 1; secFin = fin.substring(0, fin.length()-3);}
-                else{secFin = fin.substring(0, fin.length()-3);}
-            }
-            else{
-                savNum = 1;
-            }
-        }
-        if (secFin.endsWith(" ")){secFin=secFin.substring(0, secFin.length()-1);}
-        ImproVisor.setLastLeadsheetFileStem(secFin.concat("-"+savNum+".ls"));
-        savNum = 1;
-        savNot.saveAsLeadsheet(); 
-        ImproVisor.setLastLeadsheetFileStem(point);
+    if(saveImprovCheckBoxMenuItem.isSelected() && improvOn){
+      saveImprovisation();
     }
   }
+
+private void initSaveImprovisation()
+{
+  melodyList = new ArrayList<MelodyPart>();
+  pointr = new MelodyPart();
+}
+
+/**
+ * saveImprovisation was originally coded by Nathan Kim.
+ * However, there are some problems saving after the first time:
+ * the original improvisation plays rather than the new one.
+ */
+private void saveImprovisation() {
+    Notate savNot = cloneLS();
+    while (!melodyList.isEmpty()) {
+        melodyList.get(0).setInstrument(instr);
+        savNot.addChorus(melodyList.get(0));
+        melodyList.remove(0);
+    }
+    savNot.score.delPart(0);
+    String originalStem = ImproVisor.getLastLeadsheetFileStem();
+    String newStem = originalStem + "+";
+
+    ImproVisor.setLastLeadsheetFileStem(newStem); 
+    if( !savNot.saveAsLeadsheet() )
+      {
+        // User cancels save
+        ImproVisor.setLastLeadsheetFileStem(originalStem); 
+      }
+    // Reset for additional improvising
+    initSaveImprovisation();
+}
 
 
 public Notate cloneLS()
 {
-    Score newScore = getScore();
+ Score newScore = getScore().copy();
 
-    //ensureChordFontSize();
-
-    //int chordFontSize = Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE)).intValue();
-
-    //newScore.setChordFontSize(chordFontSize);
-
-    //newScore.setTempo(getDefaultTempo());
-
-    //newScore.setChordProg(new ChordPart());
-
-    //newScore.addPart(new MelodyPart(defaultBarsPerPart * measureLength));
-
-    //newScore.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
-
-    // open a new window
     
     for (int x=1; x<scoreTab.getTabCount(); x++)
     {
@@ -11055,15 +11029,12 @@ public Notate cloneLS()
 
     newNotate.updatePhiAndDelta(this.getPhiStatus(), this.getDeltaStatus());
 
-    //newNotate.makeVisible(this);//
-
     newNotate.setPrefsDialog();
     
-    
-
     // set the menu and button states
 
     setItemStates();
+
     return newNotate;
 }
 
@@ -12416,8 +12387,6 @@ private void setTempo(double value)
       {
         tempoTF.setText("" + (int) value); // keep these in sync
         tempoSet.setText("" + (int) value);
-
-        tempoSlider.setValue((int) value);
 
         score.setTempo(value);
 
@@ -14098,7 +14067,12 @@ public MelodyPart getMelodyPart(Stave stave)
  */
 public MelodyPart getCurrentMelodyPart()
   {
-    return getCurrentStave().getMelodyPart();
+    Stave current = getCurrentStave();
+    if( current == null )
+    {
+        return null;
+    }
+    return getMelodyPart(current);
   }
 
 int improvMelodyIndex = 0;
@@ -18558,7 +18532,6 @@ public boolean saveAsLeadsheetAWT()
         if( !savedLeadsheet.exists() )
           {
             setSavedLeadsheet(null);
-            return false;
           }
 
         return noErrors;
@@ -19295,11 +19268,11 @@ public void newNotate()
 
     ensureChordFontSize();
 
-    int chordFontSize = Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE)).intValue();
+    int chordFontSize = Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE));
 
     newScore.setChordFontSize(chordFontSize);
 
-    newScore.setTempo(getDefaultTempo());
+    newScore.setTempo(getTempo());
 
     newScore.setChordProg(new ChordPart());
 
@@ -21261,6 +21234,8 @@ public void adjustSelection()
 
 int cycCount = 0;
 int shufCount = 0;
+
+// These are used for saving improvisation:
 ArrayList<MelodyPart> melodyList = new ArrayList<MelodyPart>();
 MelodyPart pointr = new MelodyPart();
 int instr;
@@ -21274,11 +21249,7 @@ int instr;
  */
 public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improviseEndSlot)
   {
-   
-      
-
-      
-    instr = getCurrentMelodyPart().getInstrument();
+    instr = getCurrentMelodyPart().getInstrument(); // for savImprov
     if (ifCycle){
         String temp;
         temp = gramList.get(cycCount).substring(0, gramList.get(cycCount).length() - GrammarFilter.EXTENSION.length());
@@ -21604,125 +21575,12 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
         enableRecording(); // TRIAL
       }
 
-    if (lickgenFrame.shouldSaveImp()){
+    if (saveImprovCheckBoxMenuItem.isSelected()){
         melodyList.add(pointr);
     } 
   }
 
-//public MelodyPart genSolo(int improviseStartSlot, int improviseEndSlot){
-//    totalSlots = improviseEndSlot - improviseStartSlot + 1;
-//
-//    int beatsRequested = totalSlots / BEAT;
-//
-//    Polylist rhythm = null;
-//    
-//    MelodyPart finalMelodyPart = null;
-//
-//    boolean useOutlines = lickgenFrame.useSoloistSelected();
-//    
-//    // outLines is the same as soloist
-//    if( useOutlines )
-//      {
-//        // was new lickgenFrame.fillMelody(BEAT, rhythm, chordProg, 0);
-//        // was commented out:
-//        lickgen.getFillMelodyParameters(minPitch,
-//                                        maxPitch,
-//                                        minInterval,
-//                                        maxInterval,
-//                                        BEAT,
-//                                        leapProb,
-//                                        chordProg,
-//                                        0,
-//                                        avoidRepeats);
-//
-//        MelodyPart solo = lickgen.generateSoloFromOutline(totalSlots);
-//        pointr = solo; //TEST
-//        if( solo != null )
-//          {
-//            rhythm = lickgen.getRhythmFromSoloist(); //get the abstract melody for display
-//            if( lickgenFrame.useHeadSelected() )
-//              {
-//                adjustLickToHead(solo);
-//              }
-//
-//            if( transformRadio.isSelected() )
-//              {
-//                ChordPart chords = getChordProg().extract(improviseStartSlot,
-//                                                          improviseEndSlot);
-//                transformFrame.applySubstitutions(solo, chords);
-//              }
-//            else if(grammarDivideRadio.isSelected()){
-//                        getCurrentMelodyPart().newPasteOver(solo, 0);
-//                        fractalFrame.dividePastePlay();
-//            }
-//            else
-//              {
-//                finalMelodyPart = solo;
-//              }
-//          }
-//      }
-//    
-//    if( rhythm == null || !useOutlines )
-//      {
-//        if( lickgenFrame.getUseGrammar() )
-//          {
-//            rhythm = lickgen.generateRhythmFromGrammar(improviseStartSlot, totalSlots);
-//          }
-//        else
-//          {
-//            rhythm = lickgen.generateRandomRhythm(totalSlots,
-//                                                  lickgenFrame.getMinDuration(),
-//                                                  lickgenFrame.getMaxDuration(),
-//                                                  lickgenFrame.getRestProb());
-//          }
-//
-//        MelodyPart lick = generateLick(rhythm, improviseStartSlot, improviseEndSlot);
-//        pointr = lick; //test
-//
-//        // Critical point for recurrent generation
-//        if( lick != null )
-//          {
-//            int beatsGenerated = lick.size() / BEAT;
-//
-//            if( beatsGenerated > beatsRequested )
-//              {
-//                //debug
-//                //System.out.println("generated " + beatsGenerated
-//                //             + " beats, but " + beatsRequested + " requested (fewer)");
-//
-//                lick = lick.extract(0, BEAT * beatsRequested - 1, true);
-//              }
-//            else if( beatsGenerated < beatsRequested )
-//              {
-//                //debug
-//                //System.out.println("generated " + beatsGenerated
-//                //             + " beats, but " + beatsRequested + " requested (more)");
-//              }
-//
-//            if( transformRadio.isSelected() )
-//              {
-//                ChordPart chords = getChordProg().extract(improviseStartSlot,
-//                                                          improviseEndSlot);
-//                transformFrame.applySubstitutions(lick, chords);
-//              }
-//            else if(grammarDivideRadio.isSelected()){
-//                getCurrentMelodyPart().newPasteOver(lick, 0);
-//                fractalFrame.dividePastePlay();
-//            }
-//            else
-//              {
-//                finalMelodyPart = lick;
-//              }
-//            //System.out.println("lick = " + lick);
-//          }
-//        else
-//          {
-//            //debug System.out.println("panic: generated null lick");
-//            setMode(Mode.GENERATION_FAILED);
-//          }
-//      }
-//    return finalMelodyPart;
-//}
+
 
 /**
  * Rectify the current selection, aligning pitches to harmony.
@@ -23217,7 +23075,7 @@ int quantizeResolution = 60;
     }//GEN-LAST:event_delAllMIActionPerformed
 
     private void rememberImprovCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rememberImprovCheckBoxActionPerformed
-        lickgenFrame.setSaveImp(saveImprovCheckBoxMenuItem.isSelected());
+        
     }//GEN-LAST:event_rememberImprovCheckBoxActionPerformed
 
     private void customSoloGeneratorMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customSoloGeneratorMIActionPerformed

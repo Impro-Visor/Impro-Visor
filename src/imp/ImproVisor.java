@@ -729,7 +729,14 @@ public static void setLastLeadsheetFileStem(String stem)
   {
     if( stem != null )
       {
-      lastLeadsheetFileStem = stem;
+      if( stem.endsWith(".ls") )
+        {
+          lastLeadsheetFileStem = stem.substring(0, stem.length()-3);
+        }
+      else
+        {
+          lastLeadsheetFileStem = stem;
+        }
       }
   }
 

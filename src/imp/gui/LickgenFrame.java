@@ -250,7 +250,6 @@ public class LickgenFrame
         continuallyGenerateCheckBox = new javax.swing.JCheckBox();
         generationSelectionButton = new javax.swing.JButton();
         styleRecognitionButton = new javax.swing.JButton();
-        saveImpCheckbox = new javax.swing.JCheckBox();
         minLabel = new javax.swing.JLabel();
         rectifyPanel = new javax.swing.JPanel();
         rectifyCheckBox = new javax.swing.JCheckBox();
@@ -1171,19 +1170,6 @@ public class LickgenFrame
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         lickgenParametersPanel.add(styleRecognitionButton, gridBagConstraints);
-
-        saveImpCheckbox.setText("Save Improv");
-        saveImpCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveImpCheckboxActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        lickgenParametersPanel.add(saveImpCheckbox, gridBagConstraints);
 
         minLabel.setText("Min");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -3008,12 +2994,12 @@ public class LickgenFrame
 
         generatorWindowMenu1.setLabel("Window");
         generatorWindowMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                generatorWindowMenu1MenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                generatorWindowMenu1MenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -6038,19 +6024,6 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
        fillMelodyFromText(relativeField.getText());
     }//GEN-LAST:event_fillRelativePitchMelodyButtonActionPerformed
 
-    private boolean saveImp = false;
-    private void saveImpCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveImpCheckboxActionPerformed
-       saveImp = saveImpCheckbox.isSelected();
-    }//GEN-LAST:event_saveImpCheckboxActionPerformed
-
-    public void setSaveImp(boolean value)
-    {
-        saveImp = value;
-        saveImpCheckbox.setSelected(value);
-    }
-    public boolean shouldSaveImp(){
-        return saveImp;
-    }
     
 private void updateUseSoloist()
   {
@@ -6357,7 +6330,6 @@ private void updateUseSoloist()
     private javax.swing.JLabel rootLabel;
     private javax.swing.JButton saveGrammarAsButton;
     private javax.swing.JMenuItem saveGrammarMI1;
-    private javax.swing.JCheckBox saveImpCheckbox;
     private javax.swing.JButton saveLickButton;
     private javax.swing.JTextField saveLickTF;
     private javax.swing.JLabel saveLickWithLabelLabel;
