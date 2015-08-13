@@ -1783,18 +1783,11 @@ public Critic getCritic()
         truncatePartLabel = new javax.swing.JLabel();
         productionBtnGrp = new javax.swing.ButtonGroup();
         grammarExtractionButtonGroup = new javax.swing.ButtonGroup();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
         fileStepDialog = new javax.swing.JDialog();
         stepBackButton = new javax.swing.JButton();
         stepForwardButton = new javax.swing.JButton();
         fileStepLabel = new javax.swing.JLabel();
         currDirectoryLabel = new javax.swing.JLabel();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jCheckBox1 = new javax.swing.JCheckBox();
         audioPreferencesOld = new javax.swing.JPanel();
         jTabbedPane7 = new javax.swing.JTabbedPane();
         audioInputTab1 = new javax.swing.JPanel();
@@ -2066,6 +2059,12 @@ public Critic getCritic()
         pausePlayMI = new javax.swing.JMenuItem();
         recordMI = new javax.swing.JMenuItem();
         useAudioInputMI = new javax.swing.JCheckBoxMenuItem();
+        roadmapMenu = new javax.swing.JMenu();
+        roadMapThisAnalyze = new javax.swing.JMenuItem();
+        reAnalyzeMI = new javax.swing.JMenuItem();
+        emptyRoadMapMI = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        createRoadMapCheckBox = new javax.swing.JCheckBoxMenuItem();
         utilitiesMenu = new javax.swing.JMenu();
         stepKeyboardMI = new javax.swing.JMenuItem();
         fluidVoicings = new javax.swing.JMenuItem();
@@ -2080,12 +2079,6 @@ public Critic getCritic()
         transformMI = new javax.swing.JMenuItem();
         voicingTestMI = new javax.swing.JMenuItem();
         pianoKeyboardMI = new javax.swing.JMenuItem();
-        roadmapMenu = new javax.swing.JMenu();
-        roadMapThisAnalyze = new javax.swing.JMenuItem();
-        reAnalyzeMI = new javax.swing.JMenuItem();
-        emptyRoadMapMI = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        createRoadMapCheckBox = new javax.swing.JCheckBoxMenuItem();
         improvMenu = new javax.swing.JMenu();
         grammarRadio = new javax.swing.JRadioButtonMenuItem();
         transformRadio = new javax.swing.JRadioButtonMenuItem();
@@ -6645,18 +6638,6 @@ public Critic getCritic()
         gridBagConstraints.gridy = 2;
         fileStepDialog.getContentPane().add(currDirectoryLabel, gridBagConstraints);
 
-        jMenuItem1.setText("jMenuItem1");
-
-        jMenuItem2.setText("jMenuItem2");
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        jCheckBox1.setText("jCheckBox1");
-
         audioPreferencesOld.setBackground(new java.awt.Color(255, 255, 255));
         audioPreferencesOld.setToolTipText("settings for audio input");
         audioPreferencesOld.setAlignmentX(0.0F);
@@ -8974,6 +8955,51 @@ public Critic getCritic()
 
         menuBar.add(playMenu);
 
+        roadmapMenu.setText("Roadmap\n");
+        roadmapMenu.setToolTipText("Options for creating a roadmap of the chord progression.");
+
+        roadMapThisAnalyze.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SEMICOLON, 0));
+        roadMapThisAnalyze.setText("Show Roadmap");
+        roadMapThisAnalyze.setToolTipText("Show Roadmap");
+        roadMapThisAnalyze.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roadMapThisAnalyzeAction(evt);
+            }
+        });
+        roadmapMenu.add(roadMapThisAnalyze);
+
+        reAnalyzeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SEMICOLON, java.awt.event.InputEvent.SHIFT_MASK));
+        reAnalyzeMI.setText("Re-Analyze Roadmap");
+        reAnalyzeMI.setToolTipText("Perform a new roadmap analysis.");
+        reAnalyzeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reAnalyzeMIAction(evt);
+            }
+        });
+        roadmapMenu.add(reAnalyzeMI);
+
+        emptyRoadMapMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SEMICOLON, java.awt.event.InputEvent.CTRL_MASK));
+        emptyRoadMapMI.setText("Open Empty Roadmap ");
+        emptyRoadMapMI.setToolTipText("Opens a blank roadmap unrelated to this leadsheet");
+        emptyRoadMapMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmptyRoadMapAction(evt);
+            }
+        });
+        roadmapMenu.add(emptyRoadMapMI);
+        roadmapMenu.add(jSeparator1);
+
+        createRoadMapCheckBox.setText("Generate Roadmap on Opening Leadsheet");
+        createRoadMapCheckBox.setToolTipText("Create roadmap of leadsheet if checked.");
+        createRoadMapCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createRoadMapCheckBoxActionPerformed(evt);
+            }
+        });
+        roadmapMenu.add(createRoadMapCheckBox);
+
+        menuBar.add(roadmapMenu);
+
         utilitiesMenu.setMnemonic('U');
         utilitiesMenu.setText("Utilities");
 
@@ -9107,51 +9133,6 @@ public Critic getCritic()
         utilitiesMenu.add(pianoKeyboardMI);
 
         menuBar.add(utilitiesMenu);
-
-        roadmapMenu.setText("Roadmap\n");
-        roadmapMenu.setToolTipText("Options for creating a roadmap of the chord progression.");
-
-        roadMapThisAnalyze.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SEMICOLON, 0));
-        roadMapThisAnalyze.setText("Show Roadmap");
-        roadMapThisAnalyze.setToolTipText("Show Roadmap");
-        roadMapThisAnalyze.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roadMapThisAnalyzeAction(evt);
-            }
-        });
-        roadmapMenu.add(roadMapThisAnalyze);
-
-        reAnalyzeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SEMICOLON, java.awt.event.InputEvent.SHIFT_MASK));
-        reAnalyzeMI.setText("Re-Analyze Roadmap");
-        reAnalyzeMI.setToolTipText("Perform a new roadmap analysis.");
-        reAnalyzeMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reAnalyzeMIAction(evt);
-            }
-        });
-        roadmapMenu.add(reAnalyzeMI);
-
-        emptyRoadMapMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SEMICOLON, java.awt.event.InputEvent.CTRL_MASK));
-        emptyRoadMapMI.setText("Open Empty Roadmap ");
-        emptyRoadMapMI.setToolTipText("Opens a blank roadmap unrelated to this leadsheet");
-        emptyRoadMapMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmptyRoadMapAction(evt);
-            }
-        });
-        roadmapMenu.add(emptyRoadMapMI);
-        roadmapMenu.add(jSeparator1);
-
-        createRoadMapCheckBox.setText("Generate Roadmap on Opening Leadsheet");
-        createRoadMapCheckBox.setToolTipText("Create roadmap of leadsheet if checked.");
-        createRoadMapCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createRoadMapCheckBoxActionPerformed(evt);
-            }
-        });
-        roadmapMenu.add(createRoadMapCheckBox);
-
-        menuBar.add(roadmapMenu);
 
         improvMenu.setText("Improv");
 
@@ -23107,6 +23088,7 @@ int quantizeResolution = 60;
 
     private void passiveTradingMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passiveTradingMIActionPerformed
         passiveTradingWindow.setVisible(true);
+        tradeCheckbox.setSelected(true);
     }//GEN-LAST:event_passiveTradingMIActionPerformed
 
     private void tradeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeCheckboxActionPerformed
@@ -25330,7 +25312,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -25354,11 +25335,6 @@ private ImageIcon pauseButton =
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
     private javax.swing.JList jList4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel15;
@@ -25382,7 +25358,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel jPanel32;
     private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane2;

@@ -1,8 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This Java Class is part of the Impro-Visor Application.
+ *
+ * Copyright (C) 2015 Robert Keller and Harvey Mudd College.
+ *
+ * Impro-Visor is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * Impro-Visor is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of merchantability or fitness
+ * for a particular purpose. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
+ * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 package imp.gui;
 
 import java.util.Enumeration;
@@ -11,16 +26,16 @@ import javax.swing.JRadioButton;
 
 /**
  *
- * @author muddCS15
+ * @author Mikayla Konst
  */
 public class PassiveTradingWindow extends javax.swing.JFrame {
 
-    private Notate notate;
+    private final Notate notate;
     
     /**
      * The numeric values of the bars to be traded.
      */
-    private static int tradingQuantum[] = {1, 2, 4, 8, 12, 16};
+    private static final int tradingQuantum[] = {1, 2, 4, 8, 12, 16};
     
     /**
      * Creates new form PassiveTradingWindow
@@ -28,6 +43,7 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
     public PassiveTradingWindow(Notate notate) {
         this.notate = notate;
         initComponents();
+        four.setSelected(true);
     }
     
     public boolean getImprovisorTradeFirst(){
@@ -43,6 +59,7 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
               //return ((Integer)wordToNumber.get(button.getText()))*score.getSlotsPerMeasure();
           }
       }
+      
       return notate.getScore().getSlotsPerMeasure(); // default
     }
 
@@ -58,8 +75,6 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
 
         whoPlaysFirstGroup = new javax.swing.ButtonGroup();
         numberOfBarsGroup = new javax.swing.ButtonGroup();
-        whoGoesFirstLabel = new javax.swing.JLabel();
-        tradeLengthLabel = new javax.swing.JLabel();
         whoGoesFirstPanel = new javax.swing.JPanel();
         improvisorFirst = new javax.swing.JRadioButton();
         userFirst = new javax.swing.JRadioButton();
@@ -71,34 +86,35 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         twelve = new javax.swing.JRadioButton();
         sixteen = new javax.swing.JRadioButton();
 
-        setMaximumSize(new java.awt.Dimension(400, 300));
-        setMinimumSize(new java.awt.Dimension(400, 300));
+        setTitle("Passive Trading");
+        setAlwaysOnTop(true);
+        setBounds(new java.awt.Rectangle(10, 25, 400, 300));
+        setMaximumSize(new java.awt.Dimension(400, 150));
+        setMinimumSize(new java.awt.Dimension(400, 150));
+        setPreferredSize(new java.awt.Dimension(300, 150));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        whoGoesFirstLabel.setText("Who Goes First:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        getContentPane().add(whoGoesFirstLabel, gridBagConstraints);
-
-        tradeLengthLabel.setText("Trade Length in Bars:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        getContentPane().add(tradeLengthLabel, gridBagConstraints);
-
+        whoGoesFirstPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Who goes first?"));
+        whoGoesFirstPanel.setToolTipText("Determines whether Impro-Visor or the user plays first.");
+        whoGoesFirstPanel.setMinimumSize(new java.awt.Dimension(400, 75));
+        whoGoesFirstPanel.setPreferredSize(new java.awt.Dimension(400, 75));
         whoGoesFirstPanel.setLayout(new java.awt.GridBagLayout());
 
         whoPlaysFirstGroup.add(improvisorFirst);
         improvisorFirst.setSelected(true);
-        improvisorFirst.setText("Impro-Visor First");
+        improvisorFirst.setText("Impro-Visor");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         whoGoesFirstPanel.add(improvisorFirst, gridBagConstraints);
 
         whoPlaysFirstGroup.add(userFirst);
-        userFirst.setText("User First");
+        userFirst.setText("User");
+        userFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userFirstActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -106,9 +122,17 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.5;
         getContentPane().add(whoGoesFirstPanel, gridBagConstraints);
 
+        tradeLengthPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Trade Length (in bars)"));
+        tradeLengthPanel.setToolTipText("Controls the length of one player's melody.");
+        tradeLengthPanel.setMinimumSize(new java.awt.Dimension(400, 75));
+        tradeLengthPanel.setName(""); // NOI18N
+        tradeLengthPanel.setPreferredSize(new java.awt.Dimension(400, 75));
         tradeLengthPanel.setLayout(new java.awt.GridBagLayout());
 
         numberOfBarsGroup.add(one);
@@ -156,11 +180,18 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.5;
         getContentPane().add(tradeLengthPanel, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void userFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userFirstActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userFirstActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton eight;
@@ -169,12 +200,10 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
     private javax.swing.ButtonGroup numberOfBarsGroup;
     private javax.swing.JRadioButton one;
     private javax.swing.JRadioButton sixteen;
-    private javax.swing.JLabel tradeLengthLabel;
     private javax.swing.JPanel tradeLengthPanel;
     private javax.swing.JRadioButton twelve;
     private javax.swing.JRadioButton two;
     private javax.swing.JRadioButton userFirst;
-    private javax.swing.JLabel whoGoesFirstLabel;
     private javax.swing.JPanel whoGoesFirstPanel;
     private javax.swing.ButtonGroup whoPlaysFirstGroup;
     // End of variables declaration//GEN-END:variables

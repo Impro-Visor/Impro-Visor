@@ -6850,12 +6850,6 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="grammarExtractionButtonGroup">
     </Component>
-    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-    </Container>
     <Container class="javax.swing.JDialog" name="fileStepDialog">
       <Properties>
         <Property name="title" type="java.lang.String" value="File Step"/>
@@ -6920,39 +6914,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JMenuItem" name="jMenuItem1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jMenuItem1"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JMenuItem" name="jMenuItem2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jMenuItem2"/>
-      </Properties>
-    </Component>
-    <Container class="javax.swing.JMenuBar" name="jMenuBar1">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-      <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="File"/>
-          </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
-          </Properties>
-        </Menu>
-      </SubComponents>
-    </Container>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jCheckBox1"/>
-      </Properties>
-    </Component>
     <Container class="javax.swing.JPanel" name="audioPreferencesOld">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -8483,6 +8444,61 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="roadmapMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Roadmap&#xa;"/>
+            <Property name="toolTipText" type="java.lang.String" value="Options for creating a roadmap of the chord progression."/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="roadMapThisAnalyze">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="SEMICOLON"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Show Roadmap"/>
+                <Property name="toolTipText" type="java.lang.String" value="Show Roadmap"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="roadMapThisAnalyzeAction"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="reAnalyzeMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+SEMICOLON"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Re-Analyze Roadmap"/>
+                <Property name="toolTipText" type="java.lang.String" value="Perform a new roadmap analysis."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reAnalyzeMIAction"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="emptyRoadMapMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+SEMICOLON"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Open Empty Roadmap "/>
+                <Property name="toolTipText" type="java.lang.String" value="Opens a blank roadmap unrelated to this leadsheet"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmptyRoadMapAction"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="createRoadMapCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Generate Roadmap on Opening Leadsheet"/>
+                <Property name="toolTipText" type="java.lang.String" value="Create roadmap of leadsheet if checked."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createRoadMapCheckBoxActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="utilitiesMenu">
           <Properties>
             <Property name="mnemonic" type="int" value="85"/>
@@ -8637,61 +8653,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pianoKeyboardMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="roadmapMenu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Roadmap&#xa;"/>
-            <Property name="toolTipText" type="java.lang.String" value="Options for creating a roadmap of the chord progression."/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="roadMapThisAnalyze">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="SEMICOLON"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Show Roadmap"/>
-                <Property name="toolTipText" type="java.lang.String" value="Show Roadmap"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="roadMapThisAnalyzeAction"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reAnalyzeMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+SEMICOLON"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Re-Analyze Roadmap"/>
-                <Property name="toolTipText" type="java.lang.String" value="Perform a new roadmap analysis."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reAnalyzeMIAction"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="emptyRoadMapMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+SEMICOLON"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Open Empty Roadmap "/>
-                <Property name="toolTipText" type="java.lang.String" value="Opens a blank roadmap unrelated to this leadsheet"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmptyRoadMapAction"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
-            </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="createRoadMapCheckBox">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Generate Roadmap on Opening Leadsheet"/>
-                <Property name="toolTipText" type="java.lang.String" value="Create roadmap of leadsheet if checked."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createRoadMapCheckBoxActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
