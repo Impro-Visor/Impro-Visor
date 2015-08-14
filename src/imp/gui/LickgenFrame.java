@@ -225,15 +225,19 @@ public class LickgenFrame
         useSoloistCheckBox = new javax.swing.JCheckBox();
         useHeadCheckBox = new javax.swing.JCheckBox();
         regenerateHeadDataBtn = new javax.swing.JButton();
-        continuallyGenerateCheckBox = new javax.swing.JCheckBox();
         generationSelectionButton = new javax.swing.JButton();
-        styleRecognitionButton = new javax.swing.JButton();
         minLabel = new javax.swing.JLabel();
         rectifyPanel = new javax.swing.JPanel();
         rectifyCheckBox = new javax.swing.JCheckBox();
         chordBox = new javax.swing.JCheckBox();
         colorBox = new javax.swing.JCheckBox();
         approachBox = new javax.swing.JCheckBox();
+        scaleChoicePanel = new javax.swing.JPanel();
+        scaleLabel = new javax.swing.JLabel();
+        typeLabel = new javax.swing.JLabel();
+        scaleComboBox = new javax.swing.JComboBox();
+        rootLabel = new javax.swing.JLabel();
+        rootComboBox = new javax.swing.JComboBox();
         toneProbabilityPanel = new javax.swing.JPanel();
         chordToneProbLabel = new javax.swing.JLabel();
         colorToneProbLabel = new javax.swing.JLabel();
@@ -243,14 +247,7 @@ public class LickgenFrame
         colorToneWeightField = new javax.swing.JTextField();
         scaleToneWeightField = new javax.swing.JTextField();
         chordToneDecayField = new javax.swing.JTextField();
-        scaleChoicePanel = new javax.swing.JPanel();
-        scaleLabel = new javax.swing.JLabel();
-        typeLabel = new javax.swing.JLabel();
-        scaleComboBox = new javax.swing.JComboBox();
-        rootLabel = new javax.swing.JLabel();
-        rootComboBox = new javax.swing.JComboBox();
         lickGradeButtonsPanel = new javax.swing.JPanel();
-        lickSavedLabel = new javax.swing.JLabel();
         gradeLabel = new javax.swing.JLabel();
         saveLickTF = new javax.swing.JTextField();
         saveLickWithLabelLabel = new javax.swing.JLabel();
@@ -277,12 +274,12 @@ public class LickgenFrame
         gradeBadBtn = new javax.swing.JButton();
         gradeAverageBtn = new javax.swing.JButton();
         gradeGoodBtn = new javax.swing.JButton();
+        continuallyGenerateCheckBox = new javax.swing.JCheckBox();
+        styleRecognitionButton = new javax.swing.JButton();
         ProbFillClearPanel = new javax.swing.JPanel();
         clearProbsButton = new javax.swing.JButton();
         FillProbsButton = new javax.swing.JButton();
         autoFillCheckBox = new javax.swing.JCheckBox();
-        pitchProbabilitiesPanel = new javax.swing.JPanel();
-        chordProbPanel = new javax.swing.JPanel();
         soloCorrectionPanel = new javax.swing.JPanel();
         offsetByMeasureGradeSoloButton = new javax.swing.JButton();
         forwardGradeSoloButton = new javax.swing.JButton();
@@ -298,6 +295,8 @@ public class LickgenFrame
         criticGradeLabel = new javax.swing.JLabel();
         counterForCriticLabel = new javax.swing.JLabel();
         loadRandomGrammarButton = new javax.swing.JButton();
+        pitchProbabilitiesPanel = new javax.swing.JPanel();
+        chordProbPanel = new javax.swing.JPanel();
         grammarLearningPanel = new javax.swing.JPanel();
         finalLabel = new javax.swing.JLabel();
         windowParametersPanel = new javax.swing.JPanel();
@@ -417,7 +416,7 @@ public class LickgenFrame
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 0.3;
@@ -452,18 +451,18 @@ public class LickgenFrame
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.weighty = 0.3;
         lickGenPanel.add(relativePanel, gridBagConstraints);
 
         lickGenerationButtonsPanel.setBackground(new java.awt.Color(218, 215, 215));
         lickGenerationButtonsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lick Generation and Extraction", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         lickGenerationButtonsPanel.setMaximumSize(new java.awt.Dimension(500, 400));
         lickGenerationButtonsPanel.setMinimumSize(new java.awt.Dimension(440, 200));
-        lickGenerationButtonsPanel.setPreferredSize(new java.awt.Dimension(440, 230));
+        lickGenerationButtonsPanel.setPreferredSize(new java.awt.Dimension(400, 300));
         lickGenerationButtonsPanel.setLayout(new java.awt.GridBagLayout());
 
         generateLickButton.setToolTipText("Generate a melody using the current grammar.");
@@ -617,7 +616,7 @@ public class LickgenFrame
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.3;
@@ -626,8 +625,8 @@ public class LickgenFrame
 
         lickgenParametersPanel.setBackground(new java.awt.Color(218, 215, 215));
         lickgenParametersPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Generation Parameters", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        lickgenParametersPanel.setMinimumSize(new java.awt.Dimension(700, 250));
-        lickgenParametersPanel.setPreferredSize(new java.awt.Dimension(700, 250));
+        lickgenParametersPanel.setMinimumSize(new java.awt.Dimension(600, 300));
+        lickgenParametersPanel.setPreferredSize(new java.awt.Dimension(600, 300));
         lickgenParametersPanel.setLayout(new java.awt.GridBagLayout());
 
         pitchLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -830,17 +829,17 @@ public class LickgenFrame
         totalBeatsField.setToolTipText("The number of beats in the lick.");
         totalBeatsField.setMinimumSize(new java.awt.Dimension(60, 24));
         totalBeatsField.setPreferredSize(new java.awt.Dimension(60, 24));
-        totalBeatsField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                totalBeatsFieldActionPerformed(evt);
-            }
-        });
         totalBeatsField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 totalBeatsFieldGetsFocus(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 totalBeatsFieldFocusLost(evt);
+            }
+        });
+        totalBeatsField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalBeatsFieldActionPerformed(evt);
             }
         });
         totalBeatsField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1030,7 +1029,7 @@ public class LickgenFrame
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickgenParametersPanel.add(useSoloistCheckBox, gridBagConstraints);
@@ -1041,14 +1040,14 @@ public class LickgenFrame
         useHeadCheckBox.setPreferredSize(new java.awt.Dimension(100, 23));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickgenParametersPanel.add(useHeadCheckBox, gridBagConstraints);
 
         regenerateHeadDataBtn.setText("Regenerate Head Data");
-        regenerateHeadDataBtn.setMaximumSize(new java.awt.Dimension(100, 29));
-        regenerateHeadDataBtn.setMinimumSize(new java.awt.Dimension(100, 29));
-        regenerateHeadDataBtn.setPreferredSize(new java.awt.Dimension(100, 29));
+        regenerateHeadDataBtn.setMaximumSize(new java.awt.Dimension(200, 29));
+        regenerateHeadDataBtn.setMinimumSize(new java.awt.Dimension(200, 29));
+        regenerateHeadDataBtn.setPreferredSize(new java.awt.Dimension(200, 29));
         regenerateHeadDataBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regenerateHeadDataBtnActionPerformed(evt);
@@ -1056,29 +1055,11 @@ public class LickgenFrame
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.2;
         lickgenParametersPanel.add(regenerateHeadDataBtn, gridBagConstraints);
-
-        continuallyGenerateCheckBox.setSelected(true);
-        continuallyGenerateCheckBox.setToolTipText("After grading, continually generate new licks.");
-        continuallyGenerateCheckBox.setLabel("Continuous");
-        continuallyGenerateCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                continuallyGenerateCheckBoxActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.1;
-        lickgenParametersPanel.add(continuallyGenerateCheckBox, gridBagConstraints);
 
         generationSelectionButton.setText("Size of Selection");
         generationSelectionButton.setToolTipText("Lock the selection for lick generation.");
@@ -1092,19 +1073,6 @@ public class LickgenFrame
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 3;
         lickgenParametersPanel.add(generationSelectionButton, gridBagConstraints);
-
-        styleRecognitionButton.setText("Prepare Critics");
-        styleRecognitionButton.setToolTipText("Attempts to guess the musician of the selection based off parellel trained networks.");
-        styleRecognitionButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                styleRecognitionButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
-        lickgenParametersPanel.add(styleRecognitionButton, gridBagConstraints);
 
         minLabel.setText("Min");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1173,7 +1141,7 @@ public class LickgenFrame
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -1181,13 +1149,79 @@ public class LickgenFrame
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipady = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.7;
         gridBagConstraints.weighty = 0.2;
         lickGenPanel.add(lickgenParametersPanel, gridBagConstraints);
+
+        scaleChoicePanel.setBackground(new java.awt.Color(218, 215, 215));
+        scaleChoicePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scale Tone Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        scaleChoicePanel.setMinimumSize(new java.awt.Dimension(500, 100));
+        scaleChoicePanel.setPreferredSize(new java.awt.Dimension(500, 100));
+        scaleChoicePanel.setLayout(new java.awt.GridBagLayout());
+
+        scaleLabel.setText("Scale:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 20);
+        scaleChoicePanel.add(scaleLabel, gridBagConstraints);
+
+        typeLabel.setText("Type:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
+        scaleChoicePanel.add(typeLabel, gridBagConstraints);
+
+        scaleComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Use_First_Scale" }));
+        scaleComboBox.setSelectedIndex(0);
+        scaleComboBox.setToolTipText("The type of scale to use in scale tones. The default is the first scale associated with the chord.\n");
+        scaleComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scaleComboBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        scaleChoicePanel.add(scaleComboBox, gridBagConstraints);
+
+        rootLabel.setText("Root:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
+        scaleChoicePanel.add(rootLabel, gridBagConstraints);
+
+        rootComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#", "Gb", "G", "G#/Ab", "A", "A#/Bb", "B" }));
+        rootComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rootComboBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        scaleChoicePanel.add(rootComboBox, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.weighty = 0.2;
+        lickGenPanel.add(scaleChoicePanel, gridBagConstraints);
 
         toneProbabilityPanel.setBackground(new java.awt.Color(218, 215, 215));
         toneProbabilityPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pitch Category Weights", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
@@ -1317,103 +1351,25 @@ public class LickgenFrame
         gridBagConstraints.weighty = 0.1;
         lickGenPanel.add(toneProbabilityPanel, gridBagConstraints);
 
-        scaleChoicePanel.setBackground(new java.awt.Color(218, 215, 215));
-        scaleChoicePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scale Tone Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        scaleChoicePanel.setMinimumSize(new java.awt.Dimension(500, 100));
-        scaleChoicePanel.setPreferredSize(new java.awt.Dimension(500, 100));
-        scaleChoicePanel.setLayout(new java.awt.GridBagLayout());
-
-        scaleLabel.setText("Scale:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 20);
-        scaleChoicePanel.add(scaleLabel, gridBagConstraints);
-
-        typeLabel.setText("Type:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-        scaleChoicePanel.add(typeLabel, gridBagConstraints);
-
-        scaleComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Use_First_Scale" }));
-        scaleComboBox.setSelectedIndex(0);
-        scaleComboBox.setToolTipText("The type of scale to use in scale tones. The default is the first scale associated with the chord.\n");
-        scaleComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scaleComboBoxActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
-        scaleChoicePanel.add(scaleComboBox, gridBagConstraints);
-
-        rootLabel.setText("Root:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-        scaleChoicePanel.add(rootLabel, gridBagConstraints);
-
-        rootComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#", "Gb", "G", "G#/Ab", "A", "A#/Bb", "B" }));
-        rootComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rootComboBoxActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        scaleChoicePanel.add(rootComboBox, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 0.1;
-        lickGenPanel.add(scaleChoicePanel, gridBagConstraints);
-
         lickGradeButtonsPanel.setBackground(new java.awt.Color(218, 215, 215));
         lickGradeButtonsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lick Saving and Grading", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        lickGradeButtonsPanel.setMaximumSize(new java.awt.Dimension(500, 125));
-        lickGradeButtonsPanel.setMinimumSize(new java.awt.Dimension(300, 100));
-        lickGradeButtonsPanel.setPreferredSize(new java.awt.Dimension(300, 100));
+        lickGradeButtonsPanel.setMaximumSize(new java.awt.Dimension(500, 300));
+        lickGradeButtonsPanel.setMinimumSize(new java.awt.Dimension(300, 175));
+        lickGradeButtonsPanel.setPreferredSize(new java.awt.Dimension(300, 175));
         lickGradeButtonsPanel.setLayout(new java.awt.GridBagLayout());
-
-        lickSavedLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lickSavedLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lickSavedLabel.setMinimumSize(new java.awt.Dimension(0, 200));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.weightx = 1.0;
-        lickGradeButtonsPanel.add(lickSavedLabel, gridBagConstraints);
 
         gradeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         gradeLabel.setText("Save Lick with Grade:");
         gradeLabel.setToolTipText("Provides a grade for the quality of lick. Used in machine learning experiments.");
-        gradeLabel.setMaximumSize(new java.awt.Dimension(130, 14));
-        gradeLabel.setMinimumSize(new java.awt.Dimension(110, 14));
-        gradeLabel.setPreferredSize(new java.awt.Dimension(110, 14));
+        gradeLabel.setMaximumSize(new java.awt.Dimension(130, 25));
+        gradeLabel.setMinimumSize(new java.awt.Dimension(110, 25));
+        gradeLabel.setPreferredSize(new java.awt.Dimension(110, 25));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 0);
         lickGradeButtonsPanel.add(gradeLabel, gridBagConstraints);
 
@@ -1422,10 +1378,11 @@ public class LickgenFrame
         saveLickTF.setPreferredSize(new java.awt.Dimension(250, 25));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weighty = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         lickGradeButtonsPanel.add(saveLickTF, gridBagConstraints);
 
@@ -1436,10 +1393,10 @@ public class LickgenFrame
         saveLickWithLabelLabel.setPreferredSize(new java.awt.Dimension(110, 14));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 2, 0);
         lickGradeButtonsPanel.add(saveLickWithLabelLabel, gridBagConstraints);
 
@@ -1484,6 +1441,7 @@ public class LickgenFrame
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickGradeButtonsPanel.add(grade3Btn, gridBagConstraints);
 
         grade4Btn.setText("4");
@@ -1540,6 +1498,7 @@ public class LickgenFrame
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 11;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickGradeButtonsPanel.add(grade7Btn, gridBagConstraints);
 
         grade8Btn.setText("8");
@@ -1587,6 +1546,9 @@ public class LickgenFrame
 
         gradeBadBtn.setText("Bad");
         gradeBadBtn.setToolTipText("Grade for a bad jazz lick.");
+        gradeBadBtn.setMaximumSize(new java.awt.Dimension(70, 29));
+        gradeBadBtn.setMinimumSize(new java.awt.Dimension(70, 29));
+        gradeBadBtn.setPreferredSize(new java.awt.Dimension(70, 29));
         gradeBadBtn.setVisible(false);
         gradeBadBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1595,8 +1557,10 @@ public class LickgenFrame
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
         lickGradeButtonsPanel.add(gradeBadBtn, gridBagConstraints);
 
         gradeAverageBtn.setText("Average");
@@ -1609,8 +1573,10 @@ public class LickgenFrame
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
         lickGradeButtonsPanel.add(gradeAverageBtn, gridBagConstraints);
 
         gradeGoodBtn.setText("Good");
@@ -1622,17 +1588,57 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 11;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
         lickGradeButtonsPanel.add(gradeGoodBtn, gridBagConstraints);
 
+        continuallyGenerateCheckBox.setSelected(true);
+        continuallyGenerateCheckBox.setToolTipText("After grading, continually generate new licks.");
+        continuallyGenerateCheckBox.setLabel("Continuous");
+        continuallyGenerateCheckBox.setMaximumSize(new java.awt.Dimension(170, 23));
+        continuallyGenerateCheckBox.setMinimumSize(new java.awt.Dimension(170, 23));
+        continuallyGenerateCheckBox.setPreferredSize(new java.awt.Dimension(170, 23));
+        continuallyGenerateCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continuallyGenerateCheckBoxActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 0.1;
+        lickGradeButtonsPanel.add(continuallyGenerateCheckBox, gridBagConstraints);
+
+        styleRecognitionButton.setText("Prepare Critics");
+        styleRecognitionButton.setToolTipText("Attempts to guess the musician of the selection based off parellel trained networks.");
+        styleRecognitionButton.setMaximumSize(new java.awt.Dimension(150, 29));
+        styleRecognitionButton.setMinimumSize(new java.awt.Dimension(150, 29));
+        styleRecognitionButton.setPreferredSize(new java.awt.Dimension(150, 29));
+        styleRecognitionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                styleRecognitionButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.2;
+        lickGradeButtonsPanel.add(styleRecognitionButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.weighty = 0.2;
         lickGenPanel.add(lickGradeButtonsPanel, gridBagConstraints);
 
         ProbFillClearPanel.setBackground(new java.awt.Color(218, 215, 215));
@@ -1695,37 +1701,10 @@ public class LickgenFrame
         gridBagConstraints.weighty = 0.1;
         lickGenPanel.add(ProbFillClearPanel, gridBagConstraints);
 
-        pitchProbabilitiesPanel.setBackground(new java.awt.Color(218, 215, 215));
-        pitchProbabilitiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pitch Probabilities by Chord", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        pitchProbabilitiesPanel.setMinimumSize(new java.awt.Dimension(950, 200));
-        pitchProbabilitiesPanel.setPreferredSize(new java.awt.Dimension(950, 200));
-        pitchProbabilitiesPanel.setLayout(new java.awt.GridBagLayout());
-
-        chordProbPanel.setBackground(new java.awt.Color(218, 215, 215));
-        chordProbPanel.setMinimumSize(new java.awt.Dimension(800, 50));
-        chordProbPanel.setPreferredSize(new java.awt.Dimension(800, 400));
-        chordProbPanel.setLayout(new java.awt.BorderLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        pitchProbabilitiesPanel.add(chordProbPanel, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.2;
-        lickGenPanel.add(pitchProbabilitiesPanel, gridBagConstraints);
-
         soloCorrectionPanel.setBackground(new java.awt.Color(218, 215, 215));
         soloCorrectionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Critic Options (Using Neural Network)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        soloCorrectionPanel.setMinimumSize(new java.awt.Dimension(600, 160));
-        soloCorrectionPanel.setPreferredSize(new java.awt.Dimension(600, 160));
+        soloCorrectionPanel.setMinimumSize(new java.awt.Dimension(900, 160));
+        soloCorrectionPanel.setPreferredSize(new java.awt.Dimension(900, 160));
         soloCorrectionPanel.setLayout(new java.awt.GridBagLayout());
 
         offsetByMeasureGradeSoloButton.setText("Offset By Measure");
@@ -1922,12 +1901,39 @@ public class LickgenFrame
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.weighty = 0.2;
         lickGenPanel.add(soloCorrectionPanel, gridBagConstraints);
+
+        pitchProbabilitiesPanel.setBackground(new java.awt.Color(218, 215, 215));
+        pitchProbabilitiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pitch Probabilities by Chord", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        pitchProbabilitiesPanel.setMinimumSize(new java.awt.Dimension(950, 200));
+        pitchProbabilitiesPanel.setPreferredSize(new java.awt.Dimension(950, 200));
+        pitchProbabilitiesPanel.setLayout(new java.awt.GridBagLayout());
+
+        chordProbPanel.setBackground(new java.awt.Color(218, 215, 215));
+        chordProbPanel.setMinimumSize(new java.awt.Dimension(800, 50));
+        chordProbPanel.setPreferredSize(new java.awt.Dimension(800, 400));
+        chordProbPanel.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pitchProbabilitiesPanel.add(chordProbPanel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.2;
+        lickGenPanel.add(pitchProbabilitiesPanel, gridBagConstraints);
 
         generatorPane.addTab("Melody Generator", lickGenPanel);
 
@@ -3000,8 +3006,7 @@ public class LickgenFrame
      * chord progression we're examining.
      */
     public void redrawTriage() {
-        lickSavedLabel.setText("");
-
+        
         chordProbPanel.removeAll();
 
         GridBagLayout gbl = new GridBagLayout();
@@ -6095,7 +6100,6 @@ private void updateUseSoloist()
     private javax.swing.JPanel lickGenPanel;
     private javax.swing.JPanel lickGenerationButtonsPanel;
     private javax.swing.JPanel lickGradeButtonsPanel;
-    private javax.swing.JLabel lickSavedLabel;
     private javax.swing.JPanel lickgenParametersPanel;
     private javax.swing.JButton loadBaseGrammarBtn;
     private javax.swing.JButton loadRandomGrammarButton;
