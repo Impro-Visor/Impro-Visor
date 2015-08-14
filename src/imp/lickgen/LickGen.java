@@ -91,7 +91,7 @@ public class LickGen implements Constants
     public static final String SCALE_TONE_WEIGHT_DEFAULT = "0.1";
     public static final String CHORD_TONE_DECAY = "chord-tone-decay";
     public static final String SCALE_TYPE = "scale-type";
-    public static final String SCALE_TYPE_DEFAULT = "Use First Scale";
+    public static final String SCALE_TYPE_DEFAULT = FIRST_SCALE;
     public static final String CHORD_TONE_DECAY_DEFAULT = "0.0";
     public static final String SCALE_ROOT = "scale-root";
     public static final String SCALE_ROOT_DEFAULT = "C";
@@ -874,10 +874,6 @@ public Double getExpectancyConstant()
     return expectancyConstant;
   }
 
-public void clearParams()
-  {
-    grammar.clearParams();
-  }
 
 /**
  * Get the normalized values in our probability array.
@@ -2937,20 +2933,31 @@ public String getParameter(String paramName)
  * Throws NonExistentParameterException if not present.
  *
  * @param paramName
-  */
+ * @return 
+ * @throws imp.util.NonExistentParameterException
+ */
 
 public String getParameterQuietly(String paramName) throws NonExistentParameterException
   {
-    ArrayList<Polylist> params = grammar.getParams();
-    for( int i = 0; i < params.size(); ++i )
-      {
-        Polylist p = params.get(i);
-        if( ((String) p.first()).equals(paramName) && p.length() >= 2 )
-          {
-            return Advisor.concatListWithSpaces(p.rest());
-          }
-      }
+   Polylist rules = grammar.getRules();
+   //System.out.println("rules = " + rules);
+   while( rules.nonEmpty() )
+   {
+       Polylist first = (Polylist)rules.first();
+       if( first.nonEmpty() && first.first().equals("parameter") )
+       {
+           Polylist second = (Polylist)first.second();
+           if( second.first().equals(paramName) )
+           {
+               String found = "" + second.second();
+               //System.out.println("parameter found: " + paramName + " " + found);
+               return found;
+           }
+       }
+       rules = rules.rest();
+   }
 
+    //System.out.println("parameter not found: " + paramName);
     throw new NonExistentParameterException(paramName);
   }
 

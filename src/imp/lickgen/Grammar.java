@@ -581,10 +581,11 @@ public ArrayList<Object> getAllOfType(String t)
 
             if( type.equals(t) )
               {
-                for( int i = 1; i < next.length(); ++i )
-                  {
-                    elements.add(next.nth(i));
-                  }
+                elements.add(next.second());
+//                for( int i = 1; i < next.length(); ++i )
+//                  {
+//                    elements.add(next.nth(i));
+//                  }
               }
             search = search.rest();
           }
@@ -598,33 +599,6 @@ public ArrayList<Object> getAllOfType(String t)
     return elements;
   }
 
-
-/**
- * Clear the parameters specified in the grammar file, for subsequent
- * replacement.
- */
-
-public void clearParams()
-  {
-    Polylist newRules = Polylist.nil;
-
-    while( rules.nonEmpty() )
-      {
-        if( !((String) ((Polylist) rules.first()).first()).equals(PARAM) )
-          {
-            newRules = newRules.cons(rules.first());
-          }
-        rules = rules.rest();
-      }
-
-    newRules = newRules.reverse();
-    rules = newRules;
-  }
-
-public ArrayList<Polylist> getParams()
-  {
-    return new ArrayList<Polylist>((Collection) getAllOfType(PARAM));
-  }
 
 public Polylist addRule(Polylist toAdd)
   {

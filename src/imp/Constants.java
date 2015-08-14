@@ -884,7 +884,7 @@ public interface Constants {
                                T_GOAL = 'G';
    
     public static final String NONE = "None";
-    public static final String FIRST_SCALE = "Use First Scale";
+    public static final String FIRST_SCALE = "Use_First_Scale";
     
     public static final int IGNORE = 0,
 			    OVERWRITE = 1,

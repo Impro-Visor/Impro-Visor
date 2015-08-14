@@ -3399,12 +3399,7 @@ public class LickgenFrame
 
         totalBeats = Notate.doubleFromTextField(totalBeatsField, 0.0,
                 Double.POSITIVE_INFINITY, 0.0);
-        /*
-
-         Integer.parseInt(partBarsTF1.getText()) * score.getMetre()[0] - (getCurrentSelectionStart() / beatValue),
-
-         Math.min(totalBeats, Integer.parseInt(partBarsTF1.getText()) * score.getMetre()[0] - (getCurrentSelectionStart() / beatValue)));
-         */
+   
         totalBeats = Math.round(totalBeats);
 
         totalSlots = (int) (BEAT * totalBeats);
@@ -3414,7 +3409,6 @@ public class LickgenFrame
 
     public void resetTriageParameters(boolean menu) {
         try {
-            lickgen.clearParams();
             minPitchField.setText(lickgen.getParameter(LickGen.MIN_PITCH_STRING));
 
             minPitch = Integer.parseInt(lickgen.getParameter(LickGen.MIN_PITCH_STRING));
@@ -4501,7 +4495,7 @@ public class LickgenFrame
             return;
           }
 
-        if( type.equals("None") || type.equals("Use First Scale") )
+        if( type.equals("None") || type.equals(FIRST_SCALE) )
           {
             rootComboBox.setEnabled(false);
           }
@@ -6511,7 +6505,7 @@ public void redoScales()
 
     dcbm.addElement("None");
 
-    dcbm.addElement("Use First Scale");
+    dcbm.addElement(FIRST_SCALE);
 
     while( scales.nonEmpty() )
       {

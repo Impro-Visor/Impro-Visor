@@ -1047,16 +1047,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setAutoImprovisation(false);
 
-//    try
-//      {
-//        improvMenuSelection =
-//                Preferences.getPreferenceQuietly(Preferences.IMPROV_MENU_SETTING);
-//      }
-//    catch( NonExistentParameterException e )
-//      {
-//        setUseImproviseCheckBox(); // DEFAULT
-//      }
-
     audioSettings = new AudioSettings(this);
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
@@ -1065,30 +1055,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 boolean showConstructionLinesAndBoxes = true;
 boolean saveConstructionLineState;
 
-//private int setMenuSelection(JMenu jMenu, String string)
-//  {
-//    int n = jMenu.getItemCount();
-//
-//    for( int i = 0; i < n; i++ )
-//      {
-//        JMenuItem item = jMenu.getItem(i);
-//        if( item != null )
-//          {
-//            item.setSelected(false);
-//          }
-//      }
-//
-//    for( int i = 0; i < n; i++ )
-//      {
-//        JMenuItem item = jMenu.getItem(i);
-//        if( item != null && item.getText().equals(string) )
-//          {
-//            item.setSelected(true);
-//            return i;
-//          }
-//      }
-//    return -1;
-//  }
 
 public boolean getShowConstructionLinesAndBoxes()
   {
@@ -21244,7 +21210,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
         if (cycCount == gramList.size()){cycCount = 0;} 
     }
     
-    if (ifShuffle){
+    else if (ifShuffle){
        
         String temp;
         temp = shufGramList.get(shufCount).substring(0, shufGramList.get(shufCount).length() - GrammarFilter.EXTENSION.length());
