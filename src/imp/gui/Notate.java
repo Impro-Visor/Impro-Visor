@@ -23045,6 +23045,7 @@ int quantizeResolution = 60;
         this.setToNotLoop();
         if (trader == null) {
         trader = new ActiveTradingWindow(this);
+        trader.setLocation(trader.initialOpenPoint);
         } else {
             trader.tradingWindowOpened();
         }

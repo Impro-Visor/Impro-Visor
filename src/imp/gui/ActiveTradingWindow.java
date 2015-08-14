@@ -1,8 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2010 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2015 Robert Keller and Harvey Mudd College.
  *
  * Impro-Visor is free software; you can redistribute it and/or modifyc it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -31,7 +30,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
 /**
@@ -70,6 +68,8 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
 
     private final ActiveTrading activeTrading;
     private boolean isUserInputError = false;
+    private final Integer initialTradeLength = 4;
+    public static final java.awt.Point initialOpenPoint = new java.awt.Point(10, 800);
 
     public ActiveTradingWindow(Notate notate) {
         activeTrading = new ActiveTrading(notate);
@@ -84,11 +84,13 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         updateMusician();
         updateGUIComponents();
         activeTrading.register(this);
+        tradeLengthSpinner.setValue(initialTradeLength);
+        loopToggle.setSelected(true);
+        updateLoop();
     }
 
     public void updateGUIComponents() {
         Integer tradeLength = activeTrading.getMeasures();
-        tradeLengthField.setText(tradeLength.toString());
         updateProcessTimeText();
         loopToggle.setSelected(activeTrading.getIsLoop());
         int newVol = activeTrading.getVolume();
@@ -130,17 +132,6 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
             Double newBeatVal = activeTrading.slotsToBeats(slotsForProcessing);
             processTimeSelector.setText(newBeatVal.toString());
         }
-    }
-
-    public void updateTradeLengthText() {
-        Integer newLength = new Integer(activeTrading.getMeasures());
-        tradeLengthField.setText(newLength.toString());
-        activeTrading.setProcessTime(tryFloat(processTimeSelector.getText()));
-        updateProcessTimeText();
-    }
-
-    public void updateTradeLength() {
-        activeTrading.updateTradeLength(tradeLengthField.getText());
     }
 
     private void updateTradeMode() {
@@ -273,12 +264,8 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         mainStuff = new javax.swing.JPanel();
         tradeLengthPanel = new javax.swing.JPanel();
-        tradeLengthField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        tradeLengthSpinner = new javax.swing.JSpinner();
         processTimeSelector = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
         volumePanel = new javax.swing.JPanel();
         volumeSlider = new javax.swing.JSlider();
@@ -318,7 +305,7 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         setTitle("Active Trading - Impro-Visor");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(153, 153, 255));
-        setBounds(new java.awt.Rectangle(0, 23, 600, 380));
+        setBounds(new java.awt.Rectangle(0, 600, 600, 380));
         setMaximumSize(new java.awt.Dimension(600, 380));
         setMinimumSize(new java.awt.Dimension(600, 380));
         setPreferredSize(new java.awt.Dimension(600, 380));
@@ -366,6 +353,7 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         getContentPane().add(colorRight, gridBagConstraints);
 
         colorLeft.setBackground(new java.awt.Color(153, 153, 255));
+        colorLeft.setLocation(new java.awt.Point(0, 600));
         colorLeft.setMinimumSize(new java.awt.Dimension(100, 0));
 
         javax.swing.GroupLayout colorLeftLayout = new javax.swing.GroupLayout(colorLeft);
@@ -397,6 +385,7 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         mainStuff.setMaximumSize(new java.awt.Dimension(500, 340));
         mainStuff.setMinimumSize(new java.awt.Dimension(500, 340));
         mainStuff.setPreferredSize(new java.awt.Dimension(500, 340));
+        mainStuff.setSize(new java.awt.Dimension(500, 340));
         mainStuff.setLayout(new java.awt.GridBagLayout());
 
         tradeLengthPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -405,49 +394,22 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         tradeLengthPanel.setPreferredSize(new java.awt.Dimension(200, 123));
         tradeLengthPanel.setLayout(new java.awt.GridBagLayout());
 
-        tradeLengthField.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        tradeLengthField.setText("1");
-        tradeLengthField.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                tradeLengthFieldCaretUpdate(evt);
+        tradeLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(4), Integer.valueOf(1), null, Integer.valueOf(1)));
+        tradeLengthSpinner.setToolTipText("The number of bars in melody.");
+        tradeLengthSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Length of Trade (bars)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
+        tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(200, 52));
+        tradeLengthSpinner.setPreferredSize(new java.awt.Dimension(200, 52));
+        tradeLengthSpinner.setValue(new Integer(4));
+        tradeLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                lengthOfTradeSet(evt);
             }
         });
-        tradeLengthField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tradeLengthFieldFocusLost(evt);
-            }
-        });
-        tradeLengthField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tradeLengthFieldActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        tradeLengthPanel.add(tradeLengthField, gridBagConstraints);
-
-        jLabel5.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        jLabel5.setText("Measures");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        tradeLengthPanel.add(jLabel5, gridBagConstraints);
-
-        jLabel3.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        jLabel3.setText("Processing Time");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
-        tradeLengthPanel.add(jLabel3, gridBagConstraints);
+        tradeLengthPanel.add(tradeLengthSpinner, new java.awt.GridBagConstraints());
 
         processTimeSelector.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
         processTimeSelector.setText("0.5");
+        processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing time (in beats)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
         processTimeSelector.setMaximumSize(new java.awt.Dimension(50, 2147483647));
         processTimeSelector.setMinimumSize(new java.awt.Dimension(50, 28));
         processTimeSelector.addCaretListener(new javax.swing.event.CaretListener() {
@@ -471,22 +433,6 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         tradeLengthPanel.add(processTimeSelector, gridBagConstraints);
-
-        jLabel4.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        jLabel4.setText("Beats");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        tradeLengthPanel.add(jLabel4, gridBagConstraints);
-
-        jLabel2.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        jLabel2.setText("Length");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        tradeLengthPanel.add(jLabel2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -594,6 +540,7 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         startTradingButton.getAccessibleContext().setAccessibleDescription("");
 
         loopToggle.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        loopToggle.setSelected(true);
         loopToggle.setText("Loop");
         loopToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -735,11 +682,11 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         modeMenu.add(tradeRepeat);
 
         modeSelector.add(tradeRepeatAndRectify);
-        tradeRepeatAndRectify.setSelected(true);
         tradeRepeatAndRectify.setText("Repeat and Rectify");
         modeMenu.add(tradeRepeatAndRectify);
 
         modeSelector.add(tradeRandomModify);
+        tradeRandomModify.setSelected(true);
         tradeRandomModify.setText("Modify and Rectify");
         modeMenu.add(tradeRandomModify);
 
@@ -797,18 +744,6 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         updateVolume();
     }//GEN-LAST:event_volumeSliderStateChanged
 
-    private void tradeLengthFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeLengthFieldActionPerformed
-        updateTradeLengthText();
-    }//GEN-LAST:event_tradeLengthFieldActionPerformed
-
-    private void tradeLengthFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tradeLengthFieldCaretUpdate
-        updateTradeLength();
-    }//GEN-LAST:event_tradeLengthFieldCaretUpdate
-
-    private void tradeLengthFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tradeLengthFieldFocusLost
-        updateTradeLengthText();
-    }//GEN-LAST:event_tradeLengthFieldFocusLost
-
     private void loopToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToggleActionPerformed
         updateLoop();
     }//GEN-LAST:event_loopToggleActionPerformed
@@ -832,6 +767,10 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
     private void improvisorFirstButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_improvisorFirstButtonActionPerformed
         updateIsUserLeading();
     }//GEN-LAST:event_improvisorFirstButtonActionPerformed
+
+    private void lengthOfTradeSet(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lengthOfTradeSet
+        activeTrading.updateTradeLength("" + tradeLengthSpinner.getValue());
+    }//GEN-LAST:event_lengthOfTradeSet
 
     private double tryDouble(String number) {
         double newNumber;
@@ -873,10 +812,6 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
     private javax.swing.JLabel grammarStatus;
     private javax.swing.JRadioButton improvisorFirstButton;
     private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leadSelectors;
@@ -896,8 +831,8 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
     private javax.swing.JRadioButtonMenuItem tradeAbstract;
     private javax.swing.JMenu tradeGrammarMenu;
     private javax.swing.JRadioButtonMenuItem tradeGrammarSolo;
-    private javax.swing.JTextField tradeLengthField;
     private javax.swing.JPanel tradeLengthPanel;
+    private javax.swing.JSpinner tradeLengthSpinner;
     private javax.swing.JMenu tradeMusicianMenu;
     private javax.swing.JRadioButtonMenuItem tradeRandomModify;
     private javax.swing.JRadioButtonMenuItem tradeRepeat;
