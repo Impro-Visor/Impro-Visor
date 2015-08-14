@@ -58,12 +58,12 @@ public class LickgenFrame
         extends javax.swing.JFrame
         implements imp.Constants {
 
-    private int themeLength = 8;
-    private double themeProb = 0.4;
-    private double transposeProb = 0.5;
-    private double invertProb = 0.1;
-    private double reverseProb = 0.1;
-    private Notate notate;
+    private final int themeLength = 8;
+    private final double themeProb = 0.4;
+    private final double transposeProb = 0.5;
+    private final double invertProb = 0.1;
+    private final double reverseProb = 0.1;
+    private final Notate notate;
     private ArrayList<String> melodyData = new ArrayList<String>();
     private int minPitch = 60;
     private int maxPitch = 82;
@@ -82,37 +82,16 @@ public class LickgenFrame
     private boolean avoidRepeats = true;
     private boolean useGrammar = true;
     private boolean autoFill = true;
-    private int recurrentIteration = 1;
-    private LickGen lickgen;
-    private CommandManager cm;
-    private String frameFile;
-    private StringWriter brickProductionsWriter = new StringWriter();
-    private StringWriter windowProductionsWriter = new StringWriter();
-// Complexity graph variables
-    private int numControllers;
-    private int curController;
-    private ComplexityWindowController[] compControllers;
-    /**
-     * Number of beats per measure in the piece
-     */
-    private int beatsPerBar;
-    /**
-     * Total number of beats to represent in the solo curve graph
-     */
-    private int attrTotal;
-    /**
-     * Granularity at which to look at the bars, i.e. how many beats per
-     * division
-     */
-    private int attrGranularity;
+    private final LickGen lickgen;
+    private final CommandManager cm;
+    private final StringWriter brickProductionsWriter = new StringWriter();
+    private final StringWriter windowProductionsWriter = new StringWriter();
+
     /**
      * File extension for solo profiles
      */
     private String profileExt;
-    /**
-     * Default profile curve for the reset button
-     */
-    private File defaultProfile;
+
     /**
      * JFile Chooser for saving solo profiles
      */
@@ -130,16 +109,16 @@ public class LickgenFrame
      * ArrayList of JTextField arrays, used to display probabilities used in
      * lick generation
      */
-    private ArrayList<JTextField[]> lickPrefs = new ArrayList<JTextField[]>();
+    private final ArrayList<JTextField[]> lickPrefs = new ArrayList<JTextField[]>();
     /**
      * this will be set to true during extraction of all measures in a corpus
      */
-    private boolean allMeasures = false;
+    private final boolean allMeasures = false;
 
     /*
      * Initialize critic, from Notate leadsheet.
      */
-    private Critic critic;
+    private final Critic critic;
     /*
      * TreeMap for usage with style recognition
      */
@@ -147,8 +126,9 @@ public class LickgenFrame
     /*
      * Number of expected weight files, will be used to encourage users to
      * download the rest of the weights if they desire style recognition
+     * FIX: Magic Number!
      */
-    private static int numCritics = 22;
+    private static final int numCritics = 22;
     /**
      * Create IntervalLearningPanel
      */
@@ -156,15 +136,14 @@ public class LickgenFrame
 
     /**
      * Creates new LickgenFrame
+     * @param notate
+     * @param lickgen
+     * @param cm
      */
     public LickgenFrame(Notate notate, LickGen lickgen, CommandManager cm) {
         this.notate = notate;
         this.lickgen = lickgen;
         this.cm = cm;
-
-        beatsPerBar = notate.getBeatsPerMeasure();
-        attrTotal = 288; //max size of a selection (one chorus)
-        attrGranularity = 1; //default
 
         critic = notate.getCritic();
         initComponents();
@@ -177,7 +156,6 @@ public class LickgenFrame
     private void initCompFileChoosers() {
         ProfileFilter pFilter = new ProfileFilter();
         profileExt = ProfileFilter.EXTENSION;
-        defaultProfile = new File(ImproVisor.getProfileDirectory(), "default." + profileExt);
 
         saveCWFC = new JFileChooser();
         openCWFC = new JFileChooser();
@@ -2127,11 +2105,6 @@ public class LickgenFrame
         useMarkovCheckbox.setMaximumSize(new java.awt.Dimension(9999, 9999));
         useMarkovCheckbox.setMinimumSize(new java.awt.Dimension(350, 30));
         useMarkovCheckbox.setPreferredSize(new java.awt.Dimension(400, 30));
-        useMarkovCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useMarkovCheckboxActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
@@ -2181,11 +2154,6 @@ public class LickgenFrame
         useWindowsCheckbox.setMaximumSize(new java.awt.Dimension(9999, 9999));
         useWindowsCheckbox.setMinimumSize(new java.awt.Dimension(150, 30));
         useWindowsCheckbox.setPreferredSize(new java.awt.Dimension(150, 30));
-        useWindowsCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useWindowsCheckboxActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -2241,11 +2209,6 @@ public class LickgenFrame
         useAbstractWindowsCheckbox.setMaximumSize(new java.awt.Dimension(9999, 9999));
         useAbstractWindowsCheckbox.setMinimumSize(new java.awt.Dimension(350, 30));
         useAbstractWindowsCheckbox.setPreferredSize(new java.awt.Dimension(400, 30));
-        useAbstractWindowsCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useAbstractWindowsCheckboxActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -3736,8 +3699,8 @@ public class LickgenFrame
         DefaultTableModel model = (DefaultTableModel) layerDataTable.getModel();
 
         int nextIndex = layerDataTable.getRowCount();
-        model.insertRow(nextIndex - 1, new Object[]{new Integer(nextIndex), new Integer(64), "Logsig"});
-        model.setValueAt(new Integer(nextIndex + 1), nextIndex, 0);
+        model.insertRow(nextIndex - 1, new Object[]{nextIndex, new Integer(64), "Logsig"});
+        model.setValueAt(nextIndex + 1, nextIndex, 0);
         model.fireTableRowsInserted(nextIndex, nextIndex);
         layerDataTable.getSelectionModel().setSelectionInterval(nextIndex, nextIndex);
         numberOfLayersTextField.setText(String.valueOf(layerDataTable.getRowCount()));
@@ -3799,8 +3762,8 @@ public class LickgenFrame
 
         DefaultTableModel model = (DefaultTableModel) layerDataTable.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{new Integer(1), new Integer(64), "Logsig"});
-        model.addRow(new Object[]{new Integer(2), new Integer(1), "Logsig"});
+        model.addRow(new Object[]{1, 64, "Logsig"});
+        model.addRow(new Object[]{2, 1, "Logsig"});
         numberOfLayersTextField.setText("2");
     }//GEN-LAST:event_resetDefaultValuesButtonActionPerformed
 
@@ -4056,11 +4019,6 @@ public class LickgenFrame
         notate.openGrammar();
     }//GEN-LAST:event_loadBaseGrammarBtnActionPerformed
 
-    private void useAbstractWindowsCheckboxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_useAbstractWindowsCheckboxActionPerformed
-    {//GEN-HEADEREND:event_useAbstractWindowsCheckboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_useAbstractWindowsCheckboxActionPerformed
-
     private void useAbstractBricksCheckboxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_useAbstractBricksCheckboxActionPerformed
     {//GEN-HEADEREND:event_useAbstractBricksCheckboxActionPerformed
         // TODO add your handling code here:
@@ -4071,20 +4029,10 @@ public class LickgenFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_useRelativeBricksCheckboxActionPerformed
 
-    private void useWindowsCheckboxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_useWindowsCheckboxActionPerformed
-    {//GEN-HEADEREND:event_useWindowsCheckboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_useWindowsCheckboxActionPerformed
-
     private void MarkovLengthFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_MarkovLengthFieldActionPerformed
     {//GEN-HEADEREND:event_MarkovLengthFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MarkovLengthFieldActionPerformed
-
-    private void useMarkovCheckboxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_useMarkovCheckboxActionPerformed
-    {//GEN-HEADEREND:event_useMarkovCheckboxActionPerformed
-
-    }//GEN-LAST:event_useMarkovCheckboxActionPerformed
 
     private void useBricksCheckboxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_useBricksCheckboxActionPerformed
     {//GEN-HEADEREND:event_useBricksCheckboxActionPerformed
@@ -5204,7 +5152,7 @@ public void extractAbstractMelody()
 
     if( production != null )
       {
-        setRhythmFieldText(production.toString());
+        setRhythmFieldText(production);
       }
     
     MelodyPart segment = notate.getCurrentMelodyPart().extract(selStart, selEnd);
@@ -5274,7 +5222,7 @@ public void writeProduction(String production,
             //then concatenate the two and write them to the file
             int slotsPerSection = measureWindow * BEAT;
             String melodyToWrite;
-            String relativePitchMelody = "";
+            String relativePitchMelody;
             String exactMelody = production;
             String[] splitMel;
             boolean foundMatch = false;
@@ -5483,6 +5431,7 @@ public void addProduction(String production, int measureWindow, double prob) //f
 
         StringBuilder sb = new StringBuilder();
 
+        //FIX: Suspicious that value is not used.
         int value = part.getNote(current).getDurationString(sb, part.getNote(
                 current).getRhythmValue());
 
@@ -5801,12 +5750,11 @@ public void addProduction(String production, int measureWindow, double prob) //f
               {
                 System.out.println("No chords");
               }
-            for( int i = 0; i < chordList.size(); i++ )
-              {
-                String nextChord = ((Chord) chordList.get(i)).toLeadsheet();
+            for (Unit chordList1 : chordList) {
+                String nextChord = ((Chord) chordList1).toLeadsheet();
                 strbuf.append(nextChord);
                 strbuf.append(" ");
-              }
+            }
           }
       }
 
@@ -6060,32 +6008,6 @@ private void updateUseSoloist()
         return name;
     }
 
-    /**
-     * Generates a melody from the solo profile window. Takes the attribute
-     * ranges into account and uses the new rule expander paradigm.
-     */
-    /**
-     * If the no compute box is checked for a specific attribute, change the
-     * number of attributes to compute.
-     *
-     * @param evt
-     */
-    /**
-     * Generates an abstract melody from the solo profile window. Takes the
-     * attribute ranges into account and uses the new rule expander paradigm.
-     */
-    /**
-     * Fills the abstract melody in the abstract melody rhythm text field.
-     */
-    /**
-     * Saves a profile curve.
-     */
-    /**
-     * Loads a profile curve.
-     */
-    /**
-     * Resets graphs to flat lines, clears all check boxes and text fields.
-     */
     /**
      * Checks how many beats are selected in the current leadsheet.
      */
@@ -6462,7 +6384,7 @@ public void redoScales()
         notate.refreshGrammarEditor();
     }
     
-private static LogDialog logDialog = new LogDialog(false);
+private static final LogDialog logDialog = new LogDialog(false);
 
 public void openLog()
   {
