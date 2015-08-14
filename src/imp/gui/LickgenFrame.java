@@ -684,22 +684,14 @@ public class LickgenFrame
         maxPitchField.setToolTipText("The maximum pitch in a generated lick.");
         maxPitchField.setMinimumSize(new java.awt.Dimension(60, 24));
         maxPitchField.setPreferredSize(new java.awt.Dimension(60, 24));
-        maxPitchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maxPitchFieldActionPerformed(evt);
-            }
-        });
         maxPitchField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                maxPitchFieldGetsFocus(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 maxPitchFieldFocusLost(evt);
             }
         });
-        maxPitchField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                maxPitchFieldenterLickKeyPressed(evt);
+        maxPitchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maxPitchFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -715,22 +707,14 @@ public class LickgenFrame
         minPitchField.setToolTipText("The minimum pitch in a generated lick.");
         minPitchField.setMinimumSize(new java.awt.Dimension(60, 24));
         minPitchField.setPreferredSize(new java.awt.Dimension(60, 24));
-        minPitchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minPitchFieldActionPerformed(evt);
-            }
-        });
         minPitchField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                minPitchFieldGetsFocus(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 minPitchFieldFocusLost(evt);
             }
         });
-        minPitchField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                minPitchFieldenterLickKeyPressed(evt);
+        minPitchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minPitchFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -758,22 +742,14 @@ public class LickgenFrame
         minIntervalField.setToolTipText("The minimum interval from one note to the next, if not a leap.");
         minIntervalField.setMinimumSize(new java.awt.Dimension(60, 24));
         minIntervalField.setPreferredSize(new java.awt.Dimension(60, 24));
-        minIntervalField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minIntervalFieldActionPerformed(evt);
-            }
-        });
         minIntervalField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                minIntervalFieldGetsFocus(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 minIntervalFieldFocusLost(evt);
             }
         });
-        minIntervalField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                minIntervalFieldenterLickKeyPressed(evt);
+        minIntervalField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minIntervalFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -789,22 +765,14 @@ public class LickgenFrame
         maxIntervalField.setToolTipText("The maximum interval from one note to the next, if not a leap.");
         maxIntervalField.setMinimumSize(new java.awt.Dimension(60, 24));
         maxIntervalField.setPreferredSize(new java.awt.Dimension(60, 24));
-        maxIntervalField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                maxIntervalFieldActionPerformed(evt);
-            }
-        });
         maxIntervalField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                maxIntervalFieldGetsFocus(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 maxIntervalFieldFocusLost(evt);
             }
         });
-        maxIntervalField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                maxIntervalFieldenterLickKeyPressed(evt);
+        maxIntervalField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maxIntervalFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -833,22 +801,14 @@ public class LickgenFrame
         minDurationField.setEnabled(false);
         minDurationField.setMinimumSize(new java.awt.Dimension(60, 24));
         minDurationField.setPreferredSize(new java.awt.Dimension(60, 24));
-        minDurationField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                minDurationFieldActionPerformed(evt);
-            }
-        });
         minDurationField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                minDurationFieldGetsFocus(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 minDurationFieldFocusLost(evt);
             }
         });
-        minDurationField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                minDurationFieldenterLickKeyPressed(evt);
+        minDurationField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minDurationFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -865,17 +825,14 @@ public class LickgenFrame
         maxDurationField.setEnabled(false);
         maxDurationField.setMinimumSize(new java.awt.Dimension(60, 24));
         maxDurationField.setPreferredSize(new java.awt.Dimension(60, 24));
+        maxDurationField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                maxDurationFieldFocusLost(evt);
+            }
+        });
         maxDurationField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 maxDurationFieldActionPerformed(evt);
-            }
-        });
-        maxDurationField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                maxDurationFieldGetsFocus(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                maxDurationFieldFocusLost(evt);
             }
         });
         maxDurationField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -3350,6 +3307,11 @@ public class LickgenFrame
         notate.stopPlaying();
     }
 
+    private void verifyAndSaveTriageFields()
+    {
+        verifyTriageFields();
+        notate.saveGrammar();  // Save when field changed!
+    }
     /**
      * Make sure the user has entered acceptable values for each of the other
      * fields in the triage frame.
@@ -3396,7 +3358,9 @@ public class LickgenFrame
         chordToneDecayRate = Notate.doubleFromTextField(chordToneDecayField, 0.0,
                 Double.POSITIVE_INFINITY,
                 chordToneDecayRate);
-
+        
+        saveTriageParameters();
+        
         totalBeats = Notate.doubleFromTextField(totalBeatsField, 0.0,
                 Double.POSITIVE_INFINITY, 0.0);
    
@@ -4800,14 +4764,12 @@ public class LickgenFrame
 
     private void leapProbFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_leapProbFieldFocusLost
     {//GEN-HEADEREND:event_leapProbFieldFocusLost
-
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_leapProbFieldFocusLost
 
     private void leapProbFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_leapProbFieldActionPerformed
     {//GEN-HEADEREND:event_leapProbFieldActionPerformed
-
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_leapProbFieldActionPerformed
 
     private void restProbFieldenterLickKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_restProbFieldenterLickKeyPressed
@@ -4817,8 +4779,7 @@ public class LickgenFrame
 
     private void restProbFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_restProbFieldFocusLost
     {//GEN-HEADEREND:event_restProbFieldFocusLost
-
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_restProbFieldFocusLost
 
     private void restProbFieldGetsFocus(java.awt.event.FocusEvent evt)//GEN-FIRST:event_restProbFieldGetsFocus
@@ -4828,8 +4789,7 @@ public class LickgenFrame
 
     private void restProbFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_restProbFieldActionPerformed
     {//GEN-HEADEREND:event_restProbFieldActionPerformed
-
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_restProbFieldActionPerformed
 
     private void totalBeatsFieldenterLickKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_totalBeatsFieldenterLickKeyPressed
@@ -4839,8 +4799,6 @@ public class LickgenFrame
 
     private void totalBeatsFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_totalBeatsFieldFocusLost
     {//GEN-HEADEREND:event_totalBeatsFieldFocusLost
-        verifyTriageFields();
-
         notate.setCurrentSelectionEnd(
                 notate.getCurrentSelectionStart() + totalSlots - 1);
 
@@ -4856,10 +4814,8 @@ public class LickgenFrame
 
     private void totalBeatsFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_totalBeatsFieldActionPerformed
     {//GEN-HEADEREND:event_totalBeatsFieldActionPerformed
-        verifyTriageFields();
-
         notate.setCurrentSelectionEnd(
-            notate.getCurrentSelectionStart() + totalSlots - 1);
+        notate.getCurrentSelectionStart() + totalSlots - 1);
 
         redrawTriage();
 
@@ -4873,117 +4829,62 @@ public class LickgenFrame
 
     private void maxDurationFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_maxDurationFieldFocusLost
     {//GEN-HEADEREND:event_maxDurationFieldFocusLost
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_maxDurationFieldFocusLost
-
-    private void maxDurationFieldGetsFocus(java.awt.event.FocusEvent evt)//GEN-FIRST:event_maxDurationFieldGetsFocus
-    {//GEN-HEADEREND:event_maxDurationFieldGetsFocus
-
-    }//GEN-LAST:event_maxDurationFieldGetsFocus
 
     private void maxDurationFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_maxDurationFieldActionPerformed
     {//GEN-HEADEREND:event_maxDurationFieldActionPerformed
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_maxDurationFieldActionPerformed
-
-    private void minDurationFieldenterLickKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_minDurationFieldenterLickKeyPressed
-    {//GEN-HEADEREND:event_minDurationFieldenterLickKeyPressed
-
-    }//GEN-LAST:event_minDurationFieldenterLickKeyPressed
 
     private void minDurationFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_minDurationFieldFocusLost
     {//GEN-HEADEREND:event_minDurationFieldFocusLost
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_minDurationFieldFocusLost
-
-    private void minDurationFieldGetsFocus(java.awt.event.FocusEvent evt)//GEN-FIRST:event_minDurationFieldGetsFocus
-    {//GEN-HEADEREND:event_minDurationFieldGetsFocus
-
-    }//GEN-LAST:event_minDurationFieldGetsFocus
 
     private void minDurationFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_minDurationFieldActionPerformed
     {//GEN-HEADEREND:event_minDurationFieldActionPerformed
-        verifyTriageFields();
+        verifyAndSaveTriageFields();
     }//GEN-LAST:event_minDurationFieldActionPerformed
-
-    private void maxIntervalFieldenterLickKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_maxIntervalFieldenterLickKeyPressed
-    {//GEN-HEADEREND:event_maxIntervalFieldenterLickKeyPressed
-
-    }//GEN-LAST:event_maxIntervalFieldenterLickKeyPressed
 
     private void maxIntervalFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_maxIntervalFieldFocusLost
     {//GEN-HEADEREND:event_maxIntervalFieldFocusLost
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_maxIntervalFieldFocusLost
-
-    private void maxIntervalFieldGetsFocus(java.awt.event.FocusEvent evt)//GEN-FIRST:event_maxIntervalFieldGetsFocus
-    {//GEN-HEADEREND:event_maxIntervalFieldGetsFocus
-
-    }//GEN-LAST:event_maxIntervalFieldGetsFocus
 
     private void maxIntervalFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_maxIntervalFieldActionPerformed
     {//GEN-HEADEREND:event_maxIntervalFieldActionPerformed
-        verifyTriageFields();
+        verifyAndSaveTriageFields();
     }//GEN-LAST:event_maxIntervalFieldActionPerformed
-
-    private void minIntervalFieldenterLickKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_minIntervalFieldenterLickKeyPressed
-    {//GEN-HEADEREND:event_minIntervalFieldenterLickKeyPressed
-
-    }//GEN-LAST:event_minIntervalFieldenterLickKeyPressed
 
     private void minIntervalFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_minIntervalFieldFocusLost
     {//GEN-HEADEREND:event_minIntervalFieldFocusLost
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_minIntervalFieldFocusLost
-
-    private void minIntervalFieldGetsFocus(java.awt.event.FocusEvent evt)//GEN-FIRST:event_minIntervalFieldGetsFocus
-    {//GEN-HEADEREND:event_minIntervalFieldGetsFocus
-
-    }//GEN-LAST:event_minIntervalFieldGetsFocus
 
     private void minIntervalFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_minIntervalFieldActionPerformed
     {//GEN-HEADEREND:event_minIntervalFieldActionPerformed
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_minIntervalFieldActionPerformed
-
-    private void minPitchFieldenterLickKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_minPitchFieldenterLickKeyPressed
-    {//GEN-HEADEREND:event_minPitchFieldenterLickKeyPressed
-
-    }//GEN-LAST:event_minPitchFieldenterLickKeyPressed
 
     private void minPitchFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_minPitchFieldFocusLost
     {//GEN-HEADEREND:event_minPitchFieldFocusLost
-        verifyTriageFields();
+       verifyAndSaveTriageFields();
     }//GEN-LAST:event_minPitchFieldFocusLost
-
-    private void minPitchFieldGetsFocus(java.awt.event.FocusEvent evt)//GEN-FIRST:event_minPitchFieldGetsFocus
-    {//GEN-HEADEREND:event_minPitchFieldGetsFocus
-
-    }//GEN-LAST:event_minPitchFieldGetsFocus
 
     private void minPitchFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_minPitchFieldActionPerformed
     {//GEN-HEADEREND:event_minPitchFieldActionPerformed
-        verifyTriageFields();
+        verifyAndSaveTriageFields();
     }//GEN-LAST:event_minPitchFieldActionPerformed
-
-    private void maxPitchFieldenterLickKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_maxPitchFieldenterLickKeyPressed
-    {//GEN-HEADEREND:event_maxPitchFieldenterLickKeyPressed
-
-    }//GEN-LAST:event_maxPitchFieldenterLickKeyPressed
 
     private void maxPitchFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_maxPitchFieldFocusLost
     {//GEN-HEADEREND:event_maxPitchFieldFocusLost
-        verifyTriageFields();
+        verifyAndSaveTriageFields();
     }//GEN-LAST:event_maxPitchFieldFocusLost
-
-    private void maxPitchFieldGetsFocus(java.awt.event.FocusEvent evt)//GEN-FIRST:event_maxPitchFieldGetsFocus
-    {//GEN-HEADEREND:event_maxPitchFieldGetsFocus
-
-    }//GEN-LAST:event_maxPitchFieldGetsFocus
 
     private void maxPitchFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_maxPitchFieldActionPerformed
     {//GEN-HEADEREND:event_maxPitchFieldActionPerformed
-        verifyTriageFields();
+       verifyAndSaveTriageFields(); 
     }//GEN-LAST:event_maxPitchFieldActionPerformed
 
     private void saveLickButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveLickButtonActionPerformed

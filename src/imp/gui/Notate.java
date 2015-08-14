@@ -10164,6 +10164,28 @@ public void saveGrammarAs()
     lickgenFrame.toFront();
   }
 
+/**
+ * Save current grammar
+ */
+
+public void saveGrammar()
+  {
+    File oldDirectory = grammarfc.getCurrentDirectory();
+
+    grammarfc.setCurrentDirectory(ImproVisor.getGrammarDirectory());
+
+    // If never saved before, used the name specified in vocFile.
+    // Otherwise use previous file.
+
+    if( grammarFilename == null )
+      {
+        setGrammarFilename(ImproVisor.getGrammarFile().getAbsolutePath());
+      }
+    
+    lickgen.saveGrammar(grammarFilename);
+  }
+
+
 public void editGrammar()
   {
     grammarEditor.fillEditor();
@@ -21253,8 +21275,6 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     int beatsRequested = totalSlots / BEAT;
 
     //System.out.println("\ngenerate: " + improviseStartSlot + " to " + improviseEndSlot + ", requesting " + beatsRequested + " beats");
-
-    verifyTriageFields();
 
     Polylist rhythm = null;
 

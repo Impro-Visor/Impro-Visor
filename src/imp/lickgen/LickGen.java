@@ -735,14 +735,13 @@ public void loadGrammar(String grammarFile)
     //System.out.println("LickGen loadGrammar: " + grammarFile);
     
     // Setup defaults for syncopation and expectation values.
-    useSyncopation       = defaultUseSyncopation;
-    syncopationType      = defaultSyncopationType;
-    syncopationConstant    = defaultSyncopationConstant;
-    syncopationMultiplier   = defaultSyncopationMultiplier;
-    expectancyMultiplier = defaultExpectancyMultiplier;
-    expectancyConstant   = defaultExpectancyConstant;
+    useSyncopation        = defaultUseSyncopation;
+    syncopationType       = defaultSyncopationType;
+    syncopationConstant   = defaultSyncopationConstant;
+    syncopationMultiplier = defaultSyncopationMultiplier;
+    expectancyMultiplier  = defaultExpectancyMultiplier;
+    expectancyConstant    = defaultExpectancyConstant;
     
-    grammar.clear();
     grammar.loadGrammar(grammarFile);
 
     notate.setLickGenStatus("Grammar loaded: " + grammarFile);
@@ -812,7 +811,8 @@ public void loadGrammar(String grammarFile)
     
     try
       {
-      expectancyConstant = Double.parseDouble(getParameterQuietly(EXPECTANCY_CONSTANT)) * MAX_EXPECTANCY;
+      // With the * MAX_EXPECTANCY, the saved value will keep changing
+      expectancyConstant = Double.parseDouble(getParameterQuietly(EXPECTANCY_CONSTANT)); // * MAX_EXPECTANCY;
       }
     catch(NonExistentParameterException e)
       {
@@ -2897,9 +2897,9 @@ public static Note makeRelativeNote(Object ob, Chord chord)
  * @param param
  */
     
-public void setParameter(String paramName, Object param)
+public void setParameter(String param, Object value)
   {
-    grammar.addRule(Polylist.list(Grammar.PARAM, Polylist.list(paramName, param)));
+    grammar.setParameter(param, value);
   }
 
 

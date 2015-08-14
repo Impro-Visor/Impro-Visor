@@ -564,47 +564,52 @@ private void showFrontier(Polylist gen)
     System.out.println("| " + terminalBuffer.toPolylist() + " | " + gen + " | ");
   }
 
-/**
- * Load in any terminal values specified in the user file. Returns a ArrayList
- * containing all terminal values.
- */
-public ArrayList<Object> getAllOfType(String t)
-  {
-    Polylist search = rules;
-    ArrayList<Object> elements = new ArrayList<Object>();
-    while( search.nonEmpty() )
-      {
-        try
-          {
-            Polylist next = (Polylist) search.first();
-            String type = (String) next.first();
-
-            if( type.equals(t) )
-              {
-                elements.add(next.second());
-//                for( int i = 1; i < next.length(); ++i )
-//                  {
-//                    elements.add(next.nth(i));
-//                  }
-              }
-            search = search.rest();
-          }
-        catch( ClassCastException e )
-          {
-            ErrorLog.log(ErrorLog.SEVERE, "Error parsing " + t);
-            return null;
-          }
-      }
-
-    return elements;
-  }
-
-
 public Polylist addRule(Polylist toAdd)
   {
     rules = rules.cons(toAdd);
     return rules;
   }
+
+/**
+ * Set the value of param in the list of all rules,
+ * preserving a unique value for each parameter.
+ * @param param
+ * @param value 
+ */
+
+public void setParameter(String param, Object value)
+{
+    PolylistBuffer buffer = new PolylistBuffer();
+    boolean found = false;
+    while(rules.nonEmpty() )
+    {
+        Polylist first = (Polylist)rules.first();
+        if( first.first().equals(PARAM) )
+        {
+            Polylist second = (Polylist)first.second();
+            if( second.first().equals(param) )
+            {
+                found = true;
+                buffer.append(Polylist.list(PARAM, Polylist.list(param, value)));
+            }
+            else
+            {
+                buffer.append(first);
+            }
+        }
+        else
+        {
+            // If first is not a parameter, pass it on unchanged.
+            buffer.append(first);
+        }
+        rules = rules.rest();
+    }
+    if( !found )
+    {
+        buffer.append(Polylist.list(PARAM, Polylist.list(param, value)));
+    }
+    rules = buffer.toPolylist();
+}
 
 public Polylist getRules()
   {
@@ -615,7 +620,7 @@ public Polylist getRules()
 public int loadGrammar(String filename)
   {
     //System.out.println("Grammar loadGrammar " + filename);
-    clear();
+    PolylistBuffer buffer = new PolylistBuffer();
     try
       {
         Tokenizer in = new Tokenizer(new FileInputStream(filename));
@@ -626,11 +631,10 @@ public int loadGrammar(String filename)
             //System.out.println("ob = " + ob);
             if( ob instanceof Polylist )
               {
-                rules = rules.cons((Polylist) ob);
+                buffer.append(ob);
               }
           }
-        rules = rules.reverse();
-        //terminals = getTerminals();
+        rules = buffer.toPolylist();
         return 0;
       }
     catch( FileNotFoundException e )
@@ -642,18 +646,21 @@ public int loadGrammar(String filename)
 
 public int saveGrammar(String filename)
   {
+    //  System.out.println("rules = " + rules);
     try
       {
         Polylist toWrite = rules;
-        String contents = "";
+        StringBuilder buffer = new StringBuilder();
         while( toWrite.nonEmpty() )
           {
-            contents += toWrite.first() + "\n";
+            buffer.append(toWrite.first());
+            buffer.append("\n");
             toWrite = toWrite.rest();
           }
         FileWriter out = new FileWriter(new File(filename));
-        out.write(contents);
+        out.write(buffer.toString());
         out.close();
+        //System.out.println("\n\nsaveGrammar\n" + buffer.toString());
         return 0;
       }
     catch( IOException e )
@@ -663,10 +670,6 @@ public int saveGrammar(String filename)
       }
   }
 
-public void clear()
-  {
-    rules = Polylist.nil;
-  }
 
 /**
  * Set all instances of variables in toSet corresponding value in getValsFrom.
