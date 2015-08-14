@@ -761,7 +761,11 @@ public class CreateGrammar implements imp.Constants {
     }
 
     public static Polylist readRule(Polylist rule) {
-        Polylist result = new Polylist();
+        if( rule.isEmpty() )
+        {
+            return rule; //shouldn't happen, but has
+        }
+        Polylist result = Polylist.nil;
         rule = ((Polylist) rule.first()).rest();
         while (rule.nonEmpty()) {
             if (rule.first() instanceof Polylist) {

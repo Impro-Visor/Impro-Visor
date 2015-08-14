@@ -3682,6 +3682,10 @@ public static Polylist getScale(String root, String type)
   {
   NoteSymbol tonic = NoteSymbol.makeNoteSymbol(root);
   ScaleForm sf = getScale(type);
+  if( sf == null )
+  {
+      return Polylist.nil;
+  }
   Polylist scaleTones = sf.getSpell(tonic);
   return scaleTones;
   }

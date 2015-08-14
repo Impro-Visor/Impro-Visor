@@ -792,8 +792,11 @@ public void loadGrammar(String grammarFile)
     
     try
       {
+      // This will cause a different value of syncopationConstant to be saved.
+      // For now, I am setting it back to its default value.
       syncopationConstant = Double.parseDouble(getParameterQuietly(SYNCOPATION_CONSTANT)) * MAX_SYNCO * (lengthOfTrade/SLOTS_PER_MEASURE);
-      //System.out.println("Syncopation constant: " + syncopationConstant);
+      syncopationConstant = defaultSyncopationConstant;
+    //System.out.println("Syncopation constant: " + syncopationConstant);
       }
     catch(NonExistentParameterException e)
       {
