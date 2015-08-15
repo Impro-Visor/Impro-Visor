@@ -262,7 +262,7 @@ public class CreateBrickGrammar {
                             + rule
                             + ") (builtin brick " //evaluates to 1 if brick type is this brick's type; 0 otherwise
                             + rep.getBrickType()
-                            + "))\n");
+                            + ") 1.0)\n");        // artificial probability
                         
         } catch (Exception e) {
             System.out.println("IO exception: " + e.toString());

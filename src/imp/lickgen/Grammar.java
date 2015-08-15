@@ -85,7 +85,6 @@ String startSymbol = null; // to be set
 private Notate notate;
 private int currentSlot;
 private int chordSlot;
-boolean quotaReached;
 
 public Grammar(String file)
   {
@@ -144,6 +143,7 @@ public Polylist run(int startSlot,
     
     while( totalSlotsToFill > 0 )
       {
+        //System.out.println("totalSlots = " + totalSlotsToFill);
         if( improVisorFirst ) // Fill now, pad later, if at all
           {
           numSlotsToFill = Math.min(tradingQuantum, totalSlotsToFill); 
@@ -191,7 +191,8 @@ public Polylist run(int startSlot,
 
                 while( numSlotsToFill > 0 && stack.nonEmpty() )
                   {
-                    // System.out.println("stack = " + stack);  // Shows rhs.
+                    // This gives the best trace of how a grammar expands.
+                    //System.out.println("terminalBuffer = " + terminalBuffer.toPolylist() + ", stack = " + stack);
                     stack = applyRules(stack);
 
                     if( stack == null )
@@ -239,14 +240,12 @@ public Polylist run(int startSlot,
  */
 private void accumulateTerminal(Object terminal)
   {
-    if( quotaReached )
-      {
-        return;
-      }
+    //System.out.println("accumulateTerminal " + terminal);
+
     int duration = getDuration(terminal);
     if( numSlotsToFill < duration )
       {
-        quotaReached = true;
+        numSlotsToFill = 0;
         return;
       }
     terminalBuffer.append(terminal);
@@ -347,7 +346,7 @@ public Polylist applyRules(Polylist stack) throws RuleApplicationException
 
     // Accumulate any terminal values at the beginning of stack.
 
-    while( !quotaReached && isTerminal(token) )
+    while( numSlotsToFill > 0 && isTerminal(token) )
       {
         if( isWrappedTerminal(token) )
           {
@@ -358,7 +357,7 @@ public Polylist applyRules(Polylist stack) throws RuleApplicationException
             accumulateTerminal(token);
           }
 
-        if( stack.isEmpty() || quotaReached )
+        if( stack.isEmpty() || numSlotsToFill <= 0 )
           {
             return stack;
           }
@@ -369,6 +368,7 @@ public Polylist applyRules(Polylist stack) throws RuleApplicationException
     
     // token is a non-terminal
      
+    //System.out.println("token = " + token);
     ArrayList<WeightedRule> ruleList = new ArrayList<WeightedRule>();
     ArrayList<WeightedRule> baseList = new ArrayList<WeightedRule>();
 
@@ -495,6 +495,8 @@ public Polylist applyRules(Polylist stack) throws RuleApplicationException
 
     // Give baseList priority over ruleList.
     ArrayList<WeightedRule> listToUse = baseList.isEmpty() ? ruleList : baseList;
+    
+    //System.out.println("listToUse = " + listToUse);
 
     if( listToUse.isEmpty() )
       {
@@ -541,6 +543,8 @@ public Polylist applyRules(Polylist stack) throws RuleApplicationException
       ruleToUse = listToUse.get(listSize - 1);
       }
     
+    //System.out.println("ruleToUse = " + ruleToUse);
+    
     if( ruleToUse != null )
       {
         if( traceLevel > 1 )
@@ -552,6 +556,7 @@ public Polylist applyRules(Polylist stack) throws RuleApplicationException
           System.out.println(ruleToUse);
           System.out.println();
           }
+
       stack = ruleToUse.addToGen(stack);
       }
     }

@@ -10227,6 +10227,7 @@ public void openGrammar()
     lickgenFrame.toFront();
   }
 
+
 public void setGrammar(String grammarName)
   {
     notateGrammarMenu.setText(grammarName);
@@ -21482,6 +21483,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                                                   lickgenFrame.getRestProb());
           }
 
+        //System.out.println("rhythm = " + rhythm);
         MelodyPart lick = generateLick(rhythm, improviseStartSlot, improviseEndSlot);
         pointr = lick; //test
 

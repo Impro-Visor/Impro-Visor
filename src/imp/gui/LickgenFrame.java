@@ -183,6 +183,7 @@ public class LickgenFrame
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        learningBaseButtonGroup = new javax.swing.ButtonGroup();
         generatorPane = new javax.swing.JTabbedPane();
         lickGenPanel = new javax.swing.JPanel();
         rhythmPanel = new javax.swing.JPanel();
@@ -299,6 +300,10 @@ public class LickgenFrame
         chordProbPanel = new javax.swing.JPanel();
         grammarLearningPanel = new javax.swing.JPanel();
         finalLabel = new javax.swing.JLabel();
+        topGrammarLearningPanel = new javax.swing.JPanel();
+        learningStep0Label = new javax.swing.JLabel();
+        emptyBaseLearningButton = new javax.swing.JRadioButton();
+        selectBaseLearningButton = new javax.swing.JRadioButton();
         windowParametersPanel = new javax.swing.JPanel();
         windowSizeLabel = new javax.swing.JLabel();
         windowSlideLabel = new javax.swing.JLabel();
@@ -315,11 +320,9 @@ public class LickgenFrame
         useRelativeBricksCheckbox = new javax.swing.JCheckBox();
         useAbstractBricksCheckbox = new javax.swing.JCheckBox();
         useAbstractWindowsCheckbox = new javax.swing.JCheckBox();
-        loadBaseGrammarBtn = new javax.swing.JButton();
         saveGrammarAsButton = new javax.swing.JButton();
         openCorpusBtn = new javax.swing.JButton();
         toGrammarBtn = new javax.swing.JButton();
-        learningStep0Label = new javax.swing.JLabel();
         testGeneration = new javax.swing.JButton();
         neuralNetworkPanel = new javax.swing.JPanel();
         nnetOutputPanel = new javax.swing.JPanel();
@@ -1937,7 +1940,6 @@ public class LickgenFrame
 
         generatorPane.addTab("Melody Generator", lickGenPanel);
 
-        grammarLearningPanel.setBackground(new java.awt.Color(218, 215, 215));
         grammarLearningPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Learning", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         grammarLearningPanel.setMinimumSize(new java.awt.Dimension(500, 300));
         grammarLearningPanel.setPreferredSize(new java.awt.Dimension(500, 500));
@@ -1959,8 +1961,52 @@ public class LickgenFrame
         gridBagConstraints.weighty = 0.05;
         grammarLearningPanel.add(finalLabel, gridBagConstraints);
 
-        windowParametersPanel.setBackground(new java.awt.Color(218, 215, 215));
-        windowParametersPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Step 3: (Optional) Set the parameters below:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 14))); // NOI18N
+        topGrammarLearningPanel.setLayout(new java.awt.GridBagLayout());
+
+        learningStep0Label.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        learningStep0Label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        learningStep0Label.setText("<html>Following these steps will learn a new grammar from a corpus of solos as a folder of leadsheets.  <br>The new grammar is built based on either an empty grammar or an existing grammar. <br>Click the rectangular buttons below from top to bottom.</html>  ");
+        learningStep0Label.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        learningStep0Label.setMaximumSize(new java.awt.Dimension(2147483647, 60));
+        learningStep0Label.setMinimumSize(new java.awt.Dimension(700, 60));
+        learningStep0Label.setOpaque(true);
+        learningStep0Label.setPreferredSize(new java.awt.Dimension(700, 60));
+        learningStep0Label.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.05;
+        topGrammarLearningPanel.add(learningStep0Label, gridBagConstraints);
+
+        learningBaseButtonGroup.add(emptyBaseLearningButton);
+        emptyBaseLearningButton.setSelected(true);
+        emptyBaseLearningButton.setText("Use _empty.grammar as a base.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.weightx = 0.5;
+        topGrammarLearningPanel.add(emptyBaseLearningButton, gridBagConstraints);
+
+        learningBaseButtonGroup.add(selectBaseLearningButton);
+        selectBaseLearningButton.setLabel("Select grammar to be used as base.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.weightx = 0.5;
+        topGrammarLearningPanel.add(selectBaseLearningButton, gridBagConstraints);
+
+        grammarLearningPanel.add(topGrammarLearningPanel, new java.awt.GridBagConstraints());
+
+        windowParametersPanel.setBackground(new java.awt.Color(255, 204, 102));
+        windowParametersPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Step 2: (Optional) Set the parameters", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         windowParametersPanel.setMinimumSize(new java.awt.Dimension(500, 200));
         windowParametersPanel.setPreferredSize(new java.awt.Dimension(1272, 200));
         windowParametersPanel.setLayout(new java.awt.GridBagLayout());
@@ -1974,7 +2020,7 @@ public class LickgenFrame
         windowSizeLabel.setPreferredSize(new java.awt.Dimension(200, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
@@ -1989,7 +2035,7 @@ public class LickgenFrame
         windowSlideLabel.setPreferredSize(new java.awt.Dimension(200, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
@@ -2024,7 +2070,7 @@ public class LickgenFrame
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         windowParametersPanel.add(windowSizeField, gridBagConstraints);
@@ -2043,7 +2089,7 @@ public class LickgenFrame
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
         windowParametersPanel.add(windowSlideField, gridBagConstraints);
@@ -2096,7 +2142,7 @@ public class LickgenFrame
         numClusterRepsField.setMinimumSize(new java.awt.Dimension(100, 30));
         numClusterRepsField.setPreferredSize(new java.awt.Dimension(60, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.5;
@@ -2132,8 +2178,8 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         windowParametersPanel.add(MarkovLengthField, gridBagConstraints);
 
@@ -2146,7 +2192,7 @@ public class LickgenFrame
         markovChainLengthLabel.setPreferredSize(new java.awt.Dimension(350, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
@@ -2167,6 +2213,7 @@ public class LickgenFrame
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         windowParametersPanel.add(useWindowsCheckbox, gridBagConstraints);
 
+        useRelativeBricksCheckbox.setBackground(new java.awt.Color(255, 204, 102));
         useRelativeBricksCheckbox.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         useRelativeBricksCheckbox.setSelected(true);
         useRelativeBricksCheckbox.setText("Use relative pitches for bricks");
@@ -2224,38 +2271,17 @@ public class LickgenFrame
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 0.02;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         grammarLearningPanel.add(windowParametersPanel, gridBagConstraints);
 
-        loadBaseGrammarBtn.setBackground(new java.awt.Color(252, 110, 90));
-        loadBaseGrammarBtn.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        loadBaseGrammarBtn.setText("<html><b>Step 1</b>: Load the grammar on which you wish to build, such as _empty.grammar.  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you do nothing, Impro-Visor will build on whatever grammar is current.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This step also clears any accumulated productions from prior use of the learning tool.</html>  ");
-        loadBaseGrammarBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        loadBaseGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        loadBaseGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
-        loadBaseGrammarBtn.setMinimumSize(new java.awt.Dimension(105, 60));
-        loadBaseGrammarBtn.setOpaque(true);
-        loadBaseGrammarBtn.setPreferredSize(new java.awt.Dimension(173, 60));
-        loadBaseGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadBaseGrammarBtnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weighty = 0.05;
-        grammarLearningPanel.add(loadBaseGrammarBtn, gridBagConstraints);
-
-        saveGrammarAsButton.setBackground(new java.awt.Color(252, 110, 90));
+        saveGrammarAsButton.setBackground(new java.awt.Color(255, 255, 0));
         saveGrammarAsButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        saveGrammarAsButton.setText("<html><b>Step 2</b>: <b>IMPORTANT</b>: This step will use <b>Save as . . .</b> in the Grammar menu to save your new grammar under a new name, <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; in case you want to return to the old grammar. <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; It will also ask you to save your leadsheet if you need it, as the leadsheet window will be used as a workspace.</html>  ");
-        saveGrammarAsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        saveGrammarAsButton.setText("<html>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; This step will use <b>Save as . . .</b> in the Grammar menu to save your new grammar under a new name, <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; in case you want to preserve the old grammar. <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; It will also ask you to save your leadsheet if you need it, as the leadsheet window will be used as a workspace.</html>  ");
+        saveGrammarAsButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Step 1: Start the Process", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         saveGrammarAsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         saveGrammarAsButton.setMaximumSize(new java.awt.Dimension(9999, 9999));
         saveGrammarAsButton.setOpaque(true);
@@ -2267,22 +2293,24 @@ public class LickgenFrame
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 5);
         grammarLearningPanel.add(saveGrammarAsButton, gridBagConstraints);
 
-        openCorpusBtn.setBackground(new java.awt.Color(252, 196, 80));
+        openCorpusBtn.setBackground(new java.awt.Color(255, 153, 0));
         openCorpusBtn.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        openCorpusBtn.setText("<html><b>Step 4</b>: Select a corpus of solos from which to learn. Each solo is a leadsheet file.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Note: Selecting any leadsheet file in a folder is equivalent to selecting the entire folder. </b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The leadsheet you selected will be left in the window at the end.  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>The process is complete when the last chorus of that leadsheet appears</b>.</html>");
-        openCorpusBtn.setActionCommand("<html><b>Step 5</b>: Next select a corpus of solos from which to learn. Each solo is a leadsheet file.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selecting any file any a folder is equivalent to selecting the entire folder.  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The leadsheet you selected will be left in the window at the end. The process is over when the last chorus appears.</html>");
-        openCorpusBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        openCorpusBtn.setText("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Each solo is a leadsheet file.\n<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Note: Selecting any leadsheet file in a folder is equivalent to selecting the entire folder. </b>\n<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The leadsheet you selected will be left in the window at the end.  \n<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>The process is complete when the last chorus of that leadsheet appears</b>.</html>");
+        openCorpusBtn.setActionCommand("<html>Each solo is a leadsheet file.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selecting any file any a folder is equivalent to selecting the entire folder.  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The leadsheet you selected will be left in the window at the end. The process is over when the last chorus appears.</html>");
+        openCorpusBtn.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Step 3: Select a corpus of solos from which to learn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         openCorpusBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         openCorpusBtn.setMaximumSize(new java.awt.Dimension(9999, 9999));
-        openCorpusBtn.setMinimumSize(new java.awt.Dimension(240, 75));
+        openCorpusBtn.setMinimumSize(new java.awt.Dimension(240, 120));
         openCorpusBtn.setOpaque(true);
-        openCorpusBtn.setPreferredSize(new java.awt.Dimension(240, 75));
+        openCorpusBtn.setPreferredSize(new java.awt.Dimension(240, 120));
         openCorpusBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openCorpusBtnActionPerformed(evt);
@@ -2294,17 +2322,18 @@ public class LickgenFrame
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         grammarLearningPanel.add(openCorpusBtn, gridBagConstraints);
 
-        toGrammarBtn.setBackground(new java.awt.Color(130, 217, 151));
+        toGrammarBtn.setBackground(new java.awt.Color(204, 204, 255));
         toGrammarBtn.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        toGrammarBtn.setText("<html><b>Step 5</b>: Click this button to create and save the grammar and Soloist file.  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are two <b>other alternatives</b> at this point: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a, Quit by closing the window, with no changes. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Return to Step 4 and learn from other corpuses of solos. </html>");
-        toGrammarBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        toGrammarBtn.setText("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are two <b>other alternatives</b> at this point: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a, Quit by closing the window, with no changes. <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Return to Step 4 and learn from other corpuses of solos. </html>");
+        toGrammarBtn.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Step 4: Click this button to create and save the grammar and Soloist file", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         toGrammarBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        toGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 70));
-        toGrammarBtn.setMinimumSize(new java.awt.Dimension(240, 75));
+        toGrammarBtn.setMaximumSize(new java.awt.Dimension(9999, 100));
+        toGrammarBtn.setMinimumSize(new java.awt.Dimension(240, 100));
         toGrammarBtn.setOpaque(true);
-        toGrammarBtn.setPreferredSize(new java.awt.Dimension(240, 75));
+        toGrammarBtn.setPreferredSize(new java.awt.Dimension(240, 100));
         toGrammarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 toGrammarBtnActionPerformed(evt);
@@ -2317,34 +2346,19 @@ public class LickgenFrame
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         grammarLearningPanel.add(toGrammarBtn, gridBagConstraints);
-
-        learningStep0Label.setBackground(new java.awt.Color(218, 215, 215));
-        learningStep0Label.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        learningStep0Label.setText("<html>Please follow these steps to learn a new grammar from a corpus of solos as a folder of leadsheets. <br>Click the rectangular buttons below from top to bottom.</html>  ");
-        learningStep0Label.setMaximumSize(new java.awt.Dimension(2147483647, 60));
-        learningStep0Label.setMinimumSize(new java.awt.Dimension(400, 60));
-        learningStep0Label.setOpaque(true);
-        learningStep0Label.setPreferredSize(new java.awt.Dimension(400, 60));
-        learningStep0Label.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.weighty = 0.05;
-        grammarLearningPanel.add(learningStep0Label, gridBagConstraints);
 
         testGeneration.setBackground(new java.awt.Color(130, 217, 151));
         testGeneration.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        testGeneration.setText("<html><b>Step 6</b>: Press this button to generate solos with your Learned grammar</html>");
-        testGeneration.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        testGeneration.setText("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Press this button to create solos with your learned grammar.</html>");
+        testGeneration.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Step 5:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         testGeneration.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         testGeneration.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         testGeneration.setMaximumSize(new java.awt.Dimension(9999, 9999));
-        testGeneration.setMinimumSize(new java.awt.Dimension(240, 29));
+        testGeneration.setMinimumSize(new java.awt.Dimension(240, 50));
         testGeneration.setOpaque(true);
-        testGeneration.setPreferredSize(new java.awt.Dimension(240, 29));
+        testGeneration.setPreferredSize(new java.awt.Dimension(240, 50));
         testGeneration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testGenerationActionPerformed(evt);
@@ -2356,6 +2370,7 @@ public class LickgenFrame
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         grammarLearningPanel.add(testGeneration, gridBagConstraints);
 
         generatorPane.addTab("Grammar Learning", grammarLearningPanel);
@@ -4016,13 +4031,8 @@ public class LickgenFrame
 
     private void saveGrammarAsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveGrammarAsButtonActionPerformed
     {//GEN-HEADEREND:event_saveGrammarAsButtonActionPerformed
-        notate.saveGrammarAs();
+       initializeGrammarLearning();
     }//GEN-LAST:event_saveGrammarAsButtonActionPerformed
-
-    private void loadBaseGrammarBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loadBaseGrammarBtnActionPerformed
-    {//GEN-HEADEREND:event_loadBaseGrammarBtnActionPerformed
-        notate.openGrammar();
-    }//GEN-LAST:event_loadBaseGrammarBtnActionPerformed
 
     private void useAbstractBricksCheckboxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_useAbstractBricksCheckboxActionPerformed
     {//GEN-HEADEREND:event_useAbstractBricksCheckboxActionPerformed
@@ -4993,9 +5003,11 @@ public void getAbstractMelody()
         for( Iterator<Polylist> e = ruleList.iterator(); e.hasNext(); )
           {
             Polylist current = e.next();
+            Object last = current.last();
             if( current.first().equals("rule") || current.first().equals("base") )
               {
-                if( (!previous.equals(Polylist.nil))
+
+                  if( (!previous.equals(Polylist.nil))
                         && current.allButLast().equals(previous.allButLast()) )
                   {
                     accumulatedProbability += ((Number) current.last()).floatValue();
@@ -5011,7 +5023,10 @@ public void getAbstractMelody()
                                                    previous.third(),
                                                    accumulatedProbability));
                       }
-                    accumulatedProbability = ((Number) current.last()).floatValue();
+                    
+
+                    accumulatedProbability = ((Number) last).floatValue();
+
                     previous = current;
                   }
               }
@@ -5089,7 +5104,7 @@ public void getAbstractMelody()
               {
                 production = production.substring(0, production.indexOf("CHORDS"));
               }
-            setRhythmFieldText(production.toString());
+            setRhythmFieldText(production);
           }
       }
   }
@@ -6052,6 +6067,7 @@ private void updateUseSoloist()
     private javax.swing.JTextField criticGradeTextField;
     private javax.swing.JLabel durationLabel;
     private javax.swing.JMenuItem editGrammarMI1;
+    private javax.swing.JRadioButton emptyBaseLearningButton;
     private javax.swing.JLabel epochLimitLabel;
     private javax.swing.JTextField epochLimitTextField;
     private javax.swing.JButton fillMelodyButton;
@@ -6093,6 +6109,7 @@ private void updateUseSoloist()
     private javax.swing.JScrollPane layerInfoScrollPane;
     private javax.swing.JTextField leapProbField;
     private javax.swing.JLabel leapProbLabel;
+    private javax.swing.ButtonGroup learningBaseButtonGroup;
     private javax.swing.JLabel learningRateLabel;
     private javax.swing.JTextField learningRateTextField;
     private javax.swing.JLabel learningStep0Label;
@@ -6101,7 +6118,6 @@ private void updateUseSoloist()
     private javax.swing.JPanel lickGenerationButtonsPanel;
     private javax.swing.JPanel lickGradeButtonsPanel;
     private javax.swing.JPanel lickgenParametersPanel;
-    private javax.swing.JButton loadBaseGrammarBtn;
     private javax.swing.JButton loadRandomGrammarButton;
     private javax.swing.JButton loadWeightFileButton;
     private javax.swing.JLabel markovChainLengthLabel;
@@ -6166,6 +6182,7 @@ private void updateUseSoloist()
     private javax.swing.JLabel scaleLabel;
     private javax.swing.JLabel scaleToneProbLabel;
     private javax.swing.JTextField scaleToneWeightField;
+    private javax.swing.JRadioButton selectBaseLearningButton;
     private javax.swing.JMenuItem showCriticMI1;
     private javax.swing.JMenuItem showLogMI1;
     private javax.swing.JPanel soloCorrectionPanel;
@@ -6175,6 +6192,7 @@ private void updateUseSoloist()
     private javax.swing.JCheckBoxMenuItem toCriticMI1;
     private javax.swing.JButton toGrammarBtn;
     private javax.swing.JPanel toneProbabilityPanel;
+    private javax.swing.JPanel topGrammarLearningPanel;
     private javax.swing.JTextField totalBeatsField;
     private javax.swing.JLabel totalBeatsLabel;
     private javax.swing.JButton trainingFileButton;
@@ -6403,4 +6421,25 @@ public void setLickGenStatus(String string)
       }
   }
 
+public void openGrammar(String fileName)
+  {
+    File directory = ImproVisor.getGrammarDirectory();
+    
+    File grammarFile = new File(directory, fileName);
+
+    lickgen.loadGrammar(grammarFile.getAbsolutePath());
+  }
+
+private void initializeGrammarLearning()
+{
+    if( emptyBaseLearningButton.isSelected() )
+    {
+        openGrammar("_empty.grammar");
+    }
+    else
+    {
+        notate.openGrammar();
+    }
+  notate.saveGrammarAs();
+}
 }

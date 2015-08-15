@@ -1082,7 +1082,7 @@ private void accumulateProbs(Polylist tones, double categoryProb, double p[])
  */
 
 public Polylist generateRhythmFromGrammar(int startSlot, int slots)
-  {
+  { //System.out.println("generateRhythmFromGrammar : startSlot = " + startSlot + ", slots = " + slots);
     //TEMPORARY FIX - never trade. Trading is handled differently now.
     return grammar.run(startSlot, 
                        slots, 
