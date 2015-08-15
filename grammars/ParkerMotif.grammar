@@ -1,4 +1,4 @@
-(parameter (scale-type Use First Scale))
+(parameter (scale-type Use_First_Scale))
 (parameter (scale-root C))
 (parameter (avoid-repeats true))
 (parameter (use-grammar true))
@@ -18,7 +18,6 @@
 (parameter (min-pitch 60))
 (base (P 0) () 1.0)
 (startsymbol P)
-(terminals X2 X4 X4. X8 X16 X4/3 X8/3 H2 H4 H4. H8 H16 H4/3 H8/3 A4 A8 A8/3 A16 C2 C4 C8 L4 L8 R4 R8 S4 S8 S16 S8/3 S8/5 S16/5 slope)
 (rule (P Y) ((START 1) (P (- Y 480))) 1.0)
 (rule (P Y) ((START 2) (P (- Y 960))) 10.0)
 (rule (P Y) ((START 4) (P (- Y 1920))) 100.0)
