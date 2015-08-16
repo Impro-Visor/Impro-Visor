@@ -69,7 +69,7 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
     private final ActiveTrading activeTrading;
     private boolean isUserInputError = false;
     private final Integer initialTradeLength = 4;
-    public static final java.awt.Point initialOpenPoint = new java.awt.Point(10, 800);
+    public static final java.awt.Point initialOpenPoint = new java.awt.Point(10, 0);
 
     public ActiveTradingWindow(Notate notate) {
         activeTrading = new ActiveTrading(notate);
@@ -258,36 +258,30 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
-        colorRight = new javax.swing.JPanel();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         colorLeft = new javax.swing.JPanel();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        mainStuff = new javax.swing.JPanel();
-        tradeLengthPanel = new javax.swing.JPanel();
-        tradeLengthSpinner = new javax.swing.JSpinner();
-        processTimeSelector = new javax.swing.JTextField();
-        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
-        volumePanel = new javax.swing.JPanel();
-        volumeSlider = new javax.swing.JSlider();
-        volume = new javax.swing.JLabel();
         leadSelectors = new javax.swing.JPanel();
         userFirstButton = new javax.swing.JRadioButton();
         improvisorFirstButton = new javax.swing.JRadioButton();
-        playbackControls = new javax.swing.JPanel();
-        startTradingButton = new javax.swing.JButton();
-        loopToggle = new javax.swing.JCheckBox();
-        tempoPanel = new javax.swing.JPanel();
-        tempoSlider = new javax.swing.JSlider();
-        tempoLabel = new javax.swing.JLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        jPanel1 = new javax.swing.JPanel();
+        tradeLengthSpinner = new javax.swing.JSpinner();
+        tradeLengthPanel = new javax.swing.JPanel();
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 5), new java.awt.Dimension(0, 5), new java.awt.Dimension(32767, 5));
+        modePanel = new javax.swing.JPanel();
         modeStatus = new javax.swing.JLabel();
         grammarStatus = new javax.swing.JLabel();
         transformStatus = new javax.swing.JLabel();
+        playbackControls = new javax.swing.JPanel();
+        startTradingButton = new javax.swing.JButton();
+        loopToggle = new javax.swing.JCheckBox();
+        processTimeSelector = new javax.swing.JTextField();
+        volumePanel = new javax.swing.JPanel();
+        volumeSlider = new javax.swing.JSlider();
+        volume = new javax.swing.JLabel();
+        tempoPanel = new javax.swing.JPanel();
+        tempoSlider = new javax.swing.JSlider();
+        tempoLabel = new javax.swing.JLabel();
+        colorRight = new javax.swing.JPanel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         mainTradeMenuBar = new javax.swing.JMenuBar();
         modeMenu = new javax.swing.JMenu();
         tradeRepeat = new javax.swing.JRadioButtonMenuItem();
@@ -305,11 +299,10 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         setTitle("Active Trading - Impro-Visor");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(153, 153, 255));
-        setBounds(new java.awt.Rectangle(0, 600, 600, 380));
+        setBounds(new java.awt.Rectangle(0, 0, 700, 200));
         setMaximumSize(new java.awt.Dimension(600, 380));
-        setMinimumSize(new java.awt.Dimension(600, 380));
-        setPreferredSize(new java.awt.Dimension(600, 380));
-        setResizable(false);
+        setMinimumSize(new java.awt.Dimension(700, 200));
+        setPreferredSize(new java.awt.Dimension(700, 200));
         setSize(new java.awt.Dimension(600, 380));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -326,35 +319,9 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        colorRight.setBackground(new java.awt.Color(153, 153, 255));
-        colorRight.setMinimumSize(new java.awt.Dimension(100, 0));
-
-        javax.swing.GroupLayout colorRightLayout = new javax.swing.GroupLayout(colorRight);
-        colorRight.setLayout(colorRightLayout);
-        colorRightLayout.setHorizontalGroup(
-            colorRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(colorRightLayout.createSequentialGroup()
-                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
-        );
-        colorRightLayout.setVerticalGroup(
-            colorRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(colorRightLayout.createSequentialGroup()
-                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(340, Short.MAX_VALUE))
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        getContentPane().add(colorRight, gridBagConstraints);
-
         colorLeft.setBackground(new java.awt.Color(153, 153, 255));
-        colorLeft.setLocation(new java.awt.Point(0, 600));
-        colorLeft.setMinimumSize(new java.awt.Dimension(100, 0));
+        colorLeft.setMinimumSize(new java.awt.Dimension(100, 100));
+        colorLeft.setPreferredSize(new java.awt.Dimension(100, 100));
 
         javax.swing.GroupLayout colorLeftLayout = new javax.swing.GroupLayout(colorLeft);
         colorLeft.setLayout(colorLeftLayout);
@@ -368,50 +335,172 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
             colorLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(colorLeftLayout.createSequentialGroup()
                 .addComponent(filler4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(340, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(colorLeft, gridBagConstraints);
 
-        mainStuff.setBackground(new java.awt.Color(255, 255, 255));
-        mainStuff.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        mainStuff.setForeground(new java.awt.Color(255, 255, 255));
-        mainStuff.setMaximumSize(new java.awt.Dimension(500, 340));
-        mainStuff.setMinimumSize(new java.awt.Dimension(500, 340));
-        mainStuff.setPreferredSize(new java.awt.Dimension(500, 340));
-        mainStuff.setSize(new java.awt.Dimension(500, 340));
-        mainStuff.setLayout(new java.awt.GridBagLayout());
+        leadSelectors.setBackground(new java.awt.Color(255, 255, 255));
+        leadSelectors.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        leadSelectors.setMaximumSize(new java.awt.Dimension(200, 76));
+        leadSelectors.setMinimumSize(new java.awt.Dimension(200, 100));
+        leadSelectors.setPreferredSize(new java.awt.Dimension(200, 100));
+        leadSelectors.setLayout(new java.awt.GridBagLayout());
 
-        tradeLengthPanel.setBackground(new java.awt.Color(255, 255, 255));
-        tradeLengthPanel.setMaximumSize(new java.awt.Dimension(200, 123));
-        tradeLengthPanel.setMinimumSize(new java.awt.Dimension(200, 123));
-        tradeLengthPanel.setPreferredSize(new java.awt.Dimension(200, 123));
-        tradeLengthPanel.setLayout(new java.awt.GridBagLayout());
+        leadingSelector.add(userFirstButton);
+        userFirstButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        userFirstButton.setSelected(true);
+        userFirstButton.setText("User First");
+        userFirstButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userFirstButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        leadSelectors.add(userFirstButton, gridBagConstraints);
+
+        leadingSelector.add(improvisorFirstButton);
+        improvisorFirstButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        improvisorFirstButton.setText("Impro-Visor First");
+        improvisorFirstButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                improvisorFirstButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        leadSelectors.add(improvisorFirstButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        getContentPane().add(leadSelectors, gridBagConstraints);
 
         tradeLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(4), Integer.valueOf(1), null, Integer.valueOf(1)));
         tradeLengthSpinner.setToolTipText("The number of bars in melody.");
-        tradeLengthSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Length of Trade (bars)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
-        tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(200, 52));
-        tradeLengthSpinner.setPreferredSize(new java.awt.Dimension(200, 52));
+        tradeLengthSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Length of Trade (bars)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 12))); // NOI18N
+        tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(200, 50));
+        tradeLengthSpinner.setPreferredSize(new java.awt.Dimension(200, 50));
         tradeLengthSpinner.setValue(new Integer(4));
         tradeLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 lengthOfTradeSet(evt);
             }
         });
-        tradeLengthPanel.add(tradeLengthSpinner, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        getContentPane().add(tradeLengthSpinner, gridBagConstraints);
+
+        tradeLengthPanel.setBackground(new java.awt.Color(255, 255, 255));
+        tradeLengthPanel.setMaximumSize(new java.awt.Dimension(200, 123));
+        tradeLengthPanel.setMinimumSize(new java.awt.Dimension(200, 50));
+        tradeLengthPanel.setPreferredSize(new java.awt.Dimension(200, 50));
+        tradeLengthPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        tradeLengthPanel.add(filler9, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        getContentPane().add(tradeLengthPanel, gridBagConstraints);
+
+        modePanel.setBackground(new java.awt.Color(255, 255, 255));
+        modePanel.setBorder(new javax.swing.border.MatteBorder(null));
+        modePanel.setPreferredSize(new java.awt.Dimension(120, 100));
+        modePanel.setLayout(new java.awt.GridBagLayout());
+
+        modeStatus.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        modeStatus.setText("Mode: ___ ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        modePanel.add(modeStatus, gridBagConstraints);
+
+        grammarStatus.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        grammarStatus.setText("Grammar: ___    ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        modePanel.add(grammarStatus, gridBagConstraints);
+
+        transformStatus.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        transformStatus.setText("Transform File: ___ ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+        modePanel.add(transformStatus, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        getContentPane().add(modePanel, gridBagConstraints);
+
+        playbackControls.setBackground(new java.awt.Color(255, 255, 255));
+        playbackControls.setMinimumSize(new java.awt.Dimension(261, 50));
+        playbackControls.setPreferredSize(new java.awt.Dimension(261, 50));
+        playbackControls.setLayout(new java.awt.GridBagLayout());
+
+        startTradingButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
+        startTradingButton.setLabel("Start Trading");
+        startTradingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startTradingButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 38;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 10);
+        playbackControls.add(startTradingButton, gridBagConstraints);
+        startTradingButton.getAccessibleContext().setAccessibleDescription("");
+
+        loopToggle.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        loopToggle.setSelected(true);
+        loopToggle.setText("Loop");
+        loopToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loopToggleActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 1);
+        playbackControls.add(loopToggle, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        getContentPane().add(playbackControls, gridBagConstraints);
 
         processTimeSelector.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
         processTimeSelector.setText("0.5");
         processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing time (in beats)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
         processTimeSelector.setMaximumSize(new java.awt.Dimension(50, 2147483647));
-        processTimeSelector.setMinimumSize(new java.awt.Dimension(50, 28));
+        processTimeSelector.setMinimumSize(new java.awt.Dimension(50, 50));
+        processTimeSelector.setPreferredSize(new java.awt.Dimension(29, 50));
         processTimeSelector.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 processTimeSelectorCaretUpdate(evt);
@@ -428,27 +517,17 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        tradeLengthPanel.add(processTimeSelector, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        tradeLengthPanel.add(filler9, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        mainStuff.add(tradeLengthPanel, gridBagConstraints);
+        getContentPane().add(processTimeSelector, gridBagConstraints);
 
         volumePanel.setBackground(new java.awt.Color(255, 255, 255));
         volumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume of Response", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
         volumePanel.setMaximumSize(new java.awt.Dimension(200, 76));
-        volumePanel.setMinimumSize(new java.awt.Dimension(200, 76));
-        volumePanel.setPreferredSize(new java.awt.Dimension(200, 76));
+        volumePanel.setMinimumSize(new java.awt.Dimension(200, 50));
+        volumePanel.setPreferredSize(new java.awt.Dimension(200, 50));
         volumePanel.setLayout(new java.awt.GridBagLayout());
 
         volumeSlider.setMaximumSize(new java.awt.Dimension(150, 29));
@@ -474,97 +553,17 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         volumePanel.add(volume, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        mainStuff.add(volumePanel, gridBagConstraints);
-
-        leadSelectors.setBackground(new java.awt.Color(255, 255, 255));
-        leadSelectors.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        leadSelectors.setMaximumSize(new java.awt.Dimension(200, 76));
-        leadSelectors.setMinimumSize(new java.awt.Dimension(200, 76));
-        leadSelectors.setPreferredSize(new java.awt.Dimension(200, 76));
-        leadSelectors.setLayout(new java.awt.GridBagLayout());
-
-        leadingSelector.add(userFirstButton);
-        userFirstButton.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        userFirstButton.setSelected(true);
-        userFirstButton.setText("User First");
-        userFirstButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userFirstButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        leadSelectors.add(userFirstButton, gridBagConstraints);
-
-        leadingSelector.add(improvisorFirstButton);
-        improvisorFirstButton.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        improvisorFirstButton.setText("Impro-Visor First");
-        improvisorFirstButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                improvisorFirstButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        leadSelectors.add(improvisorFirstButton, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        mainStuff.add(leadSelectors, gridBagConstraints);
-
-        playbackControls.setBackground(new java.awt.Color(255, 255, 255));
-        playbackControls.setLayout(new java.awt.GridBagLayout());
-
-        startTradingButton.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
-        startTradingButton.setLabel("Start Trading");
-        startTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startTradingButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 38;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 10);
-        playbackControls.add(startTradingButton, gridBagConstraints);
-        startTradingButton.getAccessibleContext().setAccessibleDescription("");
-
-        loopToggle.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        loopToggle.setSelected(true);
-        loopToggle.setText("Loop");
-        loopToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loopToggleActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 1);
-        playbackControls.add(loopToggle, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 4;
-        mainStuff.add(playbackControls, gridBagConstraints);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        getContentPane().add(volumePanel, gridBagConstraints);
 
         tempoPanel.setBackground(new java.awt.Color(255, 255, 255));
-        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (Beats/Minute)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 0, 12))); // NOI18N
+        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (Beats/Minute)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 12))); // NOI18N
         tempoPanel.setMaximumSize(new java.awt.Dimension(200, 76));
         tempoPanel.setMinimumSize(new java.awt.Dimension(200, 76));
-        tempoPanel.setPreferredSize(new java.awt.Dimension(200, 76));
+        tempoPanel.setPreferredSize(new java.awt.Dimension(200, 50));
         tempoPanel.setLayout(new java.awt.GridBagLayout());
 
         tempoSlider.setMaximum(300);
@@ -578,8 +577,8 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         tempoPanel.add(tempoSlider, gridBagConstraints);
@@ -591,86 +590,36 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
         tempoPanel.add(tempoLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 1;
-        mainStuff.add(tempoPanel, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 20;
-        mainStuff.add(filler2, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 20;
-        mainStuff.add(filler5, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 20;
-        mainStuff.add(filler6, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 10;
-        mainStuff.add(filler7, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 20;
-        mainStuff.add(filler8, gridBagConstraints);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
-
-        modeStatus.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        modeStatus.setForeground(new java.awt.Color(153, 153, 153));
-        modeStatus.setText("Mode: ___ ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        jPanel1.add(modeStatus, gridBagConstraints);
-
-        grammarStatus.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        grammarStatus.setForeground(new java.awt.Color(153, 153, 153));
-        grammarStatus.setText("Grammar: ___    ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
-        jPanel1.add(grammarStatus, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        getContentPane().add(tempoPanel, gridBagConstraints);
 
-        transformStatus.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        transformStatus.setForeground(new java.awt.Color(153, 153, 153));
-        transformStatus.setText("Transform File: ___ ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
-        jPanel1.add(transformStatus, gridBagConstraints);
+        colorRight.setBackground(new java.awt.Color(153, 153, 255));
+        colorRight.setMinimumSize(new java.awt.Dimension(100, 100));
+        colorRight.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        javax.swing.GroupLayout colorRightLayout = new javax.swing.GroupLayout(colorRight);
+        colorRight.setLayout(colorRightLayout);
+        colorRightLayout.setHorizontalGroup(
+            colorRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(colorRightLayout.createSequentialGroup()
+                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+        colorRightLayout.setVerticalGroup(
+            colorRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(colorRightLayout.createSequentialGroup()
+                .addComponent(filler3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(150, Short.MAX_VALUE))
+        );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        mainStuff.add(jPanel1, gridBagConstraints);
-
-        getContentPane().add(mainStuff, new java.awt.GridBagConstraints());
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        getContentPane().add(colorRight, gridBagConstraints);
 
         mainTradeMenuBar.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
 
@@ -800,26 +749,20 @@ public class ActiveTradingWindow extends javax.swing.JFrame implements TradeList
     private javax.swing.JPanel colorLeft;
     private javax.swing.JPanel colorRight;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
-    private javax.swing.Box.Filler filler6;
-    private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler8;
     private javax.swing.Box.Filler filler9;
     private javax.swing.ButtonGroup grammarGroup;
     private javax.swing.JLabel grammarStatus;
     private javax.swing.JRadioButton improvisorFirstButton;
     private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leadSelectors;
     private javax.swing.ButtonGroup leadingSelector;
     private javax.swing.JCheckBox loopToggle;
-    private javax.swing.JPanel mainStuff;
     private javax.swing.JMenuBar mainTradeMenuBar;
     private javax.swing.JMenu modeMenu;
+    private javax.swing.JPanel modePanel;
     private javax.swing.ButtonGroup modeSelector;
     private javax.swing.JLabel modeStatus;
     private javax.swing.JPanel playbackControls;
