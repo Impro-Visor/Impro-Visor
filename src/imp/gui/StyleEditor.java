@@ -4122,7 +4122,7 @@ public void updateAllDrumPatterns(String name, String rules)
         bassAttrPanel.add(voicingTypeChoice, gridBagConstraints);
 
         voicingFilenameTF.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        voicingFilenameTF.setText("default.avp");
+        voicingFilenameTF.setText("default.fv");
         voicingFilenameTF.setToolTipText("If custom voicing is used, this is the name of the settings file.\n");
         voicingFilenameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Voicing settings file, if custom type", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         voicingFilenameTF.setMaximumSize(new java.awt.Dimension(200, 2147483647));
@@ -4271,6 +4271,7 @@ public void updateAllDrumPatterns(String name, String rules)
         muteChordToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         muteChordToggle.setMaximumSize(new java.awt.Dimension(60, 20));
         muteChordToggle.setMinimumSize(new java.awt.Dimension(60, 20));
+        muteChordToggle.setOpaque(true);
         muteChordToggle.setPreferredSize(new java.awt.Dimension(60, 20));
         muteChordToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4346,6 +4347,7 @@ public void updateAllDrumPatterns(String name, String rules)
         playToggle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         playToggle.setMaximumSize(new java.awt.Dimension(60, 20));
         playToggle.setMinimumSize(new java.awt.Dimension(60, 20));
+        playToggle.setOpaque(true);
         playToggle.setPreferredSize(new java.awt.Dimension(60, 20));
         playToggle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -5813,12 +5815,12 @@ public void updateAllDrumPatterns(String name, String rules)
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -5847,12 +5849,12 @@ public void updateAllDrumPatterns(String name, String rules)
         styleMixerMenu.setMnemonic('W');
         styleMixerMenu.setText("Style Mixer");
         styleMixerMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                styleMixerMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                styleMixerMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 

@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -25,6 +25,7 @@ import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.Part.PartIterator;
+import imp.data.Rest;
 import imp.gui.Notate;
 import static imp.lickgen.Terminals.getDuration;
 import static imp.lickgen.Terminals.isTerminal;
@@ -33,7 +34,6 @@ import imp.util.ErrorLog;
 import imp.util.ErrorLogWithResponse;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import polya.Arith;
 import polya.Polylist;
 import polya.PolylistBuffer;
@@ -103,6 +103,7 @@ PolylistBuffer terminalBuffer;
  */
 int numSlotsToFill;
 
+
 /**
  * 
  * @param startSlot
@@ -143,7 +144,6 @@ public Polylist run(int startSlot,
     
     while( totalSlotsToFill > 0 )
       {
-        //System.out.println("totalSlots = " + totalSlotsToFill);
         if( improVisorFirst ) // Fill now, pad later, if at all
           {
           numSlotsToFill = Math.min(tradingQuantum, totalSlotsToFill); 
@@ -167,7 +167,7 @@ public Polylist run(int startSlot,
         // Inner loop fills up to one quantum worth of abstract melody, or the
         // entire abstract melody if not trading.
         
-        if( numSlotsToFill > 0 )
+        while( numSlotsToFill > 0 )
           {
             try
               {
@@ -245,8 +245,9 @@ private void accumulateTerminal(Object terminal)
     int duration = getDuration(terminal);
     if( numSlotsToFill < duration )
       {
-        numSlotsToFill = 0;
-        return;
+        System.out.println("short slots = " + numSlotsToFill + " vs duration " + duration);
+        terminal = new Rest(numSlotsToFill);
+        duration = numSlotsToFill;
       }
     terminalBuffer.append(terminal);
     chordSlot += duration;
@@ -271,7 +272,7 @@ public Polylist addStart(int numSlots)
 
         try
           {
-            // ... See if the next rule contains the "startsymbol" tag.
+            // See if the next rule contains the "startsymbol" tag.
             // If it does, token it on the front of the string.
             if( ((String) next.first()).equals(START) )
               {
@@ -338,6 +339,9 @@ private void addToList(Polylist lhs,
 /**
  * Pop tokens off the stack stack. Any terminal tokens are pushed onto
  * accumulator. Rules are applied to non-terminals.
+     * @param stack
+     * @return 
+     * @throws imp.lickgen.RuleApplicationException
  */
 public Polylist applyRules(Polylist stack) throws RuleApplicationException
   {
@@ -817,6 +821,7 @@ Polylist evaluateSplice(Polylist form)
       {
         return args;
       }
+/*
     if( SYNCOPATION.equals(operator) )
       {
         MelodyPart melody = notate.getCurrentMelodyPart();
@@ -830,6 +835,7 @@ Polylist evaluateSplice(Polylist form)
         Polylist rhythmList = Polylist.PolylistFromArray(rhythmArray);
         return rhythmList;
       }
+*/
     // default
 
     return Polylist.nil;
@@ -843,8 +849,10 @@ public int getCurrentSlot()
 // For testing purposes only:
 int expectancyValue = 0;
 int syncopationValue = 1;
-private static int LENGTH_OF_TRADE = 4 * 480;
-private static int SLOTS_PER_MEASURE = 480;
+// Of course these should not stand, because the length of trade
+// won't always be the same. FIX
+//private static int LENGTH_OF_TRADE = 4 * 480;
+//private static int SLOTS_PER_MEASURE = 480;
 
 /**
  * Evaluates the arguments following the builtin operator. So far only
@@ -913,6 +921,8 @@ private Object evaluateBuiltin(Object arg1, Object arg2)
 
         return 0.1; //ZERO;
       }
+/*    
+    // This code me be worthless now because LENGTH_OF_TRADE won't be constant.
     MelodyPart melody = notate.getCurrentMelodyPart();
     MelodyPart currMelody = melody.extract(currentSlot - LENGTH_OF_TRADE, currentSlot);
     if( EXPECTANCY.equals(arg1) )
@@ -939,7 +949,7 @@ private Object evaluateBuiltin(Object arg1, Object arg2)
             secondIndex = pi.nextIndex();
             pi.next();
           }
-        return new Double(totalExpectancy / numPitches);
+        return totalExpectancy / numPitches;
       }
     if( SYNCOPATION.equals(arg1) )
       {
@@ -953,11 +963,11 @@ private Object evaluateBuiltin(Object arg1, Object arg2)
             if( syncoPerMeasure >= 8 )
               {
                 //System.out.println("High");
-                return new Double(0.8);
+                return 0.8;
               }
             else
               {
-                return new Double(0.1);
+                return 0.1;
               }
           }
         if( arg2.equals(MEDIUM) )
@@ -965,11 +975,11 @@ private Object evaluateBuiltin(Object arg1, Object arg2)
             if( syncoPerMeasure < 8 && syncoPerMeasure >= 4 )
               {
                 //System.out.println("Medium");
-                return new Double(0.8);
+                return 0.8;
               }
             else
               {
-                return new Double(0.1);
+                return 0.1;
               }
           }
         if( arg2.equals(LOW) )
@@ -977,15 +987,16 @@ private Object evaluateBuiltin(Object arg1, Object arg2)
             if( syncoPerMeasure < 4 )
               {
                 //System.out.println("Low");
-                return new Double(0.8);
+                return 0.8;
               }
             else
               {
-                return new Double(0.1);
+                return 0.1;
               }
           }
         return ZERO;
       }
+    */
     return ZERO;
   }
 

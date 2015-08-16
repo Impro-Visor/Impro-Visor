@@ -272,7 +272,7 @@ public class NoteConverter {
         StringBuilder relativePitchMelody = new StringBuilder();
 
         //first item is tells us the starting slot of this section of melody
-        int startSlot = Integer.parseInt(exactMelodyData[0]);
+        //int startSlot = Integer.parseInt(exactMelodyData[0]);
 
         //index of the i-th chord in this measure we've looked at as a possible match for this note
         int chordNumber = 0; 
