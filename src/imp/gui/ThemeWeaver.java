@@ -73,6 +73,7 @@ import java.awt.Font;
 import java.awt.Component;
 import java.util.Stack;
 
+
 /**
  *
  * @author David Morrison, Nava Dallal, Amelia Sheppard
@@ -87,6 +88,90 @@ private static String themesExt = ".themes";
 public String themesFile = "My" + themesExt;
 JFileChooser themesfc;
 private File savedThemes;
+
+private boolean endSoloEarly = false;
+boolean soloPlaying = false;
+protected ThemeWeaver themeWeaver;
+private int themeLength = 8;
+private Notate notate;
+private int minPitch = 60;
+private int maxPitch = 82;
+private int [] range;
+private int minInterval = 0;
+private int maxInterval = 6;
+private double probWholeToneTranspose = .7;
+private double probSemitoneTranspose = .3;
+private double probSlideUp = 0.5;
+private double probHalfSideSlip = 0.4;
+private double probWholeSideSlip = 0.4;
+private double probThirdSideSlip = 0.2;
+private double probForwardShift = 0.5;
+private boolean barLineShiftForward = false;
+private int shiftForwardBy = 60;
+private final int shiftForwardByFinal = 60;
+private double leapProb = 0.2;
+private boolean avoidRepeats = true;
+private LickGen lickgen;
+private CommandManager cm;
+static final int NAME_COLUMN = 0;
+static final int LENGTH_COLUMN = 1;
+static final int THEME_COLUMN = 2;
+static final int USE_COLUMN = 3;
+static final int TRANSPOSE_COLUMN = 4;
+static final int INVERT_COLUMN = 5;
+static final int REVERSE_COLUMN = 6;
+static final int EXPAND_COLUMN = 7;
+static final int SIDESLIP_COLUMN = 8;
+static final int BARLINESHIFT_COLUMN = 9;
+static final String USE_DEFAULT_VALUE = "1.0";
+static final String TRANSPOSE_DEFAULT_VALUE = "0.0";
+static final String INVERT_DEFAULT_VALUE = "0.0";
+static final String REVERSE_DEFAULT_VALUE = "0.0";
+static final String EXPAND_DEFAULT_VALUE = "0.0";
+static final String SIDESLIP_DEFAULT_VALUE = "0.0";
+static final String BARLINESHIFT_DEFAULT_VALUE = "0.0";
+private ArrayList<Object> itemsLeft = new ArrayList<Object>();
+private ArrayList<Object> itemsLeft1 = new ArrayList<Object>();
+private boolean canEnter2 = true;//controls whether trans2ComboBoxActionPerformed can execute or not
+private boolean canEnter3 = true;//controls whether trans3ComboBoxActionPerformed can execute or not
+private boolean canEnter4 = true;//controls whether trans4ComboBoxActionPerformed can execute or not
+private boolean canEnter5 = true;//controls whether trans5ComboBoxActionPerformed can execute or not
+private boolean throughOnce = false;//set to true once all of the transition combo boxes have been gone through
+private int transformNum = 0;//keeps track of the tranformation number that is being set
+private String themeUsageText = "";
+static final int ROW_COUNT = 20;
+double probTheme;//probability of using a theme 
+public ThemeListModel themeListModel = new ThemeListModel();
+private final javax.swing.JComboBox [] transformationComboBoxes = new javax.swing.JComboBox[6];//array of the tranformation combo boxes
+private boolean barlineshift = false;
+private boolean sideslip = false;
+private boolean transposeButtonPressed = false;
+private boolean invertButtonPressed = false;
+private boolean reverseButtonPressed = false;
+private boolean expandButtonPressed = false;
+private boolean sideslipButtonPressed = false;
+private boolean barlineshiftButtonPressed = false;
+private ArrayList<String> transformationOrder = new ArrayList<String>();
+private String transformationUsedText = "";
+private String directionOfTransposition = "";
+private String distanceOfTransposition = "";
+private int expandBy = -1;
+private String directionOfSideslip = "";
+private String distanceOfSideslip = "";
+private boolean barlineshift2 = false;
+private boolean sideslip2 = false;
+private String directionOfShift = "";
+private MelodyPart chosenCustomThemeOriginal = new MelodyPart();//this will keep track of the u melody
+private MelodyPart chosenCustomTheme = new MelodyPart();
+private int currentSlotCS = 0; //the current slot, used for custom solo
+private MelodyPart customSolo = new MelodyPart(0);
+private String chosenThemeName = "";
+private boolean specifiedBar = false;
+private Stack<MelodyPart> edits = new Stack<MelodyPart>();
+private Stack<MelodyPart> undos = new Stack<MelodyPart>();
+
+Random random;
+File fileName = ImproVisor.getThemesFile();
 
 /**
  * Creates new form ThemeWeaver
@@ -348,7 +433,7 @@ public void setTableColumnWidths()
         windowMenuSeparator = new javax.swing.JSeparator();
 
         nameErrorMessage.setAlwaysOnTop(true);
-        nameErrorMessage.setMinimumSize(new java.awt.Dimension(500, 400));
+        nameErrorMessage.setMinimumSize(new java.awt.Dimension(600, 400));
         nameErrorMessage.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         nameField.addActionListener(new java.awt.event.ActionListener() {
@@ -421,6 +506,7 @@ public void setTableColumnWidths()
         nameErrorMessage.getContentPane().add(chooseName, gridBagConstraints);
 
         enteredIncorrectly.setAlwaysOnTop(true);
+        enteredIncorrectly.setMinimumSize(new java.awt.Dimension(400, 300));
         enteredIncorrectly.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         typedWrong.setText("You have either typed information into a cell incorrectly,");
@@ -470,7 +556,10 @@ public void setTableColumnWidths()
         enteredIncorrectly.getContentPane().add(jLabel38, gridBagConstraints);
 
         resetCheck.setAlwaysOnTop(true);
-        resetCheck.setMinimumSize(new java.awt.Dimension(500, 300));
+        resetCheck.setMinimumSize(new java.awt.Dimension(600, 300));
+        resetCheck.setModal(true);
+        resetCheck.setPreferredSize(new java.awt.Dimension(600, 300));
+        resetCheck.setSize(new java.awt.Dimension(600, 300));
         resetCheck.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         Resettable.setText("Resetting the table will clear everything you currently have entered. ");
@@ -604,6 +693,7 @@ public void setTableColumnWidths()
         resetCheck1.getContentPane().add(NoButton1, gridBagConstraints);
 
         deleteThemeDialog.setAlwaysOnTop(true);
+        deleteThemeDialog.setMinimumSize(new java.awt.Dimension(900, 500));
         deleteThemeDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         areYouSure.setText("Are you sure you want to continue?");
@@ -647,6 +737,7 @@ public void setTableColumnWidths()
         deleteThemeDialog.getContentPane().add(rangeWrong1, gridBagConstraints);
 
         noRowSelected.setAlwaysOnTop(true);
+        noRowSelected.setMinimumSize(new java.awt.Dimension(900, 500));
         noRowSelected.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         tryAgain2.setText("Please select a row and try again.");
@@ -1389,6 +1480,7 @@ public void setTableColumnWidths()
         transformationsUsedTextArea.setRows(70);
         transformationsUsedTextArea.setPreferredSize(new java.awt.Dimension(240, 200));
         transformationsUsedTextArea.setRequestFocusEnabled(false);
+        transformationsUsedTextArea.setSize(new java.awt.Dimension(200, 200));
         transformationsUsed.setViewportView(transformationsUsedTextArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1630,6 +1722,7 @@ public void setTableColumnWidths()
         soloTableScrollPane.setMaximumSize(new java.awt.Dimension(32767, 400));
         soloTableScrollPane.setMinimumSize(new java.awt.Dimension(23, 350));
         soloTableScrollPane.setPreferredSize(new java.awt.Dimension(0, 0));
+        soloTableScrollPane.setRowHeaderView(null);
 
         soloTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1662,6 +1755,7 @@ public void setTableColumnWidths()
         soloTable.setGridColor(new java.awt.Color(0, 0, 0));
         soloTable.setPreferredSize(new java.awt.Dimension(675, 600));
         soloTable.setSelectionBackground(javax.swing.UIManager.getDefaults().getColor("CheckBoxMenuItem.selectionBackground"));
+        soloTable.setShowGrid(true);
         soloTable.getTableHeader().setReorderingAllowed(false);
         soloTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1689,6 +1783,10 @@ public void setTableColumnWidths()
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, -38, 0);
         getContentPane().add(soloTableScrollPane, gridBagConstraints);
+
+        themeListScrollPane.setMaximumSize(new java.awt.Dimension(0, 0));
+        themeListScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
+        themeListScrollPane.setPreferredSize(new java.awt.Dimension(100, 100));
 
         themeList.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         themeList.setModel(themeListModel);
@@ -1723,6 +1821,8 @@ public void setTableColumnWidths()
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
         getContentPane().add(themeListScrollPane, gridBagConstraints);
 
+        themeUsageScrollPane.setMinimumSize(new java.awt.Dimension(300, 100));
+
         themeUsageTextArea.setColumns(20);
         themeUsageTextArea.setRows(70);
         themeUsageScrollPane.setViewportView(themeUsageTextArea);
@@ -1749,6 +1849,8 @@ public void setTableColumnWidths()
         getContentPane().add(SoloGeneratorTitle, gridBagConstraints);
 
         themeIntervalTextField.setText("8");
+        themeIntervalTextField.setMaximumSize(new java.awt.Dimension(50, 2147483647));
+        themeIntervalTextField.setMinimumSize(new java.awt.Dimension(50, 28));
         themeIntervalTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 themeIntervalTextFieldActionPerformed(evt);
@@ -1757,6 +1859,7 @@ public void setTableColumnWidths()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(themeIntervalTextField, gridBagConstraints);
 
@@ -1780,6 +1883,7 @@ public void setTableColumnWidths()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(themeProbTextField, gridBagConstraints);
 
@@ -2251,12 +2355,12 @@ public void setTableColumnWidths()
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window"); // NOI18N
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
@@ -3768,89 +3872,7 @@ private void closeWindow()
         canEnter5=true;
     }
     
-private boolean endSoloEarly = false;
-boolean soloPlaying = false;
-protected ThemeWeaver themeWeaver;
-private int themeLength = 8;
-private Notate notate;
-private int minPitch = 60;
-private int maxPitch = 82;
-private int [] range;
-private int minInterval = 0;
-private int maxInterval = 6;
-private double probWholeToneTranspose = .7;
-private double probSemitoneTranspose = .3;
-private double probSlideUp = 0.5;
-private double probHalfSideSlip = 0.4;
-private double probWholeSideSlip = 0.4;
-private double probThirdSideSlip = 0.2;
-private double probForwardShift = 0.5;
-private boolean barLineShiftForward = false;
-private int shiftForwardBy = 60;
-private final int shiftForwardByFinal = 60;
-private double leapProb = 0.2;
-private boolean avoidRepeats = true;
-private LickGen lickgen;
-private CommandManager cm;
-static final int NAME_COLUMN = 0;
-static final int LENGTH_COLUMN = 1;
-static final int THEME_COLUMN = 2;
-static final int USE_COLUMN = 3;
-static final int TRANSPOSE_COLUMN = 4;
-static final int INVERT_COLUMN = 5;
-static final int REVERSE_COLUMN = 6;
-static final int EXPAND_COLUMN = 7;
-static final int SIDESLIP_COLUMN = 8;
-static final int BARLINESHIFT_COLUMN = 9;
-static final String USE_DEFAULT_VALUE = "1.0";
-static final String TRANSPOSE_DEFAULT_VALUE = "0.0";
-static final String INVERT_DEFAULT_VALUE = "0.0";
-static final String REVERSE_DEFAULT_VALUE = "0.0";
-static final String EXPAND_DEFAULT_VALUE = "0.0";
-static final String SIDESLIP_DEFAULT_VALUE = "0.0";
-static final String BARLINESHIFT_DEFAULT_VALUE = "0.0";
-private ArrayList<Object> itemsLeft = new ArrayList<Object>();
-private ArrayList<Object> itemsLeft1 = new ArrayList<Object>();
-private boolean canEnter2 = true;//controls whether trans2ComboBoxActionPerformed can execute or not
-private boolean canEnter3 = true;//controls whether trans3ComboBoxActionPerformed can execute or not
-private boolean canEnter4 = true;//controls whether trans4ComboBoxActionPerformed can execute or not
-private boolean canEnter5 = true;//controls whether trans5ComboBoxActionPerformed can execute or not
-private boolean throughOnce = false;//set to true once all of the transition combo boxes have been gone through
-private int transformNum = 0;//keeps track of the tranformation number that is being set
-private String themeUsageText = "";
-static final int ROW_COUNT = 20;
-double probTheme;//probability of using a theme 
-public ThemeListModel themeListModel = new ThemeListModel();
-private final javax.swing.JComboBox [] transformationComboBoxes = new javax.swing.JComboBox[6];//array of the tranformation combo boxes
-private boolean barlineshift = false;
-private boolean sideslip = false;
-private boolean transposeButtonPressed = false;
-private boolean invertButtonPressed = false;
-private boolean reverseButtonPressed = false;
-private boolean expandButtonPressed = false;
-private boolean sideslipButtonPressed = false;
-private boolean barlineshiftButtonPressed = false;
-private ArrayList<String> transformationOrder = new ArrayList<String>();
-private String transformationUsedText = "";
-private String directionOfTransposition = "";
-private String distanceOfTransposition = "";
-private int expandBy = -1;
-private String directionOfSideslip = "";
-private String distanceOfSideslip = "";
-private boolean barlineshift2 = false;
-private boolean sideslip2 = false;
-private String directionOfShift = "";
-private MelodyPart chosenCustomThemeOriginal = new MelodyPart();//this will keep track of the unmotified melody
-private MelodyPart chosenCustomTheme = new MelodyPart();
-private int currentSlotCS = 0; //the current slot, used for custom solo
-private MelodyPart customSolo = new MelodyPart(0);
-private String chosenThemeName = "";
-private boolean specifiedBar = false;
-private Stack<MelodyPart> edits = new Stack<MelodyPart>();
-private Stack<MelodyPart> undos = new Stack<MelodyPart>();
 
-Random random;
-File fileName = ImproVisor.getThemesFile();
 private SoloGeneratorTableModel soloTableModel = new SoloGeneratorTableModel(
         new Object[][]
   {
@@ -5414,7 +5436,7 @@ public MelodyPart adjustTheme(MelodyPart chosenTheme, ThemeUse chosenThemeUse, C
     }
     if (numAdjustments == 0)
     {
-        themeUsageText+=" unmotified";
+        themeUsageText+=" unmodified";
     }
     barlineshift = false;
     sideslip = false;
