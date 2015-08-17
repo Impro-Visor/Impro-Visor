@@ -22,6 +22,7 @@
 package imp.lickgen.transformations;
 
 import imp.Constants;
+import imp.com.MergeSameNotesCommand;
 import imp.com.RectifyPitchesCommand;
 import imp.data.Chord;
 import imp.data.ChordPart;
@@ -155,8 +156,7 @@ public MelodyPart flattenByResolution(MelodyPart melody,
                                        boolean concatRepeatPitches)
 {
     MelodyPart flattenedPart = new MelodyPart();
-    // This will be used to save the best note of the previous selection
-    Note prevNote = null;
+    
     // This will be used to save the best note for a resolution selection
     Note bestNote;
     
@@ -171,50 +171,24 @@ public MelodyPart flattenByResolution(MelodyPart melody,
                                                      slotIndex);
         
         //bestNote = getBestNote(notes, chord, resolution, startingSlot);
+        //now we pick the best note by averaging the pitches of the notes
         bestNote = getAverageNote(notes, chord);
-        
-        // if we do not want repeat pitches
-        if(concatRepeatPitches)
-        {
-            // See if the current best note equals the last best note
-            if(prevNote == null)
-            {
-                prevNote = bestNote;
-            }
-            else if(prevNote.samePitch(bestNote))
-            {
-                // if it does, we just want to add the duration to that of 
-                // the previous note
-                prevNote.augmentRhythmValue(bestNote.getRhythmValue());
-            }
-            else
-            {
-                // else we know the prev note is as long as possible, so add
-                // it to the part and try to do the same with the new best note
-                flattenedPart.addNote(prevNote);
-                prevNote = bestNote;
-            }
-        }
-        else
-        {
-            // else just add the best note
-            flattenedPart.addNote(bestNote);
-        }
+        flattenedPart.addNote(bestNote);
     }
-    if(concatRepeatPitches)
-    {
-        // since we are only adding prev notes if concatRepeatPitches is true,
-        // we need to add the last prevNote after everything is looped over
-        flattenedPart.addNote(prevNote);
-    }
-    
+
     MelodyPart newMelody = melody.copy();
     // We only want to paste over the part we changed
     newMelody.pasteOver(flattenedPart, startingSlot);
     
-    //move pitches to nearest chord tone
+    //move pitches in part we changed to nearest chord tone
     RectifyPitchesCommand cmd = new RectifyPitchesCommand(newMelody, startingSlot, endingSlot, chords, false, false, true, false, false);
     cmd.execute();
+    
+    //concatenate repeat pitches in part we changed
+    if(concatRepeatPitches){
+       MergeSameNotesCommand cmd2 = new MergeSameNotesCommand(newMelody, startingSlot, endingSlot);
+       cmd2.execute(); 
+    }
     
     return newMelody;
 }
