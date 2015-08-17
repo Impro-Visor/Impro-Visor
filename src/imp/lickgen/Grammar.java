@@ -245,7 +245,7 @@ private void accumulateTerminal(Object terminal)
     int duration = getDuration(terminal);
     if( numSlotsToFill < duration )
       {
-        System.out.println("short slots = " + numSlotsToFill + " vs duration " + duration);
+        //System.out.println("short slots = " + numSlotsToFill + " vs duration " + duration);
         terminal = new Rest(numSlotsToFill);
         duration = numSlotsToFill;
       }
