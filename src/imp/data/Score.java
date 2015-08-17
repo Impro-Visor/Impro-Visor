@@ -183,7 +183,7 @@ public class Score implements Constants, Serializable {
      * A list of voicings for the chords, for stepping purposes
      */
     
-    private PolylistBuffer voicingListBuffer;
+    private boolean constantBass = false;
 
     /**
      * The layout, if any. This can be null if no layout specified.
@@ -267,6 +267,11 @@ public class Score implements Constants, Serializable {
         chordProg = chordPart;
     }
 
+    public void setConstantBass(boolean value)
+      {
+        constantBass = value;
+      }
+    
     public void setCountIn(ChordPart countInProg)
     {
       //System.out.println("countiInProg = " + countInProg);
@@ -1012,12 +1017,11 @@ public class Score implements Constants, Serializable {
                         0,
                         true,
                         endLimitIndex,
-                        voicingListBuffer);
+                        constantBass);
             }
 
         //System.out.println("time = " + time);
             // Save voicings for subsequent stepping.
-            voicingListBuffer = new PolylistBuffer();
             
             ListIterator<MelodyPart> i = partList.listIterator();
             while (i.hasNext() && Style.limitNotReached(time, endLimitIndex)) {
@@ -1036,7 +1040,7 @@ public class Score implements Constants, Serializable {
                         transposition,
                         useDrums,
                         endLimitIndex,
-                        voicingListBuffer);
+                        constantBass);
                 time = Math.max(melTime, chTime);
             }
 
@@ -1055,25 +1059,6 @@ public class Score implements Constants, Serializable {
         }
     }
     
-/**
- * Return list of first voicing used for each chord, for purposes of stepping.
- * @return 
- */
-public Polylist getVoicingList()
-  {
-    return voicingListBuffer.toPolylist();
-  }
-
-    public void showVoicingList() 
-    {
-        Polylist voicingList = getVoicingList();
-        System.out.println("in Score render: voicingList length " + voicingList.length() + ": ");
-        for (PolylistEnum e = new PolylistEnum(voicingList); e.hasMoreElements();) 
-        {
-            Polylist v = (Polylist) e.nextElement();
-            System.out.println(v);
-        }
-    }
 
     public int getCountInOffset()
     {

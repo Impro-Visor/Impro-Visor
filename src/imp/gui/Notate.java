@@ -9970,7 +9970,14 @@ public void playChordAtIndex(int index)
     tempScore.addPart();
     tempScore.getPart(0).addRest(new Rest(chordToPlay.getRhythmValue()));
     tempScore.addChord(chordToPlay);
-    tempScore.setStyle("no-style");
+    // We want to play the chord with the voicings of the current style, but
+    // without a bass pattern. Setting constantBass to true bypasses the pattern
+    // and just plays one base note, in midi range 48-59
+    tempScore.setStyle(currStyle);
+    tempScore.setConstantBass(true);
+    tempScore.setChordInstrument(score.getChordInstrument());
+    tempScore.setBassInstrument(score.getBassInstrument());
+    //tempScore.setStyle("no-style");
     int temp = chordToPlay.getRhythmValue();
     chordToPlay.setRhythmValue(480);
     try

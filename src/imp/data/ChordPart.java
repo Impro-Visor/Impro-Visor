@@ -412,7 +412,7 @@ public long render(MidiSequence seq,
                    int transposition,
                    boolean useDrums,
                    int endLimitIndex,
-                   PolylistBuffer voicingListBuffer)
+                   boolean constantBass)
         throws InvalidMidiDataException
   {
     // to trace sequencing info:
@@ -423,7 +423,7 @@ public long render(MidiSequence seq,
                                      transposition, 
                                      useDrums, 
                                      endLimitIndex, 
-                                     voicingListBuffer);
+                                     constantBass);
     return result;
   }
 

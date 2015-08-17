@@ -1078,7 +1078,7 @@ private Polylist makeChordline(
         int duration,
         int transposition,
         int endLimitIndex,
-        PolylistBuffer voicingListBuffer)
+        boolean constantBass)
         throws InvalidMidiDataException
   {
     // To trace rendering info:
@@ -1119,7 +1119,7 @@ private Polylist makeChordline(
     //System.out.println("\nmakeChordLine on " + currentChord + " using ChordPattern " + pattern);
         ChordPatternVoiced c;
         
-        if( pattern == null )
+        if( pattern == null || constantBass )
           {
             // if there's no pattern, and we haven't used a previous
             // pattern on this currentChord, then just play the currentChord for the 
@@ -1164,10 +1164,6 @@ private Polylist makeChordline(
             // the durations of each currentChord
             c = pattern.applyRules(symbol, previousChord);
           }
-        
-        voicingListBuffer.append(Polylist.list(currentChord.getName(),
-                                               currentChord.getRhythmValue(),
-                                               currentChord.getVoicing()));
         
         // Uncomment to show how chord patterns are voiced:
         
@@ -1297,7 +1293,8 @@ static Polylist filterOutVolumes(Polylist L)
           ChordSymbol nextChord,
           NoteSymbol previousNote, 
           int duration,
-          int transposition)
+          int transposition,
+          boolean constantBass)
           throws InvalidMidiDataException
     {
     //System.out.println("addToBassline " + chord);
@@ -1306,12 +1303,19 @@ static Polylist filterOutVolumes(Polylist L)
       BassPattern pattern = getPattern(bassPatterns, duration);
 //System.out.println("makeBassLine pattern = " + pattern + ", duration = " + duration);
 
-      // just skip this area if there is no appropriate pattern
-      if( pattern == null )
+      // If there is no pattern, or we want to play the chord with the voicings 
+      // of the current style, but without a bass pattern, as in the case
+      // of stepping through chord voicings, 
+      // setting constantBass to true bypasses the pattern
+      // and just plays one base note, in midi range 48-59 (octave -1)
+      
+      if( pattern == null || constantBass )
         {
-//System.out.println("null pattern");
-        Rest r = new Rest(duration);
-        bassline.add(NoteSymbol.makeNoteSymbol(r.toLeadsheet()));
+        PitchClass bassPitchClass = chord.getBass();
+        int octave = -1; //See NoteSymbol for explanation
+        NoteSymbol bassNote = new NoteSymbol(bassPitchClass, octave, duration);
+        //System.out.println("bassNote = " + bassNote);
+        bassline.add(bassNote);
         break;
         }
 
@@ -1385,7 +1389,7 @@ System.out.println("mystery code on bassline " + bassline);
                      int endIndex, 
                      int transposition, 
                      int endLimitIndex,
-                     PolylistBuffer voicingListBuffer)
+                     boolean constantBass)
           throws InvalidMidiDataException
   {
       // refactored to direct to the method that follows with hasStyle parameter
@@ -1398,7 +1402,7 @@ System.out.println("mystery code on bassline " + bassline);
                     transposition, 
                     PlayScoreCommand.USEDRUMS, 
                     endLimitIndex,
-                    voicingListBuffer);
+                    constantBass);
   }
 
 
@@ -1424,7 +1428,7 @@ public long render(MidiSequence seq,
                    int transposition,
                    boolean useDrums,
                    int endLimitIndex,
-                   PolylistBuffer voicingListBuffer)
+                   boolean constantBass)
         throws InvalidMidiDataException
   {
     boolean hasStyle = !noStyle();
@@ -1546,8 +1550,11 @@ public long render(MidiSequence seq,
                                           rhythmValue,
                                           transposition,
                                           endLimitIndex,
-                                          voicingListBuffer);
+                                          constantBass);
           }
+        
+        if( !constantBass )
+        {
         //System.out.println("previousBassNote " + previousBassNote + " low = " + getBassLow() + " high = " + getBassHigh());
         // adjust bass octave between patterns only, not within
         if( previousBassNote.higher(getBassHigh()) )
@@ -1560,6 +1567,7 @@ public long render(MidiSequence seq,
             previousBassNote = previousBassNote.transpose(12);
             //System.out.println("upward to " + previousBassNote);
           }
+        }
         
 //System.out.println("\nAbout to add to bassline, chord = " + chord + ", hasStyle = " + hasStyle);
         if( !chord.isNOCHORD() && hasStyle )
@@ -1569,7 +1577,8 @@ public long render(MidiSequence seq,
                         nextChord,
                         previousBassNote,
                         rhythmValue,
-                        transposition);
+                        transposition,
+                        constantBass);
 
             // Sets previousBassNote to last NoteSymbol in bassline
  
