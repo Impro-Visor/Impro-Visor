@@ -2,3 +2,4 @@
 build/
 .svn/
 nbproject/private/private.xml
+.DS_store
