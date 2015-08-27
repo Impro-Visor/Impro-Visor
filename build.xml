@@ -215,7 +215,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
         <fileset dir="${transformsDir}" includes="**/*.transform" />
     </copy>
     <copy todir="${distDir}/voicings">
-        <fileset dir="${voicingssDir}" includes="**/*." />
+        <fileset dir="${voicingsDir}" includes="**/*." />
     </copy>
     <copy todir="${distDir}">
         <fileset dir="${miscDir}" includes="**/*.*" />
