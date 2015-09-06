@@ -715,11 +715,11 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
             }
         });
         libraryTree.addTreeExpansionListener(new javax.swing.event.TreeExpansionListener() {
-            public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
-                libraryTreeTreeExpanded(evt);
-            }
             public void treeCollapsed(javax.swing.event.TreeExpansionEvent evt) {
                 libraryTreeTreeCollapsed(evt);
+            }
+            public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
+                libraryTreeTreeExpanded(evt);
             }
         });
         libraryTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -1257,9 +1257,9 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         });
         toolBar.add(featureWidthSlider);
 
+        transposeSpinner.setToolTipText("Transposes the playback the specified number of half steps (e.g. use -2 for Bb instruments, +3 for Eb).");
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("imp/roadmap/Bundle"); // NOI18N
-        transposeSpinner.setToolTipText(bundle.getString("RoadMapFrame.toolTipText")); // NOI18N
-        transposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("RoadMapFrame.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 10))); // NOI18N
+        transposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("RoadMapFrame.transposeSpinner.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 10))); // NOI18N
         transposeSpinner.setMaximumSize(new java.awt.Dimension(65, 45));
         transposeSpinner.setMinimumSize(new java.awt.Dimension(65, 45));
         transposeSpinner.setName(""); // NOI18N
@@ -1400,7 +1400,6 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         clearButton.setMaximumSize(new java.awt.Dimension(46, 30));
         clearButton.setMinimumSize(new java.awt.Dimension(46, 30));
         clearButton.setName("clearButton"); // NOI18N
-        clearButton.setOpaque(true);
         clearButton.setPreferredSize(new java.awt.Dimension(46, 30));
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1422,7 +1421,6 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         insertBrickButton.setMaximumSize(new java.awt.Dimension(46, 38));
         insertBrickButton.setMinimumSize(new java.awt.Dimension(46, 38));
         insertBrickButton.setName("insertBrickButton"); // NOI18N
-        insertBrickButton.setOpaque(true);
         insertBrickButton.setPreferredSize(new java.awt.Dimension(46, 38));
         insertBrickButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1696,12 +1694,12 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         dictionaryMenu.setText("Dictionary"); // NOI18N
         dictionaryMenu.setName("dictionaryMenu"); // NOI18N
         dictionaryMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                dictionaryMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                dictionaryMenuMenuSelected(evt);
             }
         });
 
@@ -1748,12 +1746,12 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         preferencesMenu.setToolTipText("Set preferences for this roadmap."); // NOI18N
         preferencesMenu.setName("preferencesMenu"); // NOI18N
         preferencesMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                preferencesMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                preferencesMenuMenuSelected(evt);
             }
         });
 
@@ -2072,7 +2070,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         preferencesMenu.add(showJoinsCheckBoxMI);
 
         showStartingNoteCheckBoxMI.setSelected(true);
-        showStartingNoteCheckBoxMI.setText(bundle.getString("RoadMapFrame.showStartingNoteCheckBoxMI.text")); // NOI18N
+        showStartingNoteCheckBoxMI.setText("Show Starting Note");
         showStartingNoteCheckBoxMI.setName("showStartingNoteCheckBoxMI"); // NOI18N
         showStartingNoteCheckBoxMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2082,7 +2080,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         preferencesMenu.add(showStartingNoteCheckBoxMI);
 
         showVariantsCheckBoxMI.setSelected(true);
-        showVariantsCheckBoxMI.setText(bundle.getString("RoadMapFrame.showVariantsCheckBoxMI.text")); // NOI18N
+        showVariantsCheckBoxMI.setText("Show Variants");
         showVariantsCheckBoxMI.setName("showVariantsCheckBoxMI"); // NOI18N
         showVariantsCheckBoxMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2092,7 +2090,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         preferencesMenu.add(showVariantsCheckBoxMI);
 
         showStylesCheckBoxMI.setSelected(true);
-        showStylesCheckBoxMI.setText(bundle.getString("RoadMapFrame.showStylesCheckBoxMI.text")); // NOI18N
+        showStylesCheckBoxMI.setText("Show Styles");
         showStylesCheckBoxMI.setName("showStylesCheckBoxMI"); // NOI18N
         showStylesCheckBoxMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2127,12 +2125,12 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         windowMenu.setText("Window"); // NOI18N
         windowMenu.setName("windowMenu"); // NOI18N
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
         });
 
