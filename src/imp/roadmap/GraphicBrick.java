@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2015 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,6 @@
  * merchantability or fitness for a particular purpose.  See the
  * GNU General Public License for more details.
  *
-
  * You should have received a copy of the GNU General Public License
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -32,7 +31,7 @@ import imp.brickdictionary.*;
  */
 public class GraphicBrick {
     /** contained block */
-    private Block block;
+    private final Block block;
     /** is the block selected? */
     private boolean isSelected = false;
     /** which chord in the block is selected */
@@ -44,7 +43,7 @@ public class GraphicBrick {
     
     String margin = " ";
     
-    private RoadMapSettings settings;
+    private final RoadMapSettings settings;
     
     /**
      * Constructor to create a GraphicBrick from a block
@@ -326,6 +325,11 @@ public class GraphicBrick {
         int endY = y+(int)(lines*settings.getLineOffset());
         
         Graphics2D g2d = (Graphics2D)g;
+        if( g2d == null )
+          {
+            // Can happen on Windows, not sure why.
+            return;
+          }
         g2d.setStroke(settings.brickOutline);
         g2d.setColor(bgColor);
         
@@ -392,6 +396,11 @@ public class GraphicBrick {
         int yOffset = settings.yOffset;
         
         Graphics2D g2d = (Graphics2D)g;
+        if( g2d == null )
+          {
+            // Can happen on Windows, not sure why.
+            return;
+          }
         FontMetrics metrics = g2d.getFontMetrics();
         int fontOffset = (blockHeight + metrics.getAscent())/2;
         long currentBeats = 0;
@@ -413,8 +422,6 @@ public class GraphicBrick {
             int endX = xOffset + settings.getLength(endWrap[0]);
             int lines = (int)(endWrap[1] - wrap[1]);
             
-            if (g2d != null) {
-
                 if (lines > 0) {
                     if (selected == ind) {
                         g2d.setColor(settings.selectedColor);
@@ -450,11 +457,18 @@ public class GraphicBrick {
                 String name = RoadMapSettings.trimString(toSymbols(chord.getName()),
                         settings.getBlockLength(chord), metrics);
                 name = RoadMapSettings.trimString(name, cutoff - currentX, metrics);
+                try
+                {
                 g2d.drawString(margin + name, currentX + 2, currentY + fontOffset);
+                }
+                catch( Exception e )
+                {
+                    // Can happen on Windows. Not sure why.
+                }
 
                 currentBeats += chord.getDuration();
                 ind++;
-            }
+
         }
         
         if(block.isBrick() && settings.showBrickNames) {
@@ -484,6 +498,12 @@ public class GraphicBrick {
     public void drawAt(Graphics g, int x, int y)
     {
         Graphics2D g2d = (Graphics2D)g;
+        
+        if( g2d == null )
+        {
+            return;
+        }
+        
         FontMetrics metrics = g2d.getFontMetrics();
         
         if(isSelected)
@@ -528,7 +548,7 @@ public class GraphicBrick {
         
         ArrayList<ChordBlock> chords = (ArrayList) block.flattenBlock();
         
-        int xOffset = 0;
+        int xOffset;
 
         long totalSlots = 0;
         
