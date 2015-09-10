@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Vector;
-import javafx.util.Pair;
 
 /**
  * Holds info regarding an active trading response; also holds
@@ -229,15 +228,15 @@ public class TradingResponseInfo {
         MelodyPart[] choppedResponse = chopResponse();
         MelodyPart[] choppedGrammar = chopResponse(grammarSolo, nextSection);
         
-        Pair<MelodyPart[], MelodyPart[]> swappedAndChopped = randomSwap(choppedResponse, choppedGrammar);
+        LinkedList<MelodyPart[]> swappedAndChopped = randomSwap(choppedResponse, choppedGrammar);
         
-        MelodyPart[] melody = swappedAndChopped.getKey();
-        MelodyPart[] rhythm = swappedAndChopped.getValue();
+        MelodyPart[] melody = swappedAndChopped.getFirst();
+        MelodyPart[] rhythm = swappedAndChopped.getLast();
                 
         return mash(melody, rhythm);
     }
     
-    public Pair<MelodyPart[], MelodyPart[]> randomSwap(MelodyPart[] part1, MelodyPart[] part2) {
+    public LinkedList<MelodyPart[]> randomSwap(MelodyPart[] part1, MelodyPart[] part2) {
         Random generator = new Random();
         for (int i = 0; i < part1.length; i++) {
             int isSwap = generator.nextInt(2);
@@ -248,7 +247,10 @@ public class TradingResponseInfo {
                 part2[i] = savePart1;
             }
         }
-        return new Pair(part1, part2);
+        LinkedList<MelodyPart[]> swapped = new LinkedList();
+        swapped.set(0, part1);
+        swapped.set(1, part2);
+        return swapped;
     }
     
     public MelodyPart mash(MelodyPart[] melody, MelodyPart[] rhythm){
