@@ -11073,10 +11073,10 @@ private void recordFromMidi()
         windowMenu.repaint();
     }//GEN-LAST:event_windowMenuMenuSelected
 
-void FillProbsButtonActionPerformed(java.awt.event.ActionEvent evt)
-  {
-    verifyAndFill();
-  }
+//void FillProbsButtonActionPerformed(java.awt.event.ActionEvent evt)
+//  {
+//    verifyAndFill();
+//  }
 
 public void openLickGenerator()
   {
@@ -12914,25 +12914,25 @@ public String[] getNoteLabels(int location)
     return notes;
   }
 
-/**
- * Make sure the user has entered acceptable values for each of the other fields
- * in the triage frame.
- */
-private void verifyTriageFields()
-  {
-    lickgenFrame.verifyTriageFields();
-    lickgenFrame.setTotalBeats(totalBeats);
-    getCurrentStave().repaint();
-  }
+///**
+// * Make sure the user has entered acceptable values for each of the other fields
+// * in the triage frame.
+// */
+//private void verifyTriageFields()
+//  {
+//    lickgenFrame.verifyTriageFields();
+//    lickgenFrame.setTotalBeats(totalBeats);
+//    getCurrentStave().repaint();
+//  }
 
-private void verifyAndFill()
-  {
-    //System.out.println("verifyAndFill()");
-    lickgenFrame.verifyAndFill();
-    lickgenFrame.setTotalBeats(totalBeats);
-    redrawTriage();
-    getCurrentStave().repaint();
-  }
+//private void verifyAndFill()
+//  {
+//    //System.out.println("verifyAndFill()");
+//    lickgenFrame.verifyAndFill();
+//    lickgenFrame.setTotalBeats(totalBeats);
+//    redrawTriage();
+//    getCurrentStave().repaint();
+//  }
 
 /**
  * Save the lick in the vocabulary.
@@ -13237,6 +13237,8 @@ public MelodyPart generateLick(Polylist rhythm, ChordPart chordPart)
  * generateLick returns a lick generated from a rhythm to fit start to end
  *
  * @param rhythm
+     * @param start
+     * @param end
  * @return
  */
 public MelodyPart generateLick(Polylist rhythm, int start, int end)
@@ -17618,7 +17620,8 @@ public void redoCommand()
 
         getCurrentStave().setShowMeasureCL(tempShowMeasureCL);
 
-        getCurrentStave().setSelection(tempStartIndex);
+        getCurrentStave().setSelectionStart(tempStartIndex);
+        getCurrentStave().setSelectionEnd(tempEndIndex);
 
         getCurrentStave().setPrinting(false);
 

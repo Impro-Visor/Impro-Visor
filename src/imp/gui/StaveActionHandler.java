@@ -535,7 +535,6 @@ private void updateNoteCursorLabel(MouseEvent e)
 {
     int x = e.getX();
     int y = e.getY();
-    
     int pitch;
     Note note;
     
@@ -2072,6 +2071,7 @@ void redoAdvice(int selectedIndex)
 
 /**
  * Mouse released
+ * @param e
  */
 public void mouseReleased(MouseEvent e)
  {

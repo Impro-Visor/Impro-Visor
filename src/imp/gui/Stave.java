@@ -4669,9 +4669,9 @@ public void updateTempLegerLines(int pitch, int x, int staveLine, Graphics g)
     int oldx = handler.oldx;
     if (Math.abs(oldx - x) > 2)
     {
-        repaint();
-        handler.oldx = x;
-    }
+        //repaint();      //revisit: cause of flicker after printing?
+        handler.oldx = x; // but why only after printing?
+    }                     // without it tho, ledger lines update a little weird
     drawLegerLine(pitch, getActionHandler().oldx, staveLine, g);
 }
 
@@ -4689,88 +4689,81 @@ public void updateTempLegerLines(int pitch, int x, int staveLine, Graphics g)
 private void drawLegerLine(int pitch, int x, int staveLine, Graphics g)
   {
 
-    // Checks for the appropriate stave and draws the leger lines
-    if( type == StaveType.TREBLE )
-      {
-        // draw leger lines down
-        for( int i = 0; i < 5; i++ )
-          {
-            if( pitch <= treblePitches[i] )
-              {
+    if( null != type )
+      // Checks for the appropriate stave and draws the leger lines
+    switch (type) {
+        case TREBLE:
+            // draw leger lines down
+            for( int i = 0; i < 5; i++ )
+            {
+                if( pitch <= treblePitches[i] )
+                {
+                    g.drawLine(x - 3,
+                            headSpace + trebleOffset[i] + (staveLine * lineSpacing),
+                            x + 12,
+                            headSpace + trebleOffset[i] + (staveLine * lineSpacing));
+                }
+            } // draw leger lines up
+            for( int i = 5; i < 10; i++ )
+            {
+                if( pitch >= treblePitches[i] )
+                {
+                    g.drawLine(x - 3,
+                            headSpace + trebleOffset[i] + (staveLine * lineSpacing),
+                            x + 12,
+                            headSpace + trebleOffset[i] + (staveLine * lineSpacing));
+                }
+            } break;
+        case BASS:
+            // draw leger lines down
+            for( int i = 0; i < 5; i++ )
+            {
+                if( pitch <= bassPitches[i] )
+                {
+                    g.drawLine(x - 3, headSpace + bassOffset[i]
+                            + +(staveLine * lineSpacing), x + 12, headSpace
+                                    + +bassOffset[i] + (staveLine * lineSpacing));
+                }
+            } // draw leger lines up
+            for( int i = 5; i < 10; i++ )
+            {
+                if( pitch >= bassPitches[i] )
+                {
+                    g.drawLine(x - 3,
+                            headSpace + bassOffset[i] + (staveLine * lineSpacing), x + 12,
+                            headSpace + bassOffset[i] + (staveLine * lineSpacing));
+                }
+            } break;
+        case GRAND:
+            // middle C
+            if( pitch == 60 || pitch == 61 )
+            {
                 g.drawLine(x - 3,
-                           headSpace + trebleOffset[i] + (staveLine * lineSpacing),
-                           x + 12,
-                           headSpace + trebleOffset[i] + (staveLine * lineSpacing));
-              }
-          }
-        // draw leger lines up
-        for( int i = 5; i < 10; i++ )
-          {
-            if( pitch >= treblePitches[i] )
-              {
-                g.drawLine(x - 3,
-                           headSpace + trebleOffset[i] + (staveLine * lineSpacing),
-                           x + 12,
-                           headSpace + trebleOffset[i] + (staveLine * lineSpacing));
-              }
-          }
-
-      }
-    else if( type == StaveType.BASS )
-      {
-        // draw leger lines down
-        for( int i = 0; i < 5; i++ )
-          {
-            if( pitch <= bassPitches[i] )
-              {
-                g.drawLine(x - 3, headSpace + bassOffset[i]
-                        + +(staveLine * lineSpacing), x + 12, headSpace
-                        + +bassOffset[i] + (staveLine * lineSpacing));
-              }
-          }
-        // draw leger lines up
-        for( int i = 5; i < 10; i++ )
-          {
-            if( pitch >= bassPitches[i] )
-              {
-                g.drawLine(x - 3,
-                           headSpace + bassOffset[i] + (staveLine * lineSpacing), x + 12,
-                           headSpace + bassOffset[i] + (staveLine * lineSpacing));
-              }
-          }
-
-      }
-    else if( type == StaveType.GRAND )
-      {
-        // middle C
-        if( pitch == 60 || pitch == 61 )
-          {
-            g.drawLine(x - 3,
-                       headSpace + (5 * staveSpaceHeight) + (staveLine * lineSpacing),
-                       x + 12,
-                       headSpace + (5 * staveSpaceHeight) + (staveLine * lineSpacing));
-          }
-        // draw leger lines down
-        for( int i = 0; i < 5; i++ )
-          {
-            if( pitch <= grandPitches[i] )
-              {
-                g.drawLine(x - 3,
-                           headSpace + grandOffset[i] + (staveLine * lineSpacing), x + 12,
-                           headSpace + grandOffset[i] + (staveLine * lineSpacing));
-              }
-          }
-        // draw leger lines up
-        for( int i = 5; i < 10; i++ )
-          {
-            if( pitch >= treblePitches[i] )
-              {
-                g.drawLine(x - 3,
-                           headSpace + grandOffset[i] + (staveLine * lineSpacing), x + 12,
-                           headSpace + grandOffset[i] + (staveLine * lineSpacing));
-              }
-          }
-      }
+                        headSpace + (5 * staveSpaceHeight) + (staveLine * lineSpacing),
+                        x + 12,
+                        headSpace + (5 * staveSpaceHeight) + (staveLine * lineSpacing));
+            } // draw leger lines down
+            for( int i = 0; i < 5; i++ )
+            {
+                if( pitch <= grandPitches[i] )
+                {
+                    g.drawLine(x - 3,
+                            headSpace + grandOffset[i] + (staveLine * lineSpacing), x + 12,
+                            headSpace + grandOffset[i] + (staveLine * lineSpacing));
+                }
+            } // draw leger lines up
+            for( int i = 5; i < 10; i++ )
+            {
+                if( pitch >= treblePitches[i] )
+                {
+                    g.drawLine(x - 3,
+                            headSpace + grandOffset[i] + (staveLine * lineSpacing), x + 12,
+                            headSpace + grandOffset[i] + (staveLine * lineSpacing));
+                }
+            } break;
+        default:
+            break;
+    }
   }
 
 /**
@@ -5351,10 +5344,12 @@ public void play(int startAt)
 
 
 /**
- * Plays the current selection
+ * Plays from the start of the current selection through to the end of chorus.
  *
- * @param startIndex       starting index of the selection of notes
- * @param endIndex         ending index of the selection of notes
+     * @param playToEndOfChorus
+     * @param loopCount
+     * @param useDrums
+     * @param message
  */
 public void playSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message)
   {
