@@ -561,7 +561,7 @@ private void updateNoteCursorLabel(MouseEvent e)
       }
     
     if (currentChord != null && !currentChord.getName().equals(NOCHORD))
-        stave.updateTempLegerLines(pitch, x,  curLine, stave.getGraphics());
+        stave.updateTempLedgerLines(pitch, x,  curLine, stave.getGraphics());
 }
   
 
@@ -616,7 +616,7 @@ private void chooseAndSetNoteCursor(MouseEvent e)
                 return;
             }
 
-    boolean noteOnLegerLine = noteOnLegerLine(pitch, curLine);
+    boolean noteOnLedgerLine = noteOnLedgerLine(pitch, curLine);
 
     // if we have a real chord
     if (currentChord != null && !currentChord.getName().equals(NOCHORD))
@@ -653,7 +653,7 @@ private void chooseAndSetNoteCursor(MouseEvent e)
         // pitch is a chord tone
         else if (chordMIDIs.contains(pitch%OCTAVE))
         {
-            if (noteOnLegerLine)
+            if (noteOnLedgerLine)
                 noteCursor = makeCursor(blackNoteLineCursorImg, "Note", true);
             else
                 noteCursor = makeCursor(blackNoteCursorImg, "Note", true);
@@ -662,7 +662,7 @@ private void chooseAndSetNoteCursor(MouseEvent e)
         // pitch is a color tone
         else if (colorMIDIs.contains(pitch%OCTAVE))
         {
-            if (noteOnLegerLine)
+            if (noteOnLedgerLine)
                 noteCursor = makeCursor(greenNoteLineCursorImg, "Note", true);
             else
                 noteCursor = makeCursor(greenNoteCursorImg, "Note", true); 
@@ -671,7 +671,7 @@ private void chooseAndSetNoteCursor(MouseEvent e)
         // pitch is out of key
         else
         {
-            if (noteOnLegerLine)
+            if (noteOnLedgerLine)
                 noteCursor = makeCursor(redNoteLineCursorImg, "Note", true);
             else
                 noteCursor = makeCursor(redNoteCursorImg, "Note", true); 
@@ -680,13 +680,13 @@ private void chooseAndSetNoteCursor(MouseEvent e)
 
     else
     {
-        if (noteOnLegerLine)
+        if (noteOnLedgerLine)
             noteCursor = makeCursor(blackNoteLineCursorImg, "Note", true);
         else
             noteCursor = makeCursor(blackNoteCursorImg, "Note", true);
     }
 
-    stave.updateTempLegerLines(pitch, x,  curLine, stave.getGraphics());
+    stave.updateTempLedgerLines(pitch, x,  curLine, stave.getGraphics());
     if( notate.getShowNoteNamesAboveCursor() )
       {
       stave.setNoteCursorLabel(noteNameFromMidi(note), x, y);
@@ -701,7 +701,7 @@ private void chooseAndSetNoteCursor(MouseEvent e)
  * @param midi
  * @return 
  */
-private boolean noteOnLegerLine(int midi, int curLine)
+private boolean noteOnLedgerLine(int midi, int curLine)
 {
     int norm = midi%24;
     

@@ -263,7 +263,7 @@ static final private int[] lineNotes =
     0, 1, 4, 7, 8, 11, 14, 15, 17, 18, 21, 22
   };
 // Arrays of pitches corresponding to treble, bass, and grand values
-// Determines if a leger line should be drawn
+// Determines if a ledger line should be drawn
 // NOTE: These values were in jMusic, I just moved them
 // into arrays and ignored the ugliness
 static final int[] treblePitches =
@@ -3326,9 +3326,9 @@ private int checkForTupletEnd(int startBeat, int tVal, int sdivs, MelodyPart par
  * draw a tieOver or tieUnder image from the previous tied note to the
  * current note.
  * <p>
- * This method also draws accidentals, dots, and leger lines for a note.
+ * This method also draws accidentals, dots, and ledger lines for a note.
  * Can only draw one accidental and one dot per note. The maximum number of
- * leger lines above or below the stave is 5.
+ * ledger lines above or below the stave is 5.
  *
  * @param note          the note to draw
  * @param boxed         if the note is selected or not
@@ -3337,7 +3337,7 @@ private int checkForTupletEnd(int startBeat, int tVal, int sdivs, MelodyPart par
  *
  * @see #drawPart(MelodyPart, Graphics)
  * @see #chooseImage(int, int, int, int, int)
- * @see #drawLegerLine(int, int, int, Graphics)
+ * @see #drawLedgerLine(int, int, int, Graphics)
  * @see #drawTie(int, int, Graphics)
  */
 private void drawNote(Note note, boolean boxed, int i, Graphics g, Graphics2D g2,
@@ -3369,11 +3369,11 @@ private void drawNote(Note note, boolean boxed, int i, Graphics g, Graphics2D g2
 
     int drawWidth = xCoordinate - 5;
 
-    // draw the leger lines for the note
+    // draw the ledger lines for the note
 
     if( isNote )
       {
-        drawLegerLine(pitch, drawWidth, staveLine, g);
+        drawLedgerLine(pitch, drawWidth, staveLine, g);
       }
 
     // draw the accidental for the note
@@ -4657,13 +4657,13 @@ private void drawTupletBracket(int n,
   }
 
 /**
- *  Updates the the temporary leger lines associated with the note cursor
+ *  Updates the the temporary ledger lines associated with the note cursor
  * @param pitch         pitch associated with the cursor
  * @param x             where the pitch is
  * @param staveLine     the line we're on
  * @param g             the graphics we're writing to
  */
-public void updateTempLegerLines(int pitch, int x, int staveLine, Graphics g)
+public void updateTempLedgerLines(int pitch, int x, int staveLine, Graphics g)
 {
     StaveActionHandler handler = getActionHandler();
     int oldx = handler.oldx;
@@ -4672,28 +4672,28 @@ public void updateTempLegerLines(int pitch, int x, int staveLine, Graphics g)
         repaint(); 
         handler.oldx = x;
     }
-    drawLegerLine(pitch, getActionHandler().oldx, staveLine, g);
+    drawLedgerLine(pitch, getActionHandler().oldx, staveLine, g);
 }
 
 /**
- * Draws a leger line for given integers for x-position, stave number, and
+ * Draws a ledger line for given integers for x-position, stave number, and
  * beat position offset. Assumes that pitch > -1 and rhythmValue != 0.0.
- * Only 5 leger lines can be drawn above or below a given Stave type.
+ * Only 5 ledger lines can be drawn above or below a given Stave type.
  *
  * @param pitch         the pitch of the note
- * @param x             the x position of the leger line
+ * @param x             the x position of the ledger line
  * @param staveLine     the stave number corresponding to the wrap-around
  *                      line
  * @param g             the panel to draw onto
  */
-private void drawLegerLine(int pitch, int x, int staveLine, Graphics g)
+private void drawLedgerLine(int pitch, int x, int staveLine, Graphics g)
   {
 
     if( null != type )
-      // Checks for the appropriate stave and draws the leger lines
+      // Checks for the appropriate stave and draws the ledger lines
     switch (type) {
         case TREBLE:
-            // draw leger lines down
+            // draw ledger lines down
             for( int i = 0; i < 5; i++ )
             {
                 if( pitch <= treblePitches[i] )
@@ -4703,7 +4703,7 @@ private void drawLegerLine(int pitch, int x, int staveLine, Graphics g)
                             x + 12,
                             headSpace + trebleOffset[i] + (staveLine * lineSpacing));
                 }
-            } // draw leger lines up
+            } // draw ledger lines up
             for( int i = 5; i < 10; i++ )
             {
                 if( pitch >= treblePitches[i] )
@@ -4715,7 +4715,7 @@ private void drawLegerLine(int pitch, int x, int staveLine, Graphics g)
                 }
             } break;
         case BASS:
-            // draw leger lines down
+            // draw ledger lines down
             for( int i = 0; i < 5; i++ )
             {
                 if( pitch <= bassPitches[i] )
@@ -4724,7 +4724,7 @@ private void drawLegerLine(int pitch, int x, int staveLine, Graphics g)
                             + +(staveLine * lineSpacing), x + 12, headSpace
                                     + +bassOffset[i] + (staveLine * lineSpacing));
                 }
-            } // draw leger lines up
+            } // draw ledger lines up
             for( int i = 5; i < 10; i++ )
             {
                 if( pitch >= bassPitches[i] )
@@ -4742,7 +4742,7 @@ private void drawLegerLine(int pitch, int x, int staveLine, Graphics g)
                         headSpace + (5 * staveSpaceHeight) + (staveLine * lineSpacing),
                         x + 12,
                         headSpace + (5 * staveSpaceHeight) + (staveLine * lineSpacing));
-            } // draw leger lines down
+            } // draw ledger lines down
             for( int i = 0; i < 5; i++ )
             {
                 if( pitch <= grandPitches[i] )
@@ -4751,7 +4751,7 @@ private void drawLegerLine(int pitch, int x, int staveLine, Graphics g)
                             headSpace + grandOffset[i] + (staveLine * lineSpacing), x + 12,
                             headSpace + grandOffset[i] + (staveLine * lineSpacing));
                 }
-            } // draw leger lines up
+            } // draw ledger lines up
             for( int i = 5; i < 10; i++ )
             {
                 if( pitch >= treblePitches[i] )
