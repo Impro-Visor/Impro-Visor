@@ -4669,9 +4669,9 @@ public void updateTempLegerLines(int pitch, int x, int staveLine, Graphics g)
     int oldx = handler.oldx;
     if (Math.abs(oldx - x) > 2)
     {
-        //repaint();      //revisit: cause of flicker after printing?
-        handler.oldx = x; // but why only after printing?
-    }                     // without it tho, ledger lines update a little weird
+        repaint(); 
+        handler.oldx = x;
+    }
     drawLegerLine(pitch, getActionHandler().oldx, staveLine, g);
 }
 
@@ -6114,4 +6114,5 @@ public int getNumMeasures()
     public void partTitleFocus(){
         partTitleEditor.setVisible(true);
     }
+    
 }

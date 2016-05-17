@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,6 @@
  * merchantability or fitness for a particular purpose.  See the
  * GNU General Public License for more details.
  *
-
  * You should have received a copy of the GNU General Public License
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -21,12 +20,10 @@
 
 package imp.gui;
 
-import imp.util.ErrorLog;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.awt.print.*;
-import javax.print.*;
 
 /** 
  *  A simple utility class that lets you very simply print
@@ -69,17 +66,17 @@ public class PrintUtilities implements Printable {
      * Arbitrary value for now, will change so that
      * it will get a number from a text field within preferences
      */
-    private int numStavesPerPage=0;
+    private int numStavesPerPage = 0;
     
     /**
      * Magic Number that is the height of a single Stave
      */
-    private static final int staveHeight = 160;
+    private static final int STAVE_HEIGHT = 160;
     
     /**
      * Magic Number that is the height of a single Grand Stave
      */
-    private static final int grandStaveHeight = 208;
+    private static final int GRAND_STAVE_HEIGHT = 208;
     
     /**
      * Total number of lines that are currently in the chorus
@@ -92,7 +89,7 @@ public class PrintUtilities implements Printable {
     
     private BufferedImage[] multImg;
     
-    private int counter=0;
+    private int counter = 0;
     
     public static void printComponent(Component c, int numLines, int numStavesPerPage, boolean grandStave) {
         new PrintUtilities(c, numLines, numStavesPerPage, grandStave).print();
@@ -113,27 +110,27 @@ public class PrintUtilities implements Printable {
         int height;
         if(grandStave)
         {
-            height = numLines*grandStaveHeight;
+            height = numLines*GRAND_STAVE_HEIGHT;
         }
         else
         {
-            height = numLines*staveHeight;
+            height = numLines*STAVE_HEIGHT;
         }
         img = new BufferedImage(this.componentToBePrinted.getWidth(), height, BufferedImage.TYPE_INT_RGB);
         Graphics graphics = img.getGraphics();
         this.componentToBePrinted.paint(graphics);
     }
     
-        public void setComponent(Component c[], int numLines, boolean grandStave, int length)
+    public void setComponent(Component c[], int numLines, boolean grandStave, int length)
       {
         int height;
         if(grandStave)
         {
-            height = numLines*grandStaveHeight;
+            height = numLines*GRAND_STAVE_HEIGHT;
         }
         else
         {
-            height = numLines*staveHeight;
+            height = numLines*STAVE_HEIGHT;
         }
         //img = new BufferedImage(c[0].getWidth(), height, BufferedImage.TYPE_INT_RGB);
         for(int i = 0; i<length; i++)
@@ -149,7 +146,7 @@ public class PrintUtilities implements Printable {
   
     public static void printMultipleComponents(Component comp[], int numLines, int numStavesPerPage, boolean grandStave) {  
         PrintUtilities utility = new PrintUtilities(numLines, numStavesPerPage, grandStave, comp.length);
-        PrintService[] pservices = PrinterJob.lookupPrintServices();
+        //PrintService[] pservices = PrinterJob.lookupPrintServices();
         PrinterJob printJob = PrinterJob.getPrinterJob();
         printJob.setPrintable(utility);
         
@@ -185,26 +182,11 @@ public class PrintUtilities implements Printable {
 
   
     public void print() {
-        PrintService[] pservices = PrinterJob.lookupPrintServices();
+        //PrintService[] pservices = PrinterJob.lookupPrintServices();
         
         PrinterJob printJob = PrinterJob.getPrinterJob();
         printJob.setPrintable(this);
-/*
-        HashPrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-        if (printJob.printDialog(attr)) {
-            try {
-                for(Attribute a : attr.toArray()) {
-                    if(a.getName().equals("spool-data-destination") && a.toString().length() > 5 && a.toString().substring(0, 5).equals("file:")) {
-                        ErrorLog.log(ErrorLog.COMMENT, "Sorry, printing to RAW printer files (.prn) has been disabled.  Printing will not continue.  ", true);
-                        return;
-                    }
-                }
-                printJob.print(attr);
-            } catch(PrinterException pe) {
-                System.out.println("Error printing: " + pe);
-            }
-        }
-*/        
+        
         if (printJob.printDialog()) {
             try {
                 printJob.print();
@@ -212,27 +194,31 @@ public class PrintUtilities implements Printable {
                 System.out.println("Error printing: " + pe);
             }
         }
+        
     }
 
     /**
      * 7/20/11 This method was created by Amos Byon, who edited the
      * method created by Rob MacGrogan, who edited the
      * original method written by Marty Hall.
-     * 2/05 Rob MacGrogan, http://www.developerdotstar.com/community/node/124/print
+     * 2/05 Rob MacGrogan,
+     * http://www.developerdotstar.com/community/node/124/print
+     * @param g
+     * @param pf
      */
     public int print(Graphics g, PageFormat pf, int pageIndex) {
-        int response = NO_SUCH_PAGE;
+        int response;
         Graphics2D g2 = (Graphics2D) g;
         
         // for faster printing, turn off double buffering
         disableDoubleBuffering(componentToBePrinted);
         if(grandStaveSelected)
         {
-            numStavesConverted = grandStaveHeight*numStavesPerPage;
+            numStavesConverted = GRAND_STAVE_HEIGHT*numStavesPerPage;
         }
         else
         {
-            numStavesConverted =staveHeight*numStavesPerPage;
+            numStavesConverted = STAVE_HEIGHT*numStavesPerPage;
         }
         int frameHeight = numStavesConverted;
         if(!multiple)
@@ -245,7 +231,7 @@ public class PrintUtilities implements Printable {
             tracker = numStavesConverted*pageIndex;
             Dimension d = componentToBePrinted.getSize();       //  get size of document
             double panelWidth = d.width;                        //  width in pixels
-            double panelHeight = d.height;                      //  height in pixels
+            //double panelHeight = d.height;                      //  height in pixels
             double pageHeight = pf.getImageableHeight();        //  height of printer page
             double pageWidth = pf.getImageableWidth();          //  width of printer page
             double scale = pageWidth / panelWidth;
@@ -300,7 +286,7 @@ public class PrintUtilities implements Printable {
             }
             Dimension d = componentToBePrinted.getSize();
             double panelWidth = d.width;
-            double panelHeight = d.height;
+            //double panelHeight = d.height;
             double pageHeight = pf.getImageableHeight();
             double pageWidth = pf.getImageableWidth();
             double scale = pageWidth/panelWidth;
@@ -331,6 +317,8 @@ public class PrintUtilities implements Printable {
                 response = Printable.PAGE_EXISTS;
             }
         }
+        
+        enableDoubleBuffering(componentToBePrinted);
         return response;
     }
 
@@ -338,6 +326,7 @@ public class PrintUtilities implements Printable {
      *  The speed and quality of printing suffers dramatically if
      *  any of the containers have double buffering turned on.
      *  So this turns if off globally.
+     * @param c
      *  @see #enableDoubleBuffering
      */
     public static void disableDoubleBuffering(Component c) {
@@ -347,6 +336,7 @@ public class PrintUtilities implements Printable {
 
     /** 
      * Re-enables double buffering globally. 
+     * @param c
      */
     public static void enableDoubleBuffering(Component c) {
         RepaintManager currentManager = RepaintManager.currentManager(c);

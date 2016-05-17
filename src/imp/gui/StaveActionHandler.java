@@ -331,15 +331,15 @@ private boolean aPressed = false;
 /**
  * Cursors
  */
-private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+private final Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 
-private Cursor crosshair = new Cursor(Cursor.CROSSHAIR_CURSOR);
+private final Cursor crosshair = new Cursor(Cursor.CROSSHAIR_CURSOR);
 
-private Cursor resizeEastCursor = new Cursor(Cursor.E_RESIZE_CURSOR);
+private final Cursor resizeEastCursor = new Cursor(Cursor.E_RESIZE_CURSOR);
 
-private Cursor resizeWestCursor = new Cursor(Cursor.W_RESIZE_CURSOR);
+private final Cursor resizeWestCursor = new Cursor(Cursor.W_RESIZE_CURSOR);
 
-private Cursor moveCursor = new Cursor(Cursor.MOVE_CURSOR);
+private final Cursor moveCursor = new Cursor(Cursor.MOVE_CURSOR);
 
 private Cursor penCursor = null;
 
@@ -359,14 +359,13 @@ private Point cursorLocation = new Point(-1, -1);
  */
 private boolean overHandles = false;
 
-private String blueNoteCursorImg = "graphics/cursors/blueNoteCursor.gif";
-private String blackNoteCursorImg = "graphics/cursors/blackNoteCursor.gif";
-private String greenNoteCursorImg = "graphics/cursors/greenNoteCursor.gif";
-private String redNoteCursorImg = "graphics/cursors/redNoteCursor.gif";
-private String blueNoteLineCursorImg = "graphics/cursors/blueNoteLineCursor.gif";
-private String blackNoteLineCursorImg = "graphics/cursors/blackNoteLineCursor.gif";
-private String greenNoteLineCursorImg = "graphics/cursors/greenNoteLineCursor.gif";
-private String redNoteLineCursorImg = "graphics/cursors/redNoteLineCursor.gif";
+private final String blueNoteCursorImg = "graphics/cursors/blueNoteCursor.gif";
+private final String blackNoteCursorImg = "graphics/cursors/blackNoteCursor.gif";
+private final String greenNoteCursorImg = "graphics/cursors/greenNoteCursor.gif";
+private final String redNoteCursorImg = "graphics/cursors/redNoteCursor.gif";
+private final String blackNoteLineCursorImg = "graphics/cursors/blackNoteLineCursor.gif";
+private final String greenNoteLineCursorImg = "graphics/cursors/greenNoteLineCursor.gif";
+private final String redNoteLineCursorImg = "graphics/cursors/redNoteLineCursor.gif";
 
 private Cursor makeCursor(String filename, String cursorName, boolean offset)
  {
@@ -3072,6 +3071,7 @@ public void setCursor()
 
 public void setCursor(Cursor cursor)
  {
+  //System.out.println("setCursor " + cursor);
   switch( notate.getMode() )
    {
     case NORMAL:
