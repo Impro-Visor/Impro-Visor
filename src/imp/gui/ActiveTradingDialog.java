@@ -118,6 +118,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeStore = new javax.swing.JRadioButtonMenuItem();
         tradeMusicianMenu = new javax.swing.JMenu();
         tradeGrammarMenu = new javax.swing.JMenu();
+        tradePlayMenu = new javax.swing.JMenu();
+        tradePlayMenuItem = new javax.swing.JMenuItem();
+        tradeStopMenuItem = new javax.swing.JMenuItem();
 
         setTitle("Impro-Visor Active Trading");
         setBackground(new java.awt.Color(204, 204, 255));
@@ -223,9 +226,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         processTimeSelector.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
         processTimeSelector.setText("0.5");
         processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing time (in beats)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        processTimeSelector.setMaximumSize(new java.awt.Dimension(50, 2147483647));
-        processTimeSelector.setMinimumSize(new java.awt.Dimension(50, 50));
-        processTimeSelector.setPreferredSize(new java.awt.Dimension(29, 50));
+        processTimeSelector.setMaximumSize(new java.awt.Dimension(200, 50));
+        processTimeSelector.setMinimumSize(new java.awt.Dimension(200, 50));
+        processTimeSelector.setPreferredSize(new java.awt.Dimension(200, 50));
         processTimeSelector.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 processTimeSelectorCaretUpdate(evt);
@@ -249,7 +252,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         getContentPane().add(processTimeSelector, gridBagConstraints);
 
         volumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume of Response", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        volumePanel.setMaximumSize(new java.awt.Dimension(200, 76));
+        volumePanel.setMaximumSize(new java.awt.Dimension(200, 50));
         volumePanel.setMinimumSize(new java.awt.Dimension(200, 50));
         volumePanel.setPreferredSize(new java.awt.Dimension(200, 50));
         volumePanel.setLayout(new java.awt.GridBagLayout());
@@ -284,8 +287,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         getContentPane().add(volumePanel, gridBagConstraints);
 
         tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (Beats/Minute)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        tempoPanel.setMaximumSize(new java.awt.Dimension(200, 76));
-        tempoPanel.setMinimumSize(new java.awt.Dimension(200, 76));
+        tempoPanel.setMaximumSize(new java.awt.Dimension(200, 50));
+        tempoPanel.setMinimumSize(new java.awt.Dimension(200, 50));
         tempoPanel.setPreferredSize(new java.awt.Dimension(200, 50));
         tempoPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -446,6 +449,29 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeGrammarMenu.setText("Grammar");
         mainTradeMenuBar.add(tradeGrammarMenu);
 
+        tradePlayMenu.setText("Play");
+
+        tradePlayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
+        tradePlayMenuItem.setText("Trade");
+        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tradePlayMenuItemActionPerformed(evt);
+            }
+        });
+        tradePlayMenu.add(tradePlayMenuItem);
+
+        tradeStopMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
+        tradeStopMenuItem.setText("Stop");
+        tradeStopMenuItem.setActionCommand("Stop");
+        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tradeStopMenuItemActionPerformed(evt);
+            }
+        });
+        tradePlayMenu.add(tradeStopMenuItem);
+
+        mainTradeMenuBar.add(tradePlayMenu);
+
         setJMenuBar(mainTradeMenuBar);
 
         pack();
@@ -499,6 +525,14 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
        updateCountIn();
     }//GEN-LAST:event_countToggleActionPerformed
 
+    private void tradeStopMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeStopMenuItemActionPerformed
+        stopTrading();
+    }//GEN-LAST:event_tradeStopMenuItemActionPerformed
+
+    private void tradePlayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradePlayMenuItemActionPerformed
+       startTrading();
+    }//GEN-LAST:event_tradePlayMenuItemActionPerformed
+
     private float tryFloat(String number) {
         float newNumber;
         try {
@@ -536,11 +570,22 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
 
     private void startTradingButtonPressed() {
-        if (!isUserInputError) {
+
+        startTrading();
+    }
+    
+    private void startTrading()
+    {
+         if (!isUserInputError) {
             updateMusician();
             updateTradeMode();
-            activeTrading.startOrStop();
-        }
+            activeTrading.startOrStop(); 
+         }
+    }
+    
+    private void stopTrading()
+    {
+        activeTrading.startOrStop(); 
     }
     
     private void updateProcessTimeText() {
@@ -698,9 +743,12 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JPanel tradeLengthPanel;
     private javax.swing.JSpinner tradeLengthSpinner;
     private javax.swing.JMenu tradeMusicianMenu;
+    private javax.swing.JMenu tradePlayMenu;
+    private javax.swing.JMenuItem tradePlayMenuItem;
     private javax.swing.JRadioButtonMenuItem tradeRandomModify;
     private javax.swing.JRadioButtonMenuItem tradeRepeat;
     private javax.swing.JRadioButtonMenuItem tradeRepeatAndRectify;
+    private javax.swing.JMenuItem tradeStopMenuItem;
     private javax.swing.JRadioButtonMenuItem tradeStore;
     private javax.swing.JRadioButtonMenuItem tradeWithAMusician;
     private javax.swing.ButtonGroup transformFileSelector;
