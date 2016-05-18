@@ -898,7 +898,6 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
         notate.improvisationOn = false;
-        notate.improvOn = false;
         notate.playAll();
         
         updatePlayButtons();

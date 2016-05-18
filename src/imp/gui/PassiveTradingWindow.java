@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2015 Robert Keller and Harvey Mudd College.
+ * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College.
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -85,13 +85,15 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         eight = new javax.swing.JRadioButton();
         twelve = new javax.swing.JRadioButton();
         sixteen = new javax.swing.JRadioButton();
+        playbackControls = new javax.swing.JPanel();
+        countToggle = new javax.swing.JCheckBox();
+        startTradingButton = new javax.swing.JButton();
 
         setTitle("Passive Trading");
         setAlwaysOnTop(true);
-        setBounds(new java.awt.Rectangle(10, 25, 400, 300));
-        setMaximumSize(new java.awt.Dimension(400, 150));
-        setMinimumSize(new java.awt.Dimension(400, 150));
-        setPreferredSize(new java.awt.Dimension(300, 150));
+        setBounds(new java.awt.Rectangle(25, 25, 400, 200));
+        setMaximumSize(new java.awt.Dimension(400, 200));
+        setMinimumSize(new java.awt.Dimension(400, 200));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         whoGoesFirstPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Who goes first?"));
@@ -125,7 +127,7 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.weighty = 0.3;
         getContentPane().add(whoGoesFirstPanel, gridBagConstraints);
 
         tradeLengthPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Trade Length (in bars)"));
@@ -183,8 +185,48 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.weighty = 0.3;
         getContentPane().add(tradeLengthPanel, gridBagConstraints);
+
+        playbackControls.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        playbackControls.setMinimumSize(new java.awt.Dimension(261, 50));
+        playbackControls.setPreferredSize(new java.awt.Dimension(261, 50));
+        playbackControls.setLayout(new java.awt.GridBagLayout());
+
+        countToggle.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        countToggle.setText("Count");
+        countToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                countToggleActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 19, 11, 1);
+        playbackControls.add(countToggle, gridBagConstraints);
+
+        startTradingButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
+        startTradingButton.setLabel("Start Trading");
+        startTradingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startTradingButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        playbackControls.add(startTradingButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 0.4;
+        getContentPane().add(playbackControls, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -193,13 +235,48 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_userFirstActionPerformed
 
+    private void countToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countToggleActionPerformed
+        notate.toggleCountIn();
+    }//GEN-LAST:event_countToggleActionPerformed
+
+    boolean trading = false;
+    
+    private void startTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradingButtonActionPerformed
+        //notate.toggleImproviseButton(); To use this, notate would 
+        // have to change the buttons here to keep in sync
+        notate.remoteToggleImprovise();
+        if( trading )
+        {
+            tradingStopped();
+            trading = false;
+        }
+        else
+        {
+            tradingStarted();
+            trading = true;
+        }
+    }//GEN-LAST:event_startTradingButtonActionPerformed
+    
+      public void tradingStarted() {
+        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
+        startTradingButton.setText("Stop Trading");
+    }
+
+    public void tradingStopped() {
+        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif")));
+        startTradingButton.setText("Start Trading");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox countToggle;
     private javax.swing.JRadioButton eight;
     private javax.swing.JRadioButton four;
     private javax.swing.JRadioButton improvisorFirst;
     private javax.swing.ButtonGroup numberOfBarsGroup;
     private javax.swing.JRadioButton one;
+    private javax.swing.JPanel playbackControls;
     private javax.swing.JRadioButton sixteen;
+    private javax.swing.JButton startTradingButton;
     private javax.swing.JPanel tradeLengthPanel;
     private javax.swing.JRadioButton twelve;
     private javax.swing.JRadioButton two;

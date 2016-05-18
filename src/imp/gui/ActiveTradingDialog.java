@@ -323,6 +323,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         getContentPane().add(tempoPanel, gridBagConstraints);
 
+        playbackControls.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         playbackControls.setMinimumSize(new java.awt.Dimension(261, 50));
         playbackControls.setPreferredSize(new java.awt.Dimension(261, 50));
         playbackControls.setLayout(new java.awt.GridBagLayout());

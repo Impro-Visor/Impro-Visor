@@ -10944,7 +10944,7 @@ public void stopPlaying(String reason)
     //requestFocusInWindow();
     
     //from here end enables saving improv in the lickgenframe
-    if(saveImprovCheckBoxMenuItem.isSelected() && improvOn){
+    if(saveImprovCheckBoxMenuItem.isSelected() && improvisationOn){
       saveImprovisation();
     }
   }
@@ -11044,7 +11044,6 @@ private void recordFromMidi()
 
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
         improvisationOn = false;
-        improvOn = false;
         playAll();
     }//GEN-LAST:event_playBtnActionPerformed
 
@@ -23302,12 +23301,36 @@ public void textRequestFocus()
 
 int improviseStartSlot, improviseEndSlot;
 boolean improvisationOn = false;
-boolean improvOn = false;
+
+public void toggleCountIn()
+{
+    if( countInCheckBox.isSelected() )
+    {
+        setCountIn(false);
+    }
+    else
+    { 
+        setCountIn(true);
+    }
+}
+
+public void remoteToggleImprovise()
+{
+    if( !improvisationOn )
+      {
+        improvisationOn = true;
+        playAll();
+      }
+    else
+      {
+        stopPlaying();
+        improvisationOn = false;
+      }
+}
 
 public void improviseButtonToggled()
   {
     improvisationOn = improviseButton.isSelected();
-    improvOn = true;
     if( improvisationOn )
       {
         improviseButton.setBackground(new Color(255, 0, 0));
