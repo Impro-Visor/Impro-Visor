@@ -463,7 +463,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         tradeStopMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         tradeStopMenuItem.setText("Stop");
-        tradeStopMenuItem.setActionCommand("Stop");
         tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tradeStopMenuItemActionPerformed(evt);
