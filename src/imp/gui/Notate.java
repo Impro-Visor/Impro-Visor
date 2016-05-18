@@ -26,8 +26,6 @@ import imp.Constants.StaveType;
 import imp.ImproVisor;
 import static imp.ImproVisor.getStyleDirectory;
 import imp.RecentFiles;
-import imp.audio.AudioSettings;
-import imp.audio.PitchExtractor;
 import imp.audio.SCHandler;
 import imp.brickdictionary.Block;
 import imp.com.*;
@@ -97,7 +95,6 @@ FractalFrame fractalFrame;
 IntervalLearningFrame intervalLearningFrame;
 MidiImportFrame midiImportFrame = null;
 MidiImport midiImport;
-PitchExtractor extractor;
 private int captureInterval;//# of slots per audio capture interval
 //java.util.Timer captureTimer;
 //CaptureTimerTask task;
@@ -315,7 +312,6 @@ private boolean useNoteCursor = false;
  * Set this value if a roadmap created this frame.
  */
 private RoadMapFrame createdByRoadmap = null;
-private AudioSettings audioSettings;
 
 synchronized public void setPlaybackStop(int slot, String message)
   {
@@ -1042,7 +1038,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setAutoImprovisation(false);
 
-    audioSettings = new AudioSettings(this);
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
   } // end of Notate constructor
@@ -10756,29 +10751,6 @@ public void stopRecording()
       }
   }
 
-private void startAudioCapture()
-  {
-    captureInterval = score.getMetre()[0] * BEAT;
-    int startingPosition = (Math.round(midiSynth.getSlot()
-            / getTradeLength())) * getTradeLength();
-    System.out.println("Starting position " + startingPosition
-            + " passed to PitchExtractor.");
-    extractor = new PitchExtractor(this,
-                                   score,
-                                   midiSynth,
-                                   audioSettings,
-                                   startingPosition,
-                                   captureInterval,
-                                   true);
-    extractor.captureAudio();
-  }
-
-/*Used by the SCDelayOffsetter*/
-public AudioSettings getAudioSettings()
-  {
-    return audioSettings;
-  }
-
 /**
  * Starts recording: registers the midiRecorder and changes the mode.
  */
@@ -10797,36 +10769,6 @@ public void startRecording(){
       {
         ErrorLog.log(ErrorLog.COMMENT, "No valid MIDI in devices found.  \n\nPlease check your device connection and the MIDI Preferences. It is possible another program is currently using this device.");
       }
-    
-    /*
-    this section is from the old implementation of audio input
-    */
-//    else if( superColliderMode ) //User wants to use SuperCollider. Works if checkbox selected
-//      {
-//
-//        String devName = midiManager.getInDeviceInfo().getName();
-//        //Check for valid Input Device associated with using SuperCollider
-//        boolean validSCInDevice = devName.equals("IAC Bus 1")
-//                || devName.equals("Bus 1")
-//                || devName.equals("LoopBe Internal MIDI")
-//                || devName.contains("VirMIDI");
-//
-//        //If valid device selected, okay to go through with recording. Else,
-//        //yell at user. @TODO potential trouble spot for user-defined 
-//        //workarounds.            
-//        if( validSCInDevice )
-//          {
-//            SCHandler handler = new SCHandler();
-//            handler.openSC();
-//            startRecordingHelper();
-//          }
-//        else
-//          {
-//            //@TODO Yell at user. Like through a dialog. Then quit.
-//            ErrorLog.log(ErrorLog.WARNING, "You need a valid MIDI input device "
-//                    + "to do this! See Help->Audio Input for instructions/details.");
-//          }
-//      }
     else
       {
         startRecordingHelper();//below
@@ -23269,18 +23211,6 @@ public boolean getDeltaStatus()
 public void setDeltaStatus(boolean delta)
   {
     replaceWithDelta.setState(delta);
-  }
-
-public void setRMSThreshold(double value)
-  {
-    int intValue = (int) (10 * value);
-    //rmsThresholdSlider.setValue(intValue);
-  }
-
-public void setConfidenceThreshold(double value)
-  {
-    int intValue = (int) (100 * value);
-    //confidenceThresholdSlider.setValue(intValue);
   }
 
 /**

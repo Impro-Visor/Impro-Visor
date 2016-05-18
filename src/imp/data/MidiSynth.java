@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 package imp.data;
 
 import imp.Constants;
-import imp.audio.PitchExtractor;
 import imp.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,22 +54,13 @@ private short m_ppqn;
 /** The overall (Score) tempo value */
 private float tempo;
 
-/** The diff between the score and part tempi */
-private double trackTempoRatio = 1.0;
-
-/** The diff between the score and phrase tempi */
-private double elementTempoRatio = 1.0;
-
-/** The name of the jMusic score */
-private String scoreTitle;
-
 /** sets the MIDI resolution */
 private final static short DEFAULT_PPQ = 480;
 
-private final static double magic120 = 120.0;
+private final static double MAGIC120 = 120.0;
 
 /** end of track */
-private final static int StopType = 47;
+private final static int STOP_TYPE = 47;
 
 private MidiManager midiManager;
 
@@ -88,15 +78,9 @@ private static long playCounter = 0;
 
 private int countInOffset = 0;
 
-PitchExtractor extractor;
-
-private long startTime;
-
 private long playbackStartTime;
 
 ArrayList<MidiNoteListener> noteListeners = new ArrayList<MidiNoteListener>();
-
-private boolean isTradingMelody;
 
 
 public MidiSynth(MidiManager midiManager)
@@ -170,7 +154,7 @@ public long getMicrosecond()
       {
         return 0;
       }
-    return (long) (sequencer.getMicrosecondPosition() * magic120 / getTempo() );
+    return (long) (sequencer.getMicrosecondPosition() * MAGIC120 / getTempo() );
   }
 
 
@@ -181,7 +165,7 @@ public long getTotalMicroseconds()
         return 0;
       }
 
-    return (long) (sequencer.getMicrosecondLength()*(1-getCountInFraction()) * magic120 / getTempo());
+    return (long) (sequencer.getMicrosecondLength()*(1-getCountInFraction()) * MAGIC120 / getTempo());
   }
 
 
@@ -231,7 +215,7 @@ public long getTotalMicrosecondsWithCountIn()
       {
         return 0;
       }
-    return (long) (sequencer.getMicrosecondLength() * magic120 / tempo );
+    return (long) (sequencer.getMicrosecondLength() * MAGIC120 / tempo );
   }
 
 
@@ -257,7 +241,7 @@ public void setMicrosecond(long position)
         return;
       }
     midiManager.sendAllSoundsOffMsg();
-    long value = (long) (position * tempo / magic120);
+    long value = (long) (position * tempo / MAGIC120);
 
     value += getCountInMicroseconds();
 
@@ -423,7 +407,13 @@ public void play(Score score,
 /**
  * Plays the score data via a MIDI synthesizer
  * @param score   Score data to change to SMF
- * @exception Exception
+     * @param startIndex
+     * @param loopCount
+     * @param transposition
+     * @param useDrums
+     * @param endLimitIndex
+     * @param countInOffset
+     * @throws javax.sound.midi.InvalidMidiDataException
  */
 public void origPlay(Score score,
                  long startIndex,
@@ -445,8 +435,6 @@ public void origPlay(Score score,
       }
 
     setCountInOffset(countInOffset);
-
-    scoreTitle = score.getTitle();
 
     tempo = (float) score.getTempo();
 
@@ -603,7 +591,14 @@ public void prePlay(Score score,
  * Does most of what's in play(...) except for starting the sequencer.
  * This is so priming can take place, and start will have less latency.
  * @param score   Score data to change to SMF
- * @exception Exception
+     * @param startIndex
+     * @param loopCount
+     * @param transposition
+     * @param useDrums
+     * @param endLimitIndex
+     * @param countInOffset
+     * @param isTradingMelody
+     * @throws javax.sound.midi.InvalidMidiDataException
  */
 public void prePlay(Score score,
                     long startIndex,
@@ -621,16 +616,12 @@ public void prePlay(Score score,
 //              + startIndex + " loopCount = " + loopCount + " endIndex = "
 //              + endLimitIndex);
       
-    this.isTradingMelody = isTradingMelody;
-
     if( sequencer == null )
       {
         setSequencer();
       }
 
     setCountInOffset(countInOffset);
-
-    scoreTitle = score.getTitle();
 
     tempo = (float) score.getTempo();
 
@@ -823,6 +814,7 @@ public void setPlayListener(MidiPlayListener listener)
 
 /**
  * Stop sequencer object
+     * @param reason
  */
 public void stop(String reason)
   {
@@ -869,6 +861,8 @@ public void close()
  * @param pitch     the pitch of the note
  * @param velocity  the velocity of the note
  * @param tick      the time this event occurs
+     * @return 
+     * @throws javax.sound.midi.InvalidMidiDataException 
  */
 protected static MidiEvent createNoteOnEvent(int channel,
                                              int pitch, int velocity,
@@ -889,6 +883,8 @@ protected static MidiEvent createNoteOnEvent(int channel,
  * @param pitch     the pitch of the note
  * @param velocity  the velocity of the note
  * @param tick      the time this event occurs
+     * @return 
+     * @throws javax.sound.midi.InvalidMidiDataException
  */
 protected static MidiEvent createNoteOffEvent(int channel,
                                               int pitch, int velocity,
@@ -915,8 +911,10 @@ protected static MidiEvent createNoteOffEvent(int channel,
  * Not sure this is correct:
  * Create a Bank Select MSB Event
  * @param bankMSB  MSB of the bank to select
- * @param value    the new value to use
  * @param tick     the time this event occurs
+     * @param isTradingMelody
+     * @return 
+     * @throws javax.sound.midi.InvalidMidiDataException 
  */
 protected static MidiEvent createBankSelectEventMSB(int bankMSB,
                                                     long tick,
@@ -939,9 +937,13 @@ protected static MidiEvent createBankSelectEventLSB(int bankLSB,
 /**
  * Not sure this is correct:
  * Create a Bank Select LSB Event
+     * @param bankLSB
  * @param bankMSB  LSB of the bank to select
+     * @param isTradingMelody
  * @param value    the new value to use
  * @param tick     the time this event occurs
+     * @return 
+     * @throws javax.sound.midi.InvalidMidiDataException 
  */
 protected static MidiEvent createBankSelectEventLSB(int bankLSB,
                                                     long tick,
@@ -959,6 +961,8 @@ protected static MidiEvent createBankSelectEventLSB(int bankLSB,
  * @param channel  the channel to change
  * @param value    the new value to use
  * @param tick     the time this event occurs
+     * @return 
+     * @throws javax.sound.midi.InvalidMidiDataException 
  */
 protected static MidiEvent createProgramChangeEvent(int channel,
                                                     int value,
@@ -993,6 +997,9 @@ protected static MidiEvent createCChangeEvent(int channel,
  * @param controlNum  the control change number to use
  * @param value       the value of the control change
  * @param tick        the time this event occurs
+     * @param isTradingMelody
+     * @return 
+     * @throws javax.sound.midi.InvalidMidiDataException 
  */
 protected static MidiEvent createCChangeEvent(int channel,
                                               int controlNum,
@@ -1015,6 +1022,7 @@ protected static MidiEvent createCChangeEvent(int channel,
  * Takes the specified Sequence, finds the longest track and
  * adds an event to end the Sequence.
  * @param seq       the Sequence to end
+     * @throws javax.sound.midi.InvalidMidiDataException
  */
 protected static void endSequence(Sequence seq)
     throws InvalidMidiDataException
@@ -1037,7 +1045,7 @@ protected static void endSequence(Sequence seq)
       {
         MetaMessage msg = new MetaMessage();
         byte[] data = new byte[0];
-        msg.setMessage(StopType, data, 0);
+        msg.setMessage(STOP_TYPE, data, 0);
         MidiEvent evt = new MidiEvent(msg, longestTime);
         longestTrack.add(evt);
       }
@@ -1131,9 +1139,9 @@ private class Mixer implements Receiver, Transmitter
 {
 Receiver receiver;
 
-private int numChannels;
+private final int numChannels;
 
-private double[] channelVolume;
+private final double[] channelVolume;
 
 private double volume = 1;
 

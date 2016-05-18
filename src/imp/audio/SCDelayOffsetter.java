@@ -42,7 +42,6 @@ public class SCDelayOffsetter {
     private Notate notate;
     private double tempo;
     private Score score;
-    private AudioSettings audioSettings;
     private int resolution;
     private double offsetSlots;//See determineOmniOffsetSlots for explanation
 
@@ -55,8 +54,6 @@ public class SCDelayOffsetter {
         notate = notate1;
         score = notate.getScore();
         tempo = score.getTempo();
-        audioSettings = notate.getAudioSettings();
-        resolution = audioSettings.getRESOLUTION();
     }
 
     /**
