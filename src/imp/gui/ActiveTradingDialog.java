@@ -41,6 +41,7 @@ import javax.swing.JRadioButtonMenuItem;
 public class ActiveTradingDialog extends javax.swing.JDialog implements TradeListener, ActionListener {
  
     private final ActiveTrading activeTrading;
+    private boolean userFirst = true;
     private boolean isUserInputError = false;
     private final Integer initialTradeLength = 4;
     public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 25);
@@ -563,7 +564,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     }
     
     private void updateCountIn() {
-        notate.setCountIn(countToggle.isSelected());
+      notate.setCountIn(countToggle.isSelected());
     }
 
     private void updateTempo() {
@@ -589,7 +590,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     }
 
     private void updateIsUserLeading() {
-        boolean userFirst = userFirstButton.isSelected();
+        userFirst = userFirstButton.isSelected();
         activeTrading.setIsUserLeading(userFirst);
         // Force countIn off if Impro-Visor is first
         if( !userFirst )
@@ -597,7 +598,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             countToggle.setSelected(false);
             updateCountIn();
         }
-    }
+      countToggle.setEnabled(userFirst);
+   }
 
     private String getFromDropDown(JMenu menu) {
         Component[] modes = menu.getMenuComponents();
