@@ -2041,6 +2041,10 @@ public Critic getCritic()
         voicingTestMI = new javax.swing.JMenuItem();
         pianoKeyboardMI = new javax.swing.JMenuItem();
         improvMenu = new javax.swing.JMenu();
+        tradingWindow = new javax.swing.JMenuItem();
+        passiveTradingMI = new javax.swing.JMenuItem();
+        tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
+        improvSeparator2 = new javax.swing.JPopupMenu.Separator();
         grammarRadio = new javax.swing.JRadioButtonMenuItem();
         transformRadio = new javax.swing.JRadioButtonMenuItem();
         grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
@@ -2052,11 +2056,7 @@ public Critic getCritic()
         themeWeaveRadio = new javax.swing.JRadioButtonMenuItem();
         intervalsRadio = new javax.swing.JRadioButtonMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
-        tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
         saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
-        improvSeparator2 = new javax.swing.JPopupMenu.Separator();
-        tradingWindow = new javax.swing.JMenuItem();
-        passiveTradingMI = new javax.swing.JMenuItem();
         notateGrammarMenu = new javax.swing.JMenu();
         windowMenu = new javax.swing.JMenu();
         closeWindowMI = new javax.swing.JMenuItem();
@@ -9097,6 +9097,31 @@ public Critic getCritic()
 
         improvMenu.setText("Improv");
 
+        tradingWindow.setText("Open Active Trading");
+        tradingWindow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tradingWindowActionPerformed(evt);
+            }
+        });
+        improvMenu.add(tradingWindow);
+
+        passiveTradingMI.setText("Open Passive Trading");
+        passiveTradingMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passiveTradingMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(passiveTradingMI);
+
+        tradeCheckbox.setText("Trade");
+        tradeCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tradeCheckboxActionPerformed(evt);
+            }
+        });
+        improvMenu.add(tradeCheckbox);
+        improvMenu.add(improvSeparator2);
+
         improvButtonGroup.add(grammarRadio);
         grammarRadio.setSelected(true);
         grammarRadio.setText("Use Grammar");
@@ -9133,14 +9158,6 @@ public Critic getCritic()
         improvMenu.add(intervalsRadio);
         improvMenu.add(improvSeparator1);
 
-        tradeCheckbox.setText("Trade");
-        tradeCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tradeCheckboxActionPerformed(evt);
-            }
-        });
-        improvMenu.add(tradeCheckbox);
-
         saveImprovCheckBoxMenuItem.setText("Save Improvisation");
         saveImprovCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -9148,23 +9165,6 @@ public Critic getCritic()
             }
         });
         improvMenu.add(saveImprovCheckBoxMenuItem);
-        improvMenu.add(improvSeparator2);
-
-        tradingWindow.setText("Open Active Trading");
-        tradingWindow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tradingWindowActionPerformed(evt);
-            }
-        });
-        improvMenu.add(tradingWindow);
-
-        passiveTradingMI.setText("Open Passive Trading");
-        passiveTradingMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passiveTradingMIActionPerformed(evt);
-            }
-        });
-        improvMenu.add(passiveTradingMI);
 
         menuBar.add(improvMenu);
 
@@ -17862,9 +17862,14 @@ public void playAll()
 
 public void establishCountIn()
   {
-    boolean countInSelected = countInCheckBox.isSelected();
-    score.setCountIn(countInSelected ? makeCountIn() : null);
+      establishCountIn(score);
   }
+
+public void establishCountIn(Score score)
+{
+    boolean countInSelected = countInCheckBox.isSelected();
+    score.setCountIn(countInSelected ? makeCountIn() : null);    
+}
 
 public void noCountIn()
   {
@@ -17896,7 +17901,6 @@ public void playFirstChorus(){
     previousSynthSlot = 0;
 
     improvMelodyIndex = 0;
-    establishCountIn();
     playScoreBody(0, false);
 }
 

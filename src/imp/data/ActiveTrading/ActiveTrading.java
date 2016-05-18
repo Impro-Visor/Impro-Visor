@@ -431,9 +431,9 @@ public class ActiveTrading {
             tradeScore.setBassMuted(true);
             tradeScore.delPart(0);
             response = tradeResponseController.extractFromGrammarSolo(0, slotsPerTurn);
-            Long delayCopy = new Long(slotDelay);
+            Long delayCopy = slotDelay;
             MelodyPart adjustedResponse = response.extract(delayCopy.intValue(), slotsPerTurn - one, true, true);
-            tradeScore.deleteChords();
+            //notate.establishCountIn(tradeScore);  // Doesn't work for Impro-Visor first
             tradeScore.addPart(adjustedResponse);
             playCommand = new PlayScoreCommand(
                     tradeScore,

@@ -589,7 +589,14 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     }
 
     private void updateIsUserLeading() {
-        activeTrading.setIsUserLeading(userFirstButton.isSelected());
+        boolean userFirst = userFirstButton.isSelected();
+        activeTrading.setIsUserLeading(userFirst);
+        // Force countIn off if Impro-Visor is first
+        if( !userFirst )
+        {
+            countToggle.setSelected(false);
+            updateCountIn();
+        }
     }
 
     private String getFromDropDown(JMenu menu) {

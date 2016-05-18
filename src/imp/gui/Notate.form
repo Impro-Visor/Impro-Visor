@@ -8662,6 +8662,32 @@
             <Property name="text" type="java.lang.String" value="Improv"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="tradingWindow">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Open Active Trading"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradingWindowActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="passiveTradingMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Open Passive Trading"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passiveTradingMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Trade"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeCheckboxActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator2">
+            </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="grammarRadio">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
@@ -8733,38 +8759,12 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator1">
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Trade"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeCheckboxActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="saveImprovCheckBoxMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save Improvisation"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rememberImprovCheckBoxActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator2">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="tradingWindow">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Open Active Trading"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradingWindowActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="passiveTradingMI">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Open Passive Trading"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passiveTradingMIActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
