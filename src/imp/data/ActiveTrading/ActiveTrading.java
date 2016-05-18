@@ -106,7 +106,6 @@ public class ActiveTrading {
         this.notate = notate;
         tradeScore = new Score();
         
-
         //defaults on open
         this.tradeMode = DEFAULT_TRADE_MODE;
         this.measures = DEFAULT_TRADE_LENGTH;
@@ -119,7 +118,6 @@ public class ActiveTrading {
         midiManager = notate.getMidiManager();
         midiSynth = new MidiSynth(midiManager);
         midiSynth.setMasterVolume(volume);
-        notate.setEnabled(false);
     }
     
     public int getSlotsForProcessing(){
@@ -566,14 +564,14 @@ public class ActiveTrading {
         measures = length;
     }
     
-
-    public void tradingWindowClosed() {
+    
+    public void tradingClosed() {
         if (isTrading) {
             stopTrading();
         }
         notate.setEnabled(true);
         notate.setLoop(false);
-        notate.tradingWindowClosed();
+        notate.tradingDialogClosed();
     }
 
     public void startOrStop() {

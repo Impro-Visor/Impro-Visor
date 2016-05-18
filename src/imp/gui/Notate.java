@@ -89,7 +89,7 @@ public static int midiImportYoffset = 200;
 public static final int HELP_DIALOG_WIDTH = 980;
 public static final int HELP_DIALOG_HEIGHT = 600;
 private static final long serialVersionUID = 1L;
-private int DEFAULT_SLIDER_VOLUME = 80;
+private static final int DEFAULT_SLIDER_VOLUME = 80;
 RoadMapFrame roadmapFrame = null;
 LickgenFrame lickgenFrame;
 TransformFrame transformFrame;
@@ -571,8 +571,8 @@ private MidiLatencyMeasurementTool midiLatencyMeasurement = new MidiLatencyMeasu
 /**
  * Trading prefs
  */
-ActiveTradingWindow trader;
-
+//ActiveTradingWindow trader;
+ActiveTradingDialog traderDialog = null;
 private boolean isActiveTrading = false;
 
 /**
@@ -690,14 +690,9 @@ public Notate(Score score, int x, int y)
 public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
   {
     super();
-    
     passiveTradingWindow = new PassiveTradingWindow(this);
     passiveTradingWindow.setVisible(false);
-    
-//    for(int i = 0; i < tradingOption.length; i++){
-//        wordToNumber.put(tradingOption[i], tradingQuantum[i]);
-//    }
-    
+
     setTitle(score.getTitle());
 
     setTransposition(score.getTransposition());
@@ -17876,6 +17871,12 @@ public void noCountIn()
     score.noCountIn();
   }
 
+public void setCountIn(boolean value)
+{
+    countInCheckBox.setSelected(value);
+    establishCountIn();
+}
+
 int slotDelay;
 boolean continuousImprovisation = true; // Box is initially checked.
 
@@ -23041,13 +23042,19 @@ int quantizeResolution = 60;
         // Open New Trading window
         isActiveTrading = true;
         this.setToNotLoop();
-        if (trader == null) {
-        trader = new ActiveTradingWindow(this);
-        trader.setLocation(trader.initialOpenPoint);
+        if (traderDialog == null) {
+        //trader = new ActiveTradingWindow(this);
+        traderDialog = new ActiveTradingDialog(this, false); // Not modal
+        //trader.setLocation(trader.initialOpenPoint);
+        traderDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
+        traderDialog.setSize(800, 200);
         } else {
-            trader.tradingWindowOpened();
+            //trader.tradingWindowOpened();
+            traderDialog.tradingDialogOpened();
         }
-        trader.setVisible(true);
+        //trader.setVisible(true);
+        
+        traderDialog.setVisible(true);
     }//GEN-LAST:event_tradingWindowActionPerformed
 
     private void delAllMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delAllMIActionPerformed
@@ -23691,8 +23698,8 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     JMenuItem item = (JMenuItem) evt.getSource();
     String stem = item.getText();
     notateGrammarMenu.setText(stem);
-    if(trader != null){
-        trader.refreshSelectedGrammar(stem);
+    if(traderDialog != null){
+        traderDialog.refreshSelectedGrammar(stem);
     }
     fullName = stem + GrammarFilter.EXTENSION;
     grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + fullName;
@@ -26346,6 +26353,11 @@ public void tradingWindowClosed(){
     isActiveTrading = false;
 }
 
+public void tradingDialogClosed(){
+    isActiveTrading = false;
+}
+
+
 public boolean getUseNoteCursor()
   {
     return useNoteCursor;
@@ -26425,7 +26437,8 @@ public void actionPerformed(ActionEvent evt) {
 
         //this is used to pass info for interactive trading
         if (isActiveTrading) {
-            Notate.this.trader.trackPlay(evt);
+//            Notate.this.trader.trackPlay(evt);
+            Notate.this.traderDialog.trackPlay(evt);
         }
 
     if( playingStopped() )
