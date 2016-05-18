@@ -14592,25 +14592,7 @@ private boolean saveMidiLatency()
     return true;
   }
 
-/**
- * Saves audio latency in milliseconds.
- *
- * Gets latency in terms of beats from user input, converts based on current
- * tempo.
- *
- * @return
- 
-private boolean saveAudioLatency()
-  {
-    System.out.println("Saved audio latency");
-    double beatLatency = doubleFromTextField(beatDelayInputBox, 0, Double.POSITIVE_INFINITY, 0);
-    SCDelayOffsetter delayOffsetter = new SCDelayOffsetter(this);
-    double msLatency = delayOffsetter.gatherDelay(beatLatency);
-    Preferences.setAudioInLatency(msLatency);
-    audioLatencyRegistered = true;//Have edited audio latency at least once
-    return true;
-  }
-*/
+
 private boolean saveSectionInfo()
   {
     score.getChordProg().setSectionInfo(sectionInfo.copy());
