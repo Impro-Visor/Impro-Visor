@@ -686,8 +686,6 @@ public Notate(Score score, int x, int y)
 public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
   {
     super();
-    passiveTradingWindow = new PassiveTradingWindow(this);
-    passiveTradingWindow.setVisible(false);
 
     setTitle(score.getTitle());
 
@@ -922,6 +920,10 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     transformFrame = new TransformFrame(this, lickgen, cm);
     fractalFrame = new FractalFrame(this, cm);
     intervalLearningFrame = new IntervalLearningFrame(this);
+    
+    passiveTradingWindow = new PassiveTradingWindow(this);
+    passiveTradingWindow.setVisible(false);
+
     
     //OLD TRADING CODE
     //populateTradingMenu();
@@ -1836,7 +1838,6 @@ public Critic getCritic()
         noteCursorBtn = new javax.swing.JButton();
         showAdviceButton = new javax.swing.JToggleButton();
         improviseButton = new javax.swing.JToggleButton();
-        generationGapSpinner = new javax.swing.JSpinner();
         freezeLayoutButton = new javax.swing.JToggleButton();
         colorationButton = new javax.swing.JToggleButton();
         smartEntryButton = new javax.swing.JToggleButton();
@@ -7159,21 +7160,6 @@ public Critic getCritic()
             }
         });
         standardToolbar.add(improviseButton);
-
-        generationGapSpinner.setModel(new javax.swing.SpinnerNumberModel(4.0d, -20.0d, 20.0d, 0.01d));
-        generationGapSpinner.setToolTipText("Specifies the lead time, in beats, for generating next chorus before the end of the current chorus, if Recur is toggled on.");
-        generationGapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lead", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 10))); // NOI18N
-        generationGapSpinner.setInheritsPopupMenu(true);
-        generationGapSpinner.setMaximumSize(new java.awt.Dimension(70, 45));
-        generationGapSpinner.setMinimumSize(new java.awt.Dimension(70, 45));
-        generationGapSpinner.setPreferredSize(new java.awt.Dimension(70, 45));
-        generationGapSpinner.setValue(0.5);
-        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                generationLeadSpinnerChanged(evt);
-            }
-        });
-        standardToolbar.add(generationGapSpinner);
 
         freezeLayoutButton.setBackground(new java.awt.Color(0, 255, 0));
         freezeLayoutButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -22330,11 +22316,6 @@ private void showConstructionLinesMIActionPerformed(java.awt.event.ActionEvent e
       setShowConstructionLinesAndBoxes(showConstructionLinesMI.isSelected());
   }//GEN-LAST:event_showConstructionLinesMIActionPerformed
 
-private void generationLeadSpinnerChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_generationLeadSpinnerChanged
-  {//GEN-HEADEREND:event_generationLeadSpinnerChanged
-      lickgenFrame.setGap(Double.parseDouble(generationGapSpinner.getValue().toString()));
-  }//GEN-LAST:event_generationLeadSpinnerChanged
-
 private void scoreTabMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_scoreTabMousePressed
   {//GEN-HEADEREND:event_scoreTabMousePressed
       requestFocusInWindow();
@@ -23290,12 +23271,12 @@ public void setShowConstructionLinesAndBoxes(boolean value)
 
 public void setGenerationGap(double value)
   {
-    generationGapSpinner.setValue(0.01 * (int) (100 * value));
+    passiveTradingWindow.setGenerationGap(value);
   }
 
 public double getGenerationGap()
   {
-    return (Double) generationGapSpinner.getValue();
+    return passiveTradingWindow.getGenerationGap();
   }
 
 boolean recurrentImprovisation = false;
@@ -25206,7 +25187,6 @@ private ImageIcon pauseButton =
     private javax.swing.JToggleButton freezeLayoutButton;
     private javax.swing.JPanel generalContourTab;
     private javax.swing.JMenuItem generateLickInSelection;
-    private javax.swing.JSpinner generationGapSpinner;
     private javax.swing.ButtonGroup generatorButtonGroup;
     private javax.swing.JToggleButton globalBtn;
     private javax.swing.JPanel globalPreferences;

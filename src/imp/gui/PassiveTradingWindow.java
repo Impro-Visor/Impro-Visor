@@ -31,6 +31,7 @@ import javax.swing.JRadioButton;
 public class PassiveTradingWindow extends javax.swing.JFrame {
 
     private final Notate notate;
+    private final LickgenFrame lickgenFrame;
     
     /**
      * The numeric values of the bars to be traded.
@@ -42,6 +43,7 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
      */
     public PassiveTradingWindow(Notate notate) {
         this.notate = notate;
+        lickgenFrame = notate.getLickgenFrame();
         initComponents();
         four.setSelected(true);
     }
@@ -88,6 +90,7 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         playbackControls = new javax.swing.JPanel();
         countToggle = new javax.swing.JCheckBox();
         startTradingButton = new javax.swing.JButton();
+        generationGapSpinner = new javax.swing.JSpinner();
 
         setTitle("Passive Trading");
         setAlwaysOnTop(true);
@@ -221,6 +224,21 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         playbackControls.add(startTradingButton, gridBagConstraints);
 
+        generationGapSpinner.setModel(new javax.swing.SpinnerNumberModel(4.0d, -20.0d, 20.0d, 0.01d));
+        generationGapSpinner.setToolTipText("Specifies the lead time, in beats, for generating next chorus before the end of the current chorus, if Recur is toggled on.");
+        generationGapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lead", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 10))); // NOI18N
+        generationGapSpinner.setInheritsPopupMenu(true);
+        generationGapSpinner.setMaximumSize(new java.awt.Dimension(70, 45));
+        generationGapSpinner.setMinimumSize(new java.awt.Dimension(70, 45));
+        generationGapSpinner.setPreferredSize(new java.awt.Dimension(70, 45));
+        generationGapSpinner.setValue(0.5);
+        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                generationGapSpinnergenerationLeadSpinnerChanged(evt);
+            }
+        });
+        playbackControls.add(generationGapSpinner, new java.awt.GridBagConstraints());
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -256,6 +274,11 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
             trading = true;
         }
     }//GEN-LAST:event_startTradingButtonActionPerformed
+
+    private void generationGapSpinnergenerationLeadSpinnerChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_generationGapSpinnergenerationLeadSpinnerChanged
+      System.out.println("lickgenFrame = " + lickgenFrame);
+        lickgenFrame.setGap(Double.parseDouble(generationGapSpinner.getValue().toString()));
+    }//GEN-LAST:event_generationGapSpinnergenerationLeadSpinnerChanged
     
       public void tradingStarted() {
         startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
@@ -267,10 +290,21 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         startTradingButton.setText("Start Trading");
     }
     
+ public void setGenerationGap(double value)
+  {
+    generationGapSpinner.setValue(0.01 * (int) (100 * value));
+  }
+
+public double getGenerationGap()
+  {
+    return (Double) generationGapSpinner.getValue();
+  }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox countToggle;
     private javax.swing.JRadioButton eight;
     private javax.swing.JRadioButton four;
+    private javax.swing.JSpinner generationGapSpinner;
     private javax.swing.JRadioButton improvisorFirst;
     private javax.swing.ButtonGroup numberOfBarsGroup;
     private javax.swing.JRadioButton one;
