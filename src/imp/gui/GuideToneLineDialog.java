@@ -320,7 +320,6 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         maxDurationPanel.setLayout(new java.awt.GridBagLayout());
 
         maxDurationButtons.add(noPref);
-        noPref.setSelected(true);
         noPref.setText("No Preference");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -335,7 +334,13 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         maxDurationPanel.add(whole, gridBagConstraints);
 
         maxDurationButtons.add(half);
+        half.setSelected(true);
         half.setText("Half");
+        half.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                halfActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -961,6 +966,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     private void musicianChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicianChooserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_musicianChooserActionPerformed
+
+    private void halfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_halfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_halfActionPerformed
 
     /**
      * returns which JRadioButton in a ButtonGroup is selected

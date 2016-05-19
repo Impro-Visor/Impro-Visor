@@ -8680,7 +8680,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Trade"/>
+                <Property name="text" type="java.lang.String" value="Passive Trading Options"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeCheckboxActionPerformed"/>

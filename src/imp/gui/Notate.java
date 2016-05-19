@@ -933,9 +933,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     passiveTradingWindow = new PassiveTradingWindow(this);
     passiveTradingWindow.setVisible(false);
 
-    
-    //OLD TRADING CODE
-    //populateTradingMenu();
     populateNotateGrammarMenu();
 
     postInitComponents();
@@ -9103,7 +9100,7 @@ public Critic getCritic()
         });
         improvMenu.add(passiveTradingMI);
 
-        tradeCheckbox.setText("Trade");
+        tradeCheckbox.setText("Passive Trading Options");
         tradeCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tradeCheckboxActionPerformed(evt);
@@ -23581,13 +23578,6 @@ public void keyPressed(java.awt.event.KeyEvent evt)
     getCurrentStaveActionHandler().keyPressed(evt);
   }
 
-////OLD TRADING CODE
-//private void tradingMenuAction(java.awt.event.ActionEvent evt)
-//  {
-//    JMenuItem item = (JMenuItem) evt.getSource();
-//    String stem = item.getText();
-//    improvMenu.setText(stem);
-//  }
 
 boolean ifCycle = false;
 boolean ifShuffle = false;
@@ -23646,74 +23636,10 @@ public String getSelectedGrammar(){
     return notateGrammarMenu.getText();
 }
 
-
-
 public void openCorpus()
   {
     openLeadsheet(true);
   }
-
-////OLD TRADING CODE
-///**
-// * Menu item indicating whether or not to trade
-// */
-//JCheckBoxMenuItem whetherToTradeCheckBox = new JCheckBoxMenuItem();
-//
-///**
-// * Menu item indicating which trades first, Impro-Visor or user
-// */
-//JCheckBoxMenuItem tradingCheckBox = new JCheckBoxMenuItem();
-//
-///**
-// * Indicate whether or not to trade.
-// */
-//boolean whetherToTrade = false;
-//
-//
-//
-///**
-// * When trading is on, indicates that Impro-Visor will go first.
-// * Otherwise user will go first.
-// */
-//boolean improVisorFirst = true;
-//
-///**
-// * The index of the trading option currently selected.
-// */
-//int tradingIndex = 2; // four
-//
-///**
-// * Textual representations for the number of bars to be traded.
-// * The suffix "bar" is added later.
-// */
-//private static String tradingOption[] =
-//  {
-//    "one", "two", "four", "eight", "twelve", "sixteen"
-//  };
-////
-/////**
-//// * The numeric values of the bars to be traded.
-//// */
-//private static int tradingQuantum[] =
-//  {
-//    1, 2, 4, 8, 12, 16
-//  };
-
-//private HashMap wordToNumber = new HashMap();
-//
-///**
-// * Checkboxes that will be placed in the grammar menu at run time
-// * to indicate which trading option is being used.
-// */
-//private QuantumSelectionCheckBox quantumSelectionCheckBox[] =
-//  {
-//    new QuantumSelectionCheckBox(0),
-//    new QuantumSelectionCheckBox(1),
-//    new QuantumSelectionCheckBox(2),
-//    new QuantumSelectionCheckBox(3),
-//    new QuantumSelectionCheckBox(4),
-//    new QuantumSelectionCheckBox(5),    
-//  };
 
 /**
  * Get the indication of whether to use theme weaver or not
@@ -23725,101 +23651,35 @@ public boolean getWhetherToThemeWeave()
     //return themeWovenCheckBox.isSelected();
   }
 
-////OLD TRADING CODE
-///**
-// * Get the indication of who will trade first.
-// * @return 
-// */
+/**
+ * Get the indication of who will trade first.
+ * @return 
+ */
+
 public boolean getWhetherToTrade()
   {
     return tradeCheckbox.isSelected();
   }
-//
-///**
-// * Get the indication of who will trade first.
-// * @return 
-// */
+
+/**
+ * Get the indication of who will trade first.
+ * @return 
+ */
+
 public boolean getImprovisorTradeFirst()
   {
     return passiveTradingWindow.getImprovisorTradeFirst();
-    //return improvisorFirst.isSelected();
   }
-//
-///**
-// * Get the number of slots to be used in one-half of the trade.
-// * @return 
-// */
+
+/**
+ * Get the number of slots to be used in one-half of the trade.
+ * @return 
+ */
+
 public int getTradingQuantum()
   {
       return passiveTradingWindow.getTradingQuantum();
-//      Enumeration<AbstractButton> bars = numberOfBarsGroup.getElements();
-//      for(int i = 0; i < numberOfBarsGroup.getButtonCount(); i++){
-//          JRadioButtonMenuItem button = (JRadioButtonMenuItem) bars.nextElement();
-//          if(button.isSelected()){
-//              return tradingQuantum[i];
-//              //return ((Integer)wordToNumber.get(button.getText()))*score.getSlotsPerMeasure();
-//          }
-//      }
-//      return score.getSlotsPerMeasure(); // default
   }
-//
-//
-///**
-// * Populate the Improv menu
-// */
-//private void populateTradingMenu()
-//  {
-////    //OLD TRADING CODE
-////    whetherToTradeCheckBox.setText("Trade");
-////    whetherToTradeCheckBox.setSelected(whetherToTrade);
-////    
-////    whetherToTradeCheckBox.addActionListener(new ActionListener()
-////    {
-////    public void actionPerformed(ActionEvent event)
-////      {
-////        whetherToTrade = !whetherToTrade;
-////        whetherToTradeCheckBox.setSelected(whetherToTrade);
-////      }
-////
-////    });
-//
-//    //themeWovenCheckBox.setText("Theme Weave Solo");
-//    //themeWovenCheckBox.setSelected(themeWeave);
-//    
-////    themeWovenCheckBox.addActionListener(new ActionListener()
-////    {
-////    public void actionPerformed(ActionEvent event)
-////      {
-////        themeWeave = !themeWeave;
-////        themeWovenCheckBox.setSelected(themeWeave);
-////        //System.out.println("theme weave off");
-////      }
-////
-////    });
-//    
-////    //OLD TRADING CODE
-////    tradingCheckBox.setText("Impro-Visor first");
-////    tradingCheckBox.setSelected(improVisorFirst);
-////    
-////    tradingCheckBox.addActionListener(new ActionListener()
-////    {
-////    public void actionPerformed(ActionEvent event)
-////      {
-////        improVisorFirst = !improVisorFirst;
-////        tradingCheckBox.setSelected(improVisorFirst);
-////      }
-////
-////    });
-////    improvMenu.add(whetherToTradeCheckBox);
-////    improvMenu.add(tradingCheckBox);
-////
-////    for( int i = 0; i < tradingOption.length; i++ )
-////      {
-////        improvMenu.add(quantumSelectionCheckBox[i]);
-////        quantumSelectionCheckBox[i].setSelected(i == tradingIndex);
-////      }
-//  }
-
 
 ArrayList<String> gramList = new ArrayList<String>();
 ArrayList<String> shufGramList = new ArrayList<String>();
@@ -23875,13 +23735,9 @@ private void populateNotateGrammarMenu()
        notateGrammarMenu.add(grammarMenuSeparator);
        
         // Add names of grammar files
-
-        for( int i = 0; i < fileName.length; i++ )
-          {
-            String name = fileName[i];
-
+        for (String name : fileName) {
             if( name.endsWith(GrammarFilter.EXTENSION) )
-              {
+            {
                 if( !name.startsWith("_")){
                     gramList.add(name);
                     shufGramList.add(name);
@@ -23893,15 +23749,15 @@ private void populateNotateGrammarMenu()
                 notateGrammarMenu.add(item);
                 item.addActionListener(new java.awt.event.ActionListener()
                 {
-                public void actionPerformed(java.awt.event.ActionEvent evt)
-                  {
-                    notateGrammarMenuAction(evt);
-                  }
-
+                    public void actionPerformed(java.awt.event.ActionEvent evt)
+                    {
+                        notateGrammarMenuAction(evt);
+                    }
+                    
                 });
                 
-              }
-          }
+            }
+        }
       }
   }
 
@@ -26584,45 +26440,6 @@ public void setLickGenStatus(String string)
       }
   }
 
-//OLD TRADING CODE
-//
-///**
-// * QuantumSelectionCheckBox is used in the grammar menu
-// * to indicate the trading quantum. These menu items are not in the
-// * GUI builder, as they are put in the menu at runtime.
-// */
-//private class QuantumSelectionCheckBox extends JCheckBoxMenuItem
-//{
-///**
-// * the index of this box (used to index arrays tradingOption etc.
-// */
-//private final int index;
-//
-///**
-// * Construct checkbox with the desired index.
-// * @param i 
-// */
-//public QuantumSelectionCheckBox(int i)
-//  {
-//    super();
-//    index = i;
-//    setText(tradingOption[index] + " bars");
-//    addActionListener(new ActionListener()
-//    {
-//    /**
-//     * Other checkboxes are unchecked and this one is is checked.
-//     */
-//    public void actionPerformed(ActionEvent event)
-//      {
-//        tradingIndex = index;
-//        for( int i = 0; i < quantumSelectionCheckBox.length; i++ )
-//          {
-//            quantumSelectionCheckBox[i].setSelected(i == index);
-//          }
-//      }
-//    });
-//  }
-//} //QuantumSelectionCheckBox
 /**
  * Return the first note in the score, or null if there is none.
  * @return 
