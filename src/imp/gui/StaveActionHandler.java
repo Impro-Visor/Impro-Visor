@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,22 +46,22 @@ public class StaveActionHandler
  * bias estimate for parallax
  * so that default is kept at 0
  */
-private static int parallaxBias = 1;
+private static final int PARALLAX_BIAS = 1;
 
 /**
  * magic offset for bass-only staves
  */
-private static final int bassOnlyOffset = 48;
+private static final int BASS_ONLY_OFFSET = 48;
 
 /**
  * Shifts the mouse clicked position slightly for click accuracy
  */
-private static final int verticalAdjustment = 2;
+private static final int VERTICAL_ADJUSTMENT = 2;
 
 /**
  * Threshold for determining if additional vertical drag has occurred
  */
-private static int VERTICAL_DRAG_THRESHOLD = 1;
+private static final int VERTICAL_DRAG_THRESHOLD = 1;
 
 Note lastAdviceNote;
 
@@ -86,12 +86,12 @@ public static final int allPitchesFromSpacing[] =
 /**
  * The stave to set all of the actions to
  */
-private Stave stave;
+private final Stave stave;
 
 /**
  * The notation window for the Stave
  */
-private Notate notate;
+private final Notate notate;
 
 /**
  * What single index is currently selected
@@ -146,7 +146,7 @@ private Note storedNote = null;
 /**
  * Indicates whether button1 has been clicked
  */
-private boolean button1Down = false;
+private final boolean button1Down = false;
 
 /**
  * Indicates if the last mouse click was on a construction line
@@ -161,7 +161,7 @@ private boolean clickedOnBracket = false;
 /**
  * The starting index of a dragging note
  */
-private int startingIndex = OUT_OF_BOUNDS;
+private final int startingIndex = OUT_OF_BOUNDS;
 
 /**
  * Flag for if you can drag a note's pitch or not
@@ -300,7 +300,7 @@ private boolean drawScaleTones = true;
 
 private boolean drawChordTones = true;
 
-private boolean drawColorTones = false;
+private final boolean drawColorTones = false;
 
 /**
  * Left bound of curve
@@ -408,7 +408,8 @@ StaveActionHandler(Stave stave, Notate notate)
  **/
 
 /**
- * Mouse entereds
+ * Mouse entered
+ * @param e
  */
 public void mouseEntered(MouseEvent e)
  {
@@ -417,6 +418,7 @@ public void mouseEntered(MouseEvent e)
 
 /**
  * Mouse exited
+ * @param e
  */
 public void mouseExited(MouseEvent e)
  {
@@ -446,6 +448,7 @@ public void maybeSetCursor(MouseEvent e)
 
 /**
  * Mouse moved
+ * @param e
  */
 public void mouseMoved(MouseEvent e)
  { 
@@ -544,13 +547,17 @@ private void updateNoteCursorLabel(MouseEvent e)
 
     if (notate.getSmartEntry())
     {
-        note =  yPosToRectifiedPitch(y - (notate.getParallax() + parallaxBias),
+        note =  yPosToRectifiedPitch(y - (notate.getParallax() + PARALLAX_BIAS),
                             currentChord, curLine, e.isShiftDown());
+        if( note == null )
+          {
+            return;
+          }
         pitch = note.getPitch();
     }                 
     else
     {
-        pitch = yPosToPitch(y - (notate.getParallax() + parallaxBias),
+        pitch = yPosToPitch(y - (notate.getParallax() + PARALLAX_BIAS),
                             curLine);
         note = new Note(pitch);
     }
@@ -594,13 +601,13 @@ private void chooseAndSetNoteCursor(MouseEvent e)
     // will be colored based on a different note than it would be otherwise
     if (notate.getSmartEntry())
     {
-        note =  yPosToRectifiedPitch(y - (notate.getParallax() + parallaxBias),
+        note =  yPosToRectifiedPitch(y - (notate.getParallax() + PARALLAX_BIAS),
                             currentChord, curLine, e.isShiftDown());
         pitch = note.getPitch();
     }                 
     else
     {
-        pitch = yPosToPitch(y - (notate.getParallax() + parallaxBias),
+        pitch = yPosToPitch(y - (notate.getParallax() + PARALLAX_BIAS),
                             curLine);
         note = new Note(pitch);
     }
@@ -814,6 +821,7 @@ boolean mouseOverRHandle()
 
 /**
  * Mouse clicked
+ * @param e
  */
 public void mouseClicked(MouseEvent e)
  {
@@ -843,7 +851,7 @@ public void mouseClicked(MouseEvent e)
 /**
  * The maximum duration a note should sound on entry.
  */
-private static int MAX_NOTE_ENTRY_LENGTH = BEAT / 2;
+private static final int MAX_NOTE_ENTRY_LENGTH = BEAT / 2;
 
 public static int getEntryDuration(Note note)
  {
@@ -965,8 +973,7 @@ private int addNote(int x, int y, Chord chord, boolean shiftDown, boolean play)
 
   // Are approaches user-enabled?
   boolean approachEnabled = (aPressed && shiftDown);
-  boolean apprch = false; // Is this particular note going to be an
-  // approach tone?
+  boolean apprch; // Is this particular note going to be an approach tone?
 
   /* Lock in any chord tone that follows an approach tone as long as
    * the user is dragging over that index still.
@@ -994,7 +1001,7 @@ private int addNote(int x, int y, Chord chord, boolean shiftDown, boolean play)
   int pitch =
     (lastToneApproach && !apprch) ? 
          lastApproachPitch 
-       : yPosToAnyPitch(y - (notate.getParallax() + parallaxBias), currentLine);
+       : yPosToAnyPitch(y - (notate.getParallax() + PARALLAX_BIAS), currentLine);
 
   // reset the pitch to the max or min pitch of the Stave if
   // they are out of bounds
@@ -1112,7 +1119,7 @@ private int yPosToKeyPitch(int y, int currentLine)
 
   // add new note close to mouse clicked pitch
 
-  int pitch = yPosToPitch(y - (notate.getParallax() + parallaxBias), currentLine);
+  int pitch = yPosToPitch(y - (notate.getParallax() + PARALLAX_BIAS), currentLine);
 
   // reset the pitch to the max or min pitch of the Stave if
   // they are out of bounds
@@ -1164,6 +1171,7 @@ protected void clearPasteFrom()
 
 /**
  * Mouse pressed
+ * @param e
  */
 public void mousePressed(MouseEvent e)
  {
@@ -1257,7 +1265,6 @@ public void mousePressed(MouseEvent e)
     // Open a pop-up menu if ctrl + left click
     if( e.isControlDown() && !e.isShiftDown() )
      {
-
       Trace.log(2, "control (no shift) = requested popup");
 
       notate.popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -1269,7 +1276,6 @@ public void mousePressed(MouseEvent e)
     // check to see if a construction line was clicked on
     else if( selectedIndex != OUT_OF_BOUNDS )
      {
-
       // see if selecting a line, without wanting a note
 
       if( e.isShiftDown() && e.isControlDown() )
@@ -1290,7 +1296,6 @@ public void mousePressed(MouseEvent e)
        }
       else if( e.isShiftDown() && stave.nothingSelected() )
        {
-
         Trace.log(2, "shift: single line selected");
 
         stave.setSelection(selectedIndex);
@@ -2811,7 +2816,7 @@ private int yPosToPitch(int yPos, int currentLine)
 
   if( stave.getStaveType() == StaveType.BASS )
    {
-    yPos += bassOnlyOffset;
+    yPos += BASS_ONLY_OFFSET;
    }
 
   // Find the y-axis position for middle C
@@ -2821,7 +2826,7 @@ private int yPosToPitch(int yPos, int currentLine)
 
   // Find the difference between middle C position and the mouse position
 
-  int yDif = middleC - yPos + verticalAdjustment;
+  int yDif = middleC - yPos + VERTICAL_ADJUSTMENT;
 
 
   // Find the modulated y-difference. 28 is the number of pixels that
@@ -2867,7 +2872,7 @@ private int yPosToAnyPitch(int yPos, int currentLine)
 
   if( stave.getStaveType() == StaveType.BASS )
    {
-    yPos += bassOnlyOffset;
+    yPos += BASS_ONLY_OFFSET;
    }
 
   // Find the y-axis position for middle C
@@ -2877,7 +2882,7 @@ private int yPosToAnyPitch(int yPos, int currentLine)
 
   // Find the difference between middle C position and the mouse position
 
-  int yDif = middleC - yPos + verticalAdjustment;
+  int yDif = middleC - yPos + VERTICAL_ADJUSTMENT;
 
 
   // Find the modulated y-difference. 28 is the number of pixels that
