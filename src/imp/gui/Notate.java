@@ -20,6 +20,7 @@
  */
 package imp.gui;
 
+import imp.data.activeTrading.ActiveTradingDialog;
 import imp.data.advice.Advisor;
 import imp.data.advice.AdviceForScale;
 import imp.data.advice.Advice;

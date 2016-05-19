@@ -19,7 +19,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="modeMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="TradeMode"/>
+            <Property name="text" type="java.lang.String" value="Trading Mode"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeRepeatAndRectify">
@@ -81,7 +81,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="tradeMusicianMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Transform File"/>
+            <Property name="text" type="java.lang.String" value="Transform "/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="tradeGrammarMenu">
@@ -129,13 +129,7 @@
     <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
       <Point value="[25, 25]"/>
     </Property>
-    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[800, 200]"/>
-    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[800, 200]"/>
-    </Property>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[800, 200]"/>
     </Property>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">

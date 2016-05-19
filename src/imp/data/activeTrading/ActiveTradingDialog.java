@@ -18,7 +18,7 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.gui;
+package imp.data.activeTrading;
 
 /**
  * @author Zachary Kondak, formerly ActiveTradingWindow
@@ -28,6 +28,7 @@ package imp.gui;
 import imp.ImproVisor;
 import imp.data.activeTrading.ActiveTrading;
 import imp.data.activeTrading.TradeListener;
+import imp.gui.Notate;
 import imp.util.TransformFilter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -124,9 +125,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         setTitle("Impro-Visor Active Trading");
         setBackground(new java.awt.Color(204, 204, 255));
         setLocation(new java.awt.Point(25, 25));
-        setMaximumSize(new java.awt.Dimension(800, 200));
         setMinimumSize(new java.awt.Dimension(800, 200));
-        setPreferredSize(new java.awt.Dimension(800, 200));
         setSize(new java.awt.Dimension(800, 200));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -405,7 +404,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         mainTradeMenuBar.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
 
-        modeMenu.setText("TradeMode");
+        modeMenu.setText("Trading Mode");
 
         modeSelector.add(tradeRepeatAndRectify);
         tradeRepeatAndRectify.setText("Repeat and Rectify");
@@ -440,7 +439,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         mainTradeMenuBar.add(modeMenu);
 
-        tradeMusicianMenu.setText("Transform File");
+        tradeMusicianMenu.setText("Transform ");
         mainTradeMenuBar.add(tradeMusicianMenu);
 
         tradeGrammarMenu.setText("Grammar");

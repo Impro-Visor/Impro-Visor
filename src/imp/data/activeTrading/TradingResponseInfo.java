@@ -169,8 +169,8 @@ public class TradingResponseInfo {
     }
     
     public MelodyPart extractFromGrammarSolo(int startSlot, int slotLength){
-        MelodyPart mp = new MelodyPart();
-        mp = grammarSolo.extract(startSlot, startSlot + slotLength - 1, true, true);
+        MelodyPart mp = 
+         grammarSolo.extract(startSlot, startSlot + slotLength - 1, true, true);
         return mp;
     }
 
