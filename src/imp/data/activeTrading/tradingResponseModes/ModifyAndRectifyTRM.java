@@ -18,31 +18,25 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.data.ActiveTrading.TradingResponseModes;
+package imp.data.activeTrading.tradingResponseModes;
 
-import imp.data.ActiveTrading.ExceptionGenerateResponseNotDefined;
-import imp.data.ActiveTrading.TradingResponseInfo;
+import imp.data.activeTrading.TradingResponseInfo;
 import imp.data.MelodyPart;
 
 /**
  *
  * @author Zach Kondak
  */
-public abstract class TradingResponseMode {
+public class ModifyAndRectifyTRM extends TradingResponseMode {
 
-    protected TradingResponseInfo responseInfo;
-    protected String message;
-    
-    TradingResponseMode(TradingResponseInfo responseInfo, String message){
-        this.responseInfo = responseInfo;
-        this.message = message;
-    }
-
-    public MelodyPart generateResponse() throws ExceptionGenerateResponseNotDefined {
-        throw new ExceptionGenerateResponseNotDefined("Every TradinResponseMode must override method generateResponse()");
+    public ModifyAndRectifyTRM(TradingResponseInfo responseInfo, String message) {
+        super(responseInfo, message);
     }
     
-    public void printTradeType() {
-        System.out.println(message);
+    @Override
+    public MelodyPart generateResponse(){
+        responseInfo.modifySolo();
+        responseInfo.rectifySolo();
+        return responseInfo.getResponse();
     }
 }

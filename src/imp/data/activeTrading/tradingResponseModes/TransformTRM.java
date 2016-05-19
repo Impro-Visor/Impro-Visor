@@ -18,15 +18,25 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.data.ActiveTrading;
+package imp.data.activeTrading.tradingResponseModes;
+
+import imp.data.activeTrading.TradingResponseInfo;
+import imp.data.MelodyPart;
 
 /**
  *
  * @author Zach Kondak
  */
-public class ExceptionGenerateResponseNotDefined extends Exception {
+public class TransformTRM extends TradingResponseMode{
 
-    public ExceptionGenerateResponseNotDefined(String message) {
-        super(message);
+    public TransformTRM(TradingResponseInfo responseInfo, String message) {
+        super(responseInfo, message);
     }
+    
+    @Override
+    public MelodyPart generateResponse(){
+        responseInfo.musicianResponse();
+        return responseInfo.getResponse();
+    }
+    
 }

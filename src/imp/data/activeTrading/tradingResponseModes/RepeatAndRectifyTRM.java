@@ -18,15 +18,26 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.data.ActiveTrading;
+package imp.data.activeTrading.tradingResponseModes;
+
+import imp.com.RectifyPitchesCommand;
+import imp.data.activeTrading.TradingResponseInfo;
+import imp.data.MelodyPart;
 
 /**
  *
  * @author Zach Kondak
  */
-public class ExceptionTradeModeNotFound extends Exception{
-    
-    public ExceptionTradeModeNotFound(String message){
-        super(message);
+public class RepeatAndRectifyTRM extends TradingResponseMode{
+
+    public RepeatAndRectifyTRM(TradingResponseInfo responseInfo, String message) {
+        super(responseInfo, message);
     }
+
+    @Override
+    public MelodyPart generateResponse() {
+        //System.out.println("RepeatAndRectifyTRM");
+        responseInfo.rectifySolo();
+        return responseInfo.getResponse();
+        }
 }

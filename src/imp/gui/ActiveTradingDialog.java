@@ -26,8 +26,8 @@ package imp.gui;
  */
 
 import imp.ImproVisor;
-import imp.data.ActiveTrading.ActiveTrading;
-import imp.data.ActiveTrading.TradeListener;
+import imp.data.activeTrading.ActiveTrading;
+import imp.data.activeTrading.TradeListener;
 import imp.util.TransformFilter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;

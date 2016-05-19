@@ -18,26 +18,23 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.data.ActiveTrading.TradingResponseModes;
+package imp.data.activeTrading.tradingResponseModes;
 
-import imp.com.RectifyPitchesCommand;
-import imp.data.ActiveTrading.TradingResponseInfo;
+import imp.data.activeTrading.TradingResponseInfo;
 import imp.data.MelodyPart;
 
 /**
  *
  * @author Zach Kondak
  */
-public class RepeatAndRectifyTRM extends TradingResponseMode{
+public class ChopAndMemorizeTRM extends TradingResponseMode{
 
-    public RepeatAndRectifyTRM(TradingResponseInfo responseInfo, String message) {
+    public ChopAndMemorizeTRM(TradingResponseInfo responseInfo, String message) {
         super(responseInfo, message);
     }
-
-    @Override
-    public MelodyPart generateResponse() {
-        //System.out.println("RepeatAndRectifyTRM");
-        responseInfo.rectifySolo();
+    
+    public MelodyPart generateResponse(){
+        responseInfo.lookupAndPlay();
         return responseInfo.getResponse();
-        }
+    }
 }

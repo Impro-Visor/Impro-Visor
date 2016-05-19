@@ -1,8 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2015 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College XML export code
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -18,23 +17,15 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.data.ActiveTrading.TradingResponseModes;
-
-import imp.data.ActiveTrading.TradingResponseInfo;
-import imp.data.MelodyPart;
+package imp.data.activeTrading;
 
 /**
  *
  * @author Zach Kondak
  */
-public class ChopAndMemorizeTRM extends TradingResponseMode{
-
-    public ChopAndMemorizeTRM(TradingResponseInfo responseInfo, String message) {
-        super(responseInfo, message);
-    }
+public class ExceptionTradeModeNotFound extends Exception{
     
-    public MelodyPart generateResponse(){
-        responseInfo.lookupAndPlay();
-        return responseInfo.getResponse();
+    public ExceptionTradeModeNotFound(String message){
+        super(message);
     }
 }
