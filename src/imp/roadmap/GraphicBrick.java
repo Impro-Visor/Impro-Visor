@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -418,7 +418,9 @@ public class GraphicBrick {
             int currentX = xOffset+settings.getLength(wrap[0]);
             int currentY = yOffset + (int)((line + wrap[1]) * settings.getLineOffset()) + 2*blockHeight;
             
-            int[] endWrap = settings.wrapFromSlots((int)(slot+currentBeats+chord.getDuration()));
+            int chordDur = Math.abs(chord.getDuration());
+            // abs is used because * durations coded as negative
+            int[] endWrap = settings.wrapFromSlots((int)(slot+currentBeats+chordDur));
             int endX = xOffset + settings.getLength(endWrap[0]);
             int lines = (int)(endWrap[1] - wrap[1]);
             
@@ -466,7 +468,7 @@ public class GraphicBrick {
                     // Can happen on Windows. Not sure why.
                 }
 
-                currentBeats += chord.getDuration();
+                currentBeats += chordDur;
                 ind++;
 
         }
@@ -554,7 +556,9 @@ public class GraphicBrick {
         
         for( ChordBlock chord : chords ) {    
             xOffset = settings.getLength((int)totalSlots);
-            int length = settings.getLength((int)totalSlots + chord.getDuration()) - 
+            int chordDur = Math.abs(chord.getDuration());
+            // abs is used, because * duration coded as negative
+            int length = settings.getLength((int)totalSlots + chordDur) - 
                     xOffset;
             
             g2d.setColor(settings.lineColor);
@@ -564,7 +568,7 @@ public class GraphicBrick {
             String chordName = toSymbols(chord.getName());
             g2d.drawString(margin + chordName, x+xOffset+5, y+5*blockHeight/2+5);
 
-            totalSlots += chord.getDuration();
+            totalSlots += chordDur;
         }
         
         g2d.setStroke(settings.brickOutline);

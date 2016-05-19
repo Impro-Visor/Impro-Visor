@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2013 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ public Brick(String brickName,
      * @param contents, a Polylist describing bricks and chords
      * @param bricks, a BrickLibrary
      * @param m, the mode (a String)
-     * @param polymap, a LinkedHashMap<String, LinkedList<Polylist>> storing
+     * @param polymap, a LinkedHashMap, LinkedList storing
       *                definitions of other Bricks
      */
      public Brick(String brickName,long brickKey, String brickType, 
@@ -266,7 +266,9 @@ public Brick(String brickName,
     /** Brick / 2
      * Makes a brick based only on a name and a list of subblocks
      * 
-     * @param name, a String
+     * @param brickName
+     * @param brickKey
+     * @param type
      * @param brickList, subblocks for a brick
      */
     public Brick(String brickName, 
@@ -387,7 +389,7 @@ public Brick(String brickName,
     /** getSubBlocks
      * Gets all of the component blocks by reference
      * 
-     * @return ArrayList<Block> of subblocks
+     * @return ArrayList of subblocks
      */ 
     @Override
     public ArrayList<Block> getSubBlocks() {
@@ -395,7 +397,7 @@ public Brick(String brickName,
           {
             return null;
           }
-        if( subBlocks.size() == 0 )
+        if( subBlocks.isEmpty() )
           {
             return null;
           }
@@ -462,7 +464,7 @@ public Brick(String brickName,
                     String brickKeyString = pList.first().toString();
                     pList = pList.rest();
                     Object durObj = pList.first();
-                    pList = pList.rest();
+                    //pList = pList.rest();
                     boolean starFlag = isStar(durObj);
                     if(durObj instanceof Long || starFlag)
                     {
@@ -567,7 +569,7 @@ public Brick(String brickName,
                     else
                       {
                       durObj = pList.first();
-                      pList = pList.rest();
+                      //pList = pList.rest();
                       }
                     
                     // when all data members are initialized, find the correct 
@@ -623,7 +625,7 @@ public Brick(String brickName,
                                     ErrorLog.log(ErrorLog.SEVERE, 
                                             "Dictionary does not contain " +
                                             subBrickName + 
-                                            subBrickVariant.toString());
+                                            subBrickVariant);
                                 }
                             }
                             
@@ -676,7 +678,7 @@ public Brick(String brickName,
                     String chordName = pList.first().toString();
                     pList = pList.rest();
                     Object durObj = pList.first();
-                    pList = pList.rest();
+                    //pList = pList.rest();
                     boolean starFlag = isStar(durObj);
                     if(durObj instanceof Long || starFlag)
                     {
@@ -747,7 +749,7 @@ public Brick(String brickName,
         {
           if( b != null )
             {
-            dur += b.getDuration();
+            dur += Math.abs(b.getDuration());
             }
         }
         
@@ -765,7 +767,7 @@ public Brick(String brickName,
     
     /** flattenBlock
      * Returns this Brick as a list of ChordBlocks
-     * @return an ArrayList<ChordBlock> describing the Brick's contents
+     * @return an ArrayList describing the Brick's contents
      */
     @Override
     public ArrayList<ChordBlock> flattenBlock() {
@@ -821,7 +823,8 @@ public Brick(String brickName,
         while(subBlockIter.hasNext()) {
             Block currentBlock = subBlockIter.next();
             currentBlock.scaleDuration(scale);
-            duration += currentBlock.duration;
+            duration += Math.abs(currentBlock.duration);
+            // Need to use abs, because * durations are encoded as negative.
         }
         
     }

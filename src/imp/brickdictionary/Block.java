@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2013 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ abstract public class Block {
      * @return the duration (an int)
      */
     public int getDuration() {
-        return this.duration;
+        return duration;
     }
     
     /** isOverlap

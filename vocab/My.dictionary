@@ -1,8 +1,8 @@
 /*
- * File: My.dictionary, version 1.4, Sat. Dec. 3, 2011
+ * File: My.dictionary, version 1.5, Wed. May 16, 2016
  * This dictionary text file accompanies the Impro-Visor Application.
  *
- * Copyright (C) 2011 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -778,7 +778,7 @@
 (defbrick Dominant-Cycle(8-step) Major Approach C
            (brick Dominant-Cycle-8-Steps C 1))
 
-(defbrick Dominant-Cycle-Cadence Major Cadence C
+(defbrick Dominant-Cycle-Cadence(main) Major Cadence C
           (brick Dominant-Cycle C 1)
           (brick Major-On C *))
 
@@ -1023,7 +1023,7 @@
           (brick Major-On C 1)
           (brick Cadence  F 2))
 
-(defbrick To-IV-n-Yak(main) Major Turnaround C
+(defbrick To-IV-n-Yak-Turnaround(main) Major Turnaround C
           (brick Major-On C 1)
           (brick Cadence  F *)
           (chord Bb7 1)
@@ -1038,7 +1038,7 @@
 
 // To get to IV and get back:
 
-(defbrick To-IV-n-Back Major Cadence C
+(defbrick To-IV-n-Back(main) Major Cadence C
           (brick Major-On    C 1)
           (brick SuperGenDom F 2)
           (brick IV-n-Back   C 3))
@@ -1052,7 +1052,7 @@
 
 // To get to IV and get back via Yardbird:
 
-(defbrick To-IV-n-Yak Major Cadence C
+(defbrick To-IV-n-Yak(main) Major Cadence C
           (brick Major-On    C 1)
           (brick SuperGenDom F 2)
           (brick IV-n-Yak    C 3))
@@ -1588,7 +1588,7 @@
           (brick Raindrop C 1)
           (brick Straight-Approach C 1))
 
-(defbrick Rainy-Cadence Major Cadence C
+(defbrick Rainy-Cadence(main) Major Cadence C
           (brick Rainy-Turnaround C 2)
           (chord C 1))
 
@@ -2147,7 +2147,7 @@
           (chord Db7 1))
 
 (defbrick Dizzy-Cadence(short) Major Cadence C
-          (chord Db7 1)
+          (chord Db7 2)
           (chord C *))
 
 (defbrick Ladybird-Turnaround(var) Major Approach F
@@ -2851,7 +2851,6 @@
 (defbrick Dominant-Cycle-Cadence(var) Major Cadence Bb
         (chord C7 1)
         (brick Perfect-Cadence Bb 3))
-
 
 (defbrick ITCHY-Opening(var) Major Opening G
         (brick Major-On G 2)
