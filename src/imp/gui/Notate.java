@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College XML export code
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College XML export code
  * is also Copyright (C) 2009-2015 Nicolas Froment (aka Lasconic).
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
@@ -118,6 +118,7 @@ static int GRAMMAR_EDITOR_ROWS = 10000;
 AboutDialog aboutDialog = new AboutDialog(this, false);
 ErrorDialog errorDialog = ErrorLog.getDialog();
 HelpDialog helpDialog = new HelpDialog(this, false);
+ViewAdjustmentDialog viewAdjustmentDialog = new ViewAdjustmentDialog(this, false);
 int ADVICE_SCROLL_LIST_ITEMS_VISIBLE = 10;
 /**
  * trackerDelay delays the tracker by offsetting a specified number of seconds.
@@ -1891,9 +1892,6 @@ public Critic getCritic()
         transposeSpinner = new javax.swing.JSpinner();
         partBarsPanel = new javax.swing.JPanel();
         partBarsTF1 = new javax.swing.JTextField();
-        trackerDelayPanel = new javax.swing.JPanel();
-        trackerDelayTextField2 = new javax.swing.JTextField();
-        parallaxSpinner = new javax.swing.JSpinner();
         textEntryToolBar = new javax.swing.JToolBar();
         textEntryLabel = new javax.swing.JLabel();
         textEntry = new javax.swing.JTextField();
@@ -2006,6 +2004,7 @@ public Critic getCritic()
         oneAutoMI = new javax.swing.JMenuItem();
         autoAdjustMI = new javax.swing.JCheckBoxMenuItem();
         earlyScrollCheckBoxMI = new javax.swing.JCheckBoxMenuItem();
+        adjustParallaxDelayMI = new javax.swing.JMenuItem();
         showTitlesMI = new javax.swing.JCheckBoxMenuItem();
         showEmptyTitlesMI = new javax.swing.JCheckBoxMenuItem();
         barNumsMI = new javax.swing.JCheckBoxMenuItem();
@@ -7848,61 +7847,6 @@ public Critic getCritic()
 
         playToolBar.add(partBarsPanel);
 
-        trackerDelayPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delay", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 10))); // NOI18N
-        trackerDelayPanel.setMaximumSize(new java.awt.Dimension(50, 50));
-        trackerDelayPanel.setMinimumSize(new java.awt.Dimension(40, 50));
-        trackerDelayPanel.setOpaque(false);
-        trackerDelayPanel.setPreferredSize(new java.awt.Dimension(40, 50));
-        trackerDelayPanel.setRequestFocusEnabled(false);
-        trackerDelayPanel.setLayout(new java.awt.BorderLayout());
-
-        trackerDelayTextField2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        trackerDelayTextField2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        trackerDelayTextField2.setToolTipText("Set the delay between the tracker and playback.");
-        trackerDelayTextField2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        trackerDelayTextField2.setMaximumSize(new java.awt.Dimension(40, 20));
-        trackerDelayTextField2.setMinimumSize(new java.awt.Dimension(30, 20));
-        trackerDelayTextField2.setPreferredSize(new java.awt.Dimension(30, 20));
-        trackerDelayTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                trackerDelayTextField2ActionPerformed(evt);
-            }
-        });
-        trackerDelayTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                trackerDelayTextField2FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                trackerDelayTextField2FocusLost(evt);
-            }
-        });
-        trackerDelayTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                trackerDelayTextField2KeyTyped(evt);
-            }
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                trackerDelayTextField2KeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                trackerDelayTextField2KeyReleased(evt);
-            }
-        });
-        trackerDelayTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                trackerDelayTextField2MousePressed(evt);
-            }
-        });
-        trackerDelayPanel.add(trackerDelayTextField2, java.awt.BorderLayout.CENTER);
-
-        playToolBar.add(trackerDelayPanel);
-
-        parallaxSpinner.setToolTipText("Sets the vertical parallax for mouse clicks on staves.");
-        parallaxSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parallax", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 10))); // NOI18N
-        parallaxSpinner.setMaximumSize(new java.awt.Dimension(60, 45));
-        parallaxSpinner.setMinimumSize(new java.awt.Dimension(60, 45));
-        parallaxSpinner.setPreferredSize(new java.awt.Dimension(60, 45));
-        playToolBar.add(parallaxSpinner);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -8709,6 +8653,15 @@ public Critic getCritic()
         earlyScrollCheckBoxMI.setText("Early Scroll");
         earlyScrollCheckBoxMI.setToolTipText("If selected, long pages will scroll before the cursor is at the last line.");
         viewMenu.add(earlyScrollCheckBoxMI);
+
+        adjustParallaxDelayMI.setText("Adjust Parallax or Tracker Delay");
+        adjustParallaxDelayMI.setActionCommand("");
+        adjustParallaxDelayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adjustParallaxDelayMIActionPerformed(evt);
+            }
+        });
+        viewMenu.add(adjustParallaxDelayMI);
 
         showTitlesMI.setSelected(true);
         showTitlesMI.setText("Show Leadsheet Title");
@@ -15121,7 +15074,7 @@ public void setTrackerDelay(String text)
   {
     trackerDelay = doubleFromStringInRange(text, -Double.MAX_VALUE, +Double.MAX_VALUE, 0);
     trackerDelayTextField.setText(text);
-    trackerDelayTextField2.setText(text);
+    viewAdjustmentDialog.setTrackerDelay(trackerDelay);
   }
 
 public static final int DEFAULT_CHORD_FONT_SIZE_VALUE = 16;
@@ -19245,41 +19198,6 @@ public boolean countInCheckboxIsSelected()
         // TODO add your handling code here:
 }//GEN-LAST:event_truncatePartDialogKeyPressed
 
-    private void trackerDelayTextField2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_trackerDelayTextField2ActionPerformed
-    {//GEN-HEADEREND:event_trackerDelayTextField2ActionPerformed
-        setTrackerDelay(trackerDelayTextField2.getText());
-}//GEN-LAST:event_trackerDelayTextField2ActionPerformed
-
-    private void trackerDelayTextField2FocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_trackerDelayTextField2FocusGained
-    {//GEN-HEADEREND:event_trackerDelayTextField2FocusGained
-        // TODO add your handling code here:
-}//GEN-LAST:event_trackerDelayTextField2FocusGained
-
-    private void trackerDelayTextField2FocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_trackerDelayTextField2FocusLost
-    {//GEN-HEADEREND:event_trackerDelayTextField2FocusLost
-        // TODO add your handling code here:
-}//GEN-LAST:event_trackerDelayTextField2FocusLost
-
-    private void trackerDelayTextField2KeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_trackerDelayTextField2KeyTyped
-    {//GEN-HEADEREND:event_trackerDelayTextField2KeyTyped
-        // TODO add your handling code here:
-}//GEN-LAST:event_trackerDelayTextField2KeyTyped
-
-    private void trackerDelayTextField2KeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_trackerDelayTextField2KeyPressed
-    {//GEN-HEADEREND:event_trackerDelayTextField2KeyPressed
-        // TODO add your handling code here:
-}//GEN-LAST:event_trackerDelayTextField2KeyPressed
-
-    private void trackerDelayTextField2KeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_trackerDelayTextField2KeyReleased
-    {//GEN-HEADEREND:event_trackerDelayTextField2KeyReleased
-        // TODO add your handling code here:
-}//GEN-LAST:event_trackerDelayTextField2KeyReleased
-
-    private void trackerDelayTextField2MousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_trackerDelayTextField2MousePressed
-    {//GEN-HEADEREND:event_trackerDelayTextField2MousePressed
-        // TODO add your handling code here:
-}//GEN-LAST:event_trackerDelayTextField2MousePressed
-
     private void partBarsTF1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_partBarsTF1ActionPerformed
     {//GEN-HEADEREND:event_partBarsTF1ActionPerformed
         setPartBars(partBarsTF1.getText());
@@ -22988,6 +22906,10 @@ int quantizeResolution = 60;
         toggleFreezeLayout();
     }//GEN-LAST:event_freezeLayoutMIActionPerformed
 
+    private void adjustParallaxDelayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adjustParallaxDelayMIActionPerformed
+        viewAdjustmentDialog.setVisible(true);
+    }//GEN-LAST:event_adjustParallaxDelayMIActionPerformed
+
     private void setModesThatCantTrade(boolean enabled){
         guideToneRadio.setEnabled(enabled);
         guideToneTransformRadio.setEnabled(enabled);
@@ -24787,6 +24709,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem addRestMI;
     private javax.swing.JButton addTabBtn;
     private javax.swing.JMenuItem addTabPopupMenuItem;
+    private javax.swing.JMenuItem adjustParallaxDelayMI;
     protected javax.swing.JFrame adviceFrame;
     private javax.swing.JMenuItem advicePMI;
     private javax.swing.JList adviceScrollListBricks;
@@ -25268,7 +25191,6 @@ private ImageIcon pauseButton =
     protected javax.swing.JFrame overrideFrame;
     private javax.swing.JMenuItem overrideMeasPMI;
     private javax.swing.JButton overwriteLickButton;
-    private javax.swing.JSpinner parallaxSpinner;
     private javax.swing.JPanel partBarsPanel;
     private javax.swing.JTextField partBarsTF1;
     private javax.swing.JLabel partComposerLabel;
@@ -25429,9 +25351,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel toolbarPanel;
     private javax.swing.JCheckBox trackCheckBox;
     private javax.swing.JLabel trackerDelayLabel;
-    private javax.swing.JPanel trackerDelayPanel;
     private javax.swing.JTextField trackerDelayTextField;
-    private javax.swing.JTextField trackerDelayTextField2;
     private javax.swing.JCheckBoxMenuItem tradeCheckbox;
     private javax.swing.JMenuItem tradingWindow;
     private javax.swing.JMenuItem transformMI;
@@ -25742,7 +25662,7 @@ public void setLoopCount(int value)
 
 public int getParallax()
   {
-    return Integer.parseInt(parallaxSpinner.getValue().toString());
+    return viewAdjustmentDialog.getParallax();
   }
 
 public boolean getColoration()
