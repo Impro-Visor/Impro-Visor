@@ -109,11 +109,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeLengthSpinner = new javax.swing.JSpinner();
         mainTradeMenuBar = new javax.swing.JMenuBar();
         modeMenu = new javax.swing.JMenu();
-        tradeRepeat = new javax.swing.JRadioButtonMenuItem();
         tradeRepeatAndRectify = new javax.swing.JRadioButtonMenuItem();
         tradeRandomModify = new javax.swing.JRadioButtonMenuItem();
-        tradeWithAMusician = new javax.swing.JRadioButtonMenuItem();
         tradeAbstract = new javax.swing.JRadioButtonMenuItem();
+        tradeWithAMusician = new javax.swing.JRadioButtonMenuItem();
         tradeGrammarSolo = new javax.swing.JRadioButtonMenuItem();
         tradeStore = new javax.swing.JRadioButtonMenuItem();
         tradeMusicianMenu = new javax.swing.JMenu();
@@ -408,16 +407,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         modeMenu.setText("TradeMode");
 
-        modeSelector.add(tradeRepeat);
-        tradeRepeat.setText("Repeat");
-        modeMenu.add(tradeRepeat);
-
         modeSelector.add(tradeRepeatAndRectify);
         tradeRepeatAndRectify.setText("Repeat and Rectify");
         modeMenu.add(tradeRepeatAndRectify);
 
         modeSelector.add(tradeRandomModify);
-        tradeRandomModify.setSelected(true);
         tradeRandomModify.setText("Modify and Rectify");
         tradeRandomModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -426,16 +420,18 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         });
         modeMenu.add(tradeRandomModify);
 
-        modeSelector.add(tradeWithAMusician);
-        tradeWithAMusician.setText("Use Transforms");
-        modeMenu.add(tradeWithAMusician);
-
         modeSelector.add(tradeAbstract);
-        tradeAbstract.setText("Abstract");
+        tradeAbstract.setSelected(true);
+        tradeAbstract.setText("Use Abstract Melody");
         modeMenu.add(tradeAbstract);
 
+        modeSelector.add(tradeWithAMusician);
+        tradeWithAMusician.setText("Use Transform");
+        modeMenu.add(tradeWithAMusician);
+        tradeWithAMusician.getAccessibleContext().setAccessibleDescription("");
+
         modeSelector.add(tradeGrammarSolo);
-        tradeGrammarSolo.setText("Grammar Solo");
+        tradeGrammarSolo.setText("Use Grammar");
         modeMenu.add(tradeGrammarSolo);
 
         modeSelector.add(tradeStore);
@@ -746,7 +742,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JMenu tradePlayMenu;
     private javax.swing.JMenuItem tradePlayMenuItem;
     private javax.swing.JRadioButtonMenuItem tradeRandomModify;
-    private javax.swing.JRadioButtonMenuItem tradeRepeat;
     private javax.swing.JRadioButtonMenuItem tradeRepeatAndRectify;
     private javax.swing.JMenuItem tradeStopMenuItem;
     private javax.swing.JRadioButtonMenuItem tradeStore;

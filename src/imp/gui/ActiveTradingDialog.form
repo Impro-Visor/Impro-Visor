@@ -22,14 +22,6 @@
             <Property name="text" type="java.lang.String" value="TradeMode"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeRepeat">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="modeSelector"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Repeat"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeRepeatAndRectify">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
@@ -43,35 +35,38 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="modeSelector"/>
                 </Property>
-                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Modify and Rectify"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeRandomModifyActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeWithAMusician">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="modeSelector"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Use Transforms"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeAbstract">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="modeSelector"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Abstract"/>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Use Abstract Melody"/>
               </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeWithAMusician">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="modeSelector"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Use Transform"/>
+              </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+              </AccessibilityProperties>
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeGrammarSolo">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="modeSelector"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Grammar Solo"/>
+                <Property name="text" type="java.lang.String" value="Use Grammar"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeStore">

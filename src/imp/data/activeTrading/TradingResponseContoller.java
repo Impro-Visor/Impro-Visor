@@ -49,17 +49,15 @@ public class TradingResponseContoller {
     }
 
     public MelodyPart response(String tradeMode) throws ExceptionTradeModeNotFound {
-        if (tradeMode.equals("Flatten")) {
-            //flattenSolo();
-        } else if (tradeMode.equals("Repeat and Rectify")) {
+        if (tradeMode.equals("Repeat and Rectify")) {
             responseMode = new RepeatAndRectifyTRM(responseInfo, tradeMode);
         } else if (tradeMode.equals("Modify and Rectify")) {
             responseMode = new ModifyAndRectifyTRM(responseInfo, tradeMode);
-        } else if (tradeMode.equals("Use Transforms")) {
+        } else if (tradeMode.equals("Use Transform")) {
             responseMode = new TransformTRM(responseInfo, tradeMode);
-        } else if (tradeMode.equals("Abstract")) {
+        } else if (tradeMode.equals("Use Abstract Melody")) {
             responseMode = new AbstractTRM(responseInfo, tradeMode);
-        } else if (tradeMode.equals("Grammar Solo")) {
+        } else if (tradeMode.equals("Use Grammar")) {
             responseMode = new GrammarTRM(responseInfo, tradeMode);
         } else if (tradeMode.equals("Chop and Memorize")) {
             responseMode = new ChopAndMemorizeTRM(responseInfo, tradeMode);
