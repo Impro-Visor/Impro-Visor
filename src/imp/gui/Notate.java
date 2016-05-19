@@ -1847,7 +1847,6 @@ public Critic getCritic()
         noteCursorBtn = new javax.swing.JButton();
         showAdviceButton = new javax.swing.JToggleButton();
         improviseButton = new javax.swing.JToggleButton();
-        freezeLayoutButton = new javax.swing.JToggleButton();
         colorationButton = new javax.swing.JToggleButton();
         smartEntryButton = new javax.swing.JToggleButton();
         quantizeComboBox = new javax.swing.JComboBox();
@@ -2003,6 +2002,7 @@ public Critic getCritic()
         transposeMelodyDownHarmonically = new javax.swing.JMenuItem();
         transposeMelodyDownOctave = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
+        freezeLayoutMI = new javax.swing.JCheckBoxMenuItem();
         oneAutoMI = new javax.swing.JMenuItem();
         autoAdjustMI = new javax.swing.JCheckBoxMenuItem();
         earlyScrollCheckBoxMI = new javax.swing.JCheckBoxMenuItem();
@@ -7170,23 +7170,6 @@ public Critic getCritic()
         });
         standardToolbar.add(improviseButton);
 
-        freezeLayoutButton.setBackground(new java.awt.Color(0, 255, 0));
-        freezeLayoutButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        freezeLayoutButton.setText("<html><center>Freeze<br>Layout</center></html>");
-        freezeLayoutButton.setToolTipText("Freeze or thaw the current layout");
-        freezeLayoutButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        freezeLayoutButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        freezeLayoutButton.setMaximumSize(new java.awt.Dimension(45, 30));
-        freezeLayoutButton.setMinimumSize(new java.awt.Dimension(45, 30));
-        freezeLayoutButton.setOpaque(true);
-        freezeLayoutButton.setPreferredSize(new java.awt.Dimension(45, 20));
-        freezeLayoutButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                freezeLayoutButtonActionPerformed(evt);
-            }
-        });
-        standardToolbar.add(freezeLayoutButton);
-
         colorationButton.setBackground(new java.awt.Color(153, 204, 255));
         colorationButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         colorationButton.setText("<html><center>Black&<br>White</center></html>");
@@ -8696,6 +8679,14 @@ public Critic getCritic()
 
         viewMenu.setMnemonic('v');
         viewMenu.setText("View");
+
+        freezeLayoutMI.setText("Freeze Layout (bars in each line)");
+        freezeLayoutMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                freezeLayoutMIActionPerformed(evt);
+            }
+        });
+        viewMenu.add(freezeLayoutMI);
 
         oneAutoMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         oneAutoMI.setText("Perform a Single Layout Adjustment");
@@ -12406,11 +12397,6 @@ public void repaintAndStaveRequestFocus()
 // TODO add your handling code here:
     }//GEN-LAST:event_addTabBtnActionPerformed
 
-    private void freezeLayoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freezeLayoutButtonActionPerformed
-
-        toggleFreezeLayout();
-    }//GEN-LAST:event_freezeLayoutButtonActionPerformed
-
 private Color adviceBtnColorOpen = Color.green;
 private Color adviceBtnColorClosed = new Color(238, 212, 212);
 
@@ -15544,17 +15530,14 @@ private void setFreezeLayout(Boolean frozen)
   {
     if( frozen )
       {
-        freezeLayoutButton.setText("<html><center>Thaw<br>Layout</center></html>");
-
-        freezeLayoutButton.setBackground(Color.RED);
+         freezeLayoutMI.setText("Thaw Layout");
+         freezeLayoutMI.setSelected(true);
       }
     else
       {
         score.setLayoutList(Polylist.nil);
-
-        freezeLayoutButton.setText("<html><center>Freeze<br>Layout</center></html>");
-
-        freezeLayoutButton.setBackground(Color.GREEN);
+        freezeLayoutMI.setText("Freeze Layout");
+        freezeLayoutMI.setSelected(false);
       }
   }
 
@@ -23001,6 +22984,10 @@ int quantizeResolution = 60;
         mergeSelection();
     }//GEN-LAST:event_mergeSamePitchesActionPerformed
 
+    private void freezeLayoutMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freezeLayoutMIActionPerformed
+        toggleFreezeLayout();
+    }//GEN-LAST:event_freezeLayoutMIActionPerformed
+
     private void setModesThatCantTrade(boolean enabled){
         guideToneRadio.setEnabled(enabled);
         guideToneTransformRadio.setEnabled(enabled);
@@ -25029,7 +25016,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem fluidVoicings;
     private javax.swing.JMenuItem fractalMI;
     private javax.swing.JComboBox frameSizeComboBox1;
-    private javax.swing.JToggleButton freezeLayoutButton;
+    private javax.swing.JCheckBoxMenuItem freezeLayoutMI;
     private javax.swing.JPanel generalContourTab;
     private javax.swing.JMenuItem generateLickInSelection;
     private javax.swing.ButtonGroup generatorButtonGroup;
