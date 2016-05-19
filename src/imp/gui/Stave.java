@@ -23,7 +23,7 @@ package imp.gui;
 import imp.Constants;
 import static imp.Constants.ExtractMode.BRICK;
 import static imp.Constants.ExtractMode.QUOTE;
-import imp.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Block;
 import imp.com.MergeSameNotesCommand;
 import imp.com.PlayScoreCommand;
 import imp.com.RectifyPitchesCommand;

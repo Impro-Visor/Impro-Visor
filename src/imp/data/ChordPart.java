@@ -20,8 +20,8 @@
 
 package imp.data;
 
-import imp.brickdictionary.Block;
-import imp.brickdictionary.ChordBlock;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.ChordBlock;
 import imp.roadmap.RoadMap;
 import imp.roadmap.RoadMapFrame;
 import imp.util.ErrorLog;
@@ -564,7 +564,7 @@ public ArrayList<Chord> getChords() {
 }
 
 
-public ArrayList<imp.brickdictionary.Block> toBlockList()
+public ArrayList<imp.roadmap.brickdictionary.Block> toBlockList()
 {
 return sectionInfo.toBlockList();
 }
@@ -586,9 +586,9 @@ public void toRoadMapFrame(RoadMapFrame roadmapFrame)
 
 public void addFromRoadMapFrame(RoadMapFrame roadmap)
   {
-    ArrayList<imp.brickdictionary.ChordBlock> chords = roadmap.getChordsInSelection();
+    ArrayList<imp.roadmap.brickdictionary.ChordBlock> chords = roadmap.getChordsInSelection();
 
-    Iterator<imp.brickdictionary.ChordBlock> i = chords.iterator();
+    Iterator<imp.roadmap.brickdictionary.ChordBlock> i = chords.iterator();
 
     int totalSlots = 0;
     int sectionStart = 0;

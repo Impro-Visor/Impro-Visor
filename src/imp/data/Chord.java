@@ -21,7 +21,7 @@
 package imp.data;
 
 import imp.Constants;
-import imp.brickdictionary.ChordBlock;
+import imp.roadmap.brickdictionary.ChordBlock;
 import static imp.data.Chord.flushChordBuffer;
 import imp.util.Preferences;
 import java.io.BufferedReader;

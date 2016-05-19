@@ -24,7 +24,8 @@
 
 package imp.roadmap;
 
-import imp.brickdictionary.*;
+import imp.roadmap.brickdictionary.KeySpan;
+import imp.roadmap.brickdictionary.Block;
 import imp.data.PitchClass;
 import java.awt.*;
 

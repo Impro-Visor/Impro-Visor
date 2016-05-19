@@ -20,7 +20,7 @@
 
 package imp.data;
 
-import imp.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Block;
 
 /**
  * SectionRecord records the information about a section. It was added when

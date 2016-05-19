@@ -19,8 +19,12 @@
  */
 
 package imp.roadmap;
+import imp.roadmap.brickdictionary.BrickLibrary;
+import imp.roadmap.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.KeySpan;
+import imp.roadmap.brickdictionary.ChordBlock;
 import imp.gui.Notate;
-import imp.brickdictionary.*;
 import imp.data.Chord;
 import imp.data.Note;
 import imp.data.PitchClass;

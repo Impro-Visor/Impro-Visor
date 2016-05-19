@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.cykparser;
+package imp.roadmap.cykparser;
 
 /** 
  * TreeNode
@@ -28,7 +28,10 @@ package imp.cykparser;
  * @Author Xanda Schofield
  */
 
-import imp.brickdictionary.*;
+import imp.roadmap.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.BrickLibrary;
+import imp.roadmap.brickdictionary.ChordBlock;
 import java.util.*;
 
 /** TreeNode

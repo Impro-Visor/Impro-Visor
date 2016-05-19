@@ -20,11 +20,11 @@
 
 package imp.roadmap;
 
-import imp.brickdictionary.Block;
-import imp.brickdictionary.Brick;
-import imp.brickdictionary.ChordBlock;
-import imp.brickdictionary.KeySpan;
-import imp.cykparser.PostProcessor;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.ChordBlock;
+import imp.roadmap.brickdictionary.KeySpan;
+import imp.roadmap.cykparser.PostProcessor;
 import java.util.ArrayList;
 import java.util.List;
 //import polya.Formatting;

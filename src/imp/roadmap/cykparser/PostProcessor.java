@@ -18,8 +18,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.cykparser;
-import imp.brickdictionary.*;
+package imp.roadmap.cykparser;
+import imp.roadmap.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.BrickLibrary;
+import imp.roadmap.brickdictionary.ChordBlock;
+import imp.roadmap.brickdictionary.KeySpan;
 import imp.data.ChordSymbol;
 import imp.roadmap.*;
 import java.util.ArrayList;

@@ -5,8 +5,8 @@
 package imp.cluster;
 
 import static imp.Constants.BEAT;
-import imp.brickdictionary.Block;
-import imp.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Brick;
 import static imp.cluster.CreateGrammar.getRuleStringsFromWriter;
 import static imp.cluster.CreateGrammar.getRulesFromWriter;
 import static imp.cluster.CreateGrammar.processRule;

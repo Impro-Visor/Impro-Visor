@@ -19,7 +19,7 @@
  */
 package imp.lickgen;
 
-import imp.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Block;
 import imp.data.Chord;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;

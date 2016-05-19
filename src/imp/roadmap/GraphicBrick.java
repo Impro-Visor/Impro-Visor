@@ -20,9 +20,11 @@
 
 package imp.roadmap;
 
+import imp.roadmap.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.ChordBlock;
+import imp.roadmap.brickdictionary.Block;
 import java.awt.*;
 import java.util.ArrayList;
-import imp.brickdictionary.*;
 
 /**
  * This class contains the graphical representation of a Block.

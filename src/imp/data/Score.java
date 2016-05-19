@@ -33,7 +33,7 @@ import static imp.Constants.GSHARP;
 import static imp.Constants.MAX_VOLUME;
 import static imp.Constants.NOCHORD;
 import imp.ImproVisor;
-import imp.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Block;
 import static imp.data.Score.DEFAULT_BARS_PER_LINE;
 import static imp.data.Score.DEFAULT_COMPOSER;
 import static imp.data.Score.DEFAULT_KEYSIG;

@@ -21,11 +21,11 @@
 package imp.roadmap;
 
 import imp.ImproVisor;
-import imp.brickdictionary.Block;
-import imp.brickdictionary.Brick;
-import imp.brickdictionary.BrickLibrary;
-import imp.brickdictionary.ChordBlock;
-import imp.cykparser.CYKParser;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.BrickLibrary;
+import imp.roadmap.brickdictionary.ChordBlock;
+import imp.roadmap.cykparser.CYKParser;
 import imp.data.*;
 import imp.gui.*;
 import imp.util.DictionaryFilter;

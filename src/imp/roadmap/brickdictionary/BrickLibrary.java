@@ -20,8 +20,8 @@
  */
 
 
-package imp.brickdictionary;
-import imp.cykparser.PostProcessor;
+package imp.roadmap.brickdictionary;
+import imp.roadmap.cykparser.PostProcessor;
 import imp.data.ChordSymbol;
 import imp.util.ErrorLog;
 import java.util.Collection;

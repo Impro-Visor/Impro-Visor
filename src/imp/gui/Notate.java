@@ -27,7 +27,7 @@ import imp.ImproVisor;
 import static imp.ImproVisor.getStyleDirectory;
 import imp.RecentFiles;
 import imp.audio.SCHandler;
-import imp.brickdictionary.Block;
+import imp.roadmap.brickdictionary.Block;
 import imp.com.*;
 import imp.data.*;
 import imp.data.musicXML.ChordDescription;

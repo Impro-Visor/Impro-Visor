@@ -19,9 +19,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.cykparser;
+package imp.roadmap.cykparser;
 
-import imp.brickdictionary.*;
+import imp.roadmap.brickdictionary.ChordBlock;
 import java.util.ArrayList;
 import polya.*;
 /** SubstitutionRule

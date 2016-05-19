@@ -20,9 +20,12 @@
 
 package imp.roadmap;
 
+import imp.roadmap.brickdictionary.BrickLibrary;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.ChordBlock;
+import imp.roadmap.brickdictionary.Brick;
 import javax.swing.JPanel;
 import java.awt.*;
-import imp.brickdictionary.*;
 import java.util.ArrayList;
 
 /**

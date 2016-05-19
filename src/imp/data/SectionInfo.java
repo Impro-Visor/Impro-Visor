@@ -21,8 +21,8 @@
 package imp.data;
 
 import imp.Constants;
-import imp.brickdictionary.Block;
-import imp.brickdictionary.ChordBlock;
+import imp.roadmap.brickdictionary.Block;
+import imp.roadmap.brickdictionary.ChordBlock;
 import imp.util.Preferences;
 import java.io.Serializable;
 import java.util.ArrayList;
