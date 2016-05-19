@@ -20,6 +20,7 @@
  */
 package imp.data;
 
+import imp.data.stylePatterns.ChordPatternExtractor;
 import java.util.ArrayList;
 import java.util.Arrays;
 

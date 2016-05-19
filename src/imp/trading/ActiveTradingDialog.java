@@ -184,7 +184,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         modePanel.setPreferredSize(new java.awt.Dimension(200, 100));
         modePanel.setLayout(new java.awt.GridBagLayout());
 
-        modeStatus.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        modeStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         modeStatus.setText("Mode: ___ ");
         modeStatus.setMaximumSize(new java.awt.Dimension(200, 30));
         modeStatus.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -196,7 +196,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         modePanel.add(modeStatus, gridBagConstraints);
 
-        grammarStatus.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        grammarStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         grammarStatus.setText("Grammar: ___    ");
         grammarStatus.setMaximumSize(new java.awt.Dimension(200, 30));
         grammarStatus.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -208,7 +208,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
         modePanel.add(grammarStatus, gridBagConstraints);
 
-        transformStatus.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        transformStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         transformStatus.setText("Transform: ___ ");
         transformStatus.setMaximumSize(new java.awt.Dimension(200, 30));
         transformStatus.setMinimumSize(new java.awt.Dimension(200, 30));
@@ -442,11 +442,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         modeMenu.add(tradeRandomModify);
 
         modeSelector.add(tradeAbstract);
-        tradeAbstract.setSelected(true);
         tradeAbstract.setText("Use Abstract Melody");
         modeMenu.add(tradeAbstract);
 
         modeSelector.add(tradeWithAMusician);
+        tradeWithAMusician.setSelected(true);
         tradeWithAMusician.setText("Use Transform");
         modeMenu.add(tradeWithAMusician);
         tradeWithAMusician.getAccessibleContext().setAccessibleDescription("");
@@ -582,7 +582,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tempoSlider.setValue(newTempo.intValue());
         tempoLabel.setText(newTempo.toString());
         modeStatus.setText("Mode: " + activeTrading.getTradeMode());
-        transformStatus.setText("Transform File: " + activeTrading.getMusician());
+        transformStatus.setText("Transform: " + activeTrading.getMusician());
         String gramm = activeTrading.getGrammar();
         tradeGrammarMenu.setText(gramm);
         grammarStatus.setText("Grammar: " + gramm);

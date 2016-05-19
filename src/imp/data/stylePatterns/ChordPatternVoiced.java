@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
+import imp.data.MelodyPart;
+import imp.data.Note;
 import java.util.Iterator;
 import java.util.LinkedList;
 import polya.Polylist;
@@ -64,7 +66,7 @@ public class ChordPatternVoiced
         for( Polylist v: voicings )
         {
             buffer.append("(");
-            buffer.append(it.next().rhythmValue);
+            buffer.append(it.next().getRhythmValue());
             buffer.append(" ");
             buffer.append(v);
             buffer.append(") ");

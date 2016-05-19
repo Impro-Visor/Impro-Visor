@@ -20,6 +20,7 @@
 
 package imp.data;
 
+import imp.data.stylePatterns.ChordPattern;
 import imp.data.advice.Advisor;
 import imp.Constants;
 import imp.roadmap.brickdictionary.ChordBlock;

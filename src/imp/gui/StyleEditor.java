@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,19 +20,24 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.RepresentativeChordRules;
+import imp.data.stylePatterns.RepresentativeDrumRules;
+import imp.data.stylePatterns.RepresentativeBassRules;
+import imp.data.stylePatterns.DrumPattern;
+import imp.data.stylePatterns.DrumRuleRep;
+import imp.data.stylePatterns.BassPatternElement;
+import imp.data.stylePatterns.BassPattern;
+import imp.data.stylePatterns.ChordPatternElement;
+import imp.data.stylePatterns.ChordPattern;
 import imp.data.advice.Advisor;
 import imp.voicing.AutomaticVoicingSettings;
 import imp.Constants;
 import imp.voicing.ControlPanelFrame;
-import imp.voicing.HandManager;
 import imp.ImproVisor;
-import static imp.ImproVisor.getStyleDirectory;
-import imp.voicing.VoicingGenerator;
 import imp.com.CommandManager;
 import imp.com.OpenLeadsheetCommand;
 import imp.data.*;
 import imp.util.*;
-import imp.voicing.AVPFileCreator;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.*;
@@ -43,7 +48,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 import java.util.Set;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -126,11 +130,11 @@ public class StyleEditor
   
   private String voicingFileName="default.fv";
 
-    public String getVoicingFileName() {
+  public String getVoicingFileName() {
         return voicingFileName;
     }
 
-    public void setVoicingFileName(String voicingFileName) {
+  public void setVoicingFileName(String voicingFileName) {
         this.voicingFileName = voicingFileName;
     }
 

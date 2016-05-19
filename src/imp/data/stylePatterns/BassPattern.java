@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
 import imp.data.advice.ScaleForm;
 import imp.data.advice.Advisor;
 import imp.Constants;
+import imp.data.ChordForm;
+import imp.data.ChordSymbol;
+import imp.data.Duration;
+import imp.data.Key;
+import imp.data.Leadsheet;
+import imp.data.MelodySymbol;
+import imp.data.NoteSymbol;
+import imp.data.PitchClass;
+import imp.data.Style;
+import imp.data.VolumeSymbol;
 import imp.util.ErrorLog;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -18,9 +18,13 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
+import imp.data.stylePatterns.ChordPatternExtractor;
 import imp.Constants;
+import imp.data.ChordChronotonic;
+import imp.data.ImportChords;
+import imp.data.MIDIBeast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -779,7 +783,7 @@ public ChordPattern makeChordPattern(String r, float w, String p, String n)
     return new ChordPattern(r, w, p, n);
 }
 
-public ChordPattern makeChordPattern(imp.data.ChordPattern cp)
+public ChordPattern makeChordPattern(imp.data.stylePatterns.ChordPattern cp)
   {
     return new ChordPattern(cp.forGenerator(), cp.getWeight(), cp.getPushString(), cp.getName());
   }

@@ -18,9 +18,14 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
 import imp.Constants;
+import imp.data.BassChronotonic;
+import imp.data.Duration;
+import imp.data.ImportBass;
+import imp.data.MIDIBeast;
+import imp.data.Note;
 import imp.util.ErrorLog;
 import java.util.ArrayList;
 import java.util.Arrays;

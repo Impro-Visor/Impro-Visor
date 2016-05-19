@@ -20,7 +20,9 @@
  */
 package imp.gui;
 
-import imp.data.activeTrading.ActiveTradingDialog;
+import imp.data.stylePatterns.ChordPattern;
+import imp.trading.PassiveTradingWindow;
+import imp.trading.ActiveTradingDialog;
 import imp.data.advice.Advisor;
 import imp.data.advice.AdviceForScale;
 import imp.data.advice.Advice;
@@ -2046,8 +2048,8 @@ public Critic getCritic()
         improvMenu = new javax.swing.JMenu();
         tradingWindow = new javax.swing.JMenuItem();
         passiveTradingMI = new javax.swing.JMenuItem();
-        tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
         improvSeparator2 = new javax.swing.JPopupMenu.Separator();
+        tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
         grammarRadio = new javax.swing.JRadioButtonMenuItem();
         transformRadio = new javax.swing.JRadioButtonMenuItem();
         grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
@@ -9100,6 +9102,7 @@ public Critic getCritic()
             }
         });
         improvMenu.add(passiveTradingMI);
+        improvMenu.add(improvSeparator2);
 
         tradeCheckbox.setText("Passive Trading Options");
         tradeCheckbox.addActionListener(new java.awt.event.ActionListener() {
@@ -9108,7 +9111,6 @@ public Critic getCritic()
             }
         });
         improvMenu.add(tradeCheckbox);
-        improvMenu.add(improvSeparator2);
 
         improvButtonGroup.add(grammarRadio);
         grammarRadio.setSelected(true);
@@ -23661,6 +23663,11 @@ public boolean getWhetherToTrade()
   {
     return tradeCheckbox.isSelected();
   }
+
+public void doNotTrade()
+{
+    tradeCheckbox.setSelected(false);
+}
 
 /**
  * Get the indication of who will trade first.

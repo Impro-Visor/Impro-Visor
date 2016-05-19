@@ -20,6 +20,11 @@
 
 package imp.data;
 
+import imp.data.stylePatterns.BassPattern;
+import imp.data.stylePatterns.Pattern;
+import imp.data.stylePatterns.DrumPattern;
+import imp.data.stylePatterns.ChordPatternVoiced;
+import imp.data.stylePatterns.ChordPattern;
 import imp.data.advice.Advisor;
 import imp.Constants;
 import static imp.Constants.BEAT;

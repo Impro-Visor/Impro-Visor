@@ -20,6 +20,10 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.RepresentativeChordRules;
+import imp.data.stylePatterns.RepresentativeDrumRules;
+import imp.data.stylePatterns.RepresentativeBassRules;
+import imp.data.stylePatterns.RepPattern;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.com.PlayScoreCommand;

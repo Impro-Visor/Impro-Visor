@@ -8678,6 +8678,8 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passiveTradingMIActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator2">
+            </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Passive Trading Options"/>
@@ -8685,8 +8687,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeCheckboxActionPerformed"/>
               </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator2">
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="grammarRadio">
               <Properties>

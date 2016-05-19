@@ -20,6 +20,7 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.BassPattern;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.com.CommandManager;

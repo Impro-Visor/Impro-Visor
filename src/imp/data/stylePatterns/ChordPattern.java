@@ -18,8 +18,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
+import imp.data.Chord;
+import imp.data.ChordForm;
+import imp.data.ChordSymbol;
+import imp.data.Duration;
+import imp.data.Key;
+import imp.data.Leadsheet;
+import imp.data.MelodyPart;
+import imp.data.Note;
+import imp.data.NoteSymbol;
+import imp.data.PitchClass;
+import imp.data.Rest;
+import imp.data.Style;
+import imp.data.VolumeSymbol;
 import imp.data.advice.ScaleForm;
 import imp.data.advice.Advisor;
 import imp.util.ErrorLog;

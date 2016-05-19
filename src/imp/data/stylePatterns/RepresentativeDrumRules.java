@@ -18,8 +18,12 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
+import imp.data.DrumChronotonic;
+import imp.data.ImportDrums;
+import imp.data.MIDIBeast;
+import imp.data.stylePatterns.DrumPatternExtractor;
 import imp.util.ErrorLog;
 import java.util.ArrayList;
 import java.util.Random;

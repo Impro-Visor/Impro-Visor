@@ -18,10 +18,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
 import imp.Constants;
 import imp.com.OpenLeadsheetCommand;
+import imp.data.Chord;
+import imp.data.ChordPart;
+import imp.data.MIDIBeast;
+import imp.data.Note;
+import imp.data.Score;
 import java.io.File;
 import java.util.ArrayList;
 

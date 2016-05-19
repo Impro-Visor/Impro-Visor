@@ -25,7 +25,7 @@ import imp.ImproVisor;
 import imp.data.Chord;
 import imp.data.ChordForm;
 import imp.data.ChordPart;
-import imp.data.ChordPattern;
+import imp.data.stylePatterns.ChordPattern;
 import imp.data.ChordSymbol;
 import imp.data.Key;
 import imp.data.Note;

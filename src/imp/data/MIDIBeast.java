@@ -20,6 +20,9 @@
 
 package imp.data;
 
+import imp.data.stylePatterns.RepresentativeChordRules;
+import imp.data.stylePatterns.RepresentativeDrumRules;
+import imp.data.stylePatterns.RepresentativeBassRules;
 import imp.Constants;
 import imp.data.MidiChannelInfo.ChannelInfo;
 import java.util.ArrayList;

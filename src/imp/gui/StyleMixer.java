@@ -20,6 +20,10 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.BassPattern;
+import imp.data.stylePatterns.DrumPattern;
+import imp.data.stylePatterns.DrumRuleRep;
+import imp.data.stylePatterns.ChordPattern;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.com.OpenLeadsheetCommand;

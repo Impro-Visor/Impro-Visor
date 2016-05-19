@@ -18,8 +18,12 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
+import imp.data.Duration;
+import imp.data.Leadsheet;
+import imp.data.MIDIBeast;
+import imp.data.VolumeSymbol;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import polya.Polylist;

@@ -20,6 +20,7 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.DrumRuleRep;
 import imp.com.CommandManager;
 import imp.data.*;
 import imp.util.ErrorNonModal;

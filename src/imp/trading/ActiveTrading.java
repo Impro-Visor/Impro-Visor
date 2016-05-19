@@ -43,7 +43,7 @@ import java.util.logging.Logger;
  */
 public class ActiveTrading {
 
-    private Notate notate;
+    private final Notate notate;
 
     private Score tradeScore;
     private final LinkedList<Integer> triggers = new LinkedList();
@@ -86,7 +86,7 @@ public class ActiveTrading {
     public static final int one = 1;
     public static final int DEFAULT_TRADE_LENGTH = 4;
     
-    public static final String DEFAULT_TRADE_MODE = "Repeat and Rectify";
+    public static final String DEFAULT_TRADE_MODE = "Transform";
     public static final int DEFAULT_VOLUME = 80;
     private LinkedList<TradeListener> tradeListeners = new LinkedList<TradeListener>();
 
@@ -339,7 +339,7 @@ public class ActiveTrading {
         applyTradingMode();
         tradeScore.deleteChords();
 
-        Long delayCopy = new Long(slotDelay);
+        Long delayCopy = slotDelay;
         response = response.extract(delayCopy.intValue(), slotsPerTurn - one, true, true);
         //System.out.println(response);
         tradeScore.addPart(response);

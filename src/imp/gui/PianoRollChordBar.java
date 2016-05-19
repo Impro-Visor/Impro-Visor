@@ -19,7 +19,7 @@
  */
 package imp.gui;
 
-import imp.data.ChordPatternElement;
+import imp.data.stylePatterns.ChordPatternElement;
 
 /**
  *

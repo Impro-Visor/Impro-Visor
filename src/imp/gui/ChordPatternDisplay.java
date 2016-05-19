@@ -20,6 +20,7 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.ChordPattern;
 import imp.Constants;
 import imp.com.CommandManager;
 import imp.data.*;

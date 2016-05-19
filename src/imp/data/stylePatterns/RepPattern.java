@@ -1,7 +1,7 @@
 /**
- * This Java Class is part of the Impro-Visor Application.
+ * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College. 
+ * Copyright (C) 2012 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -17,15 +17,14 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.data.activeTrading;
+
+package imp.data.stylePatterns;
 
 /**
  *
- * @author Zach Kondak
+ * @author keller
  */
-public class ExceptionGenerateResponseNotDefined extends Exception {
-
-    public ExceptionGenerateResponseNotDefined(String message) {
-        super(message);
-    }
+public interface RepPattern
+{
+    
 }

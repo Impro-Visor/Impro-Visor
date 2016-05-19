@@ -18,8 +18,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
 
+import imp.data.Duration;
+import imp.data.Note;
 import imp.util.ErrorLog;
 import polya.Polylist;
 

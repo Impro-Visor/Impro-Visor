@@ -18,7 +18,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.stylePatterns;
+
+import imp.data.Style;
 
 /**
  * A Pattern is base class for accompaniment patterns that have
