@@ -20,6 +20,7 @@
 
 package imp.com;
 
+import imp.data.advice.Advisor;
 import imp.data.*;
 import imp.gui.Notate;
 import imp.util.BasicEditor;

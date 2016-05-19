@@ -19,30 +19,37 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.advice;
 
+import imp.data.Key;
+import imp.data.Note;
 import polya.*;
 
-class AdviceTreeCacheKey
+/**
+ *
+ * @author keller
+ */
+public class AdviceForLick
+        extends AdviceForMelody
   {
-  String chordName = null;
-  String nextChordName = null;
-  int interChordHalfBeats;
-  int notePitchClass;
-  boolean subs;
-  Polylist tree;
-
-  AdviceTreeCacheKey(String chordName, String nextChordName, int interChordHalfBeats, int notePitch, boolean subs)
+  public AdviceForLick(String name, Polylist notes, String chordRoot, Key key,
+                        int[] metre, int profileNumber)
     {
-    this.chordName = chordName;
-    this.nextChordName = nextChordName;
-    this.interChordHalfBeats = interChordHalfBeats;
-    this.notePitchClass = notePitch < 0 ? -1 : (notePitch % 12);
-    this.subs = subs;
+    super(name, 0, notes, chordRoot, key, metre, null, profileNumber);
     }
 
-  public String toString()
+  public AdviceForLick(String name, int serial, Polylist notes,
+                        String chordRoot, Key key, int[] metre,
+                        int profileNumber)
     {
-    return "key: " + chordName + " " + nextChordName + " " + notePitchClass + " " + interChordHalfBeats + " " + subs ;
+    super(name, serial, notes, chordRoot, key, metre, null, profileNumber);
     }
+
+  public AdviceForLick(String name, int serial, Polylist notes,
+                        String chordRoot, Key key, int[] metre,
+                        Note firstNote, int profileNumber)
+    {
+    super(name, serial, notes, chordRoot, key, metre, firstNote, profileNumber);
+    }
+
   }

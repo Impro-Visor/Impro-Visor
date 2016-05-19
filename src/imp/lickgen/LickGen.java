@@ -20,6 +20,7 @@
 
 package imp.lickgen;
 
+import imp.data.advice.Advisor;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.cluster.*;

@@ -20,6 +20,7 @@
 
 package imp;
 
+import imp.data.advice.Advisor;
 import imp.voicing.AutomaticVoicingSettings;
 import imp.com.LoadAdviceCommand;
 import imp.data.*;

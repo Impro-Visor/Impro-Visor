@@ -6,7 +6,7 @@
 package imp.voicing;
 
 import imp.ImproVisor;
-import imp.data.Advisor;
+import imp.data.advice.Advisor;
 import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.gui.RangeChooser;

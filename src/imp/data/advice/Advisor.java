@@ -18,10 +18,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.advice;
 
 import imp.Constants;
 import imp.ImproVisor;
+import imp.data.Chord;
+import imp.data.ChordForm;
+import imp.data.ChordPart;
+import imp.data.ChordPattern;
+import imp.data.ChordSymbol;
+import imp.data.Key;
+import imp.data.Note;
+import imp.data.NoteSymbol;
+import imp.data.PitchClass;
+import imp.data.Score;
+import imp.data.Style;
 import imp.gui.Notate;
 import imp.util.ErrorLog;
 import imp.util.Preferences;
@@ -192,7 +203,7 @@ static final String BAR = "|";
 
 static final String SLASH = "/";
 
-static final Polylist licksIgnore = Polylist.list(BAR, SLASH);
+public static final Polylist licksIgnore = Polylist.list(BAR, SLASH);
 
 // Figure out which components of advice to show;
 static final int NONE = 0;
@@ -1329,7 +1340,7 @@ chordForm.removeNthVoicing(position);
  * Get extensions of the chord type root in C.
  * In general, extensions will need to be transposed by the caller.
  */
-static Polylist getExtensions(String chordName)
+public static Polylist getExtensions(String chordName)
   {
   chordName = Key.makeCroot(chordName);
   for( int i = 0; i < numChords; i++ )
@@ -3246,7 +3257,7 @@ public static String getSymbolFamily(String chordSymbol)
  * database.  Hopefully there is no loop, otherwise this
  * will diverge.
  */
-static String getFinalName(String chordName)
+public static String getFinalName(String chordName)
   {
   Polylist entry = chords.assoc(chordName);
   if( entry != null )

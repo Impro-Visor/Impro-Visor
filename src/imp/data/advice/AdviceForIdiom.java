@@ -19,31 +19,33 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.advice;
 
+import imp.data.Key;
+import imp.data.Note;
 import polya.*;
 
 /**
  *
  * @author keller
  */
-public class AdviceForLick
+public class AdviceForIdiom
         extends AdviceForMelody
   {
-  public AdviceForLick(String name, Polylist notes, String chordRoot, Key key,
+  public AdviceForIdiom(String name, Polylist notes, String chordRoot, Key key,
                         int[] metre, int profileNumber)
     {
     super(name, 0, notes, chordRoot, key, metre, null, profileNumber);
     }
 
-  public AdviceForLick(String name, int serial, Polylist notes,
+  public AdviceForIdiom(String name, int serial, Polylist notes,
                         String chordRoot, Key key, int[] metre,
                         int profileNumber)
     {
     super(name, serial, notes, chordRoot, key, metre, null, profileNumber);
     }
 
-  public AdviceForLick(String name, int serial, Polylist notes,
+  public AdviceForIdiom(String name, int serial, Polylist notes,
                         String chordRoot, Key key, int[] metre,
                         Note firstNote, int profileNumber)
     {

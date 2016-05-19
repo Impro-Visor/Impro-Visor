@@ -19,8 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.advice;
 
+import imp.data.Key;
+import imp.data.Leadsheet;
+import imp.data.MelodyPart;
+import imp.data.Note;
+import imp.data.Part;
+import imp.data.PitchClass;
+import imp.data.Unit;
 import polya.*;
 
 /**

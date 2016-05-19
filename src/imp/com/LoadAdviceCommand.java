@@ -20,7 +20,7 @@
 
 package imp.com;
 
-import imp.data.Advisor;
+import imp.data.advice.Advisor;
 import imp.gui.Notate;
 import imp.util.ErrorLog;
 import imp.util.SplashDialog;

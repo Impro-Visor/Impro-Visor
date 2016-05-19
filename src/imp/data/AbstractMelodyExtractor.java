@@ -20,6 +20,7 @@
  */
 package imp.data;
 
+import imp.data.advice.Advisor;
 import static imp.Constants.BEAT;
 import static imp.Constants.FIRST_SCALE;
 import static imp.Constants.NOCHORD;

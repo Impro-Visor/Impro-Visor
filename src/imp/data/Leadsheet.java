@@ -20,6 +20,7 @@
 
 package imp.data;
 
+import imp.data.advice.Advisor;
 import imp.Constants;
 import imp.Constants.StaveType;
 import imp.util.ErrorLog;

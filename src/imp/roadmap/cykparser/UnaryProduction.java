@@ -22,7 +22,7 @@ package imp.roadmap.cykparser;
 import imp.roadmap.brickdictionary.BrickLibrary;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.ChordBlock;
-import imp.data.Advisor;
+import imp.data.advice.Advisor;
 import polya.Polylist;
 
 /** BinaryProduction

@@ -21,6 +21,7 @@
 
 package imp.data;
 
+import imp.data.advice.Advisor;
 import imp.Constants;
 import imp.util.ErrorLog;
 import java.io.Serializable;
@@ -502,7 +503,7 @@ public class Key
    *
    * @param chord the string naming the chord.
    */
-  static Polylist explodeChord(String chord)
+  public static Polylist explodeChord(String chord)
     {
     if( chord.equals("") )
       {

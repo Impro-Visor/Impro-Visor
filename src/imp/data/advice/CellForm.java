@@ -19,10 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.advice;
 
+import imp.data.advice.Advisor;
 import polya.*;
 import imp.*;
+import imp.data.ChordForm;
+import imp.data.ChordSymbol;
+import imp.data.Key;
+import imp.data.NoteSymbol;
+import imp.data.PitchClass;
 import imp.util.*;
 
 /**

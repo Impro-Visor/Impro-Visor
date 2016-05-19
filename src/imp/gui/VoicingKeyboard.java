@@ -23,7 +23,7 @@ package imp.gui;
 
 import imp.ImproVisor;
 import imp.com.PlayScoreCommand;
-import imp.data.Advisor;
+import imp.data.advice.Advisor;
 import imp.data.NoteSymbol;
 import imp.data.PianoKey;
 import imp.voicing.VoicingDebug;

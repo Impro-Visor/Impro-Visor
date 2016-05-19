@@ -20,6 +20,15 @@
  */
 package imp.gui;
 
+import imp.data.advice.Advisor;
+import imp.data.advice.AdviceForScale;
+import imp.data.advice.Advice;
+import imp.data.advice.AdviceForBrick;
+import imp.data.advice.AdviceForIdiom;
+import imp.data.advice.AdviceForLick;
+import imp.data.advice.AdviceForQuote;
+import imp.data.advice.AdviceForCell;
+import imp.data.advice.AdviceForMelody;
 import imp.Constants;
 import imp.Constants.ExtractMode;
 import imp.Constants.StaveType;

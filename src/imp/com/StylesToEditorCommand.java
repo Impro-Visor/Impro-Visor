@@ -19,6 +19,7 @@
  */
 package imp.com;
 
+import imp.data.advice.Advisor;
 import imp.data.*;
 import imp.util.BasicEditor;
 import java.io.*;

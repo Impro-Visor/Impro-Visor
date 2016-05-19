@@ -25,6 +25,7 @@
  */
 package imp.gui;
 
+import imp.data.advice.Advisor;
 import imp.ImproVisor;
 import imp.cluster.PolylistComparer;
 import imp.com.*;

@@ -25,7 +25,7 @@ import imp.roadmap.brickdictionary.ChordBlock;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.BrickLibrary;
 import java.util.ArrayList;
-import imp.data.Advisor;
+import imp.data.advice.Advisor;
 import polya.Polylist;
 
 /** BinaryProduction

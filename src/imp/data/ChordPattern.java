@@ -20,6 +20,8 @@
 
 package imp.data;
 
+import imp.data.advice.ScaleForm;
+import imp.data.advice.Advisor;
 import imp.util.ErrorLog;
 import imp.voicing.HandManager;
 import imp.voicing.VoicingDebug;

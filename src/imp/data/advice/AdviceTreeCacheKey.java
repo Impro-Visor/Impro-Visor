@@ -19,9 +19,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.data.advice;
 
-interface CacheComparator
-{
-boolean compare(Object key, Object entryKey);
-}
+import polya.*;
+
+class AdviceTreeCacheKey
+  {
+  String chordName = null;
+  String nextChordName = null;
+  int interChordHalfBeats;
+  int notePitchClass;
+  boolean subs;
+  Polylist tree;
+
+  AdviceTreeCacheKey(String chordName, String nextChordName, int interChordHalfBeats, int notePitch, boolean subs)
+    {
+    this.chordName = chordName;
+    this.nextChordName = nextChordName;
+    this.interChordHalfBeats = interChordHalfBeats;
+    this.notePitchClass = notePitch < 0 ? -1 : (notePitch % 12);
+    this.subs = subs;
+    }
+
+  public String toString()
+    {
+    return "key: " + chordName + " " + nextChordName + " " + notePitchClass + " " + interChordHalfBeats + " " + subs ;
+    }
+  }

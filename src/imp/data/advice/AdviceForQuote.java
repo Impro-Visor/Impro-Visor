@@ -3,8 +3,10 @@
  * and open the template in the editor.
  */
 
-package imp.data;
+package imp.data.advice;
 
+import imp.data.Key;
+import imp.data.Note;
 import polya.*;
 
 /**

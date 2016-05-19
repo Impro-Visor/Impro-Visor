@@ -20,6 +20,7 @@
 
 package imp.gui;
 
+import imp.data.advice.Advisor;
 import imp.voicing.AutomaticVoicingSettings;
 import imp.Constants;
 import imp.voicing.ControlPanelFrame;
