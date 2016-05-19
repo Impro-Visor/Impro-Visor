@@ -1895,7 +1895,6 @@ public Critic getCritic()
         trackerDelayPanel = new javax.swing.JPanel();
         trackerDelayTextField2 = new javax.swing.JTextField();
         parallaxSpinner = new javax.swing.JSpinner();
-        earlyScrollBtn = new javax.swing.JToggleButton();
         textEntryToolBar = new javax.swing.JToolBar();
         textEntryLabel = new javax.swing.JLabel();
         textEntry = new javax.swing.JTextField();
@@ -2006,6 +2005,7 @@ public Critic getCritic()
         viewMenu = new javax.swing.JMenu();
         oneAutoMI = new javax.swing.JMenuItem();
         autoAdjustMI = new javax.swing.JCheckBoxMenuItem();
+        earlyScrollCheckBoxMI = new javax.swing.JCheckBoxMenuItem();
         showTitlesMI = new javax.swing.JCheckBoxMenuItem();
         showEmptyTitlesMI = new javax.swing.JCheckBoxMenuItem();
         barNumsMI = new javax.swing.JCheckBoxMenuItem();
@@ -7920,25 +7920,6 @@ public Critic getCritic()
         parallaxSpinner.setPreferredSize(new java.awt.Dimension(60, 45));
         playToolBar.add(parallaxSpinner);
 
-        earlyScrollBtn.setBackground(new java.awt.Color(51, 255, 255));
-        earlyScrollBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        earlyScrollBtn.setSelected(true);
-        earlyScrollBtn.setText("<html>\n<center>\nEarly\n<br>\nScroll\n</center>\n</html>\n");
-        earlyScrollBtn.setToolTipText("Causes the staff display to scroll to the top earlier.");
-        earlyScrollBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        earlyScrollBtn.setFocusable(false);
-        earlyScrollBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        earlyScrollBtn.setMaximumSize(new java.awt.Dimension(40, 35));
-        earlyScrollBtn.setMinimumSize(new java.awt.Dimension(40, 35));
-        earlyScrollBtn.setOpaque(true);
-        earlyScrollBtn.setPreferredSize(new java.awt.Dimension(40, 35));
-        earlyScrollBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                earlyScrollBtnActionPerformed(evt);
-            }
-        });
-        playToolBar.add(earlyScrollBtn);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -7990,6 +7971,7 @@ public Critic getCritic()
         clearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         clearButton.setMaximumSize(new java.awt.Dimension(46, 38));
         clearButton.setMinimumSize(new java.awt.Dimension(46, 38));
+        clearButton.setOpaque(true);
         clearButton.setPreferredSize(new java.awt.Dimension(46, 38));
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -8731,6 +8713,11 @@ public Critic getCritic()
             }
         });
         viewMenu.add(autoAdjustMI);
+
+        earlyScrollCheckBoxMI.setSelected(true);
+        earlyScrollCheckBoxMI.setText("Early Scroll");
+        earlyScrollCheckBoxMI.setToolTipText("If selected, long pages will scroll before the cursor is at the last line.");
+        viewMenu.add(earlyScrollCheckBoxMI);
 
         showTitlesMI.setSelected(true);
         showTitlesMI.setText("Show Leadsheet Title");
@@ -21751,21 +21738,6 @@ private void defaultChordFontSizeSpinnerKeyReleased(java.awt.event.KeyEvent evt)
       }
 }//GEN-LAST:event_defaultChordFontSizeSpinnerKeyReleased
 
-private void earlyScrollBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_earlyScrollBtnActionPerformed
-    if( earlyScrollBtn.isSelected() )
-      {
-        earlyScrollBtn.setBackground(new java.awt.Color(51, 255, 255));
-        earlyScrollBtn.setText("<html><center>Early<br>Scroll</center></html>");
-        earlyScrollBtn.setSelected(true);
-      }
-    else
-      {
-        earlyScrollBtn.setBackground(Color.red);
-        earlyScrollBtn.setText("<html><center>Late<br>Scroll</center></html>");
-        earlyScrollBtn.setSelected(false);
-      }
-}//GEN-LAST:event_earlyScrollBtnActionPerformed
-
 private void mostRecentLeadsheetMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostRecentLeadsheetMIActionPerformed
 }//GEN-LAST:event_mostRecentLeadsheetMIActionPerformed
 
@@ -25024,7 +24996,7 @@ private ImageIcon pauseButton =
     private javax.swing.JLabel duplicateLickLabel;
     private javax.swing.JScrollPane duplicateLickScroll;
     private javax.swing.JTextPane duplicateLickText;
-    private javax.swing.JToggleButton earlyScrollBtn;
+    private javax.swing.JCheckBoxMenuItem earlyScrollCheckBoxMI;
     private javax.swing.JCheckBox echoMidiCheckBox;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem emptyRoadMapMI;
@@ -26387,9 +26359,7 @@ private void handlePlayline(int slotInChorus)
 
             Rectangle viewport = getCurrentScrollPosition();
 
-            // It should be noted that the early scroll button has an invverted sense.
-
-            boolean earlyScroll = !earlyScrollBtn.isSelected();
+            boolean earlyScroll = earlyScrollCheckBoxMI.isSelected();
 
             Rectangle adjustedPlayline = (Rectangle) playline.clone();
 
