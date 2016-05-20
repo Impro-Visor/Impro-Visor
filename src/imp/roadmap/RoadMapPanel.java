@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2013 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,13 +24,11 @@ import imp.roadmap.brickdictionary.Brick;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.KeySpan;
 import imp.roadmap.brickdictionary.ChordBlock;
-import imp.gui.Notate;
 import imp.data.Chord;
 import imp.data.Note;
 import imp.data.PitchClass;
 import imp.util.ErrorLog;
 import java.awt.*;
-import java.awt.Font.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -52,6 +50,12 @@ public class RoadMapPanel extends JPanel {
      * Within a brick, a data member keeps track of selection, and another keeps
      * track of which chord (if any) is selected.
      */
+    
+    /** DITTO_STYLE style name is not to be printed. */
+   
+    public static final String DITTO_STYLE = "*";
+    
+ 
     /** Index of the start of selection (inclusive) */
     private int selectionStart = -1;
     
@@ -102,7 +106,7 @@ public class RoadMapPanel extends JPanel {
     /** Playline in RoadMapPanel */
     Rectangle playline;
     
-    String margin = " ";
+    String margin = "";
     
     Graphics g;
     
@@ -908,17 +912,17 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
        repaint();
     }
     
-    /** Draws a cursor line of the desired color at the desired slot */
-    private void drawCursorLine(int slot, Color color)
-    {
-        int[] wrap = findLineAndSlot(slot);
-        drawCursorLine(wrap[0], wrap[1], color);
-    }
+//    /** Draws a cursor line of the desired color at the desired slot */
+//    private void drawCursorLine(int slot, Color color)
+//    {
+//        int[] wrap = findLineAndSlot(slot);
+//        drawCursorLine(wrap[0], wrap[1], color);
+//    }
     
     /** Draws a cursor line of the desired color at the desired line/slot point */
     private void drawCursorLine(int slotOffset, int line, Color color)
     {
-        //Graphics2D g2d = (Graphics2D)buffer.getGraphics();
+        Graphics2D g2d = (Graphics2D)buffer.getGraphics();
         g2d.setColor(color);
         g2d.setStroke(settings.cursorLine);
         
@@ -1312,12 +1316,15 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
                     if (temp < styleList.size())
                     {
                 
-                    styleName = margin + styleList.get(temp) + margin;
-                    int length = settings.getBlockLength(brick.getBlock());
+                    styleName = styleList.get(temp);
+                    
+                    String stylePrint = margin + styleName + margin;
+                    
+                    //int length = settings.getBlockLength(brick.getBlock());
                 
                     FontMetrics metrics = g2d.getFontMetrics();
                 
-                    int width = metrics.stringWidth(styleName) + 4;
+                    int width = metrics.stringWidth(stylePrint) + 4;
                     int offset = metrics.getAscent();
                 
                     int styleX = settings.xOffset;
@@ -1327,12 +1334,13 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
                     g2d.setColor(Color.WHITE);
                     g2d.setStroke(settings.basicLine);
                 
-                    g2d.fillRect(styleX+1,styleY+yAdjust, width, offset + 2);
+                    g2d.fillRect(styleX+1, styleY+yAdjust, width, offset + 2);
                 
                     g2d.setColor(settings.lineColor);                    
                 
                     g2d.setColor(settings.textColor);
-                    g2d.drawString(styleName,styleX, styleY+yAdjust+offset);
+                    if( !styleName.equals(DITTO_STYLE) )
+                        g2d.drawString(stylePrint, styleX, styleY+yAdjust+offset);
                     temp++;
                     }
                 }

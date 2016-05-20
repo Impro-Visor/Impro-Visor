@@ -2358,6 +2358,9 @@
       <Properties>
         <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
         <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Lucida Grande" size="13" style="1"/>
+        </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[800, 400]"/>
         </Property>

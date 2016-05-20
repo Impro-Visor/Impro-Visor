@@ -164,7 +164,6 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
     /** Default style name */
     public String styleName = "swing";
     
-    
     /** Style of this piece */
     public Style style = Advisor.getStyle(styleName);
         
@@ -1327,6 +1326,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         roadMapScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         roadMapScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        roadMapScrollPane.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         roadMapScrollPane.setMinimumSize(new java.awt.Dimension(800, 400));
         roadMapScrollPane.setName("roadMapScrollPane"); // NOI18N
         roadMapScrollPane.setPreferredSize(new java.awt.Dimension(2500, 900));
