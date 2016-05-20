@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,10 @@ import imp.Constants;
 import imp.data.ChordExtract;
 import imp.data.ChordPart;
 import imp.data.Duration;
-import imp.midi.MidiChannelInfo.ChannelInfo;
 import imp.data.Note;
 import imp.data.SlottedNote;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Utilities for MIDI
