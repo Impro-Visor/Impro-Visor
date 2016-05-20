@@ -20,6 +20,8 @@
 
 package imp.data;
 
+import imp.midi.MidiSynth;
+import imp.midi.MidiSequence;
 import imp.Constants;
 import static imp.Constants.ASHARP;
 import static imp.Constants.BEAT;

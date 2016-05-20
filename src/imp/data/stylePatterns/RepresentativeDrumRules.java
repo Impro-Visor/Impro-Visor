@@ -22,7 +22,7 @@ package imp.data.stylePatterns;
 
 import imp.data.DrumChronotonic;
 import imp.data.ImportDrums;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import imp.data.stylePatterns.DrumPatternExtractor;
 import imp.util.ErrorLog;
 import java.util.ArrayList;

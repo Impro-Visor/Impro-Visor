@@ -33,6 +33,8 @@
 
 package imp.util;
 
+import imp.midi.MidiPlayListener;
+import imp.midi.MidiSynth;
 import imp.data.*;
 import java.awt.event.*;
 import javax.swing.*;

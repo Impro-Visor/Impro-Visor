@@ -24,7 +24,7 @@ import imp.data.stylePatterns.ChordPatternExtractor;
 import imp.Constants;
 import imp.data.ChordChronotonic;
 import imp.data.ImportChords;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;

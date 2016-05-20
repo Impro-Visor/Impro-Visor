@@ -24,7 +24,7 @@ import imp.Constants;
 import imp.ImproVisor;
 import imp.com.CommandManager;
 import imp.com.PlayScoreCommand;
-import imp.data.MidiSynth;
+import imp.midi.MidiSynth;
 import imp.data.Score;
 import java.awt.Color;
 

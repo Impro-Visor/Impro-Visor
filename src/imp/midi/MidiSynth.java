@@ -18,9 +18,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.midi;
 
 import imp.Constants;
+import imp.data.Score;
+import imp.data.Style;
 import imp.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -864,7 +866,7 @@ public void close()
      * @return 
      * @throws javax.sound.midi.InvalidMidiDataException 
  */
-protected static MidiEvent createNoteOnEvent(int channel,
+public static MidiEvent createNoteOnEvent(int channel,
                                              int pitch, int velocity,
                                              long tick)
     throws InvalidMidiDataException
@@ -886,7 +888,7 @@ protected static MidiEvent createNoteOnEvent(int channel,
      * @return 
      * @throws javax.sound.midi.InvalidMidiDataException
  */
-protected static MidiEvent createNoteOffEvent(int channel,
+public static MidiEvent createNoteOffEvent(int channel,
                                               int pitch, int velocity,
                                               long tick)
     throws InvalidMidiDataException
@@ -899,7 +901,7 @@ protected static MidiEvent createNoteOffEvent(int channel,
     return evt;
   }
 
-    protected static MidiEvent createBankSelectEventMSB(int bankMSB,
+    public static MidiEvent createBankSelectEventMSB(int bankMSB,
             long tick)
             throws InvalidMidiDataException {
         return createBankSelectEventMSB(bankMSB,
@@ -916,7 +918,7 @@ protected static MidiEvent createNoteOffEvent(int channel,
      * @return 
      * @throws javax.sound.midi.InvalidMidiDataException 
  */
-protected static MidiEvent createBankSelectEventMSB(int bankMSB,
+public static MidiEvent createBankSelectEventMSB(int bankMSB,
                                                     long tick,
                                                     boolean isTradingMelody)
     throws InvalidMidiDataException
@@ -926,7 +928,7 @@ protected static MidiEvent createBankSelectEventMSB(int bankMSB,
     return createCChangeEvent(0, 32, bankMSB, tick, isTradingMelody);
   }
 
-protected static MidiEvent createBankSelectEventLSB(int bankLSB,
+public static MidiEvent createBankSelectEventLSB(int bankLSB,
             long tick)
             throws InvalidMidiDataException {
         return createBankSelectEventLSB(bankLSB,
@@ -945,7 +947,7 @@ protected static MidiEvent createBankSelectEventLSB(int bankLSB,
      * @return 
      * @throws javax.sound.midi.InvalidMidiDataException 
  */
-protected static MidiEvent createBankSelectEventLSB(int bankLSB,
+public static MidiEvent createBankSelectEventLSB(int bankLSB,
                                                     long tick,
                                                     boolean isTradingMelody)
     throws InvalidMidiDataException
@@ -964,7 +966,7 @@ protected static MidiEvent createBankSelectEventLSB(int bankLSB,
      * @return 
      * @throws javax.sound.midi.InvalidMidiDataException 
  */
-protected static MidiEvent createProgramChangeEvent(int channel,
+public static MidiEvent createProgramChangeEvent(int channel,
                                                     int value,
                                                     long tick)
     throws InvalidMidiDataException
@@ -977,7 +979,7 @@ protected static MidiEvent createProgramChangeEvent(int channel,
     return evt;
   }
 
-protected static MidiEvent createCChangeEvent(int channel,
+public static MidiEvent createCChangeEvent(int channel,
                                               int controlNum,
                                               int value,
                                               long tick)
@@ -1001,7 +1003,7 @@ protected static MidiEvent createCChangeEvent(int channel,
      * @return 
      * @throws javax.sound.midi.InvalidMidiDataException 
  */
-protected static MidiEvent createCChangeEvent(int channel,
+public static MidiEvent createCChangeEvent(int channel,
                                               int controlNum,
                                               int value,
                                               long tick, 
@@ -1024,7 +1026,7 @@ protected static MidiEvent createCChangeEvent(int channel,
  * @param seq       the Sequence to end
      * @throws javax.sound.midi.InvalidMidiDataException
  */
-protected static void endSequence(Sequence seq)
+public static void endSequence(Sequence seq)
     throws InvalidMidiDataException
   {
     Track longestTrack = null;
@@ -1059,7 +1061,7 @@ public Sequencer getSequencer()
   }
 
 
-private void setSequencer()
+public void setSequencer()
   {
     //Trace.log(2, "Getting MIDI sequencer");
     sequencer = null;

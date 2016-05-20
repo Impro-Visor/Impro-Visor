@@ -22,6 +22,8 @@
 
 package imp.util;
 
+import imp.midi.MidiPlayListener;
+import imp.midi.MidiSynth;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.com.OpenLeadsheetCommand;

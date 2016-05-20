@@ -19,7 +19,7 @@
  */
 
 package imp.data.stylePatterns;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import imp.data.SlottedNote;
 import java.util.ArrayList;
 import jm.music.data.Phrase;

@@ -31,7 +31,7 @@ import imp.com.ShiftChordsCommand;
 import imp.com.ShiftPitchesCommand;
 import imp.data.*;
 import imp.util.ErrorLog;
-import imp.util.MidiPlayListener;
+import imp.midi.MidiPlayListener;
 import imp.util.Preferences;
 import imp.util.Trace;
 import java.awt.*;

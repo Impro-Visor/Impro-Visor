@@ -24,7 +24,7 @@ import imp.Constants;
 import imp.data.BassChronotonic;
 import imp.data.Duration;
 import imp.data.ImportBass;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import imp.data.Note;
 import imp.util.ErrorLog;
 import java.util.ArrayList;

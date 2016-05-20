@@ -18,9 +18,12 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.data;
+package imp.midi;
 
-import static imp.data.MidiImport.DRUM_CHANNEL;
+import imp.data.ImportMelody;
+import imp.data.MelodyPart;
+import imp.midi.MIDIBeast;
+import static imp.midi.MidiImport.DRUM_CHANNEL;
 import imp.util.ErrorLog;
 import java.io.File;
 import java.util.*;

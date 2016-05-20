@@ -18,9 +18,12 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.data;
+package imp.midi;
 
 import imp.Constants;
+import imp.data.MelodyPart;
+import imp.data.Note;
+import imp.data.Unit;
 import java.util.Iterator;
 
 /**

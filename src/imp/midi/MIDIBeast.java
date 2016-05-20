@@ -18,13 +18,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.midi;
 
 import imp.data.stylePatterns.RepresentativeChordRules;
 import imp.data.stylePatterns.RepresentativeDrumRules;
 import imp.data.stylePatterns.RepresentativeBassRules;
 import imp.Constants;
-import imp.data.MidiChannelInfo.ChannelInfo;
+import imp.data.ChordExtract;
+import imp.data.ChordPart;
+import imp.data.Duration;
+import imp.midi.MidiChannelInfo.ChannelInfo;
+import imp.data.Note;
+import imp.data.SlottedNote;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;

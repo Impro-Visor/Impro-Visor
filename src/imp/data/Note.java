@@ -20,6 +20,7 @@
 
 package imp.data;
 
+import imp.midi.MidiSynth;
 import imp.Constants;
 import imp.util.ErrorLog;
 import imp.util.Trace;

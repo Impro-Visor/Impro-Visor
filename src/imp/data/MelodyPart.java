@@ -20,9 +20,11 @@
 
 package imp.data;
 
+import imp.midi.MidiSynth;
+import imp.midi.MidiImport;
+import imp.midi.MidiSequence;
 import static imp.Constants.knownNoteValue;
 import static imp.Constants.knownResolutionValue;
-import static imp.Constants.knownRestValue;
 import imp.ImproVisor;
 import imp.com.InsertPartCommand;
 import imp.gui.Notate;

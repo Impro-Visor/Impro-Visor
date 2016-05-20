@@ -24,7 +24,7 @@ import imp.Constants;
 import imp.com.OpenLeadsheetCommand;
 import imp.data.Chord;
 import imp.data.ChordPart;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import imp.data.Note;
 import imp.data.Score;
 import java.io.File;

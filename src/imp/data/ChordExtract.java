@@ -20,6 +20,8 @@
 
 package imp.data;
 
+import imp.midi.MidiImportRecord;
+import imp.midi.MidiImport;
 import imp.Constants;
 import imp.ImproVisor;
 import java.util.ArrayList;

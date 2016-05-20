@@ -24,7 +24,7 @@ import imp.Constants;
 import imp.com.OpenLeadsheetCommand;
 import imp.data.Chord;
 import imp.data.ChordPart;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import imp.data.Score;
 import imp.data.SlottedNote;
 import imp.util.ErrorLog;

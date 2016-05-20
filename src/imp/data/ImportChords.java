@@ -19,6 +19,7 @@
  */
 package imp.data;
 
+import imp.midi.MIDIBeast;
 import imp.Constants;
 import java.util.ArrayList;
 import java.util.Arrays;

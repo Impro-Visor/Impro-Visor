@@ -20,6 +20,8 @@
 
 package imp.gui;
 
+import imp.midi.MidiChannelInfo;
+import imp.midi.MIDIBeast;
 import imp.data.stylePatterns.RepresentativeChordRules;
 import imp.data.stylePatterns.RepresentativeDrumRules;
 import imp.data.stylePatterns.RepresentativeBassRules;
@@ -28,7 +30,7 @@ import imp.Constants;
 import imp.ImproVisor;
 import imp.com.PlayScoreCommand;
 import imp.data.*;
-import imp.data.MidiChannelInfo.ChannelInfo;
+import imp.midi.MidiChannelInfo.ChannelInfo;
 import imp.util.ErrorLog;
 import imp.util.LeadsheetFileView;
 import imp.util.LeadsheetFilter;

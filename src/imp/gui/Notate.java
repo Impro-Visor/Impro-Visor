@@ -20,6 +20,10 @@
  */
 package imp.gui;
 
+import imp.midi.MidiManager;
+import imp.midi.MidiPlayListener;
+import imp.midi.MidiSynth;
+import imp.midi.MidiImport;
 import imp.data.stylePatterns.ChordPattern;
 import imp.trading.PassiveTradingWindow;
 import imp.trading.ActiveTradingDialog;

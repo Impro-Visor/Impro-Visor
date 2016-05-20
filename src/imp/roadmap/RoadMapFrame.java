@@ -32,7 +32,7 @@ import imp.gui.*;
 import imp.util.DictionaryFilter;
 import imp.util.ErrorLog;
 import imp.util.FileUtilities;
-import imp.util.MidiPlayListener;
+import imp.midi.MidiPlayListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

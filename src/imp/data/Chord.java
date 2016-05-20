@@ -20,6 +20,8 @@
 
 package imp.data;
 
+import imp.midi.MidiSequence;
+import imp.midi.MidiSynth;
 import imp.data.stylePatterns.ChordPattern;
 import imp.data.advice.Advisor;
 import imp.Constants;

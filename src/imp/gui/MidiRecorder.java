@@ -22,7 +22,7 @@ package imp.gui;
 
 import imp.Constants;
 import imp.data.MelodyPart;
-import imp.data.MidiFormatting;
+import imp.midi.MidiFormatting;
 import imp.data.Note;
 import imp.data.Rest;
 import imp.data.Score;

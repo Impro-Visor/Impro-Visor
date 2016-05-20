@@ -19,6 +19,7 @@
  */
 
 package imp.data;
+import imp.midi.MIDIBeast;
 import java.util.ArrayList;
 import jm.music.data.Phrase;
 

@@ -19,16 +19,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-
-package imp.util;
+package imp.midi;
 
 /**
- * Allows classes to be notified when the sequencer starts/stops
  *
  * @author Martin
  */
-public interface MidiPlayListener {
-    enum Status { PLAYING, PAUSED, STOPPED }
-    public void setPlaying(Status playing, int transposition);
-    public Status getPlaying();
+public interface MidiNoteListener {
+    public void noteOn(int note, int channel);
 }

@@ -23,7 +23,7 @@ package imp.gui;
 import imp.Constants;
 import imp.com.CommandManager;
 import imp.data.ChordPart;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import imp.data.Score;
 import imp.data.Style;
 import imp.util.ErrorLog;

@@ -20,9 +20,10 @@
 
 package imp.com;
 
+import imp.midi.MidiSynth;
 import imp.Constants;
 import imp.data.*;
-import imp.util.MidiPlayListener;
+import imp.midi.MidiPlayListener;
 import javax.sound.midi.InvalidMidiDataException;
 
 /**

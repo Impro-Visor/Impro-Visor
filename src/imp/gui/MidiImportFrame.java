@@ -20,10 +20,13 @@
 
 package imp.gui;
 
+import imp.midi.MidiChannelInfo;
+import imp.midi.MidiImportRecord;
+import imp.midi.MidiImport;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.data.*;
-import imp.data.MidiChannelInfo.ChannelInfo;
+import imp.midi.MidiChannelInfo.ChannelInfo;
 import imp.util.LeadsheetFileView;
 import imp.util.MidiFilter;
 import java.io.File;

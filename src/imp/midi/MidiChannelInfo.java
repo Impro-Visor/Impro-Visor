@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package imp.data;
+package imp.midi;
 
+import imp.data.ImportMelody;
+import imp.midi.MIDIBeast;
 import imp.util.ErrorLog;
 import java.util.HashMap;
 import java.util.Map;

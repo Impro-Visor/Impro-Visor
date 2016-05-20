@@ -22,7 +22,7 @@ package imp.data.stylePatterns;
 
 import imp.data.Duration;
 import imp.data.Leadsheet;
-import imp.data.MIDIBeast;
+import imp.midi.MIDIBeast;
 import imp.data.VolumeSymbol;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

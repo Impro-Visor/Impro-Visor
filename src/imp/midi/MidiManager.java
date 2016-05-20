@@ -18,9 +18,12 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.util;
+package imp.midi;
 
 import imp.Constants;
+import imp.util.ErrorLog;
+import imp.util.Preferences;
+import imp.util.Trace;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;

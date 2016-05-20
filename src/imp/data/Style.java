@@ -20,6 +20,8 @@
 
 package imp.data;
 
+import imp.midi.MidiSequence;
+import imp.midi.MidiSynth;
 import imp.data.stylePatterns.BassPattern;
 import imp.data.stylePatterns.Pattern;
 import imp.data.stylePatterns.DrumPattern;

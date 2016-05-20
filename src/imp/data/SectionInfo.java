@@ -20,6 +20,7 @@
 
 package imp.data;
 
+import imp.midi.MidiSequence;
 import imp.Constants;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.ChordBlock;

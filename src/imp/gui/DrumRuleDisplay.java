@@ -20,6 +20,7 @@
 
 package imp.gui;
 
+import imp.midi.MIDIBeast;
 import imp.data.stylePatterns.DrumRuleRep;
 import imp.com.CommandManager;
 import imp.data.*;

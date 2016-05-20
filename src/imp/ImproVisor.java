@@ -20,6 +20,8 @@
 
 package imp;
 
+import imp.midi.MidiManager;
+import imp.midi.MidiSynth;
 import imp.data.advice.Advisor;
 import imp.voicing.AutomaticVoicingSettings;
 import imp.com.LoadAdviceCommand;

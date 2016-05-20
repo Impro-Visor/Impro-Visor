@@ -21,7 +21,7 @@
 
 package imp.gui;
 
-import imp.util.MidiManager;
+import imp.midi.MidiManager;
 import java.util.LinkedHashSet;
 import javax.sound.midi.MidiDevice;
 import javax.swing.AbstractListModel;

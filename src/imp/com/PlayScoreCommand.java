@@ -19,10 +19,11 @@
  */
 package imp.com;
 
+import imp.midi.MidiSynth;
 import imp.Constants;
 import static imp.Constants.ENDSCORE;
 import imp.data.*;
-import imp.util.MidiPlayListener;
+import imp.midi.MidiPlayListener;
 
 /**
  * A Command that sequences and plays a Score, either straight or swung.

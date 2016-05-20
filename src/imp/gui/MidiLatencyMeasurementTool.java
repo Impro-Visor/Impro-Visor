@@ -20,12 +20,13 @@
  */
 package imp.gui;
 
+import imp.midi.MidiSynth;
 import imp.Constants;
 import imp.data.*;
 import imp.util.ErrorLog;
-import imp.util.MidiManager;
-import imp.util.MidiNoteListener;
-import imp.util.MidiPlayListener;
+import imp.midi.MidiManager;
+import imp.midi.MidiNoteListener;
+import imp.midi.MidiPlayListener;
 import javax.sound.midi.*;
 import java.util.Vector;
 import javax.swing.*;

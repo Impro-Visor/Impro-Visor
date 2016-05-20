@@ -20,6 +20,8 @@
 
 package imp.data;
 
+import imp.midi.MIDIBeast;
+
 /**
 * Brandy McMenamy and James Thomas Herold 7/18/2007
 * Reformatted 23 April 2012 by R. Keller

@@ -236,7 +236,7 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
     return slot;
   }
 
-int size()
+public int size()
   {
     return parts.length;
   }
