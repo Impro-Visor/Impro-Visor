@@ -70,6 +70,7 @@ import polya.PolylistBuffer;
  */
 public class Score implements Constants, Serializable {
 
+    Sequence cachedSequence = null;
     /**
      * Default bars per line layout. Note that, in general, the layout
      * specification is a list of bars per line, the last of which is used
@@ -980,7 +981,7 @@ public class Score implements Constants, Serializable {
                            boolean isTradingMelody)
                     throws InvalidMidiDataException {
         // to trace sequencing
-        //System.out.println("Score: render, start 0, endLimitIndex = " + endLimitIndex);
+        //System.out.println("Score: render, ppqn = " + ppqn);
         MidiSequence seq = new MidiSequence(ppqn);
         reloadStyles();
         long time = 0;
@@ -1003,6 +1004,7 @@ public class Score implements Constants, Serializable {
             return seq.getSequence();
         } else {
             //System.out.println("NOT TRADING (coming from score.java; method render)");
+            //System.out.println("time = " + time + ", countInProg = " + countInProg);
             if (countInProg != null) {
                 // Handle count-in render
 
@@ -1033,14 +1035,16 @@ public class Score implements Constants, Serializable {
                         seq.getMelodyTrack(),
                         transposition,
                         endLimitIndex);
+                //System.out.println("melTime = " + melTime);
 
                 long chTime = chordProg.render(seq,
                         time,
-                        seq.getChordTrack(),
+                        seq.getMelodyTrack(),
                         transposition,
                         useDrums,
                         endLimitIndex,
                         constantBass);
+                //System.out.println("chTime = " + chTime + "\n");
                 time = Math.max(melTime, chTime);
             }
 
@@ -1054,11 +1058,12 @@ public class Score implements Constants, Serializable {
             // Uncomment to see voicing list by chord
             
             //showVoicingList();
+            Sequence sequence = seq.getSequence();
             
-            return seq.getSequence();
+            return sequence;
         }
     }
-    
+ 
 
     public int getCountInOffset()
     {

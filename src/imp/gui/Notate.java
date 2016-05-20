@@ -13640,6 +13640,8 @@ private void exportToMusicXML()
 
 private void exportToMidi(int toExport)
   {
+    score.noCountIn(); // bug: doesn't work correctly with countin on
+                       // haven't been able to track down why
     midfc.setCurrentDirectory(ImproVisor.getMidiDirectory());
     if( savedMidi != null )
       {

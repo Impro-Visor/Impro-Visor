@@ -88,6 +88,11 @@ public Track getDrumTrack(int midiNumber)
     return track;
   }
    
+public Track[] getDrumTracks()
+  {
+    return trackDrums;
+  }
+
 public Track getBassTrack()
   {
     return trackBass;

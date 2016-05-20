@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ package imp.com;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.data.Score;
-import imp.data.Style;
 import imp.util.ErrorLog;
 import java.io.*;
 import javax.sound.midi.*;
@@ -47,12 +46,13 @@ public class ExportToMidiCommand implements Command, Constants
     private static final int BEGIN_TRACK = 0x4D54726B;
     private static final int MIDI_FORMAT_1 = 1;
     private static final int HEADER_LENGTH = 6;
-    private static final short PPQN = BEAT;
+    private static final short PPQN = 480; //BEAT;
     
     // Midi Messages
     private static final byte[] END_OF_TRACK = {0xffffffff, 0x2f, 0x0};
-    private static byte[] TEMPO = {0xffffffff, 0x51, 0x03, 0, 0, 0};
-    private static byte[] TIME_SIGNATURE = {0xffffffff, 0x58, 0x04, 0x04, 0x02, 0x40, 0x08};
+    private static final byte[] TEMPO = {0xffffffff, 0x51, 0x03, 0, 0, 0};
+    private static final byte[] 
+            TIME_SIGNATURE = {0xffffffff, 0x58, 0x04, 0x04, 0x02, 0x40, 0x08};
 
     /**
      * stores error if exception during save
@@ -62,9 +62,9 @@ public class ExportToMidiCommand implements Command, Constants
     /**
      * false since this Command cannot be undone
      */
-    private boolean undoable = false;
+    private final boolean undoable = false;
     
-    private int transposition;
+    private final int transposition;
 
     /**
      * Creates a new Command that can save a Score to a File.
@@ -115,23 +115,37 @@ public class ExportToMidiCommand implements Command, Constants
         score.makeSwing();
 
         // Try to get the render
-        try
+       try
         {
-            seq = score.render(PPQN, transposition);       
+            seq = score.render(PPQN, transposition);  
+            //seq = score.getCachedSequence();
         }
         catch (InvalidMidiDataException e)
         {
+            System.out.println("InvalideMidiDataException " + e);
         }
         
-        // Get the number of tracks in the sequence
-        short numOfTracks = 0;
+        System.out.println("sequence in Midi = " + seq);
         
-        if (toExport == ALL)
-            numOfTracks = (short) (seq.getTracks()).length;
-        else if (toExport == CHORDS_ONLY)   
-            numOfTracks = 1;                                        // We only export one track if we export chords only
-        else if (toExport == MELODY_ONLY)
-            numOfTracks = (short) ((seq.getTracks()).length - 1);   // We don't export the chords track if we export melody only
+        // Get the array of tracks from the render.
+        Track[] tracks = seq.getTracks();
+        int numOfTracks = tracks.length;
+
+        // Not sure that we currently use any variant but ALL
+        //System.out.println("toExport = " + toExport);
+        switch (toExport) {
+            case ALL:
+                break;
+            case CHORDS_ONLY:
+                numOfTracks = 1;  // We only export one track if we export chords only
+                break;
+            case MELODY_ONLY:
+                 // We don't export the chords track if we export melody only
+                numOfTracks = numOfTracks - 1; 
+                break;
+            default:
+                break;
+        }
             
         
         // Write the header chunk; this always follows the format
@@ -148,13 +162,11 @@ public class ExportToMidiCommand implements Command, Constants
         {
                 e.printStackTrace();
         }	
-        
-        // Get the array of tracks from the render.
-        Track[] tracks = seq.getTracks();
-        
+                
         // write volume messages to tracks
-        Style currentStyle = score.getChordProg().getStyle();
 
+        // Why are these all added to track 0?
+       
         try {
             ShortMessage volMsg = new ShortMessage();
             volMsg.setMessage(ShortMessage.CONTROL_CHANGE, ImproVisor.getBassChannel(), 7, score.getBassMuted()?0:score.getBassVolume());
@@ -185,22 +197,29 @@ public class ExportToMidiCommand implements Command, Constants
         //System.out.println("writing Sequence of " + tracks.length + " tracks ");
         
         // Write all of the data tracks
-        for (int i = 0; i <tracks.length; ++i)
+        for (int i = 0; i < numOfTracks; ++i)
         {
             // The chord track is track 0, so if we're only exporting the chords, then ignore
             // everything after i = 0.
-            if (toExport == CHORDS_ONLY && i > 0)
-                break;
-            
-            // If we're exporting melody, then ignore i = 0.
-            else if (toExport == MELODY_ONLY && i == 0)
+            switch( toExport )
             {
-                // Do nothing
+                case CHORDS_ONLY:
+                    if( i > 0 )
+                      {
+                      writeTrack(i, dos, tracks[i]);
+                      }
+                    break;
+                    
+                case MELODY_ONLY:
+                    if( i == 0 )
+                      {
+                        writeTrack(i, dos, tracks[i]);
+                      }
+                    break;
+                default:
+                    writeTrack(i, dos, tracks[i]);
+                    break;
             }
-            
-            // Otherwise, we'll just write all of them.
-            else
-                writeTrack(dos, tracks[i]);
         }
     }
         
@@ -243,7 +262,7 @@ public class ExportToMidiCommand implements Command, Constants
     }
     
     // Output an individual track.
-    private void writeTrack(DataOutputStream dos, Track track) throws IOException
+    private void writeTrack(int num, DataOutputStream dos, Track track) throws IOException
     {       
         // First we need to load everything into a buffer.
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -255,10 +274,10 @@ public class ExportToMidiCommand implements Command, Constants
 
         long size = track.size();
 
-        //System.out.println("writing track of size " + size);
+        //System.out.println("writing track " + num + " size " + size);
         
         // Write the remaining messages to the buffer.
-        for (int i = 1; i < size - 1; ++i)
+        for (int i = 1; i < size; ++i) // why was it size-1???
         {           
             // Events are expressed in the following format:
             // <delta-time> <event>
