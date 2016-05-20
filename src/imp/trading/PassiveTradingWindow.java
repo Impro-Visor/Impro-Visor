@@ -74,7 +74,8 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         whoPlaysFirstGroup = new javax.swing.ButtonGroup();
@@ -82,6 +83,7 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         whoGoesFirstPanel = new javax.swing.JPanel();
         improvisorFirst = new javax.swing.JRadioButton();
         userFirst = new javax.swing.JRadioButton();
+        switchToActiveTradingButton = new javax.swing.JButton();
         tradeLengthPanel = new javax.swing.JPanel();
         one = new javax.swing.JRadioButton();
         two = new javax.swing.JRadioButton();
@@ -103,11 +105,14 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(25, 25, 400, 200));
         setMaximumSize(new java.awt.Dimension(400, 200));
         setMinimumSize(new java.awt.Dimension(400, 200));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 passiveTradingClosing(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
                 passiveTradingClosed(evt);
             }
         });
@@ -125,23 +130,41 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         improvisorFirst.setText("Impro-Visor First");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         whoGoesFirstPanel.add(improvisorFirst, gridBagConstraints);
 
         whoPlaysFirstGroup.add(userFirst);
         userFirst.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         userFirst.setText("User First");
-        userFirst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        userFirst.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 userFirstActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         whoGoesFirstPanel.add(userFirst, gridBagConstraints);
+
+        switchToActiveTradingButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        switchToActiveTradingButton.setText("Stop and Switch to Active Trading");
+        switchToActiveTradingButton.setToolTipText("Opens the Active Trading Menu");
+        switchToActiveTradingButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                switchToActiveTradingHandler(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(1, 0, 0, 0);
+        whoGoesFirstPanel.add(switchToActiveTradingButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -216,8 +239,10 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
 
         countToggle.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         countToggle.setText("Count");
-        countToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        countToggle.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 countToggleActionPerformed(evt);
             }
         });
@@ -232,13 +257,15 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
         startTradingButton.setToolTipText("Start/Stop trading. You may also use the I and K keys for this.");
         startTradingButton.setLabel("Start Trading");
-        startTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        startTradingButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 startTradingButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
@@ -252,12 +279,15 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         generationGapSpinner.setMinimumSize(new java.awt.Dimension(70, 45));
         generationGapSpinner.setPreferredSize(new java.awt.Dimension(70, 45));
         generationGapSpinner.setValue(0.5);
-        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 generationGapSpinnergenerationLeadSpinnerChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 19, 0, 0);
         playbackControls.add(generationGapSpinner, gridBagConstraints);
 
@@ -274,8 +304,10 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
 
         tradePlayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
         tradePlayMenuItem.setText("Trade");
-        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradePlayMenuItemActionPerformed(evt);
             }
         });
@@ -283,8 +315,10 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
 
         tradeStopMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         tradeStopMenuItem.setText("Stop");
-        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradeStopMenuItemActionPerformed(evt);
             }
         });
@@ -348,6 +382,14 @@ else
     private void passiveTradingClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_passiveTradingClosing
          notate.doNotTrade();
     }//GEN-LAST:event_passiveTradingClosing
+
+    private void switchToActiveTradingHandler(java.awt.event.ActionEvent evt)//GEN-FIRST:event_switchToActiveTradingHandler
+    {//GEN-HEADEREND:event_switchToActiveTradingHandler
+        tradingStopped();
+        trading = false;
+        setVisible(false);
+        notate.openActiveTradingWindow();
+    }//GEN-LAST:event_switchToActiveTradingHandler
     
       public void tradingStarted() {
         startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
@@ -381,6 +423,7 @@ public double getGenerationGap()
     private javax.swing.JPanel playbackControls;
     private javax.swing.JRadioButton sixteen;
     private javax.swing.JButton startTradingButton;
+    private javax.swing.JButton switchToActiveTradingButton;
     private javax.swing.JPanel tradeLengthPanel;
     private javax.swing.JMenu tradePlayMenu;
     private javax.swing.JMenuItem tradePlayMenuItem;
