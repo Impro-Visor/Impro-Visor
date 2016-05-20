@@ -289,19 +289,19 @@ public class GraphicBrick {
      * Draws the brick at its current position
      * @param g graphics on which to draw the brick
      */
-    public void draw(Graphics g)
+    public void draw(Graphics2D g2d)
     {
         // I split this up like this because drawing junk is a pain in the monk
         // - August
-        drawBrick(g);
-        drawChords(g);
+        drawBrick(g2d);
+        drawChords(g2d);
     }
     
     /**
      * Draws the background and outline of the brick
      * @param g graphics on which to draw
      */
-    private void drawBrick(Graphics g)
+    private void drawBrick(Graphics2D g2d)
     {   
         Color bgColor;
         if(!isSelected || selected != -1)
@@ -326,7 +326,7 @@ public class GraphicBrick {
         
         int endY = y+(int)(lines*settings.getLineOffset());
         
-        Graphics2D g2d = (Graphics2D)g;
+        //Graphics2D g2d = (Graphics2D)g;
         if( g2d == null )
           {
             // Can happen on Windows, not sure why.
@@ -385,7 +385,7 @@ public class GraphicBrick {
      * Draws the chords of the brick, including lines and text.
      * @param g graphics on which to draw
      */
-    private void drawChords(Graphics g)
+    private void drawChords(Graphics2D g2d)
     {
         ArrayList<ChordBlock> chords = (ArrayList) block.flattenBlock();
  
@@ -397,7 +397,6 @@ public class GraphicBrick {
         int xOffset = settings.xOffset;
         int yOffset = settings.yOffset;
         
-        Graphics2D g2d = (Graphics2D)g;
         if( g2d == null )
           {
             // Can happen on Windows, not sure why.
@@ -499,10 +498,8 @@ public class GraphicBrick {
      * @param x x-coordinate
      * @param y y-coordinate
      */
-    public void drawAt(Graphics g, int x, int y)
+    public void drawAt(Graphics2D g2d, int x, int y)
     {
-        Graphics2D g2d = (Graphics2D)g;
-        
         if( g2d == null )
         {
             return;

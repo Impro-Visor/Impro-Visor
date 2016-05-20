@@ -922,7 +922,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
     /** Draws a cursor line of the desired color at the desired line/slot point */
     private void drawCursorLine(int slotOffset, int line, Color color)
     {
-        Graphics2D g2d = (Graphics2D)buffer.getGraphics();
+        //Graphics2D g2d = (Graphics2D)buffer.getGraphics();
         g2d.setColor(color);
         g2d.setStroke(settings.cursorLine);
         
@@ -970,23 +970,23 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
     /** Draws the grid */
     private void drawGrid()
     {
-      Graphics g = buffer.getGraphics();
+      //Graphics2D g = (Graphics2D)buffer.getGraphics();
 
         for(int i = 0; i < numLines; i++) {
-            g.setColor(settings.gridBGColor);
-            g.fillRect(settings.xOffset,
+            g2d.setColor(settings.gridBGColor);
+            g2d.fillRect(settings.xOffset,
                     settings.yOffset + i*(settings.lineHeight + settings.lineSpacing),
                     settings.getLineLength(), settings.lineHeight);
             
             for(int j = 0; j <= settings.barsPerLine; ) {
-                g.setColor(settings.gridLineColor);
-                g.drawLine(settings.xOffset + j*settings.measureLength,
+                g2d.setColor(settings.gridLineColor);
+                g2d.drawLine(settings.xOffset + j*settings.measureLength,
                         settings.yOffset + i*(settings.lineHeight + settings.lineSpacing) - 5,
                         settings.xOffset + j*settings.measureLength,
                         settings.yOffset + (i+1)*settings.lineHeight + i*settings.lineSpacing + 5);
 
                 // Draw double lines to make more prominent
-                g.drawLine(settings.xOffset + j*settings.measureLength - 1,
+                g2d.drawLine(settings.xOffset + j*settings.measureLength - 1,
                         settings.yOffset + i*(settings.lineHeight + settings.lineSpacing) - 5,
                         settings.xOffset + j*settings.measureLength - 1,
                         settings.yOffset + (i+1)*settings.lineHeight + i*settings.lineSpacing + 5);
@@ -999,13 +999,13 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
     /** Draws the roadmap text (title, style, tempo, etc) */
     private void drawText()
     {
-        //Graphics g = buffer.getGraphics();
-       g.setFont(settings.titleFont);
-       g.setColor(settings.textColor);
-       g.drawString(view.roadMapTitle, settings.xOffset, settings.yOffset - settings.lineSpacing);
+       //Graphics2D g = (Graphics2D)this.g; 
+       g2d.setFont(settings.titleFont);
+       g2d.setColor(settings.textColor);
+       g2d.drawString(view.roadMapTitle, settings.xOffset, settings.yOffset - settings.lineSpacing);
        String composerName = view.getComposer(); 
-       g.setFont(settings.basicFont);
-       g.drawString( composerName, 
+       g2d.setFont(settings.basicFont);
+       g2d.drawString( composerName, 
                      settings.xOffset, 
                      settings.yOffset - settings.lineSpacing / 2);
         /* 
@@ -1013,18 +1013,18 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         FontMetrics metrics = g.getFontMetrics();
         String text = view.style + " " + view.tempo + " bpm";
         int width = metrics.stringWidth(text);
-        g.drawString(text,settings.getCutoff() - width, settings.yOffset - 5); 
+        g2d.drawString(text,settings.getCutoff() - width, settings.yOffset - 5); 
         //g.drawString(text,settings.xOffset,settings.yOffset-5);
         */
         
     }
     
-    /** Draws the brick at the given brickInd */
-    private void drawBrick(int ind)
-    {
-        graphicMap.get(ind).draw(g); //buffer.getGraphics());
-        repaint();
-    }
+//    /** Draws the brick at the given brickInd */
+//    private void drawBrick(int ind)
+//    {
+//        graphicMap.get(ind).draw(g); //buffer.getGraphics());
+//        repaint();
+//    }
     
     
     /** Draws all bricks */
@@ -1047,7 +1047,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
             int x = brick.x();
             int y = brick.y();
             
-            brick.draw(g);
+            brick.draw(g2d);
             
             if( showJoins )
               {
@@ -1101,7 +1101,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         int xOffset = x;
         
         for(GraphicBrick brick : bricks) {
-            brick.drawAt(g, xOffset, y);
+            brick.drawAt(g2d, xOffset, y);
             xOffset+=brick.getLength();
         }
     }
@@ -1114,10 +1114,10 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         long currentBeats = 0;
         long lines = 0;
         long lineBeats = 0;
-        g.setFont(settings.basicFont);
+        g2d.setFont(settings.basicFont);
         for( KeySpan keySpan : roadMap.getKeyMap() ) {
             drawKeySpan(keySpan, settings.xOffset + settings.getLength((int)lineBeats),
-                    settings.yOffset + (int)(settings.getLineOffset() * lines), g);
+                    settings.yOffset + (int)(settings.getLineOffset() * lines));
             
             currentBeats += keySpan.getDuration();
             lineBeats += keySpan.getDuration();
@@ -1136,7 +1136,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
     }
     
     /** Draws an individual keySpan */
-    private void drawKeySpan(KeySpan keySpan, int x, int y, Graphics g)
+    private void drawKeySpan(KeySpan keySpan, int x, int y)
     {       //TODO this should really be using beats and junk to find the end
             //Graphics2D g2d = (Graphics2D)g;
         
@@ -1236,7 +1236,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
       if (firstNote != null)
       {
       
-        g.drawString("Starting Note: " + firstNote.getPitchClassName(), 
+        g2d.drawString("Starting Note: " + firstNote.getPitchClassName(), 
                      settings.getLineLength()-settings.measureLength, 
                      settings.yOffset - settings.lineSpacing);
     }
@@ -1265,13 +1265,13 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
                 int width = metrics.stringWidth(text) + 4;
                 int height = metrics.getAscent() + 2;
 
-                g.setColor(settings.rolloverBGColor);
+                g2d.setColor(settings.rolloverBGColor);
 
-                g.fillRect(x, y, width, height);
+                g2d.fillRect(x, y, width, height);
 
-                g.setColor(settings.lineColor);
-                g.drawString(text, x+2, y+height - 2);
-                g.drawRect(x, y, width, height);
+                g2d.setColor(settings.lineColor);
+                g2d.drawString(text, x+2, y+height - 2);
+                g2d.drawRect(x, y, width, height);
                 repaint();
             }
         }
@@ -1308,7 +1308,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
             int x = brick.x();
             int y = brick.y();
             String styleName = "style";
-            brick.draw(g);        
+            brick.draw(g2d);        
         
              
             if (ind == 0 || (ind > 0 && graphicMap.get(ind - 1).getBlock().isSectionEnd()))

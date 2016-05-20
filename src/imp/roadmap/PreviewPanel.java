@@ -86,12 +86,12 @@ public class PreviewPanel extends JPanel
     {
         view.setBackground(buffer);
         
-        Graphics g = buffer.getGraphics();
+        Graphics2D g2d = (Graphics2D)buffer.getGraphics();
         
-        g.setFont(view.getSettings().basicFont);
+        g2d.setFont(view.getSettings().basicFont);
         
         if( currentBrick != null ) {
-            currentBrick.drawAt(g, 1, 1);
+            currentBrick.drawAt(g2d, 1, 1);
         }
         repaint();
     }
