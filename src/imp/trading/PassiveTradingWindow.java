@@ -150,9 +150,13 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         whoGoesFirstPanel.add(userFirst, gridBagConstraints);
 
-        switchToActiveTradingButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        switchToActiveTradingButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         switchToActiveTradingButton.setText("Stop and Switch to Active Trading");
         switchToActiveTradingButton.setToolTipText("Opens the Active Trading Menu");
+        switchToActiveTradingButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        switchToActiveTradingButton.setMaximumSize(new java.awt.Dimension(260, 21));
+        switchToActiveTradingButton.setMinimumSize(new java.awt.Dimension(260, 21));
+        switchToActiveTradingButton.setPreferredSize(new java.awt.Dimension(260, 21));
         switchToActiveTradingButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -253,10 +257,14 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
         playbackControls.add(countToggle, gridBagConstraints);
 
-        startTradingButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        startTradingButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
         startTradingButton.setToolTipText("Start/Stop trading. You may also use the I and K keys for this.");
+        startTradingButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         startTradingButton.setLabel("Start Trading");
+        startTradingButton.setMaximumSize(new java.awt.Dimension(130, 28));
+        startTradingButton.setMinimumSize(new java.awt.Dimension(130, 28));
+        startTradingButton.setPreferredSize(new java.awt.Dimension(130, 28));
         startTradingButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)

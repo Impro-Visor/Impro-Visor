@@ -23485,7 +23485,12 @@ private boolean isDotted = false;
         shouldFilter = false;
     }//GEN-LAST:event_clearRangeBtnActionPerformed
 
-    public void openActiveTradingWindow()
+   public void openPassiveTradingWindow()
+    {
+        passiveTradingMIActionPerformed(null);
+    }
+   
+   public void openActiveTradingWindow()
     {
         tradingWindowActionPerformed(null);
     }

@@ -185,7 +185,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="3" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.0" weightY="0.0"/>
+          <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="2" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.4" weightY="0.0"/>
         </Constraint>
       </Constraints>
 
@@ -207,7 +207,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -226,7 +226,37 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="0" gridY="1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="0" gridY="1" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="switchToPassiveTradingButton">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Stop and Switch to Passive Trading"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[270, 21]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[270, 21]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[270, 21]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="switchToPassiveTradingButtonActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="0" gridY="2" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="5" insetsBottom="0" insetsRight="5" anchor="14" weightX="0.0" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -251,7 +281,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="3" fill="2" ipadX="120" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.5" weightY="0.7"/>
+          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="2" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="11" weightX="0.2" weightY="0.7"/>
         </Constraint>
       </Constraints>
 
@@ -325,52 +355,8 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="processTimeSelector">
+    <Container class="javax.swing.JPanel" name="controlsPanel">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ee" green="ee" red="ee" type="rgb"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Helvetica" size="12" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="0.5"/>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder justification="2" title="Processing time (in beats)">
-              <Font PropertyName="font" name="Lucida Grande" size="12" style="1"/>
-            </TitledBorder>
-          </Border>
-        </Property>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[200, 50]"/>
-        </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[200, 50]"/>
-        </Property>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[200, 50]"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="processTimeSelectorCaretUpdate"/>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="processTimeSelectorFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="processTimeSelectorActionPerformed"/>
-      </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="2" gridY="0" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.25" weightY="0.3"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Container class="javax.swing.JPanel" name="volumePanel">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder justification="2" title="Volume of Response">
-              <Font PropertyName="font" name="Lucida Grande" size="12" style="1"/>
-            </TitledBorder>
-          </Border>
-        </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[200, 50]"/>
         </Property>
@@ -383,106 +369,159 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="2" gridY="1" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.25" weightY="0.3"/>
+          <GridBagConstraints gridX="2" gridY="0" gridWidth="1" gridHeight="3" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.25" weightY="0.3"/>
         </Constraint>
       </Constraints>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JSlider" name="volumeSlider">
+        <Component class="javax.swing.JTextField" name="processTimeSelector">
           <Properties>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[150, 29]"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ee" green="ee" red="ee" type="rgb"/>
             </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[150, 29]"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="volumeSliderStateChanged"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JLabel" name="volume">
-          <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Helvetica" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="50%"/>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="0.5"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder justification="1" title="Processing time (in beats)">
+                  <Font PropertyName="font" name="Lucida Grande" size="12" style="1"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[200, 50]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[200, 50]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[200, 50]"/>
+            </Property>
           </Properties>
+          <Events>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="processTimeSelectorCaretUpdate"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="processTimeSelectorFocusLost"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="processTimeSelectorActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="13" weightX="1.0" weightY="0.3"/>
             </Constraint>
           </Constraints>
         </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="tempoPanel">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder justification="2" title="Tempo (Beats/Minute)">
-              <Font PropertyName="font" name="Lucida Grande" size="12" style="1"/>
-            </TitledBorder>
-          </Border>
-        </Property>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[200, 50]"/>
-        </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[200, 50]"/>
-        </Property>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[200, 50]"/>
-        </Property>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="2" gridY="2" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.25" weightY="0.4"/>
-        </Constraint>
-      </Constraints>
+        <Container class="javax.swing.JPanel" name="tempoPanel">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder justification="1" title="Tempo (Beats per Minute)">
+                  <Font PropertyName="font" name="Lucida Grande" size="12" style="1"/>
+                </TitledBorder>
+              </Border>
+            </Property>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+              <GridBagConstraints gridX="0" gridY="2" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="1.0" weightY="0.3"/>
+            </Constraint>
+          </Constraints>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JSlider" name="tempoSlider">
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="tempoLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Helvetica" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="120"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.3" weightY="0.0"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JSlider" name="tempoSlider">
+              <Properties>
+                <Property name="maximum" type="int" value="300"/>
+                <Property name="minimum" type="int" value="30"/>
+                <Property name="value" type="int" value="120"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 29]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 29]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tempoSliderStateChanged"/>
+              </Events>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                  <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.7" weightY="0.0"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="volumePanel">
           <Properties>
-            <Property name="maximum" type="int" value="300"/>
-            <Property name="minimum" type="int" value="30"/>
-            <Property name="value" type="int" value="120"/>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[150, 29]"/>
-            </Property>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[150, 29]"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder justification="1" title="Response Volume">
+                  <Font PropertyName="font" name="Lucida Grande" size="12" style="1"/>
+                </TitledBorder>
+              </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tempoSliderStateChanged"/>
-          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="0" gridY="1" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="1.0" weightY="0.3"/>
             </Constraint>
           </Constraints>
-        </Component>
-        <Component class="javax.swing.JLabel" name="tempoLabel">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica" size="12" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="120"/>
-          </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
-            </Constraint>
-          </Constraints>
-        </Component>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="volumeLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Helvetica" size="12" style="0"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="120"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                  <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.3" weightY="0.0"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JSlider" name="volumeSlider">
+              <Properties>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 29]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 29]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="volumeSliderStateChanged"/>
+              </Events>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                  <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="playbackControls">
@@ -512,7 +551,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Count"/>
+            <Property name="text" type="java.lang.String" value="Count In"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="countToggleActionPerformed"/>
@@ -548,7 +587,21 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imp/gui/graphics/toolbar/play.gif"/>
             </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
             <Property name="label" type="java.lang.String" value="Start Trading"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[140, 28]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[140, 28]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[140, 28]"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startTradingButtonActionPerformed"/>
@@ -583,8 +636,8 @@
             <Property name="toolTipText" type="java.lang.String" value="The number of bars in melody."/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder justification="2" title="Length of Trade (bars)">
-                  <Font PropertyName="font" name="Helvetica" size="12" style="1"/>
+                <TitledBorder justification="1" title="Length of Trade (bars)">
+                  <Font PropertyName="font" name="Lucida Grande" size="12" style="1"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -603,7 +656,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="0" gridY="3" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="13" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="0" gridY="2" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="17" weightX="0.0" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>

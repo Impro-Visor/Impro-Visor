@@ -108,7 +108,7 @@ public class ActiveTrading {
         //defaults on open
         this.tradeMode = DEFAULT_TRADE_MODE;
         this.measures = DEFAULT_TRADE_LENGTH;
-        this.slotsPerTurn = notate.getScore().getSlotsPerMeasure() * measures;
+        this.slotsPerTurn = notate.getSlotsPerMeasure() * measures;
         firstPlay = true;
         isTrading = false;
         isUserLeading = true;
