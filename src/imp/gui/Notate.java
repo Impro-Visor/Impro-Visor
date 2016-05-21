@@ -18493,6 +18493,7 @@ public void playScore()
     previousSynthSlot = 0;
 
     improvMelodyIndex = 0;
+    setFirstChorus(true);
     if( improvisationOn ){
         improviseContinuously();
     }
@@ -23800,9 +23801,17 @@ public void improvisationOff()
     improviseButton.setText("<html><center>Improv</center></html>");
   }
 
+/**
+ * improviseContinuously() is called for straight improvisation or
+ * passive trading, but not for active trading.
+ */
+
 public void improviseContinuously()
   {
-    //System.out.println("\nImprovise Continuously");
+    // This first line is really important. Without it, bad things
+    // can happen in MidiRecorder do to resetting the destination melodyPart.
+    isActiveTrading = false;
+    
     // Looping is also automatically implied with improvisation.
     loopButton.setSelected(false);
     lickgenFrame.setRecurrent(true);
@@ -26844,6 +26853,7 @@ public void actionPerformed(ActionEvent evt) {
 
 /**
  * Handle automatic improvisation This is called at practically every slot
+ * in straight improvisation or passive trading, but not in active trading.
  *
  * @param slotInPlayback
  */
@@ -26853,7 +26863,7 @@ private void handleAutoImprov(int slotInPlayback)
 
     int gap = lickgenFrame.getGap();
 
-    // System.out.println("\nhandleAutoImprov at " + slotInPlayback);
+    //System.out.println("\nhandleAutoImprov at " + slotInPlayback + ": " + improviseStartSlot + " to " + improviseEndSlot);
     // Recurrent generation option
     // There are two separate branches for the time being, reflecting
     // an intended change
@@ -26865,8 +26875,11 @@ private void handleAutoImprov(int slotInPlayback)
         // firstChorus indicator is used by MidiRecorder to deal with countin
         setFirstChorus(false);
         setStatus("Chorus " + recurrentIteration);
-        int start = improviseStartSlot;
-        originalGenerate(lickgen, start, improviseEndSlot);
+        
+   // Danger: improviseSlotSlot and improviseEndSlot are instance variables
+   // Right now, they seem to be set at 0 and length of chorus -1.
+   
+        originalGenerate(lickgen, improviseStartSlot, improviseEndSlot);
       }
   } // handleAutoImprov
 

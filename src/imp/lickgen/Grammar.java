@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -22,9 +22,7 @@ package imp.lickgen;
 import imp.roadmap.brickdictionary.Block;
 import imp.data.Chord;
 import imp.data.ChordPart;
-import imp.data.MelodyPart;
 import imp.data.Note;
-import imp.data.Part.PartIterator;
 import imp.data.Rest;
 import imp.gui.Notate;
 import static imp.lickgen.Terminals.getDuration;
@@ -133,13 +131,14 @@ public Polylist run(int startSlot,
         tradingQuantum = totalSlotsToFill;
     }
     
+    //System.out.println("grammar:run " + startSlot + " initialNumSlots = " + initialNumSlots + ", tradingQuantum = " + tradingQuantum);
+    
     // applyRules will side-effect terminalBuffer anwd numSlotsToFill
     
     terminalBuffer = new PolylistBuffer();
  
-    // When trading, outer loop alternates melodies with rests. 
-    // On each iteration both melody and rests will be potentially
-    // generated.
+    // When trading passively, outer loop alternates melodies with rests. 
+    // On each iteration both melody and rests will be potentially generated.
     // If not trading, the outer loop will be executed only once.
     
     while( totalSlotsToFill > 0 )

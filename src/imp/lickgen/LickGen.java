@@ -1085,7 +1085,9 @@ private void accumulateProbs(Polylist tones, double categoryProb, double p[])
   }
 
 /**
- * Use the loaded grammar file to generate a rhythm
+ * Use the loaded grammar file to generate a rhythm.
+ * This only used in straight and passive trading, not active trading.
+ * 
  * TODO: it might be nice to be able to specify a minDuration and a maxDuration here.
  */
 

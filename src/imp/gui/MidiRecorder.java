@@ -227,10 +227,13 @@ public long getTick()
      * when instance variable 'tradePart' is null, midi will be 
      * recorded into the current melodyPart of 'notate' - Zach Kondak.
      * 
+     * Maybe this design should be revisited. - Bob Keller 5/20/2016
+     * 
      * @param destination melody part into which midi is actually recorded
      */
     public void setDestination(MelodyPart destination){
         this.tradePart = destination;
+        //System.out.println("MidiRecorder:setDestination to " + destination);
     }
 
     /**
