@@ -175,377 +175,377 @@ public Trading(Notate notate)
     this.notate = notate;
   }
 
-public void reset()
-  {
-    size = notate.getCurrentMelodyPart().size();
-    generateAtSlot = 0;
-    melodyStartsAtSlot = 0;
-    melodyStart = 0;
-    improLick = null;
-    improCommand = null;
-    generated = false;
-    played = false;
-    numCycles = size / improInterval;
-    nextGenerateCycle = 0;
-    //firstTime = ivFirst == 0;
-    setGenerationLeadSlots(480);
-    setPlayLeadSlots(30);
-    licksGenerated = 0;
-  }
+//public void reset()
+//  {
+//    size = notate.getCurrentMelodyPart().size();
+//    generateAtSlot = 0;
+//    melodyStartsAtSlot = 0;
+//    melodyStart = 0;
+//    improLick = null;
+//    improCommand = null;
+//    generated = false;
+//    played = false;
+//    numCycles = size / improInterval;
+//    nextGenerateCycle = 0;
+//    //firstTime = ivFirst == 0;
+//    setGenerationLeadSlots(480);
+//    setPlayLeadSlots(30);
+//    licksGenerated = 0;
+//  }
 
 
 int failCounter;
 
-public void autoImprovCycle(int slotInPlayback)
-  {
-    maybeCreateLick(slotInPlayback);
-    maybePlayLick(slotInPlayback);
-  }
+//public void autoImprovCycle(int slotInPlayback)
+//  {
+//    maybeCreateLick(slotInPlayback);
+//    maybePlayLick(slotInPlayback);
+//  }
 
-/**
- * This creates the first melody at slot 0 when Impro-Visor is to begin
- * trading.
- * @param currentMelodyPart
- */
+///**
+// * This creates the first melody at slot 0 when Impro-Visor is to begin
+// * trading.
+// * @param currentMelodyPart
+// */
+//
+//public MelodyPart createAndPlayInitialLick(MelodyPart melodyPart)
+//  {
+//  System.out.println("createAndPlayInitialLick");
+//  int countInOffset = notate.getScore().getCountInOffset();
+//    if( improLick != null && improLick.size() > 0 )
+//      {
+//        melodyStartsAtSlot = 0; //countInOffset;
+//        melodyStart = 0; //melodyStartsAtSlot;
+//        playAtSlot = 0;
+//        firstTime = true;
+//        played = false;
+//      }
+//    
+//    maybeCreateInitialLick(countInOffset);
+//
+//    return improLick;
+//  }
+//
+//public void maybeCreateInitialLick(int melodyStart)
+//  {
+//    long biasedCyclesElapsed = (notate.getTotalSlotsElapsed() + generationLeadSlots) / improInterval;
+//    //System.out.println("biasedCyclesElapsed = " + biasedCyclesElapsed + " nextGenerateCycle = " + nextGenerateCycle);
+//
+//    // This prevents multiple generations within one cycle.
+//    // Trying to hinge on generated does not work.
+//    // Neither does hinging on slotInPlayback < generateAtSlot
+//
+//    if( biasedCyclesElapsed < nextGenerateCycle )
+//      {
+//        return;
+//      }
+//
+////    melodyStart = ivFirst ? improInterval * biasedCyclesElapsed
+////                          : improInterval * biasedCyclesElapsed + halfInterval;
+//
+//    playAtSlot = Math.max(0, melodyStart - playLeadSlots);
+//
+//    generateAtSlot = melodyStart - generationLeadSlots;
+//
+//    MelodyPart melodyPart = notate.getImprovMelodyPart();
+//    if( melodyPart == null )
+//      {
+//        return;
+//      }
+//
+////    if( !generated 
+////      && notate.getTotalSlotsElapsed() >= generateAtSlot 
+////      )
+//      {
+//       // We are generating for the NEXT cycle, due to using the bias in triggering
+//      
+//        melodyStartsAtSlot = 0; // melodyStart;
+//        melodyStart = 0;
+//        playAtSlot = 0; //960;
+//              
+//        int partsize = melodyPart.size();
+//
+//        int chordStartSlot = melodyStartsAtSlot % partsize; // TEMP
+//        int chordStopSlot = (melodyStartsAtSlot + halfInterval - 1)% partsize; // TEMP
+//        
+//        
+//        if( traceAutoImprov )
+//          {
+//          System.out.println("\ncreate lick for initial"
+//                           + ", melodyStart " + notate.bar(melodyStart)
+//                           + " to play at " + notate.bar(playAtSlot)
+//                           + ", chords from " + notate.bar(chordStartSlot) + " to " + notate.bar(chordStopSlot));
+//          }
+//        
+//        //improLick = notate.generate(chordStartSlot, chordStopSlot);
+//
+//        generated = improLick != null && improLick.size() > 0;
+//
+//        if( generated )
+//          {
+//            licksGenerated++;
+//            //System.out.println("licks generated = " + licksGenerated + ", numCycles = " + numCycles);
+//            if( licksGenerated > 1 && (licksGenerated - 1) % numCycles == 0 )
+//              {
+//                // Change leadsheet chorus number  for pasting
+//                notate.incrementMelodyPartIndex();
+//                melodyPart = notate.getImprovMelodyPart();
+//                if( melodyPart == null )
+//                  {
+//                    return;
+//                  }
+//              }
+//            nextGenerateCycle = biasedCyclesElapsed + 1;
+//
+//            if( traceAutoImprov )
+//              {
+//                System.out.println("\n"  + notate.bar(notate.getTotalSlotsElapsed())
+//                        + ": result: "   + improLick
+//                        + ", generate: " + notate.bar(generateAtSlot)
+//                        + ", play: "     + notate.bar(playAtSlot)
+//                        + ", paste: "    + notate.bar(melodyStartsAtSlot)
+//                        + ", hear: "     + notate.bar(melodyStart));
+//
+//                if( failCounter > 0 )
+//                  {
+//                    System.out.println(" generation succeeded after " + failCounter + " failures.");
+//                    failCounter = 0;
+//                  }
+//                else
+//                  {
+//                    System.out.println(" generation succeeded first time.");
+//                  }
+//              }
+//
+//            played = false;
+//            Score improScore = new Score();
+//            improScore.setTempo(notate.getTempo());
+//
+//            improLick.setInstrument(notate.getMelodyInstrument().getValue()-1);
+//
+//            improScore.addPart(improLick);
+//
+//            Style style = notate.getChordProg().getStyleAtSlot(chordStartSlot);
+//            improLick.setSwing(style.getSwing());
+//
+//            //System.out.println("slot " + chordStartSlot + " style " + style);
+//            setImproCommand(
+//                    new PlayScoreFastCommand(improScore,
+//                                             0,         // startTime
+//                                             true,      // To cause swing value to be used.
+//                                             style,
+//                                             notate.getMidiSynth2(),
+//                                             null,      // play listener
+//                                             0,         // loopCount,
+//                                             notate.getTransposition(), // transposition
+//                                             false,     // use drums
+//                                             -1));      // end
+//          }
+//        else
+//          {
+//            ++failCounter;
+//            //System.out.println(" *** generation failed " + failCounter + " time consecutively.");
+//          }
+//      }
+//  }
 
-public MelodyPart createAndPlayInitialLick(MelodyPart melodyPart)
-  {
-  System.out.println("createAndPlayInitialLick");
-  int countInOffset = notate.getScore().getCountInOffset();
-    if( improLick != null && improLick.size() > 0 )
-      {
-        melodyStartsAtSlot = 0; //countInOffset;
-        melodyStart = 0; //melodyStartsAtSlot;
-        playAtSlot = 0;
-        firstTime = true;
-        played = false;
-      }
-    
-    maybeCreateInitialLick(countInOffset);
 
-    return improLick;
-  }
-
-public void maybeCreateInitialLick(int melodyStart)
-  {
-    long biasedCyclesElapsed = (notate.getTotalSlotsElapsed() + generationLeadSlots) / improInterval;
-    //System.out.println("biasedCyclesElapsed = " + biasedCyclesElapsed + " nextGenerateCycle = " + nextGenerateCycle);
-
-    // This prevents multiple generations within one cycle.
-    // Trying to hinge on generated does not work.
-    // Neither does hinging on slotInPlayback < generateAtSlot
-
-    if( biasedCyclesElapsed < nextGenerateCycle )
-      {
-        return;
-      }
-
+///**
+// * Create lick at indicated slot, for playback in a subsequent slot.
+// * @param slotInPlayback
+// * @return
+// */
+//
+//public void maybeCreateLick(int slotInPlayback)
+//  {
+//    long biasedCyclesElapsed = (notate.getTotalSlotsElapsed() + generationLeadSlots) / improInterval;
+//    //System.out.println("biasedCyclesElapsed = " + biasedCyclesElapsed + " nextGenerateCycle = " + nextGenerateCycle);
+//
+//    // This prevents multiple generations within one cycle.
+//    // Trying to hinge on generated does not work.
+//    // Neither does hinging on slotInPlayback < generateAtSlot
+//
+//    if( biasedCyclesElapsed < nextGenerateCycle )
+//      {
+//        return;
+//      }
+//
 //    melodyStart = ivFirst ? improInterval * biasedCyclesElapsed
 //                          : improInterval * biasedCyclesElapsed + halfInterval;
-
-    playAtSlot = Math.max(0, melodyStart - playLeadSlots);
-
-    generateAtSlot = melodyStart - generationLeadSlots;
-
-    MelodyPart melodyPart = notate.getImprovMelodyPart();
-    if( melodyPart == null )
-      {
-        return;
-      }
-
+//
+//    playAtSlot = Math.max(0, melodyStart - playLeadSlots);
+//
+//    generateAtSlot = melodyStart - generationLeadSlots;
+//
+//    MelodyPart melodyPart = notate.getImprovMelodyPart();
+//    if( melodyPart == null )
+//      {
+//        return;
+//      }
+//
 //    if( !generated 
-//      && notate.getTotalSlotsElapsed() >= generateAtSlot 
+//     && notate.getTotalSlotsElapsed() >= generateAtSlot 
 //      )
-      {
-       // We are generating for the NEXT cycle, due to using the bias in triggering
-      
-        melodyStartsAtSlot = 0; // melodyStart;
-        melodyStart = 0;
-        playAtSlot = 0; //960;
-              
-        int partsize = melodyPart.size();
+//      {
+//       // We are generating for the NEXT cycle, due to using the bias in triggering
+//      
+//        melodyStartsAtSlot = (int)melodyStart;
+//               
+//        int partsize = melodyPart.size();
+//
+//        int chordStartSlot = melodyStartsAtSlot % partsize; // TEMP
+//        int chordStopSlot = (melodyStartsAtSlot + halfInterval - 1)% partsize; // TEMP
+//        
+//        if( traceAutoImprov )
+//          {
+//          System.out.println("\ncreate lick for next cycle at " + notate.bar(slotInPlayback) 
+//                           + ", melodyStart " + notate.bar(melodyStart)
+//                           + " to play at " + notate.bar(playAtSlot)
+//                           + ", chords from " + notate.bar(chordStartSlot) + " to " + notate.bar(chordStopSlot));
+//          }
+//        
+//        //improLick = notate.generate(chordStartSlot, chordStopSlot);
+//
+//        generated = improLick != null && improLick.size() > 0;
+//
+//        if( generated )
+//          {
+//            licksGenerated++;
+//            //System.out.println("licks generated = " + licksGenerated + ", numCycles = " + numCycles);
+//            if( licksGenerated > 1 && (licksGenerated - 1) % numCycles == 0 )
+//              {
+//                // Change leadsheet chorus number  for pasting
+//                notate.incrementMelodyPartIndex();
+//                melodyPart = notate.getImprovMelodyPart();
+//                if( melodyPart == null )
+//                  {
+//                    return;
+//                  }
+//              }
+//            nextGenerateCycle = biasedCyclesElapsed + 1;
+//
+//            if( traceAutoImprov )
+//              {
+//                System.out.println("\n"  + notate.bar(notate.getTotalSlotsElapsed())
+//                        + ": result: "   + improLick
+//                        + ", generate: " + notate.bar(generateAtSlot)
+//                        + ", play: "     + notate.bar(playAtSlot)
+//                        + ", paste: "    + notate.bar(melodyStartsAtSlot)
+//                        + ", hear: "     + notate.bar(melodyStart));
+//
+//                if( failCounter > 0 )
+//                  {
+//                    System.out.println(" generation succeeded after " + failCounter + " failures.");
+//                    failCounter = 0;
+//                  }
+//                else
+//                  {
+//                    System.out.println(" generation succeeded first time.");
+//                  }
+//              }
+//
+//            played = false;
+//            Score improScore = new Score();
+//            improScore.setTempo(notate.getTempo());
+//
+//            improLick.setInstrument(notate.getMelodyInstrument().getValue()-1);
+//
+//            improScore.addPart(improLick);
+//
+//            Style style = notate.getChordProg().getStyleAtSlot(chordStartSlot);
+//            improLick.setSwing(style.getSwing());
+//
+//            //System.out.println("slot " + chordStartSlot + " style " + style);
+//            setImproCommand(
+//                    new PlayScoreFastCommand(improScore,
+//                                             0,         // startTime
+//                                             true,      // To cause swing value to be used.
+//                                             style,
+//                                             notate.getMidiSynth2(),
+//                                             null,      // play listener
+//                                             0,         // loopCount,
+//                                             notate.getTransposition(), // transposition
+//                                             false,     // use drums
+//                                             -1));      // end
+//          }
+//        else
+//          {
+//            ++failCounter;
+//            //System.out.println(" *** generation failed " + failCounter + " time consecutively.");
+//          }
+//      }
+//  }
 
-        int chordStartSlot = melodyStartsAtSlot % partsize; // TEMP
-        int chordStopSlot = (melodyStartsAtSlot + halfInterval - 1)% partsize; // TEMP
-        
-        
-        if( traceAutoImprov )
-          {
-          System.out.println("\ncreate lick for initial"
-                           + ", melodyStart " + notate.bar(melodyStart)
-                           + " to play at " + notate.bar(playAtSlot)
-                           + ", chords from " + notate.bar(chordStartSlot) + " to " + notate.bar(chordStopSlot));
-          }
-        
-        //improLick = notate.generate(chordStartSlot, chordStopSlot);
+//
+//public void maybePlayLick(int slotInPlayback)
+//  {
+//    MelodyPart melodyPart = notate.getImprovMelodyPart();
+//    if( melodyPart == null )
+//      {
+//        return;
+//      }
+//    
+//    boolean paste = true;
+//    boolean timeOk = notate.getTotalSlotsElapsed() > playAtSlot; // + (notate.getScore().getCountInOffset())/4;
+//    boolean commandOk = improCommand != null;
+//    boolean result = !played && generated && commandOk && timeOk;
+//
+//    if( result )
+//      {
+//        improCommand.execute();
+//
+//        if( traceAutoImprov )
+//          {
+//          System.out.println(notate.bar(notate.getTotalSlotsElapsed())
+//                           + " >= " + notate.bar(playAtSlot)
+//                           + " playing");
+//          }
+//
+//        played = true;
+//        generated = false;
+//
+//        if( paste )
+//          {
+//            if( firstTime )
+//              {
+//                firstTime = false;
+//                // firstTime pasteOver is handled outside
+//              }
+//            else
+//              {
+//                //System.out.println("pasting over " + melodyPart.hashCode());
+//                int partsize = melodyPart.size();
+//                int chordStartSlot = melodyStartsAtSlot % partsize;
+//                int chordStopSlot = (melodyStartsAtSlot + halfInterval - 1)% partsize;
+//                melodyPart.newPasteOver(improLick, chordStartSlot);
+////System.out.println("pasting into " + melodyPart.getMelodyPartId() + ": " + melodyPart + ", lick = " + improLick);
+//                notate.rectifySelection(notate.getCurrentStave(), chordStartSlot, chordStopSlot);
+//                // We are not getting refresh on other than the first chorus
+//                // This is stuff that I've tried.
+//                //notate.refreshCurrentStaveScrollPane(); not effective
+//                //notate.repaintAndStaveRequestFocus(); not effective
+//                //notate.getCurrentStave().repaintDuringPlayback(chordStartSlot);
+//              }
+//          }
+//
+//        setImproCommand(null); // Don't play twice
+//      }
+//  }
 
-        generated = improLick != null && improLick.size() > 0;
+//public int getGenerationLeadSlots()
+//  {
+//    return generationLeadSlots;
+//  }
+//
+//public void setGenerationLeadSlots(int generationLeadSlots)
+//  {
+//    this.generationLeadSlots = generationLeadSlots;
+//  }
 
-        if( generated )
-          {
-            licksGenerated++;
-            //System.out.println("licks generated = " + licksGenerated + ", numCycles = " + numCycles);
-            if( licksGenerated > 1 && (licksGenerated - 1) % numCycles == 0 )
-              {
-                // Change leadsheet chorus number  for pasting
-                notate.incrementMelodyPartIndex();
-                melodyPart = notate.getImprovMelodyPart();
-                if( melodyPart == null )
-                  {
-                    return;
-                  }
-              }
-            nextGenerateCycle = biasedCyclesElapsed + 1;
-
-            if( traceAutoImprov )
-              {
-                System.out.println("\n"  + notate.bar(notate.getTotalSlotsElapsed())
-                        + ": result: "   + improLick
-                        + ", generate: " + notate.bar(generateAtSlot)
-                        + ", play: "     + notate.bar(playAtSlot)
-                        + ", paste: "    + notate.bar(melodyStartsAtSlot)
-                        + ", hear: "     + notate.bar(melodyStart));
-
-                if( failCounter > 0 )
-                  {
-                    System.out.println(" generation succeeded after " + failCounter + " failures.");
-                    failCounter = 0;
-                  }
-                else
-                  {
-                    System.out.println(" generation succeeded first time.");
-                  }
-              }
-
-            played = false;
-            Score improScore = new Score();
-            improScore.setTempo(notate.getTempo());
-
-            improLick.setInstrument(notate.getMelodyInstrument().getValue()-1);
-
-            improScore.addPart(improLick);
-
-            Style style = notate.getChordProg().getStyleAtSlot(chordStartSlot);
-            improLick.setSwing(style.getSwing());
-
-            //System.out.println("slot " + chordStartSlot + " style " + style);
-            setImproCommand(
-                    new PlayScoreFastCommand(improScore,
-                                             0,         // startTime
-                                             true,      // To cause swing value to be used.
-                                             style,
-                                             notate.getMidiSynth2(),
-                                             null,      // play listener
-                                             0,         // loopCount,
-                                             notate.getTransposition(), // transposition
-                                             false,     // use drums
-                                             -1));      // end
-          }
-        else
-          {
-            ++failCounter;
-            //System.out.println(" *** generation failed " + failCounter + " time consecutively.");
-          }
-      }
-  }
-
-
-/**
- * Create lick at indicated slot, for playback in a subsequent slot.
- * @param slotInPlayback
- * @return
- */
-
-public void maybeCreateLick(int slotInPlayback)
-  {
-    long biasedCyclesElapsed = (notate.getTotalSlotsElapsed() + generationLeadSlots) / improInterval;
-    //System.out.println("biasedCyclesElapsed = " + biasedCyclesElapsed + " nextGenerateCycle = " + nextGenerateCycle);
-
-    // This prevents multiple generations within one cycle.
-    // Trying to hinge on generated does not work.
-    // Neither does hinging on slotInPlayback < generateAtSlot
-
-    if( biasedCyclesElapsed < nextGenerateCycle )
-      {
-        return;
-      }
-
-    melodyStart = ivFirst ? improInterval * biasedCyclesElapsed
-                          : improInterval * biasedCyclesElapsed + halfInterval;
-
-    playAtSlot = Math.max(0, melodyStart - playLeadSlots);
-
-    generateAtSlot = melodyStart - generationLeadSlots;
-
-    MelodyPart melodyPart = notate.getImprovMelodyPart();
-    if( melodyPart == null )
-      {
-        return;
-      }
-
-    if( !generated 
-     && notate.getTotalSlotsElapsed() >= generateAtSlot 
-      )
-      {
-       // We are generating for the NEXT cycle, due to using the bias in triggering
-      
-        melodyStartsAtSlot = (int)melodyStart;
-               
-        int partsize = melodyPart.size();
-
-        int chordStartSlot = melodyStartsAtSlot % partsize; // TEMP
-        int chordStopSlot = (melodyStartsAtSlot + halfInterval - 1)% partsize; // TEMP
-        
-        if( traceAutoImprov )
-          {
-          System.out.println("\ncreate lick for next cycle at " + notate.bar(slotInPlayback) 
-                           + ", melodyStart " + notate.bar(melodyStart)
-                           + " to play at " + notate.bar(playAtSlot)
-                           + ", chords from " + notate.bar(chordStartSlot) + " to " + notate.bar(chordStopSlot));
-          }
-        
-        //improLick = notate.generate(chordStartSlot, chordStopSlot);
-
-        generated = improLick != null && improLick.size() > 0;
-
-        if( generated )
-          {
-            licksGenerated++;
-            //System.out.println("licks generated = " + licksGenerated + ", numCycles = " + numCycles);
-            if( licksGenerated > 1 && (licksGenerated - 1) % numCycles == 0 )
-              {
-                // Change leadsheet chorus number  for pasting
-                notate.incrementMelodyPartIndex();
-                melodyPart = notate.getImprovMelodyPart();
-                if( melodyPart == null )
-                  {
-                    return;
-                  }
-              }
-            nextGenerateCycle = biasedCyclesElapsed + 1;
-
-            if( traceAutoImprov )
-              {
-                System.out.println("\n"  + notate.bar(notate.getTotalSlotsElapsed())
-                        + ": result: "   + improLick
-                        + ", generate: " + notate.bar(generateAtSlot)
-                        + ", play: "     + notate.bar(playAtSlot)
-                        + ", paste: "    + notate.bar(melodyStartsAtSlot)
-                        + ", hear: "     + notate.bar(melodyStart));
-
-                if( failCounter > 0 )
-                  {
-                    System.out.println(" generation succeeded after " + failCounter + " failures.");
-                    failCounter = 0;
-                  }
-                else
-                  {
-                    System.out.println(" generation succeeded first time.");
-                  }
-              }
-
-            played = false;
-            Score improScore = new Score();
-            improScore.setTempo(notate.getTempo());
-
-            improLick.setInstrument(notate.getMelodyInstrument().getValue()-1);
-
-            improScore.addPart(improLick);
-
-            Style style = notate.getChordProg().getStyleAtSlot(chordStartSlot);
-            improLick.setSwing(style.getSwing());
-
-            //System.out.println("slot " + chordStartSlot + " style " + style);
-            setImproCommand(
-                    new PlayScoreFastCommand(improScore,
-                                             0,         // startTime
-                                             true,      // To cause swing value to be used.
-                                             style,
-                                             notate.getMidiSynth2(),
-                                             null,      // play listener
-                                             0,         // loopCount,
-                                             notate.getTransposition(), // transposition
-                                             false,     // use drums
-                                             -1));      // end
-          }
-        else
-          {
-            ++failCounter;
-            //System.out.println(" *** generation failed " + failCounter + " time consecutively.");
-          }
-      }
-  }
-
-
-public void maybePlayLick(int slotInPlayback)
-  {
-    MelodyPart melodyPart = notate.getImprovMelodyPart();
-    if( melodyPart == null )
-      {
-        return;
-      }
-    
-    boolean paste = true;
-    boolean timeOk = notate.getTotalSlotsElapsed() > playAtSlot; // + (notate.getScore().getCountInOffset())/4;
-    boolean commandOk = improCommand != null;
-    boolean result = !played && generated && commandOk && timeOk;
-
-    if( result )
-      {
-        improCommand.execute();
-
-        if( traceAutoImprov )
-          {
-          System.out.println(notate.bar(notate.getTotalSlotsElapsed())
-                           + " >= " + notate.bar(playAtSlot)
-                           + " playing");
-          }
-
-        played = true;
-        generated = false;
-
-        if( paste )
-          {
-            if( firstTime )
-              {
-                firstTime = false;
-                // firstTime pasteOver is handled outside
-              }
-            else
-              {
-                //System.out.println("pasting over " + melodyPart.hashCode());
-                int partsize = melodyPart.size();
-                int chordStartSlot = melodyStartsAtSlot % partsize;
-                int chordStopSlot = (melodyStartsAtSlot + halfInterval - 1)% partsize;
-                melodyPart.newPasteOver(improLick, chordStartSlot);
-//System.out.println("pasting into " + melodyPart.getMelodyPartId() + ": " + melodyPart + ", lick = " + improLick);
-                notate.rectifySelection(notate.getCurrentStave(), chordStartSlot, chordStopSlot);
-                // We are not getting refresh on other than the first chorus
-                // This is stuff that I've tried.
-                //notate.refreshCurrentStaveScrollPane(); not effective
-                //notate.repaintAndStaveRequestFocus(); not effective
-                //notate.getCurrentStave().repaintDuringPlayback(chordStartSlot);
-              }
-          }
-
-        setImproCommand(null); // Don't play twice
-      }
-  }
-
-public int getGenerationLeadSlots()
-  {
-    return generationLeadSlots;
-  }
-
-public void setGenerationLeadSlots(int generationLeadSlots)
-  {
-    this.generationLeadSlots = generationLeadSlots;
-  }
-
-public Command getImproCommand()
-  {
-    return improCommand;
-  }
+//public Command getImproCommand()
+//  {
+//    return improCommand;
+//  }
 
 public void setImproCommand(Command improCommand)
   {

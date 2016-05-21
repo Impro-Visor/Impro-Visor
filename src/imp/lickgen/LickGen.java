@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import imp.ImproVisor;
 import imp.cluster.*;
 import imp.data.*;
 import imp.gui.Notate;
+import imp.trading.PassiveTradingWindow;
 import imp.util.ErrorLog;
 import imp.util.NonExistentParameterException;
 import static imp.lickgen.Terminals.isScaleDegree;
@@ -129,10 +130,10 @@ private double expectancyConstant   = defaultExpectancyConstant;
 public Integer integer;
 
     private int lengthOfTrade;
-    private static int SLOTS_PER_MEASURE = 480;
-    private static int QUARTER_NOTE = 120;
-    private static int BASE_WEIGHT = 15;
-    private static int QUARTER_WEIGHT = 5;
+    private static final int SLOTS_PER_MEASURE = 480;
+    private static final int QUARTER_NOTE = 120;
+    private static final int BASE_WEIGHT = 15;
+    private static final int QUARTER_WEIGHT = 5;
     //used in chooseNote - should be able to be varied
     public static final double REPEAT_PROB = 1.0 / 512.0;
     public static final int PERCENT_REPEATED_NOTES_TO_REMOVE = 98;
@@ -151,10 +152,10 @@ public Integer integer;
     private static final int MAX_EXPECTANCY = 216;
     private static final int MAX_SYNCO = 12;
     public static int MELODY_GEN_LIMIT = 15;
-    private int NOTE_GEN_LIMIT = 100;    
+    private final int NOTE_GEN_LIMIT = 100;    
     public ArrayList<double[]> probs;  // Array of note probabilities
-    private Grammar grammar;
-    private double[] pitchUsed = new double[TOTALPITCHES];
+    private final Grammar grammar;
+    private final double[] pitchUsed = new double[TOTALPITCHES];
     private Polylist preferredScale = Polylist.nil;
     ArrayList<String> chordUsed = new ArrayList<String>();
     // Indices that are global to an instance
@@ -163,8 +164,8 @@ public Integer integer;
     int oldPitch = 0;
     int oldOldPitch = 0;
     double expectancy = -1;
-    private static int DEFAULT_EXPECTANCY_LIMIT = 30;
-    private static int MINIMAX_EXPECTANCY = 128;
+    private static final int DEFAULT_EXPECTANCY_LIMIT = 30;
+    private static final int MINIMAX_EXPECTANCY = 128;
     boolean useOutlines = false;
     boolean soloistLoaded = false;
     
@@ -179,7 +180,7 @@ public Integer integer;
     private int slotsPerMeasure;
     
     //head file data
-    private ArrayList<Score> headData = new ArrayList<Score> ();
+    private final ArrayList<Score> headData = new ArrayList<Score> ();
     
     //fillmelody parameters from notate
     private int mMinPitch = 60;
@@ -201,7 +202,8 @@ public Integer integer;
     //used in in building a solo from outline
     private boolean lastWasTied = false;
 
-    private Notate notate;
+    private final Notate notate;
+    private final PassiveTradingWindow passiveTradingWindow;
     private int prevPitch = (int)(Math.random() * 20 + 60);
     private int prevPrevPitch = 0;
     private int prevQuarter = prevPitch;
@@ -210,10 +212,14 @@ public Integer integer;
     /**
      * Constructor -- loads the grammar in from the specified filename, and
      * sets all note probabilities to 1.
+     * @param grammarFile
+     * @param notate
+     * @param passiveTradingWindow
      */
-    public LickGen(String grammarFile, Notate notate) {
+    public LickGen(String grammarFile, Notate notate, PassiveTradingWindow passiveTradingWindow) {
     //System.out.println("Lickgen constructor grammarFile = " + grammarFile);
         this.notate = notate;
+        this.passiveTradingWindow = passiveTradingWindow;
         grammar = new Grammar(grammarFile);
         loadGrammar(grammarFile);
         probs = new ArrayList<double[]>();
@@ -236,10 +242,10 @@ public Integer integer;
             soloistLoaded = false;
          //System.out.println("LickGen constructor, no soloist file = " + soloistFileName);
        }
-        if(notate.getAutoImprovisation())
-        {
-            lengthOfTrade = notate.getTradeLength();
-        }
+//        if(notate.getAutoImprovisation())
+//        {
+//            lengthOfTrade = notate.getTradeLength();
+//        }
     }
 
     public Polylist getRhythmFromSoloist() {
@@ -1084,18 +1090,14 @@ private void accumulateProbs(Polylist tones, double categoryProb, double p[])
  */
 
 public Polylist generateRhythmFromGrammar(int startSlot, int slots)
-  { //System.out.println("generateRhythmFromGrammar : startSlot = " + startSlot + ", slots = " + slots);
-    //TEMPORARY FIX - never trade. Trading is handled differently now.
+  { 
+    //System.out.println("generateRhythmFromGrammar : startSlot = " + startSlot + ", slots = " + slots);
     return grammar.run(startSlot, 
                        slots, 
                        notate, 
-                       notate.getWhetherToTrade(),
-                       //false,
-                       notate.getImprovisorTradeFirst(),
-                       //false,
-                       notate.getTradingQuantum());
-                       //-1);
-
+                       passiveTradingWindow.isVisible(),
+                       passiveTradingWindow.getImprovisorTradeFirst(),
+                       passiveTradingWindow.getTradingQuantum());
   }
 
 /**
@@ -2155,7 +2157,7 @@ private boolean fillMelodyHelper(MelodyPart lick,
                       }
                   } // end of slope processing
                  else if ( first.equals("triadic") ) {
-                     MelodyPart melodyPart = notate.getCurrentMelodyPart();
+                     //MelodyPart melodyPart = notate.getCurrentMelodyPart();
                      int lengthInSlots = Duration.getDuration(inner.second().toString());
                      Note noteIn = prevNote;
                      if (prevNote != null) {
@@ -2241,15 +2243,15 @@ private boolean fillMelodyHelper(MelodyPart lick,
 
             // Get the note corresponding to the string.
             Note note = parseNote(rhythmVal, beatValue);
-            int type = note.getPitch();
-
             if( note == null )
               {
                 ErrorLog.log(ErrorLog.WARNING,
                              "Invalid note string: " + rhythmVal + "; no melody will be generated.");
                 return false;
               }
-                    
+            
+            int type = note.getPitch();
+          
             switch( type )
               {
                 case REST:

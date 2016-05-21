@@ -111,6 +111,8 @@ ErrorDialog errorDialog = ErrorLog.getDialog();
 HelpDialog helpDialog = new HelpDialog(this, false);
 ViewAdjustmentDialog viewAdjustmentDialog = new ViewAdjustmentDialog(this, false);
 int ADVICE_SCROLL_LIST_ITEMS_VISIBLE = 10;
+private static final String SKIP_GRAMMAR_FILES_STARTING_WITH = "_";
+
 /**
  * trackerDelay delays the tracker by offsetting a specified number of seconds.
  * This is for compatibility with midi delays introduced by different operating
@@ -769,7 +771,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     midiSynth3 = new MidiSynth(midiManager);
 
-    autoImprovisation = new Trading(this);
+    //autoImprovisation = new Trading(this);
 
     midiStepInput = new MidiStepEntryActionHandler(this);
 
@@ -892,11 +894,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     repainter = new PlayActionListener();
 
-
-    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this); //orig
-
     ChordDescription.load(ImproVisor.getVocabDirectory() + File.separator + musicxmlFile);
-
 
     initComponents();
 
@@ -920,14 +918,17 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     replaceWithDelta.setState(false);
 
     critic = new Critic();
+    
+    passiveTradingWindow = new PassiveTradingWindow(this);
+    passiveTradingWindow.setVisible(false);
+    
+    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingWindow); //orig
+
     lickgenFrame = new LickgenFrame(this, lickgen, cm);
     transformFrame = new TransformFrame(this, lickgen, cm);
     fractalFrame = new FractalFrame(this, cm);
     intervalLearningFrame = new IntervalLearningFrame(this);
     
-    passiveTradingWindow = new PassiveTradingWindow(this);
-    passiveTradingWindow.setVisible(false);
-
     populateNotateGrammarMenu();
 
     postInitComponents();
@@ -1039,7 +1040,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setNormalMode();
 
-    setAutoImprovisation(false);
+    //setAutoImprovisation(false);
 
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
@@ -13721,16 +13722,13 @@ public boolean putLick(MelodyPart lick)
         stop = chorusSize - 1;
       }
 
-    Stave stave = getCurrentStave();
-
-    // Ideally, would wait for previous generation to finish before starting
+     // Ideally, would wait for previous generation to finish before starting
     // a new one, but attempts to do this have been unsuccessful so far.
 
-    getMelodyPart(stave).newPasteOver(lick, getCurrentSelectionStart(stave));
-
+    getCurrentMelodyPart().newPasteOver(lick, start);
     if( lickgenFrame.rectifySelected() )
       {
-        rectifySelection(stave, start, stop);
+        rectifySelection(getCurrentStave(), start, stop);
       }
 
     playCurrentSelection(false, 0, PlayScoreCommand.USEDRUMS, "putLick " + start + " - " + stop);
@@ -23089,38 +23087,39 @@ public void chordReplayDo(){
  */
 public int getTradeLength()
   {
-    int tradeLength = autoImprovisation.getImproInterval() / 2;
-    return tradeLength;
+   return passiveTradingWindow.getTradingQuantum();
+  //    int tradeLength = autoImprovisation.getImproInterval() / 2;
+   // return tradeLength;
   }
 
-/**
- * Returns true if trading
- *
- * @return
- */
-public boolean getAutoImprovisation()
-  {
-    return !originalGeneration;
-  }
-
-/**
- * Enable or disable auto improvisation. Disabled means that only the original
- * style of improvisation is used, pressing a button to generate. Enabled means
- * that improvisation may occur automatically with playback, trading in a manner
- * specified in the menu.
- *
- * @param value
- */
-public void setAutoImprovisation(boolean value)
-  {
-    //originalGeneration = !value;
-    autoImprovisation.setSelected(value);
-    if( value )
-      {
-        //openLickGenerator();  //FIX.
-        //lickgenFrame.toBack();
-      }
-  }
+///**
+// * Returns true if trading
+// *
+// * @return
+// */
+//public boolean getAutoImprovisation()
+//  {
+//    return !originalGeneration;
+//  }
+//
+///**
+// * Enable or disable auto improvisation. Disabled means that only the original
+// * style of improvisation is used, pressing a button to generate. Enabled means
+// * that improvisation may occur automatically with playback, trading in a manner
+// * specified in the menu.
+// *
+// * @param value
+// */
+//public void setAutoImprovisation(boolean value)
+//  {
+//    //originalGeneration = !value;
+//    autoImprovisation.setSelected(value);
+//    if( value )
+//      {
+//        //openLickGenerator();  //FIX.
+//        //lickgenFrame.toBack();
+//      }
+//  }
 
 public void setFrameSize(int value)
   {
@@ -24229,7 +24228,8 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     lickgenFrame.resetTriageParameters(false);
     Preferences.setPreference(Preferences.DEFAULT_GRAMMAR_FILE, fullName);
 
-    if (stem.startsWith("_")){
+    // If cycling or shuffle the grammar, skip files beginning with _
+    if (stem.startsWith(SKIP_GRAMMAR_FILES_STARTING_WITH)){
         cycCount = 0;
         shufCount = 0;
     }
@@ -24255,40 +24255,11 @@ public boolean getWhetherToThemeWeave()
   }
 
 
-/**
- * Get the indication of who will trade first.
- * @return 
- */
-
-public boolean getWhetherToTrade()
-  {
-    return tradeCheckbox.isSelected();
-  }
-
-public void doNotTrade()
+public void setNotToTrade()
 {
     tradeCheckbox.setSelected(false);
 }
 
-/**
- * Get the indication of who will trade first.
- * @return 
- */
-
-public boolean getImprovisorTradeFirst()
-  {
-    return passiveTradingWindow.getImprovisorTradeFirst();
-  }
-
-/**
- * Get the number of slots to be used in one-half of the trade.
- * @return 
- */
-
-public int getTradingQuantum()
-  {
-      return passiveTradingWindow.getTradingQuantum();
-  }
 
 ArrayList<String> gramList = new ArrayList<String>();
 ArrayList<String> shufGramList = new ArrayList<String>();
@@ -27062,6 +27033,11 @@ public Note getFirstNote()
 public String getComposer()
 {
     return score.getComposer();
+}
+
+public int getSlotsPerMeasure()
+{
+    return score.getSlotsPerMeasure();
 }
 
 public void playAscoreWithStyle(Score score, int loopCount, int newTranspos)

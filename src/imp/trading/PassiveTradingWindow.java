@@ -59,12 +59,12 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
       for(int i = 0; i < numberOfBarsGroup.getButtonCount(); i++){
           JRadioButton button = (JRadioButton) bars.nextElement();
           if(button.isSelected()){
-              return tradingQuantum[i]*notate.getScore().getSlotsPerMeasure();
+              return tradingQuantum[i] * notate.getSlotsPerMeasure();
               //return ((Integer)wordToNumber.get(button.getText()))*score.getSlotsPerMeasure();
           }
       }
       
-      return notate.getScore().getSlotsPerMeasure(); // default
+      return notate.getSlotsPerMeasure(); // default, should not get used
     }
 
     /**
@@ -376,11 +376,11 @@ else
     }//GEN-LAST:event_tradeStopMenuItemActionPerformed
 
     private void passiveTradingClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_passiveTradingClosed
-        notate.doNotTrade();
+        notate.setNotToTrade();
     }//GEN-LAST:event_passiveTradingClosed
 
     private void passiveTradingClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_passiveTradingClosing
-         notate.doNotTrade();
+         notate.setNotToTrade();
     }//GEN-LAST:event_passiveTradingClosing
 
     private void switchToActiveTradingHandler(java.awt.event.ActionEvent evt)//GEN-FIRST:event_switchToActiveTradingHandler

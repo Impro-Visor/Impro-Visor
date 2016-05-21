@@ -311,8 +311,9 @@ public class ActiveTrading {
             sectionStart = nextSection - slotsPerTurn;
             sectionEnd = nextSection - 1;
         }
-        soloChords = notate.getScore().getChordProg().extract(sectionStart, sectionEnd);
-        responseChords = notate.getScore().getChordProg().extract(nextSection, nextSection + slotsPerTurn - 1);
+        ChordPart chordProg = notate.getChordProg();
+        soloChords = chordProg.extract(sectionStart, sectionEnd);
+        responseChords = chordProg.extract(nextSection, nextSection + slotsPerTurn - 1);
         tradeScore = new Score("trading", notate.getTempo(), zero);
         tradeScore.setChordProg(responseChords);
         tradeScore.addPart(response);
@@ -328,8 +329,9 @@ public class ActiveTrading {
             userStartIndex = triggers.size() + userStartIndex;
         }
         int userStartSlot = triggers.get(userStartIndex);
-        notate.getCurrentMelodyPart().altPasteOver(response, userStartSlot);
-        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn), (userStartSlot + slotsPerTurn) % this.adjustedLength);
+        MelodyPart melodyPart = notate.getCurrentMelodyPart();
+        melodyPart.altPasteOver(response, userStartSlot);
+        melodyPart.altPasteOver(new MelodyPart(slotsPerTurn), (userStartSlot + slotsPerTurn) % this.adjustedLength);
 
         tradeScore.setBassMuted(true);
         tradeScore.delPart(0);
@@ -456,8 +458,9 @@ public class ActiveTrading {
         } else {
             //TODO make a nice comment
             phase = TradePhase.PROCESS_INPUT;
-            notate.getCurrentMelodyPart().altPasteOver(response, 0);
-            notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);
+            MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
+            currentMelodyPart.altPasteOver(response, 0);
+            currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);
         }
     }
 
@@ -540,8 +543,9 @@ public class ActiveTrading {
             tradeResponseController.updateResponse(response, soloChords, responseChords, nextSection, transform);
             response = tradeResponseController.response(tradeMode);
             //System.out.println(response);
-            notate.getCurrentMelodyPart().altPasteOver(response, (triggers.get(triggerIndex) % adjustedLength));
-            notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn), triggers.get(triggerIndex) + slotsPerTurn);
+            MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
+            currentMelodyPart.altPasteOver(response, (triggers.get(triggerIndex) % adjustedLength));
+            currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), triggers.get(triggerIndex) + slotsPerTurn);
         } catch (ExceptionTradeModeNotFound ex) {
             Logger.getLogger(ActiveTrading.class.getName()).log(Level.SEVERE, null, ex);
         }
