@@ -21,6 +21,8 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.Playable;
+
 /**
  *
  * @author keller

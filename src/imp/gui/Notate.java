@@ -20,6 +20,13 @@
  */
 package imp.gui;
 
+import imp.midi.MidiDeviceChooser;
+import imp.midi.MidiLatencyMeasurementTool;
+import imp.midi.MidiStepEntryActionHandler;
+import imp.midi.MidiRecorder;
+import imp.midi.MidiImportFrame;
+import imp.data.stylePatterns.DrumRuleDisplay;
+import imp.data.stylePatterns.DrumPatternDisplay;
 import imp.midi.MidiManager;
 import imp.midi.MidiPlayListener;
 import imp.midi.MidiSynth;
@@ -14568,7 +14575,7 @@ int getCurrentSelectionStart(Stave stave)
 /**
  * Get the current Selection start.
  */
-int getCurrentSelectionStart()
+public int getCurrentSelectionStart()
   {
     return getCurrentStave().getSelectionStart();
   }
@@ -14584,7 +14591,7 @@ int getCurrentSelectionEnd(Stave stave)
 /**
  * Get the current Selection end.
  */
-int getCurrentSelectionEnd()
+public int getCurrentSelectionEnd()
   {
     return getCurrentStave().getSelectionEnd();
   }

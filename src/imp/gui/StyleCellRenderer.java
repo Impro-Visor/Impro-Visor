@@ -21,6 +21,9 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.DrumRuleDisplay;
+import imp.data.stylePatterns.ChordPatternDisplay;
+import imp.data.stylePatterns.BassPatternDisplay;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JCheckBox;

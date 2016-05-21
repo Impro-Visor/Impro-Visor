@@ -19,8 +19,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.gui;
+package imp.data.stylePatterns;
 
+import imp.gui.StyleTableModel;
 import java.util.ArrayList;
 import javax.swing.JTable;
 

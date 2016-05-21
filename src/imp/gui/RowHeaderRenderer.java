@@ -26,6 +26,7 @@ package imp.gui;
  * @author keller
  */
 
+import imp.data.stylePatterns.DrumRuleDisplay;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;

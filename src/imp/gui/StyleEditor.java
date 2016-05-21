@@ -20,6 +20,14 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.Playable;
+import imp.data.stylePatterns.Displayable;
+import imp.data.stylePatterns.DrumRuleDisplay;
+import imp.data.stylePatterns.DrumPatternDisplay;
+import imp.data.stylePatterns.PatternDisplay;
+import imp.data.stylePatterns.PatternSet;
+import imp.data.stylePatterns.ChordPatternDisplay;
+import imp.data.stylePatterns.BassPatternDisplay;
 import imp.midi.MIDIBeast;
 import imp.data.stylePatterns.RepresentativeChordRules;
 import imp.data.stylePatterns.RepresentativeDrumRules;

@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.gui;
+package imp.midi;
 
 import imp.Constants;
 import imp.data.MelodyPart;
-import imp.midi.MidiFormatting;
 import imp.data.Note;
 import imp.data.Rest;
 import imp.data.Score;
+import imp.gui.Notate;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.Sequencer;
@@ -95,7 +95,7 @@ public long getTick()
         }
     }
 
-    void start(int countInOffset) {
+public void start(int countInOffset) {
         snapTo = BEAT / notate.getRecordSnapValue();
         this.sequencer = notate.getSequencer();
         if (sequencer == null || sequencer.getSequence() == null) {

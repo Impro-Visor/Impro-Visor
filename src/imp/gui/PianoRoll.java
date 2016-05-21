@@ -20,6 +20,7 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.Playable;
 import imp.data.stylePatterns.BassPatternElement;
 import imp.util.ErrorLog;
 import java.awt.Color;

@@ -20,6 +20,11 @@
 
 package imp.gui;
 
+import imp.data.stylePatterns.Displayable;
+import imp.data.stylePatterns.DrumPatternDisplay;
+import imp.data.stylePatterns.PatternDisplay;
+import imp.data.stylePatterns.ChordPatternDisplay;
+import imp.data.stylePatterns.BassPatternDisplay;
 import java.awt.Choice;
 import java.awt.Component;
 import javax.swing.DefaultCellEditor;

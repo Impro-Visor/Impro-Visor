@@ -19,13 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.gui;
+package imp.midi;
 
 import imp.data.*;
 import imp.com.*;
 import javax.sound.midi.*;
 
 import imp.Constants;
+import imp.gui.Notate;
+import imp.gui.Stave;
+import imp.gui.VoicingKeyboard;
 /**
  *
  * @author Martin

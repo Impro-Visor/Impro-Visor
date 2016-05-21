@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.gui;
+package imp.data.stylePatterns;
 
 import imp.Constants;
 import imp.ImproVisor;
@@ -26,6 +26,9 @@ import imp.com.CommandManager;
 import imp.com.PlayScoreCommand;
 import imp.midi.MidiSynth;
 import imp.data.Score;
+import imp.gui.Notate;
+import imp.gui.StyleEditor;
+import imp.gui.ThemeWeaver;
 import java.awt.Color;
 
 /**
@@ -35,7 +38,7 @@ import java.awt.Color;
  *
  * @author keller
  */
-abstract class PatternDisplay
+public abstract class PatternDisplay
         extends javax.swing.JPanel
         implements Constants, Playable
 {

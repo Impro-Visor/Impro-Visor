@@ -18,7 +18,7 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.gui;
+package imp.midi;
 
 import imp.midi.MidiChannelInfo;
 import imp.midi.MidiImportRecord;
@@ -26,6 +26,8 @@ import imp.midi.MidiImport;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.data.*;
+import imp.gui.Notate;
+import imp.gui.WindowRegistry;
 import imp.midi.MidiChannelInfo.ChannelInfo;
 import imp.util.LeadsheetFileView;
 import imp.util.MidiFilter;
@@ -218,7 +220,8 @@ private void initChannelInfo(String filename)
  */
 @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         midiImportTopPanel = new javax.swing.JPanel();
@@ -249,7 +252,6 @@ private void initChannelInfo(String filename)
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
         setMinimumSize(new java.awt.Dimension(100, 550));
-        setPreferredSize(new java.awt.Dimension(1100, 550));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         midiImportTopPanel.setLayout(new java.awt.GridBagLayout());
@@ -278,11 +280,14 @@ private void initChannelInfo(String filename)
         importedTrackList.setModel(trackListModel);
         importedTrackList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         importedTrackList.setToolTipText("These are all channels and tracks from the imported MIDI file. Select the one you wish to play or import to the leadsheet. Doube clicking imports the track, or use the button below.");
-        importedTrackList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
+        importedTrackList.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseReleased(java.awt.event.MouseEvent evt)
+            {
                 importTrackSelected(evt);
             }
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 importedTrackListMouseClicked(evt);
             }
         });
@@ -305,8 +310,10 @@ private void initChannelInfo(String filename)
         playMIDIfile.setMaximumSize(new java.awt.Dimension(97, 33));
         playMIDIfile.setMinimumSize(new java.awt.Dimension(97, 33));
         playMIDIfile.setPreferredSize(new java.awt.Dimension(97, 33));
-        playMIDIfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        playMIDIfile.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 playMIDIfileActionPerformed(evt);
             }
         });
@@ -324,8 +331,10 @@ private void initChannelInfo(String filename)
         playMIDIimportTrack.setMaximumSize(new java.awt.Dimension(97, 33));
         playMIDIimportTrack.setMinimumSize(new java.awt.Dimension(97, 33));
         playMIDIimportTrack.setPreferredSize(new java.awt.Dimension(97, 33));
-        playMIDIimportTrack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        playMIDIimportTrack.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 playMIDIimportTrackActionPerformed(evt);
             }
         });
@@ -343,8 +352,10 @@ private void initChannelInfo(String filename)
         stopPlayingTrackButton.setMaximumSize(new java.awt.Dimension(97, 33));
         stopPlayingTrackButton.setMinimumSize(new java.awt.Dimension(97, 33));
         stopPlayingTrackButton.setPreferredSize(new java.awt.Dimension(97, 33));
-        stopPlayingTrackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopPlayingTrackButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 stopPlayingTrackButtonActionPerformed(evt);
             }
         });
@@ -360,8 +371,10 @@ private void initChannelInfo(String filename)
         volumeSpinner.setModel(new javax.swing.SpinnerNumberModel(70, 0, 127, 5));
         volumeSpinner.setToolTipText("Controls the volume.");
         volumeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
-        volumeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        volumeSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 volumeSpinnerChanged(evt);
             }
         });
@@ -377,8 +390,10 @@ private void initChannelInfo(String filename)
         importTrackToLeadsheet.setMaximumSize(null);
         importTrackToLeadsheet.setMinimumSize(null);
         importTrackToLeadsheet.setPreferredSize(null);
-        importTrackToLeadsheet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        importTrackToLeadsheet.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 importTrackToLeadsheetActionPerformed(evt);
             }
         });
@@ -390,7 +405,7 @@ private void initChannelInfo(String filename)
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         midiImportButtonPanel.add(importTrackToLeadsheet, gridBagConstraints);
 
-        startBeatSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        startBeatSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         startBeatSpinner.setToolTipText("Sets the starting beat for playback or importing to the leadsheet.");
         startBeatSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Start Beat"));
         startBeatSpinner.setMinimumSize(new java.awt.Dimension(75, 50));
@@ -401,7 +416,7 @@ private void initChannelInfo(String filename)
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         midiImportButtonPanel.add(startBeatSpinner, gridBagConstraints);
 
-        endBeatSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        endBeatSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         endBeatSpinner.setToolTipText("Sets the ending beat for playback or importing to the leadsheet.");
         endBeatSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "End Beat", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         endBeatSpinner.setMinimumSize(new java.awt.Dimension(75, 50));
@@ -431,8 +446,10 @@ private void initChannelInfo(String filename)
         melodyChannelNumberComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Melody", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         melodyChannelNumberComboBox.setMinimumSize(null);
         melodyChannelNumberComboBox.setPreferredSize(null);
-        melodyChannelNumberComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        melodyChannelNumberComboBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 melodyChannelNumberComboBoxActionPerformed(evt);
             }
         });
@@ -446,8 +463,10 @@ private void initChannelInfo(String filename)
         chordChannelNumberComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chord", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         chordChannelNumberComboBox.setMinimumSize(null);
         chordChannelNumberComboBox.setPreferredSize(null);
-        chordChannelNumberComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chordChannelNumberComboBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 chordChannelNumberComboBoxActionPerformed(evt);
             }
         });
@@ -461,8 +480,10 @@ private void initChannelInfo(String filename)
         bassChannelNumberComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bass", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         bassChannelNumberComboBox.setMinimumSize(null);
         bassChannelNumberComboBox.setPreferredSize(null);
-        bassChannelNumberComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bassChannelNumberComboBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 bassChannelNumberComboBoxActionPerformed(evt);
             }
         });
@@ -493,8 +514,10 @@ private void initChannelInfo(String filename)
         noteResolutionComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Note Resolution", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         noteResolutionComboBox.setMinimumSize(new java.awt.Dimension(300, 60));
         noteResolutionComboBox.setPreferredSize(new java.awt.Dimension(300, 75));
-        noteResolutionComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        noteResolutionComboBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 noteResolutionComboBoxChanged(evt);
             }
         });
@@ -510,8 +533,10 @@ private void initChannelInfo(String filename)
         chordResolutionComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chord Resolution", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         chordResolutionComboBox.setMinimumSize(new java.awt.Dimension(300, 60));
         chordResolutionComboBox.setPreferredSize(new java.awt.Dimension(300, 75));
-        chordResolutionComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chordResolutionComboBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 chordResolutionComboBoxActionPerformed(evt);
             }
         });
@@ -532,8 +557,10 @@ private void initChannelInfo(String filename)
         extractChords.setMaximumSize(null);
         extractChords.setMinimumSize(null);
         extractChords.setPreferredSize(null);
-        extractChords.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        extractChords.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 extractChordsActionPerformed(evt);
             }
         });
@@ -559,8 +586,10 @@ private void initChannelInfo(String filename)
         openAnotherFileMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
         openAnotherFileMI.setText("Open Another MIDI File");
         openAnotherFileMI.setToolTipText("Opens a MIDI File, usually a different one from the current.");
-        openAnotherFileMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        openAnotherFileMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 openAnotherFileMIActionPerformed(evt);
             }
         });

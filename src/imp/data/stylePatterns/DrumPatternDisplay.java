@@ -18,14 +18,17 @@
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-package imp.gui;
+package imp.data.stylePatterns;
 
+import imp.data.stylePatterns.PatternDisplay;
 import imp.Constants;
 import imp.com.CommandManager;
 import imp.data.ChordPart;
 import imp.midi.MIDIBeast;
 import imp.data.Score;
 import imp.data.Style;
+import imp.gui.Notate;
+import imp.gui.StyleEditor;
 import imp.util.ErrorLog;
 import java.awt.Color;
 import java.awt.Component;
