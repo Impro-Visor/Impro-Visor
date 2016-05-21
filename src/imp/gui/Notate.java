@@ -771,8 +771,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     midiSynth3 = new MidiSynth(midiManager);
 
-    //autoImprovisation = new Trading(this);
-
     midiStepInput = new MidiStepEntryActionHandler(this);
 
     voicingInput = new MidiStepEntryActionHandler(this);
@@ -1039,8 +1037,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     midiRecordSnapSpinner.setValue(Preferences.getMidiRecordSnap());
 
     setNormalMode();
-
-    //setAutoImprovisation(false);
 
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
@@ -23069,57 +23065,6 @@ public void chordReplayDo(){
         sectionTable.getSelectionModel().setSelectionInterval(index, index);
     }//GEN-LAST:event_usePreviousStyleButtonActionPerformed
 
-//private void setUseImproviseCheckBox()
-//  {
-//    setAutoImprovisation(false);
-//    setContinuousImprovisation(false);
-//  }
-//
-//private void setContinuousImprovisation(boolean value)
-//  {
-//    continuousImprovisation = value;
-//  }
-
-/**
- * Returns the length of trading
- *
- * @return
- */
-public int getTradeLength()
-  {
-   return passiveTradingWindow.getTradingQuantum();
-  //    int tradeLength = autoImprovisation.getImproInterval() / 2;
-   // return tradeLength;
-  }
-
-///**
-// * Returns true if trading
-// *
-// * @return
-// */
-//public boolean getAutoImprovisation()
-//  {
-//    return !originalGeneration;
-//  }
-//
-///**
-// * Enable or disable auto improvisation. Disabled means that only the original
-// * style of improvisation is used, pressing a button to generate. Enabled means
-// * that improvisation may occur automatically with playback, trading in a manner
-// * specified in the menu.
-// *
-// * @param value
-// */
-//public void setAutoImprovisation(boolean value)
-//  {
-//    //originalGeneration = !value;
-//    autoImprovisation.setSelected(value);
-//    if( value )
-//      {
-//        //openLickGenerator();  //FIX.
-//        //lickgenFrame.toBack();
-//      }
-//  }
 
 public void setFrameSize(int value)
   {
@@ -26776,8 +26721,7 @@ public String bar(long slot)
 /**
  * Select which improvisation type to use.
  */
-private boolean originalGeneration = true;
-private Trading autoImprovisation = null;
+
 private long totalSlotsElapsed = 0;
 private int previousSynthSlot = 0;
 

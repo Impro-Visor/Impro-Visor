@@ -1536,7 +1536,7 @@ public MelodyPart fillMelody(int minPitch,
 
     MelodyPart melPart = new MelodyPart();
     
-    lengthOfTrade = notate.getTradeLength();
+    lengthOfTrade = passiveTradingWindow.getTradingQuantum();
 
    //Generates a rhythm with matched syncopation
     if(useSyncopation)
