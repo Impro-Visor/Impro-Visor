@@ -20,6 +20,8 @@
 
 package imp.data;
 
+import imp.style.SectionInfo;
+import imp.style.Style;
 import imp.midi.MidiSynth;
 import imp.midi.MidiSequence;
 import imp.Constants;

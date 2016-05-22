@@ -22,7 +22,7 @@ package imp.midi;
 
 import imp.Constants;
 import imp.data.Score;
-import imp.data.Style;
+import imp.style.Style;
 import imp.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;

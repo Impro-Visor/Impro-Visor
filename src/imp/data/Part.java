@@ -20,6 +20,9 @@
 
 package imp.data;
 
+import imp.style.SectionInfo;
+import imp.style.SectionRecord;
+import imp.style.Style;
 import imp.Constants;
 import static imp.data.Part.isRest;
 import imp.util.ErrorLog;

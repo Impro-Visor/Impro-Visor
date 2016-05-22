@@ -20,6 +20,7 @@
 
 package imp.roadmap;
 
+import imp.style.Style;
 import imp.data.advice.Advisor;
 import imp.ImproVisor;
 import imp.roadmap.brickdictionary.Block;

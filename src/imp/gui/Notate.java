@@ -20,18 +20,22 @@
  */
 package imp.gui;
 
+import imp.style.SectionInfo;
+import imp.style.SectionRecord;
+import imp.style.Style;
+import imp.style.StyleEditor;
 import imp.midi.MidiDeviceChooser;
 import imp.midi.MidiLatencyMeasurementTool;
 import imp.midi.MidiStepEntryActionHandler;
 import imp.midi.MidiRecorder;
 import imp.midi.MidiImportFrame;
-import imp.data.stylePatterns.DrumRuleDisplay;
-import imp.data.stylePatterns.DrumPatternDisplay;
+import imp.style.stylePatterns.DrumRuleDisplay;
+import imp.style.stylePatterns.DrumPatternDisplay;
 import imp.midi.MidiManager;
 import imp.midi.MidiPlayListener;
 import imp.midi.MidiSynth;
 import imp.midi.MidiImport;
-import imp.data.stylePatterns.ChordPattern;
+import imp.style.stylePatterns.ChordPattern;
 import imp.trading.PassiveTradingWindow;
 import imp.trading.ActiveTradingDialog;
 import imp.data.advice.*;
@@ -11619,7 +11623,7 @@ public void enableRecording()
     midiRecorder.start(score.getCountInOffset());
   }
 
-void stopPlaying()
+public void stopPlaying()
   {
     stopPlaying(" unlabeled");
   }

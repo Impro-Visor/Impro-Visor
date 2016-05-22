@@ -19,6 +19,8 @@
  */
 package imp.com;
 
+import imp.style.SectionInfo;
+import imp.style.Style;
 import imp.midi.MidiSynth;
 import imp.Constants;
 import static imp.Constants.ENDSCORE;

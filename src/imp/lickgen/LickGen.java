@@ -20,7 +20,7 @@
 
 package imp.lickgen;
 
-import imp.data.stylePatterns.BassPatternElement;
+import imp.style.stylePatterns.BassPatternElement;
 import imp.data.advice.Advisor;
 import imp.Constants;
 import imp.ImproVisor;

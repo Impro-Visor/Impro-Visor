@@ -20,6 +20,9 @@
 
 package imp.gui;
 
+import imp.style.SectionRecord;
+import imp.style.SectionInfo;
+import imp.style.Style;
 import imp.Constants;
 import static imp.Constants.ExtractMode.BRICK;
 import static imp.Constants.ExtractMode.QUOTE;

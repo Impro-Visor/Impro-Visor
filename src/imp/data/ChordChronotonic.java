@@ -21,7 +21,7 @@
 package imp.data;
 
 import imp.midi.MIDIBeast;
-import imp.data.stylePatterns.ChordPatternExtractor;
+import imp.style.stylePatterns.ChordPatternExtractor;
 import java.util.ArrayList;
 import java.util.Arrays;
 

@@ -20,12 +20,14 @@
 
 package imp.gui;
 
+import imp.style.Style;
+import imp.style.StyleEditor;
 import imp.midi.MidiChannelInfo;
 import imp.midi.MIDIBeast;
-import imp.data.stylePatterns.RepresentativeChordRules;
-import imp.data.stylePatterns.RepresentativeDrumRules;
-import imp.data.stylePatterns.RepresentativeBassRules;
-import imp.data.stylePatterns.RepPattern;
+import imp.style.stylePatterns.RepresentativeChordRules;
+import imp.style.stylePatterns.RepresentativeDrumRules;
+import imp.style.stylePatterns.RepresentativeBassRules;
+import imp.style.stylePatterns.RepPattern;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.com.PlayScoreCommand;

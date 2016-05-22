@@ -22,6 +22,7 @@
 
 package imp.util;
 
+import imp.style.Style;
 import imp.midi.MidiPlayListener;
 import imp.midi.MidiSynth;
 import imp.Constants;

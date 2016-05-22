@@ -20,6 +20,7 @@
 
 package imp.data;
 
+import imp.style.Style;
 import imp.data.advice.Advisor;
 import imp.Constants;
 import imp.Constants.StaveType;

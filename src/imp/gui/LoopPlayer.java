@@ -21,7 +21,7 @@
 
 package imp.gui;
 
-import imp.data.stylePatterns.Playable;
+import imp.style.stylePatterns.Playable;
 
 /**
  *

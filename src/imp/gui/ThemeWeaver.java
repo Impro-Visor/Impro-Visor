@@ -19,7 +19,7 @@
  */
 package imp.gui;
 
-import imp.data.stylePatterns.PatternDisplay;
+import imp.style.stylePatterns.PatternDisplay;
 import static imp.Constants.BEAT;
 import static imp.Constants.OCTAVE;
 import imp.com.CommandManager;

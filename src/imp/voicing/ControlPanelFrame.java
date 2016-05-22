@@ -10,7 +10,7 @@ import imp.data.advice.Advisor;
 import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.gui.RangeChooser;
-import imp.gui.StyleEditor;
+import imp.style.StyleEditor;
 import imp.gui.WindowRegistry;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
