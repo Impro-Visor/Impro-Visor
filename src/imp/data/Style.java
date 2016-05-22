@@ -1124,10 +1124,9 @@ private Polylist makeChordline(
         
         ChordPattern pattern = getPattern(chordPatterns, duration);
 
-    //System.out.println("\nmakeChordLine on " + currentChord + " using ChordPattern " + pattern);
         ChordPatternVoiced c;
         
-        if( pattern == null || constantBass )
+        if( pattern == null  || constantBass )
           {
             // if there's no pattern, and we haven't used a previous
             // pattern on this currentChord, then just play the currentChord for the 
@@ -1323,7 +1322,10 @@ static Polylist filterOutVolumes(Polylist L)
         int octave = -1; //See NoteSymbol for explanation
         NoteSymbol bassNote = new NoteSymbol(bassPitchClass, octave, duration);
         //System.out.println("bassNote = " + bassNote);
-        bassline.add(bassNote);
+        if( constantBass )
+          {
+            bassline.add(bassNote);
+          }
         break;
         }
 
@@ -1440,7 +1442,6 @@ public long render(MidiSequence seq,
         throws InvalidMidiDataException
   {
     boolean hasStyle = !noStyle();
-
     // to trace sequencing info:
     //System.out.println("Sequencing Style: " + this + " startIndex = " + startIndex
     // + " endIndex = " + endIndex + " endLimitIndex = " + endLimitIndex + " useDrums = " + useDrums + " hasStyle = " + hasStyle);
