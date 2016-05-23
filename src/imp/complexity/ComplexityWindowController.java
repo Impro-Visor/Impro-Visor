@@ -1,7 +1,7 @@
 /*
  *
  */
-package imp.gui;
+package imp.complexity;
 
 import java.awt.event.ItemEvent;
 import java.io.*;

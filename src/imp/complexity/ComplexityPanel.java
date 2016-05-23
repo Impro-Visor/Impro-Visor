@@ -2,8 +2,9 @@
  * 
  */
 
-package imp.gui;
+package imp.complexity;
 
+import imp.gui.BarDimensions;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
