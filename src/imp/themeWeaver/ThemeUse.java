@@ -22,7 +22,7 @@
  *
  * @author Nava Dallal, Amelia Sheppard
  */
-package imp.gui;
+package imp.themeWeaver;
 
 import imp.data.MelodyPart;
 

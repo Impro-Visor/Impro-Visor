@@ -20,7 +20,7 @@
 
 package imp.com;
 
-import imp.gui.ThemeWeaver;
+import imp.themeWeaver.ThemeWeaver;
 import java.io.*;
 
 /**

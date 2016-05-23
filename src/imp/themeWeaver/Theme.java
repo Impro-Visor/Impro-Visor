@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.gui;
+package imp.themeWeaver;
 import imp.data.MelodyPart;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

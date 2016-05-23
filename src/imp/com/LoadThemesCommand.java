@@ -21,7 +21,7 @@
 package imp.com;
 
 import imp.gui.Notate;
-import imp.gui.ThemeWeaver;
+import imp.themeWeaver.ThemeWeaver;
 import java.io.File;
 import java.io.FileInputStream;
 import javax.swing.JFrame;

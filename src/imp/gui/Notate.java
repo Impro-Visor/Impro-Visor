@@ -20,6 +20,7 @@
  */
 package imp.gui;
 
+import imp.themeWeaver.ThemeWeaver;
 import imp.style.SectionInfo;
 import imp.style.SectionRecord;
 import imp.style.Style;
@@ -14603,7 +14604,7 @@ public int getCurrentSelectionEnd()
 /**
  * Set the current Selection start.
  */
-void setCurrentSelectionStart(int index)
+public void setCurrentSelectionStart(int index)
   {
     getCurrentStave().setSelectionStart(index);
 
@@ -15036,7 +15037,7 @@ public static int intFromString(String string) throws NumberFormatException
  * Get integer value from string, with range check
  *
  */
-static int intFromStringInRange(String string, int low, int high, int error)
+public static int intFromStringInRange(String string, int low, int high, int error)
   {
     try
       {
@@ -23606,7 +23607,7 @@ private boolean isDotted = false;
             || grammarDivideRadio.isSelected();
     }
     
-    void delAllMelody()
+    public void delAllMelody()
     {
         Trace.log(2, "delete all melody");
 

@@ -28,7 +28,7 @@ import imp.midi.MidiSynth;
 import imp.data.Score;
 import imp.gui.Notate;
 import imp.style.StyleEditor;
-import imp.gui.ThemeWeaver;
+import imp.themeWeaver.ThemeWeaver;
 import java.awt.Color;
 
 /**
