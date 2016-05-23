@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College XML export code
+ * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College XML export code
  * is also Copyright (C) 2009-2010 Nicolas Froment (aka Lasconic).
  *
  * Impro-Visor is free software; you can redistribute it and/or modifyc it under
@@ -47,12 +47,8 @@ import imp.lickgen.transformations.Transform;
 import imp.util.Preferences;
 import imp.util.TransformFilter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 import polya.Polylist;
 
@@ -125,7 +121,8 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         directionButtons = new javax.swing.ButtonGroup();
@@ -196,8 +193,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         numberOfLinesButtons.add(oneLine);
         oneLine.setSelected(true);
         oneLine.setText("One Line");
-        oneLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        oneLine.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 oneLineActionPerformed(evt);
             }
         });
@@ -208,8 +207,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
 
         numberOfLinesButtons.add(twoLines);
         twoLines.setText("Two Lines");
-        twoLines.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        twoLines.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 twoLinesActionPerformed(evt);
             }
         });
@@ -269,8 +270,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         buttonPanel.setLayout(new java.awt.GridBagLayout());
 
         generateLine.setText("Generate Guide Tone Line");
-        generateLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        generateLine.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 generateLineActionPerformed(evt);
             }
         });
@@ -287,16 +290,20 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         transformPanel.setLayout(new java.awt.GridBagLayout());
 
         transformLine.setText("Generate Solo Over Line");
-        transformLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        transformLine.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 transformLineActionPerformed(evt);
             }
         });
         transformPanel.add(transformLine, new java.awt.GridBagConstraints());
 
         divideLine.setText("Divide Line");
-        divideLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        divideLine.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 divideLineActionPerformed(evt);
             }
         });
@@ -337,8 +344,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         maxDurationButtons.add(half);
         half.setSelected(true);
         half.setText("Half");
-        half.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        half.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 halfActionPerformed(evt);
             }
         });
@@ -367,8 +376,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         playBtn.setMaximumSize(new java.awt.Dimension(30, 30));
         playBtn.setMinimumSize(new java.awt.Dimension(30, 30));
         playBtn.setPreferredSize(new java.awt.Dimension(30, 30));
-        playBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        playBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 playBtnActionPerformed(evt);
             }
         });
@@ -381,8 +392,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         pauseBtn.setMaximumSize(new java.awt.Dimension(30, 30));
         pauseBtn.setMinimumSize(new java.awt.Dimension(30, 30));
         pauseBtn.setPreferredSize(new java.awt.Dimension(30, 30));
-        pauseBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        pauseBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 pauseBtnActionPerformed(evt);
             }
         });
@@ -395,8 +408,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         stopBtn.setMaximumSize(new java.awt.Dimension(30, 30));
         stopBtn.setMinimumSize(new java.awt.Dimension(30, 30));
         stopBtn.setPreferredSize(new java.awt.Dimension(30, 30));
-        stopBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 stopBtnActionPerformed(evt);
             }
         });
@@ -411,8 +426,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
 
         allowColorBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         allowColorBox.setText("Allow Color Tones");
-        allowColorBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        allowColorBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 allowColorBoxActionPerformed(evt);
             }
         });
@@ -426,8 +443,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         rangeChooserPanel.setLayout(new java.awt.GridBagLayout());
 
         rangeChooserButton.setText("Choose Range");
-        rangeChooserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        rangeChooserButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 rangeChooserButtonActionPerformed(evt);
             }
         });
@@ -443,8 +462,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         revertLine.setText("Restore Guide Tone Line");
         revertLine.setToolTipText("");
         revertLine.setEnabled(false);
-        revertLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        revertLine.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 revertLineActionPerformed(evt);
             }
         });
@@ -452,8 +473,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
 
         reapplyTransform.setText("Try Again");
         reapplyTransform.setEnabled(false);
-        reapplyTransform.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        reapplyTransform.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 reapplyTransformActionPerformed(evt);
             }
         });
@@ -572,8 +595,10 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
         getContentPane().add(jLabel1, gridBagConstraints);
 
         populateMusicianList();
-        musicianChooser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        musicianChooser.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 musicianChooserActionPerformed(evt);
             }
         });

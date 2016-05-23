@@ -20,7 +20,7 @@
 
 package imp.trading;
 
-import imp.gui.LickgenFrame;
+import imp.lickgen.LickgenFrame;
 import imp.gui.Notate;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;

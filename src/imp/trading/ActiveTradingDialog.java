@@ -40,6 +40,7 @@ import javax.swing.JRadioButtonMenuItem;
 public class ActiveTradingDialog extends javax.swing.JDialog implements TradeListener, ActionListener {
  
     private final ActiveTrading activeTrading;
+    private boolean tradingNow = false;
     private boolean userFirst = true;
     private boolean isUserInputError = false;
     private final Integer initialTradeLength = 4;
@@ -106,7 +107,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         playbackControls = new javax.swing.JPanel();
         countToggle = new javax.swing.JCheckBox();
         loopToggle = new javax.swing.JCheckBox();
-        startTradingButton = new javax.swing.JButton();
+        startOrStopTradingButton = new javax.swing.JButton();
         tradeLengthPanel = new javax.swing.JPanel();
         tradeLengthSpinner = new javax.swing.JSpinner();
         mainTradeMenuBar = new javax.swing.JMenuBar();
@@ -433,18 +434,18 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         playbackControls.add(loopToggle, gridBagConstraints);
 
-        startTradingButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
-        startTradingButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        startTradingButton.setLabel("Start Trading");
-        startTradingButton.setMaximumSize(new java.awt.Dimension(140, 28));
-        startTradingButton.setMinimumSize(new java.awt.Dimension(140, 28));
-        startTradingButton.setPreferredSize(new java.awt.Dimension(140, 28));
-        startTradingButton.addActionListener(new java.awt.event.ActionListener()
+        startOrStopTradingButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
+        startOrStopTradingButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        startOrStopTradingButton.setLabel("Start Trading");
+        startOrStopTradingButton.setMaximumSize(new java.awt.Dimension(140, 28));
+        startOrStopTradingButton.setMinimumSize(new java.awt.Dimension(140, 28));
+        startOrStopTradingButton.setPreferredSize(new java.awt.Dimension(140, 28));
+        startOrStopTradingButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                startTradingButtonActionPerformed(evt);
+                startOrStopTradingButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -452,7 +453,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
-        playbackControls.add(startTradingButton, gridBagConstraints);
+        playbackControls.add(startOrStopTradingButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -597,9 +598,16 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         updateTempo();
     }//GEN-LAST:event_tempoSliderStateChanged
 
-    private void startTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTradingButtonActionPerformed
-        startTradingButtonPressed();
-    }//GEN-LAST:event_startTradingButtonActionPerformed
+    private void startOrStopTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startOrStopTradingButtonActionPerformed
+        if( tradingNow )
+          {
+            stopTrading();
+          }
+        else
+          {
+            startTrading();
+          }
+    }//GEN-LAST:event_startOrStopTradingButtonActionPerformed
 
     private void loopToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToggleActionPerformed
         updateLoop();
@@ -686,13 +694,15 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
          if (!isUserInputError) {
             updateMusician();
             updateTradeMode();
-            activeTrading.startOrStop(); 
+            activeTrading.startTrading(); 
          }
+         tradingNow = true;
     }
     
     private void stopTrading()
     {
-        activeTrading.startOrStop(); 
+        activeTrading.stopTrading(); 
+        tradingNow = false;
     }
     
     private void updateProcessTimeText() {
@@ -806,13 +816,13 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     }
 
     public void tradingStarted() {
-        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
-        startTradingButton.setText("Stop Trading");
+        startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
+        startOrStopTradingButton.setText("Stop Trading");
     }
 
     public void tradingStopped() {
-        startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif")));
-        startTradingButton.setText("Start Trading");
+        startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif")));
+        startOrStopTradingButton.setText("Start Trading");
     }
 
     public void trackPlay(ActionEvent e) {
@@ -841,7 +851,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JLabel modeStatus;
     private javax.swing.JPanel playbackControls;
     private javax.swing.JTextField processTimeSelector;
-    private javax.swing.JButton startTradingButton;
+    private javax.swing.JButton startOrStopTradingButton;
     private javax.swing.JButton switchToPassiveTradingButton;
     private javax.swing.JLabel tempoLabel;
     private javax.swing.JPanel tempoPanel;

@@ -20,6 +20,7 @@
  */
 package imp.gui;
 
+import imp.neuralnet.CriticDialog;
 import imp.transform.TransformFrame;
 import imp.themeWeaver.ThemeWeaver;
 import imp.style.SectionInfo;
@@ -53,6 +54,7 @@ import imp.com.*;
 import imp.data.*;
 import imp.data.musicXML.ChordDescription;
 import imp.lickgen.LickGen;
+import imp.lickgen.LickgenFrame;
 import imp.neuralnet.*;
 import imp.roadmap.RoadMapFrame;
 import imp.util.*;
@@ -1257,7 +1259,7 @@ public boolean stepInputSelected()
     return stepInputBtn.isSelected();
   }
 
-public LickgenFrame getLickgenFrame()
+public imp.lickgen.LickgenFrame getLickgenFrame()
   {
     return lickgenFrame;
   }
@@ -14622,7 +14624,7 @@ public void setCurrentSelectionStart(int index)
  * Set the current Selection end.
  *
  */
-void setCurrentSelectionEnd(int index)
+public void setCurrentSelectionEnd(int index)
   {
     getCurrentStave().setSelectionEnd(index);
   }

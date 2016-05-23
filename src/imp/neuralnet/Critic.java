@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2013 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +32,8 @@ import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.data.Score;
 import imp.data.Unit;
-import imp.gui.LickgenFrame;
 import imp.gui.Notate;
+import imp.lickgen.LickgenFrame;
 import imp.util.Preferences;
 import imp.util.Trace;
 import java.io.BufferedReader;

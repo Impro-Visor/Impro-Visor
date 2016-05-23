@@ -12,7 +12,7 @@ import static imp.cluster.CreateGrammar.getRulesFromWriter;
 import static imp.cluster.CreateGrammar.processRule;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
-import imp.gui.LickgenFrame;
+import imp.lickgen.LickgenFrame;
 import imp.gui.Notate;
 import imp.gui.Stave;
 import imp.gui.StaveScrollPane;

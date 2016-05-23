@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -65,11 +65,11 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import polya.Tokenizer;
 import imp.data.Score;
-import imp.gui.LickgenFrame;
 import imp.gui.Notate;
 import imp.gui.RangeChooser;
 import imp.gui.WindowMenuItem;
 import imp.gui.WindowRegistry;
+import imp.lickgen.LickgenFrame;
 import javax.swing.table.DefaultTableCellRenderer;
 import polya.PolylistEnum;
 import java.util.Hashtable;
