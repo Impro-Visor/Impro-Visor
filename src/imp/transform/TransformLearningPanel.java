@@ -18,7 +18,7 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.gui;
+package imp.transform;
 
 import imp.Constants;
 import imp.com.PasteCommand;
@@ -28,6 +28,7 @@ import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.Part.PartIterator;
 import imp.data.PartList;
+import imp.gui.Notate;
 import imp.lickgen.LickGen;
 import imp.lickgen.transformations.Evaluate;
 import imp.lickgen.transformations.TransformLearning;
@@ -124,7 +125,8 @@ public class TransformLearningPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         shortcutPanel = new javax.swing.JPanel();
@@ -195,8 +197,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         shortcutPanel.add(shortcutLabel, gridBagConstraints);
 
         learnAllButton.setText("Learn All!");
-        learnAllButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        learnAllButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 learnAllButtonActionPerformed(evt);
             }
         });
@@ -252,8 +256,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         saveOriginalButton.setToolTipText("Save the currently selected melody");
         saveOriginalButton.setMinimumSize(new java.awt.Dimension(156, 25));
         saveOriginalButton.setPreferredSize(new java.awt.Dimension(156, 25));
-        saveOriginalButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        saveOriginalButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 saveOriginalButtonActionPerformed(evt);
             }
         });
@@ -263,8 +269,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         saveAllButton.setText("Save All Choruses");
         saveAllButton.setToolTipText("Save all open choruses in the leadsheet");
-        saveAllButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        saveAllButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 saveAllButtonActionPerformed(evt);
             }
         });
@@ -286,8 +294,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         replaceWithOriginalButton.setEnabled(false);
         replaceWithOriginalButton.setMinimumSize(new java.awt.Dimension(340, 25));
         replaceWithOriginalButton.setPreferredSize(new java.awt.Dimension(340, 25));
-        replaceWithOriginalButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        replaceWithOriginalButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 replaceWithOriginalButtonActionPerformed(evt);
             }
         });
@@ -300,8 +310,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         replaceAllWithOriginalButton.setText("Replace All with Original");
         replaceAllWithOriginalButton.setToolTipText("Replace all choruses with their original");
         replaceAllWithOriginalButton.setEnabled(false);
-        replaceAllWithOriginalButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        replaceAllWithOriginalButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 replaceAllWithOriginalButtonActionPerformed(evt);
             }
         });
@@ -363,8 +375,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         allowRepeatsCheckBox.setSelected(true);
         allowRepeatsCheckBox.setText("Allow Repeat Pitches");
         allowRepeatsCheckBox.setToolTipText("Whether ajacent notes with the same pitch in the flattened melody will be combined or not");
-        allowRepeatsCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        allowRepeatsCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 allowRepeatsCheckBoxActionPerformed(evt);
             }
         });
@@ -404,8 +418,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         flattenButton.setEnabled(false);
         flattenButton.setMinimumSize(new java.awt.Dimension(171, 25));
         flattenButton.setPreferredSize(new java.awt.Dimension(171, 25));
-        flattenButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        flattenButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 flattenButtonActionPerformed(evt);
             }
         });
@@ -418,8 +434,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         flattenAllButton.setText("Flatten All Choruses");
         flattenAllButton.setEnabled(false);
-        flattenAllButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        flattenAllButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 flattenAllButtonActionPerformed(evt);
             }
         });
@@ -489,8 +507,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         createTransformButton.setMaximumSize(new java.awt.Dimension(200, 25));
         createTransformButton.setMinimumSize(new java.awt.Dimension(200, 25));
         createTransformButton.setPreferredSize(new java.awt.Dimension(200, 25));
-        createTransformButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        createTransformButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 createTransformButtonActionPerformed(evt);
             }
         });
@@ -510,8 +530,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         createAllTransform.setText("Generate All Transform");
         createAllTransform.setEnabled(false);
-        createAllTransform.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        createAllTransform.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 createAllTransformActionPerformed(evt);
             }
         });
@@ -543,8 +565,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         subFlatFromOrigButton.setEnabled(false);
         subFlatFromOrigButton.setMinimumSize(new java.awt.Dimension(340, 25));
         subFlatFromOrigButton.setPreferredSize(new java.awt.Dimension(340, 25));
-        subFlatFromOrigButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        subFlatFromOrigButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 subFlatFromOrigButtonActionPerformed(evt);
             }
         });
@@ -556,8 +580,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
 
         subAllFlatFromOriginal.setText("Subtract Flattening from All");
         subAllFlatFromOriginal.setEnabled(false);
-        subAllFlatFromOriginal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        subAllFlatFromOriginal.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 subAllFlatFromOriginalActionPerformed(evt);
             }
         });
@@ -602,8 +628,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         setTransformButton.setEnabled(false);
         setTransformButton.setMinimumSize(new java.awt.Dimension(340, 25));
         setTransformButton.setPreferredSize(new java.awt.Dimension(340, 25));
-        setTransformButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        setTransformButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 setTransformButtonActionPerformed(evt);
             }
         });
@@ -636,8 +664,10 @@ public class TransformLearningPanel extends javax.swing.JPanel {
         showTransformButton.setEnabled(false);
         showTransformButton.setMinimumSize(new java.awt.Dimension(340, 25));
         showTransformButton.setPreferredSize(new java.awt.Dimension(340, 25));
-        showTransformButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        showTransformButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 showTransformButtonActionPerformed(evt);
             }
         });
@@ -933,7 +963,7 @@ public class TransformLearningPanel extends javax.swing.JPanel {
     public void showTransform()
     {
         TransformDialogue transEditor = 
-                new TransformDialogue(notate.lickgenFrame, transform);
+                new TransformDialogue(notate.getLickgenFrame(), transform);
         
         transEditor.setLocationRelativeTo(this);
         transEditor.toFront();

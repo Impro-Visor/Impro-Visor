@@ -25,7 +25,7 @@ import imp.Constants;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.data.Note;
-import imp.gui.TransformPanel;
+import imp.transform.TransformPanel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import polya.*;

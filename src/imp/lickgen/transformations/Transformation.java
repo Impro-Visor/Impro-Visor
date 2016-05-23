@@ -27,7 +27,7 @@ import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.data.Unit;
-import imp.gui.TransformPanel;
+import imp.transform.TransformPanel;
 import imp.util.ErrorLog;
 import polya.*;
 import java.util.*;

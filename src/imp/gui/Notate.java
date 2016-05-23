@@ -20,6 +20,7 @@
  */
 package imp.gui;
 
+import imp.transform.TransformFrame;
 import imp.themeWeaver.ThemeWeaver;
 import imp.style.SectionInfo;
 import imp.style.SectionRecord;
@@ -1260,6 +1261,11 @@ public LickgenFrame getLickgenFrame()
   {
     return lickgenFrame;
   }
+
+public HelpDialog getHelpDialog()
+{
+    return helpDialog;
+}
 
 public Critic getCritic()
   {

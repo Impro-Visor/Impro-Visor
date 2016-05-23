@@ -19,6 +19,7 @@
  */
 package imp.gui;
 
+import imp.transform.TransformPanel;
 import imp.ImproVisor;
 import imp.com.CommandManager;
 import imp.com.RectifyPitchesCommand;

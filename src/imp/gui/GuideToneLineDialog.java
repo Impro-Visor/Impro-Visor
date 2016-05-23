@@ -20,6 +20,7 @@
  */
 package imp.gui;
 
+import imp.transform.TransformPanel;
 import imp.Constants;
 import static imp.Constants.A2;
 import static imp.Constants.C1;
