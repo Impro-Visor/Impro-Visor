@@ -1771,7 +1771,7 @@ private void addNote(Note note,
                      String reason, 
                      Object item)
   {
-    //System.out.println("addNote " + note);
+    //System.out.println("addNote " + note + " avoidRepeats = " + avoidRepeats);
     int slotsInserted = note.getRhythmValue();
     position += slotsInserted;
     if( note.isRest() )

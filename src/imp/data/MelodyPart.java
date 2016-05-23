@@ -2468,4 +2468,59 @@ public void setAutoFill(boolean fill)
         return qMelody;
     }
     
+    /**
+     * removeRepeatedNotes() returns a new melody based on the current one,
+     * except that repeated notes are merged together into single notes.
+     * @return 
+     */
+    public MelodyPart removeRepeatedNotes()
+    {
+        MelodyPart result = new MelodyPart();
+        PartIterator it = iterator();
+        Note previous = null;
+        int duration = 0;
+        while( it.hasNext() )
+          {
+            Note current = (Note) it.next();
+            if( previous == null )
+              {
+                /* initialize */
+                previous = current.copy();
+                duration = current.getRhythmValue();
+              }
+            else 
+              {
+                /* possibly accumulate */
+                boolean currentRest = current.isRest();
+                boolean previousRest = previous.isRest();
+                if( currentRest && previousRest )
+                  {
+                    duration += current.getRhythmValue();
+                  }
+                else if( currentRest && !previousRest 
+                      || !currentRest && previousRest
+                      || !currentRest && !previousRest && current.getPitch() != previous.getPitch() )
+                  {
+                  /* end accumulation and start a new one */
+                  previous.setRhythmValue(duration);
+                  result.addNote(previous);
+                  previous = current.copy();
+                  duration = current.getRhythmValue();                    
+                  }
+                else
+                  {
+                  /* add to the accumulation */
+                  duration += current.getRhythmValue();
+                  previous = current.copy();
+                  }
+                }
+          }
+        if( previous != null )
+          {
+            previous.setRhythmValue(duration);
+            result.addNote(previous);
+          }
+        //System.out.println("old melody = " + this + "\nnew melody = " + result);
+        return result;
+    }
 }

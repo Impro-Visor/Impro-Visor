@@ -22136,7 +22136,7 @@ while( useCritic )
  */
 public void rectifySelection(Stave stave, int selectionStart, int selectionEnd)
   {
-    ///System.out.println("rectifying from  " + selectionStart + " to " + selectionEnd);
+    //System.out.println("rectifying from  " + selectionStart + " to " + selectionEnd);
     stave.rectifySelection(selectionStart, selectionEnd, false, false);
   }
 

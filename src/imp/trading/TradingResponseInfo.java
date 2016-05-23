@@ -519,8 +519,12 @@ public class TradingResponseInfo {
     //STEP 5 - retreive the response
     
     //retreive response
+    // 5/23/2016 Bob Keller added removeRepeatedNotes(), which is intended
+    // to make the result sound more realistic. In the future, this
+    // can be modified, to remove notes selectively according to
+    // certain restrictions.
     public MelodyPart getResponse(){
-        return response;
+        return response.removeRepeatedNotes();
     }
     
     //ALL THE STEPS TOGETHER
