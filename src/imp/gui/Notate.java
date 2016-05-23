@@ -20,6 +20,8 @@
  */
 package imp.gui;
 
+import imp.fractal.FractalFrame;
+import imp.guidetone.GuideToneLineDialog;
 import imp.neuralnet.CriticDialog;
 import imp.transform.TransformFrame;
 import imp.themeWeaver.ThemeWeaver;

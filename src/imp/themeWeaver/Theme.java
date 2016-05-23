@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2014-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,9 @@ import imp.data.MelodyPart;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import static imp.Constants.BEAT;
-import static imp.Constants.LCROOT;
-import imp.data.Note;
 import imp.data.Part;
 import imp.data.Unit;
 import polya.Polylist;
-import java.lang.Long;
 import polya.PolylistEnum;
 
 /**
@@ -42,7 +39,6 @@ public class Theme {
  String name;
  
  int ThemeLength;
- 
  
  int serial;
  

@@ -23,7 +23,7 @@ import imp.Constants;
 import static imp.Constants.REST;
 import imp.data.Chord;
 import imp.data.ChordPart;
-import imp.data.GuideLineGenerator;
+import imp.guidetone.GuideLineGenerator;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.NoteSymbol;

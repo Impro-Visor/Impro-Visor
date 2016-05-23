@@ -17,14 +17,18 @@
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package imp.gui;
+package imp.fractal;
 
+import imp.guidetone.GuideToneLineDialog;
 import imp.transform.TransformPanel;
 import imp.ImproVisor;
 import imp.com.CommandManager;
 import imp.com.RectifyPitchesCommand;
-import imp.data.Fractal;
+import imp.fractal.Fractal;
 import imp.data.MelodyPart;
+import imp.gui.Notate;
+import imp.gui.WindowMenuItem;
+import imp.gui.WindowRegistry;
 import imp.util.ErrorLog;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,7 +116,8 @@ public class FractalFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         probabilitiesPanel = new javax.swing.JPanel();
@@ -167,12 +172,12 @@ public class FractalFrame extends javax.swing.JFrame {
         windowMenuSeparator = new javax.swing.JPopupMenu.Separator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(700, 400));
         setMinimumSize(new java.awt.Dimension(600, 350));
-        setPreferredSize(new java.awt.Dimension(650, 375));
         setSize(new java.awt.Dimension(650, 375));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosed(evt);
             }
         });
@@ -295,8 +300,10 @@ public class FractalFrame extends javax.swing.JFrame {
 
         tripleText.setMinimumSize(new java.awt.Dimension(50, 28));
         tripleText.setPreferredSize(new java.awt.Dimension(50, 28));
-        tripleText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tripleText.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tripleTextActionPerformed(evt);
             }
         });
@@ -434,7 +441,7 @@ public class FractalFrame extends javax.swing.JFrame {
 
         dividingPanel.setLayout(new java.awt.GridBagLayout());
 
-        numDivisionsSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(0), null, Integer.valueOf(1)));
+        numDivisionsSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, null, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -442,16 +449,20 @@ public class FractalFrame extends javax.swing.JFrame {
         dividingPanel.add(numDivisionsSpinner, gridBagConstraints);
 
         multDivideButton.setText("Divide Multiple Times");
-        multDivideButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        multDivideButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 multDivideButtonActionPerformed(evt);
             }
         });
         dividingPanel.add(multDivideButton, new java.awt.GridBagConstraints());
 
         singleDivideButton.setText("Divide One Time");
-        singleDivideButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        singleDivideButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 singleDivideButtonActionPerformed(evt);
             }
         });
@@ -467,16 +478,20 @@ public class FractalFrame extends javax.swing.JFrame {
         fileMenu.setText("File");
 
         openFileMI.setText("Open Fractal File");
-        openFileMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        openFileMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 openFileMIActionPerformed(evt);
             }
         });
         fileMenu.add(openFileMI);
 
         saveFileMI.setText("Save Fractal File");
-        saveFileMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        saveFileMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 saveFileMIActionPerformed(evt);
             }
         });
@@ -485,27 +500,35 @@ public class FractalFrame extends javax.swing.JFrame {
         menuBar.add(fileMenu);
 
         windowMenu.setText("Window");
-        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener()
+        {
+            public void menuSelected(javax.swing.event.MenuEvent evt)
+            {
                 windowMenuMenuSelected(evt);
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt)
+            {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt)
+            {
             }
         });
 
         closeWindowMI.setText("Close Window");
-        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 closeWindowMIActionPerformed(evt);
             }
         });
         windowMenu.add(closeWindowMI);
 
         cascadeMI.setText("Cascade Windows");
-        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cascadeMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cascadeMIActionPerformed(evt);
             }
         });

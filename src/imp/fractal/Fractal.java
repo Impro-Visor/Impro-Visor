@@ -17,11 +17,14 @@
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package imp.data;
+package imp.fractal;
 
 import imp.Constants;
 import imp.ImproVisor;
-import imp.gui.GuideToneLineDialog;
+import imp.data.Leadsheet;
+import imp.data.MelodyPart;
+import imp.data.Note;
+import imp.guidetone.GuideToneLineDialog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

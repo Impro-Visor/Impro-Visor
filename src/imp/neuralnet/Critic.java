@@ -22,7 +22,6 @@ package imp.neuralnet;
 
 import imp.ImproVisor;
 import imp.com.SetChordsCommand;
-import imp.data.BitVectorGenerator;
 import imp.data.Chord;
 import imp.data.ChordPart;
 import imp.data.ChordSymbol;

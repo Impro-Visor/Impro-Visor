@@ -18,9 +18,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.data;
+package imp.guidetone;
 
 import imp.Constants;
+import imp.data.Chord;
+import imp.data.ChordPart;
+import imp.data.MelodyPart;
+import imp.data.Note;
+import imp.data.NoteSymbol;
+import imp.data.PitchClass;
 import static imp.Constants.OCTAVE;
 import static imp.data.NoteSymbol.makeNoteSymbol;
 import java.util.ArrayList;

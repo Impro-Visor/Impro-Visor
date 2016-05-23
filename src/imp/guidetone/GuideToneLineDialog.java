@@ -18,7 +18,7 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-package imp.gui;
+package imp.guidetone;
 
 import imp.transform.TransformPanel;
 import imp.Constants;
@@ -32,17 +32,19 @@ import imp.com.PlayScoreCommand;
 import imp.com.RectifyPitchesCommand;
 import imp.data.Chord;
 import imp.data.ChordPart;
-import imp.data.Fractal;
-import imp.data.GuideLineGenerator;
+import imp.fractal.Fractal;
 import imp.data.MelodyInContext;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.NoteSymbol;
+import imp.gui.Notate;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import imp.gui.Notate.Mode;
+import imp.gui.RangeChooser;
+import imp.gui.Stave;
 import imp.lickgen.transformations.Transform;
 import imp.util.Preferences;
 import imp.util.TransformFilter;
@@ -185,7 +187,6 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 600));
-        setPreferredSize(new java.awt.Dimension(600, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         linesPanel.setLayout(new java.awt.GridBagLayout());
@@ -928,7 +929,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
     
     
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
-        notate.improvisationOn = false;
+        notate.improvisationOff();
         notate.playAll();
         
         updatePlayButtons();

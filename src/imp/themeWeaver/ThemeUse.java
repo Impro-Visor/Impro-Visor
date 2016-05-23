@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2014-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,6 +100,7 @@ public ThemeUse(MelodyPart melody)
       {
         return probBarLineShift;
       }
+@Override
 public String toString()
 {
     return "ThemeUse " + theme.melody + " " 
