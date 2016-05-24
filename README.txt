@@ -1,6 +1,6 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 8.0,
-from Prof. Bob Keller at Harvey Mudd College, August 2015.
+Welcome to Impro-Visor (Improvisation Advisor) Version 8.1,
+from Prof. Bob Keller at Harvey Mudd College, May 23, 2016.
 
 Release notes for this version may be found at the end.
 
@@ -16,8 +16,11 @@ Impro-Visor is free and runs on any platform that supports Java 1.7 or
 later, including:
  
     Windows (XP, 2000, Vista, 7, 8, 10)
-    MacOSX (Lion 10.7.3 or later needed for Java 1.7)
+    MacOSX
     Linux 
+
+Java virtual machines are currently bundled in the release for Windows and
+MacOSX, but not for Linux.
 
 The official information site for Impro-Visor is:
 
@@ -34,41 +37,56 @@ The official download site for Impro-Visor is sourceForge:
 Download the installer that is provided for your platform, 
 then launch the installer.
 
+The sources are currently maintained on github:
+
+    https://github.com/Impro-Visor/Impro-Visor
+
 Once the program is installed, there should be a launcher
 
     Impro-Visor
 
-that will run the program itself. The first time the program is run it
+that will run the program proper. The first time the program is run it
 will set up a folder in your user home for your personal version of
 various files.
-
-On Windows, you will need to adjust MIDI settings to get sound on your 
-particular system. The Impro-Visor MIDI control panel is identified by
-a black circular icon (representing a MIDI connector) on the right side 
-of the upper icon bar. Set it to one of:
-
-    Microsoft GS Wavetable SW Synth  
-
-    Microsoft MIDI Mapper
-or
-    some external synth.
-
 
 Alternatively, you may run by double-clicking the file: 
 
     improvisor.jar
 
-which is a Java archive.
+which is a Java archive. (Sometimes Windows will try to unpack this as an
+archive, in which case you would need to do java -jar improvisor.jar on
+the command line instead.)
 
-You cannot start the application by clicking on individual leadsheet
-files. They must be opened from within.
+You will need to adjust MIDI settings to get sound on your system.
+The Impro-Visor MIDI control panel is identified by a black circular icon 
+(representing a MIDI connector) on the right side of the upper icon bar. 
+Set the Output to one of:
+    Gervill
+    Microsoft GS Wavetable SW Synth  
+    Microsoft MIDI Mapper
+or
+    some external synthesizer.
+
+Gervill is built into Java by Oracle Corporation, but it is inferior to the
+earlier Java synthesizer. We recommend using one of the following instead:
+
+    On Windows: VirtualMidiSynth from
+        http://coolsoft.altervista.org/en/virtualmidisynth
+    You will need to download a sound font in .sf2 format. We recommend 
+    following the instructions at
+        https://musescore.org/en/handbook/soundfont 
+
+    On MacOSX or Windows: Kontakt5 Player from
+        https://www.native-instruments.com/en/products/komplete/samplers/
+            kontakt-5-player/free-download/
+    You will also need to download the free Factory Instruments.
+
+You can also use any external MIDI instrument, such as most digital pianos.
+
+
+You cannot start the application by clicking on individual leadsheet files.
+Instead these files must be opened from within Impro-Visor.
  
-You can download the latest version of Java free from:
-
-           http://www.java.com/download/
- 
-What you want is the JRE (Java Runtime Environment).
-
 
 I am pleased to acknowledge contributions from the following developers:
 
@@ -81,24 +99,65 @@ I am pleased to acknowledge contributions from the following developers:
  Caitlin Chen, Nicolas Chung, Anna Turner, Hayden Blauzvern, 
  Nate Tarrh, Brian Kwak, Kelly Lee, Willem Engen, Eric Chicot,
  Mark Heimann, Nava Dallal, Carli Lessard, Alex Putman, Becki Yukman
- Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst, Baunnee Martinez,
- Daniel Scanteianu, Amelia Sheppard, and David Siah
+ Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
+ Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, and David Siah
 
 We hope you enjoy using the program. 
 
 Sincerely,
 
-Bob Keller, Impro-Visor Project Director
+Robert M. (Bob) Keller, Impro-Visor Project Director
 Professor of Computer Science
 Harvey Mudd College
 Claremont, CA 91711
 
-keller@cs.hmc.edu
+Please send issues to: keller@cs.hmc.edu
 
 ===============================================================================
-Release notes for Impro-Visor 8.0
+Release notes for Impro-Visor 8.1
 
-To be added
+The newest feature is Active Improvisation, in which Impro-Visor will react
+to what the user plays on a MIDI instrument, such as a keyboard. Still 
+present is Passive Improvisation, which was formerly available. Only now 
+there are some new forms of passive improvisation:
+
+    Division: Which sub-divides the interval between successive notes of
+    a generated line, in some cases multiple times (as set by the Division 
+    control panel).
+
+    One way to get a line for Division is to use Guide Tones, and there is
+    now a facility for generating them.
+
+    Guide Tone and Transform: Which applies a transform from a 
+    Transformational Grammar to a guide tone line.
+
+    Interval Learning: which generates based on a Markov Chain derived from
+    statistics taken from a solo.
+
+    Theme Weaving: which reuses one or more themes specified by the user
+    among lines generated by a Grammar.
+
+There is a new Fluid Voicing Editor for generating piano-oriented chord 
+voicings based on parameters settable by the user.
+
+There is now a range filter for midi input, so that, for example one could
+play the left-hand on a piano and have only the right-hand notes entered
+(assuming they are in the specified range).
+
+Starting note can be displayed in the roadmap if melody is present in the
+leadsheet. Also styles can be displayed on the roadmap (in case a tune
+has multiple styles).
+
+Bugs fixed include:
+
+    Certain types of bricks no longer get mangled in the roadmap preview.
+
+    Voicing keyboard no longer fails to display certain voicings during
+    playback.
+
+The number of widgets in the main window has been reduced for a simplified
+interface. The functionality of removed widgets is available through other
+menus, such as the View menu.
 
 ===============================================================================
 Release notes for Impro-Visor 7.0

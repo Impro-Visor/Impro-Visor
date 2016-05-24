@@ -2080,17 +2080,19 @@ public Critic getCritic()
         utilitiesMenu = new javax.swing.JMenu();
         stepKeyboardMI = new javax.swing.JMenuItem();
         fluidVoicings = new javax.swing.JMenuItem();
+        voicingTestMI = new javax.swing.JMenuItem();
+        pianoKeyboardMI = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        openLeadsheetEditorMI = new javax.swing.JMenuItem();
+        styleGenerator1 = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         fractalMI = new javax.swing.JMenuItem();
         guideToneLine = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
         intervalLearningMI = new javax.swing.JMenuItem();
-        openLeadsheetEditorMI = new javax.swing.JMenuItem();
-        styleGenerator1 = new javax.swing.JMenuItem();
         soloGeneratorMI = new javax.swing.JMenuItem();
         customSoloGeneratorMI = new javax.swing.JMenuItem();
         transformMI = new javax.swing.JMenuItem();
-        voicingTestMI = new javax.swing.JMenuItem();
-        pianoKeyboardMI = new javax.swing.JMenuItem();
         improvMenu = new javax.swing.JMenu();
         passiveTradingMI = new javax.swing.JMenuItem();
         tradingWindow = new javax.swing.JMenuItem();
@@ -9674,7 +9676,7 @@ public Critic getCritic()
         });
         utilitiesMenu.add(stepKeyboardMI);
 
-        fluidVoicings.setText("Fluid Voicings");
+        fluidVoicings.setText("Fluid Voicing Editor");
         fluidVoicings.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9684,7 +9686,62 @@ public Critic getCritic()
         });
         utilitiesMenu.add(fluidVoicings);
 
-        fractalMI.setText("Fractal Improvisation");
+        voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        voicingTestMI.setMnemonic('v');
+        voicingTestMI.setText("Voicing Editor");
+        voicingTestMI.setToolTipText("Editor for chord voicings");
+        voicingTestMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                voicingTestMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(voicingTestMI);
+
+        pianoKeyboardMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
+        pianoKeyboardMI.setMnemonic('K');
+        pianoKeyboardMI.setText("Voicing Keyboard");
+        pianoKeyboardMI.setToolTipText("Keyboard for viewing and creating voicings");
+        pianoKeyboardMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                pianoKeyboardMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(pianoKeyboardMI);
+        utilitiesMenu.add(jSeparator4);
+
+        openLeadsheetEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        openLeadsheetEditorMI.setMnemonic('l');
+        openLeadsheetEditorMI.setText("Leadsheet Textual Editor");
+        openLeadsheetEditorMI.setToolTipText("Open file editor for leadsheet.");
+        openLeadsheetEditorMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                openLeadsheetEditorMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(openLeadsheetEditorMI);
+
+        styleGenerator1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+        styleGenerator1.setMnemonic('S');
+        styleGenerator1.setText("Style Editor & Extractor");
+        styleGenerator1.setToolTipText("Editor for styles and extractor for styles from MIDI");
+        styleGenerator1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                styleGenerator1ActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(styleGenerator1);
+        utilitiesMenu.add(jSeparator10);
+
+        fractalMI.setText("Division Improvisation");
+        fractalMI.setActionCommand("Improvisation");
         fractalMI.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9730,32 +9787,6 @@ public Critic getCritic()
         });
         utilitiesMenu.add(intervalLearningMI);
 
-        openLeadsheetEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
-        openLeadsheetEditorMI.setMnemonic('l');
-        openLeadsheetEditorMI.setText("Leadsheet Textual Editor");
-        openLeadsheetEditorMI.setToolTipText("Open file editor for leadsheet.");
-        openLeadsheetEditorMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                openLeadsheetEditorMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(openLeadsheetEditorMI);
-
-        styleGenerator1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
-        styleGenerator1.setMnemonic('S');
-        styleGenerator1.setText("Style Editor & Extractor");
-        styleGenerator1.setToolTipText("Editor for styles and extractor for styles from MIDI");
-        styleGenerator1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                styleGenerator1ActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(styleGenerator1);
-
         soloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         soloGeneratorMI.setText("Theme Weaver");
         soloGeneratorMI.setToolTipText("Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation.");
@@ -9790,32 +9821,6 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(transformMI);
-
-        voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-        voicingTestMI.setMnemonic('v');
-        voicingTestMI.setText("Voicing Editor");
-        voicingTestMI.setToolTipText("Editor for chord voicings");
-        voicingTestMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                voicingTestMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(voicingTestMI);
-
-        pianoKeyboardMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
-        pianoKeyboardMI.setMnemonic('K');
-        pianoKeyboardMI.setText("Voicing Keyboard");
-        pianoKeyboardMI.setToolTipText("Keyboard for viewing and creating voicings");
-        pianoKeyboardMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                pianoKeyboardMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(pianoKeyboardMI);
 
         menuBar.add(utilitiesMenu);
 
@@ -25716,6 +25721,7 @@ private ImageIcon pauseButton =
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
@@ -25732,6 +25738,7 @@ private ImageIcon pauseButton =
     private javax.swing.JSeparator jSeparator30;
     private javax.swing.JSeparator jSeparator31;
     private javax.swing.JSeparator jSeparator32;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
