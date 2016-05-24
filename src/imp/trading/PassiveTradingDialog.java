@@ -90,7 +90,7 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         tradeStopMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setBounds(new java.awt.Rectangle(25, 25, 400, 250));
+        setBounds(new java.awt.Rectangle(25, 25, 400, 350));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         whoGoesFirstPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));

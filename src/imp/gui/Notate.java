@@ -936,7 +936,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     
     passiveTradingDialog = new PassiveTradingDialog(this, false);
     passiveTradingDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
-    passiveTradingDialog.setSize(400, 250);
+    passiveTradingDialog.setSize(400, 350);
     passiveTradingDialog.setVisible(false);
     
     lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingDialog); //orig
@@ -7718,9 +7718,9 @@ public Critic getCritic()
         chordFontSizeSpinner.setToolTipText("Specifies the chord font size.");
         chordFontSizeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chord Font", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         chordFontSizeSpinner.setInheritsPopupMenu(true);
-        chordFontSizeSpinner.setMaximumSize(new java.awt.Dimension(80, 45));
-        chordFontSizeSpinner.setMinimumSize(new java.awt.Dimension(80, 45));
-        chordFontSizeSpinner.setPreferredSize(new java.awt.Dimension(80, 45));
+        chordFontSizeSpinner.setMaximumSize(new java.awt.Dimension(90, 45));
+        chordFontSizeSpinner.setMinimumSize(new java.awt.Dimension(90, 45));
+        chordFontSizeSpinner.setPreferredSize(new java.awt.Dimension(90, 45));
         chordFontSizeSpinner.setValue(16);
         chordFontSizeSpinner.addChangeListener(new javax.swing.event.ChangeListener()
         {
@@ -8201,7 +8201,7 @@ public Critic getCritic()
 
         playToolBar.add(playbackPanel);
 
-        masterVolumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 10))); // NOI18N
+        masterVolumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume & Mixer", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 10))); // NOI18N
         masterVolumePanel.setMaximumSize(new java.awt.Dimension(130, 50));
         masterVolumePanel.setMinimumSize(new java.awt.Dimension(100, 50));
         masterVolumePanel.setOpaque(false);
@@ -8346,9 +8346,9 @@ public Critic getCritic()
 
         transposeSpinner.setToolTipText("Transposes the playback the specified number of half steps (e.g. use -2 for Bb instruments, +3 for Eb).");
         transposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transpose", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
-        transposeSpinner.setMaximumSize(new java.awt.Dimension(75, 45));
-        transposeSpinner.setMinimumSize(new java.awt.Dimension(75, 45));
-        transposeSpinner.setPreferredSize(new java.awt.Dimension(75, 45));
+        transposeSpinner.setMaximumSize(new java.awt.Dimension(80, 45));
+        transposeSpinner.setMinimumSize(new java.awt.Dimension(80, 45));
+        transposeSpinner.setPreferredSize(new java.awt.Dimension(80, 45));
         transposeSpinner.setValue(0);
         transposeSpinner.addChangeListener(new javax.swing.event.ChangeListener()
         {
@@ -10469,13 +10469,13 @@ private void setStepInputBtn(boolean selected)
         stepInputBtn.setText("<html><center>Stop</center></html>");
 
         stepInputBtn.setBackground(Color.RED);
+        stepInputBtn.setOpaque(true);        
         stopRecording();
         setMode(Mode.STEP_INPUT);
       }
     else
       {
         stepInputBtn.setText("<html><center>Step<br>Input</center></html>");
-
         stepInputBtn.setBackground(Color.GREEN);
         setNormalStatus();
       }
@@ -19995,12 +19995,14 @@ public boolean countInCheckboxIsSelected()
             noteColoration = false;
             colorationButton.setBackground(Color.red);
             colorationButton.setText("<html><center>Color</center></html>");
+            colorationButton.setOpaque(true);
           }
         else
           {
             noteColoration = true;
             colorationButton.setBackground(new Color(153, 204, 255));
             colorationButton.setText("<html><center>Black&<br>White</center></html>");
+            colorationButton.setOpaque(true);
           }
 
 }//GEN-LAST:event_colorationButtonActionPerformed
@@ -20012,12 +20014,14 @@ public boolean countInCheckboxIsSelected()
             smartEntry = false;
             smartEntryButton.setBackground(Color.red);
             smartEntryButton.setText("<html><center>Harmonic<br>Entry</center></html>");
+            smartEntryButton.setOpaque(true);
           }
         else
           {
             smartEntry = true;
             smartEntryButton.setBackground(new Color(255, 153, 255));
             smartEntryButton.setText("<html><center>Simple<br>Entry</center></html>");
+            smartEntryButton.setOpaque(true);
           }
 }//GEN-LAST:event_smartEntryButtonActionPerformed
 
@@ -23532,7 +23536,7 @@ private boolean isDotted = false;
           {
             traderDialog = new ActiveTradingDialog(this, false); // Not modal
             traderDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
-            traderDialog.setSize(800, 200);
+            traderDialog.setSize(800, 350);
           }
         else
           {
@@ -23816,13 +23820,15 @@ public void improviseButtonToggled()
       {
         improviseButton.setBackground(new Color(255, 0, 0));
         improviseButton.setText("<html><center>Stop</center></html>");
+        improviseButton.setOpaque(true);
 
         playAll();
       }
     else
       {
         stopPlaying();
-      }
+        improviseButton.setOpaque(true);
+     }
   }
 
 public void improvisationOff()
