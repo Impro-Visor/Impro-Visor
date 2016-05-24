@@ -41,7 +41,7 @@ import imp.midi.MidiPlayListener;
 import imp.midi.MidiSynth;
 import imp.midi.MidiImport;
 import imp.style.stylePatterns.ChordPattern;
-import imp.trading.PassiveTradingWindow;
+import imp.trading.PassiveTradingDialog;
 import imp.trading.ActiveTradingDialog;
 import imp.data.advice.*;
 import imp.Constants;
@@ -105,7 +105,7 @@ public class Notate
         extends javax.swing.JFrame
         implements Constants, MidiPlayListener
 {
-private PassiveTradingWindow passiveTradingWindow;
+private PassiveTradingDialog passiveTradingDialog;
 public GuideToneLineDialog guideToneLineDialog;
 public static int midiImportXoffset = 200;
 public static int midiImportYoffset = 200;
@@ -934,12 +934,12 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     critic = new Critic();
     
-    passiveTradingWindow = new PassiveTradingWindow(this);
-    passiveTradingWindow.setLocation(traderDialog.INITIAL_OPEN_POINT);
-    passiveTradingWindow.setSize(400, 250);
-    passiveTradingWindow.setVisible(false);
+    passiveTradingDialog = new PassiveTradingDialog(this, false);
+    passiveTradingDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
+    passiveTradingDialog.setSize(400, 250);
+    passiveTradingDialog.setVisible(false);
     
-    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingWindow); //orig
+    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingDialog); //orig
 
     lickgenFrame = new LickgenFrame(this, lickgen, cm);
     transformFrame = new TransformFrame(this, lickgen, cm);
@@ -23577,7 +23577,7 @@ private boolean isDotted = false;
     }//GEN-LAST:event_fluidVoicingsActionPerformed
 
     private void passiveTradingMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passiveTradingMIActionPerformed
-        passiveTradingWindow.setVisible(true);
+        passiveTradingDialog.setVisible(true);
         tradeCheckbox.setSelected(true);
     }//GEN-LAST:event_passiveTradingMIActionPerformed
 
@@ -23867,12 +23867,12 @@ public void setShowConstructionLinesAndBoxes(boolean value)
 
 public void setGenerationGap(double value)
   {
-    passiveTradingWindow.setGenerationGap(value);
+    passiveTradingDialog.setGenerationGap(value);
   }
 
 public double getGenerationGap()
   {
-    return passiveTradingWindow.getGenerationGap();
+    return passiveTradingDialog.getGenerationGap();
   }
 
 boolean recurrentImprovisation = false;

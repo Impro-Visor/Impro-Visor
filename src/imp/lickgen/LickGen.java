@@ -27,7 +27,7 @@ import imp.ImproVisor;
 import imp.cluster.*;
 import imp.data.*;
 import imp.gui.Notate;
-import imp.trading.PassiveTradingWindow;
+import imp.trading.PassiveTradingDialog;
 import imp.util.ErrorLog;
 import imp.util.NonExistentParameterException;
 import static imp.lickgen.Terminals.isScaleDegree;
@@ -203,7 +203,7 @@ public Integer integer;
     private boolean lastWasTied = false;
 
     private final Notate notate;
-    private final PassiveTradingWindow passiveTradingWindow;
+    private final PassiveTradingDialog passiveTradingDialog;
     private int prevPitch = (int)(Math.random() * 20 + 60);
     private int prevPrevPitch = 0;
     private int prevQuarter = prevPitch;
@@ -216,10 +216,10 @@ public Integer integer;
      * @param notate
      * @param passiveTradingWindow
      */
-    public LickGen(String grammarFile, Notate notate, PassiveTradingWindow passiveTradingWindow) {
+    public LickGen(String grammarFile, Notate notate, PassiveTradingDialog passiveTradingDialog) {
     //System.out.println("Lickgen constructor grammarFile = " + grammarFile);
         this.notate = notate;
-        this.passiveTradingWindow = passiveTradingWindow;
+        this.passiveTradingDialog = passiveTradingDialog;
         grammar = new Grammar(grammarFile);
         loadGrammar(grammarFile);
         probs = new ArrayList<double[]>();
@@ -1097,9 +1097,9 @@ public Polylist generateRhythmFromGrammar(int startSlot, int slots)
     return grammar.run(startSlot, 
                        slots, 
                        notate, 
-                       passiveTradingWindow.isVisible(),
-                       passiveTradingWindow.getImprovisorTradeFirst(),
-                       passiveTradingWindow.getTradingQuantum());
+                       passiveTradingDialog.isVisible(),
+                       passiveTradingDialog.getImprovisorTradeFirst(),
+                       passiveTradingDialog.getTradingQuantum());
   }
 
 /**
@@ -1538,7 +1538,7 @@ public MelodyPart fillMelody(int minPitch,
 
     MelodyPart melPart = new MelodyPart();
     
-    lengthOfTrade = passiveTradingWindow.getTradingQuantum();
+    lengthOfTrade = passiveTradingDialog.getTradingQuantum();
 
    //Generates a rhythm with matched syncopation
     if(useSyncopation)
