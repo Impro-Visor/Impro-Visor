@@ -118,8 +118,9 @@ Release notes for Impro-Visor 8.1
 
 The newest feature is Active Improvisation, in which Impro-Visor will react
 to what the user plays on a MIDI instrument, such as a keyboard. Still 
-present is Passive Improvisation, which was formerly available. Only now 
-there are some new forms of passive improvisation:
+present is Passive Trading, which was formerly available. 
+
+Now there are some new forms of passive improvisation:
 
     Division: Which sub-divides the interval between successive notes of
     a generated line, in some cases multiple times (as set by the Division 

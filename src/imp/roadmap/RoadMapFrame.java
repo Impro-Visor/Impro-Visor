@@ -699,8 +699,10 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         brickDictionaryFrame.setTitle("Brick Dictionary"); // NOI18N
         brickDictionaryFrame.setAlwaysOnTop(true);
-        brickDictionaryFrame.setMinimumSize(new java.awt.Dimension(200, 400));
+        brickDictionaryFrame.setMaximumSize(new java.awt.Dimension(300, 500));
+        brickDictionaryFrame.setMinimumSize(new java.awt.Dimension(300, 500));
         brickDictionaryFrame.setName("brickDictionaryFrame"); // NOI18N
+        brickDictionaryFrame.setPreferredSize(new java.awt.Dimension(300, 500));
         brickDictionaryFrame.addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
