@@ -935,6 +935,8 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     critic = new Critic();
     
     passiveTradingWindow = new PassiveTradingWindow(this);
+    passiveTradingWindow.setLocation(traderDialog.INITIAL_OPEN_POINT);
+    passiveTradingWindow.setSize(400, 250);
     passiveTradingWindow.setVisible(false);
     
     lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingWindow); //orig

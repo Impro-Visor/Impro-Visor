@@ -102,7 +102,7 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
 
         setTitle("Impro-Visor Passive Trading");
         setAlwaysOnTop(true);
-        setBounds(new java.awt.Rectangle(25, 25, 400, 200));
+        setBounds(new java.awt.Rectangle(25, 25, 400, 250));
         setMaximumSize(new java.awt.Dimension(400, 200));
         setMinimumSize(new java.awt.Dimension(400, 200));
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -262,9 +262,9 @@ public class PassiveTradingWindow extends javax.swing.JFrame {
         startTradingButton.setToolTipText("Start/Stop trading. You may also use the I and K keys for this.");
         startTradingButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         startTradingButton.setLabel("Start Trading");
-        startTradingButton.setMaximumSize(new java.awt.Dimension(130, 28));
-        startTradingButton.setMinimumSize(new java.awt.Dimension(130, 28));
-        startTradingButton.setPreferredSize(new java.awt.Dimension(130, 28));
+        startTradingButton.setMaximumSize(new java.awt.Dimension(140, 28));
+        startTradingButton.setMinimumSize(new java.awt.Dimension(140, 28));
+        startTradingButton.setPreferredSize(new java.awt.Dimension(140, 28));
         startTradingButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
