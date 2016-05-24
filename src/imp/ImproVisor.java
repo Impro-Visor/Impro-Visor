@@ -1,7 +1,7 @@
 /**
- * This Java Class is part of the Impro-Visor Application v. 8.0
+ * This Java Class is part of the Impro-Visor Application v. 8.1
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,12 +40,12 @@ import polya.*;
  * Impro-Visor main class
  *
  * @author Stephen Jones, Aaron Wolin, Robert Keller
- * @version 8.0
+ * @version 8.1
  */
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "8.0";
+    public static final String version = "8.1";
     
     private static boolean firstTime = false;
     
