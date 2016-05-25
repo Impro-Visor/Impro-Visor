@@ -89,8 +89,23 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         tradePlayMenuItem = new javax.swing.JMenuItem();
         tradeStopMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setBounds(new java.awt.Rectangle(25, 25, 400, 350));
+        setTitle("Impro-Visor Passive Trading");
+        setBounds(new java.awt.Rectangle(25, 0, 800, 200));
+        setMaximumSize(new java.awt.Dimension(800, 200));
+        setMinimumSize(new java.awt.Dimension(800, 200));
+        setPreferredSize(new java.awt.Dimension(800, 200));
+        setSize(new java.awt.Dimension(800, 200));
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         whoGoesFirstPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -149,8 +164,8 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.3;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.6;
         getContentPane().add(whoGoesFirstPanel, gridBagConstraints);
 
         tradeLengthPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Trade Length (in bars)"));
@@ -206,9 +221,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.3;
+        gridBagConstraints.weighty = 1.4;
         getContentPane().add(tradeLengthPanel, gridBagConstraints);
 
         playbackControls.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -275,10 +291,11 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         playbackControls.add(generationGapSpinner, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.weightx = 0.6;
+        gridBagConstraints.weighty = 0.6;
         getContentPane().add(playbackControls, gridBagConstraints);
 
         mainTradeMenuBar.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
@@ -353,6 +370,16 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         lickgenFrame.setGap(Double.parseDouble(generationGapSpinner.getValue().toString()));
     }//GEN-LAST:event_generationGapSpinnergenerationLeadSpinnerChanged
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosed
+    {//GEN-HEADEREND:event_formWindowClosed
+        tradingStopped();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
+    {//GEN-HEADEREND:event_formWindowClosing
+        tradingStopped();
+    }//GEN-LAST:event_formWindowClosing
+
 
 private void toggleTrading()
 {
@@ -362,12 +389,10 @@ notate.remoteToggleImprovise();
 if( trading )
   {
     tradingStopped();
-    trading = false;
   }
 else
   {
     tradingStarted();
-    trading = true;
   }    
 }
 
@@ -393,11 +418,13 @@ public int getTradingQuantum(){
      public void tradingStarted() {
         startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
         startTradingButton.setText("Stop Trading");
+        trading = true;
     }
 
     public void tradingStopped() {
         startTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif")));
         startTradingButton.setText("Start Trading");
+        trading = false;
     }
     
  public void setGenerationGap(double value)

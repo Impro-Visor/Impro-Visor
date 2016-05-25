@@ -139,13 +139,12 @@ private static final String SKIP_GRAMMAR_FILES_STARTING_WITH = "_";
  * the time playback is triggered.
  */
 double trackerDelay = 0;
-public static final int defaultBarsPerPart = 72;
+public static final int DEFAULT_BARS_PER_PART = 72;
 public static final Dimension leadsheetEditorDimension =
         new Dimension(500, 600);
 public static final Dimension lickGenFrameDimension =
         new Dimension(1100, 750);
-public static final int defaultMeasPerLine = 4;
-public static final int defaultMetre = 4;
+public static final int DEFAULT_MEASURES_PER_LINE = 4;
 public static final Dimension preferencesDialogDimension =
         new Dimension(800, 700);
 private boolean noteColoration = true;
@@ -224,7 +223,7 @@ public String musicxmlDef = "untitled.xml";
  *
  * break if this is exceeded.
  */
-public static final int maxMeasuresPerLine = 15;
+public static final int MAX_MEASURES_PER_LINE = 15;
 /**
  * The default stave type.
  */
@@ -303,19 +302,19 @@ private ThemeWeaver themeWeaver = null;
 /**
  * Default values pertinent to lick generation
  */
-private double roundTo = BEAT;
-private int paddingSlots = BEAT / 2;
-private int minPitch = 60;
-private int maxPitch = 82;
-private int minInterval = 0;
-private int maxInterval = 6;
+private final double roundTo = BEAT;
+private final int paddingSlots = BEAT / 2;
+private final int minPitch = 60;
+private final int maxPitch = 82;
+private final int minInterval = 0;
+private final int maxInterval = 6;
 //private int minDuration = 8;
 //private int maxDuration = 8;
 private double totalBeats = 8;
 private int totalSlots;
 //private double restProb = 0.1;
-private double leapProb = 0.2;
-private boolean avoidRepeats = true;
+private final double leapProb = 0.2;
+private final boolean avoidRepeats = true;
 //private boolean autoFill = true;
 private int ignoreDuplicateLick;
 private boolean cancelTruncation = true;
@@ -936,7 +935,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     
     passiveTradingDialog = new PassiveTradingDialog(this, false);
     passiveTradingDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
-    passiveTradingDialog.setSize(400, 350);
+    passiveTradingDialog.setSize(800, 200);
     passiveTradingDialog.setVisible(false);
     
     lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingDialog); //orig
@@ -2774,7 +2773,7 @@ public Critic getCritic()
         leadsheetSpecificPanel.add(measuresPerPartLabel, gridBagConstraints);
 
         prefMeasTF.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        prefMeasTF.setText("" + defaultBarsPerPart);
+        prefMeasTF.setText("" + DEFAULT_BARS_PER_PART);
         prefMeasTF.setMinimumSize(new java.awt.Dimension(50, 19));
         prefMeasTF.setPreferredSize(new java.awt.Dimension(50, 19));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -10359,20 +10358,11 @@ public void reCaptureCurrentStyle()
 
     }//GEN-LAST:event_globalPrefsMIActionPerformed
 
-private String tempoSetOldTempo;
 
     private void tempoSetFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tempoSetFocusGained
 
-        tempoSetOldTempo = tempoSet.getText();
 
     }//GEN-LAST:event_tempoSetFocusGained
-
-private void setSectionParameters()
-  {
-    setSectionPrefs();
-
-    sectionTableModel.tableRefresh();
-  }
 
 /**
  * Split or sub-divide section
@@ -12475,11 +12465,12 @@ public class VoicingTableModel
         extends AbstractTableModel
 {
 
-private String[] columnNames =
+private final String[] columnNames =
   {
     "Chord", "Name", "Type", "Voicing", "Extension"
   };
-private Class[] columnClasses =
+
+private final Class[] columnClasses =
   {
     ChordSymbol.class,
     String.class,
@@ -14293,6 +14284,7 @@ public void updateSelection()
 
     if( evt.getKeyCode() == KeyEvent.VK_ENTER )
       {
+System.out.println("chordProg = " + chordProg);
         if( !slotIsSelected() )
           {
             // If no slot is selected, force the first slot to be selected.
@@ -16782,7 +16774,7 @@ private void setTotalMeasures(int measures)
       }
 
     int[] tempLockedMeasures = new int[lockedMeasures.length
-            + (measures - lockedMeasures.length) / defaultMeasPerLine];
+            + (measures - lockedMeasures.length) / DEFAULT_MEASURES_PER_LINE];
 
     for( int i = 0; i < tempLockedMeasures.length; i++ )
       {
@@ -16792,7 +16784,7 @@ private void setTotalMeasures(int measures)
           }
         else
           {
-            tempLockedMeasures[i] = defaultMeasPerLine;
+            tempLockedMeasures[i] = DEFAULT_MEASURES_PER_LINE;
           }
       }
     setLockedMeasures(tempLockedMeasures, "setTotalMeasures");
@@ -17029,7 +17021,7 @@ private void enterMeasuresCore()
           {
             int newMeasures = Integer.decode(measuresText).intValue();
 
-            if( newMeasures <= maxMeasuresPerLine )
+            if( newMeasures <= MAX_MEASURES_PER_LINE )
               {
                 measureOverride(newMeasures, getCurrentStave().currentLine);
 
@@ -17041,8 +17033,7 @@ private void enterMeasuresCore()
               }
             else
               {
-                measErrorLabel.setText(
-                        "This would exceed the maximum number of " + maxMeasuresPerLine);
+                measErrorLabel.setText("This would exceed the maximum number of " + MAX_MEASURES_PER_LINE);
               }
           }
         else
@@ -17763,7 +17754,8 @@ public static Polylist parseListFromString(String input)
  */
 private void enterBoth()
   {
-    if( slotIsSelected() )
+  System.out.println("chordProg = " + chordProg);
+  if( slotIsSelected() )
       {
         String chordText = textEntry.getText();
 
@@ -17795,7 +17787,7 @@ private void enterBoth()
  */
 void enterChords()
   {
-
+System.out.println("chordProg = " + chordProg);
     if( slotIsSelected() )
       {
         String windowText = textEntry.getText();
@@ -19849,10 +19841,14 @@ public void newNotate()
     newScore.setChordFontSize(chordFontSize);
 
     newScore.setTempo(getTempo());
+    
+    ChordPart chords = new ChordPart();
+    
+    chords.addChord(new Chord("NC")); // Necessary to preven screw-ups
 
-    newScore.setChordProg(new ChordPart());
+    newScore.setChordProg(chords);
 
-    newScore.addPart(new MelodyPart(defaultBarsPerPart * measureLength));
+    newScore.addPart(new MelodyPart(DEFAULT_BARS_PER_PART * measureLength));
 
     newScore.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
 
@@ -23536,7 +23532,7 @@ private boolean isDotted = false;
           {
             traderDialog = new ActiveTradingDialog(this, false); // Not modal
             traderDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
-            traderDialog.setSize(800, 350);
+            traderDialog.setSize(800, 200);
           }
         else
           {
@@ -23839,6 +23835,7 @@ public void improvisationOff()
     lickgenFrame.setRecurrent(false);
     improviseButton.setBackground(new Color(0, 255, 0));
     improviseButton.setText("<html><center>Improv</center></html>");
+    tradeCheckbox.setSelected(false);
   }
 
 /**
@@ -24252,6 +24249,7 @@ public boolean getWhetherToThemeWeave()
 public void setNotToTrade()
 {
     tradeCheckbox.setSelected(false);
+    tradingDialogClosed();
 }
 
 
@@ -26707,14 +26705,9 @@ public void setLayoutTF(String text)
     layoutTF.setText(text);
   }
 
-public void tradingWindowClosed(){
-    isActiveTrading = false;
-}
-
 public void tradingDialogClosed(){
     isActiveTrading = false;
 }
-
 
 public boolean getUseNoteCursor()
   {
@@ -26916,7 +26909,7 @@ private void handleAutoImprov(int slotInPlayback)
         recurrentIteration++;
         // firstChorus indicator is used by MidiRecorder to deal with countin
         setFirstChorus(false);
-        setStatus("Chorus " + recurrentIteration);
+        setStatus("Improvising Chorus " + recurrentIteration);
         
    // Danger: improviseSlotSlot and improviseEndSlot are instance variables
    // Right now, they seem to be set at 0 and length of chorus -1.

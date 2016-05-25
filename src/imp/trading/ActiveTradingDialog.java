@@ -44,7 +44,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private boolean userFirst = true;
     private boolean isUserInputError = false;
     private final Integer initialTradeLength = 4;
-    public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 25);
+    public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 0);
 
     private final Notate notate;
     
@@ -126,8 +126,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         setTitle("Impro-Visor Active Trading");
         setBackground(new java.awt.Color(204, 204, 255));
-        setBounds(new java.awt.Rectangle(25, 25, 800, 350));
-        setLocation(new java.awt.Point(25, 25));
+        setBounds(new java.awt.Rectangle(25, 0, 800, 200));
+        setLocation(new java.awt.Point(25, 0));
         setMaximumSize(new java.awt.Dimension(800, 200));
         setMinimumSize(new java.awt.Dimension(800, 200));
         setPreferredSize(new java.awt.Dimension(800, 200));

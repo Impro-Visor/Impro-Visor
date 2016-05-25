@@ -335,7 +335,7 @@ private ImproVisor(String leadsheet)
     // First open a blank Notate window
 
     // Create a score with default measures in default meter
-    Score score = new Score(Notate.defaultBarsPerPart * (BEAT * Notate.defaultMetre));
+    Score score = new Score(Notate.DEFAULT_BARS_PER_PART * (BEAT * DEFAULT_METRE[0]));
 
     String fontSizePref = Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE);
 
