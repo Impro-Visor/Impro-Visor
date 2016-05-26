@@ -56,8 +56,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     public ActiveTradingDialog(Notate notate, boolean modal) {
         super(notate, modal);
         this.notate = notate;
-        activeTrading = new ActiveTrading(notate);
         initComponents();
+        activeTrading = new ActiveTrading(notate, swingCheckBox);
         notate.populateGenericGrammarMenu(tradeGrammarMenu);
         populateMusicianList();
         Component[] modes = modeMenu.getMenuComponents();
@@ -92,6 +92,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         userFirstButton = new javax.swing.JRadioButton();
         improvisorFirstButton = new javax.swing.JRadioButton();
         switchToPassiveTradingButton = new javax.swing.JButton();
+        swingCheckBox = new javax.swing.JCheckBox();
         modePanel = new javax.swing.JPanel();
         modeStatus = new javax.swing.JLabel();
         grammarStatus = new javax.swing.JLabel();
@@ -163,6 +164,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         leadSelectors.add(userFirstButton, gridBagConstraints);
@@ -200,10 +203,17 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         leadSelectors.add(switchToPassiveTradingButton, gridBagConstraints);
+
+        swingCheckBox.setText("Swing");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        leadSelectors.add(swingCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -853,6 +863,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JPanel playbackControls;
     private javax.swing.JTextField processTimeSelector;
     private javax.swing.JButton startOrStopTradingButton;
+    private javax.swing.JCheckBox swingCheckBox;
     private javax.swing.JButton switchToPassiveTradingButton;
     private javax.swing.JLabel tempoLabel;
     private javax.swing.JPanel tempoPanel;
