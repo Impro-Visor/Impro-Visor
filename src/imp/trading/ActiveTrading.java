@@ -80,15 +80,14 @@ public class ActiveTrading {
     private PlayScoreCommand playCommand;
     private static MidiManager midiManager;
     //magic values
-    private static final int endLimitIndex = 1;
-    private javax.swing.JCheckBox swingCheckBox;
-    public static final int zero = 0;
-    public static final int one = 1;
+    private static final int END_LIMIT_INDEX = 1;
+    private final javax.swing.JCheckBox swingCheckBox;
+    public static final int ZERO = 0;
+    public static final int ONE = 1;
     public static final int DEFAULT_TRADE_LENGTH = 4;
-    
     public static final String DEFAULT_TRADE_MODE = "Transform";
     public static final int DEFAULT_VOLUME = 80;
-    private LinkedList<TradeListener> tradeListeners = new LinkedList<TradeListener>();
+    private final LinkedList<TradeListener> tradeListeners = new LinkedList<TradeListener>();
 
     public enum TradePhase {
         USER_TURN,
@@ -201,7 +200,7 @@ public class ActiveTrading {
      public void setNotateDefaults() {
         firstPlay = true;
         isTrading = false;
-        notate.setEnabled(false);
+        //notate.setEnabled(false);
         notate.setLoop(true);
     }
      
@@ -316,7 +315,7 @@ public class ActiveTrading {
         ChordPart chordProg = notate.getChordProg();
         soloChords = chordProg.extract(sectionStart, sectionEnd);
         responseChords = chordProg.extract(nextSection, nextSection + slotsPerTurn - 1);
-        tradeScore = new Score("trading", notate.getTempo(), zero);
+        tradeScore = new Score("trading", notate.getTempo(), ZERO);
         tradeScore.setChordProg(responseChords);
         tradeScore.addPart(response);
     }
@@ -344,7 +343,7 @@ public class ActiveTrading {
         tradeScore.deleteChords();
 
         Long delayCopy = slotDelay;
-        response = response.extract(delayCopy.intValue(), slotsPerTurn - one, true, true);
+        response = response.extract(delayCopy.intValue(), slotsPerTurn - ONE, true, true);
         //System.out.println(response);
         tradeScore.addPart(response);
         //System.out.println("TRADE SCORE" + tradeScore);
@@ -357,14 +356,14 @@ public class ActiveTrading {
 
         playCommand = new PlayScoreCommand(
                 tradeScore,
-                zero,
+                ZERO,
                 swingCheckBox.isSelected(),
                 midiSynth,
                 notate,
-                zero,
+                ZERO,
                 notate.getTransposition(),
                 false,
-                slotsPerTurn - endLimitIndex,
+                slotsPerTurn - END_LIMIT_INDEX,
                 true
         );
     }
@@ -430,24 +429,24 @@ public class ActiveTrading {
 
         //if computer is leading, generate a solo via selected grammar
         if (!isUserLeading) {
-            tradeScore = new Score("trading", notate.getTempo(), zero);
+            tradeScore = new Score("trading", notate.getTempo(), ZERO);
             tradeScore.setBassMuted(true);
             tradeScore.delPart(0);
             response = tradeResponseController.extractFromGrammarSolo(0, slotsPerTurn);
             Long delayCopy = slotDelay;
-            MelodyPart adjustedResponse = response.extract(delayCopy.intValue(), slotsPerTurn - one, true, true);
+            MelodyPart adjustedResponse = response.extract(delayCopy.intValue(), slotsPerTurn - ONE, true, true);
             //notate.establishCountIn(tradeScore);  // Doesn't work for Impro-Visor first
             tradeScore.addPart(adjustedResponse);
             playCommand = new PlayScoreCommand(
                     tradeScore,
-                    zero,
+                    ZERO,
                     swingCheckBox.isSelected(),
                     midiSynth,
                     notate,
-                    zero,
+                    ZERO,
                     notate.getTransposition(),
                     false,
-                    slotsPerTurn - endLimitIndex,
+                    slotsPerTurn - END_LIMIT_INDEX,
                     true
             );
         }
@@ -471,7 +470,7 @@ public class ActiveTrading {
         triggers.clear();
         //populate trigger stack (scheduler)
         boolean computerTurnNext;
-        if (numberOfTurns % 2 == zero) {
+        if (numberOfTurns % 2 == ZERO) {
             //even number of turns
             if (isUserLeading) {
                 //user turn first.
@@ -501,11 +500,11 @@ public class ActiveTrading {
                 computerTurnNext = !computerTurnNext;
             }
         }
-        for (int trigSlot = length; trigSlot >= zero; trigSlot = trigSlot - slotsPerTurn) {
+        for (int trigSlot = length; trigSlot >= ZERO; trigSlot = trigSlot - slotsPerTurn) {
             triggers.push(trigSlot);
             if (computerTurnNext) {
                 computerTurnNext = false;
-                if (trigSlot != zero) {
+                if (trigSlot != ZERO) {
                     triggers.push(trigSlot - slotsForProcessing);
                 }
             } else {
@@ -574,12 +573,12 @@ public class ActiveTrading {
         if (isTrading) {
             stopTrading();
         }
-        notate.setEnabled(true);
+        //notate.setEnabled(true);
         notate.setLoop(false);
-        notate.tradingDialogClosed();
+        //notate.tradingDialogClosed();
     }
 
-    public void startOrStop() {
+    public void startOrSsettop() {
         if (!isUserInputError) {
             if (!isTrading) {
                 //System.out.println("Starting");

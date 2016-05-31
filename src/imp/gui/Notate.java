@@ -1472,9 +1472,11 @@ public Critic getCritic()
         midiOutStatus = new javax.swing.JLabel();
         midiInPanel = new javax.swing.JPanel();
         midiInComboBox = new javax.swing.JComboBox();
+        recordingLatency = new javax.swing.JLabel();
+        recordingLatencySpinner = new javax.swing.JSpinner();
         midiInStatus = new javax.swing.JLabel();
-        echoMidiCheckBox = new javax.swing.JCheckBox();
         midiRecordSnapSpinner = new javax.swing.JSpinner();
+        echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         rangeFilterBtn = new javax.swing.JButton();
@@ -3994,17 +3996,37 @@ public Critic getCritic()
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         midiInPanel.add(midiInComboBox, gridBagConstraints);
+
+        recordingLatency.setText("Recording latency (beats):");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 0.2;
+        midiInPanel.add(recordingLatency, gridBagConstraints);
+
+        recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2"}));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.3;
+        midiInPanel.add(recordingLatencySpinner, gridBagConstraints);
 
         midiInStatus.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         midiInStatus.setText("Status:");
         midiInStatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 0.5;
         midiInPanel.add(midiInStatus, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4012,6 +4034,23 @@ public Critic getCritic()
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         devicesTab.add(midiInPanel, gridBagConstraints);
+
+        midiRecordSnapSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"2", "3", "4", "6", "8", "12", "24", "48", "60", "96", "120"}));
+        midiRecordSnapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MIDI Recording Resolution Beat Sub-Divisions", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        midiRecordSnapSpinner.setMinimumSize(new java.awt.Dimension(250, 56));
+        midiRecordSnapSpinner.setPreferredSize(new java.awt.Dimension(250, 56));
+        midiRecordSnapSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                midiRecordSnapChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        devicesTab.add(midiRecordSnapSpinner, gridBagConstraints);
 
         echoMidiCheckBox.setSelected(midiManager.getEcho());
         echoMidiCheckBox.setLabel("Echo MIDI input (send MIDI messages from MIDI input to MIDI output).");
@@ -4024,25 +4063,9 @@ public Critic getCritic()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.insets = new java.awt.Insets(10, 11, 10, 11);
         devicesTab.add(echoMidiCheckBox, gridBagConstraints);
-
-        midiRecordSnapSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"2", "3", "4", "6", "8", "12", "24", "48", "60", "96", "120"}));
-        midiRecordSnapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MIDI Record Beat Sub-Divisions", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        midiRecordSnapSpinner.setMinimumSize(new java.awt.Dimension(250, 56));
-        midiRecordSnapSpinner.setPreferredSize(new java.awt.Dimension(250, 56));
-        midiRecordSnapSpinner.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                midiRecordSnapChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        devicesTab.add(midiRecordSnapSpinner, gridBagConstraints);
 
         sendSetBankCheckBox.setSelected(Preferences.getMidiSendBankSelect());
         sendSetBankCheckBox.setLabel("Send SetBank-to-0 MIDI messages with each note.");
@@ -7386,7 +7409,7 @@ public Critic getCritic()
         {
             public void focusGained(java.awt.event.FocusEvent evt)
             {
-                formFocusGained(evt);
+                formFocusedGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt)
             {
@@ -11518,6 +11541,8 @@ public void stopRecording()
 
         midiSynth.registerReceiver(midiStepInput);
       }
+    
+    requestFocusInWindow();
   }
 
 /**
@@ -11585,7 +11610,7 @@ private void startRecordingHelper()
 
     midiSynth.registerReceiver(midiRecorder);
 
-    midiRecorder.start(this.score.getCountInOffset());   // set time to 0
+    midiRecorder.start(this.score.getCountInOffset(), getRecordLatency());   // set time to 0
   }
 
 
@@ -11628,8 +11653,23 @@ public void enableRecording()
 
     // redundant midiSynth.registerReceiver(midiRecorder);
 
-    midiRecorder.start(score.getCountInOffset());
+    midiRecorder.start(score.getCountInOffset(), getRecordLatency());
   }
+
+private int getRecordLatency()
+{
+    String spinnerValue = (String)recordingLatencySpinner.getValue();
+    double numericValue;
+    try
+      {
+        numericValue = Double.valueOf(spinnerValue);
+      }
+    catch( Exception e )
+      {
+        numericValue = 0;
+      }
+    return (int)(BEAT*numericValue);
+}
 
 public void stopPlaying()
   {
@@ -11651,13 +11691,14 @@ public void stopPlaying(String reason)
     improvisationOff();
     setNormalMode();
     setShowConstructionLinesAndBoxes(showConstructionLinesMI.isSelected());
-    //System.out.println("stopPlaying()");
-    //requestFocusInWindow();
     
     //from here end enables saving improv in the lickgenframe
-    if(saveImprovCheckBoxMenuItem.isSelected() && improvisationOn){
+    if(saveImprovCheckBoxMenuItem.isSelected())
+      {
       saveImprovisation();
-    }
+      }
+      
+    requestFocusInWindow();
   }
 
 private void initSaveImprovisation()
@@ -11846,11 +11887,6 @@ private void openIntervalLearningFrame()
     {//GEN-HEADEREND:event_overrideFrameComponentHidden
 // TODO add your handling code here:
     }//GEN-LAST:event_overrideFrameComponentHidden
-
-    private void formFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_formFocusGained
-
-    {//GEN-HEADEREND:event_formFocusGained
-    }//GEN-LAST:event_formFocusGained
 
 public void focus()
   {
@@ -14284,7 +14320,6 @@ public void updateSelection()
 
     if( evt.getKeyCode() == KeyEvent.VK_ENTER )
       {
-System.out.println("chordProg = " + chordProg);
         if( !slotIsSelected() )
           {
             // If no slot is selected, force the first slot to be selected.
@@ -14561,14 +14596,15 @@ public void staveRequestFocus()
  *
  * @return
  */
-@Override
-public boolean requestFocusInWindow()
-  {
-    requestFocus();
-
-    boolean value = true; // super.requestFocusInWindow();
-    return value;
-  }
+//@Override
+//public boolean requestFocusInWindow()
+//  {
+//    requestFocus();
+//
+//    boolean value = true; // super.requestFocusInWindow();
+//    setItemStates();
+//    return value;
+//  }
 
 /**
  * Get the ActionHandler for the current Stave.
@@ -17754,7 +17790,6 @@ public static Polylist parseListFromString(String input)
  */
 private void enterBoth()
   {
-  System.out.println("chordProg = " + chordProg);
   if( slotIsSelected() )
       {
         String chordText = textEntry.getText();
@@ -17787,7 +17822,6 @@ private void enterBoth()
  */
 void enterChords()
   {
-System.out.println("chordProg = " + chordProg);
     if( slotIsSelected() )
       {
         String windowText = textEntry.getText();
@@ -18473,6 +18507,11 @@ public void setCountIn(boolean value)
 {
     countInCheckBox.setSelected(value);
     establishCountIn();
+}
+
+public boolean getCountIn()
+{
+    return countInCheckBox.isSelected();
 }
 
 int slotDelay;
@@ -22360,7 +22399,7 @@ private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_
 }//GEN-LAST:event_formMouseEntered
 
 private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-    requestFocusInWindow();
+    //requestFocusInWindow();
 }//GEN-LAST:event_formMouseClicked
 
 private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
@@ -22394,13 +22433,13 @@ private void chordFontStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIR
 private int newChordFontSize = DEFAULT_CHORD_FONT_SIZE_VALUE;
 
 private void defaultChordFontChange(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_defaultChordFontChange
-    newChordFontSize = ((Integer) defaultChordFontSizeSpinner.getValue()).intValue();
+    newChordFontSize = ((Integer) defaultChordFontSizeSpinner.getValue());
 }//GEN-LAST:event_defaultChordFontChange
 
 private void defaultChordFontSizeSpinnerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_defaultChordFontSizeSpinnerKeyReleased
     if( evt.getKeyCode() == KeyEvent.VK_ENTER )
       {
-        newChordFontSize = ((Integer) defaultChordFontSizeSpinner.getValue()).intValue();
+        newChordFontSize = ((Integer) defaultChordFontSizeSpinner.getValue());
         savePrefs();
       }
 }//GEN-LAST:event_defaultChordFontSizeSpinnerKeyReleased
@@ -23526,11 +23565,10 @@ private boolean isDotted = false;
     
     private void tradingWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradingWindowActionPerformed
         // Open New Trading window
-        isActiveTrading = true;
         this.setToNotLoop();
         if( traderDialog == null )
           {
-            traderDialog = new ActiveTradingDialog(this, false); // Not modal
+            traderDialog = new ActiveTradingDialog(this); // Not modal
             traderDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
             traderDialog.setSize(800, 200);
           }
@@ -23607,6 +23645,11 @@ private boolean isDotted = false;
     private void adjustParallaxDelayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adjustParallaxDelayMIActionPerformed
         viewAdjustmentDialog.setVisible(true);
     }//GEN-LAST:event_adjustParallaxDelayMIActionPerformed
+
+    private void formFocusedGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_formFocusedGained
+    {//GEN-HEADEREND:event_formFocusedGained
+   
+    }//GEN-LAST:event_formFocusedGained
 
     private void setModesThatCantTrade(boolean enabled)
     {
@@ -24246,10 +24289,17 @@ public boolean getWhetherToThemeWeave()
   }
 
 
+public void setToTrade()
+{
+    isActiveTrading = true;
+    //System.out.println("Active Trading set ON");
+}
+
 public void setNotToTrade()
 {
     tradeCheckbox.setSelected(false);
-    tradingDialogClosed();
+    isActiveTrading = false;
+    //System.out.println("Active Trading set OFF");
 }
 
 
@@ -25934,6 +25984,8 @@ private ImageIcon pauseButton =
     private javax.swing.JScrollPane recentStyleListScrollPane;
     private javax.swing.JButton recordBtn;
     private javax.swing.JMenuItem recordMI;
+    private javax.swing.JLabel recordingLatency;
+    private javax.swing.JSpinner recordingLatencySpinner;
     private javax.swing.JRadioButton redApproachBtn;
     private javax.swing.JRadioButton redChordBtn;
     private javax.swing.JRadioButton redColorBtn;
@@ -26784,7 +26836,6 @@ class PlayActionListener implements ActionListener
  * @param evt
  */
 public void actionPerformed(ActionEvent evt) {
-
         //this is used to pass info for interactive trading
         if (isActiveTrading) {
 //            Notate.this.trader.trackPlay(evt);

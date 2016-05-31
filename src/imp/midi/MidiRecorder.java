@@ -43,13 +43,16 @@ public class MidiRecorder implements Constants, Receiver
     Sequencer sequencer = null;
     MelodyPart tradePart = null;
     int countInOffset;
+    /* insertion is offset from onset detection due to latency */
+    int insertionOffset;
     long noteOn = 0, noteOff = 0, lastEvent = 0;
     boolean notePlaying = false;
     int prevNote = 0;
     int resolution;
     int snapTo = BEAT/4;
     double latency = 0;
-
+    
+ 
 public MidiRecorder(Notate notate, Score score)
   {
         this.notate = notate;
@@ -95,15 +98,15 @@ public long getTick()
         }
     }
 
-public void start(int countInOffset) {
+public void start(int countInOffset, int insertionOffset) {
         snapTo = BEAT / notate.getRecordSnapValue();
         this.sequencer = notate.getSequencer();
         if (sequencer == null || sequencer.getSequence() == null) {
             return;
         }
         resolution = sequencer.getSequence().getResolution();
-
-        while ((noteOn = getTick()) < 0) {
+        
+         while ((noteOn = getTick()) < 0) {
         }
 
         noteOff = noteOn = getTick();
@@ -113,7 +116,8 @@ public void start(int countInOffset) {
         // of countin.
         //notate.setCurrentSelectionStartAndEnd(0);
 
-        this.countInOffset = countInOffset;
+       this.insertionOffset = insertionOffset;
+       this.countInOffset = countInOffset;
     }
 
     int getCountInBias() {
@@ -258,7 +262,13 @@ public void start(int countInOffset) {
         // but rather only when a next note is pressed. We'd need to mark
         // the first place after the generator has played notes.
         // FIX: Revisit this issue after more refactoring.
-        melodyPart.setNote(index % melodyPart.size(), noteToAdd);
+        
+        int actualIndex = (index% melodyPart.size()) - insertionOffset;
+        if( actualIndex < 0 )
+          {
+            actualIndex = 0;
+          }
+        melodyPart.setNote(actualIndex, noteToAdd);
     }
 
     void handleNoteOff(int note, int velocity, int channel) {

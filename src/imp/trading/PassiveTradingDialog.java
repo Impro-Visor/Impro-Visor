@@ -95,6 +95,17 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         setMinimumSize(new java.awt.Dimension(800, 200));
         setPreferredSize(new java.awt.Dimension(800, 200));
         setSize(new java.awt.Dimension(800, 200));
+        addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentShown(java.awt.event.ComponentEvent evt)
+            {
+                passiveTradingShown(evt);
+            }
+            public void componentHidden(java.awt.event.ComponentEvent evt)
+            {
+                passiveTradingHidden(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
@@ -379,6 +390,16 @@ public class PassiveTradingDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_formWindowClosing
         tradingStopped();
     }//GEN-LAST:event_formWindowClosing
+
+    private void passiveTradingShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_passiveTradingShown
+    {//GEN-HEADEREND:event_passiveTradingShown
+        countToggle.setSelected(notate.getCountIn());
+    }//GEN-LAST:event_passiveTradingShown
+
+    private void passiveTradingHidden(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_passiveTradingHidden
+    {//GEN-HEADEREND:event_passiveTradingHidden
+        notate.setCountIn(countToggle.isSelected());
+    }//GEN-LAST:event_passiveTradingHidden
 
 
 private void toggleTrading()

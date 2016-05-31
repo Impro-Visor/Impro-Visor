@@ -53,8 +53,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
      * @param notate
      * @param modal
      */
-    public ActiveTradingDialog(Notate notate, boolean modal) {
-        super(notate, modal);
+    public ActiveTradingDialog(Notate notate) {
+        super(notate, false);
         this.notate = notate;
         initComponents();
         activeTrading = new ActiveTrading(notate, swingCheckBox);
@@ -133,6 +133,17 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         setMinimumSize(new java.awt.Dimension(800, 200));
         setPreferredSize(new java.awt.Dimension(800, 200));
         setSize(new java.awt.Dimension(800, 200));
+        addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentShown(java.awt.event.ComponentEvent evt)
+            {
+                activeTradingShown(evt);
+            }
+            public void componentHidden(java.awt.event.ComponentEvent evt)
+            {
+                activingTradingHidden(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
@@ -645,11 +656,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     }//GEN-LAST:event_tradePlayMenuItemActionPerformed
 
     private void activeTradingWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_activeTradingWindowClosed
-        notate.setNotToTrade();
+        stopTrading();
     }//GEN-LAST:event_activeTradingWindowClosed
 
     private void activeTradingWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_activeTradingWindowClosing
-        notate.setNotToTrade();
+        stopTrading();
     }//GEN-LAST:event_activeTradingWindowClosing
 
     private void switchToPassiveTradingButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_switchToPassiveTradingButtonActionPerformed
@@ -658,6 +669,16 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         setVisible(false);
         notate.openPassiveTradingWindow();
     }//GEN-LAST:event_switchToPassiveTradingButtonActionPerformed
+
+    private void activeTradingShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_activeTradingShown
+    {//GEN-HEADEREND:event_activeTradingShown
+        countToggle.setSelected(notate.getCountIn());
+    }//GEN-LAST:event_activeTradingShown
+
+    private void activingTradingHidden(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_activingTradingHidden
+    {//GEN-HEADEREND:event_activingTradingHidden
+        notate.setCountIn(countToggle.isSelected());
+    }//GEN-LAST:event_activingTradingHidden
 
     private float tryFloat(String number) {
         float newNumber;
@@ -692,14 +713,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     public void tradingDialogOpened() {
         activeTrading.setNotateDefaults();
         updateGUIComponents();
+        setVisible(true);
     }
 
-
-    private void startTradingButtonPressed() {
-
-        startTrading();
-    }
-    
     private void startTrading()
     {
          if (!isUserInputError) {
@@ -708,12 +724,14 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             activeTrading.startTrading(); 
          }
          tradingNow = true;
+         notate.setToTrade();
     }
     
     private void stopTrading()
     {
         activeTrading.stopTrading(); 
         tradingNow = false;
+        notate.setNotToTrade();
     }
     
     private void updateProcessTimeText() {
