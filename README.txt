@@ -1,6 +1,6 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 8.1,
-from Prof. Bob Keller at Harvey Mudd College, May 23, 2016.
+Welcome to Impro-Visor (Improvisation Advisor) Version 8.11,
+from Prof. Bob Keller at Harvey Mudd College, May 31, 2016.
 
 Release notes for this version may be found at the end.
 
@@ -112,6 +112,16 @@ Harvey Mudd College
 Claremont, CA 91711
 
 Please send issues to: keller@cs.hmc.edu
+
+===============================================================================
+Release notes for Impro-Visor 8.11
+
+This release fixes a bug in Active Improvisation, namely that the main window
+controls become disabled if the Active Improvisation window is opened more
+than once.
+
+It also adds a MIDI setting to correct for input delay in the case that the
+audio Pitch Tracker is being used to convert audio to MIDI.
 
 ===============================================================================
 Release notes for Impro-Visor 8.1
