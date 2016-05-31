@@ -3996,7 +3996,7 @@ public Critic getCritic()
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         midiInPanel.add(midiInComboBox, gridBagConstraints);
@@ -8542,14 +8542,6 @@ public Critic getCritic()
         });
         scoreTab.addMouseListener(new java.awt.event.MouseAdapter()
         {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                scoreTabMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt)
-            {
-                mouseEnteredTabPanel(evt);
-            }
             public void mousePressed(java.awt.event.MouseEvent evt)
             {
                 scoreTabMousePressed(evt);
@@ -8557,6 +8549,14 @@ public Critic getCritic()
             public void mouseReleased(java.awt.event.MouseEvent evt)
             {
                 scoreTabMouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                scoreTabMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                mouseEnteredTabPanel(evt);
             }
         });
         scoreTab.addKeyListener(new java.awt.event.KeyAdapter()
