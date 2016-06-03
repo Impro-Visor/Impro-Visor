@@ -39,7 +39,7 @@ public class MidiImport
 {
 public final static int DRUM_CHANNEL = 9;
 File file;
-private int defaultResolution = 1;
+private final int defaultResolution = 1;
 private int resolution;
 private static jm.music.data.Score score;
 private static ArrayList<jm.music.data.Part> allParts;
@@ -80,7 +80,7 @@ public void importMidi(File file)
 
 
 /**
- * @param String midiFileName
+ * @param midiFileName
  * 
  */
 

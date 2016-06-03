@@ -1,3 +1,24 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * This Java Class is part of the Impro-Visor Application
  *
@@ -466,184 +487,184 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         keyC8.setBounds(1020, 0, 20, 120);
 
         keyBb0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb0, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb0);
         keyBb0.setBounds(13, 0, 14, 80);
-        keyboardLP.setLayer(keyBb0, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyCsharp1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyCsharp1, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyCsharp1);
         keyCsharp1.setBounds(53, 0, 14, 80);
-        keyboardLP.setLayer(keyCsharp1, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyEb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyEb1, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyEb1);
         keyEb1.setBounds(73, 0, 14, 80);
-        keyboardLP.setLayer(keyEb1, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyFsharp1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyFsharp1, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyFsharp1);
         keyFsharp1.setBounds(113, 0, 14, 80);
-        keyboardLP.setLayer(keyFsharp1, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyGsharp1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyGsharp1, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyGsharp1);
         keyGsharp1.setBounds(133, 0, 14, 80);
-        keyboardLP.setLayer(keyGsharp1, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyBb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb1, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb1);
         keyBb1.setBounds(153, 0, 14, 80);
-        keyboardLP.setLayer(keyBb1, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyCsharp2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyCsharp2, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyCsharp2);
         keyCsharp2.setBounds(193, 0, 14, 80);
-        keyboardLP.setLayer(keyCsharp2, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyEb2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyEb2, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyEb2);
         keyEb2.setBounds(213, 0, 14, 80);
-        keyboardLP.setLayer(keyEb2, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyFsharp2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyFsharp2, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyFsharp2);
         keyFsharp2.setBounds(253, 0, 14, 80);
-        keyboardLP.setLayer(keyFsharp2, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyGsharp2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyGsharp2, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyGsharp2);
         keyGsharp2.setBounds(273, 0, 14, 80);
-        keyboardLP.setLayer(keyGsharp2, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyBb2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb2, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb2);
         keyBb2.setBounds(293, 0, 14, 80);
-        keyboardLP.setLayer(keyBb2, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyCsharp3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyCsharp3, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyCsharp3);
         keyCsharp3.setBounds(333, 0, 14, 80);
-        keyboardLP.setLayer(keyCsharp3, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyEb3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyEb3, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyEb3);
         keyEb3.setBounds(353, 0, 14, 80);
-        keyboardLP.setLayer(keyEb3, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyFsharp3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyFsharp3, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyFsharp3);
         keyFsharp3.setBounds(393, 0, 14, 80);
-        keyboardLP.setLayer(keyFsharp3, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyGsharp3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyGsharp3, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyGsharp3);
         keyGsharp3.setBounds(413, 0, 14, 80);
-        keyboardLP.setLayer(keyGsharp3, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyBb3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb3, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb3);
         keyBb3.setBounds(433, 0, 14, 80);
-        keyboardLP.setLayer(keyBb3, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyCsharp4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyCsharp4, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyCsharp4);
         keyCsharp4.setBounds(473, 0, 14, 80);
-        keyboardLP.setLayer(keyCsharp4, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyEb4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyEb4, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyEb4);
         keyEb4.setBounds(493, 0, 14, 80);
-        keyboardLP.setLayer(keyEb4, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyFsharp4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyFsharp4, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyFsharp4);
         keyFsharp4.setBounds(533, 0, 14, 80);
-        keyboardLP.setLayer(keyFsharp4, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyGsharp4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyGsharp4, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyGsharp4);
         keyGsharp4.setBounds(553, 0, 14, 80);
-        keyboardLP.setLayer(keyGsharp4, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyBb4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb4, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb4);
         keyBb4.setBounds(573, 0, 14, 80);
-        keyboardLP.setLayer(keyBb4, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyCsharp5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyCsharp5, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyCsharp5);
         keyCsharp5.setBounds(613, 0, 14, 80);
-        keyboardLP.setLayer(keyCsharp5, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyEb5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyEb5, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyEb5);
         keyEb5.setBounds(633, 0, 14, 80);
-        keyboardLP.setLayer(keyEb5, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyFsharp5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyFsharp5, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyFsharp5);
         keyFsharp5.setBounds(673, 0, 14, 80);
-        keyboardLP.setLayer(keyFsharp5, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyGsharp5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyGsharp5, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyGsharp5);
         keyGsharp5.setBounds(693, 0, 14, 80);
-        keyboardLP.setLayer(keyGsharp5, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyBb5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb5, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb5);
         keyBb5.setBounds(713, 0, 14, 80);
-        keyboardLP.setLayer(keyBb5, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyCsharp6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyCsharp6, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyCsharp6);
         keyCsharp6.setBounds(753, 0, 14, 80);
-        keyboardLP.setLayer(keyCsharp6, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyEb6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyEb6, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyEb6);
         keyEb6.setBounds(773, 0, 14, 80);
-        keyboardLP.setLayer(keyEb6, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyFsharp6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyFsharp6, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyFsharp6);
         keyFsharp6.setBounds(813, 0, 14, 80);
-        keyboardLP.setLayer(keyFsharp6, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyGsharp6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyGsharp6, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyGsharp6);
         keyGsharp6.setBounds(833, 0, 14, 80);
-        keyboardLP.setLayer(keyGsharp6, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyBb6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb6, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb6);
         keyBb6.setBounds(853, 0, 14, 80);
-        keyboardLP.setLayer(keyBb6, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyCsharp7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyCsharp7, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyCsharp7);
         keyCsharp7.setBounds(893, 0, 14, 80);
-        keyboardLP.setLayer(keyCsharp7, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyEb7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyEb7, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyEb7);
         keyEb7.setBounds(913, 0, 14, 80);
-        keyboardLP.setLayer(keyEb7, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyFsharp7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyFsharp7, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyFsharp7);
         keyFsharp7.setBounds(953, 0, 14, 80);
-        keyboardLP.setLayer(keyFsharp7, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyGsharp7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyGsharp7, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyGsharp7);
         keyGsharp7.setBounds(973, 0, 14, 80);
-        keyboardLP.setLayer(keyGsharp7, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         keyBb7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/blackkey.jpg"))); // NOI18N
+        keyboardLP.setLayer(keyBb7, javax.swing.JLayeredPane.PALETTE_LAYER);
         keyboardLP.add(keyBb7);
         keyBb7.setBounds(993, 0, 14, 80);
-        keyboardLP.setLayer(keyBb7, javax.swing.JLayeredPane.PALETTE_LAYER);
 
         pointerC4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/pointer.png"))); // NOI18N
         keyboardLP.add(pointerC4);
@@ -751,7 +772,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         chordStepBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/playReversedGreen.gif"))); // NOI18N
         chordStepBackButton.setToolTipText("Move back to the previous chord (without playing).\n");
-        chordStepBackButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        chordStepBackButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         chordStepBackButton.setFocusable(false);
         chordStepBackButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         chordStepBackButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -767,7 +788,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         chordReplayButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/replayGreen.gif"))); // NOI18N
         chordReplayButton.setToolTipText("Replays chord.");
-        chordReplayButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        chordReplayButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         chordReplayButton.setFocusable(false);
         chordReplayButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         chordReplayButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -782,7 +803,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         chordStepForwardButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/playGreen.gif"))); // NOI18N
         chordStepForwardButton.setToolTipText("Move to, and play, the next chord.");
-        chordStepForwardButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        chordStepForwardButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         chordStepForwardButton.setFocusable(false);
         chordStepForwardButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         chordStepForwardButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -971,12 +992,12 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
