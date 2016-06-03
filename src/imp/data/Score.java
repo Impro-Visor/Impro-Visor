@@ -1280,15 +1280,15 @@ public class Score implements Constants, Serializable {
     }
 
 
-  /**
-   * Add chords in the current selection in RoadMapFrame to this Score.
-   */
-    
-  public void fromRoadMapFrame(RoadMapFrame roadmap)
-    {
-        chordProg.addFromRoadMapFrame(roadmap);
-        setLength(chordProg.size());
-    }
+//  /**
+//   * Add chords in the current selection in RoadMapFrame to this Score.
+//   */
+//    
+//  public void fromRoadMapFrame(RoadMapFrame roadmap)
+//    {
+//        chordProg.addFromRoadMapChordBlocks(roadmap);
+//        setLength(chordProg.size());
+//    }
 
   
 /**

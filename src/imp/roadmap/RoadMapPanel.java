@@ -341,6 +341,11 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         return new ArrayList<Block>();
     }
     
+    protected String getStylenameOfFirstInSelection()
+    {
+        return roadMap.getFirstStyle();
+    }
+    
     /** Removes and returns the selected blocks*/
     protected ArrayList<Block> removeSelection()
     {

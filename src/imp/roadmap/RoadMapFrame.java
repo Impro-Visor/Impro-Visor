@@ -699,10 +699,8 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         brickDictionaryFrame.setTitle("Brick Dictionary"); // NOI18N
         brickDictionaryFrame.setAlwaysOnTop(true);
-        brickDictionaryFrame.setMaximumSize(new java.awt.Dimension(300, 500));
         brickDictionaryFrame.setMinimumSize(new java.awt.Dimension(300, 500));
         brickDictionaryFrame.setName("brickDictionaryFrame"); // NOI18N
-        brickDictionaryFrame.setPreferredSize(new java.awt.Dimension(300, 500));
         brickDictionaryFrame.addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
@@ -4214,7 +4212,7 @@ public void saveToNewNotate()
     ChordPart chordPart = new ChordPart();
     chordPart.setStyle(getStyle());
 
-    chordPart.addFromRoadMapFrame(this);
+    chordPart.addFromRoadMapChordBlocks(getChordsInSelection());
 
     // A small hack to deal with a totally empty chord part.
 
@@ -4293,9 +4291,9 @@ public void setParent(Notate notate)
          }
          
         ChordPart chordPart = new ChordPart();
-        ArrayList<Block> blocks = roadMapPanel.getSelection();
+        //ArrayList<Block> blocks = roadMapPanel.getSelection();
        
-        chordPart.addFromRoadMapFrame(this);
+        chordPart.addFromRoadMapChordBlocks(getChordsInSelection());
  
         Score score = new Score(chordPart);
         score.setMetre(getMetre());

@@ -25,6 +25,7 @@ import imp.roadmap.brickdictionary.Brick;
 import imp.roadmap.brickdictionary.ChordBlock;
 import imp.roadmap.brickdictionary.KeySpan;
 import imp.roadmap.cykparser.PostProcessor;
+import imp.style.Style;
 import java.util.ArrayList;
 import java.util.List;
 //import polya.Formatting;
@@ -463,4 +464,17 @@ public class RoadMap {
           }
         return null;
       }
+    
+    public String getFirstStyle()
+    {
+        for( Block b: blocks )
+          {
+            String tentative = b.getStyleName();
+            if( !tentative.equals(imp.style.Style.USE_PREVIOUS_STYLE) )
+              {
+                return tentative;
+              }
+          }
+        return imp.style.Style.USE_PREVIOUS_STYLE;
+    }
 }

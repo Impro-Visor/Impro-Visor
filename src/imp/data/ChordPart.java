@@ -588,10 +588,8 @@ public void toRoadMapFrame(RoadMapFrame roadmapFrame)
  * Add chords in the current selection in RoadMapFrame to this ChordPart.
  */
 
-public void addFromRoadMapFrame(RoadMapFrame roadmap)
+public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.ChordBlock> chords)
   {
-    ArrayList<imp.roadmap.brickdictionary.ChordBlock> chords = roadmap.getChordsInSelection();
-
     Iterator<imp.roadmap.brickdictionary.ChordBlock> i = chords.iterator();
 
     int totalSlots = 0;
@@ -603,12 +601,13 @@ public void addFromRoadMapFrame(RoadMapFrame roadmap)
         
         Chord chord = new Chord(chordBlock);
         
-        String name = chord.getName();
+        //String name = chord.getName();
         if( chord.getRhythmValue() > 0 ) {
             // Note: 0 duration causes addUnit to fail.
             totalSlots += chordBlock.getDuration();
             addChord(chord);
             if( chordBlock.isSectionEnd() ) {
+                System.out.println("chordBlock.getStyleName() = " + chordBlock.getStyleName());
                 addSection(chordBlock.getStyleName(),
                            sectionStart,
                            chordBlock.isPhraseEnd());

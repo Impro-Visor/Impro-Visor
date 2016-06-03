@@ -32,6 +32,7 @@ import static imp.data.NoteSymbol.makeNoteSymbol;
 import java.util.ArrayList;
 import imp.lickgen.NoteConverter;
 import polya.PolylistEnum;
+import static imp.data.NoteSymbol.makeNoteSymbol;
 
 /**
  * The GuideLineGenerator class is used to create a leadsheet of guide tones

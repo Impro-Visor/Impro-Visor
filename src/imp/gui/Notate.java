@@ -26515,19 +26515,19 @@ public void chordPartToRoadMapFrame(RoadMapFrame roadmap)
     chordPart.toRoadMapFrame(roadmap);
   }
 
-/**
- * Add selected bars from roadmap to the current Score displayed.
- *
- * @param roadmap
- */
-public void addToChordPartFromRoadMapFrame(RoadMapFrame roadmap)
-  {
-    score.fromRoadMapFrame(roadmap);
-    setBars(score.getBarsPerChorus());
-    //TODO style isn't set correctly
-    //TODO set name
-    repaint();
-  }
+///**
+// * Add selected bars from roadmap to the current Score displayed.
+// *
+// * @param roadmap
+// */
+//public void addToChordPartFromRoadMapFrame(RoadMapFrame roadmap)
+//  {
+//    score.fromRoadMapFrame(roadmap);
+//    setBars(score.getBarsPerChorus());
+//    //TODO style isn't set correctly
+//    //TODO set name
+//    repaint();
+//  }
 
 /**
  * Execute a command in the context of this Notate frame.
