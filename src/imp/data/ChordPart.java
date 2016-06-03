@@ -588,7 +588,7 @@ public void toRoadMapFrame(RoadMapFrame roadmapFrame)
  * Add chords in the current selection in RoadMapFrame to this ChordPart.
  */
 
-public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.ChordBlock> chords)
+public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.ChordBlock> chords, String previousStyleName)
   {
     Iterator<imp.roadmap.brickdictionary.ChordBlock> i = chords.iterator();
 
@@ -606,9 +606,14 @@ public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.Chor
             // Note: 0 duration causes addUnit to fail.
             totalSlots += chordBlock.getDuration();
             addChord(chord);
+            
+            String styleName = chordBlock.getStyleName();
+            if( styleName.equals(Style.USE_PREVIOUS_STYLE) )
+              {
+                styleName = previousStyleName;
+              }
             if( chordBlock.isSectionEnd() ) {
-                System.out.println("chordBlock.getStyleName() = " + chordBlock.getStyleName());
-                addSection(chordBlock.getStyleName(),
+                addSection(styleName,
                            sectionStart,
                            chordBlock.isPhraseEnd());
                 sectionStart = totalSlots;
