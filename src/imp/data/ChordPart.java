@@ -616,7 +616,12 @@ public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.Chor
               {
                 previousStyleName = styleName;
               }
-            if( chordBlock.isSectionEnd() ) {
+            // The second condition below is needed in case the last block
+            // in the selection is not a section end in the roadmap.
+            // In this case we still want to create a proper section with
+            // a style.
+            
+            if( chordBlock.isSectionEnd() || !i.hasNext() ) {
                 addSection(styleName,
                            sectionStart,
                            chordBlock.isPhraseEnd());
