@@ -68,7 +68,7 @@ public class PhraseTable {
         LinkedList<Integer> pitches = getNotes(phraseToAdd);
         if (pitches.size() > 0){
             int newNoteKey = pitches.get(0);
-            System.out.println("INSERT PITCH " + newNoteKey);
+            //System.out.println("INSERT PITCH " + newNoteKey);
             LinkedList<MelodyPart> melodies = phrases.get(newNoteKey);
             if(melodies == null){
                 melodies = new LinkedList<MelodyPart>();
@@ -91,9 +91,9 @@ public class PhraseTable {
         if(notes.size() >= 2){
             MelodyPart nextPhrase;
             int nextNote = getNextNote(notes);
-            System.out.println("Searching for pitch" + nextNote);
+            //System.out.println("Searching for pitch" + nextNote);
             nextPhrase = getLastPhrase(nextNote);
-            System.out.println("phrases: " + phrases.get(nextNote));
+            //System.out.println("phrases: " + phrases.get(nextNote));
             return nextPhrase;
         }
         else {
