@@ -27,6 +27,7 @@ import imp.roadmap.brickdictionary.ChordBlock;
 import imp.data.Chord;
 import imp.data.Note;
 import imp.data.PitchClass;
+import imp.style.Style;
 import imp.util.ErrorLog;
 import java.awt.*;
 import java.io.BufferedWriter;
@@ -340,10 +341,14 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         }
         return new ArrayList<Block>();
     }
-    
-    protected String getStylenameOfFirstInSelection()
+
+    protected String getFirstStylenameInSelection()
     {
-        return roadMap.getFirstStyle();
+    if(graphicMap != null && !graphicMap.isEmpty() && selectionStart != -1 && selectionEnd != -1 ) {
+
+        return roadMap.getFirstStyleAtOrBefore(selectionStart);
+        }
+    return Style.USE_PREVIOUS_STYLE; // dummy
     }
     
     /** Removes and returns the selected blocks*/
@@ -387,6 +392,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         return roadMap.getBlocks(start, end);
     }
     
+
     /** Removes and returns all blocks.*/
     protected ArrayList<Block> removeBlocks()
     {

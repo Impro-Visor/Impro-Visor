@@ -387,6 +387,7 @@ abstract public class Block {
      * @return whether this block has just one chord
      */
     abstract public boolean singleChord();
+    
     public void setStyleName(String newStyleName)
     {
         styleName = newStyleName;

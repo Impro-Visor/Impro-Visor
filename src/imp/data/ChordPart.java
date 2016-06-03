@@ -612,6 +612,10 @@ public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.Chor
               {
                 styleName = previousStyleName;
               }
+            else
+              {
+                previousStyleName = styleName;
+              }
             if( chordBlock.isSectionEnd() ) {
                 addSection(styleName,
                            sectionStart,

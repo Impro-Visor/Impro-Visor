@@ -3554,6 +3554,11 @@ public void setVolumeSlider(int volume)
         return RoadMap.getChords(roadMapPanel.getSelection());
     }
     
+    public String getFirstStylenameInSelection()
+    {
+        return roadMapPanel.getFirstStylenameInSelection();
+    }
+    
     /** Saves the current state of the roadmap */
     private void saveState(String name)
     {
@@ -4212,7 +4217,8 @@ public void saveToNewNotate()
     ChordPart chordPart = new ChordPart();
     chordPart.setStyle(getStyle());
 
-    chordPart.addFromRoadMapChordBlocks(getChordsInSelection(), roadMapPanel.getRoadMap().getFirstStyle());
+    chordPart.addFromRoadMapChordBlocks(getChordsInSelection(), 
+                                        getFirstStylenameInSelection());
 
     // A small hack to deal with a totally empty chord part.
 
@@ -4293,7 +4299,8 @@ public void setParent(Notate notate)
         ChordPart chordPart = new ChordPart();
         //ArrayList<Block> blocks = roadMapPanel.getSelection();
        
-        chordPart.addFromRoadMapChordBlocks(getChordsInSelection(), roadMapPanel.getRoadMap().getFirstStyle());
+        chordPart.addFromRoadMapChordBlocks(getChordsInSelection(), 
+                                            getFirstStylenameInSelection());
  
         Score score = new Score(chordPart);
         score.setMetre(getMetre());

@@ -465,16 +465,17 @@ public class RoadMap {
         return null;
       }
     
-    public String getFirstStyle()
-    {
-        for( Block b: blocks )
+    public String getFirstStyleAtOrBefore(int index)
+    {   
+        for( int i = index; i >= 0; i-- )
           {
-            String tentative = b.getStyleName();
-            if( !tentative.equals(imp.style.Style.USE_PREVIOUS_STYLE) )
+            String tentative = blocks.get(i).getStyleName();
+            if( !tentative.equals(Style.USE_PREVIOUS_STYLE) )
               {
                 return tentative;
               }
           }
-        return imp.style.Style.USE_PREVIOUS_STYLE;
+
+        return Style.USE_PREVIOUS_STYLE;
     }
 }
