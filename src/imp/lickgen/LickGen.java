@@ -2030,7 +2030,7 @@ private boolean fillMelodyHelper(MelodyPart lick,
                                             inner = inner.rest();
                                             //get next note
 
-                                            Note nextNote = parseNote((String) inner.first(), beatValue);
+                                            Note nextNote = parseNote(inner.first().toString(), beatValue);
                                             int nextType = nextNote.getPitch();
 
                                             // Set the next note....
@@ -2275,7 +2275,7 @@ private boolean fillMelodyHelper(MelodyPart lick,
                     // out its rhythm value.
                     if( rhythmString.nonEmpty() && !(rhythmString.first() instanceof Polylist) )
                       {
-                        Note nextNote = parseNote((String) rhythmString.first(), beatValue);
+                        Note nextNote = parseNote(rhythmString.first().toString(), beatValue);
 
                         // Force the next type to be a chord tone for now -- can change this later.
                         int nextType = CHORD;
