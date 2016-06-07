@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2012-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2012-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -22,7 +22,6 @@ package imp.midi;
 
 import imp.data.ImportMelody;
 import imp.data.MelodyPart;
-import imp.midi.MIDIBeast;
 import static imp.midi.MidiImport.DRUM_CHANNEL;
 import imp.util.ErrorLog;
 import java.io.File;
@@ -105,6 +104,72 @@ public void readMidiFile(String midiFileName)
     
 public void scoreToMelodies()
   {
+  int quantum[] = {1, 1};
+  scoreToMelodies(quantum);
+//  //System.out.println("score from MIDI = " + score);
+//  if( score != null )
+//    {
+//    allParts = new ArrayList<jm.music.data.Part>();
+//
+//    allParts.addAll(Arrays.asList(score.getPartArray()));
+//
+//    ImportMelody importMelody = new ImportMelody(score);
+//
+//    //System.out.println("importMelody = " + importMelody);
+//
+//    melodies = new LinkedList<MidiImportRecord>();
+//    
+//    for( int i = 0; i < importMelody.size(); i++ )
+//      {
+//      try
+//        {
+//        jm.music.data.Part part = importMelody.getPart(i);
+//        int channel = part.getChannel();
+//        //System.out.println("part " + i + " raw = " + part);
+//        int numTracks = part.getSize();
+//        
+//        for( int j = 0; j < numTracks; j++ )
+//          {
+//            MelodyPart partOut = new MelodyPart();
+//            ImportMelody.convertToImpPart(part, j, partOut, resolution);
+//            
+//              // For Testing of impMelody2jmPart only
+//              
+//              // jm.music.data.Part tempPart = impMelody2jmPart(partOut);
+//              // MelodyPart echoedPart = new MelodyPart();
+//              // ImportMelody.convertToImpPart(tempPart, 0, echoedPart, 1);
+//              // System.out.println(echoedPart);
+//              // System.out.println();
+//            
+//            String instrumentString = MIDIBeast.getInstrumentForPart(part);
+//            
+//            if( channel != DRUM_CHANNEL )
+//               {
+//                partOut.setInstrument(part.getInstrument());
+//               }
+//            
+//            MidiImportRecord record = new MidiImportRecord(channel, j, partOut, instrumentString);
+//            melodies.add(record);            
+//          }
+//        }
+//      catch( java.lang.OutOfMemoryError e )
+//        {
+//        ErrorLog.log(ErrorLog.SEVERE, "There is not enough memory to continue importing this MIDI file.");
+//        return;
+//        }
+//      }
+//    
+//    Collections.sort(melodies);
+    
+//    for( MidiImportRecord record: melodies )
+//      {
+//        System.out.println(record);
+//      }    
+//    }
+  }
+  
+public void scoreToMelodies(int quantum[])
+  {
   //System.out.println("score from MIDI = " + score);
   if( score != null )
     {
@@ -130,7 +195,7 @@ public void scoreToMelodies()
         for( int j = 0; j < numTracks; j++ )
           {
             MelodyPart partOut = new MelodyPart();
-            ImportMelody.convertToImpPart(part, j, partOut, resolution);
+            ImportMelody.convertToImpPart(part, j, partOut, quantum, resolution);
             
               // For Testing of impMelody2jmPart only
               
@@ -166,7 +231,6 @@ public void scoreToMelodies()
 //      }    
     }
   }
-    
     
     public jm.music.data.Score getScore() {
         return score;

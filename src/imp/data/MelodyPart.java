@@ -1,7 +1,7 @@
  /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1875,8 +1875,8 @@ public void setAutoFill(boolean fill)
             System.out.print("slot: "+slot);
             System.out.print(", ");
             System.out.print("duration: "+value);
-            System.out.print(", ");
-            System.out.println("cost: "+getUnitCost(note));
+            //System.out.print(", ");
+            //System.out.println("cost: "+getUnitCost(note));
             slot += value;
         }
         return result;   
@@ -2105,104 +2105,107 @@ public void setAutoFill(boolean fill)
         }
     }
     
-    /**
-     * returns the total of all the note costs of a given melody
-     * @param MelodyPart m
-     * @return int total
-     */
+//    /**
+//     * returns the total of all the note costs of a given melody
+//     * @param MelodyPart m
+//     * @return int total
+//     */
+//    
+//    public int getMelodyCost()
+//    {
+//        MelodyPart m = this;
+//        
+//        int total = 0;
+//        PartIterator iter = m.iterator();
+//        while(iter.hasNext())
+//        {
+//            Note n = ((Note)iter.next());
+//            if(n.nonRest())
+//            {
+//                total += Math.abs(getUnitCost(n));
+//            }
+//        }       
+//        return total;
+//    }
     
-    public int getMelodyCost()
-    {
-        MelodyPart m = this;
-        
-        int total = 0;
-        PartIterator iter = m.iterator();
-        while(iter.hasNext())
-        {
-            Note n = ((Note)iter.next());
-            if(n.nonRest())
-            {
-                total += Math.abs(getUnitCost(n));
-            }
-        }       
-        return total;
-    }
+//    /**
+//     * calculates the weighted cost of a given melody by finding the median note
+//     * and weighting each lost note by that value in combination with the 
+//     * standard getMelodyCost() function
+//     * @param int initialSum
+//     * @return int  wCost
+//     */
+//    
+//    public int getWeightedMelodyCost(int initialSum)
+//    {
+//        MelodyPart m = this;
+//        int wCost;
+//        int noteSum = m.getNoteSum();
+//        int diff = initialSum - noteSum;
+//        int median = m.getMedianNoteLength();
+//        int cost = m.getMelodyCost();
+//        
+//        //System.out.println("diff: "+diff+", median: "+median+", cost: "+cost);
+//        
+//        wCost = ((diff)*median)+(cost);
+//        
+//        return wCost;
+//    }
     
-    /**
-     * calculates the weighted cost of a given melody by finding the median note
-     * and weighting each lost note by that value in combination with the 
-     * standard getMelodyCost() function
-     * @param int initialSum
-     * @return int  wCost
-     */
-    
-    public int getWeightedMelodyCost(int initialSum)
-    {
-        MelodyPart m = this;
-        int wCost;
-        int noteSum = m.getNoteSum();
-        int diff = initialSum - noteSum;
-        int median = m.getMedianNoteLength();
-        int cost = m.getMelodyCost();
-        
-        //System.out.println("diff: "+diff+", median: "+median+", cost: "+cost);
-        
-        wCost = ((diff)*median)+(cost);
-        
-        return wCost;
-    }
-    
-    /**
-     * applies all resolution values to the melody and returns the melody
-     * with the minimal note sum loss as compared to the original melody
-     * @param melody MelodyPart
-     * @return int bestResolution
-     */
-    
-    public int getBestResolution()
-    {
-        // variable declarations to store the melody the function is called on,
-        // the melody with the best resolution thus far, and the melody with the
-        // resolution currently under evaluation
-        MelodyPart melody = this.copy();
-        MelodyPart appliedRes;
-        int bestResolution = 0;
-        int cost;
-        
-        int initialNoteSum = melody.getNoteSum();
-        //System.out.println("Initial note sum: "+initialNoteSum);
-        
-        MelodyPart start = melody.applyResolution(120);
-        int lowestCost = start.getWeightedMelodyCost(initialNoteSum);
-        
-        for (int i = 0; i<knownResolutionValue.length; i++)
-        {
-            // stores the given melody with the resolution the for loop provides
-            appliedRes = melody.applyResolution(knownResolutionValue[i]);
-            //calculates the weighted cost for the given resolution
-            cost = appliedRes.getWeightedMelodyCost(initialNoteSum);
-            
-            //System.out.println("applied "+knownResolutionValue[i]+", cost "+cost);
-            
-            if (cost < lowestCost)
-            {
-                bestResolution = knownResolutionValue[i];
-                lowestCost = cost;
-                
-            }
-        }
-        //System.out.println("Found best resolution: "+bestResolution);
-        return bestResolution;
-    }
+//    /**
+//     * applies all resolution values to the melody and returns the melody
+//     * with the minimal note sum loss as compared to the original melody
+//     * @param melody MelodyPart
+//     * @return int bestResolution
+//     */
+//    
+//    public int getBestResolution()
+//    {
+//        // variable declarations to store the melody the function is called on,
+//        // the melody with the best resolution thus far, and the melody with the
+//        // resolution currently under evaluation
+//        MelodyPart melody = this.copy();
+//        MelodyPart appliedRes;
+//        int bestResolution = 0;
+//        int cost;
+//        
+//        int quantum[] = {1, 1};
+//
+//        int initialNoteSum = melody.getNoteSum();
+//        //System.out.println("Initial note sum: "+initialNoteSum);
+//        
+//        MelodyPart start = melody.applyResolution(120, quantum);
+//        int lowestCost = start.getWeightedMelodyCost(initialNoteSum);
+//        
+//        for (int i = 0; i<knownResolutionValue.length; i++)
+//        {
+//            // stores the given melody with the resolution the for loop provides
+//            appliedRes = melody.applyResolution(knownResolutionValue[i], quantum);
+//            //calculates the weighted cost for the given resolution
+//            cost = appliedRes.getWeightedMelodyCost(initialNoteSum);
+//            
+//            //System.out.println("applied "+knownResolutionValue[i]+", cost "+cost);
+//            
+//            if (cost < lowestCost)
+//            {
+//                bestResolution = knownResolutionValue[i];
+//                lowestCost = cost;
+//                
+//            }
+//        }
+//        //System.out.println("Found best resolution: "+bestResolution);
+//        return bestResolution;
+//    }
     
     /**
      * applies a given resolution to a given melodyPart and returns 
      * the int noteSum 
      * @param resolution int 
+     * @param quantum 
      * @return NoteSum int 
      */
     
-    public MelodyPart applyResolution(int resolution)
+    public MelodyPart applyResolution(int resolution, int quantum[])
     {
         //System.out.println("resolution = " + resolution);
         MelodyPart melody = this.copy();
@@ -2215,11 +2218,13 @@ public void setAutoFill(boolean fill)
         midiImport.setResolution(resolution);
         
         // extracts the melody from the score
-        midiImport.scoreToMelodies();
+        midiImport.scoreToMelodies(quantum);
         melody = midiImport.getMelody(0);
 
         return melody;
     }
+    
+    
     
 //public void swap(Note shiftFor, Note moveBack)
 //    {

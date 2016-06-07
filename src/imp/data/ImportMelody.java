@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2012-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2012-2016 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -36,6 +36,7 @@ import java.util.Iterator;
  * Pitches are kept as integers representing Hertz values. The final melody was
  * originally stored in MIDIBeast.originalBassNotes, which of course breaks
  * encapsulation.
+ * Wenbo Cao contributed to noteArray2ImpPart.
  */
 public class ImportMelody implements Constants
 {
@@ -61,15 +62,18 @@ public ImportMelody(jm.music.data.Score score)
  * @param melodyPart
  * @param trackNumber
  * @param partOut
+ * @param quantum
  * @param precision 
  */
 public static void convertToImpPart(jm.music.data.Part melodyPart,
                                     int trackNumber,
                                     MelodyPart partOut,
+                                    int quantum[],
                                     int precision)
   {
      convertToImpPart(melodyPart.getPhraseArray()[trackNumber], 
-                      partOut, 
+                      partOut,
+                      quantum,
                       precision);
   }
     
@@ -79,6 +83,7 @@ public static void convertToImpPart(jm.music.data.Part melodyPart,
  */
 public static void convertToImpPart(jm.music.data.Phrase phrase,
                                     MelodyPart partOut,
+                                    int quantum[],
                                     int precision)
   {
     jm.music.data.Note[] notes = phrase.getNoteArray();
@@ -109,7 +114,7 @@ public static void convertToImpPart(jm.music.data.Phrase phrase,
       slot += restSlots; 
       }
 
-   noteArray2ImpPart(origNoteArray, time, partOut, slot, precision);
+   noteArray2ImpPart(origNoteArray, time, partOut, slot, quantum, precision);
    // returned slot is ignored.
   }
 
@@ -144,12 +149,10 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
                                 double time,
                                 MelodyPart partOut,
                                 int slot,
-                                int quantum)
+                                int quantum[],
+                                int precision)
   {
-    //System.out.println("\nquantum = " + quantum);
-    
-    // Counter for the number of notes lost in the quantization process
-    
+    // Counter for the number of notes lost in the quantization proces    
     int notesLost = 0;
     
     // The time from the jMusic part and the slot in the Impro-Visor part
@@ -165,11 +168,34 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
 
     int usedUpToSlot = slot;
     
+    // Assuming selected note value is quarter, eighth, sixteenth
+    // subdivisions will be 1, 2, 4
+    // quantum[0] will be 120, 60, 30
+    // quantum[1] (for triplets will be) 80, 40, 20
+    // gcd will be 40, 20, 10
+    // When either regular notes or triplets are not wanted, the corresponding
+    // quantum will be set to a large value such as 480, the number of slots
+    // in 4 beats.
+    
+    int gcd = gcd(quantum[0], quantum[1]);
+    
+    // Consider moving reporting to the Quantize Chorus dialog
+    // The remainder of the line is printed after quantization
+    System.out.print("quanta = " + quantum[0] + " & " + quantum[1] 
+                     + ", gcd = " + gcd + ": " );
+ 
     while( origNotes.hasNext() )
       {
         // Catch up the number of slots up to quantized time.
-        int timeInSlots = quantizeDown(time, quantum);
+        int timeInSlots = quantizeDown(time, precision);
         slot = Math.max(slot, timeInSlots);
+        
+        while( !((slot%quantum[0] == 0) || (slot%quantum[1] == 0)) )
+          {
+            //System.out.println("skipping slot " + slot);
+            slot += 1;
+            // use 1 rather than gcd, because otherwise this might not terminate
+          }
         
         // Get the next Note to be placed, or a rest.
         jm.music.data.Note longNote = origNotes.next();
@@ -177,24 +203,33 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
         //System.out.println("time = " + time + " note = " + longNote);
         time += longNote.getRhythmValue();
         
+        // time now represents the time at which longNote nominally ends.
+        
         if( !longNote.isRest() )
           {
-          while( time*FACTOR < slot + quantum && origNotes.hasNext() )
+
+          // Iterate as long as there are more notes that will fit in
+          // the current interval.
+            
+          while( time*FACTOR < slot + gcd && origNotes.hasNext() )
             {
-            // The note starting at time is placeable in the current slot.
+            // Consider the next note.
             jm.music.data.Note note = origNotes.next();
-            //System.out.println("time = " + time + " note = " + note);
             
-            // Account for the time elapsed in that note (or rest).
+            // Account for the time elapsed in that note (or rest). 
+            // We still need to advance the time, even if only one of note
+            // or longNote gets used, because that space is used in the
+            // input melody.
+            
             time += note.getRhythmValue();
-            
-            // Incoming rests are ignored, except that time is still advanced
-            // on account of them.
             
             if( !note.isRest() )
               {
-              // If the current note is longer than the previous long one
+              // If the next note is longer than the previous long one
               // replace the long note in the slot with the current one.
+              // The idea here is the we cannot fit both notes, so the
+              // longer one is regarded as the more important.
+                
               if( note.getRhythmValue() > longNote.getRhythmValue() )
                 {
                 //System.out.println("losing " + longNote);
@@ -203,24 +238,26 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
                 }
               else
                 {
+                // The next note is not longer than longNote, so we just lose it.
                 //System.out.println("losing " + note);
+                notesLost++;
                 }
-              notesLost++;
               }
-            }
-          // No further notes starting at time is not placeable in the current slot.
-          // Therefore we will place the longest placeable note in the current slot.
-          int duration = quantize(longNote.getRhythmValue(), quantum);
+            } // end of inner while, finding the longest note.
+          
+          // Place the longest placeable note in the current slot.
+          int duration = quantize(longNote.getRhythmValue(), gcd);
           int pitch = longNote.getPitch();
         
-          // However, we may need to place a rest first, to fill the intervening
+          // However, we may need to place a rest first, in case there is a
           // gap between the end of the previous note and the current slot.
           
           if( slot > usedUpToSlot )
             {
               partOut.addRest(new Rest(slot-usedUpToSlot));
             }
-          // Place the new note.
+          
+          // Create and place the new note.
           Note newNote = new Note(pitch, duration);
           //System.out.println("slot = " + slot + " adding pitch = " + pitch 
           // + " duration = " + duration + " " + newNote + "\n");
@@ -230,11 +267,30 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
           slot += duration;
           usedUpToSlot = slot;
           }
-      }
+      } // end of outer while
 
-    //System.out.println("notes lost in quantization: " + notesLost);
+    System.out.println("notes lost in quantization: " + notesLost);
     return slot;
   }
+
+/**
+ * Finds the Greatest Common Denominator of two integers, a & b
+ * @param a         first integer
+ * @param b         second integer
+ * @return int      the GCD of a and b
+ */
+public static int gcd(int a, int b)
+  {
+    if( b == 0 )
+      {
+        return a;
+      }
+    else
+      {
+        return gcd(b, a % b);
+      }
+  }
+
 
 public int size()
   {

@@ -127,6 +127,7 @@ AboutDialog aboutDialog = new AboutDialog(this, false);
 ErrorDialog errorDialog = ErrorLog.getDialog();
 HelpDialog helpDialog = new HelpDialog(this, false);
 ViewAdjustmentDialog viewAdjustmentDialog = new ViewAdjustmentDialog(this, false);
+QuantizationDialog quantizationDialog = new QuantizationDialog(this, false);
 int ADVICE_SCROLL_LIST_ITEMS_VISIBLE = 10;
 private static final String SKIP_GRAMMAR_FILES_STARTING_WITH = "_";
 
@@ -1058,6 +1059,8 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
+    
+    quantizationDialog.setVisible(true);        // TEMPORARY FOR DEVELOPMENT
   } // end of Notate constructor
 
 boolean showConstructionLinesAndBoxes = true;
@@ -2087,6 +2090,7 @@ public Critic getCritic()
         pianoKeyboardMI = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
+        openQuantizeDialogMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         fractalMI = new javax.swing.JMenuItem();
@@ -9749,6 +9753,18 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(openLeadsheetEditorMI);
+
+        openQuantizeDialogMI.setMnemonic('S');
+        openQuantizeDialogMI.setText("Quantization");
+        openQuantizeDialogMI.setToolTipText("Open dialog for quantizing note values.");
+        openQuantizeDialogMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                openQuantizeDialogMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(openQuantizeDialogMI);
 
         styleGenerator1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         styleGenerator1.setMnemonic('S');
@@ -23499,17 +23515,7 @@ private boolean isDotted = false;
 
     private void quantizeComboBoxscaleChosen(java.awt.event.ActionEvent evt)//GEN-FIRST:event_quantizeComboBoxscaleChosen
     {//GEN-HEADEREND:event_quantizeComboBoxscaleChosen
-        MelodyPart originalPart = getCurrentMelodyPart();
-        MelodyPart quantizedPart;
-        String quantizeString = ((String) quantizeComboBox.getSelectedItem());
-        int quantizeResolution= getSlotsFromString(quantizeString);
-        
-        if( quantizeResolution > 0 )
-          {
-            quantizedPart = originalPart.applyResolution(quantizeResolution);
-            quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument()); //fix bug 60
-            addChorus(quantizedPart);
-          }
+        originalQuantize();
     }//GEN-LAST:event_quantizeComboBoxscaleChosen
 
     private void notateGrammarMenuMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_notateGrammarMenuMousePressed
@@ -23517,7 +23523,33 @@ private boolean isDotted = false;
         //populateNotateGrammarMenu();
     }//GEN-LAST:event_notateGrammarMenuMousePressed
 
+    public void originalQuantize()
+    {
+        MelodyPart originalPart = getCurrentMelodyPart();
+        MelodyPart quantizedPart;
+        String quantizeString = ((String) quantizeComboBox.getSelectedItem());
+        int quantizeResolution = getSlotsFromString(quantizeString);
+        
+        if( quantizeResolution > 0 )
+          {
+            int quantum[] = {quantizeResolution, quantizeResolution};
+            quantizedPart = originalPart.applyResolution(BEAT, quantum); // BEAT was quantizeResolution
+            quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument()); //fix bug 60
+            addChorus(quantizedPart);
+          }      
+    }
     
+  public void newQuantize()
+    {
+        MelodyPart originalPart = getCurrentMelodyPart();
+        MelodyPart quantizedPart;
+        int quantum[] = quantizationDialog.getQuanta();
+        
+        quantizedPart = originalPart.applyResolution(BEAT, quantum);
+        quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument());
+        addChorus(quantizedPart);    
+    }
+      
     /**
      * guideToneLineActionPerformed
      * Makes guideToneLineDialog visible
@@ -23650,6 +23682,11 @@ private boolean isDotted = false;
     {//GEN-HEADEREND:event_formFocusedGained
    
     }//GEN-LAST:event_formFocusedGained
+
+    private void openQuantizeDialogMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openQuantizeDialogMIActionPerformed
+    {//GEN-HEADEREND:event_openQuantizeDialogMIActionPerformed
+        quantizationDialog.setVisible(true);
+    }//GEN-LAST:event_openQuantizeDialogMIActionPerformed
 
     private void setModesThatCantTrade(boolean enabled)
     {
@@ -25919,6 +25956,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton openBtn;
     private javax.swing.JMenuItem openLeadsheetEditorMI;
     private javax.swing.JMenuItem openLeadsheetMI;
+    private javax.swing.JMenuItem openQuantizeDialogMI;
     private javax.swing.JMenu openRecentLeadsheetMenu;
     private javax.swing.JMenu openRecentLeadsheetNewWindowMenu;
     private javax.swing.ButtonGroup otherColorBtnGrp;

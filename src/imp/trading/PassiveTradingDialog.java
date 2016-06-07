@@ -203,6 +203,13 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         numberOfBarsGroup.add(four);
         four.setSelected(true);
         four.setText("four");
+        four.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                fourActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -400,6 +407,11 @@ public class PassiveTradingDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_passiveTradingHidden
         notate.setCountIn(countToggle.isSelected());
     }//GEN-LAST:event_passiveTradingHidden
+
+    private void fourActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_fourActionPerformed
+    {//GEN-HEADEREND:event_fourActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fourActionPerformed
 
 
 private void toggleTrading()
