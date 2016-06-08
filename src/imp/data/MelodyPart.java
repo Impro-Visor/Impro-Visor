@@ -2205,7 +2205,7 @@ public void setAutoFill(boolean fill)
      * @return NoteSum int 
      */
     
-    public MelodyPart applyResolution(int resolution, int quantum[])
+    public MelodyPart applyResolution(int resolution, int quantum[], boolean toSwing)
     {
         //System.out.println("resolution = " + resolution);
         MelodyPart melody = this.copy();
@@ -2218,9 +2218,63 @@ public void setAutoFill(boolean fill)
         midiImport.setResolution(resolution);
         
         // extracts the melody from the score
+        if( toSwing )
+        {
+        int swingQuantum[] = {60, 40};
+        midiImport.scoreToMelodies(swingQuantum); 
+        MelodyPart tempMelody = midiImport.getMelody(0);
+        PartIterator iterator = tempMelody.iterator();
+        int slots = 0;
+        melody = new MelodyPart();
+        while( iterator.hasNext() )
+            {
+            Note thisNote = (Note)iterator.next();
+            Boolean startOnBeat = slots%BEAT == 0;
+            int duration = thisNote.getRhythmValue();
+            if( startOnBeat )
+            {
+                if( duration == 80 )
+                {
+                    Note firstNote = thisNote.isRest() ? new Rest(60) : new Note(thisNote.getPitch(), 60);                   
+                    if( iterator.hasNext() )
+                    {
+                        Note nextNote = (Note)iterator.next();
+                        slots += nextNote.getRhythmValue();
+                        if( nextNote.getRhythmValue() == 40 )
+                        {
+                            Note secondNote = nextNote.isRest()? new Rest(40) : new Note(nextNote.getPitch(), 60);
+                            melody.addNote(firstNote);
+                            melody.addNote(secondNote);
+                        }
+                        else
+                        {
+                            melody.addNote(thisNote.copy());
+                            melody.addNote(nextNote.copy());
+                        }
+                    }
+                    else
+                    {
+                        melody.addNote(thisNote.copy());
+                    }
+                }
+                else
+                {
+                    melody.addNote(thisNote.copy());
+                }
+            }
+            else
+            {
+                melody.addNote(thisNote.copy());
+            }
+            //System.out.println(startOnBeat + " " + thisNote);
+            slots += duration;
+            }
+        }
+        else
+        {
         midiImport.scoreToMelodies(quantum);
         melody = midiImport.getMelody(0);
-
+        }
         return melody;
     }
     

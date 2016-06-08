@@ -424,7 +424,7 @@ public class QuantizationDialog extends javax.swing.JDialog
 
     private void quantizeButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_quantizeButtonActionPerformed
     {//GEN-HEADEREND:event_quantizeButtonActionPerformed
-        notate.newQuantize();
+        notate.newQuantize(eighthNoteSwingBox.isSelected());
     }//GEN-LAST:event_quantizeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

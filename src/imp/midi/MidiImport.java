@@ -167,7 +167,6 @@ public void scoreToMelodies()
 //      }    
 //    }
   }
-  
 public void scoreToMelodies(int quantum[])
   {
   //System.out.println("score from MIDI = " + score);
