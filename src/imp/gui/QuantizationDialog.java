@@ -61,6 +61,11 @@ public class QuantizationDialog extends javax.swing.JDialog
         thirtysecondNoteTripletQuantizationBox = new javax.swing.JCheckBox();
         eighthNoteSwingBox = new javax.swing.JCheckBox();
         quantizeButton = new javax.swing.JButton();
+        noAbsorbBox = new javax.swing.JCheckBox();
+        absorbQuarterRestBox = new javax.swing.JCheckBox();
+        absorbEighthRestBox = new javax.swing.JCheckBox();
+        absorbSixteenthRestBox = new javax.swing.JCheckBox();
+        absorbThirtySecondRestBox = new javax.swing.JCheckBox();
 
         setTitle("Quantize Chorus");
         setBounds(new java.awt.Rectangle(650, 25, 0, 0));
@@ -128,7 +133,6 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         eighthNoteQuantizationBox.setSelected(true);
         eighthNoteQuantizationBox.setText("Eighth-Note");
-        eighthNoteQuantizationBox.setActionCommand("Eighth-Note");
         eighthNoteQuantizationBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -223,8 +227,8 @@ public class QuantizationDialog extends javax.swing.JDialog
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(eighthNoteSwingBox, gridBagConstraints);
 
@@ -239,11 +243,83 @@ public class QuantizationDialog extends javax.swing.JDialog
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         getContentPane().add(quantizeButton, gridBagConstraints);
+
+        noAbsorbBox.setText("No Rest Absorption");
+        noAbsorbBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                noAbsorbBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(noAbsorbBox, gridBagConstraints);
+
+        absorbQuarterRestBox.setText("Absorb Quarter Rests");
+        absorbQuarterRestBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                absorbQuarterRestBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(absorbQuarterRestBox, gridBagConstraints);
+
+        absorbEighthRestBox.setLabel("Absorb Eighth Rests");
+        absorbEighthRestBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                absorbEighthRestBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(absorbEighthRestBox, gridBagConstraints);
+
+        absorbSixteenthRestBox.setSelected(true);
+        absorbSixteenthRestBox.setLabel("Absorb Sixteenth Rests");
+        absorbSixteenthRestBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                absorbSixteenthRestBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(absorbSixteenthRestBox, gridBagConstraints);
+
+        absorbThirtySecondRestBox.setSelected(true);
+        absorbThirtySecondRestBox.setLabel("Absorb Thirty-Second Rests");
+        absorbThirtySecondRestBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                absorbThirtySecondRestBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(absorbThirtySecondRestBox, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -260,11 +336,17 @@ public class QuantizationDialog extends javax.swing.JDialog
             THIRTYSECOND_NOTE_TRIPLET_QUANTUM = 10,
             MINIMUM_QUANTUM = 1;
     
-    private final int quantum[] = {60, 40};
+    private final int quantum[] = {EIGHTH_NOTE_QUANTUM, EIGHTH_NOTE_TRIPLET_QUANTUM};
+    private int restAbsorption = SIXTEENTH_NOTE_QUANTUM;
     
     public int[] getQuanta()
     {
         return quantum;
+    }
+    
+    public int getRestAbsorption()
+    {
+        return restAbsorption;
     }
     
     private void noneQuantizationBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_noneQuantizationBoxActionPerformed
@@ -427,10 +509,91 @@ public class QuantizationDialog extends javax.swing.JDialog
         notate.newQuantize(eighthNoteSwingBox.isSelected());
     }//GEN-LAST:event_quantizeButtonActionPerformed
 
+    private void noAbsorbBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_noAbsorbBoxActionPerformed
+    {//GEN-HEADEREND:event_noAbsorbBoxActionPerformed
+            absorbThirtySecondRestBox.setSelected(false);
+            absorbSixteenthRestBox.setSelected(false);
+            absorbEighthRestBox.setSelected(false);
+            absorbQuarterRestBox.setSelected(false);
+            restAbsorption = MINIMUM_QUANTUM;
+    }//GEN-LAST:event_noAbsorbBoxActionPerformed
+
+    private void absorbQuarterRestBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_absorbQuarterRestBoxActionPerformed
+    {//GEN-HEADEREND:event_absorbQuarterRestBoxActionPerformed
+    if( absorbQuarterRestBox.isSelected() )
+          {
+            noAbsorbBox.setSelected(false);
+            absorbEighthRestBox.setSelected(true);
+            absorbSixteenthRestBox.setSelected(true);
+            absorbThirtySecondRestBox.setSelected(true);
+            restAbsorption = QUARTER_NOTE_QUANTUM;
+          }
+         else
+         {
+            restAbsorption = EIGHTH_NOTE_QUANTUM;
+          }
+    }//GEN-LAST:event_absorbQuarterRestBoxActionPerformed
+
+    private void absorbEighthRestBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_absorbEighthRestBoxActionPerformed
+    {//GEN-HEADEREND:event_absorbEighthRestBoxActionPerformed
+    if( absorbEighthRestBox.isSelected() )
+          {
+            noAbsorbBox.setSelected(false);
+            absorbSixteenthRestBox.setSelected(true);
+            absorbThirtySecondRestBox.setSelected(true);
+            restAbsorption = EIGHTH_NOTE_QUANTUM;
+          }
+         else
+         {
+            absorbQuarterRestBox.setSelected(false);
+            restAbsorption = SIXTEENTH_NOTE_QUANTUM;
+         }
+    }//GEN-LAST:event_absorbEighthRestBoxActionPerformed
+
+    private void absorbSixteenthRestBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_absorbSixteenthRestBoxActionPerformed
+    {//GEN-HEADEREND:event_absorbSixteenthRestBoxActionPerformed
+    if( absorbSixteenthRestBox.isSelected() )
+          {
+            noAbsorbBox.setSelected(false);
+            absorbSixteenthRestBox.setSelected(true);
+            absorbThirtySecondRestBox.setSelected(true);
+            restAbsorption = EIGHTH_NOTE_QUANTUM;
+          }
+         else
+         {
+            absorbEighthRestBox.setSelected(false);
+            absorbQuarterRestBox.setSelected(false);
+            restAbsorption = SIXTEENTH_NOTE_QUANTUM;
+         }
+    }//GEN-LAST:event_absorbSixteenthRestBoxActionPerformed
+
+    private void absorbThirtySecondRestBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_absorbThirtySecondRestBoxActionPerformed
+    {//GEN-HEADEREND:event_absorbThirtySecondRestBoxActionPerformed
+    if( absorbThirtySecondRestBox.isSelected() )
+          {
+            noAbsorbBox.setSelected(false);
+            absorbThirtySecondRestBox.setSelected(true);
+            restAbsorption = THIRTYSECOND_NOTE_QUANTUM;
+          }
+         else
+         {
+            noAbsorbBox.setSelected(true);
+            absorbSixteenthRestBox.setSelected(false);
+            absorbEighthRestBox.setSelected(false);
+            absorbQuarterRestBox.setSelected(false);
+            restAbsorption = MINIMUM_QUANTUM;
+         }
+    }//GEN-LAST:event_absorbThirtySecondRestBoxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox absorbEighthRestBox;
+    private javax.swing.JCheckBox absorbQuarterRestBox;
+    private javax.swing.JCheckBox absorbSixteenthRestBox;
+    private javax.swing.JCheckBox absorbThirtySecondRestBox;
     private javax.swing.JCheckBox eighthNoteQuantizationBox;
     private javax.swing.JCheckBox eighthNoteSwingBox;
     private javax.swing.JCheckBox eighthNoteTripletQuantizationBox;
+    private javax.swing.JCheckBox noAbsorbBox;
     private javax.swing.JCheckBox noTripletQuantizationBox;
     private javax.swing.JCheckBox noneQuantizationBox;
     private javax.swing.JButton quantizeButton;

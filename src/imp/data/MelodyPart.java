@@ -2118,7 +2118,10 @@ public void setAutoFill(boolean fill)
      * @return NoteSum int 
      */
     
-    public MelodyPart applyResolution(int resolution, int quantum[], boolean toSwing)
+    public MelodyPart applyResolution(int resolution, 
+                                      int quantum[], 
+                                      boolean toSwing, 
+                                      int restAbsorption)
     {
         //System.out.println("resolution = " + resolution);
         MelodyPart melody = this.copy();

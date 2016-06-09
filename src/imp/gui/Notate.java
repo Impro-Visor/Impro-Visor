@@ -23533,7 +23533,7 @@ private boolean isDotted = false;
         if( quantizeResolution > 0 )
           {
             int quantum[] = {quantizeResolution, quantizeResolution};
-            quantizedPart = originalPart.applyResolution(BEAT, quantum, false); // BEAT was quantizeResolution
+            quantizedPart = originalPart.applyResolution(BEAT, quantum, false, 1); // BEAT was quantizeResolution
             quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument()); //fix bug 60
             addChorus(quantizedPart);
           }      
@@ -23544,8 +23544,9 @@ private boolean isDotted = false;
         MelodyPart originalPart = getCurrentMelodyPart();
         MelodyPart quantizedPart;
         int quantum[] = quantizationDialog.getQuanta();
+        int restAbsorption = quantizationDialog.getRestAbsorption();
         
-        quantizedPart = originalPart.applyResolution(BEAT, quantum, toSwing);
+        quantizedPart = originalPart.applyResolution(BEAT, quantum, toSwing, restAbsorption);
         quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument());
         addChorus(quantizedPart);    
     }
