@@ -25,7 +25,6 @@ import imp.midi.MidiSynth;
 import imp.midi.MidiImport;
 import imp.midi.MidiSequence;
 import static imp.Constants.knownNoteValue;
-import static imp.Constants.knownResolutionValue;
 import imp.ImproVisor;
 import imp.com.InsertPartCommand;
 import imp.gui.Notate;
@@ -1678,7 +1677,9 @@ public MelodyPart copy(int startingIndex, int endingIndex)
 
  /**
   * returns the last note in the melodypart that is not a rest
+  * @return 
   */
+  
  public Note getLastNote() {
      int tracker = this.getPrevIndex(size);
 
@@ -1787,6 +1788,7 @@ public int getInitialBeatsRest()
   * Get the melody as a list of just note symbols in leadsheet notation
   * @return 
   */
+ 
 public ArrayList<Integer> getArrayListForm()
   {
   ArrayList<Integer> result = new ArrayList<Integer>();
@@ -1814,6 +1816,8 @@ public ArrayList<Integer> getArrayListForm()
  * a 1 is returned in that position. Otherwise a 0 is returned.
  * For this purpose, rests are not considered to be notes.
  * For example, slotSpacing might be 15.
+ * @param slotSpacing
+ * @param maxSize
  * @return
  */
 
@@ -1919,7 +1923,7 @@ public void setAutoFill(boolean fill)
     
     /**
      * returns the known Note closest to a give irregular Note (from above)
-     * @param Note n
+     * @param n
      * @return int cost
      */
     
@@ -1950,7 +1954,7 @@ public void setAutoFill(boolean fill)
     
     /**
      * returns the known Note closest to a give irregular Note (from below)
-     * @param Note n
+     * @param n
      * @return int cost
      */
     
@@ -2071,7 +2075,7 @@ public void setAutoFill(boolean fill)
     
     /**
      * calculates the distance between a note and the closest known Note rhythmically
-     * @param Note note
+     * @param note
      * @return int cost
      */
     
@@ -2105,103 +2109,12 @@ public void setAutoFill(boolean fill)
         }
     }
     
-//    /**
-//     * returns the total of all the note costs of a given melody
-//     * @param MelodyPart m
-//     * @return int total
-//     */
-//    
-//    public int getMelodyCost()
-//    {
-//        MelodyPart m = this;
-//        
-//        int total = 0;
-//        PartIterator iter = m.iterator();
-//        while(iter.hasNext())
-//        {
-//            Note n = ((Note)iter.next());
-//            if(n.nonRest())
-//            {
-//                total += Math.abs(getUnitCost(n));
-//            }
-//        }       
-//        return total;
-//    }
-    
-//    /**
-//     * calculates the weighted cost of a given melody by finding the median note
-//     * and weighting each lost note by that value in combination with the 
-//     * standard getMelodyCost() function
-//     * @param int initialSum
-//     * @return int  wCost
-//     */
-//    
-//    public int getWeightedMelodyCost(int initialSum)
-//    {
-//        MelodyPart m = this;
-//        int wCost;
-//        int noteSum = m.getNoteSum();
-//        int diff = initialSum - noteSum;
-//        int median = m.getMedianNoteLength();
-//        int cost = m.getMelodyCost();
-//        
-//        //System.out.println("diff: "+diff+", median: "+median+", cost: "+cost);
-//        
-//        wCost = ((diff)*median)+(cost);
-//        
-//        return wCost;
-//    }
-    
-//    /**
-//     * applies all resolution values to the melody and returns the melody
-//     * with the minimal note sum loss as compared to the original melody
-//     * @param melody MelodyPart
-//     * @return int bestResolution
-//     */
-//    
-//    public int getBestResolution()
-//    {
-//        // variable declarations to store the melody the function is called on,
-//        // the melody with the best resolution thus far, and the melody with the
-//        // resolution currently under evaluation
-//        MelodyPart melody = this.copy();
-//        MelodyPart appliedRes;
-//        int bestResolution = 0;
-//        int cost;
-//        
-//        int quantum[] = {1, 1};
-//
-//        int initialNoteSum = melody.getNoteSum();
-//        //System.out.println("Initial note sum: "+initialNoteSum);
-//        
-//        MelodyPart start = melody.applyResolution(120, quantum);
-//        int lowestCost = start.getWeightedMelodyCost(initialNoteSum);
-//        
-//        for (int i = 0; i<knownResolutionValue.length; i++)
-//        {
-//            // stores the given melody with the resolution the for loop provides
-//            appliedRes = melody.applyResolution(knownResolutionValue[i], quantum);
-//            //calculates the weighted cost for the given resolution
-//            cost = appliedRes.getWeightedMelodyCost(initialNoteSum);
-//            
-//            //System.out.println("applied "+knownResolutionValue[i]+", cost "+cost);
-//            
-//            if (cost < lowestCost)
-//            {
-//                bestResolution = knownResolutionValue[i];
-//                lowestCost = cost;
-//                
-//            }
-//        }
-//        //System.out.println("Found best resolution: "+bestResolution);
-//        return bestResolution;
-//    }
-    
     /**
      * applies a given resolution to a given melodyPart and returns 
      * the int noteSum 
      * @param resolution int 
      * @param quantum 
+     * @param toSwing 
      * @return NoteSum int 
      */
     
@@ -2233,34 +2146,68 @@ public void setAutoFill(boolean fill)
             int duration = thisNote.getRhythmValue();
             if( startOnBeat )
             {
-                if( duration == 80 )
+                if( duration % 120 == 80 )
                 {
-                    Note firstNote = thisNote.isRest() ? new Rest(60) : new Note(thisNote.getPitch(), 60);                   
+                    Note firstNote = thisNote.isRest() ? new Rest(duration-20) : new Note(thisNote.getPitch(), duration-20);                   
                     if( iterator.hasNext() )
                     {
                         Note nextNote = (Note)iterator.next();
-                        slots += nextNote.getRhythmValue();
-                        if( nextNote.getRhythmValue() == 40 )
+                        int nextDuration = nextNote.getRhythmValue();
+                        slots += nextDuration;
+                        
+                        if( nextDuration % 120 == 40 )
                         {
-                            Note secondNote = nextNote.isRest()? new Rest(40) : new Note(nextNote.getPitch(), 60);
+                            nextDuration += 20;
+                            Note secondNote = nextNote.isRest()? new Rest(nextDuration) : new Note(nextNote.getPitch(), nextDuration);
                             melody.addNote(firstNote);
                             melody.addNote(secondNote);
                         }
                         else
                         {
+                            // triplet sixteenth note
+                            if ( nextDuration == 20 )
+                            {
+                                if( iterator.hasNext() )
+                                {
+                                    Note followingNote = (Note)iterator.next();
+                                    int followingDuration = followingNote.getRhythmValue();
+                                    slots += followingDuration;
+                                    if( followingDuration % 120 == 20 )
+                                    {
+                                        nextDuration += 10;
+                                        followingDuration += 10;
+                                        Note secondNote = nextNote.isRest()? new Rest(nextDuration) : new Note(nextNote.getPitch(), nextDuration);
+                                        Note thirdNote = followingNote.isRest()? new Rest(followingDuration) : new Note(followingNote.getPitch(), followingDuration);
+                                        //System.out.println("is followingNote a rest?");
+                                        //System.out.println(followingNote.isRest());
+                                        melody.addNote(firstNote);
+                                        melody.addNote(secondNote);
+                                        melody.addNote(thirdNote);
+                                    }
+                                    else
+                                    {
                             melody.addNote(thisNote.copy());
                             melody.addNote(nextNote.copy());
+                                        melody.addNote(followingNote.copy());
                         }
                     }
+                            }
                     else
                     {
                         melody.addNote(thisNote.copy());
+                                melody.addNote(nextNote.copy());
                     }
                 }
+                    }
                 else
                 {
                     melody.addNote(thisNote.copy());
                 }
+            }
+            else
+            {
+                melody.addNote(thisNote.copy());
+            }
             }
             else
             {
@@ -2278,168 +2225,7 @@ public void setAutoFill(boolean fill)
         return melody;
     }
     
-    
-    
-//public void swap(Note shiftFor, Note moveBack)
-//    {
-//        MelodyPart melody = this;
-//        melody.addUnit(shiftFor);
-//        melody.addUnit(moveBack);
-//    
-//    }
-    
-//    public int shiftAndMergeHelper(Note prev, Note note)
-//    {
-//        int noteLength = note.getRhythmValue();
-//        int prevLength = prev.getRhythmValue();
-//        int prospLength = noteLength+prevLength;       
-//        
-//        boolean isNoteValidLength = isValidUnitLength(noteLength, note.isRest());
-//        boolean isPrevValidLength = isValidUnitLength(prevLength, prev.isRest());
-//        boolean isProspValidLength = isValidUnitLength(prospLength, note.isRest());
-//        boolean isShortRelatively = false;
-//        boolean isLongRelatively = false;
-//        
-//        if (prevLength!=0 && noteLength!=0)
-//        {
-//            isShortRelatively = (noteLength/prevLength) >= 4;
-//            isLongRelatively = (prevLength/noteLength) >= 4;
-//        }
-//        
-//        // case: prospective length is valid, but note length and 
-//        // previous length are not valid
-//        if (isProspValidLength)
-//        {
-//            //System.out.println("Prospective length valid, note and prev not");
-//            // if note is longer by prev by a factor of 4 or greater, 
-//            // add the rhythmValue of prev to note
-//            if (isShortRelatively)
-//            {
-//                //System.out.println("Adding length of prev to note");
-//                return 1;
-//            }
-//            
-//            // if prev is longer by note bt a factor of 4 or greater,
-//            // add the rhythmValue of note to prev
-//            if (isLongRelatively)
-//            {
-//                //System.out.println("Adding length of note to prev");
-//                return 0;
-//            }
-//        }
-//
-//        return -1;
-//    }
-    
-//    public MelodyPart shiftAndMergeMelody()
-//    {
-//        MelodyPart melody = this.copy();
-//        MelodyPart fixed = new MelodyPart();
-//        
-//        PartIterator iter = melody.iterator();
-//
-//        Note prev = (Note) iter.next();
-//        Note note = (Note) iter.next();
-//
-//        int shiftAndExtendValue;
-//        int prospRhythmValue;
-//        int prospPitch;
-//
-//        while (iter.hasNext()) 
-//        {
-//            shiftAndExtendValue = shiftAndMergeHelper(prev, note);
-//
-//            // case: adding previous value to note, removing previous
-//            if (shiftAndExtendValue == 1) 
-//            {
-//                prospRhythmValue = prev.getRhythmValue() + note.getRhythmValue();
-//
-//                if (note.isRest()) 
-//                {
-//                    Rest prosp = new Rest(prospRhythmValue);
-//                    fixed.addNote(prosp);
-//                    //System.out.println("Added prosp = "+prosp+" replacing note");
-//                } 
-//                else 
-//                {
-//                    prospPitch = note.getPitch();
-//                    Note prosp = new Note(prospPitch, prospRhythmValue);
-//                    fixed.addNote(prosp);
-//                    //System.out.println("Added prosp = "+prosp+" replacing note");
-//                }                    
-//
-//                prev = (Note) iter.next();
-//
-//                if (iter.hasNext()) 
-//                {
-//                    note = (Note) iter.next();
-//                } 
-//                else 
-//                {
-//                    break;
-//                }
-//            } 
-//
-//            // case: adding note value to previous, removing note
-//            else if (shiftAndExtendValue == 0) 
-//            {
-//                prospRhythmValue = prev.getRhythmValue() + note.getRhythmValue();
-//
-//                if (prev.isRest()) 
-//                {
-//                    Rest prosp = new Rest(prospRhythmValue);
-//                    fixed.addNote(prosp);
-//                    //System.out.println("Added prosp = "+prosp+" replacing note");
-//                } 
-//                else 
-//                {
-//                    prospPitch = prev.getPitch();
-//                    Note prosp = new Note(prospPitch, prospRhythmValue);
-//                    fixed.addNote(prosp);
-//                    //System.out.println("Added prosp = "+prosp+" replacing prev");
-//                }
-//
-//                prev = (Note) iter.next();
-//
-//                if (iter.hasNext()) 
-//                {
-//                    note = (Note) iter.next();
-//                } 
-//                else 
-//                {
-//                    break;
-//                }
-//            } 
-//
-//            else 
-//            {
-//                if (prev.isRest()) 
-//                {
-//                    Rest prosp = new Rest(prev.getRhythmValue());
-//                    fixed.addNote(prosp);
-//                    //System.out.println("Added regular = "+prev);
-//                } 
-//                else 
-//                {
-//                    prospPitch = prev.getPitch();
-//                    Note prosp = new Note(prospPitch, prev.getRhythmValue());
-//                    fixed.addNote(prosp);
-//                    //System.out.println("Added regular = "+prev);
-//                }
-//
-//                prev = note;
-//                note = (Note) iter.next();
-//                }
-//            }
-//        
-//        //System.out.println("Finished shift and extend melody");
-//        return fixed;
-//    }
-    
-     /**
-     * cycles through all units in the melody to merge adjacent rests
-     */
-    
+       
     public void mergeAdjacentRests() 
     {
         int index = getNextIndex(0);
@@ -2487,46 +2273,7 @@ public void setAutoFill(boolean fill)
         //System.out.println("Merge rests quantization completed.");
     }
 
-//    /**
-//     * main call for all quantify functions
-//     * @param MelodyPart original 
-//     * @return MelodyPart qMelody 
-//     */
-//    
-//    public static MelodyPart quantize(MelodyPart original) 
-//    {
-//        // create a new MelodyPart and copy the original melody to it,
-//        // in order to apply quantization without modifying original 
-//        MelodyPart qMelody = original.copy();
-//        
-//        //System.out.println("Calling quantize WITH resolution finder");
-//        
-//        // find best resolution setting
-//        int resolution = qMelody.getBestResolution();
-//         qMelody = original.applyResolution(resolution);  
-//        
-//        //shift and extend notes and rests towards valid lengths
-//        qMelody = qMelody.shiftAndMergeMelody();
-//        
-//        // merge adjacent rests
-//        qMelody.mergeAdjacentRests();
-//        
-//        return qMelody;
-//    }
-    
-//    // same as quantize without call to getBestResolution();
-//    public static MelodyPart quantizeNoRes(MelodyPart original)
-//    {
-//        MelodyPart qMelody = original.copy(); 
-//        
-//        //System.out.println("Calling quantize WITHOUT resolution finder");
-//        
-//        qMelody.shiftAndMergeMelody();
-//        qMelody.mergeAdjacentRests();
-//        
-//        return qMelody;
-//    }
-    
+
     /**
      * removeRepeatedNotes() returns a new melody based on the current one,
      * except that repeated notes are merged together into single notes.
