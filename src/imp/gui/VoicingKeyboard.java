@@ -1,24 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * This Java Class is part of the Impro-Visor Application
  *
@@ -53,7 +32,8 @@ import imp.voicing.VoicingDistanceCalculator;
 import java.io.StringReader;
 import javax.swing.Icon;
 import javax.swing.JLabel;
-import javax.swing.KeyStroke;
+import javax.swing.KeyStroke; 
+import java.awt.Color; 
 
 import polya.Polylist;
 import polya.Tokenizer;
@@ -63,6 +43,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author  Emma Carlson, 2009
+ * @author  Mira Jambusaria, 2016 -- labels
  */
 
 public class VoicingKeyboard extends javax.swing.JFrame {
@@ -70,7 +51,13 @@ public class VoicingKeyboard extends javax.swing.JFrame {
     Notate notate;
     boolean singleNoteMode = false;
     
-    /** Creates new form VoicingKeyboard */
+    boolean turnOnOffLabels = true; 
+    //if true, labels on. else, labels off 
+    
+    /** Creates new form VoicingKeyboard
+     * @param notate
+     * @param x
+     * @param y */
     public VoicingKeyboard(Notate notate, int x, int y) {
         initComponents();
         initKeys();
@@ -79,7 +66,9 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         setSize(1045, 285);
         setLocation(x, y);
         WindowRegistry.registerWindow(this);
-        setVisible(true);       
+        setInvisible(); 
+        setVisible(true); 
+        
     }
     
     Notate getNotate()
@@ -217,9 +206,6 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         pointerC4 = new javax.swing.JLabel();
         chordRootNoteLabel = new javax.swing.JLabel();
         ctrlClicktoChangeRootLabel = new javax.swing.JLabel();
-        futureChordDisplay = new javax.swing.JLabel();
-        pastChordDisplay = new javax.swing.JLabel();
-        presentChordDisplay = new javax.swing.JLabel();
         ctrlShiftClickExtLabel = new javax.swing.JLabel();
         playChordButton = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
@@ -227,12 +213,105 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         chordReplayButton = new javax.swing.JButton();
         chordStepForwardButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        keyNamesPanel = new javax.swing.JPanel();
+        whiteKeyLabels = new javax.swing.JPanel();
+        A0 = new javax.swing.JLabel();
+        B0 = new javax.swing.JLabel();
+        C1 = new javax.swing.JLabel();
+        D1 = new javax.swing.JLabel();
+        E1 = new javax.swing.JLabel();
+        F1 = new javax.swing.JLabel();
+        G1 = new javax.swing.JLabel();
+        A1 = new javax.swing.JLabel();
+        B1 = new javax.swing.JLabel();
+        C2 = new javax.swing.JLabel();
+        D2 = new javax.swing.JLabel();
+        E2 = new javax.swing.JLabel();
+        F2 = new javax.swing.JLabel();
+        G2 = new javax.swing.JLabel();
+        A2 = new javax.swing.JLabel();
+        B2 = new javax.swing.JLabel();
+        C3 = new javax.swing.JLabel();
+        D3 = new javax.swing.JLabel();
+        E3 = new javax.swing.JLabel();
+        F3 = new javax.swing.JLabel();
+        G3 = new javax.swing.JLabel();
+        A3 = new javax.swing.JLabel();
+        B3 = new javax.swing.JLabel();
+        C4 = new javax.swing.JLabel();
+        D4 = new javax.swing.JLabel();
+        E4 = new javax.swing.JLabel();
+        F4 = new javax.swing.JLabel();
+        G4 = new javax.swing.JLabel();
+        A4 = new javax.swing.JLabel();
+        B4 = new javax.swing.JLabel();
+        C5 = new javax.swing.JLabel();
+        D5 = new javax.swing.JLabel();
+        E5 = new javax.swing.JLabel();
+        F5 = new javax.swing.JLabel();
+        G5 = new javax.swing.JLabel();
+        A5 = new javax.swing.JLabel();
+        B5 = new javax.swing.JLabel();
+        C6 = new javax.swing.JLabel();
+        D6 = new javax.swing.JLabel();
+        E6 = new javax.swing.JLabel();
+        F6 = new javax.swing.JLabel();
+        G6 = new javax.swing.JLabel();
+        A6 = new javax.swing.JLabel();
+        B6 = new javax.swing.JLabel();
+        C7 = new javax.swing.JLabel();
+        D7 = new javax.swing.JLabel();
+        E7 = new javax.swing.JLabel();
+        F7 = new javax.swing.JLabel();
+        G7 = new javax.swing.JLabel();
+        A7 = new javax.swing.JLabel();
+        B7 = new javax.swing.JLabel();
+        C8 = new javax.swing.JLabel();
+        blackKeyLabels = new javax.swing.JPanel();
+        Bb0 = new javax.swing.JLabel();
+        Csharp1 = new javax.swing.JLabel();
+        Eb1 = new javax.swing.JLabel();
+        Fsharp1 = new javax.swing.JLabel();
+        Gsharp1 = new javax.swing.JLabel();
+        Bb1 = new javax.swing.JLabel();
+        Csharp2 = new javax.swing.JLabel();
+        Eb2 = new javax.swing.JLabel();
+        Fsharp2 = new javax.swing.JLabel();
+        Gsharp2 = new javax.swing.JLabel();
+        Bb2 = new javax.swing.JLabel();
+        Csharp3 = new javax.swing.JLabel();
+        Eb3 = new javax.swing.JLabel();
+        Fsharp3 = new javax.swing.JLabel();
+        Gsharp3 = new javax.swing.JLabel();
+        Bb3 = new javax.swing.JLabel();
+        Csharp4 = new javax.swing.JLabel();
+        Eb4 = new javax.swing.JLabel();
+        Fsharp4 = new javax.swing.JLabel();
+        Gsharp4 = new javax.swing.JLabel();
+        Bb4 = new javax.swing.JLabel();
+        Csharp5 = new javax.swing.JLabel();
+        Eb5 = new javax.swing.JLabel();
+        Fsharp5 = new javax.swing.JLabel();
+        Gsharp5 = new javax.swing.JLabel();
+        Bb5 = new javax.swing.JLabel();
+        Csharp6 = new javax.swing.JLabel();
+        Eb6 = new javax.swing.JLabel();
+        Fsharp6 = new javax.swing.JLabel();
+        Gsharp6 = new javax.swing.JLabel();
+        Bb6 = new javax.swing.JLabel();
+        Csharp7 = new javax.swing.JLabel();
+        Eb7 = new javax.swing.JLabel();
+        Fsharp7 = new javax.swing.JLabel();
+        Gsharp7 = new javax.swing.JLabel();
+        Bb7 = new javax.swing.JLabel();
+        presentChordDisplay = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         optionsMenu = new javax.swing.JMenu();
         clearKeyboardMI = new javax.swing.JMenuItem();
         resetChordDisplayMI = new javax.swing.JMenuItem();
         playChordMI = new javax.swing.JMenuItem();
         addToSequenceMI = new javax.swing.JMenuItem();
+        turnOnOffKeyLabelsMI = new javax.swing.JCheckBoxMenuItem();
         voicingModeMenu = new javax.swing.JMenu();
         singleNoteModeMI = new javax.swing.JMenuItem();
         chordModeMI = new javax.swing.JMenuItem();
@@ -256,8 +335,8 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Keyboard");
         setAlwaysOnTop(true);
-        setMinimumSize(new java.awt.Dimension(1045, 310));
-        setPreferredSize(new java.awt.Dimension(1045, 310));
+        setMinimumSize(new java.awt.Dimension(1100, 370));
+        setPreferredSize(new java.awt.Dimension(1100, 370));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -668,7 +747,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         pointerC4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/pointer.png"))); // NOI18N
         keyboardLP.add(pointerC4);
-        pointerC4.setBounds(460, 120, 19, 30);
+        pointerC4.setBounds(460, 120, 20, 30);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -704,41 +783,6 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(ctrlClicktoChangeRootLabel, gridBagConstraints);
 
-        futureChordDisplay.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        futureChordDisplay.setForeground(new java.awt.Color(51, 153, 255));
-        futureChordDisplay.setMaximumSize(new java.awt.Dimension(485, 20));
-        futureChordDisplay.setMinimumSize(new java.awt.Dimension(485, 20));
-        futureChordDisplay.setPreferredSize(new java.awt.Dimension(485, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        getContentPane().add(futureChordDisplay, gridBagConstraints);
-
-        pastChordDisplay.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        pastChordDisplay.setForeground(new java.awt.Color(153, 153, 153));
-        pastChordDisplay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        pastChordDisplay.setMaximumSize(new java.awt.Dimension(375, 20));
-        pastChordDisplay.setMinimumSize(new java.awt.Dimension(375, 20));
-        pastChordDisplay.setPreferredSize(new java.awt.Dimension(375, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        getContentPane().add(pastChordDisplay, gridBagConstraints);
-
-        presentChordDisplay.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        presentChordDisplay.setForeground(new java.awt.Color(0, 153, 0));
-        presentChordDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        presentChordDisplay.setMaximumSize(new java.awt.Dimension(175, 20));
-        presentChordDisplay.setMinimumSize(new java.awt.Dimension(175, 20));
-        presentChordDisplay.setPreferredSize(new java.awt.Dimension(175, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 110);
-        getContentPane().add(presentChordDisplay, gridBagConstraints);
-
         ctrlShiftClickExtLabel.setText("Ctrl-shift-click to add an extension.");
         ctrlShiftClickExtLabel.setMaximumSize(new java.awt.Dimension(400, 14));
         ctrlShiftClickExtLabel.setMinimumSize(new java.awt.Dimension(400, 14));
@@ -772,7 +816,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         chordStepBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/playReversedGreen.gif"))); // NOI18N
         chordStepBackButton.setToolTipText("Move back to the previous chord (without playing).\n");
-        chordStepBackButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        chordStepBackButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         chordStepBackButton.setFocusable(false);
         chordStepBackButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         chordStepBackButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -788,7 +832,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         chordReplayButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/replayGreen.gif"))); // NOI18N
         chordReplayButton.setToolTipText("Replays chord.");
-        chordReplayButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        chordReplayButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         chordReplayButton.setFocusable(false);
         chordReplayButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         chordReplayButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -803,7 +847,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         chordStepForwardButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/playGreen.gif"))); // NOI18N
         chordStepForwardButton.setToolTipText("Move to, and play, the next chord.");
-        chordStepForwardButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        chordStepForwardButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         chordStepForwardButton.setFocusable(false);
         chordStepForwardButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         chordStepForwardButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -818,7 +862,8 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         jToolBar1.add(chordStepForwardButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(jToolBar1, gridBagConstraints);
 
         jButton2.setText("Save Voicing");
@@ -832,6 +877,1093 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         gridBagConstraints.gridy = 4;
         getContentPane().add(jButton2, gridBagConstraints);
         jButton2.getAccessibleContext().setAccessibleName("VoicingChord");
+
+        keyNamesPanel.setAlignmentX(0.0F);
+        keyNamesPanel.setAlignmentY(0.0F);
+        keyNamesPanel.setMinimumSize(new java.awt.Dimension(1040, 60));
+        keyNamesPanel.setPreferredSize(new java.awt.Dimension(1040, 154));
+        keyNamesPanel.setLayout(new java.awt.GridBagLayout());
+
+        whiteKeyLabels.setAlignmentX(0.0F);
+        whiteKeyLabels.setMinimumSize(new java.awt.Dimension(1045, 12));
+        whiteKeyLabels.setOpaque(false);
+        whiteKeyLabels.setLayout(new java.awt.GridBagLayout());
+
+        A0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A0.setText("A");
+        A0.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A0.setMaximumSize(new java.awt.Dimension(20, 14));
+        A0.setMinimumSize(new java.awt.Dimension(20, 14));
+        A0.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A0, gridBagConstraints);
+
+        B0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B0.setText("B");
+        B0.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B0.setMaximumSize(new java.awt.Dimension(20, 14));
+        B0.setMinimumSize(new java.awt.Dimension(20, 14));
+        B0.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B0, gridBagConstraints);
+
+        C1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C1.setText("C");
+        C1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C1.setMaximumSize(new java.awt.Dimension(20, 14));
+        C1.setMinimumSize(new java.awt.Dimension(20, 14));
+        C1.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C1, gridBagConstraints);
+
+        D1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        D1.setText("D");
+        D1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        D1.setMaximumSize(new java.awt.Dimension(20, 14));
+        D1.setMinimumSize(new java.awt.Dimension(20, 14));
+        D1.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(D1, gridBagConstraints);
+
+        E1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        E1.setText("E");
+        E1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        E1.setMaximumSize(new java.awt.Dimension(20, 14));
+        E1.setMinimumSize(new java.awt.Dimension(20, 14));
+        E1.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(E1, gridBagConstraints);
+
+        F1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        F1.setText("F");
+        F1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        F1.setMaximumSize(new java.awt.Dimension(20, 14));
+        F1.setMinimumSize(new java.awt.Dimension(20, 14));
+        F1.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(F1, gridBagConstraints);
+
+        G1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        G1.setText("G");
+        G1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        G1.setMaximumSize(new java.awt.Dimension(20, 14));
+        G1.setMinimumSize(new java.awt.Dimension(20, 14));
+        G1.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(G1, gridBagConstraints);
+
+        A1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A1.setText("A");
+        A1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A1.setMaximumSize(new java.awt.Dimension(20, 14));
+        A1.setMinimumSize(new java.awt.Dimension(20, 14));
+        A1.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A1, gridBagConstraints);
+
+        B1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B1.setText("B");
+        B1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B1.setMaximumSize(new java.awt.Dimension(20, 14));
+        B1.setMinimumSize(new java.awt.Dimension(20, 14));
+        B1.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B1, gridBagConstraints);
+
+        C2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C2.setText("C");
+        C2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C2.setMaximumSize(new java.awt.Dimension(20, 14));
+        C2.setMinimumSize(new java.awt.Dimension(20, 14));
+        C2.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C2, gridBagConstraints);
+
+        D2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        D2.setLabelFor(keyD4);
+        D2.setText("D");
+        D2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        D2.setMaximumSize(new java.awt.Dimension(20, 14));
+        D2.setMinimumSize(new java.awt.Dimension(20, 14));
+        D2.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(D2, gridBagConstraints);
+
+        E2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        E2.setText("E");
+        E2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        E2.setMaximumSize(new java.awt.Dimension(20, 14));
+        E2.setMinimumSize(new java.awt.Dimension(20, 14));
+        E2.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 11;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(E2, gridBagConstraints);
+
+        F2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        F2.setText("F");
+        F2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        F2.setMaximumSize(new java.awt.Dimension(20, 14));
+        F2.setMinimumSize(new java.awt.Dimension(20, 14));
+        F2.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(F2, gridBagConstraints);
+
+        G2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        G2.setText("G");
+        G2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        G2.setMaximumSize(new java.awt.Dimension(20, 14));
+        G2.setMinimumSize(new java.awt.Dimension(20, 14));
+        G2.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 13;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(G2, gridBagConstraints);
+
+        A2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A2.setText("A");
+        A2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A2.setMaximumSize(new java.awt.Dimension(20, 14));
+        A2.setMinimumSize(new java.awt.Dimension(20, 14));
+        A2.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A2, gridBagConstraints);
+
+        B2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B2.setText("B");
+        B2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B2.setMaximumSize(new java.awt.Dimension(20, 14));
+        B2.setMinimumSize(new java.awt.Dimension(20, 14));
+        B2.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B2, gridBagConstraints);
+
+        C3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C3.setText("C");
+        C3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C3.setMaximumSize(new java.awt.Dimension(20, 14));
+        C3.setMinimumSize(new java.awt.Dimension(20, 14));
+        C3.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C3, gridBagConstraints);
+
+        D3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        D3.setLabelFor(keyD4);
+        D3.setText("D");
+        D3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        D3.setMaximumSize(new java.awt.Dimension(20, 14));
+        D3.setMinimumSize(new java.awt.Dimension(20, 14));
+        D3.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 17;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(D3, gridBagConstraints);
+
+        E3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        E3.setText("E");
+        E3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        E3.setMaximumSize(new java.awt.Dimension(20, 14));
+        E3.setMinimumSize(new java.awt.Dimension(20, 14));
+        E3.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 18;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(E3, gridBagConstraints);
+
+        F3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        F3.setText("F");
+        F3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        F3.setMaximumSize(new java.awt.Dimension(20, 14));
+        F3.setMinimumSize(new java.awt.Dimension(20, 14));
+        F3.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 19;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(F3, gridBagConstraints);
+
+        G3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        G3.setText("G");
+        G3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        G3.setMaximumSize(new java.awt.Dimension(20, 14));
+        G3.setMinimumSize(new java.awt.Dimension(20, 14));
+        G3.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 20;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(G3, gridBagConstraints);
+
+        A3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A3.setText("A");
+        A3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A3.setMaximumSize(new java.awt.Dimension(20, 14));
+        A3.setMinimumSize(new java.awt.Dimension(20, 14));
+        A3.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 21;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A3, gridBagConstraints);
+
+        B3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B3.setText("B");
+        B3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B3.setMaximumSize(new java.awt.Dimension(20, 14));
+        B3.setMinimumSize(new java.awt.Dimension(20, 14));
+        B3.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 22;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B3, gridBagConstraints);
+
+        C4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C4.setText("C");
+        C4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C4.setMaximumSize(new java.awt.Dimension(20, 14));
+        C4.setMinimumSize(new java.awt.Dimension(20, 14));
+        C4.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 23;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C4, gridBagConstraints);
+
+        D4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        D4.setLabelFor(keyD4);
+        D4.setText("D");
+        D4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        D4.setMaximumSize(new java.awt.Dimension(20, 14));
+        D4.setMinimumSize(new java.awt.Dimension(20, 14));
+        D4.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(D4, gridBagConstraints);
+
+        E4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        E4.setText("E");
+        E4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        E4.setMaximumSize(new java.awt.Dimension(20, 14));
+        E4.setMinimumSize(new java.awt.Dimension(20, 14));
+        E4.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 25;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(E4, gridBagConstraints);
+
+        F4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        F4.setText("F");
+        F4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        F4.setMaximumSize(new java.awt.Dimension(20, 14));
+        F4.setMinimumSize(new java.awt.Dimension(20, 14));
+        F4.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 26;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(F4, gridBagConstraints);
+
+        G4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        G4.setText("G");
+        G4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        G4.setMaximumSize(new java.awt.Dimension(20, 14));
+        G4.setMinimumSize(new java.awt.Dimension(20, 14));
+        G4.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 27;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(G4, gridBagConstraints);
+
+        A4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A4.setText("A");
+        A4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A4.setMaximumSize(new java.awt.Dimension(20, 14));
+        A4.setMinimumSize(new java.awt.Dimension(20, 14));
+        A4.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 28;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A4, gridBagConstraints);
+
+        B4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B4.setText("B");
+        B4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B4.setMaximumSize(new java.awt.Dimension(20, 14));
+        B4.setMinimumSize(new java.awt.Dimension(20, 14));
+        B4.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 29;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B4, gridBagConstraints);
+
+        C5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C5.setText("C");
+        C5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C5.setMaximumSize(new java.awt.Dimension(20, 14));
+        C5.setMinimumSize(new java.awt.Dimension(20, 14));
+        C5.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 30;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C5, gridBagConstraints);
+
+        D5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        D5.setLabelFor(keyD4);
+        D5.setText("D");
+        D5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        D5.setMaximumSize(new java.awt.Dimension(20, 14));
+        D5.setMinimumSize(new java.awt.Dimension(20, 14));
+        D5.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 31;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(D5, gridBagConstraints);
+
+        E5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        E5.setText("E");
+        E5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        E5.setMaximumSize(new java.awt.Dimension(20, 14));
+        E5.setMinimumSize(new java.awt.Dimension(20, 14));
+        E5.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 32;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(E5, gridBagConstraints);
+
+        F5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        F5.setText("F");
+        F5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        F5.setMaximumSize(new java.awt.Dimension(20, 14));
+        F5.setMinimumSize(new java.awt.Dimension(20, 14));
+        F5.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(F5, gridBagConstraints);
+
+        G5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        G5.setText("G");
+        G5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        G5.setMaximumSize(new java.awt.Dimension(20, 14));
+        G5.setMinimumSize(new java.awt.Dimension(20, 14));
+        G5.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 34;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(G5, gridBagConstraints);
+
+        A5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A5.setText("A");
+        A5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A5.setMaximumSize(new java.awt.Dimension(20, 14));
+        A5.setMinimumSize(new java.awt.Dimension(20, 14));
+        A5.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A5, gridBagConstraints);
+
+        B5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B5.setText("B");
+        B5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B5.setMaximumSize(new java.awt.Dimension(20, 14));
+        B5.setMinimumSize(new java.awt.Dimension(20, 14));
+        B5.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 36;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B5, gridBagConstraints);
+
+        C6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C6.setText("C");
+        C6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C6.setMaximumSize(new java.awt.Dimension(20, 14));
+        C6.setMinimumSize(new java.awt.Dimension(20, 14));
+        C6.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 37;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C6, gridBagConstraints);
+
+        D6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        D6.setLabelFor(keyD4);
+        D6.setText("D");
+        D6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        D6.setMaximumSize(new java.awt.Dimension(20, 14));
+        D6.setMinimumSize(new java.awt.Dimension(20, 14));
+        D6.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 38;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(D6, gridBagConstraints);
+
+        E6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        E6.setText("E");
+        E6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        E6.setMaximumSize(new java.awt.Dimension(20, 14));
+        E6.setMinimumSize(new java.awt.Dimension(20, 14));
+        E6.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 39;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(E6, gridBagConstraints);
+
+        F6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        F6.setText("F");
+        F6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        F6.setMaximumSize(new java.awt.Dimension(20, 14));
+        F6.setMinimumSize(new java.awt.Dimension(20, 14));
+        F6.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 40;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(F6, gridBagConstraints);
+
+        G6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        G6.setText("G");
+        G6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        G6.setMaximumSize(new java.awt.Dimension(20, 14));
+        G6.setMinimumSize(new java.awt.Dimension(20, 14));
+        G6.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 41;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(G6, gridBagConstraints);
+
+        A6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A6.setText("A");
+        A6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A6.setMaximumSize(new java.awt.Dimension(20, 14));
+        A6.setMinimumSize(new java.awt.Dimension(20, 14));
+        A6.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 42;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A6, gridBagConstraints);
+
+        B6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B6.setText("B");
+        B6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B6.setMaximumSize(new java.awt.Dimension(20, 14));
+        B6.setMinimumSize(new java.awt.Dimension(20, 14));
+        B6.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 43;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B6, gridBagConstraints);
+
+        C7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C7.setText("C");
+        C7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C7.setMaximumSize(new java.awt.Dimension(20, 14));
+        C7.setMinimumSize(new java.awt.Dimension(20, 14));
+        C7.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 44;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C7, gridBagConstraints);
+
+        D7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        D7.setLabelFor(keyD4);
+        D7.setText("D");
+        D7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        D7.setMaximumSize(new java.awt.Dimension(20, 14));
+        D7.setMinimumSize(new java.awt.Dimension(20, 14));
+        D7.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 45;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(D7, gridBagConstraints);
+
+        E7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        E7.setText("E");
+        E7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        E7.setMaximumSize(new java.awt.Dimension(20, 14));
+        E7.setMinimumSize(new java.awt.Dimension(20, 14));
+        E7.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 46;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(E7, gridBagConstraints);
+
+        F7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        F7.setText("F");
+        F7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        F7.setMaximumSize(new java.awt.Dimension(20, 14));
+        F7.setMinimumSize(new java.awt.Dimension(20, 14));
+        F7.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 47;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(F7, gridBagConstraints);
+
+        G7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        G7.setText("G");
+        G7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        G7.setMaximumSize(new java.awt.Dimension(20, 14));
+        G7.setMinimumSize(new java.awt.Dimension(20, 14));
+        G7.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 48;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(G7, gridBagConstraints);
+
+        A7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A7.setText("A");
+        A7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        A7.setMaximumSize(new java.awt.Dimension(20, 14));
+        A7.setMinimumSize(new java.awt.Dimension(20, 14));
+        A7.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 49;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(A7, gridBagConstraints);
+
+        B7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B7.setText("B");
+        B7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        B7.setMaximumSize(new java.awt.Dimension(20, 14));
+        B7.setMinimumSize(new java.awt.Dimension(20, 14));
+        B7.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 50;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        whiteKeyLabels.add(B7, gridBagConstraints);
+
+        C8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C8.setText("C");
+        C8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        C8.setMaximumSize(new java.awt.Dimension(20, 14));
+        C8.setMinimumSize(new java.awt.Dimension(20, 14));
+        C8.setPreferredSize(new java.awt.Dimension(20, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 51;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        whiteKeyLabels.add(C8, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        keyNamesPanel.add(whiteKeyLabels, gridBagConstraints);
+
+        blackKeyLabels.setAlignmentX(0.0F);
+        blackKeyLabels.setMinimumSize(new java.awt.Dimension(1025, 14));
+        blackKeyLabels.setOpaque(false);
+        blackKeyLabels.setPreferredSize(new java.awt.Dimension(1025, 100));
+        blackKeyLabels.setLayout(new java.awt.GridBagLayout());
+
+        Bb0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Bb0.setText("Bb");
+        Bb0.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Bb0.setMaximumSize(new java.awt.Dimension(40, 14));
+        Bb0.setMinimumSize(new java.awt.Dimension(40, 14));
+        Bb0.setPreferredSize(new java.awt.Dimension(40, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
+        blackKeyLabels.add(Bb0, gridBagConstraints);
+
+        Csharp1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Csharp1.setText("C#");
+        Csharp1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Csharp1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        Csharp1.setMaximumSize(new java.awt.Dimension(30, 14));
+        Csharp1.setMinimumSize(new java.awt.Dimension(30, 14));
+        Csharp1.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Csharp1, gridBagConstraints);
+
+        Eb1.setText(" Eb");
+        Eb1.setMaximumSize(new java.awt.Dimension(30, 14));
+        Eb1.setMinimumSize(new java.awt.Dimension(30, 14));
+        Eb1.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Eb1, gridBagConstraints);
+
+        Fsharp1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Fsharp1.setText("F#");
+        Fsharp1.setMaximumSize(new java.awt.Dimension(27, 14));
+        Fsharp1.setMinimumSize(new java.awt.Dimension(27, 14));
+        Fsharp1.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Fsharp1, gridBagConstraints);
+
+        Gsharp1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Gsharp1.setText("G#");
+        Gsharp1.setMaximumSize(new java.awt.Dimension(26, 14));
+        Gsharp1.setMinimumSize(new java.awt.Dimension(26, 14));
+        Gsharp1.setPreferredSize(new java.awt.Dimension(26, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Gsharp1, gridBagConstraints);
+
+        Bb1.setText("Bb");
+        Bb1.setMaximumSize(new java.awt.Dimension(27, 14));
+        Bb1.setMinimumSize(new java.awt.Dimension(27, 14));
+        Bb1.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Bb1, gridBagConstraints);
+
+        Csharp2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Csharp2.setText("C#");
+        Csharp2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Csharp2.setMaximumSize(new java.awt.Dimension(30, 14));
+        Csharp2.setMinimumSize(new java.awt.Dimension(30, 14));
+        Csharp2.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Csharp2, gridBagConstraints);
+
+        Eb2.setText(" Eb");
+        Eb2.setMaximumSize(new java.awt.Dimension(30, 14));
+        Eb2.setMinimumSize(new java.awt.Dimension(30, 14));
+        Eb2.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Eb2, gridBagConstraints);
+
+        Fsharp2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Fsharp2.setText("F#");
+        Fsharp2.setMaximumSize(new java.awt.Dimension(27, 14));
+        Fsharp2.setMinimumSize(new java.awt.Dimension(27, 14));
+        Fsharp2.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Fsharp2, gridBagConstraints);
+
+        Gsharp2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Gsharp2.setText("G#");
+        Gsharp2.setMaximumSize(new java.awt.Dimension(26, 14));
+        Gsharp2.setMinimumSize(new java.awt.Dimension(26, 14));
+        Gsharp2.setPreferredSize(new java.awt.Dimension(26, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Gsharp2, gridBagConstraints);
+
+        Bb2.setText("Bb");
+        Bb2.setMaximumSize(new java.awt.Dimension(27, 14));
+        Bb2.setMinimumSize(new java.awt.Dimension(27, 14));
+        Bb2.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Bb2, gridBagConstraints);
+
+        Csharp3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Csharp3.setText("C#");
+        Csharp3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Csharp3.setMaximumSize(new java.awt.Dimension(30, 14));
+        Csharp3.setMinimumSize(new java.awt.Dimension(30, 14));
+        Csharp3.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 11;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Csharp3, gridBagConstraints);
+
+        Eb3.setText(" Eb");
+        Eb3.setMaximumSize(new java.awt.Dimension(30, 14));
+        Eb3.setMinimumSize(new java.awt.Dimension(30, 14));
+        Eb3.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Eb3, gridBagConstraints);
+
+        Fsharp3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Fsharp3.setText("F#");
+        Fsharp3.setMaximumSize(new java.awt.Dimension(27, 14));
+        Fsharp3.setMinimumSize(new java.awt.Dimension(27, 14));
+        Fsharp3.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 13;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Fsharp3, gridBagConstraints);
+
+        Gsharp3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Gsharp3.setText("G#");
+        Gsharp3.setMaximumSize(new java.awt.Dimension(26, 14));
+        Gsharp3.setMinimumSize(new java.awt.Dimension(26, 14));
+        Gsharp3.setPreferredSize(new java.awt.Dimension(26, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Gsharp3, gridBagConstraints);
+
+        Bb3.setText("Bb");
+        Bb3.setMaximumSize(new java.awt.Dimension(27, 14));
+        Bb3.setMinimumSize(new java.awt.Dimension(27, 14));
+        Bb3.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 15;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Bb3, gridBagConstraints);
+
+        Csharp4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Csharp4.setText("C#");
+        Csharp4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Csharp4.setMaximumSize(new java.awt.Dimension(30, 14));
+        Csharp4.setMinimumSize(new java.awt.Dimension(30, 14));
+        Csharp4.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Csharp4, gridBagConstraints);
+
+        Eb4.setText(" Eb");
+        Eb4.setMaximumSize(new java.awt.Dimension(30, 14));
+        Eb4.setMinimumSize(new java.awt.Dimension(30, 14));
+        Eb4.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 17;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Eb4, gridBagConstraints);
+
+        Fsharp4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Fsharp4.setText("F#");
+        Fsharp4.setMaximumSize(new java.awt.Dimension(27, 14));
+        Fsharp4.setMinimumSize(new java.awt.Dimension(27, 14));
+        Fsharp4.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 18;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Fsharp4, gridBagConstraints);
+
+        Gsharp4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Gsharp4.setText("G#");
+        Gsharp4.setMaximumSize(new java.awt.Dimension(26, 14));
+        Gsharp4.setMinimumSize(new java.awt.Dimension(26, 14));
+        Gsharp4.setPreferredSize(new java.awt.Dimension(26, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 19;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Gsharp4, gridBagConstraints);
+
+        Bb4.setText("Bb");
+        Bb4.setMaximumSize(new java.awt.Dimension(27, 14));
+        Bb4.setMinimumSize(new java.awt.Dimension(27, 14));
+        Bb4.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 20;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Bb4, gridBagConstraints);
+
+        Csharp5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Csharp5.setText("C#");
+        Csharp5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Csharp5.setMaximumSize(new java.awt.Dimension(30, 14));
+        Csharp5.setMinimumSize(new java.awt.Dimension(30, 14));
+        Csharp5.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 21;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Csharp5, gridBagConstraints);
+
+        Eb5.setText(" Eb");
+        Eb5.setMaximumSize(new java.awt.Dimension(30, 14));
+        Eb5.setMinimumSize(new java.awt.Dimension(30, 14));
+        Eb5.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 22;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Eb5, gridBagConstraints);
+
+        Fsharp5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Fsharp5.setText("F#");
+        Fsharp5.setMaximumSize(new java.awt.Dimension(27, 14));
+        Fsharp5.setMinimumSize(new java.awt.Dimension(27, 14));
+        Fsharp5.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 23;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Fsharp5, gridBagConstraints);
+
+        Gsharp5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Gsharp5.setText("G#");
+        Gsharp5.setMaximumSize(new java.awt.Dimension(26, 14));
+        Gsharp5.setMinimumSize(new java.awt.Dimension(26, 14));
+        Gsharp5.setPreferredSize(new java.awt.Dimension(26, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 24;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Gsharp5, gridBagConstraints);
+
+        Bb5.setText("Bb");
+        Bb5.setMaximumSize(new java.awt.Dimension(27, 14));
+        Bb5.setMinimumSize(new java.awt.Dimension(27, 14));
+        Bb5.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 25;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Bb5, gridBagConstraints);
+
+        Csharp6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Csharp6.setText("C#");
+        Csharp6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Csharp6.setMaximumSize(new java.awt.Dimension(30, 14));
+        Csharp6.setMinimumSize(new java.awt.Dimension(30, 14));
+        Csharp6.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 26;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Csharp6, gridBagConstraints);
+
+        Eb6.setText(" Eb");
+        Eb6.setMaximumSize(new java.awt.Dimension(30, 14));
+        Eb6.setMinimumSize(new java.awt.Dimension(30, 14));
+        Eb6.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 27;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Eb6, gridBagConstraints);
+
+        Fsharp6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Fsharp6.setText("F#");
+        Fsharp6.setMaximumSize(new java.awt.Dimension(27, 14));
+        Fsharp6.setMinimumSize(new java.awt.Dimension(27, 14));
+        Fsharp6.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 28;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Fsharp6, gridBagConstraints);
+
+        Gsharp6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Gsharp6.setText("G#");
+        Gsharp6.setMaximumSize(new java.awt.Dimension(26, 14));
+        Gsharp6.setMinimumSize(new java.awt.Dimension(26, 14));
+        Gsharp6.setPreferredSize(new java.awt.Dimension(26, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 29;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Gsharp6, gridBagConstraints);
+
+        Bb6.setText("Bb");
+        Bb6.setMaximumSize(new java.awt.Dimension(27, 14));
+        Bb6.setMinimumSize(new java.awt.Dimension(27, 14));
+        Bb6.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 30;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Bb6, gridBagConstraints);
+
+        Csharp7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Csharp7.setText("C#");
+        Csharp7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Csharp7.setMaximumSize(new java.awt.Dimension(30, 14));
+        Csharp7.setMinimumSize(new java.awt.Dimension(30, 14));
+        Csharp7.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 31;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Csharp7, gridBagConstraints);
+
+        Eb7.setText(" Eb");
+        Eb7.setMaximumSize(new java.awt.Dimension(30, 14));
+        Eb7.setMinimumSize(new java.awt.Dimension(30, 14));
+        Eb7.setPreferredSize(new java.awt.Dimension(30, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 32;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Eb7, gridBagConstraints);
+
+        Fsharp7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Fsharp7.setText("F#");
+        Fsharp7.setMaximumSize(new java.awt.Dimension(27, 14));
+        Fsharp7.setMinimumSize(new java.awt.Dimension(27, 14));
+        Fsharp7.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 33;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Fsharp7, gridBagConstraints);
+
+        Gsharp7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Gsharp7.setText("G#");
+        Gsharp7.setMaximumSize(new java.awt.Dimension(26, 14));
+        Gsharp7.setMinimumSize(new java.awt.Dimension(26, 14));
+        Gsharp7.setPreferredSize(new java.awt.Dimension(26, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 34;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Gsharp7, gridBagConstraints);
+
+        Bb7.setText("Bb");
+        Bb7.setMaximumSize(new java.awt.Dimension(27, 14));
+        Bb7.setMinimumSize(new java.awt.Dimension(27, 14));
+        Bb7.setPreferredSize(new java.awt.Dimension(27, 14));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 35;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        blackKeyLabels.add(Bb7, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        keyNamesPanel.add(blackKeyLabels, gridBagConstraints);
+
+        presentChordDisplay.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        presentChordDisplay.setForeground(new java.awt.Color(0, 153, 0));
+        presentChordDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        presentChordDisplay.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        presentChordDisplay.setMaximumSize(new java.awt.Dimension(175, 30));
+        presentChordDisplay.setMinimumSize(new java.awt.Dimension(175, 30));
+        presentChordDisplay.setPreferredSize(new java.awt.Dimension(175, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        keyNamesPanel.add(presentChordDisplay, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        getContentPane().add(keyNamesPanel, gridBagConstraints);
 
         optionsMenu.setText("Options");
 
@@ -870,6 +2002,16 @@ public class VoicingKeyboard extends javax.swing.JFrame {
             }
         });
         optionsMenu.add(addToSequenceMI);
+
+        turnOnOffKeyLabelsMI.setBackground(new java.awt.Color(230, 230, 230));
+        turnOnOffKeyLabelsMI.setSelected(true);
+        turnOnOffKeyLabelsMI.setText("Turn On/Off Key Labels");
+        turnOnOffKeyLabelsMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnOnOffKeyLabelsMIActionPerformed(evt);
+            }
+        });
+        optionsMenu.add(turnOnOffKeyLabelsMI);
 
         jMenuBar1.add(optionsMenu);
 
@@ -992,12 +2134,12 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
         windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
-                windowMenuMenuSelected(evt);
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
             public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                windowMenuMenuSelected(evt);
             }
         });
 
@@ -1130,6 +2272,8 @@ private void keyboardLPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:
     int y = evt.getY();
     int x = evt.getX();
     
+    
+    
     if (y < WKHEIGHT && !playback)
     {
         // True if the user clicked a black key.
@@ -1248,6 +2392,8 @@ private void keyboardLPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:
         int m = evt.getModifiers();
         String mod = evt.getMouseModifiersText(m);
         setKeyboard(mod, midiValue);
+         
+        
     }
 }//GEN-LAST:event_keyboardLPMouseClicked
 
@@ -1255,7 +2401,7 @@ public void setKeyboard(String mod, int midiValue)
 {       
         // Pressing the keys and playing the notes
         PianoKey keyPlayed = pianoKeys()[midiValue - A];
-        
+         
         // to change bass note
         if (mod.equals(CTRLCLICK))
         {
@@ -1273,21 +2419,31 @@ public void setKeyboard(String mod, int midiValue)
             {
                 keyPlayed.setPressed(false);
                 keyPlayed.setAsExtension(false);
+                int x = keyPlayed.getMIDI(); 
+                labels[x-21].setForeground(new Color(240,240,240)); 
+                
             }
             // press the correct key
             else 
             {
                 keyPlayed.setPressed(true);
                 keyPlayed.setAsExtension(true);
+                int x = keyPlayed.getMIDI(); 
+                labels[x-21].setForeground(Color.black);  
             }
             
             if (singleNoteMode)
             {
                 pressSingleKey(keyPlayed);
+                //labels adjusted directly in the method
+                
+                
             }
             else
             {
                 pressKey(keyPlayed);
+                //labels adjusted directly in the method
+                 
             }
             // display voicing in text field
             setVoicingEntryTFfromKeys();
@@ -1326,6 +2482,8 @@ public void setKeyboard(String mod, int midiValue)
                 int root = findBass();
                 name = findBassName(root);
                 setBass(name, root);
+                
+                //labels[root-21].setForeground(Color.black); 
                 notate.rebuildVoicingTable();
             }
             return;
@@ -1818,7 +2976,15 @@ public void clearKeyboard()
             pk.setPressed(false);
             pressKey(pk);
         }
+        if(pk.isBass())
+        {
+            Icon offIcon = pk.getOffIcon();
+            JLabel label = pk.getLabel(); 
+            label.setIcon(offIcon);  
+        }
     }
+    presentChordDisplay.setText(EMPTY); 
+    setInvisible(); 
 }
 
 /**
@@ -2050,45 +3216,6 @@ public void setPlayback(boolean on)
     playback = on;
 }
 
-/**
- * Sets the text in the future chord display label.
- * 
- * @param text
- */
-public void setFutureChordDisplayText(String text)
-{
-    futureChordDisplay.setText(text);
-}
-
-/**
- * Gets the text displayed in the future chord display
- * 
- * @return a String - the chords displayed above the keyboard.
- */
-public String getFutureChordDisplayText()
-{
-    return futureChordDisplay.getText();
-}
-
-/**
- * Sets the text in the past chord display label.
- * 
- * @param text
- */
-public void setPastChordDisplayText(String text)
-{
- pastChordDisplay.setText(text);
-}
-
-/**
- * Gets the text displayed in the past chord display
- * 
- * @return a String - the chords displayed above the keyboard.
- */
-public String getPastChordDisplayText()
-{
-    return pastChordDisplay.getText();
-}
 
 /**
  * Sets the text in the present chord display label.
@@ -2267,6 +3394,33 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         saveChord();
     }//GEN-LAST:event_jButton2ActionPerformed
+/**
+ * if turned off, the labels will set invisible and turnOnOffLabels is changed to false
+ * otherwise, goes through pianoKeys() and determines which ones are on and turns on their labels
+ * @param evt 
+ */
+    private void turnOnOffKeyLabelsMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnOnOffKeyLabelsMIActionPerformed
+        if (!turnOnOffKeyLabelsMI.isSelected())
+        {
+            setInvisible();
+            turnOnOffLabels = false; 
+        } 
+        else
+        {
+            for(int x = 0; x<pianoKeys().length; x++)
+            {
+                if (pianoKeys()[x].isPressed())
+                {
+                    labels[x].setForeground(Color.black); 
+                }
+                if (pianoKeys()[x].isBass())
+                {
+                    labels[x].setForeground(Color.black);
+                }
+            }
+            turnOnOffLabels = true; 
+        }
+    }//GEN-LAST:event_turnOnOffKeyLabelsMIActionPerformed
     /**
      * For Voicing Data/info
      */
@@ -2330,9 +3484,7 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
  */
 public void resetChordDisplay()
 {
-    pastChordDisplay.setText(EMPTY);
     presentChordDisplay.setText(EMPTY);
-    futureChordDisplay.setText(EMPTY);
 }
 
 /**
@@ -2419,7 +3571,7 @@ public void setBass(String bassNote, int midiValue)
     {
         notate.setChordRootTFText(bassNote);
     }
-    
+     
     pressKey(bass);
 }
 
@@ -2554,12 +3706,23 @@ public void pressSingleKey(PianoKey keyPlayed)
         if(!currentVoicing[i] && key.isPressed())
         {
             key.setPressed(false);
-            pressKey(key);
+            pressKey(key); 
+            
+       }
+        if((key.isPressed() || key.isBass()) && turnOnOffLabels)
+        {
+            
+            labels[key.getMIDI()-21].setForeground(Color.black);
+        }
+        else
+        {
+            labels[key.getMIDI()-21].setForeground(new Color(240,240,240));
         }
     }
     notate.clearVoicingEntryTF();
     keyPlayed.setPressed(true);
     pressKey(keyPlayed);
+    
 }
 
 /**
@@ -2571,6 +3734,8 @@ public void pressSingleKey(PianoKey keyPlayed)
 public void pressKey(PianoKey keyPlayed)
 {
     JLabel label = keyPlayed.getLabel();
+    int x  = keyPlayed.getMIDI();  
+    
     Icon onIcon = keyPlayed.getOnIcon();
     Icon offIcon = keyPlayed.getOffIcon();
     Icon rootIcon = keyPlayed.getBassIcon();
@@ -2579,12 +3744,17 @@ public void pressKey(PianoKey keyPlayed)
     if (keyPlayed.isPressed()) 
     {
         if (keyPlayed.isBass()) 
-        {
+        { 
             label.setIcon(rootIconOn);
+            if(turnOnOffLabels)
+            {labels[x-21].setForeground(Color.black);}
+            
         }
         else 
         {
             label.setIcon(onIcon);
+            if(turnOnOffLabels)
+            {labels[x-21].setForeground(Color.black);}  
         }
     }
     else if (!keyPlayed.isPressed()) 
@@ -2592,10 +3762,13 @@ public void pressKey(PianoKey keyPlayed)
         if (keyPlayed.isBass()) 
         {
             label.setIcon(rootIcon);
+            if(turnOnOffLabels)
+            {labels[x-21].setForeground(Color.black);}           
         }
         else 
         {
             label.setIcon(offIcon);
+            labels[x-21].setForeground(new Color (240,240,240));            
         }
     }
 forcePaint();
@@ -2612,7 +3785,96 @@ private void forcePaint()
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel A0;
+    private javax.swing.JLabel A1;
+    private javax.swing.JLabel A2;
+    private javax.swing.JLabel A3;
+    private javax.swing.JLabel A4;
+    private javax.swing.JLabel A5;
+    private javax.swing.JLabel A6;
+    private javax.swing.JLabel A7;
+    private javax.swing.JLabel B0;
+    private javax.swing.JLabel B1;
+    private javax.swing.JLabel B2;
+    private javax.swing.JLabel B3;
+    private javax.swing.JLabel B4;
+    private javax.swing.JLabel B5;
+    private javax.swing.JLabel B6;
+    private javax.swing.JLabel B7;
+    private javax.swing.JLabel Bb0;
+    private javax.swing.JLabel Bb1;
+    private javax.swing.JLabel Bb2;
+    private javax.swing.JLabel Bb3;
+    private javax.swing.JLabel Bb4;
+    private javax.swing.JLabel Bb5;
+    private javax.swing.JLabel Bb6;
+    private javax.swing.JLabel Bb7;
+    private javax.swing.JLabel C1;
+    private javax.swing.JLabel C2;
+    private javax.swing.JLabel C3;
+    private javax.swing.JLabel C4;
+    private javax.swing.JLabel C5;
+    private javax.swing.JLabel C6;
+    private javax.swing.JLabel C7;
+    private javax.swing.JLabel C8;
+    private javax.swing.JLabel Csharp1;
+    private javax.swing.JLabel Csharp2;
+    private javax.swing.JLabel Csharp3;
+    private javax.swing.JLabel Csharp4;
+    private javax.swing.JLabel Csharp5;
+    private javax.swing.JLabel Csharp6;
+    private javax.swing.JLabel Csharp7;
+    private javax.swing.JLabel D1;
+    private javax.swing.JLabel D2;
+    private javax.swing.JLabel D3;
+    private javax.swing.JLabel D4;
+    private javax.swing.JLabel D5;
+    private javax.swing.JLabel D6;
+    private javax.swing.JLabel D7;
+    private javax.swing.JLabel E1;
+    private javax.swing.JLabel E2;
+    private javax.swing.JLabel E3;
+    private javax.swing.JLabel E4;
+    private javax.swing.JLabel E5;
+    private javax.swing.JLabel E6;
+    private javax.swing.JLabel E7;
+    private javax.swing.JLabel Eb1;
+    private javax.swing.JLabel Eb2;
+    private javax.swing.JLabel Eb3;
+    private javax.swing.JLabel Eb4;
+    private javax.swing.JLabel Eb5;
+    private javax.swing.JLabel Eb6;
+    private javax.swing.JLabel Eb7;
+    private javax.swing.JLabel F1;
+    private javax.swing.JLabel F2;
+    private javax.swing.JLabel F3;
+    private javax.swing.JLabel F4;
+    private javax.swing.JLabel F5;
+    private javax.swing.JLabel F6;
+    private javax.swing.JLabel F7;
+    private javax.swing.JLabel Fsharp1;
+    private javax.swing.JLabel Fsharp2;
+    private javax.swing.JLabel Fsharp3;
+    private javax.swing.JLabel Fsharp4;
+    private javax.swing.JLabel Fsharp5;
+    private javax.swing.JLabel Fsharp6;
+    private javax.swing.JLabel Fsharp7;
+    private javax.swing.JLabel G1;
+    private javax.swing.JLabel G2;
+    private javax.swing.JLabel G3;
+    private javax.swing.JLabel G4;
+    private javax.swing.JLabel G5;
+    private javax.swing.JLabel G6;
+    private javax.swing.JLabel G7;
+    private javax.swing.JLabel Gsharp1;
+    private javax.swing.JLabel Gsharp2;
+    private javax.swing.JLabel Gsharp3;
+    private javax.swing.JLabel Gsharp4;
+    private javax.swing.JLabel Gsharp5;
+    private javax.swing.JLabel Gsharp6;
+    private javax.swing.JLabel Gsharp7;
     private javax.swing.JMenuItem addToSequenceMI;
+    private javax.swing.JPanel blackKeyLabels;
     private javax.swing.JMenuItem cascadeMI;
     private javax.swing.JMenuItem chordModeMI;
     private javax.swing.JButton chordReplayButton;
@@ -2625,7 +3887,6 @@ private void forcePaint()
     private javax.swing.JLabel ctrlShiftClickExtLabel;
     private javax.swing.JMenuItem downHalfStepMI;
     private javax.swing.JMenuItem downOctaveMI;
-    private javax.swing.JLabel futureChordDisplay;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -2719,9 +3980,9 @@ private void forcePaint()
     private javax.swing.JLabel keyGsharp5;
     private javax.swing.JLabel keyGsharp6;
     private javax.swing.JLabel keyGsharp7;
+    private javax.swing.JPanel keyNamesPanel;
     private javax.swing.JLayeredPane keyboardLP;
     public javax.swing.JMenu optionsMenu;
-    private javax.swing.JLabel pastChordDisplay;
     private javax.swing.JMenuItem pausePlayMI;
     private javax.swing.JButton playChordButton;
     private javax.swing.JMenuItem playChordMI;
@@ -2734,10 +3995,12 @@ private void forcePaint()
     private javax.swing.JMenuItem startSelPlayMI;
     private javax.swing.JMenuItem stopPlayMI;
     private javax.swing.JMenuItem stopSelPlayMI;
+    private javax.swing.JCheckBoxMenuItem turnOnOffKeyLabelsMI;
     private javax.swing.JMenuItem upHalfStepMI;
     private javax.swing.JMenuItem upOctaveMI;
     private javax.swing.JMenu voicingModeMenu;
     private javax.swing.JMenu voicingTransposeMenu;
+    private javax.swing.JPanel whiteKeyLabels;
     private javax.swing.JMenu windowMenu;
     private javax.swing.JSeparator windowMenuSeparator;
     // End of variables declaration//GEN-END:variables
@@ -2747,7 +4010,12 @@ private void forcePaint()
  */
     
 public PianoKey[] pkeys;
-    
+
+/**
+ *  the array of PianoKeyLabels for this Keyboard
+ */
+public JLabel[] labels;
+
 /**
  * Initialize all keys.
  */
@@ -2755,6 +4023,9 @@ public PianoKey[] pkeys;
 private void initKeys()
 {
     pkeys = new PianoKey[88];
+    
+    labels = new JLabel[88]; 
+    
     // 0th octave keys
     pkeys[0] = new PianoKey(21, whiteKeyPressed, whiteKey, bassKey, bassKeyPressed, keyA0);
     pkeys[1] = new PianoKey(22, blackKeyPressed, blackKey, blackBassKey, blackBassKeyPressed, keyBb0);
@@ -2860,16 +4131,138 @@ private void initKeys()
     
     // 8th octave keys
     pkeys[87] = new PianoKey(108, whiteKeyPressed, whiteKey, bassKey, bassKeyPressed, keyC8);
+    
+    // 0th octave keys
+    labels[0] = A0;
+    labels[1] = Bb0;
+    labels[2] = B0;
+    
+    // 1st octave labels
+    labels[3] = C1;
+    labels[4] = Csharp1;
+    labels[5] = D1;
+    labels[6] = Eb1;
+    labels[7] = E1;
+    labels[8] = F1;
+    labels[9] = Fsharp1;
+    labels[10] = G1;
+    labels[11] = Gsharp1;
+    labels[12] = A1;
+    labels[13] = Bb1;
+    labels[14] = B1;
+    
+    // 2nd octave labels
+    labels[15] = C2;
+    labels[16] = Csharp2;
+    labels[17] = D2;
+    labels[18] = Eb2;
+    labels[19] = E2;
+    labels[20] = F2;
+    labels[21] = Fsharp2;
+    labels[22] = G2;
+    labels[23] = Gsharp2;
+    labels[24] = A2;
+    labels[25] = Bb2;
+    labels[26] = B2;
+    
+    // 3rd octave labels
+    labels[27] = C3;
+    labels[28] = Csharp3;
+    labels[29] = D3;
+    labels[30] = Eb3;
+    labels[31] = E3;
+    labels[32] = F3;
+    labels[33] = Fsharp3;
+    labels[34] = G3;
+    labels[35] = Gsharp3;
+    labels[36] = A3;
+    labels[37] = Bb3;
+    labels[38] = B3;
+    
+    // 4th octave labels
+    labels[39] = C4;
+    labels[40] = Csharp4;
+    labels[41] = D4;
+    labels[42] = Eb4;
+    labels[43] = E4;
+    labels[44] = F4;
+    labels[45] = Fsharp4;
+    labels[46] = G4;
+    labels[47] = Gsharp4;
+    labels[48] = A4;
+    labels[49] = Bb4;
+    labels[50] = B4;
+    
+    // 5th octave labels
+    labels[51] = C5;
+    labels[52] = Csharp5;
+    labels[53] = D5;
+    labels[54] = Eb5;
+    labels[55] = E5;
+    labels[56] = F5;
+    labels[57] = Fsharp5;
+    labels[58] = G5;
+    labels[59] = Gsharp5;
+    labels[60] = A5;
+    labels[61] = Bb5;
+    labels[62] = B5;
+    
+    // 6th octave labels
+    labels[63] = C6;
+    labels[64] = Csharp6;
+    labels[65] = D6; 
+    labels[66] = Eb6;
+    labels[67] = E6;
+    labels[68] = F6;
+    labels[69] = Fsharp6;
+    labels[70] = G6;
+    labels[71] = Gsharp6;
+    labels[72] = A6;
+    labels[73] = Bb6;
+    labels[74] = B6;
+    
+    // 7th octave labels
+    labels[75] = C7;
+    labels[76] = Csharp7;
+    labels[77] = D7;
+    labels[78] = Eb7;
+    labels[79] = E7;
+    labels[80] = F7;
+    labels[81] = Fsharp7;
+    labels[82] = G7;
+    labels[83] = Gsharp7;
+    labels[84] = A7;
+    labels[85] = Bb7;
+    labels[86] = B7; 
+    
+    // 8th octave labels
+    labels[87] = C8;
+ 
+}
+       
+/**
+ * sets all the labels to the same color as the background
+ */
+public void setInvisible()
+{
+    
+    for(int r = 0; r<88; r++)
+    {
+    
+        labels[r].setForeground(new Color(240,240,240));
+         
+    }
 }
 
-public PianoKey[] pianoKeys() {
+public PianoKey[] pianoKeys() 
+    {
         return pkeys;
     }
     
 public void closeWindow()
   {
-  setVisible(false);
-notate.closeKeyboard();
-  WindowRegistry.unregisterWindow(this);
+    setVisible(false);
+    notate.closeKeyboard();
+    WindowRegistry.unregisterWindow(this);
   }    
 }
