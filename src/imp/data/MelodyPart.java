@@ -2112,6 +2112,32 @@ public void setAutoFill(boolean fill)
     /**
      * applies a given resolution to a given melodyPart and returns 
      * the int noteSum 
+     * @param restAbsorption int
+     * @return newMelody MelodyPart 
+     */
+    
+    public MelodyPart absorbRests (int restAbsorption) {
+        MelodyPart newMelody = new MelodyPart();
+        PartIterator melodyIterator = this.iterator();
+        Note thisNote = null;
+        Note nextNote = (Note)melodyIterator.next();
+        while (melodyIterator.hasNext()){
+            thisNote = nextNote;
+            nextNote = (Note)melodyIterator.next();
+            if (nextNote.isRest() && nextNote.rhythmValue%(2*restAbsorption) <= restAbsorption && thisNote != null){
+                int extraLength = nextNote.rhythmValue%(2*restAbsorption);
+                nextNote.setRhythmValue(nextNote.getRhythmValue()-extraLength);
+                thisNote.setRhythmValue(thisNote.getRhythmValue()+extraLength);
+            }
+            newMelody.addNote(thisNote);
+        }
+        newMelody.addNote(thisNote);
+        return newMelody;
+    }
+    
+    /**
+     * applies a given resolution to a given melodyPart and returns 
+     * the int noteSum 
      * @param resolution int 
      * @param quantum 
      * @param toSwing 
@@ -2225,6 +2251,7 @@ public void setAutoFill(boolean fill)
         midiImport.scoreToMelodies(quantum);
         melody = midiImport.getMelody(0);
         }
+        melody = melody.absorbRests(restAbsorption);
         return melody;
     }
     

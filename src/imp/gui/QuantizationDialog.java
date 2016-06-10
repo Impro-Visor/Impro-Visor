@@ -71,7 +71,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         setBounds(new java.awt.Rectangle(650, 25, 0, 0));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        noneQuantizationBox.setSelected(true);
         noneQuantizationBox.setText("None");
         noneQuantizationBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -86,7 +85,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(noneQuantizationBox, gridBagConstraints);
 
-        noTripletQuantizationBox.setSelected(true);
         noTripletQuantizationBox.setText("No Triplet");
         noTripletQuantizationBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -227,9 +225,10 @@ public class QuantizationDialog extends javax.swing.JDialog
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
         getContentPane().add(eighthNoteSwingBox, gridBagConstraints);
 
         quantizeButton.setText("Quantize");
@@ -242,11 +241,11 @@ public class QuantizationDialog extends javax.swing.JDialog
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
         getContentPane().add(quantizeButton, gridBagConstraints);
 
         noAbsorbBox.setText("No Rest Absorption");
@@ -334,7 +333,8 @@ public class QuantizationDialog extends javax.swing.JDialog
             SIXTEENTH_NOTE_TRIPLET_QUANTUM = 20,
             THIRTYSECOND_NOTE_QUANTUM = 15,
             THIRTYSECOND_NOTE_TRIPLET_QUANTUM = 10,
-            MINIMUM_QUANTUM = 1;
+            MINIMUM_QUANTUM = 1,
+            MINIMUM_TRIPLET_QUANTUM = 5;
     
     private final int quantum[] = {EIGHTH_NOTE_QUANTUM, EIGHTH_NOTE_TRIPLET_QUANTUM};
     private int restAbsorption = SIXTEENTH_NOTE_QUANTUM;
@@ -349,41 +349,133 @@ public class QuantizationDialog extends javax.swing.JDialog
         return restAbsorption;
     }
     
+    private void setQuantizationBoxesOn(int level)
+    {
+        // Note that most cases intentionally fall through to the next.
+        switch( level )
+          {
+            case THIRTYSECOND_NOTE_QUANTUM:
+                thirtysecondNoteQuantizationBox.setSelected(true);
+            case SIXTEENTH_NOTE_QUANTUM:
+                sixteenthNoteQuantizationBox.setSelected(true);
+            case EIGHTH_NOTE_QUANTUM:
+                eighthNoteQuantizationBox.setSelected(true);
+            case QUARTER_NOTE_QUANTUM:
+                quarterNoteQuantizationBox.setSelected(true);
+                          
+                noneQuantizationBox.setSelected(false);
+                break;
+                
+            case THIRTYSECOND_NOTE_TRIPLET_QUANTUM:
+                thirtysecondNoteTripletQuantizationBox.setSelected(true);
+            case SIXTEENTH_NOTE_TRIPLET_QUANTUM:
+                sixteenthNoteTripletQuantizationBox.setSelected(true);
+            case EIGHTH_NOTE_TRIPLET_QUANTUM:
+                eighthNoteTripletQuantizationBox.setSelected(true);
+            case QUARTER_NOTE_TRIPLET_QUANTUM:
+                quarterNoteTripletQuantizationBox.setSelected(true);
+
+                noTripletQuantizationBox.setSelected(false);
+                break;
+          }
+    }
+    
+    private void setQuantizationBoxesOff(int level)
+    {
+         // Note that most cases intentionally fall through to the next.
+       switch( level )
+          {
+           case MINIMUM_QUANTUM:
+                noneQuantizationBox.setSelected(true);
+            case QUARTER_NOTE_QUANTUM:
+                quarterNoteQuantizationBox.setSelected(false);
+            case EIGHTH_NOTE_QUANTUM:
+                eighthNoteQuantizationBox.setSelected(false); 
+            case SIXTEENTH_NOTE_QUANTUM:
+                sixteenthNoteQuantizationBox.setSelected(false);
+            case THIRTYSECOND_NOTE_QUANTUM:      
+                thirtysecondNoteQuantizationBox.setSelected(false);
+            break;
+
+           case MINIMUM_TRIPLET_QUANTUM:
+                noTripletQuantizationBox.setSelected(true);
+            case QUARTER_NOTE_TRIPLET_QUANTUM:
+                quarterNoteTripletQuantizationBox.setSelected(false);
+            case EIGHTH_NOTE_TRIPLET_QUANTUM:
+                eighthNoteTripletQuantizationBox.setSelected(false); 
+            case SIXTEENTH_NOTE_TRIPLET_QUANTUM:
+                sixteenthNoteTripletQuantizationBox.setSelected(false);
+            case THIRTYSECOND_NOTE_TRIPLET_QUANTUM:      
+                thirtysecondNoteTripletQuantizationBox.setSelected(false);
+            break;            
+
+          }
+    }
+ 
+private void setAbsorbRestBoxesOn(int level)
+    {
+        // Note that most cases intentionally fall through to the next.
+        switch( level )
+          {
+            case QUARTER_NOTE_QUANTUM:
+                absorbQuarterRestBox.setSelected(true);
+            case EIGHTH_NOTE_QUANTUM:
+                absorbEighthRestBox.setSelected(true);
+             case SIXTEENTH_NOTE_QUANTUM:
+                absorbSixteenthRestBox.setSelected(true);
+            case THIRTYSECOND_NOTE_QUANTUM:
+                absorbThirtySecondRestBox.setSelected(true);
+
+                noAbsorbBox.setSelected(false);                
+          }
+    }
+
+private void setAbsorbRestBoxesOff()
+    {
+                noAbsorbBox.setSelected(true);
+                absorbThirtySecondRestBox.setSelected(false);
+                absorbSixteenthRestBox.setSelected(false);
+                absorbEighthRestBox.setSelected(false);
+                absorbQuarterRestBox.setSelected(false);  
+                
+                restAbsorption = MINIMUM_QUANTUM;
+    }
+        
     private void noneQuantizationBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_noneQuantizationBoxActionPerformed
     {//GEN-HEADEREND:event_noneQuantizationBoxActionPerformed
-            quantum[0] = MAXIMUM_QUANTUM;
-            thirtysecondNoteQuantizationBox.setSelected(false);
-            sixteenthNoteQuantizationBox.setSelected(false);
-            eighthNoteQuantizationBox.setSelected(false);
-            quarterNoteQuantizationBox.setSelected(false);
-            noneQuantizationBox.setSelected(true);
+    if( noneQuantizationBox.isSelected() )
+      {
+        quantum[0] = MINIMUM_QUANTUM;
+        thirtysecondNoteQuantizationBox.setSelected(false);
+        sixteenthNoteQuantizationBox.setSelected(false);
+        eighthNoteQuantizationBox.setSelected(false);
+        quarterNoteQuantizationBox.setSelected(false);
+      }
     }//GEN-LAST:event_noneQuantizationBoxActionPerformed
 
     private void noTripletQuantizationBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_noTripletQuantizationBoxActionPerformed
     {//GEN-HEADEREND:event_noTripletQuantizationBoxActionPerformed
-
-            quantum[1] = MAXIMUM_QUANTUM;
-            thirtysecondNoteTripletQuantizationBox.setSelected(false);
-            sixteenthNoteTripletQuantizationBox.setSelected(false);
-            eighthNoteTripletQuantizationBox.setSelected(false);
-            quarterNoteTripletQuantizationBox.setSelected(false);
-            noTripletQuantizationBox.setSelected(true);
-            
+    if( noTripletQuantizationBox.isSelected() )
+      {
+        quantum[1] = MINIMUM_TRIPLET_QUANTUM;
+        thirtysecondNoteTripletQuantizationBox.setSelected(false);
+        sixteenthNoteTripletQuantizationBox.setSelected(false);
+        eighthNoteTripletQuantizationBox.setSelected(false);
+        quarterNoteTripletQuantizationBox.setSelected(false);
+      }
     }//GEN-LAST:event_noTripletQuantizationBoxActionPerformed
 
     private void quarterNoteQuantizationBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_quarterNoteQuantizationBoxActionPerformed
     {//GEN-HEADEREND:event_quarterNoteQuantizationBoxActionPerformed
         if( quarterNoteQuantizationBox.isSelected() )
           {
-            noneQuantizationBox.setSelected(true);
             quantum[0] = QUARTER_NOTE_QUANTUM;
+            setQuantizationBoxesOn(quantum[0]);
           }
         else
           {
-            quantum[0] = MAXIMUM_QUANTUM;
-            thirtysecondNoteQuantizationBox.setSelected(false);
-            sixteenthNoteQuantizationBox.setSelected(false);
-            eighthNoteQuantizationBox.setSelected(false);
+            quantum[0] = MINIMUM_QUANTUM;
+            setQuantizationBoxesOff(quantum[0]);
           }
     }//GEN-LAST:event_quarterNoteQuantizationBoxActionPerformed
 
@@ -391,15 +483,13 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_quarterNoteTripletQuantizationBoxActionPerformed
         if( quarterNoteTripletQuantizationBox.isSelected() )
           {
-            noTripletQuantizationBox.setSelected(true);
             quantum[1] = QUARTER_NOTE_TRIPLET_QUANTUM;
+            setQuantizationBoxesOn(quantum[1]);
           }
         else
           {
-            quantum[1] = MAXIMUM_QUANTUM;
-            thirtysecondNoteTripletQuantizationBox.setSelected(false);
-            sixteenthNoteTripletQuantizationBox.setSelected(false);
-            eighthNoteTripletQuantizationBox.setSelected(false);
+            quantum[1] = MINIMUM_TRIPLET_QUANTUM;
+            setQuantizationBoxesOff(quantum[1]);
           }
     }//GEN-LAST:event_quarterNoteTripletQuantizationBoxActionPerformed
 
@@ -407,15 +497,13 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_eighthNoteQuantizationBoxActionPerformed
         if( eighthNoteQuantizationBox.isSelected() )
           {
-            quarterNoteQuantizationBox.setSelected(true);
-            noneQuantizationBox.setSelected(true);
             quantum[0] = EIGHTH_NOTE_QUANTUM;
+            setQuantizationBoxesOn(quantum[0]);
          }
         else
           {
-            quantum[0] = QUARTER_NOTE_QUANTUM;
-            thirtysecondNoteQuantizationBox.setSelected(false);
-            sixteenthNoteQuantizationBox.setSelected(false);
+            quantum[0] = SIXTEENTH_NOTE_QUANTUM;
+            setQuantizationBoxesOff(quantum[0]);
           }
     }//GEN-LAST:event_eighthNoteQuantizationBoxActionPerformed
 
@@ -423,15 +511,13 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_eighthNoteTripletQuantizationBoxActionPerformed
        if( eighthNoteTripletQuantizationBox.isSelected() )
           {
-            quarterNoteTripletQuantizationBox.setSelected(true);
-            noTripletQuantizationBox.setSelected(true);
             quantum[1] = EIGHTH_NOTE_TRIPLET_QUANTUM;
+            setQuantizationBoxesOn(quantum[1]);
          }
         else
           {
-            quantum[1] = QUARTER_NOTE_TRIPLET_QUANTUM;
-            thirtysecondNoteTripletQuantizationBox.setSelected(false);
-            sixteenthNoteTripletQuantizationBox.setSelected(false);
+            quantum[1] = SIXTEENTH_NOTE_TRIPLET_QUANTUM;
+            setQuantizationBoxesOff(quantum[1]);
           }
     }//GEN-LAST:event_eighthNoteTripletQuantizationBoxActionPerformed
 
@@ -439,15 +525,13 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_sixteenthNoteQuantizationBoxActionPerformed
         if( sixteenthNoteQuantizationBox.isSelected() )
           {
-            eighthNoteQuantizationBox.setSelected(true);
-            quarterNoteQuantizationBox.setSelected(true);
-            noneQuantizationBox.setSelected(true);
             quantum[0] = SIXTEENTH_NOTE_QUANTUM;
+            setQuantizationBoxesOn(quantum[0]);
           }
         else
           {
-            quantum[1] = EIGHTH_NOTE_QUANTUM;
-            thirtysecondNoteQuantizationBox.setSelected(false);
+            quantum[0] = THIRTYSECOND_NOTE_QUANTUM;
+            setQuantizationBoxesOff(quantum[0]);
           }
     }//GEN-LAST:event_sixteenthNoteQuantizationBoxActionPerformed
 
@@ -455,15 +539,14 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_sixteenthNoteTripletQuantizationBoxActionPerformed
         if( sixteenthNoteTripletQuantizationBox.isSelected() )
           {
-            eighthNoteTripletQuantizationBox.setSelected(true);
-            quarterNoteTripletQuantizationBox.setSelected(true);
-            noTripletQuantizationBox.setSelected(true);
+            
             quantum[1] = SIXTEENTH_NOTE_TRIPLET_QUANTUM;
+            setQuantizationBoxesOn(quantum[1]);
          }
         else
           {
-            quantum[1] = EIGHTH_NOTE_TRIPLET_QUANTUM;
-            thirtysecondNoteTripletQuantizationBox.setSelected(false);
+            quantum[1] = THIRTYSECOND_NOTE_TRIPLET_QUANTUM;
+            setQuantizationBoxesOff(quantum[1]);
           }
     }//GEN-LAST:event_sixteenthNoteTripletQuantizationBoxActionPerformed
 
@@ -471,31 +554,27 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_thirtysecondNoteQuantizationBoxActionPerformed
          if( thirtysecondNoteQuantizationBox.isSelected() )
           {
-            sixteenthNoteQuantizationBox.setSelected(true);
-            eighthNoteQuantizationBox.setSelected(true);
-            quarterNoteQuantizationBox.setSelected(true);
-            noneQuantizationBox.setSelected(true);
             quantum[0] = THIRTYSECOND_NOTE_QUANTUM;
+            setQuantizationBoxesOn(quantum[0]);
           }
           else
           {
-            quantum[0] = SIXTEENTH_NOTE_QUANTUM;
+            quantum[0] = MINIMUM_QUANTUM;
+            setQuantizationBoxesOff(quantum[0]);
           }
     }//GEN-LAST:event_thirtysecondNoteQuantizationBoxActionPerformed
 
     private void thirtysecondNoteTripletQuantizationBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_thirtysecondNoteTripletQuantizationBoxActionPerformed
     {//GEN-HEADEREND:event_thirtysecondNoteTripletQuantizationBoxActionPerformed
          if( thirtysecondNoteTripletQuantizationBox.isSelected() )
-          {
-            sixteenthNoteTripletQuantizationBox.setSelected(true);
-            eighthNoteTripletQuantizationBox.setSelected(true);
-            quarterNoteTripletQuantizationBox.setSelected(true);
-            noTripletQuantizationBox.setSelected(true);
+           {
             quantum[1] = THIRTYSECOND_NOTE_TRIPLET_QUANTUM;
-          }
+            setQuantizationBoxesOn(quantum[1]);
+           }
          else
-         {
-            quantum[0] = SIXTEENTH_NOTE_TRIPLET_QUANTUM;
+          {
+            quantum[1] = MINIMUM_TRIPLET_QUANTUM;
+            setQuantizationBoxesOff(quantum[1]);
           }
     }//GEN-LAST:event_thirtysecondNoteTripletQuantizationBoxActionPerformed
 
@@ -522,15 +601,12 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_absorbQuarterRestBoxActionPerformed
     if( absorbQuarterRestBox.isSelected() )
           {
-            noAbsorbBox.setSelected(false);
-            absorbEighthRestBox.setSelected(true);
-            absorbSixteenthRestBox.setSelected(true);
-            absorbThirtySecondRestBox.setSelected(true);
             restAbsorption = QUARTER_NOTE_QUANTUM;
+            setAbsorbRestBoxesOn(restAbsorption);
           }
          else
          {
-            restAbsorption = EIGHTH_NOTE_QUANTUM;
+            setAbsorbRestBoxesOff();
           }
     }//GEN-LAST:event_absorbQuarterRestBoxActionPerformed
 
@@ -538,15 +614,12 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_absorbEighthRestBoxActionPerformed
     if( absorbEighthRestBox.isSelected() )
           {
-            noAbsorbBox.setSelected(false);
-            absorbSixteenthRestBox.setSelected(true);
-            absorbThirtySecondRestBox.setSelected(true);
             restAbsorption = EIGHTH_NOTE_QUANTUM;
+            setAbsorbRestBoxesOn(restAbsorption);
           }
          else
          {
-            absorbQuarterRestBox.setSelected(false);
-            restAbsorption = SIXTEENTH_NOTE_QUANTUM;
+            setAbsorbRestBoxesOff();
          }
     }//GEN-LAST:event_absorbEighthRestBoxActionPerformed
 
@@ -554,16 +627,12 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_absorbSixteenthRestBoxActionPerformed
     if( absorbSixteenthRestBox.isSelected() )
           {
-            noAbsorbBox.setSelected(false);
-            absorbSixteenthRestBox.setSelected(true);
-            absorbThirtySecondRestBox.setSelected(true);
-            restAbsorption = EIGHTH_NOTE_QUANTUM;
+            restAbsorption = SIXTEENTH_NOTE_QUANTUM;
+            setAbsorbRestBoxesOn(restAbsorption);
           }
          else
          {
-            absorbEighthRestBox.setSelected(false);
-            absorbQuarterRestBox.setSelected(false);
-            restAbsorption = SIXTEENTH_NOTE_QUANTUM;
+            setAbsorbRestBoxesOff();
          }
     }//GEN-LAST:event_absorbSixteenthRestBoxActionPerformed
 
@@ -571,17 +640,12 @@ public class QuantizationDialog extends javax.swing.JDialog
     {//GEN-HEADEREND:event_absorbThirtySecondRestBoxActionPerformed
     if( absorbThirtySecondRestBox.isSelected() )
           {
-            noAbsorbBox.setSelected(false);
-            absorbThirtySecondRestBox.setSelected(true);
             restAbsorption = THIRTYSECOND_NOTE_QUANTUM;
+            setAbsorbRestBoxesOn(restAbsorption);
           }
          else
          {
-            noAbsorbBox.setSelected(true);
-            absorbSixteenthRestBox.setSelected(false);
-            absorbEighthRestBox.setSelected(false);
-            absorbQuarterRestBox.setSelected(false);
-            restAbsorption = MINIMUM_QUANTUM;
+           setAbsorbRestBoxesOff();           
          }
     }//GEN-LAST:event_absorbThirtySecondRestBoxActionPerformed
 
