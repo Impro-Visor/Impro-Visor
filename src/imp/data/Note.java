@@ -97,7 +97,7 @@ public static int maxRhythmValuePerLine = 480;	// 4 beats
 
 /**
  * Creates a Note with the specified pitchName, accidental, and rhythm value
- * @param pitchName        an int containing the MIDI number for the Note
+ * @param pitch
  * @param accidental   a flag indicating the Note's accidental
  * @param rhythmValue  the rhythm value for the Note
  */
@@ -113,7 +113,7 @@ public Note(int pitch, Accidental accidental, int rhythmValue)
 
 /**
  * Creates a Note with the specified pitchName and accidental
- * @param pitchName        an int containing the MIDI number for the Note
+ * @param pitch
  * @param accidental   a flag indicating the Note's accidental
  */
 public Note(int pitch, Accidental accidental)
@@ -124,7 +124,7 @@ public Note(int pitch, Accidental accidental)
 
 /**
  * Creates a Note with the specified pitchName, SHARP or FLAT, and rhythm value
- * @param pitchName        an int containing the MIDI number for the Note
+     * @param pitch
  * @param natural      true if natural, false if sharp or flat
  * @param sharp        true for SHARP, false for FLAT
  * @param rhythmValue  the rhythm value for the Note
@@ -143,7 +143,7 @@ public Note(int pitch, boolean natural, boolean sharp, int rhythmValue)
 
 /**
  * Creates a Note with the specified pitchName, SHARP or FLAT, and rhythm value
- * @param pitchName        an int containing the MIDI number for the Note
+ * @param pitch
  * @param sharp        true for SHARP, false for FLAT
  * @param rhythmValue  the rhythm value for the Note
  */
@@ -160,7 +160,7 @@ public Note(int pitch, boolean sharp, int rhythmValue)
 /**
  * Creates a Note with the specified pitchName, SHARP or FLAT, 
  * and default rhythm value
- * @param pitchName        an int containing the MIDI number for the Note
+ * @param pitch       an int containing the MIDI number for the Note
  * @param sharp        true for SHARP, false for FLAT
  */
 public Note(int pitch, boolean sharp)
@@ -171,7 +171,7 @@ public Note(int pitch, boolean sharp)
 
 /**
  * Creates a Note with the specified pitchName and rhythm value
- * @param pitchName        an int containing the MIDI number for the Note
+ * @param pitch       an int containing the MIDI number for the Note
  * @param rhythmValue  the Note's rhythmValue
  */
 public Note(int pitch, int rhythmValue)
@@ -186,13 +186,36 @@ public Note(int pitch, int rhythmValue)
 
 /**
  * Creates a Note with the specified pitchName
- * @param pitchName        an int containing the MIDI number for the Note
+ * @param pitch
  */
 public Note(int pitch)
   {
   this(pitch, DEFAULT_RHYTHM_VALUE);
   }
 
+/**
+ * makeNote is a factory method for making a note out of a pitch and a
+ * rhythmvalue. The difference between it and a constructor is that if
+ * pitch == REST (defined in Constants.java) the returned value will be
+ * a Rest (which is a kind of note), whereas if pitch != REST, the returned
+ * value will be a regular note. This is intended to be more convenient to use
+ * when doing things like copying melodyParts.
+ * @param pitch the pitch of the returned Note (or Rest if pitch == REST)
+ * @param rhythmvalue the duration of the returned Note or Rest
+ * @return 
+ */
+
+public static Note makeNote(int pitch, int rhythmvalue)
+{
+    if( pitch == REST )
+      {
+        return new Rest(rhythmvalue);
+      }
+    else
+      {
+        return new Note(pitch, rhythmvalue);
+      }
+}
 
 public void setVolume(int volume)
   {
@@ -369,6 +392,8 @@ static Accidental getSharpOrFlat(boolean value)
 
 /**
  * Gets the closest match Note to a given pitchName, from a polylist of NoteSymbols
+ * @param pitch
+ * @param tonesPL
  * @return Note  an instance of the 'closest' note in list from the pitchName
  */
 public static Note getClosestMatch(int pitch, Polylist tonesPL)
@@ -431,6 +456,9 @@ public static Note getClosestMatch(int pitch, Polylist tonesPL)
 
 /**
  * Gets the closest match Note at or above a given pitchName, from a polylist of NoteSymbols
+ * @param pitch
+ * @param tonesPL
+ * @param upward
  * @return Note  an instance of the 'closest' note in list from the pitchName
  */
 public static Note getClosestMatchDirectional(int pitch, 
@@ -812,6 +840,8 @@ public void save(BufferedWriter out) throws IOException
 /**
  * Writes the Note to the passed BufferedWriter in Leadsheet format.
  * @param out       the BufferedWriter to write the Note to
+ * @param metre
+ * @throws java.io.IOException
  */
 public void saveLeadsheet(BufferedWriter out, int[] metre) throws IOException
   {
@@ -897,6 +927,8 @@ static int flatInKeysBelow[] =
 /**
  * Determine whether this note would be accidental in the indicated
  * key signature.
+ * @param keySig
+ * @return 
  */
 public boolean isAccidentalInKey(int keySig)
   {
@@ -921,6 +953,7 @@ public boolean isAccidentalInKey(int keySig)
 
 /**
  * Get name of the PitchClass of this note
+ * @return 
  */
 public String getPitchClassName()
   {
@@ -933,24 +966,26 @@ public String getPitchClassName()
 
   StringBuilder buffer = new StringBuilder();
 
-  if( accidental == Accidental.SHARP )
-    {
-    buffer.append(sharpPitchFromMidi[pitch_within_octave]);
-    }
-  else if( accidental == Accidental.FLAT )
-    {
-    buffer.append(flatPitchFromMidi[pitch_within_octave]);
-    }
-  else
-    {
-    buffer.append(naturalPitchFromMidi[pitch_within_octave]);
-    }
+  if( null != accidental )
+    switch( accidental )
+      {
+        case SHARP:
+            buffer.append(sharpPitchFromMidi[pitch_within_octave]);
+            break;
+        case FLAT:
+            buffer.append(flatPitchFromMidi[pitch_within_octave]);
+            break;
+        default:
+            buffer.append(naturalPitchFromMidi[pitch_within_octave]);
+            break;
+      }
   return buffer.toString();
   }
 
 
 /**
  * Sets the pitchName of the note used to draw the part
+ * @param p
  */
 public void setDrawnPitch(int p)
   {
@@ -960,6 +995,7 @@ public void setDrawnPitch(int p)
 
 /**
  * Gets the the drawn pitchName
+ * @return 
  */
 public int getDrawnPitch()
   {
@@ -981,6 +1017,7 @@ public int getDrawnPitch()
 
 /**
  * Tell if drawn as a rest.
+ * @return 
  */
 public boolean isDrawnRest()
   {
@@ -990,6 +1027,7 @@ public boolean isDrawnRest()
 
 /**
  * Creates a String representing a note in Leadsheet notation.
+ * @return 
  */
 public String toLeadsheet()
   {
@@ -1171,6 +1209,9 @@ static int accumulateExactValue(int value, int duration, StringBuffer buffer,
  * @param time          the time at which to start this Note
  * @param ch            the channel on which to put this Note 
  * @param transposition amount by which to transpose this note in semitones
+ * @param sendBankSelect
+ * @return 
+ * @throws javax.sound.midi.InvalidMidiDataException 
  */
 
 public long render(Sequence seq, 
@@ -1202,7 +1243,8 @@ public long render(Sequence seq,
  * @param offTime   the time at which to end this Note
  * @param ch        the channel on which to put this Note 
  * @param transposition amount by which to transpose this note in semitones
-  */
+ * @throws javax.sound.midi.InvalidMidiDataException
+ */
 
 public void render(Sequence seq, 
                    Track track, 
