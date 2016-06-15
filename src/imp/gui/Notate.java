@@ -1574,6 +1574,7 @@ public Critic getCritic()
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         autoFillMI = new javax.swing.JCheckBoxMenuItem();
         adviceFrame = new javax.swing.JFrame();
+        adviceTargetSpinner = new javax.swing.JSpinner();
         adviceTabbedPane = new javax.swing.JTabbedPane();
         scrollNotes = new javax.swing.JScrollPane();
         adviceTree = new javax.swing.JTree();
@@ -4457,6 +4458,18 @@ public Critic getCritic()
         });
         adviceFrame.getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        adviceTargetSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"c-", "c#-", "d-", "eb-", "e-", "f-", "f#-", "g-", "ab-", "a-", "bb-", "b-", "c", "c#", "d", "eb", "e", "f", "f#", "g", "ab", "a", "bb", "b", "c+", "c#+", "d+", "eb+", "e+", "f+", "f+#", "g+", "ab+", "a+", "bb+", "b+"}));
+        adviceTargetSpinner.setToolTipText("Select the target pitch center for Advice melodies.");
+        adviceTargetSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Target Center", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        adviceTargetSpinner.setMaximumSize(new java.awt.Dimension(150, 50));
+        adviceTargetSpinner.setMinimumSize(new java.awt.Dimension(150, 50));
+        adviceTargetSpinner.setPreferredSize(new java.awt.Dimension(150, 50));
+        adviceTargetSpinner.setValue("c+");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        adviceFrame.getContentPane().add(adviceTargetSpinner, gridBagConstraints);
+
         adviceTabbedPane.setMinimumSize(new java.awt.Dimension(500, 400));
         adviceTabbedPane.setPreferredSize(new java.awt.Dimension(500, 400));
         adviceTabbedPane.addMouseListener(new java.awt.event.MouseAdapter()
@@ -4697,6 +4710,8 @@ public Critic getCritic()
         adviceTabbedPane.addTab("Bricks", scrollBricks);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -17726,6 +17741,11 @@ void adviceSelected(Object object)
       }
   }
 
+public String getAdviceTargetCenter()
+{
+    return (String)adviceTargetSpinner.getValue();
+}
+
 /**
  *
  * Displays an internal frame that allows the user to override the number
@@ -25490,6 +25510,7 @@ private ImageIcon pauseButton =
     private javax.swing.JList adviceScrollListQuotes;
     private javax.swing.JList adviceScrollListScales;
     private javax.swing.JTabbedPane adviceTabbedPane;
+    private javax.swing.JSpinner adviceTargetSpinner;
     protected javax.swing.JTree adviceTree;
     private javax.swing.JPopupMenu.Separator afterGrammarSeparator;
     private javax.swing.JPopupMenu.Separator afterGuideToneSeparator;

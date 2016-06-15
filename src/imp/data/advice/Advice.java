@@ -23,7 +23,9 @@ package imp.data.advice;
 
 import imp.*;
 import imp.com.*;
+import imp.data.NoteSymbol;
 import imp.data.Part;
+import imp.gui.Notate;
 import polya.*;
 
 /**
@@ -53,6 +55,7 @@ public class Advice implements Constants {
      * Prints out the name of this piece of Advice
      * @return String   the name of the Advice
      */
+    @Override
     public String toString() {
         // The blank is so that this entry will NOT be selected by letter in the advice window.
         return " " + name;
@@ -62,9 +65,17 @@ public class Advice implements Constants {
      * Inserts the Advice into the Part at a specified index
      * @param part      the Part to insert into
      * @param index     the index at which to insert
+     * @param cm
+     * @param notate
      */
-    public void insertInPart(Part part, int index, CommandManager cm,
-            imp.gui.Notate notate) {
+    public void insertInPart(Part part, 
+                             int index, 
+                             CommandManager cm,
+                             Notate notate) {
+        String adviceTargetAsString = notate.getAdviceTargetCenter();
+        int adviceTargetMidiValue = NoteSymbol.makeNoteSymbol(adviceTargetAsString).getMIDI();
+        System.out.println("advice target center is " + adviceTargetAsString 
+                         + ", MIDI = " + adviceTargetMidiValue);
         cm.execute(new SafePasteCommand(getPart(), part, index,
                 !notate.getAlwaysPasteOver(), true, notate));
     }

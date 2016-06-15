@@ -1166,7 +1166,17 @@ public class CreateGrammar implements imp.Constants {
 
             //sort the points by distance from averagePoint
             Vector<DataPoint> points = tempCluster.getDataPoints();
-            Collections.sort((List) points, new DataPointDistanceComparer());
+            
+            // This causes an exception sometime. Do we really need it?
+            //java.lang.IllegalArgumentException: Comparison method violates its general contract!
+            try
+              {
+              Collections.sort((List) points, new DataPointDistanceComparer());
+              }
+            catch( Exception e )
+              {
+                // Do nothing for now
+              }
 
             //remove duplicates
             for (int j = 0; j < points.size() - 1; j++) {
