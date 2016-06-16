@@ -2120,7 +2120,11 @@ public void setAutoFill(boolean fill)
         MelodyPart newMelody = new MelodyPart();
         PartIterator melodyIterator = this.iterator();
         Note thisNote = null;
-        Note nextNote = (Note)melodyIterator.next();
+        Note nextNote = null;
+        if (melodyIterator.hasNext())
+        {
+            nextNote = (Note)melodyIterator.next();
+        }
         while (melodyIterator.hasNext()){
             thisNote = nextNote;
             nextNote = (Note)melodyIterator.next();

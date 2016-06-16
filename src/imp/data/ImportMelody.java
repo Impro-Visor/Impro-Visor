@@ -269,9 +269,15 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
           // Place the longest placeable note in the current slot.
           int duration = quantize(longNote.getRhythmValue(), gcd);
           int pitch = longNote.getPitch();
-          if ((duration < quantum[0]) && (duration < quantum[1]))
+          if (duration < smallerQuantum)
           {
               duration = smallerQuantum;
+          }
+          else
+          {
+              //This is to get rid of the extra durations on the notes that
+              //have an acceptably long duration but are tied to a shorter note
+              duration -= (duration%smallerQuantum);
           }
           
         
