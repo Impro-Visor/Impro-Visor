@@ -323,7 +323,7 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         noteQuantumTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         noteQuantumTextField.setText("60");
-        noteQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Note Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
+        noteQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "First Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         noteQuantumTextField.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -340,7 +340,7 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         tripletQuantumTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         tripletQuantumTextField.setText("40");
-        tripletQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Triplet Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
+        tripletQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Second Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         tripletQuantumTextField.setFocusTraversalKeysEnabled(false);
         tripletQuantumTextField.addActionListener(new java.awt.event.ActionListener()
         {
@@ -428,6 +428,10 @@ public class QuantizationDialog extends javax.swing.JDialog
                 note04box.setSelected(true);                          
                 break;
           }
+        if( tripletNoneBox.isSelected() )
+          {
+            setQuantization(TRIPLET_INDEX, level);
+          }
     }
  
  private void setTripletQuantizationBoxesOn(int level)
@@ -460,6 +464,10 @@ public class QuantizationDialog extends javax.swing.JDialog
                 triplet04box.setSelected(true);
                 break;
           }
+        if( noteNoneBox.isSelected() )
+          {
+            setQuantization(NOTE_INDEX, level);
+          }
     }
         
     private void setNoteQuantizationBoxesOff(int level)
@@ -472,18 +480,30 @@ public class QuantizationDialog extends javax.swing.JDialog
                 note16box.setSelected(true);
                 note08box.setSelected(true);
                 note04box.setSelected(true);
+                if( tripletNoneBox.isSelected() )
+                  {
+                  setQuantization(TRIPLET_INDEX, SIXTEENTH_NOTE_QUANTUM);
+                  }
                 break;
            case SIXTEENTH_NOTE_QUANTUM:
                 note32box.setSelected(false);
                 note16box.setSelected(false);
                 note08box.setSelected(true);
                 note04box.setSelected(true);
+                if( tripletNoneBox.isSelected() )
+                  {
+                  setQuantization(TRIPLET_INDEX, EIGHTH_NOTE_QUANTUM);
+                  }
                 break;
             case EIGHTH_NOTE_QUANTUM:
                 note32box.setSelected(false);
                 note16box.setSelected(false);
                 note08box.setSelected(false);
                 note04box.setSelected(true);
+                if( tripletNoneBox.isSelected() )
+                  {
+                  setQuantization(TRIPLET_INDEX, QUARTER_NOTE_QUANTUM);
+                  }
                 break;
             case QUARTER_NOTE_QUANTUM:
                 note32box.setSelected(false);
@@ -491,11 +511,15 @@ public class QuantizationDialog extends javax.swing.JDialog
                 note08box.setSelected(false);
                 note04box.setSelected(false);                  
                 noteNoneBox.setSelected(true);
+                if( tripletNoneBox.isSelected() )
+                  {
+                  unsetQuantization(TRIPLET_INDEX);
+                  }
                 break;
           }
     }
  
-        private void setTripletQuantizationBoxesOff(int level)
+private void setTripletQuantizationBoxesOff(int level)
     {
          // Note that most cases intentionally fall through to the next.
        switch( level )
@@ -505,18 +529,30 @@ public class QuantizationDialog extends javax.swing.JDialog
                 triplet16box.setSelected(true);
                 triplet08box.setSelected(true);
                 triplet04box.setSelected(true);
-                break;
+                if( noteNoneBox.isSelected() )
+                  {
+                  setQuantization(NOTE_INDEX, SIXTEENTH_NOTE_TRIPLET_QUANTUM);
+                  }
+                 break;
            case SIXTEENTH_NOTE_TRIPLET_QUANTUM:
                 triplet32box.setSelected(false);
                 triplet16box.setSelected(false);
                 triplet08box.setSelected(true);
                 triplet04box.setSelected(true);
-                break;
+                if( noteNoneBox.isSelected() )
+                  {
+                  setQuantization(NOTE_INDEX, EIGHTH_NOTE_TRIPLET_QUANTUM);
+                  }
+                 break;
             case EIGHTH_NOTE_TRIPLET_QUANTUM:
                 triplet32box.setSelected(false);
                 triplet16box.setSelected(false);
                 triplet08box.setSelected(false);
                 triplet04box.setSelected(true);
+            if( noteNoneBox.isSelected() )
+                  {
+                  setQuantization(NOTE_INDEX, QUARTER_NOTE_TRIPLET_QUANTUM);
+                  }
                 break;
             case QUARTER_NOTE_TRIPLET_QUANTUM:
                 triplet32box.setSelected(false);
@@ -524,6 +560,10 @@ public class QuantizationDialog extends javax.swing.JDialog
                 triplet08box.setSelected(false);
                 triplet04box.setSelected(false);                  
                 tripletNoneBox.setSelected(true);
+                if( noteNoneBox.isSelected() )
+                  {
+                  unsetQuantization(NOTE_INDEX);
+                  }
                 break;
           }
     }
@@ -565,12 +605,36 @@ private void setQuantization(int index, int value)
     quantum[index] = value;
     field[index].setText("" + value);
 }
+
+private void unsetQuantization(int index)
+{
+    //System.out.println("sunetQuantization(" + index + ")");
+    javax.swing.JTextField field[] = {noteQuantumTextField, tripletQuantumTextField};
+    
+    switch( index )
+      {
+        case NOTE_INDEX: quantum[NOTE_INDEX] = quantum[TRIPLET_INDEX];
+        break;
+        
+        case TRIPLET_INDEX: quantum[TRIPLET_INDEX] = quantum[NOTE_INDEX];
+        break;
+      }
+    field[index].setText("1");
+}
         
     private void noteNoneBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_noteNoneBoxActionPerformed
     {//GEN-HEADEREND:event_noteNoneBoxActionPerformed
     if( noteNoneBox.isSelected() )
       {
-        setQuantization(NOTE_INDEX, MINIMUM_QUANTUM);
+        unsetQuantization(NOTE_INDEX);
+        if( tripletNoneBox.isSelected() )
+          {
+            unsetQuantization(TRIPLET_INDEX);
+          }
+        else
+          {
+            setQuantization(NOTE_INDEX, quantum[TRIPLET_INDEX]);
+          }
         note32box.setSelected(false);
         note16box.setSelected(false);
         note08box.setSelected(false);
@@ -582,7 +646,15 @@ private void setQuantization(int index, int value)
     {//GEN-HEADEREND:event_tripletNoneBoxActionPerformed
     if( tripletNoneBox.isSelected() )
       {
-        setQuantization(TRIPLET_INDEX, MINIMUM_QUANTUM);
+        unsetQuantization(TRIPLET_INDEX);
+        if( noteNoneBox.isSelected() )
+          {
+            unsetQuantization(NOTE_INDEX);
+          }
+        else
+          {
+            setQuantization(TRIPLET_INDEX, quantum[NOTE_INDEX]);
+          }
         triplet32box.setSelected(false);
         triplet16box.setSelected(false);
         triplet08box.setSelected(false);
@@ -600,7 +672,7 @@ private void setQuantization(int index, int value)
         else
           {
              setNoteQuantizationBoxesOff(QUARTER_NOTE_QUANTUM);
-             setQuantization(NOTE_INDEX, MINIMUM_QUANTUM);
+             unsetQuantization(NOTE_INDEX);
           }
     }//GEN-LAST:event_note04boxActionPerformed
 
@@ -614,7 +686,7 @@ private void setQuantization(int index, int value)
         else
           {
             setTripletQuantizationBoxesOff(QUARTER_NOTE_TRIPLET_QUANTUM);
-            setQuantization(TRIPLET_INDEX, MINIMUM_QUANTUM);
+            unsetQuantization(TRIPLET_INDEX);
          }
     }//GEN-LAST:event_triplet04boxActionPerformed
 

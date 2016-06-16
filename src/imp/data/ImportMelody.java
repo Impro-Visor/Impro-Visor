@@ -178,6 +178,27 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
     // in 4 beats.
     
     int gcd = gcd(quantum[0], quantum[1]);
+    int smallerQuantum = Math.min(quantum[0], quantum[1]);
+    //If no quantization is specified, skip it altogether
+    if (gcd == 1){
+        jm.music.data.Note thisNote;
+        while (origNotes.hasNext()){
+            thisNote = origNotes.next();
+            int duration = quantize(thisNote.getRhythmValue(), 1);
+            if (thisNote.isRest())
+            {
+                Rest noteCopy = new Rest(duration);
+                partOut.addRest(noteCopy);
+            }
+            else
+            {
+                int pitch = thisNote.getPitch();
+                Note noteCopy = new Note(pitch,duration);
+                partOut.addNote(noteCopy);
+            }
+        }
+        return slot;
+    }
     
     // Consider moving reporting to the Quantize Chorus dialog
     // The remainder of the line is printed after quantization
@@ -248,6 +269,11 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
           // Place the longest placeable note in the current slot.
           int duration = quantize(longNote.getRhythmValue(), gcd);
           int pitch = longNote.getPitch();
+          if ((duration < quantum[0]) && (duration < quantum[1]))
+          {
+              duration = smallerQuantum;
+          }
+          
         
           // However, we may need to place a rest first, in case there is a
           // gap between the end of the previous note and the current slot.
