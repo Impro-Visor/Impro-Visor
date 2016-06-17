@@ -45,8 +45,7 @@ public class QuantizationDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         noteNoneBox = new javax.swing.JCheckBox();
@@ -70,14 +69,13 @@ public class QuantizationDialog extends javax.swing.JDialog
         tripletQuantumTextField = new javax.swing.JTextField();
 
         setTitle("Quantize Chorus");
+        setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(650, 25, 0, 0));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         noteNoneBox.setText("None");
-        noteNoneBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        noteNoneBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noteNoneBoxActionPerformed(evt);
             }
         });
@@ -88,10 +86,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(noteNoneBox, gridBagConstraints);
 
         tripletNoneBox.setText("No Triplet");
-        tripletNoneBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tripletNoneBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tripletNoneBoxActionPerformed(evt);
             }
         });
@@ -103,10 +99,8 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         note04box.setSelected(true);
         note04box.setText("Quarter-Note");
-        note04box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        note04box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 note04boxActionPerformed(evt);
             }
         });
@@ -118,10 +112,8 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         triplet04box.setSelected(true);
         triplet04box.setText("Quarter-Note Triplet");
-        triplet04box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        triplet04box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 triplet04boxActionPerformed(evt);
             }
         });
@@ -133,10 +125,8 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         note08box.setSelected(true);
         note08box.setText("Eighth-Note");
-        note08box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        note08box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 note08boxActionPerformed(evt);
             }
         });
@@ -148,10 +138,8 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         triplet08box.setSelected(true);
         triplet08box.setText("Eighth-Note Triplet");
-        triplet08box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        triplet08box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 triplet08boxActionPerformed(evt);
             }
         });
@@ -162,10 +150,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(triplet08box, gridBagConstraints);
 
         note16box.setText("Sixteenth-Note");
-        note16box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        note16box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 note16boxActionPerformed(evt);
             }
         });
@@ -176,10 +162,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(note16box, gridBagConstraints);
 
         triplet16box.setText("Sixteenth-Note Triplet");
-        triplet16box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        triplet16box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 triplet16boxActionPerformed(evt);
             }
         });
@@ -190,10 +174,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(triplet16box, gridBagConstraints);
 
         note32box.setText("Thirty-Second-Note");
-        note32box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        note32box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 note32boxActionPerformed(evt);
             }
         });
@@ -204,10 +186,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(note32box, gridBagConstraints);
 
         triplet32box.setText("Thirty-Second Triplet");
-        triplet32box.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        triplet32box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 triplet32boxActionPerformed(evt);
             }
         });
@@ -219,10 +199,8 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         eighthNoteSwingBox.setText("Swing Eighth-Notes");
         eighthNoteSwingBox.setToolTipText("");
-        eighthNoteSwingBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        eighthNoteSwingBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eighthNoteSwingBoxActionPerformed(evt);
             }
         });
@@ -235,10 +213,8 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         quantizeButton.setText("Quantize");
         quantizeButton.setContentAreaFilled(false);
-        quantizeButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        quantizeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quantizeButtonActionPerformed(evt);
             }
         });
@@ -251,10 +227,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(quantizeButton, gridBagConstraints);
 
         noAbsorbBox.setText("No Rest Absorption");
-        noAbsorbBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        noAbsorbBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noAbsorbBoxActionPerformed(evt);
             }
         });
@@ -265,10 +239,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(noAbsorbBox, gridBagConstraints);
 
         absorbQuarterRestBox.setText("Absorb Quarter Rests");
-        absorbQuarterRestBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        absorbQuarterRestBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 absorbQuarterRestBoxActionPerformed(evt);
             }
         });
@@ -279,10 +251,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(absorbQuarterRestBox, gridBagConstraints);
 
         absorbEighthRestBox.setLabel("Absorb Eighth Rests");
-        absorbEighthRestBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        absorbEighthRestBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 absorbEighthRestBoxActionPerformed(evt);
             }
         });
@@ -293,10 +263,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(absorbEighthRestBox, gridBagConstraints);
 
         absorbSixteenthRestBox.setLabel("Absorb Sixteenth Rests");
-        absorbSixteenthRestBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        absorbSixteenthRestBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 absorbSixteenthRestBoxActionPerformed(evt);
             }
         });
@@ -308,10 +276,8 @@ public class QuantizationDialog extends javax.swing.JDialog
 
         absorbThirtySecondRestBox.setSelected(true);
         absorbThirtySecondRestBox.setLabel("Absorb Thirty-Second Rests");
-        absorbThirtySecondRestBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        absorbThirtySecondRestBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 absorbThirtySecondRestBoxActionPerformed(evt);
             }
         });
@@ -324,10 +290,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         noteQuantumTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         noteQuantumTextField.setText("60");
         noteQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "First Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
-        noteQuantumTextField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        noteQuantumTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noteQuantumTextFieldActionPerformed(evt);
             }
         });
@@ -342,10 +306,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         tripletQuantumTextField.setText("40");
         tripletQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Second Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         tripletQuantumTextField.setFocusTraversalKeysEnabled(false);
-        tripletQuantumTextField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tripletQuantumTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tripletQuantumTextFieldActionPerformed(evt);
             }
         });
@@ -393,9 +355,19 @@ public class QuantizationDialog extends javax.swing.JDialog
     return result;
     }
     
+    public boolean getSwing()
+    {
+        return eighthNoteSwingBox.isSelected();
+    }
+    
     public int getRestAbsorption()
     {
         return restAbsorption;
+    }
+    
+    public void hideQuantizeButton()
+    {
+        quantizeButton.setVisible(false);
     }
     
     private void setNoteQuantizationBoxesOn(int level)
