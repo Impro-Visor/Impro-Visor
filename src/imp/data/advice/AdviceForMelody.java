@@ -67,6 +67,8 @@ public class AdviceForMelody extends Advice {
 
     boolean mark = false;
 
+    
+
     public AdviceForMelody(String name, Polylist notes, String chordRoot, Key key, int[] metre, int profileNumber)
       {
       this(name, 0, notes, chordRoot, key, metre, null, profileNumber);
@@ -104,11 +106,10 @@ public class AdviceForMelody extends Advice {
         int measureLength = metre[0] * beatValue;
 
         //System.out.println("AdviceForMelody addToMelodyFromPolylist " + notes + ", rise = " + rise);
-
+        
         Leadsheet.addToMelodyFromPolylist(notes, newPart, rise, measureLength, key);
 
         // See if we need to make first notes coincide.
-
         if( firstNote != null && startsWith(firstNote) )
           {
           int firstNotePitch = firstNote.getPitch();
@@ -122,8 +123,19 @@ public class AdviceForMelody extends Advice {
             newPart = new MelodyPart();  
             newPart.setMetre(metre[0], metre[1]);
             Leadsheet.addToMelodyFromPolylist(notes, newPart, rise, measureLength, key);
+            
             }
           }
+        
+    }
+    
+    /**
+     * Converts the Advice into a Part and returns that
+     * @param targetMIDI  the center for which to transpose the part 
+     * @return Part       the Advice in Part form, ready to be inserted
+     */
+    public MelodyPart getPart(int targetMIDI) {
+        return transpose(targetMIDI);
     }
     
     /**
@@ -158,7 +170,89 @@ public class AdviceForMelody extends Advice {
 
       return PitchClass.enharmonic(firstNotePC, thisNotePC);
       }
+    
+    /**
+     * transpose is a method that centers the Part around a targetMIDI
+     * value 
+     * 
+     * @see average()    -- finds the middle of the part 
+     * @param targetMIDI -- the center to compare the phrase to 
+     */
+    public MelodyPart transpose(int targetMIDI)
+    {
+        int averageMIDI = average();
+        
+        int difference = targetMIDI - averageMIDI;
+        //if neg, average is too high -- needs to be moved down
+        //if pos, average is too low  -- needs to be moved up 
+        
+        int absoluteValue = Math.abs(difference); 
+        int end = 0; 
+        if (absoluteValue >  6 && absoluteValue < 12)
+        {
+            end = absoluteValue/6; 
+        }
+        else
+        {
+            end = Math.abs(difference) / 12 ;
+        } 
+        MelodyPart d = newPart.copy(); 
+        Part.PartIterator j = d.iterator(); 
+        // newPart is a MelodyPart
+        
+        while (j.hasNext())
+        {
+            Note next = (Note)(j.next()); 
+            if (!next.isRest() && (absoluteValue > 6))
+            {
+                for(int i = 0; i<end; i++)
+                {
+                    if (difference<0)
+                    {
+                        next.shiftPitch(-12, 0);
+                    }
+                    else 
+                    {
+                        next.shiftPitch(12, 0);
+                    }
+                }
+                
+            }
+        }
+        return d; 
+    }
 
+    /**
+     * the method average does exactly whats in the name. It calculates the average MIDI value by
+     * using the midpoint of the lowest and highest MIDI value in the phrase 
+     * 
+     * @return averageMIDI          -- gives you average using all the notes (not just top and bottom) 
+     * @see transpose(targetValue)  -- average was made for the transpose method 
+     */
+    public int average()
+    {
+        Part.PartIterator f = newPart.iterator();
+        int highestPitch = 0;
+        int lowestPitch = 128; 
+        int averageMIDI = 0;  
+        while(f.hasNext())
+        {
+            Note next = (Note)f.next(); 
+            if (!next.isRest())
+            {
+                if(next.getPitch() > highestPitch)
+                {
+                    highestPitch = next.getPitch(); 
+                }
+                if(next.getPitch() < lowestPitch)
+                {
+                    lowestPitch = next.getPitch(); 
+                }
+            }     
+        }
+        averageMIDI = (highestPitch + lowestPitch) / 2 ; 
+        return averageMIDI; 
+    }
 
     /**
      * Tells whether this Advice contains the note named.

@@ -74,9 +74,7 @@ public class Advice implements Constants {
                              Notate notate) {
         String adviceTargetAsString = notate.getAdviceTargetCenter();
         int adviceTargetMidiValue = NoteSymbol.makeNoteSymbol(adviceTargetAsString).getMIDI();
-        System.out.println("advice target center is " + adviceTargetAsString 
-                         + ", MIDI = " + adviceTargetMidiValue);
-        cm.execute(new SafePasteCommand(getPart(), part, index,
+        cm.execute(new SafePasteCommand(getPart(adviceTargetMidiValue), part, index,
                 !notate.getAlwaysPasteOver(), true, notate));
     }
 
@@ -84,7 +82,7 @@ public class Advice implements Constants {
      * Converts the Advice into a Part and returns that.
      * @return Part     the Advice in Part form, ready to be inserted
      */
-    public Part getPart() {
+    public Part getPart(int adviceTargetMidiValue) {
         throw new UnsupportedOperationException("No default Advice to Part " +
                 "conversion.  Use a specific type of Advice.");
     }
