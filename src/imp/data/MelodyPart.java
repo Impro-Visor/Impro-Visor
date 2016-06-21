@@ -2263,7 +2263,7 @@ public MelodyPart quantizeMelody(int quanta[])
 {
     int gcd = quanta[0];
     
-    System.out.print("quantizeMelody to " + gcd + " ");
+    System.out.println("quantizeMelody to " + gcd + " ");
     
     MelodyPart result = this; // will be replaced if part is non-empty
     
@@ -2280,7 +2280,7 @@ public MelodyPart quantizeMelody(int quanta[])
          while( it.hasNext() )
            {
              Note thisNote = (Note)it.next();
-             System.out.println("inputSlot = " + inputSlot + ", outputSlot = " + outputSlot + ", thisNote = " + thisNote);
+             //System.out.println("inputSlot = " + inputSlot + ", outputSlot = " + outputSlot + ", thisNote = " + thisNote);
              if( !thisNote.isRest() )
                {
                  // thisNote is an actual Note, not a Rest.
@@ -2289,12 +2289,11 @@ public MelodyPart quantizeMelody(int quanta[])
                  if( inputSlot < outputSlot )
                    {
                      // Lose thisNote
-                     System.out.println("losing " + thisNote);
+                     //System.out.println("losing " + thisNote);
                      notesLost++;
                    }
                  else
                    {
-
                      if( outputSlot < inputSlot )
                        {
                          outputSlot = quantizeDown(inputSlot, gcd);
@@ -2303,17 +2302,17 @@ public MelodyPart quantizeMelody(int quanta[])
                      int gap = quantizeDown(inputSlot - endOfLastPlacement, gcd);
                      if( gap > 0 )
                        {
-                         System.out.println("gap = " + gap);
+                           //System.out.println("gap = " + gap);
                            Rest newRest = new Rest(gap);
                            result.addRest(newRest);
-                           //outputSlot += gap;
                        }
+                     
                      Note newNote = thisNote.copy();
                      // Copying, rather than constructing anew, will preserve accidental
                      int noteDuration = quantizeUp(thisNote.getRhythmValue(), gcd);
                      newNote.setRhythmValue(noteDuration);
                      result.addNote(newNote);
-                     System.out.println("placing at " + outputSlot + " " + newNote);
+                     //System.out.println("placing at " + outputSlot + " " + newNote);
                      outputSlot += noteDuration;
                      endOfLastPlacement = outputSlot;
                    }
@@ -2321,8 +2320,8 @@ public MelodyPart quantizeMelody(int quanta[])
             inputSlot += thisNote.getRhythmValue();
            } // while
       }
-    
     System.out.println("notesLost = " + notesLost);
+    result.setInstrument(getInstrument());
     return result;
 }
 
