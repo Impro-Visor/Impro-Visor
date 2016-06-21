@@ -2259,6 +2259,84 @@ public void setAutoFill(boolean fill)
         return melody;
     }
     
+public MelodyPart quantizeMelody(int quanta[])
+{
+    int gcd = quanta[0];
+    
+    System.out.print("quantizeMelody to " + gcd + " ");
+    
+    MelodyPart result = this; // will be replaced if part is non-empty
+    
+    int notesLost = 0;
+    PartIterator it = iterator();
+    
+    // Only quanitize non-empty melody part that is not maximum quantization
+    if( it.hasNext() && gcd != 1 )
+      {
+         result = new MelodyPart();
+         int inputSlot = 0;
+         int outputSlot = 0;
+         int endOfLastPlacement = 0;
+         while( it.hasNext() )
+           {
+             Note thisNote = (Note)it.next();
+             System.out.println("inputSlot = " + inputSlot + ", outputSlot = " + outputSlot + ", thisNote = " + thisNote);
+             if( !thisNote.isRest() )
+               {
+                 // thisNote is an actual Note, not a Rest.
+                 // Can't place note until inputSlot has caught up to
+                 // outputSlot.
+                 if( inputSlot < outputSlot )
+                   {
+                     // Lose thisNote
+                     System.out.println("losing " + thisNote);
+                     notesLost++;
+                   }
+                 else
+                   {
+
+                     if( outputSlot < inputSlot )
+                       {
+                         outputSlot = quantizeDown(inputSlot, gcd);
+                       }
+
+                     int gap = quantizeDown(inputSlot - endOfLastPlacement, gcd);
+                     if( gap > 0 )
+                       {
+                         System.out.println("gap = " + gap);
+                           Rest newRest = new Rest(gap);
+                           result.addRest(newRest);
+                           //outputSlot += gap;
+                       }
+                     Note newNote = thisNote.copy();
+                     // Copying, rather than constructing anew, will preserve accidental
+                     int noteDuration = quantizeUp(thisNote.getRhythmValue(), gcd);
+                     newNote.setRhythmValue(noteDuration);
+                     result.addNote(newNote);
+                     System.out.println("placing at " + outputSlot + " " + newNote);
+                     outputSlot += noteDuration;
+                     endOfLastPlacement = outputSlot;
+                   }
+               }
+            inputSlot += thisNote.getRhythmValue();
+           } // while
+      }
+    
+    System.out.println("notesLost = " + notesLost);
+    return result;
+}
+
+static int quantizeDown(int duration, int quantum)
+{
+    int result = quantum * Math.floorDiv(duration, quantum);
+    return result;
+}
+
+static int quantizeUp(int duration, int quantum)
+{
+    return quantum * (int)Math.ceil(((double)duration)/quantum);
+}
+    
        
     public void mergeAdjacentRests() 
     {
