@@ -22740,13 +22740,21 @@ private boolean isDotted = false;
     
   public void newQuantize(boolean toSwing)
     {
+        int[] quanta = quantizationDialog.getQuanta();
+        int restAbsorption = quantizationDialog.getRestAbsorption();
         MelodyPart originalPart = getCurrentMelodyPart();
         MelodyPart quantizedPart;
-        int quantum[] = quantizationDialog.getQuanta();
-        int restAbsorption = quantizationDialog.getRestAbsorption();
         
-        quantizedPart = originalPart.applyResolution(BEAT, quantum, toSwing, restAbsorption);
-        quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument());
+        // Temporary until new version replaces old
+        if( quantizationDialog.getOldVersion() )
+          {
+          quantizedPart = originalPart.applyResolution(BEAT, quanta, toSwing, restAbsorption);
+          quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument());
+          }
+        else
+          {
+          quantizedPart = originalPart.quantizeMelody(quanta, toSwing, restAbsorption);
+          }
         addChorus(quantizedPart);    
     }
       

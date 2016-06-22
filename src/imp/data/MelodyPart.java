@@ -2259,11 +2259,21 @@ public void setAutoFill(boolean fill)
         return melody;
     }
     
-public MelodyPart quantizeMelody(int quanta[])
+/**
+ * New version of quantizing melody, 21 June 2016.
+ * Self-contained and does not rely on classes in jMusic.
+ * Also preserves accidentals in the original melody.
+ * See "Attempt ..." to see case of swing not handled yet.
+ * @param quanta
+ * @param toSwing
+ * @param restAbsorption
+ * @return a quantized melody part
+ */
+public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorption)
 {
-    int gcd = quanta[0];
+    int gcd = gcd(quanta[0], quanta[1]);
     
-    System.out.println("quantizeMelody to " + gcd + " ");
+    System.out.print("new quantizeMelody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
     
     MelodyPart result = this; // will be replaced if part is non-empty
     
@@ -2286,6 +2296,13 @@ public MelodyPart quantizeMelody(int quanta[])
                  // thisNote is an actual Note, not a Rest.
                  // Can't place note until inputSlot has caught up to
                  // outputSlot.
+                 
+                 // Find next slot that is a multiple of one of the quanta
+                 while( outputSlot%quanta[0] != 0 && outputSlot%quanta[1] != 0 )
+                   {
+                     outputSlot += gcd;
+                   }
+                 
                  if( inputSlot < outputSlot )
                    {
                      // Lose thisNote
@@ -2300,7 +2317,7 @@ public MelodyPart quantizeMelody(int quanta[])
                        }
 
                      int gap = quantizeDown(inputSlot - endOfLastPlacement, gcd);
-                     if( gap > 0 )
+                     if( gap >= restAbsorption )
                        {
                            //System.out.println("gap = " + gap);
                            Rest newRest = new Rest(gap);
@@ -2320,7 +2337,85 @@ public MelodyPart quantizeMelody(int quanta[])
             inputSlot += thisNote.getRhythmValue();
            } // while
       }
-    System.out.println("notesLost = " + notesLost);
+    System.out.println(", notes lost = " + notesLost);
+
+    // Handle converting swing-eighth situations to appear as normal eights
+    // including when second third of triplet is sixteenths etc.
+    if( toSwing )
+      { 
+        int swingFirst = (2*BEAT)/3;
+        int thirdBeat = BEAT/3;
+        int sixthBeat = BEAT/6;
+        MelodyPart unswung = result;
+        result = new MelodyPart();
+        it = unswung.iterator();
+        int slot = 0;
+        boolean leftOver = false;
+        Note nextNote = null;
+        while( it.hasNext() || leftOver )
+          {
+            // Use the note left over from previous iterationr, or a new one
+            Note note = leftOver ? nextNote : ((Note)it.next()).copy();
+            if( slot % BEAT == 0 
+                    & (note.getRhythmValue() % BEAT) == swingFirst 
+                    && it.hasNext() 
+                    )
+              {
+              // We have a swing situation. Adjust first note.
+              note.setRhythmValue(note.getRhythmValue() - sixthBeat);
+              result.addNote(note);
+               
+              // Adjust note or notes following first swing note, 
+              // as long as they totally fit into 1/3 of a beat
+              
+              // CAUTION: Fairly awful code, which might not always work.
+              
+              nextNote = ((Note)it.next()).copy();
+              leftOver = true;
+              int nextDuration = nextNote.getRhythmValue();
+              int accumulation = nextDuration;
+              int remaining = thirdBeat - accumulation;
+              // Adjust durations in the second half of a swing figure
+              while( accumulation <= thirdBeat )
+                {
+                nextNote.setRhythmValue(nextDuration + nextDuration/2);
+                result.addNote(nextNote);
+                if( it.hasNext() )
+                  {
+                  nextNote = ((Note)it.next()).copy();
+                  nextDuration = nextNote.getRhythmValue();
+                  accumulation += nextDuration;
+                  remaining -= nextDuration;
+                  leftOver = true;
+                  }
+                else
+                  {
+                    // no note left
+                    leftOver = false;
+                    break;
+                  }
+                }
+              if( leftOver && remaining > 0 )
+                {
+                  // Attempt to handle messy special circumstance where
+                  // swing note hangs over beyond the last third,
+                  // but other notes have already been adjusted.
+                  // Currently does not properly handle this kind of situation:
+                  // b4/3 c+4/3+16/3 c+8 b8 a8 g8 f8 e8 d8 
+                  // d+2/3+8/3 a16/3 f4+8+16+32/3 d16/3 e4/3
+                  nextNote.setRhythmValue(nextDuration + remaining);
+                  result.addNote(nextNote);
+                  leftOver = false;
+                }
+              } // end of swing situation
+            else
+              {
+                // Not a swing situation. Just use the note as is.
+                result.addNote(note.copy());
+                leftOver = false;
+              } // end handling swing situation
+          } // end while
+      }
     result.setInstrument(getInstrument());
     return result;
 }
@@ -2336,6 +2431,23 @@ static int quantizeUp(int duration, int quantum)
     return quantum * (int)Math.ceil(((double)duration)/quantum);
 }
     
+/**
+ * Finds the Greatest Common Denominator of two integers, a & b
+ * @param a         first integer
+ * @param b         second integer
+ * @return int      the GCD of a and b
+ */
+public static int gcd(int a, int b)
+  {
+    if( b == 0 )
+      {
+        return a;
+      }
+    else
+      {
+        return gcd(b, a % b);
+      }
+  }
        
     public void mergeAdjacentRests() 
     {
