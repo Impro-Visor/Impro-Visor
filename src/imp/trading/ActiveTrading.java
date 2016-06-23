@@ -113,7 +113,7 @@ public class ActiveTrading {
         firstPlay = true;
         isTrading = false;
         isUserLeading = true;
-        slotsForProcessing = BEAT / 2;
+        slotsForProcessing = BEAT;
         volume = DEFAULT_VOLUME;
         midiManager = notate.getMidiManager();
         midiSynth = new MidiSynth(midiManager);

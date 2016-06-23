@@ -267,6 +267,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="swingCheckBox">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Swing"/>
           </Properties>
           <Constraints>
@@ -396,10 +397,10 @@
               <Color blue="ee" green="ee" red="ee" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica" size="12" style="0"/>
+              <Font name="Helvetica" size="12" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="0.5"/>
+            <Property name="text" type="java.lang.String" value="1.0"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder justification="1" title="Processing time (in beats)">
@@ -566,6 +567,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="1"/>
             </Property>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Count In"/>
           </Properties>
           <Events>

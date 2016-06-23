@@ -220,6 +220,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         leadSelectors.add(switchToPassiveTradingButton, gridBagConstraints);
 
+        swingCheckBox.setSelected(true);
         swingCheckBox.setText("Swing");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -293,9 +294,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         controlsPanel.setLayout(new java.awt.GridBagLayout());
 
         processTimeSelector.setBackground(new java.awt.Color(238, 238, 238));
-        processTimeSelector.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        processTimeSelector.setFont(new java.awt.Font("Helvetica", 1, 12)); // NOI18N
         processTimeSelector.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        processTimeSelector.setText("0.5");
+        processTimeSelector.setText("1.0");
         processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing time (in beats)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
         processTimeSelector.setMaximumSize(new java.awt.Dimension(200, 50));
         processTimeSelector.setMinimumSize(new java.awt.Dimension(200, 50));
@@ -424,6 +425,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         playbackControls.setLayout(new java.awt.GridBagLayout());
 
         countToggle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        countToggle.setSelected(true);
         countToggle.setText("Count In");
         countToggle.addActionListener(new java.awt.event.ActionListener()
         {
