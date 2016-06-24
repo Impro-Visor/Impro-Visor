@@ -2273,7 +2273,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
 {
     int gcd = gcd(quanta[0], quanta[1]);
     
-    System.out.print("new quantizeMelody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
+    //System.out.print("new quantizeMelody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
     
     MelodyPart result = this; // will be replaced if part is non-empty
     
@@ -2337,83 +2337,96 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
             inputSlot += thisNote.getRhythmValue();
            } // while
       }
-    System.out.println(", notes lost = " + notesLost);
+    //System.out.println(", notes lost = " + notesLost);
 
     // Handle converting swing-eighth situations to appear as normal eights
     // including when second third of triplet is sixteenths etc.
     if( toSwing )
       { 
         int swingFirst = (2*BEAT)/3;
-        int thirdBeat = BEAT/3;
+        int halfBeat = BEAT/2;
         int sixthBeat = BEAT/6;
         MelodyPart unswung = result;
         result = new MelodyPart();
         it = unswung.iterator();
         int slot = 0;
-        boolean leftOver = false;
-        Note nextNote = null;
-        while( it.hasNext() || leftOver )
+        while( it.hasNext() )
           {
             // Use the note left over from previous iterationr, or a new one
-            Note note = leftOver ? nextNote : ((Note)it.next()).copy();
+            Note unswungNote = (Note)it.next();
+            int unswungDuration = unswungNote.getRhythmValue();
             if( slot % BEAT == 0 
-                    & (note.getRhythmValue() % BEAT) == swingFirst 
-                    && it.hasNext() 
-                    )
+              && (unswungDuration % BEAT) == swingFirst 
+              && it.hasNext() 
+              )
               {
-              // We have a swing situation. Adjust first note.
-              note.setRhythmValue(note.getRhythmValue() - sixthBeat);
-              result.addNote(note);
+              // We may have a swing situation. 
+              // Keep track of "swung" and "unswung" values, until we
+              // know for sure.
+                
+              Note swungNote = unswungNote.copy();
+              ArrayList<Note> unswungNotes = new ArrayList<Note>();
+              ArrayList<Note> swungNotes = new ArrayList<Note>();
+              unswungNotes.add(unswungNote);
+              swungNote.setRhythmValue(swungNote.getRhythmValue() - sixthBeat);
+              swungNotes.add(swungNote);
                
+              // See if the notes after the first fit the swing pattern.              
               // Adjust note or notes following first swing note, 
-              // as long as they totally fit into 1/3 of a beat
+              // as long as they exactly fit into 1/2 of a beat
+ 
+              unswungNote = (Note)it.next();
+              swungNote = unswungNote.copy();
+              unswungDuration = unswungNote.getRhythmValue();
+              int swungDuration = unswungDuration + unswungDuration/2;
+              // Above converts value of 1/3 into 1/2 by multiplying by 1.5
+              swungNote.setRhythmValue(swungDuration);
+              unswungNotes.add(unswungNote);
+              swungNotes.add(swungNote);
+              int remainingSpace = halfBeat - swungDuration;
               
-              // CAUTION: Fairly awful code, which might not always work.
-              
-              nextNote = ((Note)it.next()).copy();
-              leftOver = true;
-              int nextDuration = nextNote.getRhythmValue();
-              int accumulation = nextDuration;
-              int remaining = thirdBeat - accumulation;
               // Adjust durations in the second half of a swing figure
-              while( accumulation <= thirdBeat )
+              while( it.hasNext() && remainingSpace > 0 )
                 {
-                nextNote.setRhythmValue(nextDuration + nextDuration/2);
-                result.addNote(nextNote);
-                if( it.hasNext() )
-                  {
-                  nextNote = ((Note)it.next()).copy();
-                  nextDuration = nextNote.getRhythmValue();
-                  accumulation += nextDuration;
-                  remaining -= nextDuration;
-                  leftOver = true;
+                  unswungNote = (Note)it.next();
+                  swungNote = unswungNote.copy();                 
+                  unswungDuration = unswungNote.getRhythmValue();
+                  swungDuration = unswungDuration + unswungDuration/2;                  
+                  swungNote.setRhythmValue(swungDuration);
+                  unswungNotes.add(unswungNote);
+                  swungNotes.add(swungNote);          
+                  remainingSpace -= swungDuration;
                   }
-                else
+              /*
+              System.out.println("slot = " + slot + ", remainingSpace) = " + remainingSpace);
+              System.out.println("unswungNotes = " + unswungNotes);
+              System.out.println("swungNotes = " + swungNotes);
+              System.out.println("");
+              */
+              
+              // If swing situation fits
+              if( remainingSpace == 0 )
+                {
+                for( Note n: swungNotes )
                   {
-                    // no note left
-                    leftOver = false;
-                    break;
+                    result.addNote(n);
                   }
                 }
-              if( leftOver && remaining > 0 )
+              else
                 {
-                  // Attempt to handle messy special circumstance where
-                  // swing note hangs over beyond the last third,
-                  // but other notes have already been adjusted.
-                  // Currently does not properly handle this kind of situation:
-                  // b4/3 c+4/3+16/3 c+8 b8 a8 g8 f8 e8 d8 
-                  // d+2/3+8/3 a16/3 f4+8+16+32/3 d16/3 e4/3
-                  nextNote.setRhythmValue(nextDuration + remaining);
-                  result.addNote(nextNote);
-                  leftOver = false;
+                for( Note n: unswungNotes )
+                  {
+                    result.addNote(n);
+                    slot += n.getRhythmValue();
+                  }                  
                 }
               } // end of swing situation
             else
               {
                 // Not a swing situation. Just use the note as is.
-                result.addNote(note.copy());
-                leftOver = false;
-              } // end handling swing situation
+                result.addNote(unswungNote);
+                slot += unswungDuration;
+              } // end handling possible swing situation
           } // end while
       }
     result.setInstrument(getInstrument());
@@ -2479,7 +2492,7 @@ public static int gcd(int a, int b)
                 
                 note.setRhythmValue(note.getRhythmValue() + nextNote.getRhythmValue());
                 
-                // skips over nextNote while allowing the next iteration to 
+                // skips over swung while allowing the next iteration to 
                 // compare against the note most recently corrected
                 nextNote = getNote(getNextIndex(nextIndex));
             }
