@@ -610,7 +610,7 @@ private void setAbsorbRestBoxesOff()
                 absorbEighthRestBox.setSelected(false);
                 absorbQuarterRestBox.setSelected(false);  
                 
-                restAbsorption = MINIMUM_QUANTUM;
+                restAbsorption = 0;
     }
 
 private void setQuantization(int index, int value)

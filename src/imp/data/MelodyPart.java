@@ -2139,6 +2139,39 @@ public void setAutoFill(boolean fill)
         return newMelody;
     }
     
+    public MelodyPart newAbsorbRests(int restAbsorption)
+    {
+        MelodyPart result = new MelodyPart();
+        PartIterator it = iterator();
+        if( it.hasNext() )
+          {
+            Note previousNote = ((Note)it.next()).copy();
+            while( it.hasNext() )
+              {
+                Note note = (Note)it.next();
+                int duration = note.getRhythmValue();
+                if( note.isRest() 
+                 && duration <= restAbsorption 
+                 && previousNote.nonRest()
+                  )
+                  {
+                    previousNote.setRhythmValue(previousNote.getRhythmValue() + duration);
+                  }
+                else
+                  {
+                    result.addNote(previousNote);
+                    previousNote = note;
+                  }
+              }
+            result.addNote(previousNote);
+            return result;
+          }
+        else
+          {
+            return this;
+          }
+    }
+    
     /**
      * applies a given resolution to a given melodyPart and returns 
      * the int noteSum 
@@ -2317,7 +2350,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
                        }
 
                      int gap = quantizeDown(inputSlot - endOfLastPlacement, gcd);
-                     if( gap >= restAbsorption )
+                     if( gap >= 0 )
                        {
                            //System.out.println("gap = " + gap);
                            Rest newRest = new Rest(gap);
@@ -2428,6 +2461,10 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
                 slot += unswungDuration;
               } // end handling possible swing situation
           } // end while
+      }
+    if( restAbsorption > 0 )
+      {
+        result = result.newAbsorbRests(restAbsorption);
       }
     result.setInstrument(getInstrument());
     return result;
