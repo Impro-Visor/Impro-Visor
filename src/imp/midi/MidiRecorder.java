@@ -190,11 +190,11 @@ public void start(int countInOffset, int recordLatency) {
             handleNoteOff(prevNote, velocity, channel);
 
         } else {
-            int duration = snapSlots(tickToSlots(noteOff, lastEvent));
+            int duration = snapDuration(tickToSlots(lastEvent - noteOff));
 
             // this try is here because a function a few steps up in the call hierarchy tends to capture error messages
             try {
-                index = snapSlots(tickToSlots(noteOff)) - getCountInBias();
+                index = snapStart(tickToSlots(noteOff)) - getCountInBias();
 
                 // add rests since nothing was played between now and the previous note
                 if (duration > 0 && index >= 0) {
@@ -202,33 +202,27 @@ public void start(int countInOffset, int recordLatency) {
                     setNote(index, noteToAdd);
                 }
 
-//This is disastrous for improvisation because it messes up the selection.
-//            if( index >= 0 )
-//              {
-//                //notate.setCurrentSelectionStartAndEnd(index);
-//              }
             } catch (Exception e) {
                 //ErrorLog.log(ErrorLog.SEVERE, "Internal exception in MidiRecorder: " + e);
             }
         }
 
         noteOn = lastEvent;
-        noteOnIndex = snapSlots(tickToSlots(noteOn)) - getCountInBias();
+        noteOnIndex = snapStart(tickToSlots(noteOn)) - getCountInBias();
 
         // add current note   MAYBE RIGHT HEREEREREREREREER
         Note noteToAdd = new Note(note, snapTo);
 
         try {
-            noteToAdd.setEnharmonic(score.getCurrentEnharmonics(noteOnIndex));
             setNote(noteOnIndex, noteToAdd);
         } catch (Exception e) {
             System.out.println("Internal exception in MidiRecorder: " + e);
         }
 
-        notate.repaint();
-
         prevNote = note;
         notePlaying = true;
+        
+        notate.repaint();
     }
 
     void handleNoteOff(int note, int velocity, int channel) {
@@ -246,12 +240,11 @@ public void start(int countInOffset, int recordLatency) {
             return;
         }
 
-        int duration = snapSlots(tickToSlots(noteOn, noteOff));
+        int duration = snapDuration(tickToSlots(noteOff - noteOn));
 
         if (duration != 0)
           {
             Note noteToAdd = new Note(note, duration);
-            noteToAdd.setEnharmonic(score.getCurrentEnharmonics(noteOnIndex));
             setNote(noteOnIndex, noteToAdd);
             noteOnIndex += duration;
           }
@@ -266,8 +259,6 @@ public void start(int countInOffset, int recordLatency) {
      * it allows one to record midi into some specified melody; 
      * when instance variable 'tradePart' is null, midi will be 
      * recorded into the current melodyPart of 'notate' - Zach Kondak.
-     * 
-     * Maybe this design should be revisited. - Bob Keller 5/20/2016
      * 
      * @param destination melody part into which midi is actually recorded
      */
@@ -285,19 +276,14 @@ public void start(int countInOffset, int recordLatency) {
      */
     private void setNote(int index, Note noteToAdd) //THIS COULD BE It
     {
+        noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
+
         if (tradePart == null) {
             melodyPart = notateMelodyPart;
         }
         else {
             melodyPart = tradePart;
         }
-
-      //melodyPart.setNoteAndLength(index, noteToAdd, notate);
-      // Avoid using notate, if possible.
-        // However the version above does not shorten notes on release,
-        // but rather only when a next note is pressed. We'd need to mark
-        // the first place after the generator has played notes.
-        // FIX: Revisit this issue after more refactoring.
         
         int actualIndex = (index%melodyPart.size()) - recordLatency;
         if( actualIndex < 0 )
@@ -316,17 +302,22 @@ public void start(int countInOffset, int recordLatency) {
 //        return (int) (duration / 1000000.0 * (tempo / 60) * BEAT);
 //    }
 
-    int tickToSlots(long start, long finish) {
-        return tickToSlots(finish - start);
-    }
+//    int tickToSlots(long start, long finish) {
+//        return tickToSlots(finish - start);
+//    }
 
     int tickToSlots(long duration) {
         return (int) (BEAT * duration / resolution);
     }
 
-    int snapSlots(int slots) {
+    int snapDuration(int slots) {
         slots = snapToMultiple(slots, snapTo);
         return slots;
+    }
+    
+    int snapStart(int slot) {
+        slot = snapToMultiple(slot, snapTo);
+        return slot;
     }
 
     
