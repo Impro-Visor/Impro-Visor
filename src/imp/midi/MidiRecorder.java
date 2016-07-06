@@ -39,24 +39,31 @@ public class MidiRecorder implements Constants, Receiver
 {
     Notate notate;
     MelodyPart melodyPart;
+    MelodyPart notateMelodyPart;
     Score score;
     Sequencer sequencer = null;
     MelodyPart tradePart = null;
     int countInOffset;
     /* insertion is offset from onset detection due to latency */
-    int insertionOffset;
+    int recordLatency;
     long noteOn = 0, noteOff = 0, lastEvent = 0;
     boolean notePlaying = false;
     int prevNote = 0;
     int resolution;
-    int snapTo = BEAT/4;
+    int snapTo;
     double latency = 0;
+    
+    int noteOnIndex;
+    
+    int quantum[] = {60, 40};
+    int gcd = 20;
     
  
 public MidiRecorder(Notate notate, Score score)
   {
         this.notate = notate;
         this.score = score;
+        notateMelodyPart = notate.getCurrentMelodyPart();
     }
 
 public double getLatency()
@@ -69,18 +76,18 @@ public void setLatency(double latency)
         this.latency = latency;
     }
 
-public long getTime()
-  {
-    if( sequencer != null && sequencer.isRunning() )
-      {
-            return sequencer.getMicrosecondPosition();
-      }
-    else
-      {
-            //notate.stopRecording();
-            return -1;
-        }
-    }
+//public long getTime()
+//  {
+//    if( sequencer != null && sequencer.isRunning() )
+//      {
+//            return sequencer.getMicrosecondPosition();
+//      }
+//    else
+//      {
+//            //notate.stopRecording();
+//            return -1;
+//        }
+//    }
 
 public long getTick()
   {
@@ -98,8 +105,8 @@ public long getTick()
         }
     }
 
-public void start(int countInOffset, int insertionOffset) {
-        snapTo = BEAT / notate.getRecordSnapValue();
+public void start(int countInOffset, int recordLatency) {
+        snapTo = quantum[0]; // snapTo = BEAT / notate.getRecordSnapValue();
         this.sequencer = notate.getSequencer();
         if (sequencer == null || sequencer.getSequence() == null) {
             return;
@@ -116,7 +123,7 @@ public void start(int countInOffset, int insertionOffset) {
         // of countin.
         //notate.setCurrentSelectionStartAndEnd(0);
 
-       this.insertionOffset = insertionOffset;
+       this.recordLatency = recordLatency;
        this.countInOffset = countInOffset;
     }
 
@@ -206,14 +213,14 @@ public void start(int countInOffset, int insertionOffset) {
         }
 
         noteOn = lastEvent;
-        index = snapSlots(tickToSlots(noteOn)) - getCountInBias();
+        noteOnIndex = snapSlots(tickToSlots(noteOn)) - getCountInBias();
 
         // add current note   MAYBE RIGHT HEREEREREREREREER
         Note noteToAdd = new Note(note, snapTo);
 
         try {
-            noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
-            setNote(index, noteToAdd);
+            noteToAdd.setEnharmonic(score.getCurrentEnharmonics(noteOnIndex));
+            setNote(noteOnIndex, noteToAdd);
         } catch (Exception e) {
             System.out.println("Internal exception in MidiRecorder: " + e);
         }
@@ -223,6 +230,35 @@ public void start(int countInOffset, int insertionOffset) {
         prevNote = note;
         notePlaying = true;
     }
+
+    void handleNoteOff(int note, int velocity, int channel) {
+        //System.out.println("noteOff: " + noteOff + "; event: " + lastEvent);
+
+        if (note != prevNote) {
+            return;
+        }
+
+        // use the one in constructor: Notate notate = imp.ImproVisor.getCurrentWindow();
+        noteOff = lastEvent;
+        notePlaying = false;
+
+        if (noteOnIndex < 0) {
+            return;
+        }
+
+        int duration = snapSlots(tickToSlots(noteOn, noteOff));
+
+        if (duration != 0)
+          {
+            Note noteToAdd = new Note(note, duration);
+            noteToAdd.setEnharmonic(score.getCurrentEnharmonics(noteOnIndex));
+            setNote(noteOnIndex, noteToAdd);
+            noteOnIndex += duration;
+          }
+
+        notate.repaint();
+    }
+
     
     /**
      * Setter for the instance variable tradePart;
@@ -250,10 +286,10 @@ public void start(int countInOffset, int insertionOffset) {
     private void setNote(int index, Note noteToAdd) //THIS COULD BE It
     {
         if (tradePart == null) {
-            this.melodyPart = notate.getCurrentMelodyPart();
+            melodyPart = notateMelodyPart;
         }
         else {
-            this.melodyPart = tradePart;
+            melodyPart = tradePart;
         }
 
       //melodyPart.setNoteAndLength(index, noteToAdd, notate);
@@ -263,7 +299,7 @@ public void start(int countInOffset, int insertionOffset) {
         // the first place after the generator has played notes.
         // FIX: Revisit this issue after more refactoring.
         
-        int actualIndex = (index% melodyPart.size()) - insertionOffset;
+        int actualIndex = (index%melodyPart.size()) - recordLatency;
         if( actualIndex < 0 )
           {
             actualIndex = 0;
@@ -271,52 +307,14 @@ public void start(int countInOffset, int insertionOffset) {
         melodyPart.setNote(actualIndex, noteToAdd);
     }
 
-    void handleNoteOff(int note, int velocity, int channel) {
-        //System.out.println("noteOff: " + noteOff + "; event: " + lastEvent);
+//    int microsecondsToSlots(long start, long finish) {
+//        return microsecondsToSlots(finish - start);
+//    }
 
-        if (note != prevNote) {
-            return;
-        }
-
-        // use the one in constructor: Notate notate = imp.ImproVisor.getCurrentWindow();
-        noteOff = lastEvent;
-        notePlaying = false;
-
-        int index = snapSlots(tickToSlots(noteOn)) - getCountInBias();
-
-        if (index < 0) {
-            return;
-        }
-
-        int duration = snapSlots(tickToSlots(noteOn, noteOff));
-
-        if (duration == 0) {
-        } else {
-            Note noteToAdd = new Note(note, duration);
-            noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
-            setNote(index, noteToAdd);
-        }
-
-        index += duration;
-
-    //Does this mess up improvisation?
-    //notate.setCurrentSelectionStartAndEnd(index);
-    // System.out.println("duration: " + duration + "; corrected: " + ((double) slots) / BEAT);
-        notate.repaint();
-    }
-
-    int snapToMultiple(int input, int base) {
-        return base * (int) Math.round(((double) input) / base);
-    }
-
-    int microsecondsToSlots(long start, long finish) {
-        return microsecondsToSlots(finish - start);
-    }
-
-    int microsecondsToSlots(long duration) {
-        double tempo = score.getTempo();
-        return (int) (duration / 1000000.0 * (tempo / 60) * BEAT);
-    }
+//    int microsecondsToSlots(long duration) {
+//        double tempo = score.getTempo();
+//        return (int) (duration / 1000000.0 * (tempo / 60) * BEAT);
+//    }
 
     int tickToSlots(long start, long finish) {
         return tickToSlots(finish - start);
@@ -330,6 +328,12 @@ public void start(int countInOffset, int insertionOffset) {
         slots = snapToMultiple(slots, snapTo);
         return slots;
     }
+
+    
+    int snapToMultiple(int input, int base) {
+        return base * (int) Math.round(((double) input) / base);
+    }
+
 
     public void close() {
     }
