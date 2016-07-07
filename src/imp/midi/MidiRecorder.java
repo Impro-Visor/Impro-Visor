@@ -105,7 +105,7 @@ public class MidiRecorder implements Constants, Receiver
         swingEighths = notate.getRealtimeSwing();
         restAbsorption = notate.getRealtimeRestAbsorption();
         
-        System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd);
+        System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd + ", restAbsorption = " + restAbsorption);
         
         notesLost = 0;
         
@@ -206,11 +206,10 @@ public class MidiRecorder implements Constants, Receiver
           }
         else
           {
-            //int restDuration = snapDuration(tickToSlots(lastEvent - noteOff));
-            int restDuration = snapDuration(tickToSlots(lastEvent - noteOff));
+            int restDuration = snapRest(tickToSlots(lastEvent - noteOff));
 
             // add rests since nothing was played between now and the previous note
-            if( restDuration > 0 && stopIndex >= 0 )
+            if( restDuration > restAbsorption && stopIndex >= 0 )
               {
                 Note restToAdd = new Rest(restDuration);
                 setNote(stopIndex, restToAdd);
@@ -341,6 +340,12 @@ int tickToSlots(long duration)
 int snapDuration(int slots)
     {
         slots = MelodyPart.quantizeUp(slots, gcd);
+        return slots;
+    }
+
+int snapRest(int slots)
+    {
+        slots = MelodyPart.quantizeDown(slots, gcd);
         return slots;
     }
 

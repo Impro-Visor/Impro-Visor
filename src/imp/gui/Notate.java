@@ -2091,6 +2091,7 @@ public Critic getCritic()
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
         openQuantizeDialogMI = new javax.swing.JMenuItem();
+        openRealtimeQuantizeDialogMI1 = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         fractalMI = new javax.swing.JMenuItem();
@@ -9757,6 +9758,18 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(openQuantizeDialogMI);
+
+        openRealtimeQuantizeDialogMI1.setMnemonic('S');
+        openRealtimeQuantizeDialogMI1.setText("Real-Time Quantization");
+        openRealtimeQuantizeDialogMI1.setToolTipText("Open dialog for quantizing real-time MIDI input");
+        openRealtimeQuantizeDialogMI1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                openRealtimeQuantizeDialogMI1ActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(openRealtimeQuantizeDialogMI1);
 
         styleGenerator1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         styleGenerator1.setMnemonic('S');
@@ -23672,11 +23685,21 @@ private boolean isDotted = false;
     }//GEN-LAST:event_openQuantizeDialogMIActionPerformed
 
     private void openQuantizationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openQuantizationButtonActionPerformed
-        realtimeQuantizationDialog.setVisible(true);
-        realtimeQuantizationDialog.setTitle("Real-Time Input Quantization");
-        realtimeQuantizationDialog.hideQuantizeButton();
+    openRealTimeQuantization();
     }//GEN-LAST:event_openQuantizationButtonActionPerformed
 
+    private void openRealtimeQuantizeDialogMI1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openRealtimeQuantizeDialogMI1ActionPerformed
+    {//GEN-HEADEREND:event_openRealtimeQuantizeDialogMI1ActionPerformed
+        openRealTimeQuantization();
+    }//GEN-LAST:event_openRealtimeQuantizeDialogMI1ActionPerformed
+
+    private void openRealTimeQuantization()
+    {
+        realtimeQuantizationDialog.setVisible(true);
+        realtimeQuantizationDialog.setTitle("Real-Time Input Quantization");
+        realtimeQuantizationDialog.hideQuantizeButton();        
+    }
+    
     /**
      * @return array of two ints indicating the time quanta for realtime
      * MIDI capture
@@ -25974,6 +25997,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem openLeadsheetMI;
     private javax.swing.JButton openQuantizationButton;
     private javax.swing.JMenuItem openQuantizeDialogMI;
+    private javax.swing.JMenuItem openRealtimeQuantizeDialogMI1;
     private javax.swing.JMenu openRecentLeadsheetMenu;
     private javax.swing.JMenu openRecentLeadsheetNewWindowMenu;
     private javax.swing.ButtonGroup otherColorBtnGrp;

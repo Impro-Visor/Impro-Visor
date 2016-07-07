@@ -35,8 +35,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         super(notate, modal);
         this.notate = notate;
         initComponents();
-        setNoteQuantizationBoxesOn(SIXTEENTH_NOTE_QUANTUM);
-        setTripletQuantizationBoxesOn(THIRTYSECOND_NOTE_TRIPLET_QUANTUM);
     }
 
     /**
@@ -164,7 +162,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(triplet08box, gridBagConstraints);
 
-        note16box.setSelected(true);
         note16box.setText("Sixteenth-Note");
         note16box.addActionListener(new java.awt.event.ActionListener()
         {
@@ -179,7 +176,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(note16box, gridBagConstraints);
 
-        triplet16box.setSelected(true);
         triplet16box.setText("Sixteenth-Note Triplet");
         triplet16box.addActionListener(new java.awt.event.ActionListener()
         {
@@ -208,7 +204,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(note32box, gridBagConstraints);
 
-        triplet32box.setSelected(true);
         triplet32box.setText("Thirty-Second Triplet");
         triplet32box.addActionListener(new java.awt.event.ActionListener()
         {
@@ -223,6 +218,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(triplet32box, gridBagConstraints);
 
+        eighthNoteSwingBox.setSelected(true);
         eighthNoteSwingBox.setText("Swing Eighth-Notes");
         eighthNoteSwingBox.setToolTipText("");
         eighthNoteSwingBox.addActionListener(new java.awt.event.ActionListener()
@@ -256,7 +252,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
         getContentPane().add(quantizeButton, gridBagConstraints);
 
-        noAbsorbBox.setSelected(true);
         noAbsorbBox.setText("No Rest Absorption");
         noAbsorbBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -299,6 +294,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(absorbEighthRestBox, gridBagConstraints);
 
+        absorbSixteenthRestBox.setSelected(true);
         absorbSixteenthRestBox.setLabel("Absorb Sixteenth Rests");
         absorbSixteenthRestBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -313,6 +309,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(absorbSixteenthRestBox, gridBagConstraints);
 
+        absorbThirtySecondRestBox.setSelected(true);
         absorbThirtySecondRestBox.setLabel("Absorb Thirty-Second Rests");
         absorbThirtySecondRestBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -328,7 +325,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(absorbThirtySecondRestBox, gridBagConstraints);
 
         noteQuantumTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        noteQuantumTextField.setText("30");
+        noteQuantumTextField.setText("60");
         noteQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "First Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         noteQuantumTextField.addActionListener(new java.awt.event.ActionListener()
         {
@@ -345,7 +342,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(noteQuantumTextField, gridBagConstraints);
 
         tripletQuantumTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tripletQuantumTextField.setText("10");
+        tripletQuantumTextField.setText("40");
         tripletQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Second Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         tripletQuantumTextField.setFocusTraversalKeysEnabled(false);
         tripletQuantumTextField.addActionListener(new java.awt.event.ActionListener()
@@ -381,8 +378,8 @@ public class QuantizationDialog extends javax.swing.JDialog
             NOTE_INDEX = 0,
             TRIPLET_INDEX = 1;
     
-    private final int quantum[] = {SIXTEENTH_NOTE_QUANTUM, THIRTYSECOND_NOTE_TRIPLET_QUANTUM};
-    private int restAbsorption = THIRTYSECOND_NOTE_QUANTUM;
+    private final int quantum[] = {EIGHTH_NOTE_QUANTUM, EIGHTH_NOTE_TRIPLET_QUANTUM};
+    private int restAbsorption = SIXTEENTH_NOTE_QUANTUM;
     
     public int[] getQuanta()
     {

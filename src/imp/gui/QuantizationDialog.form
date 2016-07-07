@@ -111,7 +111,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="note16box">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Sixteenth-Note"/>
       </Properties>
       <Events>
@@ -125,7 +124,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="triplet16box">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Sixteenth-Note Triplet"/>
       </Properties>
       <Events>
@@ -152,7 +150,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="triplet32box">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Thirty-Second Triplet"/>
       </Properties>
       <Events>
@@ -166,6 +163,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="eighthNoteSwingBox">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Swing Eighth-Notes"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
@@ -194,7 +192,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="noAbsorbBox">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="No Rest Absorption"/>
       </Properties>
       <Events>
@@ -234,6 +231,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="absorbSixteenthRestBox">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="label" type="java.lang.String" value="Absorb Sixteenth Rests"/>
       </Properties>
       <Events>
@@ -247,6 +245,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="absorbThirtySecondRestBox">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="label" type="java.lang.String" value="Absorb Thirty-Second Rests"/>
       </Properties>
       <Events>
@@ -261,7 +260,7 @@
     <Component class="javax.swing.JTextField" name="noteQuantumTextField">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="30"/>
+        <Property name="text" type="java.lang.String" value="60"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder justification="2" title="First Quantum in Slots">
@@ -282,7 +281,7 @@
     <Component class="javax.swing.JTextField" name="tripletQuantumTextField">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="10"/>
+        <Property name="text" type="java.lang.String" value="40"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder justification="2" title="Second Quantum in Slots">
