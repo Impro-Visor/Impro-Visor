@@ -240,7 +240,7 @@ public int getVolume()
  */
 public boolean equalsBasic(Note compare)
   {
-  return (samePitch(compare) && getRhythmValue() == compare.getRhythmValue());
+  return (compare != null) && samePitch(compare) && (getRhythmValue() == compare.getRhythmValue());
   }
 
 /**

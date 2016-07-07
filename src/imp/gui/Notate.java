@@ -1054,7 +1054,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setSliderVolumes(DEFAULT_SLIDER_VOLUME);
 
-    midiRecordSnapSpinner.setValue(Preferences.getMidiRecordSnap());
+    //midiRecordSnapSpinner.setValue(Preferences.getMidiRecordSnap());
 
     setNormalMode();
 
@@ -1474,11 +1474,10 @@ public Critic getCritic()
         midiOutStatus = new javax.swing.JLabel();
         midiInPanel = new javax.swing.JPanel();
         midiInComboBox = new javax.swing.JComboBox();
-        recordingLatency = new javax.swing.JLabel();
-        recordingLatencySpinner = new javax.swing.JSpinner();
         midiInStatus = new javax.swing.JLabel();
         midiQuantizationPanel = new javax.swing.JPanel();
-        midiRecordSnapSpinner = new javax.swing.JSpinner();
+        recordingLatency = new javax.swing.JLabel();
+        recordingLatencySpinner = new javax.swing.JSpinner();
         openQuantizationButton = new javax.swing.JButton();
         echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
@@ -4006,23 +4005,6 @@ public Critic getCritic()
         gridBagConstraints.weightx = 1.0;
         midiInPanel.add(midiInComboBox, gridBagConstraints);
 
-        recordingLatency.setText("Recording latency (beats):");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.weightx = 0.2;
-        midiInPanel.add(recordingLatency, gridBagConstraints);
-
-        recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2"}));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.3;
-        midiInPanel.add(recordingLatencySpinner, gridBagConstraints);
-
         midiInStatus.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         midiInStatus.setText("Status:");
         midiInStatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -4042,23 +4024,20 @@ public Critic getCritic()
 
         midiQuantizationPanel.setLayout(new java.awt.GridBagLayout());
 
-        midiRecordSnapSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"2", "3", "4", "6", "8", "12", "24", "48", "60", "96", "120"}));
-        midiRecordSnapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MIDI Recording Resolution Beat Sub-Divisions", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        midiRecordSnapSpinner.setMinimumSize(new java.awt.Dimension(250, 56));
-        midiRecordSnapSpinner.setPreferredSize(new java.awt.Dimension(250, 56));
-        midiRecordSnapSpinner.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                midiRecordSnapChanged(evt);
-            }
-        });
+        recordingLatency.setText("Recording latency (beats):");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        midiQuantizationPanel.add(recordingLatency, gridBagConstraints);
+
+        recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2"}));
+        recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(100, 26));
+        recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(100, 26));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.6;
-        midiQuantizationPanel.add(midiRecordSnapSpinner, gridBagConstraints);
+        midiQuantizationPanel.add(recordingLatencySpinner, gridBagConstraints);
 
         openQuantizationButton.setText("Open Quantization");
         openQuantizationButton.addActionListener(new java.awt.event.ActionListener()
@@ -4069,7 +4048,7 @@ public Critic getCritic()
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.4;
@@ -23134,11 +23113,6 @@ private void recordMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:
       recordFromMidi();
   }//GEN-LAST:event_recordMIActionPerformed
 
-private void midiRecordSnapChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_midiRecordSnapChanged
-  {//GEN-HEADEREND:event_midiRecordSnapChanged
-      Preferences.setMidiRecordSnap(midiRecordSnapSpinner.getValue().toString());
-  }//GEN-LAST:event_midiRecordSnapChanged
-
     private void stepKeyboardMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepKeyboardMIActionPerformed
         openStepKeyboard();
     }//GEN-LAST:event_stepKeyboardMIActionPerformed
@@ -25951,7 +25925,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton midiPreferencesBtn;
     private javax.swing.JMenuItem midiPrefsMI;
     private javax.swing.JPanel midiQuantizationPanel;
-    private javax.swing.JSpinner midiRecordSnapSpinner;
     private javax.swing.JFrame midiStyleSpec;
     private javax.swing.JSpinner minPitchSpinner1;
     private javax.swing.JButton mixerBtn;
@@ -26877,11 +26850,6 @@ public void openMidiPreferences()
     setPrefsDialog();
     changePrefTab(midiBtn, midiPreferences);
     preferencesDialog.setVisible(true);
-  }
-
-public int getRecordSnapValue()
-  {
-    return Integer.parseInt(midiRecordSnapSpinner.getValue().toString());
   }
 
 /**

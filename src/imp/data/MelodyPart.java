@@ -2306,7 +2306,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
 {
     int gcd = gcd(quanta[0], quanta[1]);
     
-    //System.out.print("new quantizeMelody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
+    System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
     
     MelodyPart result = this; // will be replaced if part is non-empty
     
@@ -2339,7 +2339,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
                  if( inputSlot < outputSlot )
                    {
                      // Lose thisNote
-                     //System.out.println("losing " + thisNote);
+                     System.out.println("note lost at beat " + (inputSlot/BEAT) + ": " + thisNote.toLeadsheet());
                      notesLost++;
                    }
                  else
@@ -2370,7 +2370,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
             inputSlot += thisNote.getRhythmValue();
            } // while
       }
-    //System.out.println(", notes lost = " + notesLost);
+   System.out.println(notesLost + " notes lost in quantization");
 
     // Handle converting swing-eighth situations to appear as normal eights
     // including when second third of triplet is sixteenths etc.
@@ -2470,13 +2470,13 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
     return result;
 }
 
-static int quantizeDown(int duration, int quantum)
+public static int quantizeDown(int duration, int quantum)
 {
     int result = quantum * Math.floorDiv(duration, quantum);
     return result;
 }
 
-static int quantizeUp(int duration, int quantum)
+public static int quantizeUp(int duration, int quantum)
 {
     return quantum * (int)Math.ceil(((double)duration)/quantum);
 }
