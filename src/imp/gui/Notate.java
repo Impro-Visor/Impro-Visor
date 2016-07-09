@@ -24772,6 +24772,7 @@ public void setStavesChordFontSize()
       }
   }
 
+
 /**
  *
  * Convert a polylist to the form required by the advice tree

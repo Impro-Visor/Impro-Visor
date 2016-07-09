@@ -890,6 +890,7 @@ public void newSetUnit(int unitIndex, Unit unit)
     // Re-eneable this!! checkConsistency("end of newSetUnit");
   }
 
+
 private void setSlot(int index, Unit unit, String message)
   {
     //System.out.println("\nsetting slot at " + message + " index " + index + " to " + unit);

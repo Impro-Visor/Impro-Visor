@@ -61,9 +61,12 @@ public class MidiRecorder implements Constants, Receiver
     int restAbsorption;
     
     Note lastNoteAdded = null;
+    Note lastNoteAdded2 = null;
     int lastIndex = -1;
+    int lastIndex2 = -1;
     
     int notesLost;
+    int swingConversions;
 
     public MidiRecorder(Notate notate, Score score)
     {
@@ -105,9 +108,10 @@ public class MidiRecorder implements Constants, Receiver
         swingEighths = notate.getRealtimeSwing();
         restAbsorption = notate.getRealtimeRestAbsorption();
         
-        System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd + ", restAbsorption = " + restAbsorption);
+        System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd + ", restAbsorption = " + restAbsorption + ", swing = " + swingEighths);
         
         notesLost = 0;
+        swingConversions = 0;
         
         this.sequencer = notate.getSequencer();
         if( sequencer == null || sequencer.getSequence() == null )
@@ -202,7 +206,6 @@ public class MidiRecorder implements Constants, Receiver
         if( notePlaying )
           {
             handleNoteOff(prevNote, velocity, channel);
-
           }
         else
           {
@@ -214,7 +217,6 @@ public class MidiRecorder implements Constants, Receiver
                 Note restToAdd = new Rest(restDuration);
                 setNote(stopIndex, restToAdd);
               }
-
           }
 
         noteOn = lastEvent;
@@ -271,6 +273,10 @@ public class MidiRecorder implements Constants, Receiver
      */
     private void setNote(int index, Note noteToAdd) //THIS COULD BE It
     {
+        if( index == lastIndex )
+          {
+            return;
+          }
         try
           {
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
@@ -304,8 +310,45 @@ public class MidiRecorder implements Constants, Receiver
                   notesLost++;
                   System.out.println("note lost at beat " + (index/BEAT) + ": " + oldNote.toLeadsheet());
                 }
+              
+//              System.out.println(
+//                     "lastIndex2 = " + lastIndex2 
+//                      + ", lastIndex = " + lastIndex 
+//                      + ", index = " + index 
+//                      + ", lastNoteAdded2 = " + (lastNoteAdded2 == null ? "null" : lastNoteAdded2.toLeadsheet())
+//                      + ", lastNoteAdded = " + (lastNoteAdded == null ? "null" : lastNoteAdded.toLeadsheet())
+//                      + ", noteToAdd = " + noteToAdd.toLeadsheet());
+//              
+              if( swingEighths 
+               && index%BEAT == 0
+               && lastNoteAdded != null 
+               && lastNoteAdded2 != null
+               && lastNoteAdded.nonRest()
+               && lastIndex2 == index - BEAT
+               && lastIndex == index - 40
+                 )
+                {
+                Note firstSwingNote = lastNoteAdded2.copy();
+                Note secondSwingNote = lastNoteAdded.copy();
+            System.out.print("\nswing detected at beat " + lastIndex/BEAT
+                   + " converting " + firstSwingNote.toLeadsheet() + " & "
+                   + secondSwingNote.toLeadsheet());
+                firstSwingNote.setRhythmValue(BEAT/2);
+                secondSwingNote.setRhythmValue(BEAT/2);
+            System.out.println(" to " 
+                   + firstSwingNote.toLeadsheet() + " & "
+                   + secondSwingNote.toLeadsheet());
+            //System.out.println("melody before swing:   " + melodyPart);
+                melodyPart.setNoteFromCapture(lastIndex2, firstSwingNote);
+                melodyPart.setNoteFromCapture(lastIndex2 + BEAT/2, secondSwingNote);
+            //System.out.println("melody after swing:    " + melodyPart);
+                swingConversions++;
+                }
+              
               melodyPart.setNote(index, noteToAdd);
+              lastNoteAdded2 = lastNoteAdded;
               lastNoteAdded = noteToAdd;
+              lastIndex2 = lastIndex;
               lastIndex = index;
               }
           }

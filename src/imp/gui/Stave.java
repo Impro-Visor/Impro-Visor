@@ -974,6 +974,12 @@ public ChordPart getChordProg()
     return chordProg;
   }
 
+public void setOrigPart(MelodyPart part)
+{
+    System.out.println("setOrigPart " + part);
+    origPart = part;
+}
+
 /**
  * Sets the current Part for this Stave instance.
  * @param part          the Part to be set in the Stave
