@@ -330,12 +330,16 @@ public class MidiRecorder implements Constants, Receiver
                 {
                 Note firstSwingNote = lastNoteAdded2.copy();
                 Note secondSwingNote = lastNoteAdded.copy();
-            System.out.print("\nswing detected at beat " + lastIndex/BEAT
-                   + " converting " + firstSwingNote.toLeadsheet() + " & "
+                int beat = (1 + lastIndex)/BEAT;
+                int bar = 1 + beat/4;
+                beat = 1 + (beat % 4);
+            System.out.print("\nswing conversion in bar " + bar 
+                   + " beat " + beat
+                   + ": " + firstSwingNote.toLeadsheet() + " & "
                    + secondSwingNote.toLeadsheet());
                 firstSwingNote.setRhythmValue(BEAT/2);
                 secondSwingNote.setRhythmValue(BEAT/2);
-            System.out.println(" to " 
+            System.out.println(" -> " 
                    + firstSwingNote.toLeadsheet() + " & "
                    + secondSwingNote.toLeadsheet());
             //System.out.println("melody before swing:   " + melodyPart);
