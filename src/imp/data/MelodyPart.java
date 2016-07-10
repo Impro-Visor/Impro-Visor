@@ -2172,125 +2172,126 @@ public void setAutoFill(boolean fill)
           }
     }
     
-    /**
-     * applies a given resolution to a given melodyPart and returns 
-     * the int noteSum 
-     * @param resolution int 
-     * @param quantum 
-     * @param toSwing 
-     * @return NoteSum int 
-     */
-    
-    public MelodyPart applyResolution(int resolution, 
-                                      int quantum[], 
-                                      boolean toSwing, 
-                                      int restAbsorption)
-    {
-        //System.out.println("resolution = " + resolution);
-        MelodyPart melody = this.copy();
-        
-        // converts the improvisor melody to a jMusic score
-        jm.music.data.Score score = MidiImport.impMelody2jmScore(melody);
-        
-        // sets the resolution of the new score to the value given
-        MidiImport midiImport = new MidiImport(score);
-        midiImport.setResolution(resolution);
-        
-        // extracts the melody from the score
-        if( toSwing )
-        {
-        int swingQuantum[] = {60, 40};
-        midiImport.scoreToMelodies(swingQuantum); 
-        MelodyPart tempMelody = midiImport.getMelody(0);
-        PartIterator iterator = tempMelody.iterator();
-        int slots = 0;
-        melody = new MelodyPart();
-        while( iterator.hasNext() )
-            {
-            Note thisNote = (Note)iterator.next();
-            Boolean startOnBeat = slots%BEAT == 0;
-            int duration = thisNote.getRhythmValue();
-            if( startOnBeat )
-            {
-                if( duration % 120 == 80 )
-                {
-                    Note firstNote = thisNote.isRest() ? new Rest(duration-20) : new Note(thisNote.getPitch(), duration-20);                   
-                    if( iterator.hasNext() )
-                    {
-                        Note nextNote = (Note)iterator.next();
-                        int nextDuration = nextNote.getRhythmValue();
-                        slots += nextDuration;
-                        
-                        if( nextDuration % 120 == 40 )
-                        {
-                            nextDuration += 20;
-                            Note secondNote = nextNote.isRest()? new Rest(nextDuration) : new Note(nextNote.getPitch(), nextDuration);
-                            melody.addNote(firstNote);
-                            melody.addNote(secondNote);
-                        }
-                        else
-                        {
-                            // triplet sixteenth note
-                            if ( nextDuration == 20 )
-                            {
-                                if( iterator.hasNext() )
-                                {
-                                    Note followingNote = (Note)iterator.next();
-                                    int followingDuration = followingNote.getRhythmValue();
-                                    slots += followingDuration;
-                                    if( followingDuration % 120 == 20 )
-                                    {
-                                        nextDuration += 10;
-                                        followingDuration += 10;
-                                        Note secondNote = nextNote.isRest()? new Rest(nextDuration) : new Note(nextNote.getPitch(), nextDuration);
-                                        Note thirdNote = followingNote.isRest()? new Rest(followingDuration) : new Note(followingNote.getPitch(), followingDuration);
-                                        //System.out.println("is followingNote a rest?");
-                                        //System.out.println(followingNote.isRest());
-                                        melody.addNote(firstNote);
-                                        melody.addNote(secondNote);
-                                        melody.addNote(thirdNote);
-                                    }
-                                    else
-                                    {
-                            melody.addNote(thisNote.copy());
-                            melody.addNote(nextNote.copy());
-                                        melody.addNote(followingNote.copy());
-                        }
-                    }
-                            }
-                    else
-                    {
-                        melody.addNote(thisNote.copy());
-                                melody.addNote(nextNote.copy());
-                    }
-                }
-                    }
-                else
-                {
-                    melody.addNote(thisNote.copy());
-                }
-            }
-            else
-            {
-                melody.addNote(thisNote.copy());
-            }
-            }
-            else
-            {
-                melody.addNote(thisNote.copy());
-            }
-            //System.out.println(startOnBeat + " " + thisNote);
-            slots += duration;
-            }
-        }
-        else
-        {
-        midiImport.scoreToMelodies(quantum);
-        melody = midiImport.getMelody(0);
-        }
-        melody = melody.absorbRests(restAbsorption);
-        return melody;
-    }
+//    /**
+//     * applies a given resolution to a given melodyPart and returns 
+//     * the int noteSum 
+//     * @param resolution int 
+//     * @param quantum 
+//     * @param toSwing 
+//     * @return NoteSum int 
+//     */
+//    
+//    public MelodyPart applyResolution(int resolution, 
+//                                      int quantum[], 
+//                                      boolean toSwing, 
+//                                      int restAbsorption)
+//    {
+//        //System.out.println("resolution = " + resolution);
+//        MelodyPart melody = this.copy();
+//        
+//        // converts the improvisor melody to a jMusic score
+//        jm.music.data.Score score = MidiImport.impMelody2jmScore(melody);
+//        
+//        // sets the resolution of the new score to the value given
+//        MidiImport midiImport = new MidiImport(score);
+//        midiImport.setResolution(resolution);
+//        
+//        // extracts the melody from the score
+//        if( toSwing )
+//        {
+//        int swingQuantum[] = {60, 40};
+//        midiImport.scoreToMelodies(swingQuantum); 
+//        MelodyPart tempMelody = midiImport.getMelody(0);
+//        PartIterator iterator = tempMelody.iterator();
+//        int slots = 0;
+//        melody = new MelodyPart();
+//        while( iterator.hasNext() )
+//            {
+//            Note thisNote = (Note)iterator.next();
+//            Boolean startOnBeat = slots%BEAT == 0;
+//            int duration = thisNote.getRhythmValue();
+//            if( startOnBeat )
+//            {
+//                if( duration % 120 == 80 )
+//                {
+//                    Note firstNote = thisNote.isRest() ? new Rest(duration-20) : new Note(thisNote.getPitch(), duration-20);                   
+//                    if( iterator.hasNext() )
+//                    {
+//                        Note nextNote = (Note)iterator.next();
+//                        int nextDuration = nextNote.getRhythmValue();
+//                        slots += nextDuration;
+//                        
+//                        if( nextDuration % 120 == 40 )
+//                        {
+//                            nextDuration += 20;
+//                            Note secondNote = nextNote.isRest()? new Rest(nextDuration) : new Note(nextNote.getPitch(), nextDuration);
+//                            melody.addNote(firstNote);
+//                            melody.addNote(secondNote);
+//                        }
+//                        else
+//                        {
+//                            // triplet sixteenth note
+//                            if ( nextDuration == 20 )
+//                            {
+//                                if( iterator.hasNext() )
+//                                {
+//                                    Note followingNote = (Note)iterator.next();
+//                                    int followingDuration = followingNote.getRhythmValue();
+//                                    slots += followingDuration;
+//                                    if( followingDuration % 120 == 20 )
+//                                    {
+//                                        nextDuration += 10;
+//                                        followingDuration += 10;
+//                                        Note secondNote = nextNote.isRest()? new Rest(nextDuration) : new Note(nextNote.getPitch(), nextDuration);
+//                                        Note thirdNote = followingNote.isRest()? new Rest(followingDuration) : new Note(followingNote.getPitch(), followingDuration);
+//                                        //System.out.println("is followingNote a rest?");
+//                                        //System.out.println(followingNote.isRest());
+//                                        melody.addNote(firstNote);
+//                                        melody.addNote(secondNote);
+//                                        melody.addNote(thirdNote);
+//                                    }
+//                                    else
+//                                    {
+//                            melody.addNote(thisNote.copy());
+//                            melody.addNote(nextNote.copy());
+//                                        melody.addNote(followingNote.copy());
+//                        }
+//                    }
+//                            }
+//                    else
+//                    {
+//                        melody.addNote(thisNote.copy());
+//                                melody.addNote(nextNote.copy());
+//                    }
+//                }
+//                    }
+//                else
+//                {
+//                    melody.addNote(thisNote.copy());
+//                }
+//            }
+//            else
+//            {
+//                melody.addNote(thisNote.copy());
+//            }
+//            }
+//            else
+//            {
+//                melody.addNote(thisNote.copy());
+//            }
+//            //System.out.println(startOnBeat + " " + thisNote);
+//            slots += duration;
+//            }
+//        }
+//        else
+//        {
+//        midiImport.scoreToMelodies(quantum);
+//        melody = midiImport.getMelody(0);
+//        }
+//        melody = melody.absorbRests(restAbsorption);
+//        return melody;
+//    }
+
     
 /**
  * New version of quantizing melody, 21 June 2016.
@@ -2370,7 +2371,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
             inputSlot += thisNote.getRhythmValue();
            } // while
       }
-   System.out.println("quantized melody: " + result);
+   //System.out.println("quantized melody: " + result);
    System.out.println(notesLost + " notes lost in quantization");
 
     // Handle converting swing-eighth situations to appear as normal eights

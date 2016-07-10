@@ -42,6 +42,8 @@ public interface Constants {
      */
     
     public static final int BEAT = 120;
+    public static final int THIRD_BEAT = 40;
+    public static final int HALF_BEAT = 60;
     
     
     /**

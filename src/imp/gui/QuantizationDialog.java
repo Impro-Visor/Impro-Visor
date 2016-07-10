@@ -69,7 +69,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         noteQuantumTextField = new javax.swing.JTextField();
         tripletQuantumTextField = new javax.swing.JTextField();
 
-        setTitle("Quantize Chorus");
+        setTitle("Quantization");
         setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(650, 25, 0, 0));
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -235,7 +235,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         getContentPane().add(eighthNoteSwingBox, gridBagConstraints);
 
-        quantizeButton.setText("Quantize");
+        quantizeButton.setText("Requantize to New Chorus");
+        quantizeButton.setToolTipText("Requantize the current chorus according to the set parameters, resulting in a new chorus that will be added at the end.");
         quantizeButton.setContentAreaFilled(false);
         quantizeButton.addActionListener(new java.awt.event.ActionListener()
         {

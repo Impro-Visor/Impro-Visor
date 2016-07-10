@@ -103,10 +103,10 @@ public class MidiRecorder implements Constants, Receiver
     {
         
         notateMelodyPart = notate.getCurrentMelodyPart();
-        quantum = notate.getRealtimeQuanta();
+        quantum = notate.getQuantizationQuanta();
         gcd = MelodyPart.gcd(quantum[0], quantum[1]);
-        swingEighths = notate.getRealtimeSwing();
-        restAbsorption = notate.getRealtimeRestAbsorption();
+        swingEighths = notate.getQuantizationSwing();
+        restAbsorption = notate.getQuantizationRestAbsorption();
         
         System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd + ", restAbsorption = " + restAbsorption + ", swing = " + swingEighths);
         
@@ -310,22 +310,14 @@ public class MidiRecorder implements Constants, Receiver
                   notesLost++;
                   System.out.println("note lost at beat " + (index/BEAT) + ": " + oldNote.toLeadsheet());
                 }
-              
-//              System.out.println(
-//                     "lastIndex2 = " + lastIndex2 
-//                      + ", lastIndex = " + lastIndex 
-//                      + ", index = " + index 
-//                      + ", lastNoteAdded2 = " + (lastNoteAdded2 == null ? "null" : lastNoteAdded2.toLeadsheet())
-//                      + ", lastNoteAdded = " + (lastNoteAdded == null ? "null" : lastNoteAdded.toLeadsheet())
-//                      + ", noteToAdd = " + noteToAdd.toLeadsheet());
-//              
+                       
               if( swingEighths 
                && index%BEAT == 0
                && lastNoteAdded != null 
                && lastNoteAdded2 != null
                && lastNoteAdded.nonRest()
                && lastIndex2 == index - BEAT
-               && lastIndex == index - 40
+               && lastIndex == index - THIRD_BEAT
                  )
                 {
                 Note firstSwingNote = lastNoteAdded2.copy();
@@ -333,18 +325,21 @@ public class MidiRecorder implements Constants, Receiver
                 int beat = (1 + lastIndex)/BEAT;
                 int bar = 1 + beat/4;
                 beat = 1 + (beat % 4);
+                
             System.out.print("\nswing conversion in bar " + bar 
                    + " beat " + beat
                    + ": " + firstSwingNote.toLeadsheet() + " & "
                    + secondSwingNote.toLeadsheet());
-                firstSwingNote.setRhythmValue(BEAT/2);
-                secondSwingNote.setRhythmValue(BEAT/2);
+            
+                firstSwingNote.setRhythmValue(HALF_BEAT);
+                secondSwingNote.setRhythmValue(HALF_BEAT);
+                
             System.out.println(" -> " 
                    + firstSwingNote.toLeadsheet() + " & "
                    + secondSwingNote.toLeadsheet());
             //System.out.println("melody before swing:   " + melodyPart);
                 melodyPart.setNoteFromCapture(lastIndex2, firstSwingNote);
-                melodyPart.setNoteFromCapture(lastIndex2 + BEAT/2, secondSwingNote);
+                melodyPart.setNoteFromCapture(lastIndex2 + HALF_BEAT, secondSwingNote);
             //System.out.println("melody after swing:    " + melodyPart);
                 swingConversions++;
                 }

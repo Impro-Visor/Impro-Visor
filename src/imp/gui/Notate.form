@@ -8690,16 +8690,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openQuantizeDialogMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="openRealtimeQuantizeDialogMI1">
-              <Properties>
-                <Property name="mnemonic" type="int" value="83"/>
-                <Property name="text" type="java.lang.String" value="Real-Time Quantization"/>
-                <Property name="toolTipText" type="java.lang.String" value="Open dialog for quantizing real-time MIDI input"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openRealtimeQuantizeDialogMI1ActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="styleGenerator1">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
