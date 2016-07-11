@@ -39,7 +39,13 @@ import polya.Polylist;
 import polya.Tokenizer;
 
 import java.util.Calendar;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel; 
+import javax.swing.JSeparator; 
+
+
 /**
  *
  * @author  Emma Carlson, 2009
@@ -67,6 +73,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         setLocation(x, y);
         WindowRegistry.registerWindow(this);
         setInvisible(); 
+        
+        setVisichordDialog(); 
+        
+        //setNotes(); 
         setVisible(true); 
         
     }
@@ -110,9 +120,17 @@ public class VoicingKeyboard extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        VisichordDialog = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        clefLabel = new javax.swing.JLabel();
+        staff1 = new javax.swing.JLabel();
+        staff2 = new javax.swing.JLabel();
+        staff3 = new javax.swing.JLabel();
+        endStaff = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         keyboardLP = new javax.swing.JLayeredPane();
         keyA0 = new javax.swing.JLabel();
@@ -332,13 +350,58 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         cascadeMI = new javax.swing.JMenuItem();
         windowMenuSeparator = new javax.swing.JSeparator();
 
+        VisichordDialog.setTitle("Visichord Display");
+        VisichordDialog.setAlwaysOnTop(true);
+        VisichordDialog.setBackground(new java.awt.Color(255, 255, 255));
+        VisichordDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        VisichordDialog.setMaximumSize(new java.awt.Dimension(700, 420));
+        VisichordDialog.setSize(new java.awt.Dimension(700, 420));
+        VisichordDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(700, 420));
+        jPanel2.setMinimumSize(new java.awt.Dimension(700, 420));
+        jPanel2.setName(""); // NOI18N
+        jPanel2.setOpaque(false);
+        jPanel2.setSize(new java.awt.Dimension(700, 420));
+        jPanel2.setLayout(null);
+
+        clefLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/clefs.gif"))); // NOI18N
+        jPanel2.add(clefLabel);
+        clefLabel.setBounds(30, 80, 77, 260);
+
+        staff1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/staff.gif"))); // NOI18N
+        jPanel2.add(staff1);
+        staff1.setBounds(100, 110, 162, 200);
+
+        staff2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/staff.gif"))); // NOI18N
+        jPanel2.add(staff2);
+        staff2.setBounds(260, 110, 162, 200);
+
+        staff3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/staff.gif"))); // NOI18N
+        jPanel2.add(staff3);
+        staff3.setBounds(420, 110, 162, 200);
+
+        endStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/endStaff.gif"))); // NOI18N
+        jPanel2.add(endStaff);
+        endStaff.setBounds(580, 100, 30, 220);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        VisichordDialog.getContentPane().add(jPanel2, gridBagConstraints);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Keyboard");
         setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(1100, 370));
         setPreferredSize(new java.awt.Dimension(1100, 370));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -351,8 +414,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         keyboardLP.setMinimumSize(new java.awt.Dimension(1045, 150));
         keyboardLP.setRequestFocusEnabled(false);
-        keyboardLP.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        keyboardLP.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 keyboardLPMouseClicked(evt);
             }
         });
@@ -794,13 +859,17 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         getContentPane().add(ctrlShiftClickExtLabel, gridBagConstraints);
 
         playChordButton.setText("Play Chord");
-        playChordButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        playChordButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 playChordButtonActionPerformed(evt);
             }
         });
-        playChordButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+        playChordButton.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
                 playChordButtonKeyTyped(evt);
             }
         });
@@ -823,8 +892,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         chordStepBackButton.setMinimumSize(new java.awt.Dimension(30, 30));
         chordStepBackButton.setPreferredSize(new java.awt.Dimension(30, 30));
         chordStepBackButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        chordStepBackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chordStepBackButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 chordStepBackButtonActionPerformed(evt);
             }
         });
@@ -838,8 +909,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         chordReplayButton.setMaximumSize(new java.awt.Dimension(30, 30));
         chordReplayButton.setMinimumSize(new java.awt.Dimension(30, 30));
         chordReplayButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        chordReplayButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chordReplayButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 chordReplayButtonActionPerformed(evt);
             }
         });
@@ -854,8 +927,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         chordStepForwardButton.setMinimumSize(new java.awt.Dimension(30, 30));
         chordStepForwardButton.setPreferredSize(new java.awt.Dimension(30, 30));
         chordStepForwardButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        chordStepForwardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chordStepForwardButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 chordStepForwardButtonActionPerformed(evt);
             }
         });
@@ -867,8 +942,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         getContentPane().add(jToolBar1, gridBagConstraints);
 
         jButton2.setText("Save Voicing");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jButton2ActionPerformed(evt);
             }
         });
@@ -1969,8 +2046,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         clearKeyboardMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
         clearKeyboardMI.setText("Clear Keyboard");
-        clearKeyboardMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        clearKeyboardMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 clearKeyboardMIActionPerformed(evt);
             }
         });
@@ -1978,8 +2057,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         resetChordDisplayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
         resetChordDisplayMI.setText("Reset Chord Display");
-        resetChordDisplayMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        resetChordDisplayMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 resetChordDisplayMIActionPerformed(evt);
             }
         });
@@ -1987,8 +2068,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         playChordMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, 0));
         playChordMI.setText("Play Chord");
-        playChordMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        playChordMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 playChordMIActionPerformed(evt);
             }
         });
@@ -1996,8 +2079,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         addToSequenceMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, 0));
         addToSequenceMI.setText("Add to Sequence");
-        addToSequenceMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        addToSequenceMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 addToSequenceMIActionPerformed(evt);
             }
         });
@@ -2006,8 +2091,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         turnOnOffKeyLabelsMI.setBackground(new java.awt.Color(230, 230, 230));
         turnOnOffKeyLabelsMI.setSelected(true);
         turnOnOffKeyLabelsMI.setText("Turn On/Off Key Labels");
-        turnOnOffKeyLabelsMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        turnOnOffKeyLabelsMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 turnOnOffKeyLabelsMIActionPerformed(evt);
             }
         });
@@ -2019,8 +2106,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         singleNoteModeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, 0));
         singleNoteModeMI.setText("Single Note");
-        singleNoteModeMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        singleNoteModeMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 singleNoteModeMIActionPerformed(evt);
             }
         });
@@ -2028,8 +2117,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         chordModeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, 0));
         chordModeMI.setText("Chords");
-        chordModeMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chordModeMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 chordModeMIActionPerformed(evt);
             }
         });
@@ -2042,8 +2133,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         upHalfStepMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
         upHalfStepMI.setBackground(new java.awt.Color(236, 233, 216));
         upHalfStepMI.setText("Up half step");
-        upHalfStepMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        upHalfStepMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 upHalfStepMIActionPerformed(evt);
             }
         });
@@ -2052,8 +2145,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         downHalfStepMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, 0));
         downHalfStepMI.setBackground(new java.awt.Color(236, 233, 216));
         downHalfStepMI.setText("Down half step");
-        downHalfStepMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        downHalfStepMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 downHalfStepMIActionPerformed(evt);
             }
         });
@@ -2063,8 +2158,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         upOctaveMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
         upOctaveMI.setBackground(new java.awt.Color(236, 233, 216));
         upOctaveMI.setText("Up octave");
-        upOctaveMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        upOctaveMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 upOctaveMIActionPerformed(evt);
             }
         });
@@ -2073,8 +2170,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         downOctaveMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, 0));
         downOctaveMI.setBackground(new java.awt.Color(236, 233, 216));
         downOctaveMI.setText("Down octave");
-        downOctaveMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        downOctaveMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 downOctaveMIActionPerformed(evt);
             }
         });
@@ -2086,8 +2185,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         startPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
         startPlayMI.setText("Start play");
-        startPlayMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        startPlayMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 startPlayMIActionPerformed(evt);
             }
         });
@@ -2095,8 +2196,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         pausePlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
         pausePlayMI.setText("Pause play");
-        pausePlayMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        pausePlayMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 pausePlayMIActionPerformed(evt);
             }
         });
@@ -2104,8 +2207,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         stopPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         stopPlayMI.setText("Stop play");
-        stopPlayMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopPlayMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 stopPlayMIActionPerformed(evt);
             }
         });
@@ -2113,8 +2218,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         startSelPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0));
         startSelPlayMI.setText("Start selection play");
-        startSelPlayMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        startSelPlayMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 startSelPlayMIActionPerformed(evt);
             }
         });
@@ -2122,8 +2229,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         stopSelPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK));
         stopSelPlayMI.setText("Play from selection to end");
-        stopSelPlayMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        stopSelPlayMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 stopSelPlayMIActionPerformed(evt);
             }
         });
@@ -2133,21 +2242,27 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
-        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuSelected(javax.swing.event.MenuEvent evt) {
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener()
+        {
+            public void menuSelected(javax.swing.event.MenuEvent evt)
+            {
                 windowMenuMenuSelected(evt);
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt)
+            {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt)
+            {
             }
         });
 
         closeWindowMI.setMnemonic('C');
         closeWindowMI.setText("Close Window");
         closeWindowMI.setToolTipText("Closes the current window (exits program if there are no other windows)");
-        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 closeWindowMIActionPerformed(evt);
             }
         });
@@ -2155,8 +2270,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         cascadeMI.setMnemonic('A');
         cascadeMI.setText("Cascade Windows");
-        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cascadeMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cascadeMIActionPerformed(evt);
             }
         });
@@ -2205,6 +2322,37 @@ public javax.swing.ImageIcon blackBassKeyPressed =
     new javax.swing.ImageIcon(
         getClass().getResource("/imp/gui/graphics/blackrootkeypressed.jpg"));
 
+ public javax.swing.ImageIcon staffIcon = 
+    new javax.swing.ImageIcon(
+            getClass().getResource("/imp/gui/graphics/staff.gif"));
+ 
+ public javax.swing.ImageIcon clefsIcon = 
+    new javax.swing.ImageIcon(
+            getClass().getResource("/imp/gui/graphics/clefs.gif"));
+ 
+ public javax.swing.ImageIcon wholeNoteIcon = 
+    new javax.swing.ImageIcon(
+            getClass().getResource("/imp/gui/graphics/wholeNote.gif"));
+
+ public javax.swing.ImageIcon sharpIcon = 
+    new javax.swing.ImageIcon(
+            getClass().getResource("/imp/gui/graphics/sharp.gif"));
+ 
+  public javax.swing.ImageIcon flatIcon = 
+    new javax.swing.ImageIcon(
+            getClass().getResource("/imp/gui/graphics/flat.gif"));
+  
+ public javax.swing.ImageIcon staffEndIcon = 
+    new javax.swing.ImageIcon(
+            getClass().getResource("/imp/gui/graphics/endStaff.gif"));
+ 
+public JLabel staff = new JLabel(staffIcon);
+public JLabel clefs = new JLabel(clefsIcon);
+//public JLabel wholeNote = new JLabel(wholeNoteIcon);
+public JLabel sharp = new JLabel(sharpIcon); 
+public JLabel flat = new JLabel(flatIcon); 
+public JLabel staffEnd = new JLabel(staffEndIcon); 
+        
 /**
  * Setting some useful constants.
  */
@@ -3403,10 +3551,12 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
         if (!turnOnOffKeyLabelsMI.isSelected())
         {
             setInvisible();
+            turnOnOffKeyLabelsMI.setText("Click To Turn On Key Labels");
             turnOnOffLabels = false; 
         } 
         else
         {
+            turnOnOffKeyLabelsMI.setText("Click To Turn Off Key Labels");
             for(int x = 0; x<pianoKeys().length; x++)
             {
                 if (pianoKeys()[x].isPressed())
@@ -3443,6 +3593,176 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
             VoicingDebug.println("Keyboard Voicing Analytics:,,,,NumNotesOld,"+lastChord.length+",NumNotesNew,"+chordMidi.length+" ,Distance,"+VoicingDistanceCalculator.calculateDistance(lastChord,chordMidi)+", NotesChanged,"+VoicingDistanceCalculator.calculateNotesChanged(lastChord,chordMidi));
         lastChord=chordMidi;
     }
+    
+    public JLabel [] barDisplay; 
+    public JPanel [] notePane; 
+    public int curChordPanel = 1; 
+    
+    public int numStaffs = 3; 
+    /* Various constants for sizes on the staffs */
+    static int staffGap = 11;           // Pixel gap between staff lines
+    static int trebleBase = 111;         // Top line of the treble clef
+    static int bassBase = 254;          // Top line on the bass clef
+    static int staffWidth = 30;         // Width of extra staff lines
+    
+ /* Various note constants */
+    static int lowBLine = 2*7+4;        // Note value of lowest line on bass
+    static int highBLine = 3*7+5;       // Note value of highest line on bass
+    static int lowTLine = 4*7+2;        // Note value of lowest line on treble
+    static int highTLine = 5*7+3;       // Note value of highest line on treble
+    static int highestLine = 7;       // Highest Space -- C8 
+    
+    public void setVisichordDialog()
+    {
+        VisichordDialog.setLocation(500, 500); 
+        
+        drawStaffLines(4,3,3,4,0); 
+        drawStaffLines(4,3,3,4,1); 
+        drawStaffLines(4,3,3,4,2); 
+        
+        // Sample drawing of 3 chords
+        drawNote(60, 0); 
+        drawNote(64, 0);
+        drawNote(67, 0);
+        
+        drawNote(62, 1); 
+        drawNote(66, 1);
+        drawNote(69, 1);
+        
+        drawNote(72, 2); 
+        drawNote(76, 2);
+        drawNote(79, 2);
+        VisichordDialog.setVisible(true);
+    }
+    // this method is for testing -- to be deleted 
+  
+    // Not being called currently:
+//     /** Display the note and accidental (if necessary) on the staff. */
+//        public void displayStaff(int MIDIvalue)
+//        {
+//            
+//            /* Now display the corresponding note on the staff.  The Y offset
+//             * is now set so the note lies right on the top line of the staff.
+//             * The X offset is simply half the width of the bar minus half
+//             * the width of the icon to center it properly */
+//            int offsetY = -wholeNote.getHeight()/2;
+//            int offsetX = notePane[curChordPanel-1].getWidth()/2
+//                - wholeNote.getWidth()/2;
+//            int aoffsetX;               // Accidental X offset
+//
+//            /* Get the absolute note value */
+//            int note = MIDIvalue;
+//
+//            int baseLine;               // Value of the base line, T or B
+//            if (note >= 48) {
+//                offsetY += trebleBase;
+//                baseLine = highTLine;
+//            } else {
+//                offsetY += bassBase;
+//                baseLine = highBLine;
+//            }
+//            offsetY += (baseLine - note)*staffGap/2 +
+//                      ((note < baseLine || (note - baseLine) % 2 == 0)? 1 : 0);
+//                                        // Adjust the Y offset down by the
+//                                        // necessary half steps.  Add 1 pixel
+//                                        // in the case of notes on even lines
+//                                        // and below the baseline to correct
+//                                        // for parity error.
+//
+//            /* Get the chord number relative to the current one */
+//            int relativeChord = curChordPanel - 1;
+//            /* Get the note character, and adjust down if it's higher than G */
+//            //deleted 
+//            
+//            /* Set the position of the whole note */
+//            wholeNote.setLocation(offsetX, offsetY);
+//            //wholeNote.setLocation(0, 0);
+//            notePane[curChordPanel -1].add(wholeNote); 
+//            
+//        }
+        
+static final int MIDDLE_C_OFFSET_TREBLE = 142;    
+static final int MIDDLE_C_MIDI_VALUE = 60;
+static final int NOTE_ICON_WIDTH = 50;
+static final int NOTE_ICON_HEIGHT = 50;
+static final int OCTAVE_DISPLACEMENT = 40;
+
+// CAUTION: These offset are only good for the accidentl assignments shown
+// and for treble clef.
+                                             /* C, Db, D, Eb, E, F,  F#, G,  Ab,  A, Bb, B */
+static final int NOTE_OFFSET_WITHIN_OCTAVE[] = {0, 6, 6, 12,  12, 18, 18, 24, 30, 30, 36, 36}; 
+static final int NOTE_OCTAVE_STEP = 4;
+
+    public void drawNote(int MIDIvalue, int panelNumber)
+        {
+            // This code is for treble clef only
+            int offsetX = 50;
+
+            int octave = (MIDIvalue - MIDDLE_C_MIDI_VALUE) / 12;
+            int offsetWithinOctave = NOTE_OFFSET_WITHIN_OCTAVE[(MIDIvalue - MIDDLE_C_MIDI_VALUE)%12];
+            int offsetY = MIDDLE_C_OFFSET_TREBLE - octave*OCTAVE_DISPLACEMENT - offsetWithinOctave;  
+            
+            JLabel wholeNote = new JLabel(wholeNoteIcon);
+            notePane[panelNumber].add(wholeNote); // NOte is added here
+            wholeNote.setBounds(offsetX, offsetY, NOTE_ICON_WIDTH, NOTE_ICON_HEIGHT);
+        }
+    
+    /**
+     * Draws the specified number of ledger lines below the bass clef,
+     * above the bass clef, below and above the treble clef for the specified
+     * chord. */
+    public void drawStaffLines(int belowBass, int aboveBass,
+                               int belowTreble, int aboveTreble,
+                               int chordNum)
+    {
+        /* Set the base x and y positions, starting with the lines above
+         * the treble clef */
+        int xPos = staffIcon.getIconWidth()/2 - staffWidth/2; //
+        int yPos = trebleBase; //starts on top line
+
+        /* Draw the specified number of lines above the treble clef, changing
+         * the y position by the space between the lines */
+        for (int i = 0; i < aboveTreble; i++) {
+            yPos -= staffGap; //gap of 11 
+            drawStaffLine(xPos, yPos, chordNum);
+        }
+
+        /* Set the initial y position to the bottom of the treble clef,
+         * then draw the specified number of lines there */
+        yPos = trebleBase + 4*staffGap;
+        for (int i = 0; i < belowTreble; i++) {
+            yPos += staffGap;
+            drawStaffLine(xPos, yPos, chordNum);
+        }
+
+        /* Draw the lines above the bass clef */
+        yPos = bassBase;
+        for (int i = 0; i < aboveBass; i++) {
+            yPos -= staffGap;
+            drawStaffLine(xPos, yPos, chordNum);
+        }
+
+        /* Draw the lines below the bass clef */
+        yPos = bassBase + 4*staffGap;
+        for (int i = 0; i < belowBass; i++) {
+            yPos += staffGap;
+            drawStaffLine(xPos, yPos, chordNum);
+        }
+    }
+
+    /**
+     * Draw a ledger line at the specified x, y position for the given
+     * chord. */
+    public void drawStaffLine(int xPos, int yPos, int panelNum)
+    {
+        JSeparator line = new JSeparator();
+        line.setBackground(Color.black);
+        line.setForeground(Color.black);
+        line.setBounds(xPos, yPos, staffWidth, 1);
+        //set border taken out 
+        notePane[panelNum].add(line);
+    }
+    
     /**
      * saves current voicing in the Advisor which makes its way to My.voc eventually
      */
@@ -3873,6 +4193,7 @@ private void forcePaint()
     private javax.swing.JLabel Gsharp5;
     private javax.swing.JLabel Gsharp6;
     private javax.swing.JLabel Gsharp7;
+    private javax.swing.JDialog VisichordDialog;
     private javax.swing.JMenuItem addToSequenceMI;
     private javax.swing.JPanel blackKeyLabels;
     private javax.swing.JMenuItem cascadeMI;
@@ -3882,14 +4203,17 @@ private void forcePaint()
     private javax.swing.JButton chordStepBackButton;
     private javax.swing.JButton chordStepForwardButton;
     private javax.swing.JMenuItem clearKeyboardMI;
+    private javax.swing.JLabel clefLabel;
     private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.JLabel ctrlClicktoChangeRootLabel;
     private javax.swing.JLabel ctrlShiftClickExtLabel;
     private javax.swing.JMenuItem downHalfStepMI;
     private javax.swing.JMenuItem downOctaveMI;
+    private javax.swing.JLabel endStaff;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel keyA0;
@@ -3991,6 +4315,9 @@ private void forcePaint()
     private javax.swing.JLabel presentChordDisplay;
     private javax.swing.JMenuItem resetChordDisplayMI;
     private javax.swing.JMenuItem singleNoteModeMI;
+    private javax.swing.JLabel staff1;
+    private javax.swing.JLabel staff2;
+    private javax.swing.JLabel staff3;
     private javax.swing.JMenuItem startPlayMI;
     private javax.swing.JMenuItem startSelPlayMI;
     private javax.swing.JMenuItem stopPlayMI;
@@ -4025,6 +4352,8 @@ private void initKeys()
     pkeys = new PianoKey[88];
     
     labels = new JLabel[88]; 
+    
+    notePane = new JPanel[numStaffs]; 
     
     // 0th octave keys
     pkeys[0] = new PianoKey(21, whiteKeyPressed, whiteKey, bassKey, bassKeyPressed, keyA0);
@@ -4238,6 +4567,29 @@ private void initKeys()
     // 8th octave labels
     labels[87] = C8;
  
+    // Set up NotePanes for chords
+    
+    int numberOfNotePanes = 3;
+    
+    java.awt.Dimension notePaneDimension = new java.awt.Dimension(162, 335);
+    int paneBase = 100;
+    int paneDisplacement = 160;
+    
+    notePane = new javax.swing.JPanel[numberOfNotePanes];
+    
+    for( int i = 0; i < numberOfNotePanes; i++ )
+      {
+      notePane[i] = new javax.swing.JPanel();
+        
+      notePane[i].setMaximumSize(notePaneDimension);
+      notePane[i].setMinimumSize(notePaneDimension);
+      notePane[i].setPreferredSize(notePaneDimension);
+      notePane[i].setOpaque(false);
+      notePane[i].setLayout(null);
+      notePane[i].setBounds(paneBase + i*paneDisplacement, 10, 162, 370);
+      
+      jPanel2.add(notePane[i]);
+      }
 }
        
 /**
@@ -4245,12 +4597,9 @@ private void initKeys()
  */
 public void setInvisible()
 {
-    
     for(int r = 0; r<88; r++)
     {
-    
         labels[r].setForeground(new Color(240,240,240));
-         
     }
 }
 
