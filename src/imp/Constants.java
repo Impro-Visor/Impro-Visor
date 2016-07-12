@@ -38,12 +38,13 @@ public interface Constants {
     public static final int DEFAULT_BEAT_DENOMINATOR = 4;
     
     /**
-     * the number of slots in a single beat
+     *  120 slots in a single beat
      */
     
     public static final int BEAT = 120;
     public static final int THIRD_BEAT = 40;
     public static final int HALF_BEAT = 60;
+    public static final int SIXTH_BEAT = 20;
     
     
     /**

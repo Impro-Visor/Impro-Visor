@@ -108,7 +108,7 @@ public class MidiRecorder implements Constants, Receiver
         swingEighths = notate.getQuantizationSwing();
         restAbsorption = notate.getQuantizationRestAbsorption();
         
-        System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd + ", restAbsorption = " + restAbsorption + ", swing = " + swingEighths);
+        //System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd + ", restAbsorption = " + restAbsorption + ", swing = " + swingEighths);
         
         notesLost = 0;
         swingConversions = 0;
@@ -308,7 +308,7 @@ public class MidiRecorder implements Constants, Receiver
               if( oldNote != null && oldNote.nonRest() && oldNote.getPitch() != noteToAdd.getPitch() )
                 {
                   notesLost++;
-                  System.out.println("note lost at beat " + (index/BEAT) + ": " + oldNote.toLeadsheet());
+                  //System.out.println("note lost at beat " + (index/BEAT) + ": " + oldNote.toLeadsheet());
                 }
                        
               if( swingEighths 
@@ -326,28 +326,57 @@ public class MidiRecorder implements Constants, Receiver
                 int bar = 1 + beat/4;
                 beat = 1 + (beat % 4);
                 
-            System.out.print("\nswing conversion in bar " + bar 
-                   + " beat " + beat
-                   + ": " + firstSwingNote.toLeadsheet() + " & "
-                   + secondSwingNote.toLeadsheet());
+//            System.out.print("\nswing conversion in bar " + bar 
+//                   + " beat " + beat
+//                   + ": " + firstSwingNote.toLeadsheet() + " & "
+//                   + secondSwingNote.toLeadsheet());
             
                 firstSwingNote.setRhythmValue(HALF_BEAT);
                 secondSwingNote.setRhythmValue(HALF_BEAT);
                 
-            System.out.println(" -> " 
-                   + firstSwingNote.toLeadsheet() + " & "
-                   + secondSwingNote.toLeadsheet());
+//            System.out.println(" -> " 
+//                   + firstSwingNote.toLeadsheet() + " & "
+//                   + secondSwingNote.toLeadsheet());
             //System.out.println("melody before swing:   " + melodyPart);
+            
                 melodyPart.setNoteFromCapture(lastIndex2, firstSwingNote);
                 melodyPart.setNoteFromCapture(lastIndex2 + HALF_BEAT, secondSwingNote);
+                
             //System.out.println("melody after swing:    " + melodyPart);
                 swingConversions++;
                 }
+            
+              // HACK for eigth-note triplets
+              // This is hopefully a temporary hack. It deals with the case
+              // where there is an 8/3 on the beat, then a 16/3 and a 4/3
+              // presumably intended as a triplet. It converts this to 
+              // three 8/3's
               
-              melodyPart.setNote(index, noteToAdd);
+              if( lastIndex%BEAT == THIRD_BEAT && index%BEAT == HALF_BEAT )
+                {
+//                  System.out.print("\nhack at bar " + (1+lastIndex2/BEAT/4) + " beat " + (lastIndex2/4%BEAT));
+//                  System.out.println(" notes: " + lastNoteAdded2.toLeadsheet() + " " + lastNoteAdded.toLeadsheet() + " " + noteToAdd.toLeadsheet());
+//                  System.out.println("part before = " + melodyPart);
+                  
+                  melodyPart.delUnit(lastIndex);
+                  lastNoteAdded.setRhythmValue(THIRD_BEAT);
+                  melodyPart.setNoteFromCapture(lastIndex, lastNoteAdded);
+                  noteToAdd.setRhythmValue(THIRD_BEAT);
+                  index = index + SIXTH_BEAT;
+                  melodyPart.setNoteFromCapture(index, noteToAdd);
+
+//                  System.out.print("after hack");
+//                  System.out.println(" notes: " + lastNoteAdded2.toLeadsheet() + " " + lastNoteAdded.toLeadsheet() + " " + noteToAdd.toLeadsheet());
+//                  System.out.println("part after = " + melodyPart);
+                }
+              else
+                {
+                melodyPart.setNoteFromCapture(index, noteToAdd);
+                }
               lastNoteAdded2 = lastNoteAdded;
               lastNoteAdded = noteToAdd;
               lastIndex2 = lastIndex;
+
               lastIndex = index;
               }
           }
