@@ -2070,13 +2070,13 @@ public Critic getCritic()
         replaceWithPhi = new javax.swing.JCheckBoxMenuItem();
         replaceWithDelta = new javax.swing.JCheckBoxMenuItem();
         playMenu = new javax.swing.JMenu();
+        openQuantizeDialogMI = new javax.swing.JMenuItem();
         playSelectionMI = new javax.swing.JMenuItem();
         playSelectionToEndMI = new javax.swing.JMenuItem();
         playAllMI = new javax.swing.JMenuItem();
         stopPlayMI = new javax.swing.JMenuItem();
         pausePlayMI = new javax.swing.JMenuItem();
         recordMI = new javax.swing.JMenuItem();
-        useAudioInputMI = new javax.swing.JCheckBoxMenuItem();
         roadmapMenu = new javax.swing.JMenu();
         roadMapThisAnalyze = new javax.swing.JMenuItem();
         reAnalyzeMI = new javax.swing.JMenuItem();
@@ -2090,7 +2090,6 @@ public Critic getCritic()
         pianoKeyboardMI = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
-        openQuantizeDialogMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         fractalMI = new javax.swing.JMenuItem();
@@ -9552,6 +9551,18 @@ public Critic getCritic()
             }
         });
 
+        openQuantizeDialogMI.setMnemonic('S');
+        openQuantizeDialogMI.setText("Open Quantization");
+        openQuantizeDialogMI.setToolTipText("Open dialog for quantizing note values.");
+        openQuantizeDialogMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                openQuantizeDialogMIActionPerformed(evt);
+            }
+        });
+        playMenu.add(openQuantizeDialogMI);
+
         playSelectionMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0));
         playSelectionMI.setText("Play Selection");
         playSelectionMI.setToolTipText("Play only the selection.");
@@ -9621,10 +9632,6 @@ public Critic getCritic()
             }
         });
         playMenu.add(recordMI);
-
-        useAudioInputMI.setSelected(false);
-        useAudioInputMI.setText("Use Audio Input");
-        playMenu.add(useAudioInputMI);
 
         menuBar.add(playMenu);
 
@@ -9745,18 +9752,6 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(openLeadsheetEditorMI);
-
-        openQuantizeDialogMI.setMnemonic('S');
-        openQuantizeDialogMI.setText("Open Quantization");
-        openQuantizeDialogMI.setToolTipText("Open dialog for quantizing note values.");
-        openQuantizeDialogMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                openQuantizeDialogMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(openQuantizeDialogMI);
 
         styleGenerator1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         styleGenerator1.setMnemonic('S');
@@ -18650,14 +18645,6 @@ public void playScoreBody(int startAt, boolean allChoruses)
         // reset playback offset
 
         initCurrentPlaybackTab(0, 0);
-        //sets up a Timer to handle audio capture
-        if( useAudioInputMI.isSelected() )
-          {
-            setMode(Mode.RECORDING);
-//            startAudioTimer();
-//            System.out.println("Capture timer started.");
-          }
-
         
         int stopPlayingAt;
         if(allChoruses){
@@ -18703,13 +18690,6 @@ public void playScoreBody(int startAt, Style style)
         // reset playback offset
 
         initCurrentPlaybackTab(0, 0);
-        //sets up a Timer to handle audio capture
-        if( useAudioInputMI.isSelected() )
-          {
-            setMode(Mode.RECORDING);
-//            startAudioTimer();
-//            System.out.println("Capture timer started.");
-          }
 
         getStaveAtTab(0).playSelection(startAt, score.getTotalLength() - 1, getLoopCount(), true, "playScoreBody", style);
         //getCurrentStave().play(startAt);
@@ -26172,7 +26152,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton undoBtn;
     private javax.swing.JMenuItem undoMI;
     private javax.swing.JMenuItem undoPMI;
-    private javax.swing.JCheckBoxMenuItem useAudioInputMI;
     private javax.swing.JCheckBoxMenuItem useBeamsMI;
     private javax.swing.JButton usePreviousStyleButton;
     private javax.swing.JLabel useSuperColliderCheckboxText;

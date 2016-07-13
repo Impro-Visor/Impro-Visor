@@ -255,9 +255,9 @@ public class MidiRecorder implements Constants, Receiver
 
         if( duration != 0 )
           {
-            Note noteToAdd = new Note(note, duration);
-            setNote(noteOnIndex, noteToAdd);
-            noteOnIndex += duration;
+           Note noteToAdd = new Note(note, duration);
+           setNote(noteOnIndex, noteToAdd);
+           noteOnIndex += duration;
           }
 
         notate.repaint();
@@ -346,7 +346,7 @@ public class MidiRecorder implements Constants, Receiver
                 swingConversions++;
                 }
             
-              // HACK for eigth-note triplets
+              // HACK for eigth-note triplets. Needs to be generalized
               // This is hopefully a temporary hack. It deals with the case
               // where there is an 8/3 on the beat, then a 16/3 and a 4/3
               // presumably intended as a triplet. It converts this to 
@@ -407,31 +407,38 @@ int tickToSlots(long duration)
         return (int) (BEAT * duration / resolution);
     }
 
-// Not sure this is the right direction to quantize in each case
+
 int snapDuration(int slots)
     {
-        slots = MelodyPart.quantizeUp(slots, gcd);
+        slots = round(slots);
         return slots;
     }
 
+        
 int snapRest(int slots)
     {
-        slots = MelodyPart.quantizeDown(slots, gcd);
+        slots = round(slots);
         return slots;
     }
 
 int snapStart(int slot)
     {
-        slot = MelodyPart.quantizeDown(slot, gcd);
+        slot = round(slot);
+        // This loop helps revent snapping to the "wrong" slot
+        // in case of triplets.
         while( slot % quantum[0] != 0 && slot % quantum[1] != 0 )
           {
             slot += gcd;
-            //System.out.println("advancing: " + (slot-gcd) + " -> " + slot);
           }
         return slot;
     }
 
-    public void close()
+int round(int slot)
+{
+    return Math.round(((float)slot)/gcd)*gcd;
+}
+
+public void close()
     {
     }
   }
