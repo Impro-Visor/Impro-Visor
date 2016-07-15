@@ -113,6 +113,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeLengthSpinner = new javax.swing.JSpinner();
         mainTradeMenuBar = new javax.swing.JMenuBar();
         modeMenu = new javax.swing.JMenu();
+        tradeRepeat = new javax.swing.JRadioButtonMenuItem();
         tradeRepeatAndRectify = new javax.swing.JRadioButtonMenuItem();
         tradeRandomModify = new javax.swing.JRadioButtonMenuItem();
         tradeAbstract = new javax.swing.JRadioButtonMenuItem();
@@ -522,6 +523,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         modeMenu.setText("Trading Mode");
 
+        modeSelector.add(tradeRepeat);
+        tradeRepeat.setText("Repeat");
+        tradeRepeat.setToolTipText("Simply repeat user input.");
+        modeMenu.add(tradeRepeat);
+
         modeSelector.add(tradeRepeatAndRectify);
         tradeRepeatAndRectify.setText("Repeat and Rectify");
         modeMenu.add(tradeRepeatAndRectify);
@@ -897,6 +903,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JMenu tradePlayMenu;
     private javax.swing.JMenuItem tradePlayMenuItem;
     private javax.swing.JRadioButtonMenuItem tradeRandomModify;
+    private javax.swing.JRadioButtonMenuItem tradeRepeat;
     private javax.swing.JRadioButtonMenuItem tradeRepeatAndRectify;
     private javax.swing.JMenuItem tradeStopMenuItem;
     private javax.swing.JRadioButtonMenuItem tradeStore;

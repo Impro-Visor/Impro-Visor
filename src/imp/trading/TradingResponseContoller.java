@@ -49,7 +49,9 @@ public class TradingResponseContoller {
     }
 
     public MelodyPart response(String tradeMode) throws ExceptionTradeModeNotFound {
-        if (tradeMode.equals("Repeat and Rectify")) {
+        if (tradeMode.equals("Repeat")) {
+            responseMode = new RepeatTRM(responseInfo, tradeMode);
+        } else if (tradeMode.equals("Repeat and Rectify")) {
             responseMode = new RepeatAndRectifyTRM(responseInfo, tradeMode);
         } else if (tradeMode.equals("Modify and Rectify")) {
             responseMode = new ModifyAndRectifyTRM(responseInfo, tradeMode);

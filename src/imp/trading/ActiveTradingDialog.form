@@ -22,6 +22,15 @@
             <Property name="text" type="java.lang.String" value="Trading Mode"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeRepeat">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="modeSelector"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Repeat"/>
+                <Property name="toolTipText" type="java.lang.String" value="Simply repeat user input."/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeRepeatAndRectify">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
