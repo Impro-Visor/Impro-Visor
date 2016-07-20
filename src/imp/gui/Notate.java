@@ -107,6 +107,7 @@ public class Notate
 {
 private PassiveTradingDialog passiveTradingDialog;
 public GuideToneLineDialog guideToneLineDialog;
+public LSTMDialog lstmDialog;
 public static int midiImportXoffset = 200;
 public static int midiImportYoffset = 200;
 public static final int HELP_DIALOG_WIDTH = 980;
@@ -1060,6 +1061,9 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
+    
+    lstmDialog = new LSTMDialog(this);
+    lstmDialog.setVisible(false);
   } // end of Notate constructor
 
 boolean showConstructionLinesAndBoxes = true;
@@ -2096,6 +2100,7 @@ public Critic getCritic()
         guideToneLine = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
         intervalLearningMI = new javax.swing.JMenuItem();
+        lstmControlPanel = new javax.swing.JMenuItem();
         soloGeneratorMI = new javax.swing.JMenuItem();
         customSoloGeneratorMI = new javax.swing.JMenuItem();
         transformMI = new javax.swing.JMenuItem();
@@ -2114,6 +2119,7 @@ public Critic getCritic()
         afterGuideToneSeparator = new javax.swing.JPopupMenu.Separator();
         themeWeaveRadio = new javax.swing.JRadioButtonMenuItem();
         intervalsRadio = new javax.swing.JRadioButtonMenuItem();
+        lstmRadio = new javax.swing.JRadioButtonMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
         saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         notateGrammarMenu = new javax.swing.JMenu();
@@ -9814,6 +9820,18 @@ public Critic getCritic()
         });
         utilitiesMenu.add(intervalLearningMI);
 
+        lstmControlPanel.setMnemonic('g');
+        lstmControlPanel.setText("LSTM Control Panel");
+        lstmControlPanel.setToolTipText("Improvisation using interval learning");
+        lstmControlPanel.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                lstmControlPanelActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(lstmControlPanel);
+
         soloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         soloGeneratorMI.setText("Theme Weaver");
         soloGeneratorMI.setToolTipText("Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation.");
@@ -9913,11 +9931,22 @@ public Critic getCritic()
 
         improvButtonGroup.add(themeWeaveRadio);
         themeWeaveRadio.setText("Theme Weave");
+        themeWeaveRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                themeWeaveRadioActionPerformed(evt);
+            }
+        });
         improvMenu.add(themeWeaveRadio);
 
         improvButtonGroup.add(intervalsRadio);
         intervalsRadio.setText("Use Interval Learning");
         improvMenu.add(intervalsRadio);
+
+        improvButtonGroup.add(lstmRadio);
+        lstmRadio.setText("Use LSTM");
+        improvMenu.add(lstmRadio);
         improvMenu.add(improvSeparator1);
 
         saveImprovCheckBoxMenuItem.setText("Save Improvisation");
@@ -21921,6 +21950,11 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
           transformFrame.applySubstitutions(getCurrentMelodyPart(), chords);
           return;
       }
+      
+      if(lstmRadio.isSelected()){
+          lstmDialog.generatePastePlay();     
+          return;
+      }
 
     // outLines is the same as soloist
     if( useOutlines )
@@ -23655,6 +23689,21 @@ private boolean isDotted = false;
     openRealTimeQuantization();
     }//GEN-LAST:event_openQuantizationButtonActionPerformed
 
+    private void themeWeaveRadioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_themeWeaveRadioActionPerformed
+    {//GEN-HEADEREND:event_themeWeaveRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_themeWeaveRadioActionPerformed
+
+    private void lstmControlPanelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_lstmControlPanelActionPerformed
+    {//GEN-HEADEREND:event_lstmControlPanelActionPerformed
+        openLSTMdialog();
+    }//GEN-LAST:event_lstmControlPanelActionPerformed
+
+    private void openLSTMdialog()
+    {
+        lstmDialog.setVisible(true);
+    }
+    
     private void openRealTimeQuantization()
     {
         realtimeQuantizationDialog.setVisible(true);
@@ -24315,15 +24364,15 @@ public void openCorpus()
     openLeadsheet(true);
   }
 
-/**
- * Get the indication of whether to use theme weaver or not
- * @return 
- */
-public boolean getWhetherToThemeWeave()
-  {
-    return themeWeaveRadio.isSelected();
-    //return themeWovenCheckBox.isSelected();
-  }
+///**
+// * Get the indication of whether to use theme weaver or not
+// * @return 
+// */
+//public boolean getWhetherToThemeWeave()
+//  {
+//    return themeWeaveRadio.isSelected();
+//    //return themeWovenCheckBox.isSelected();
+//  }
 
 
 public void setToTrade()
@@ -25880,6 +25929,8 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField loopSet;
     private javax.swing.JTextField lowRangeTF;
     private javax.swing.JTextField lowRangeTF2;
+    private javax.swing.JMenuItem lstmControlPanel;
+    private javax.swing.JRadioButtonMenuItem lstmRadio;
     private javax.swing.JPanel masterVolumePanel;
     private javax.swing.JSpinner maxPitchSpinner1;
     private javax.swing.JLabel measErrorLabel;
