@@ -62,7 +62,11 @@ public class GenerativeProductModel implements Loadable {
         this.encodings[0] = new IntervalRelativeNoteEncoding(lowbound, highbound);
         this.encodings[1] = new ChordRelativeNoteEncoding();
         
-        for(int i=0; i<this.num_experts; i++) {
+        reset();
+    }
+    
+    public void reset(){
+        for (int i = 0; i < this.num_experts; i++) {
             this.last_output_parts[i].provide(this.encodings[i].reset());
         }
     }

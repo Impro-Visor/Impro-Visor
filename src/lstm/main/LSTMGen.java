@@ -56,6 +56,7 @@ public class LSTMGen {
             }
             throw new InvalidParametersException(notFound);
         }
+        model.reset();
         loaded = true;
     }
     
@@ -77,6 +78,7 @@ public class LSTMGen {
                 }
                 throw new InvalidParametersException(notFound);
             }
+            model.reset();
         }
     }
     
