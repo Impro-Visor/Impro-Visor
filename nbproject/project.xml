@@ -3,14 +3,29 @@
     <type>org.netbeans.modules.ant.freeform</type>
     <configuration>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <name>Impro-Visor</name>
+        </general-data>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
             <!--Do not use Project Properties customizer when editing this file manually.-->
             <name>Impro-Visor</name>
             <properties/>
             <folders>
                 <source-folder>
+                    <label>Impro-Visor</label>
+                    <location>.</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
                     <label>src</label>
                     <type>java</type>
                     <location>src</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>lib</label>
+                    <type>java</type>
+                    <location>lib</location>
+                    <encoding>UTF-8</encoding>
                 </source-folder>
             </folders>
             <ide-actions>
@@ -72,6 +87,10 @@
                         <label>src</label>
                         <location>src</location>
                     </source-folder>
+                    <source-folder style="packages">
+                        <label>lib</label>
+                        <location>lib</location>
+                    </source-folder>
                     <source-file>
                         <location>build.xml</location>
                     </source-file>
@@ -87,12 +106,16 @@
             </view>
             <subprojects/>
         </general-data>
-        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
             <compilation-unit>
                 <package-root>src</package-root>
-                <classpath mode="compile">src</classpath>
+                <classpath mode="compile">src:lib:lib/edn-java-0.4.5.jar:lib/mathz-0.3.0.jar:lib/randomz-0.3.0.jar:lib/vectorz-0.48.0-javadoc.jar:lib/vectorz-0.48.0-sources.jar:lib/vectorz-0.48.0.jar</classpath>
                 <built-to>build</built-to>
-                <source-level>1.5</source-level>
+                <source-level>1.8</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>lib</package-root>
+                <source-level>1.8</source-level>
             </compilation-unit>
         </java-data>
     </configuration>
