@@ -70,7 +70,7 @@ public class LeadSheetIO {
             AVector chordData = chordEncoder.encode(chord.getRoot(), chord.getType(), chord.getBass());
             if(chordData == null)
             {
-                System.out.println(chord.getType());
+                //System.out.println(chord.getType());
             }
             //System.out.println(chordData);
             for(int remaining = chord.getDuration(); remaining > 0; remaining--) {
@@ -78,7 +78,7 @@ public class LeadSheetIO {
                 sequence.pushStep(null, chordData.copy(), null);
             }
         }
-        System.out.println("Note steps: " + noteSteps + " Chord steps: " + chordSteps);
+        //System.out.println("Note steps: " + noteSteps + " Chord steps: " + chordSteps);
         
         for(int timeStep = 0; timeStep < noteSteps; timeStep++)
         {
@@ -170,7 +170,6 @@ public class LeadSheetIO {
                                 String type = m.group(2);
                                 String slash_bass = m.group(3);
                                 chord = new ChordInfo(0,root,type,slash_bass);
-                                System.out.println(strToken + " -> " + root + " " + type + " " + slash_bass);
                             } else {
                                 throw new RuntimeException("Malformed chord symbol " + strToken);
                             }
@@ -225,9 +224,9 @@ public class LeadSheetIO {
                 NoteEncoder noteEncoder = EncodingParameters.noteEncoder;
                 int noteValue = 0;  //The variable to keep track of the current note's midi value
                 AVector firstMelodyStep = data.pollMelody();
-                for(int i = 0; i < firstMelodyStep.length(); i++)
-                        System.out.print(firstMelodyStep.get(i) + " ");
-                    System.out.println();
+                //for(int i = 0; i < firstMelodyStep.length(); i++)
+                        //System.out.print(firstMelodyStep.get(i) + " ");
+                    //System.out.println();
                 if(noteEncoder.hasSustain(firstMelodyStep)) {
                     System.err.println("ERROR: first beat of bit-vector sustained");
                     noteValue = -1;
@@ -238,18 +237,18 @@ public class LeadSheetIO {
                 int duration = 1;
                 while(data.hasMelodyLeft()) {
                     AVector nextStep = data.pollMelody();
-                    for(int i = 0; i < nextStep.length(); i++)
+                    /*for(int i = 0; i < nextStep.length(); i++)
                         System.out.print(nextStep.get(i) + " ");
                     System.out.println("<- generated melody step");
                     if(noteEncoder.hasSustain(nextStep))
-                        System.out.println("sustain");
+                        System.out.println("sustain");*/
                     if(noteEncoder.hasSustain(nextStep) || ((noteValue == -1) && noteEncoder.decode(nextStep) == -1))
                     {
-                        System.out.println("adding to duration for " + noteValue);
+                        //System.out.println("adding to duration for " + noteValue);
                         duration++;
                     }
                     else {
-                        System.out.println(noteValue + " is note value that is ending!");
+                        //System.out.println(noteValue + " is note value that is ending!");
                         Note note;
                         if(noteValue == -1)
                             note = Note.makeRest(duration * Constants.RESOLUTION_SCALAR); //construct a LeadSheet Note from the the midiValue and duation in timeSteps
@@ -257,7 +256,7 @@ public class LeadSheetIO {
                             note = new Note(noteValue, duration * Constants.RESOLUTION_SCALAR);
                         outputWriter.write(note.toLeadsheet() + " ");
                         noteValue = noteEncoder.decode(nextStep);
-                        System.out.println(noteValue + " is new noteValue!");
+                        //System.out.println(noteValue + " is new noteValue!");
                         duration = 1;
                     }  
                 }

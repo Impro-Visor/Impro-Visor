@@ -39,7 +39,7 @@ public class DataPartIOTest {
         } else {
             ruleFileName = ruleFilePath.substring(ruleFilePath.lastIndexOf(File.separator), ruleFilePath.length());
         }
-        File ruleFile = new File("/Users/cssummer16/NetBeansProjects/Impro-Visor/improvisor811/vocab", ruleFileName);
+        File ruleFile = new File("../Impro-Visor/improvisor811/vocab", ruleFileName);
         
         LoadAdviceCommand loadAdvice = new LoadAdviceCommand(ruleFile, advisor, null, true, false);
         loadAdvice.setLoadDialogText("Loading Vocabulary ...");

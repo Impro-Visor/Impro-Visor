@@ -287,7 +287,7 @@ public static String upperCaseNote(String s)
     }
   if( len > 1 )
     {
-    buffer.append(Character.toUpperCase(s.charAt(1)));
+    buffer.append(s.charAt(1));
     }
 
   return buffer.toString();

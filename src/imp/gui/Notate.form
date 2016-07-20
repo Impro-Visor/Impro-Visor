@@ -8773,6 +8773,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transformMIActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="lstmNetworkMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="LSTM Network Control Panel"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lstmNetworkMIActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="improvMenu">
@@ -8832,6 +8840,16 @@
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterGrammarSeparator">
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="lstmNetworkRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="improvButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="LSTM Network"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterLstmSeparator">
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="guideToneRadio">
               <Properties>

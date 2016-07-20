@@ -23,6 +23,15 @@ import mikera.vectorz.Vector;
  */
 public class DataPartIO {
     
+    public static LeadSheetDataSequence readChords(ChordPart chords) {
+        return readChords(chords, 0);
+    }
+    public static LeadSheetDataSequence readChords(ChordPart chords, int beat_timestep_start) {
+        MelodyPart restPart = new MelodyPart();
+        restPart.addNote(Note.makeRest(chords.size()));
+        System.out.println("Restpart " + restPart.size());
+        return readParts(chords, restPart, beat_timestep_start);
+    }
     public static LeadSheetDataSequence readParts(ChordPart chords, MelodyPart melody) {
         return readParts(chords, melody, 0);
     }
@@ -72,7 +81,7 @@ public class DataPartIO {
                 sequence.pushStep(null, chordData.copy(), null);
             }
         }
-        System.out.println("Note steps: " + noteSteps + " Chord steps: " + chordSteps);
+//        System.out.println("Note steps: " + noteSteps + " Chord steps: " + chordSteps);
         
         for(int i = 0; i < noteSteps; i++)
         {
@@ -99,10 +108,7 @@ public class DataPartIO {
             sequence.pushStep(beat, null, null);    
         }
         
-        if(sequence.isBalanced())
-            return sequence;
-        else
-            throw new RuntimeException("The chord, beat, and note sequence lengths don't match!");
+        return sequence;
     }
     
     public static MelodyPart getMelodyPart(LeadSheetDataSequence seq) {

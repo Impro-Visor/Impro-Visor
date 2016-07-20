@@ -5,6 +5,7 @@
  */
 package lstm.architecture.poex;
 
+import lstm.architecture.DataStep;
 import lstm.architecture.FragmentedNeuralQueue;
 import lstm.architecture.Loadable;
 import lstm.filters.Operations;
@@ -41,14 +42,11 @@ public class ProductCompressingAutoEncoder implements Loadable {
     private PassthroughInputPart[] cur_output_parts;
     private PassthroughInputPart[] last_output_parts;
     
-    private LeadSheetDataSequence inputSequence;
-    private LeadSheetDataSequence outputSequence;
-    
     private int num_experts;
     
     private Random rand;
     
-    public ProductCompressingAutoEncoder(LeadSheetDataSequence inputSequence, int fixedFeatureLength, int inputSize, int outputSize, int beatVectorSize, int featureVectorSize, int lowbound, int highbound, boolean variational){
+    public ProductCompressingAutoEncoder(int fixedFeatureLength, int inputSize, int outputSize, int beatVectorSize, int featureVectorSize, int lowbound, int highbound, boolean variational){
         this.fixedFeatureLength = fixedFeatureLength;
         this.inputSize = inputSize;
         this.outputSize = outputSize;
@@ -60,10 +58,6 @@ public class ProductCompressingAutoEncoder implements Loadable {
         this.currTimeStep = 0;
         this.queue = new FragmentedNeuralQueue();
         this.variational = variational;
-        
-        this.inputSequence = inputSequence;
-        this.outputSequence = inputSequence.copy();
-        this.outputSequence.clearMelody();
         
         this.encoder_experts = new Expert[2];
         this.encoder_experts[0] = new Expert(Operations.None);
@@ -121,13 +115,14 @@ public class ProductCompressingAutoEncoder implements Loadable {
         return !queue.isEmpty();
     }
     
-    public void encodeStep() {
-        AVector beat = this.inputSequence.pollBeats();
-        AVector raw_chord = this.inputSequence.pollChords();
-        AVector raw_melody = this.inputSequence.pollMelody();
-        int chord_root = (int) raw_chord.get(0);
-        AVector chord_type = raw_chord.subVector(1, 12);
-        int midinote = (int) raw_melody.get(0);
+    public void encodeStep(DataStep currStep) {
+       
+        AVector chord = currStep.get("chord");
+        AVector beat = currStep.get("beat");
+        AVector melody = currStep.get("melody");
+        int chord_root = (int) chord.get(0);
+        AVector chord_type = chord.subVector(1, 12);
+        int midinote = (int) melody.get(0);
         this.beat_part.provide(beat,this.num_experts);
         
         AVector accum_activations = null;
@@ -177,6 +172,33 @@ public class ProductCompressingAutoEncoder implements Loadable {
             throw new RuntimeException("Set feature size is negative!");
     }
     
+    public void readInQueue(String inFilePath)
+    {
+        queue.initFromFile(inFilePath);
+    }
+    
+    public void hotSwapQueue(String inFilePath, String outFilePath)
+    {
+        queue.writeToFile(outFilePath);
+        queue.initFromFile(inFilePath);
+        System.out.println(queue.toString());
+    }
+    
+    public FragmentedNeuralQueue hotSwapQueue(FragmentedNeuralQueue newQueue)
+    {
+        FragmentedNeuralQueue oldQueue = this.queue;
+        this.queue = newQueue;
+        return oldQueue;
+    }
+    
+    public FragmentedNeuralQueue getQueue()
+    {
+        return this.queue;
+    }
+    public void setQueue(FragmentedNeuralQueue newQueue)
+    {
+        this.queue = newQueue;
+    }
     
     public boolean canDecode() {
         return queue.hasFullBuffer();
@@ -186,11 +208,11 @@ public class ProductCompressingAutoEncoder implements Loadable {
         // don't do anything (for now?)
     }
     
-    public AVector decodeStep() {
-        AVector beat = this.outputSequence.pollBeats();
-        AVector raw_chord = this.outputSequence.pollChords();
-        int chord_root = (int) raw_chord.get(0);
-        AVector chord_type = raw_chord.subVector(1, 12);
+    public AVector decodeStep(DataStep currStep) {
+        AVector chord = currStep.get("chord");
+        AVector beat = currStep.get("beat");
+        int chord_root = (int) chord.get(0);
+        AVector chord_type = chord.subVector(1, 12);
         this.beat_part.provide(beat,this.num_experts);
         this.feature_part.provide(this.queue.dequeueStep(), this.num_experts);
         

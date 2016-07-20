@@ -1,4 +1,4 @@
-<project name="Impro-Visor" default="compile" basedir=".">
+<project name="Impro-Visor" default="compile" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
 <description>
 Build-file for Impro-Visor 8.11
@@ -98,6 +98,67 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </javadoc>
 </target>
 
+<!-- ivy start -->
+    <property name="ivy.install.version" value="2.1.0-rc2" />
+    <condition property="ivy.home" value="${env.IVY_HOME}">
+      <isset property="env.IVY_HOME" />
+    </condition>
+    <property name="ivy.home" value="${basedir}/.ant" />
+    <property name="ivy.jar.dir" value="${ivy.home}/lib" />
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+    <property name="ivy.settings.dir" value="." />
+    <property name="apache.ant.ext.lib" value="{ivy.home}"/>
+    
+    <path id="ivy.classpath" path="${ivy.jar.file}" />
+    <typedef resource="org/apache/ivy/ant/antlib.xml"
+           uri="antlib:org.apache.ivy.ant"
+           classpathref="ivy.classpath" />
+    
+    <target name="download-ivy" unless="offline">
+        <echo> Fetching ivy... </echo>
+        <mkdir dir="${ivy.jar.dir}"/>
+        <!-- download Ivy from web site so that it can be used even without any special installation -->
+        <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
+             dest="${ivy.jar.file}" usetimestamp="true"/>
+    </target>
+
+    <target name="init-ivy" depends="download-ivy">
+      <!-- try to load ivy here from ivy home, in case the user has not already dropped
+              it into ant's lib dir (note that the latter copy will always take precedence).
+              We will not fail as long as local lib dir exists (it may be empty) and
+              ivy is in at least one of ant's lib dir or the local lib dir. -->
+        <path id="ivy.lib.path">
+            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+
+        </path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml"
+                 uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    </target>
+    
+    <target name="check-for-ivy">
+        <available property="have.ivy" resource="org/apache/ivy/ant/antlib.xml"/>
+    </target>
+    <target name="ensure-ivy-installed" depends="check-for-ivy" unless="have.ivy">
+        <antcall target="init-ivy" />
+    </target>
+    
+    <!-- ivy to get dependencies and copy to project lib folder automatically -->
+    <target name="resolve-deps" depends="init,ensure-ivy-installed" description="retrieve dependencies with ivy">
+        <echo> Retrieving! ${ivy.settings.dir} </echo>
+        <ivy:retrieve/>
+        <pathconvert property="lib-jars-str" refid="base.classpath">
+            <mapper>
+                <globmapper from="${basedir}/*" to="*" handledirsep="true" />
+            </mapper>
+        </pathconvert>
+        <echo> Automatically setting NetBeans sources to match classpath: ${lib-jars-str}</echo>
+        <replaceregexp
+            file="nbproject/project.xml"
+            match="(\x3cclasspath mode=\x22compile\x22\x3e)[^>]*(\x3c/classpath\x3e)"
+            replace="\1${lib-jars-str}\2" />
+    </target>
+<!-- ivy end -->
+
 <target name="imp" depends="init,jm,lstm " description="compile imp">
     <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
          <classpath refid="base.classpath" />
@@ -114,7 +175,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
      </javac>
 </target>
 
-<target name="lstm" depends="init" description="compile lstm">
+<target name="lstm" depends="init,resolve-deps" description="compile lstm">
      <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
          <classpath refid="base.classpath" />
          <include name="lstm/**/*.java"/>

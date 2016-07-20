@@ -5,7 +5,13 @@
  */
 package lstm.architecture;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import mikera.vectorz.AVector;
 import mikera.vectorz.Vector;
@@ -13,6 +19,9 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import mikera.matrixx.AMatrix;
+import mikera.matrixx.Matrix;
+import lstm.nickd4j.ReadWriteUtilities;
 
 /**
  * Class FragmentedNeuralQueue is an implementation of a fragmented neural queue simplified for operation (cannot be used for training) of a CompressingAutoencoder
@@ -253,6 +262,11 @@ public class FragmentedNeuralQueue {
         return totalStrength >= fragmentStrength;
     }
     
+    public String toString()
+    {
+        return strengthList.size() + " " + vectorList.size();
+    }
+    
     /**
      * Read vectors scaled by their strengths until we fill the fragment, then return the fragment.
      * A vector is scaled by a portion of their strength if their strength would overfill the fragment.
@@ -297,6 +311,52 @@ public class FragmentedNeuralQueue {
         throw new RuntimeException("The neural queue is empty!!");
     }
     
+    public FragmentedNeuralQueue copy()
+    {
+        FragmentedNeuralQueue duplicate = new FragmentedNeuralQueue();
+        duplicate.fragmentStrength = this.fragmentStrength;
+        duplicate.totalStrength = this.totalStrength;
+        strengthList.forEach((strength) -> {duplicate.strengthList.add(strength);});
+        vectorList.forEach((vector) -> {duplicate.vectorList.add(vector.copy());});
+        return duplicate;
+    }
+    
+    public void basicInterpolate(FragmentedNeuralQueue target, double ipStrength)
+    {
+        ArrayList<Integer> queueIndexes = new ArrayList<>();
+        //System.out.println("Starting basic interpolate");
+        for(int i = 0; i < strengthList.size(); i++)
+        {
+            if(strengthList.get(i) > 0.1) {
+                queueIndexes.add(i);
+                //System.out.println("queue index: " + i);
+            }
+        }
+        ArrayList<Integer> refQueueIndexes = new ArrayList<>();
+        for(int i = 0; i < target.strengthList.size(); i++)
+        {
+            if(target.strengthList.get(i) > 0.1) {
+                refQueueIndexes.add(i);
+                //System.out.println("reference index: " + i);
+            }
+        }
+        int refFeatureIndex = 0;
+        //System.out.println(target.vectorList.size());
+        //System.out.println(target.strengthList.size());
+        for(Integer index : queueIndexes)
+        {
+            //this vector will become the diff multiplied by the ipStrength
+            //System.out.println(refQueueIndexes.get(refFeatureIndex));
+            AVector diff = target.vectorList.get(refQueueIndexes.get(refFeatureIndex)).copy();
+            //System.out.println("read: " + target.vectorList.get(refQueueIndexes.get(refFeatureIndex)));
+            diff.sub(vectorList.get(index));
+            refFeatureIndex = (refFeatureIndex + 1) % refQueueIndexes.size();
+            diff.multiply(ipStrength);
+            vectorList.get(index).add(diff);
+            //System.out.println("new: " + vectorList.get(index));
+        }
+    }
+    
     /**
      * Removes an element of the queue in first-in, first-out order.
      */
@@ -306,5 +366,70 @@ public class FragmentedNeuralQueue {
         vectorList.remove(0);
         totalStrength -= strengthList.remove(0);
         return result;
+    }
+    
+    public void initFromFile(String filePath)
+    {
+        try{
+            //System.out.println("starting init");
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            Object[] lines = reader.lines().toArray();
+            String contents = "";
+            for(int i = 0; i < lines.length; i++)
+            {
+                contents += (String) lines[i];
+                if(i < lines.length - 1)
+                    contents += "\n";
+            }
+            String strengthLabel = "(strengths)\n";
+            String vectorLabel = "(vectors)\n";
+            int strengthStart = contents.indexOf(strengthLabel) + strengthLabel.length();
+            int strengthEnd = contents.indexOf(vectorLabel);
+            int vectorStart = strengthEnd + vectorLabel.length();
+            String strengthContents = contents.substring(strengthStart, strengthEnd);
+            String vectorContents = contents.substring(vectorStart);
+            AVector strengths = (AVector) ReadWriteUtilities.readNumpyCSVString(strengthContents);
+            AMatrix vectors = (AMatrix) ReadWriteUtilities.readNumpyCSVString(vectorContents);
+            
+            initFromData(strengths, vectors);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void writeToFile(String filePath)
+    {
+        try {
+            //System.out.println("starting write");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            writer.write("(strengths)");
+            writer.newLine();
+            AVector strengthData = Vector.create(strengthList);
+            writer.write(ReadWriteUtilities.getNumpyCSVString(strengthData));
+            writer.write("(vectors)");
+            writer.newLine();
+            AVector[] vectorArray = new AVector[vectorList.size()];
+            AMatrix vectorData = Matrix.create(vectorList.toArray(vectorArray));
+            writer.write(ReadWriteUtilities.getNumpyCSVString(vectorData));
+            //System.out.println(" oh nooooooooo");
+            writer.close();
+        } catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    public void initFromData(AVector strengths, AMatrix vectors)
+    {
+        //System.out.println("starting init from data");
+        strengthList.clear();
+        vectorList.clear();
+        for(int i = 0; i < strengths.length(); i++)
+            strengthList.add(strengths.get(i));
+        for(int i = 0; i < vectors.rowCount(); i++)
+            vectorList.add(vectors.getRow(i));
     }
 }

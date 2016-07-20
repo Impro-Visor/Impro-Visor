@@ -7,6 +7,7 @@ package lstm.architecture;
 import lstm.filters.Operations;
 import lstm.filters.GroupedSoftMaxSampler;
 import lstm.filters.NoteEncodingCleanFilter;
+import java.util.Queue;
 import lstm.filters.DataFilter;
 import lstm.encoding.EncodingParameters;
 

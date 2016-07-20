@@ -5,6 +5,7 @@
  */
 package lstm.io.leadsheet;
 
+import lstm.architecture.DataStep;
 import java.util.Queue;
 import lstm.io.DataSequence;
 import java.util.LinkedList;
@@ -44,6 +45,16 @@ public class LeadSheetDataSequence implements DataSequence{
     public String getTempo()
     {
         return tempo;
+    }
+    
+    public void concat(LeadSheetDataSequence additional)
+    {
+        while(!additional.beats.isEmpty())
+            beats.offer(additional.beats.poll());
+        while(!additional.melody.isEmpty())
+            melody.offer(additional.melody.poll());
+        while(!additional.chords.isEmpty())
+            chords.offer(additional.chords.poll());
     }
     
     /**
@@ -110,8 +121,11 @@ public class LeadSheetDataSequence implements DataSequence{
     }
     
     @Override
-    public AVector retrieve() {
-        return beats.poll().join(chords.poll()).join(melody.poll());
+    public DataStep retrieve() {
+        DataStep currStep = new DataStep();
+        currStep.addNames("beat","chord","melody");
+        currStep.addComponents(beats.poll(),chords.poll(),melody.poll());
+        return currStep;
     }
     
     @Override
