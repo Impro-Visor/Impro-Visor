@@ -588,6 +588,18 @@ public void prePlay(Score score,
               false);
   }
 
+public void prePlay(Score score,
+                    long startIndex,
+                    int loopCount,
+                    int transposition,
+                    boolean useDrums,
+                    int endLimitIndex,
+                    int countInOffset,
+                    boolean isTradingMelody)
+        throws InvalidMidiDataException
+  {
+      prePlay(score, startIndex, loopCount, transposition, useDrums, endLimitIndex, countInOffset, isTradingMelody, false);
+  }
 
 /**
  * Does most of what's in play(...) except for starting the sequencer.
@@ -609,7 +621,8 @@ public void prePlay(Score score,
                     boolean useDrums,
                     int endLimitIndex,
                     int countInOffset,
-                    boolean isTradingMelody)
+                    boolean isTradingMelody,
+                    boolean shouldHotSwap)
         throws InvalidMidiDataException
   {
       //System.out.println("MidiSynth: isTradingMelody = " + isTradingMelody);
@@ -642,6 +655,13 @@ public void prePlay(Score score,
             ErrorLog.log(ErrorLog.SEVERE, "MIDI System Unavailable:" + e);
             return;
           }
+        
+        long hotSwapPos = -1;
+        if(shouldHotSwap){
+            System.out.println("Hotswapping");
+//            sequencer.stop();
+            hotSwapPos = sequencer.getTickPosition();
+        }
         sequencer.setSequence(seq);
         // needed? sequencer.addMetaEventListener(this);
 
@@ -654,7 +674,11 @@ public void prePlay(Score score,
 
         setLoopCount(0);
 
-        setSlot(startIndex);
+        if(shouldHotSwap) {
+            sequencer.setTickPosition(hotSwapPos);
+        } else {
+            setSlot(startIndex);
+        }
 
         System.runFinalization();
         System.gc();
@@ -728,7 +752,6 @@ public void actualPlay(int transposition)
                                 transposition);
       }
   }
-
 
 
 public boolean isRunning()

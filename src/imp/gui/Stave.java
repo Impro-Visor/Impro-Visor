@@ -5351,7 +5351,9 @@ public void play(int startAt)
   }
 
 
-
+public void playSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message){
+    playSelection(playToEndOfChorus, loopCount, useDrums, message);
+}
 /**
  * Plays from the start of the current selection through to the end of chorus.
  *
@@ -5360,7 +5362,7 @@ public void play(int startAt)
      * @param useDrums
      * @param message
  */
-public void playSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message)
+public void playSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message, boolean shouldHotSwap)
   {
 
     //System.out.println("\nStave: playSelection, playToEndOfChorus = " + playToEndOfChorus);
@@ -5385,16 +5387,20 @@ public void playSelection(boolean playToEndOfChorus, int loopCount, boolean useD
         stopIndex = BEAT*(1 + stopIndex/BEAT);
       }
 
-    playSelection(startIndex, stopIndex, loopCount, useDrums, "from Stave playSelection/4");
+    playSelection(startIndex, stopIndex, loopCount, useDrums, "from Stave playSelection/4", shouldHotSwap);
   }
 
 public void playSelection(int startIndex, int stopIndex, int loopCount, boolean useDrums, String message)
+  {
+      playSelection(startIndex, stopIndex, loopCount, useDrums, message, false);
+  }
+public void playSelection(int startIndex, int stopIndex, int loopCount, boolean useDrums, String message, boolean shouldHotSwap)
   {
     if( startIndex != 0 || !notate.getFirstChorus() )
       {
         notate.noCountIn();
       }
-
+    
     notate.chordVolumeChanged();
 
     //System.out.println("*** Play Selection from startIndex = " + startIndex + " to stopIndex = " + stopIndex + ", loopCount = " + loopCount + " " + message);
@@ -5424,7 +5430,9 @@ public void playSelection(int startIndex, int stopIndex, int loopCount, boolean 
                          loopCount, 
                          notate.getTransposition(), 
                          useDrums, 
-                         stopIndex).execute();
+                         stopIndex,
+                         false,
+                         shouldHotSwap).execute();
 
     //System.out.println("score = " + score);
     

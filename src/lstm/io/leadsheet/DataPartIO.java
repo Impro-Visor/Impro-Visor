@@ -68,7 +68,12 @@ public class DataPartIO {
         {
             String root = PitchClass.upperCaseNote(chord.getRoot());
             String bass = PitchClass.upperCaseNote(chord.getChordSymbol().getBass().toString());
-            boolean[] spellVec = chord.getChordForm().getSpellVector("c", Key.Ckey);
+            boolean[] spellVec;
+            if(chord.isNOCHORD()){
+                spellVec = new boolean[12];
+            } else {
+                spellVec = chord.getChordForm().getSpellVector("c", Key.Ckey);
+            }
             AVector typeData = Vector.createLength(spellVec.length);
             for(int i=0; i<spellVec.length; i++){
                 if(spellVec[i])

@@ -128,6 +128,31 @@ public PlayScoreCommand(Score score,
               false);
   }
 
+
+public PlayScoreCommand(Score score,
+                        long startTime,
+                        boolean swing,
+                        MidiSynth ms,
+                        MidiPlayListener listener,
+                        int loopCount,
+                        int transposition,
+                        boolean useDrums,
+                        int endLimitIndex,
+                        boolean isTradingMelody)
+  {
+      this(score,
+              startTime,
+              swing,
+              ms,
+              listener,
+              loopCount,
+              transposition,
+              useDrums,
+              endLimitIndex,
+              isTradingMelody,
+              false);
+  }
+
 /**
  * Used by Notate, Stave, and other PlayScoreCommands
  *
@@ -150,7 +175,8 @@ public PlayScoreCommand(Score score,
                         int transposition,
                         boolean useDrums,
                         int endLimitIndex,
-                        boolean isTradingMelody)
+                        boolean isTradingMelody,
+                        boolean shouldHotSwap)
   {
     this.score = score;
     this.swing = swing;
@@ -161,7 +187,7 @@ public PlayScoreCommand(Score score,
     this.transposition = transposition;
     this.useDrums = useDrums;
     this.endLimitIndex = endLimitIndex;
-    preExecute(isTradingMelody);
+    preExecute(isTradingMelody, shouldHotSwap);
   }
 
 public PlayScoreCommand(Score score,
@@ -187,7 +213,6 @@ public PlayScoreCommand(Score score,
               endLimitIndex,
               false);
   }
-
 public PlayScoreCommand(Score score,
                         Style style,
                         long startTime,
@@ -200,6 +225,33 @@ public PlayScoreCommand(Score score,
                         int endLimitIndex,
                         boolean isTradingMelody)
   {
+      this(score,
+              style,
+              startTime,
+              swing,
+              ms,
+              listener,
+              loopCount,
+              transposition,
+              useDrums,
+              endLimitIndex,
+              isTradingMelody,
+              false);
+  }
+
+public PlayScoreCommand(Score score,
+                        Style style,
+                        long startTime,
+                        boolean swing,
+                        MidiSynth ms,
+                        MidiPlayListener listener,
+                        int loopCount,
+                        int transposition,
+                        boolean useDrums,
+                        int endLimitIndex,
+                        boolean isTradingMelody,
+                        boolean shouldHotSwap)
+  {
     this.score = score;
     this.swing = swing;
     this.ms = ms;
@@ -209,18 +261,22 @@ public PlayScoreCommand(Score score,
     this.transposition = transposition;
     this.useDrums = useDrums;
     this.endLimitIndex = endLimitIndex;
-    preExecute(style, isTradingMelody);
+    preExecute(style, isTradingMelody, shouldHotSwap);
   }
 
 public final void preExecute()
   {
       preExecute(false);
   }
+public final void preExecute(boolean isTradingMelody)
+  {
+      preExecute(isTradingMelody, false);
+  }
 
 /**
  * Plays the Score
  */
-public final void preExecute(boolean isTradingMelody)
+public final void preExecute(boolean isTradingMelody, boolean shouldHotSwap)
   {
 //    Trace.log(3,
 //              "executing PlayScoreCommand, startTime = " + startTime 
@@ -279,7 +335,7 @@ public final void preExecute(boolean isTradingMelody)
     try
       {
         ms.prePlay(score, startTime, loopCount, transposition, useDrums,
-                endLimitIndex, offset, isTradingMelody);
+                endLimitIndex, offset, isTradingMelody, shouldHotSwap);
       }
     catch( Exception e )
       {
@@ -290,8 +346,11 @@ public final void preExecute(boolean isTradingMelody)
 public final void preExecute(Style style){
     preExecute(style, false);
 }
+public final void preExecute(Style style, boolean isTradingMelody){
+    preExecute(style, isTradingMelody, false);
+}
 
-public final void preExecute(Style style, boolean isTradingMelody)
+public final void preExecute(Style style, boolean isTradingMelody, boolean shouldHotSwap)
   {
 //    Trace.log(3,
 //              "executing PlayScoreCommand, startTime = " + startTime 
@@ -350,7 +409,7 @@ public final void preExecute(Style style, boolean isTradingMelody)
     try
       {
         ms.prePlay(score, startTime, loopCount, transposition, useDrums,
-                endLimitIndex, offset, isTradingMelody);
+                endLimitIndex, offset, isTradingMelody, shouldHotSwap);
       }
     catch( Exception e )
       {

@@ -66,6 +66,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.Sequencer;
 import javax.swing.*;
@@ -627,6 +631,10 @@ private Critic critic;
  */
 private LSTMNetworkFrame lstmNetworkFrame;
 private LSTMGen lstmGen;
+
+private PartialBackgroundGenerator lazyGenerator;
+private int lazyGeneratedGoodUntil;
+private Future<MelodyPart> nextLazyPart;
 
 /**
  * Constructs a new Notate JFrame.
@@ -9458,8 +9466,12 @@ public Critic getCritic()
 
 public void playCurrentSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message)
   {
+    playCurrentSelection(playToEndOfChorus, loopCount, useDrums, message, false);
+  }
+public void playCurrentSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message, boolean hotSwap)
+  {
     setMode(Mode.PLAYING);
-    getCurrentStave().playSelection(playToEndOfChorus, loopCount, useDrums, "Notate playCurrentSelection: " + message);
+    getCurrentStave().playSelection(playToEndOfChorus, loopCount, useDrums, "Notate playCurrentSelection: " + message, hotSwap);
   }
 
 private void setToLoop()
@@ -10880,6 +10892,7 @@ public void stopPlaying(String reason)
         stopRecording();
       }
     improvisationOff();
+    cancelLazyGeneration();
     setNormalMode();
     setShowConstructionLinesAndBoxes(showConstructionLinesMI.isSelected());
     
@@ -12993,16 +13006,21 @@ public boolean putLickWithoutRectify(MelodyPart lick)
   {
     return putLickWithoutRectify(lick, true);
   }
+public boolean putLickWithoutRectify(MelodyPart lick, boolean play)
+  {
+    return putLickWithoutRectify(lick, play, false);
+  }
 
 /**
  * putLick puts the lick into the MelodyPart at the current selection without
  * rectifying
  *
- * @param lick play - whether or not the lick should be played after being
+ * @param lick
+ * @param play - whether or not the lick should be played after being
  * placed in.
  * @return
  */
-public boolean putLickWithoutRectify(MelodyPart lick, boolean play)
+public boolean putLickWithoutRectify(MelodyPart lick, boolean play, boolean hotswap)
   {
     //System.out.println("putLick " + lick);
     if( lick == null )
@@ -13053,10 +13071,10 @@ public boolean putLickWithoutRectify(MelodyPart lick, boolean play)
     getMelodyPart(stave).newPasteOver(lick, getCurrentSelectionStart(stave));
 
     if( play )
-      {
-        playCurrentSelection(false, 0, PlayScoreCommand.USEDRUMS, "putLick " + start + " - " + stop);
-        ImproVisor.setPlayEntrySounds(true);
-      }
+    {
+        playCurrentSelection(false, 0, PlayScoreCommand.USEDRUMS, "putLick " + start + " - " + stop, hotswap);
+    }
+    ImproVisor.setPlayEntrySounds(true);
 
     return true;
   }
@@ -18181,6 +18199,7 @@ public void setPlaying(MidiPlayListener.Status playing, int transposition)
             break;
       }
 
+    
     staveRequestFocus();
   }
 
@@ -21086,52 +21105,66 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     boolean enableRecording = !useCritic;
     
     if (themeWeaveRadio.isSelected()) {
-          if (themeWeaver == null) {
-              themeWeaver = new ThemeWeaver(lickgen, this, cm);
-          }
-          themeWeaver.generateThemeWovenSolo();
-          return;
-      }
-      
-      if (intervalsRadio.isSelected()) {
-          intervalLearningFrame.intervalImprovise();
-          return;
-      }
-      
-      if(guideToneRadio.isSelected()){
-          guideToneLineDialog.generatePastePlay();
-          return;
-      }
-      
-      if(guideToneDivideRadio.isSelected()){
-          guideToneLineDialog.generatePaste();
-          fractalFrame.dividePastePlay();
-          return;
-      }
-      
-      if(guideToneTransformRadio.isSelected()){
-          guideToneLineDialog.generatePaste();
-          ChordPart chords = getChordProg().extract(improviseStartSlot,
-                                                          improviseEndSlot);
-          transformFrame.applySubstitutions(getCurrentMelodyPart(), chords);
-          return;
-      }
-      
-      if(lstmNetworkRadio.isSelected() && lstmNetworkRadio.isEnabled()){
-          ChordPart chords = getChordProg().extract(improviseStartSlot,
-                                                          improviseEndSlot);
-          MelodyPart lick;
-          if(passiveTradingDialog.isVisible()){
-              // Passive trading mode
-              lick = lstmGen.generateTrading(chords,
-                      passiveTradingDialog.getImprovisorTradeFirst(),
-                      passiveTradingDialog.getTradingQuantum());
-          } else {
-              lick = lstmGen.generate(chords);
-          }
-          putLick(lick);
-          return;
-      }
+        if (themeWeaver == null) {
+            themeWeaver = new ThemeWeaver(lickgen, this, cm);
+        }
+        themeWeaver.generateThemeWovenSolo();
+        return;
+    }
+
+    if (intervalsRadio.isSelected()) {
+        intervalLearningFrame.intervalImprovise();
+        return;
+    }
+
+    if (guideToneRadio.isSelected()) {
+        guideToneLineDialog.generatePastePlay();
+        return;
+    }
+
+    if (guideToneDivideRadio.isSelected()) {
+        guideToneLineDialog.generatePaste();
+        fractalFrame.dividePastePlay();
+        return;
+    }
+
+    if (guideToneTransformRadio.isSelected()) {
+        guideToneLineDialog.generatePaste();
+        ChordPart chords = getChordProg().extract(improviseStartSlot,
+                improviseEndSlot);
+        transformFrame.applySubstitutions(getCurrentMelodyPart(), chords);
+        return;
+    }
+
+    if (lstmNetworkRadio.isSelected() && lstmNetworkRadio.isEnabled()) {
+        ChordPart chords = getChordProg().extract(improviseStartSlot,
+                improviseEndSlot);
+        int offset = getCurrentSelectionStart();
+        if (lstmNetworkFrame.justInTimeGenerationEnabled()) {
+            if (passiveTradingDialog.isVisible()) {
+                lstmGen.startGenerateTrading(chords, offset,
+                        passiveTradingDialog.getImprovisorTradeFirst(),
+                        passiveTradingDialog.getTradingQuantum());
+            } else {
+                lstmGen.startGenerate(chords, offset, 1920);
+            }
+            lazyGenerator = lstmGen;
+            lazyGenerateNext();
+            addNextLazyGeneratedPart(false);
+            lazyGenerateNext();
+        } else {
+            MelodyPart lick;
+            if (passiveTradingDialog.isVisible()) {
+                lick = lstmGen.generateTrading(chords, offset,
+                        passiveTradingDialog.getImprovisorTradeFirst(),
+                        passiveTradingDialog.getTradingQuantum());
+            } else {
+                lick = lstmGen.generate(chords, offset);
+            }
+            putLickWithoutRectify(lick, true);
+        }
+        return;
+    }
 
     // outLines is the same as soloist
     if( useOutlines )
@@ -21379,6 +21412,52 @@ while( useCritic )
         return;
       }
   } 
+}
+
+public void addNextLazyGeneratedPart(boolean hotSwapIn){
+//    long hotSwapTick = 0;
+//    if(hotSwapIn){
+//        hotSwapTick = midiSynth.getSequencer().getTickPosition();
+//        midiSynth.getSequencer().stop();
+//    }
+    if(hotSwapIn && !nextLazyPart.isDone()){
+        midiSynth.getSequencer().stop();
+    }
+    MelodyPart nextPart;
+    while(true){
+        try {
+            nextPart = nextLazyPart.get();
+            break;
+        } catch (InterruptedException ex) {
+            System.out.println("Interrupted while waiting for generation. Trying again...");
+            // try again
+        } catch (ExecutionException ex) {
+            ErrorLog.log(ErrorLog.WARNING, "ExecutionException in lazy generator");
+            ex.printStackTrace();
+            return;
+        }
+    }
+    int selectionLen = getCurrentSelectionEnd() - getCurrentSelectionStart() + 1;
+    lazyGeneratedGoodUntil = getCurrentSelectionStart() + nextPart.size();
+    nextPart = nextPart.copy();
+    nextPart.addNote(Note.makeRest(selectionLen - nextPart.size()));
+    putLickWithoutRectify(nextPart, true, hotSwapIn);
+//    if(hotSwapIn){
+//        System.out.println("Swapping in at " + hotSwapTick);
+//        midiSynth.getSequencer().setTickPosition(hotSwapTick);
+//    }
+    nextLazyPart = null;
+}
+public void lazyGenerateNext(){
+    if(lazyGenerator.canLazyGenerateMore()){
+        nextLazyPart = lazyGenerator.lazyGenerateMore();
+    }
+}
+public void cancelLazyGeneration(){
+    if(nextLazyPart != null){
+        nextLazyPart.cancel(true);
+        nextLazyPart = null;
+    }
 }
 
 /**
@@ -26133,6 +26212,10 @@ public void actionPerformed(ActionEvent evt) {
       }
     previousSynthSlot = synthSlot;
 
+    if(nextLazyPart != null && slotInPlayback > lazyGeneratedGoodUntil) {
+        addNextLazyGeneratedPart(true);
+        lazyGenerateNext();
+    }
 
     //handleAudioInput(slotInPlayback);
     if( improvisationOn )

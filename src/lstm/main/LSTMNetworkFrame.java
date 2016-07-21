@@ -52,11 +52,16 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         paramFileChooser = new javax.swing.JFileChooser();
+        generationTimeButtonGroup = new javax.swing.ButtonGroup();
         statusPanel = new javax.swing.JPanel();
         statusLabel = new javax.swing.JLabel();
         statusSeparator = new javax.swing.JSeparator();
         infoLabel = new javax.swing.JLabel();
         statusFiller = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
+        settingsPanel = new javax.swing.JPanel();
+        aheadOfTimeRadio = new javax.swing.JRadioButton();
+        justInTimeRadio = new javax.swing.JRadioButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         paramPanel = new javax.swing.JPanel();
         filePathLabel = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
@@ -110,6 +115,48 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         gridBagConstraints.weighty = 0.1;
         getContentPane().add(statusPanel, gridBagConstraints);
 
+        settingsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Generation Settings"));
+        settingsPanel.setLayout(new java.awt.GridBagLayout());
+
+        generationTimeButtonGroup.add(aheadOfTimeRadio);
+        aheadOfTimeRadio.setSelected(true);
+        aheadOfTimeRadio.setText("Ahead of time (slower)");
+        aheadOfTimeRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aheadOfTimeRadioActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(aheadOfTimeRadio, gridBagConstraints);
+
+        generationTimeButtonGroup.add(justInTimeRadio);
+        justInTimeRadio.setText("Just in time (faster)");
+        justInTimeRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                justInTimeRadioActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(justInTimeRadio, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        settingsPanel.add(filler1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        getContentPane().add(settingsPanel, gridBagConstraints);
+
         paramPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Network Parameters"));
         paramPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -146,7 +193,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
         getContentPane().add(paramPanel, gridBagConstraints);
@@ -177,18 +224,35 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_browseButtonActionPerformed
 
+    private void aheadOfTimeRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aheadOfTimeRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aheadOfTimeRadioActionPerformed
+
+    private void justInTimeRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_justInTimeRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_justInTimeRadioActionPerformed
+
     public void closeWindow() {
         this.setVisible(false);
         WindowRegistry.unregisterWindow(this);
     }
+    
+    public boolean justInTimeGenerationEnabled(){
+        return justInTimeRadio.isSelected();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton aheadOfTimeRadio;
     private javax.swing.JButton browseButton;
     private javax.swing.JLabel filePathLabel;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.ButtonGroup generationTimeButtonGroup;
     private javax.swing.JLabel infoLabel;
+    private javax.swing.JRadioButton justInTimeRadio;
     private javax.swing.JButton loadButton;
     private javax.swing.JFileChooser paramFileChooser;
     private javax.swing.JPanel paramPanel;
+    private javax.swing.JPanel settingsPanel;
     private javax.swing.Box.Filler statusFiller;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel statusPanel;
