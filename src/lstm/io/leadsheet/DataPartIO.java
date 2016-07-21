@@ -29,7 +29,6 @@ public class DataPartIO {
     public static LeadSheetDataSequence readChords(ChordPart chords, int beat_timestep_start) {
         MelodyPart restPart = new MelodyPart();
         restPart.addNote(Note.makeRest(chords.size()));
-        System.out.println("Restpart " + restPart.size());
         return readParts(chords, restPart, beat_timestep_start);
     }
     public static LeadSheetDataSequence readParts(ChordPart chords, MelodyPart melody) {

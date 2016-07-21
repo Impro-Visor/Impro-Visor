@@ -6,7 +6,7 @@
       <Properties>
         <Property name="acceptAllFileFilterUsed" type="boolean" value="false"/>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.filechooser.FileNameExtensionFilter(&quot;LSTM Network Parameters file&quot;, &quot;nnpz&quot;)" type="code"/>
+          <Connection code="new javax.swing.filechooser.FileNameExtensionFilter(&quot;Network connectome file&quot;, &quot;ctome&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>

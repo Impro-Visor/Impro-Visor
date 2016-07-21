@@ -63,7 +63,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         loadButton = new javax.swing.JButton();
 
         paramFileChooser.setAcceptAllFileFilterUsed(false);
-        paramFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("LSTM Network Parameters file", "nnpz"));
+        paramFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Network connectome file", "ctome"));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("LSTM Network Control Panel");
