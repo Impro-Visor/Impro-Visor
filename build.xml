@@ -420,7 +420,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </delete>
 </target>
 
- <target name="cleanBuild" depends="init" description="removes build directory contents">
+ <target name="cleanBuild" depends="buildInit,init" description="removes build directory contents">
     <delete includeemptydirs="true">
         <fileset dir="${buildDir}" includes="imp/** jm/** lstm/** polya/**" />
     </delete>
@@ -433,6 +433,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <delete dir="${distDir}" />
 </target>
 
+<target name="cleanLib" depends="init" description="removes dist directory">
+    <delete dir="${libDir}" />
+</target>
+
 <target name="cleanZip" depends="init" description="removes zip file">
    <delete file="${zipName}" />
 </target>
@@ -441,8 +445,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
    <delete file="improvisor508-src.zip" />
 </target>
 
-<target name="clean" depends="cleanBuild,cleanTest,cleanDist,cleanZip,cleanSrc,cleanZipSrc,cleanJavadoc" 
-        description="Deletes all class files, build, dist, and zip files" />
+<target name="clean" depends="cleanBuild,cleanTest,cleanDist,cleanZip,cleanSrc,cleanZipSrc,cleanJavadoc,cleanLib" 
+        description="Deletes all class files, build, dist, lib, and zip files" />
         
 <target name="dist-mac" depends="dist">
     <property name="appdir"
