@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="polyaDir"               value="src/polya"                />
     <property name="testDir"                value="test"                     />
     <property name="buildDir"               value="build"                    />
+    <property name="libDir"                 value="lib"                      />
     <property name="lsDir"                  value="leadsheets"               />
     <property name="vocabDir"               value="vocab"                    />
     <property name="grammarDir"             value="grammars"                 />
@@ -87,6 +88,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <mkdir dir="${javadocDir}" />
 </target>
 
+<target name="libInit" depends="init" description="initiate libraries">
+    <mkdir dir="${libDir}" />
+</target>
+
 <target name="javadoc" depends="javadocInit" description="create javadoc">
     <javadoc destdir="${javadocDir}" access="private" use="true" 
              linksource="yes">
@@ -110,9 +115,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="apache.ant.ext.lib" value="{ivy.home}"/>
     
     <path id="ivy.classpath" path="${ivy.jar.file}" />
-    <path id="ivy.lib.path">
-        <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
-    </path>
     
     <target name="download-ivy" unless="offline" >
         <echo> Fetching ivy... </echo>
@@ -122,13 +124,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
              dest="${ivy.jar.file}" usetimestamp="true"/>
     </target>
     <target name="check-for-ivy">
-        <available property="have.ivy" resource="org/apache/ivy/ant/antlib.xml" classpathref="ivy.lib.path"/>
+        <available property="have.ivy" resource="org/apache/ivy/ant/antlib.xml" classpathref="ivy.classpath"/>
     </target>
     <target name="download-ivy-if-needed" depends="check-for-ivy" unless="have.ivy">
         <antcall target="download-ivy" />
     </target>
 
-    <target name="init-ivy">
+    <target name="init-ivy" depends="libInit">
         <antcall target="download-ivy-if-needed" />
       <!-- try to load ivy here from ivy home, in case the user has not already dropped
               it into ant's lib dir (note that the latter copy will always take precedence).
@@ -155,7 +157,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </target>
 <!-- ivy end -->
 
-<target name="imp" depends="init,jm,lstm " description="compile imp">
+<target name="imp" depends="buildInit,libInit,init,jm,lstm " description="compile imp">
     <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
          <classpath refid="base.classpath" />
          <include name="imp/**/*.java"/>
@@ -163,7 +165,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
      </javac>
 </target>
 
-<target name="jm" depends="init" description="compile jm">
+<target name="jm" depends="buildInit,libInit,init" description="compile jm">
      <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
          <classpath refid="base.classpath" />
          <include name="jm/**/*.java"/>
@@ -171,7 +173,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
      </javac>
 </target>
 
-<target name="lstm" depends="init,resolve-deps" description="compile lstm">
+<target name="lstm" depends="buildInit,libInit,init,resolve-deps" description="compile lstm">
      <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
          <classpath refid="base.classpath" />
          <include name="lstm/**/*.java"/>
@@ -179,7 +181,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
      </javac>
 </target>
 
-<target name="polya" depends="init" description="compile polya">
+<target name="polya" depends="buildInit,libInit,init" description="compile polya">
     <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
         <classpath refid="base.classpath" />
         <include name="polya/**/*.java"/>
@@ -187,7 +189,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </javac>
 </target>
 
-<target name="buildImp" depends="buildInit,imp" description="compile imp in build">
+<target name="buildImp" depends="buildInit,libInit,imp" description="compile imp in build">
     <copy todir="${buildDir}">
         <fileset dir="${srcDir}">
             <include name="imp/**/*.class" />
@@ -200,7 +202,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
 </target>
 
-<target name="buildJm" depends="buildInit,jm" description="compile jm in build">
+<target name="buildJm" depends="buildInit,libInit,jm" description="compile jm in build">
     <copy todir="${buildDir}">
         <fileset dir="${srcDir}">
             <include name="jm/**/*.class" />
@@ -209,7 +211,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
 </target>
 
-<target name="buildLstm" depends="buildInit,lstm" description="compile lstm in build">
+<target name="buildLstm" depends="buildInit,libInit,lstm" description="compile lstm in build">
     <copy todir="${buildDir}">
         <fileset dir="${srcDir}">
             <include name="lstm/**/*.class" />
@@ -218,7 +220,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
 </target>
 
-<target name="buildPolya" depends="buildInit,polya" description="compile polya in build">
+<target name="buildPolya" depends="buildInit,libInit,polya" description="compile polya in build">
     <copy todir="${buildDir}">
         <fileset dir="${srcDir}">
             <include name="polya/**/*.class" />
