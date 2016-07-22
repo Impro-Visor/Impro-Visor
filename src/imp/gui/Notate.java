@@ -21164,93 +21164,95 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
             }
             putLickWithoutRectify(lick, true);
         }
-        return;
-    }
+    } else {
+        // use grammar
 
-    // outLines is the same as soloist
-    if( useOutlines )
-      {
-      generateUsingOutlines();
-      }
-    else if( useCritic )
-      {
-      generateUsingCritic(stave);
-      }
-    // If the outline is unable to generate a solo, which might
-    // happen if there are no outlines of the correct length or the soloist
-    // file was not correctly loaded, use the grammar.
-    if( abstractMelody == null ) // should this not be an "else"?
-      {
-        if( lickgenFrame.getUseGrammar() )
+        // outLines is the same as soloist
+        if( useOutlines )
           {
-            abstractMelody = lickgen.generateRhythmFromGrammar(improviseStartSlot, totalSlots);
+          generateUsingOutlines();
           }
-        else
+        else if( useCritic )
           {
-            abstractMelody = lickgen.generateRandomRhythm(totalSlots,
-                                                  lickgenFrame.getMinDuration(),
-                                                  lickgenFrame.getMaxDuration(),
-                                                  lickgenFrame.getRestProb());
+          generateUsingCritic(stave);
           }
-
-        //System.out.println("rhythm = " + rhythm);
-        MelodyPart lick = generateLick(abstractMelody, improviseStartSlot, improviseEndSlot);
-        pointr = lick; //test
-
-        // Critical point for recurrent generation
-        if( lick != null )
+        // If the outline is unable to generate a solo, which might
+        // happen if there are no outlines of the correct length or the soloist
+        // file was not correctly loaded, use the grammar.
+        if( abstractMelody == null ) // should this not be an "else"?
           {
-            int beatsGenerated = lick.size() / BEAT;
-
-            if( beatsGenerated > beatsRequested )
+            if( lickgenFrame.getUseGrammar() )
               {
-                //debug
-                //System.out.println("generated " + beatsGenerated
-                //             + " beats, but " + beatsRequested + " requested (fewer)");
-
-                lick = lick.extract(0, BEAT * beatsRequested - 1, true);
+                abstractMelody = lickgen.generateRhythmFromGrammar(improviseStartSlot, totalSlots);
               }
-            else if( beatsGenerated < beatsRequested )
-              {
-                //debug
-                //System.out.println("generated " + beatsGenerated
-                //             + " beats, but " + beatsRequested + " requested (more)");
-              }
-
-            //if( transformCheckBoxMenuItem.isSelected() )
-            if( transformRadio.isSelected())
-              {
-                ChordPart chords = getChordProg().extract(improviseStartSlot,
-                                                          improviseEndSlot);
-                transformFrame.applySubstitutions(lick, chords);
-              }
-            else if(grammarDivideRadio.isSelected()){
-                        getCurrentMelodyPart().newPasteOver(lick, 0);
-                        fractalFrame.dividePastePlay();
-            }
             else
               {
-                putLick(lick);
+                abstractMelody = lickgen.generateRandomRhythm(totalSlots,
+                                                      lickgenFrame.getMinDuration(),
+                                                      lickgenFrame.getMaxDuration(),
+                                                      lickgenFrame.getRestProb());
               }
-            //System.out.println("lick = " + lick);
+
+            //System.out.println("rhythm = " + rhythm);
+            MelodyPart lick = generateLick(abstractMelody, improviseStartSlot, improviseEndSlot);
+            pointr = lick; //test
+
+            // Critical point for recurrent generation
+            if( lick != null )
+              {
+                int beatsGenerated = lick.size() / BEAT;
+
+                if( beatsGenerated > beatsRequested )
+                  {
+                    //debug
+                    //System.out.println("generated " + beatsGenerated
+                    //             + " beats, but " + beatsRequested + " requested (fewer)");
+
+                    lick = lick.extract(0, BEAT * beatsRequested - 1, true);
+                  }
+                else if( beatsGenerated < beatsRequested )
+                  {
+                    //debug
+                    //System.out.println("generated " + beatsGenerated
+                    //             + " beats, but " + beatsRequested + " requested (more)");
+                  }
+
+                //if( transformCheckBoxMenuItem.isSelected() )
+                if( transformRadio.isSelected())
+                  {
+                    ChordPart chords = getChordProg().extract(improviseStartSlot,
+                                                              improviseEndSlot);
+                    transformFrame.applySubstitutions(lick, chords);
+                  }
+                else if(grammarDivideRadio.isSelected()){
+                            getCurrentMelodyPart().newPasteOver(lick, 0);
+                            fractalFrame.dividePastePlay();
+                }
+                else
+                  {
+                    putLick(lick);
+                  }
+                //System.out.println("lick = " + lick);
+              }
+            else
+              {
+                //debug System.out.println("panic: generated null lick");
+                setMode(Mode.GENERATION_FAILED);
+                return;
+              }
           }
-        else
+
+        if( abstractMelody != null )
           {
-            //debug System.out.println("panic: generated null lick");
-            setMode(Mode.GENERATION_FAILED);
-            return;
+            lickgenFrame.setRhythmFieldText(Formatting.prettyFormat(abstractMelody));
           }
-      }
-
-    if( abstractMelody != null )
-      {
-        lickgenFrame.setRhythmFieldText(Formatting.prettyFormat(abstractMelody));
-      }
-
+    }
+    
     setMode(Mode.GENERATED);
 
     if( enableRecording )
       {
+          
         enableRecording(); // TRIAL
       }
 
