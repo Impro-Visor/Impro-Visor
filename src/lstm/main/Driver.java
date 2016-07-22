@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import lstm.architecture.InvalidParametersException;
 import mikera.arrayz.INDArray;
 import mikera.vectorz.AVector;
 import mikera.vectorz.Vector;
@@ -45,7 +46,7 @@ public class Driver {
 
     private static final boolean advanceDecoding = false; //should we start decoding as soon as possible?
 
-    public static void main(String[] args) throws FileNotFoundException, IOException, ConfigurationException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, ConfigurationException, InvalidParametersException {
         FileBasedConfigurationBuilder<PropertiesConfiguration> builder
                 = new FileBasedConfigurationBuilder<>(PropertiesConfiguration.class)
                 .configure(new Parameters().properties()
@@ -92,13 +93,7 @@ public class Driver {
         };
 
         LogTimer.log("Packing name generator from files...");
-        String[] notFound1 = (new NetworkMeatPacker()).pack(nameGeneratorParamsPath, titleNetLoader);
-        if (notFound1.length > 0) {
-            System.err.println("The following parameter files were not matched to the network:");
-        }
-        for (String name : notFound1) {
-            System.err.println("\t" + name);
-        }
+        (new NetworkMeatPacker()).pack(nameGeneratorParamsPath, titleNetLoader);
 
         String characterString = " !\"'[],-.01245679:?ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwxyz";
 
@@ -113,13 +108,7 @@ public class Driver {
 
         //"pack" the network from weights and biases file directory
         LogTimer.log("Packing autoencoder from files");
-        String[] notFound = (new NetworkMeatPacker()).pack(autoEncoderParamsPath, autoencoder);
-        if (notFound.length > 0) {
-            System.err.println(notFound.length + " files were not able to be matched to the architecture!");
-            for (String fileName : notFound) {
-                System.err.println("\t" + fileName);
-            }
-        }
+        (new NetworkMeatPacker()).pack(autoEncoderParamsPath, autoencoder);
 
         File[] songFiles;
         if (iterateOverCorpus) {

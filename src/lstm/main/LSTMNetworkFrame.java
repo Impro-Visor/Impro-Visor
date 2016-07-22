@@ -4,11 +4,16 @@
  * and open the template in the editor.
  */
 package lstm.main;
+import lstm.architecture.InvalidParametersException;
+import imp.ImproVisor;
 import imp.gui.Notate;
 import imp.gui.WindowRegistry;
 import imp.util.NonExistentParameterException;
 import imp.util.Preferences;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.midi.Sequence;
@@ -24,7 +29,6 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
     private Notate notate;
     private File paramfile;
     
-    private final String LSTM_GEN_PARAMS_PREFKEY = "lstm-gen-params";
     /**
      * Creates new form LSTMNetworkFrame
      */
@@ -33,11 +37,14 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         lstmGen = gen;
         initComponents();
         
+        paramFileChooser.setCurrentDirectory(ImproVisor.getConnectomeDirectory());
         try {
-            String last_pref_path = Preferences.getPreferenceQuietly(LSTM_GEN_PARAMS_PREFKEY);
-            paramfile = new File(last_pref_path);
+            String lastPrefPathString = Preferences.getPreferenceQuietly(Preferences.LSTM_GEN_PARAMS);
+            Path lastPrefPath = FileSystems.getDefault().getPath(lastPrefPathString);
+            Path referencePath = ImproVisor.getConnectomeDirectory().toPath();
+            paramfile = referencePath.resolve(lastPrefPath).toFile();
             filePathLabel.setText(paramfile.getAbsolutePath());
-            loadButton.setEnabled(true);
+            load();
         } catch (NonExistentParameterException ex) {
             paramfile = null;
         }
@@ -67,7 +74,6 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         paramPanel = new javax.swing.JPanel();
         filePathLabel = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
-        loadButton = new javax.swing.JButton();
 
         paramFileChooser.setAcceptAllFileFilterUsed(false);
         paramFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Network connectome file", "ctome"));
@@ -181,18 +187,6 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         paramPanel.add(browseButton, gridBagConstraints);
 
-        loadButton.setText("Load Parameters");
-        loadButton.setEnabled(false);
-        loadButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        paramPanel.add(loadButton, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -203,26 +197,13 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        notate.setLSTMModeEnabled(false);
-        if(paramfile == null)
-            throw new RuntimeException("Parameters file was null! Can't load!");
-        try {
-            lstmGen.loadFromPath(paramfile.getAbsolutePath());
-            statusLabel.setText("<html>Network parameters loaded successfully!");
-            notate.setLSTMModeEnabled(true);
-        } catch (InvalidParametersException ex) {
-            statusLabel.setText("<html>Could not load the parameters file.");
-        }
-    }//GEN-LAST:event_loadButtonActionPerformed
-
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         int dialogResult = paramFileChooser.showOpenDialog(this);
         if(dialogResult == JFileChooser.APPROVE_OPTION){
             paramfile = paramFileChooser.getSelectedFile();
             filePathLabel.setText(paramfile.getAbsolutePath());
-            loadButton.setEnabled(true);
-            Preferences.setPreference(LSTM_GEN_PARAMS_PREFKEY, paramfile.getAbsolutePath());
+            Preferences.setPreference(Preferences.LSTM_GEN_PARAMS, paramfile.getAbsolutePath());
+            load();
         }
     }//GEN-LAST:event_browseButtonActionPerformed
 
@@ -234,6 +215,31 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_justInTimeRadioActionPerformed
 
+    private void load() {
+        browseButton.setEnabled(false);
+        statusLabel.setText("Loading parameters file...");
+        notate.setLSTMModeEnabled(false);
+        if (paramfile == null) {
+            throw new RuntimeException("Parameters file was null! Can't load!");
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    lstmGen.loadFromPath(paramfile.getAbsolutePath());
+                    statusLabel.setText("<html>Network parameters loaded successfully!");
+                    notate.setLSTMModeEnabled(true);
+                } catch (InvalidParametersException ex) {
+                    statusLabel.setText("<html>Could not load the parameters file. " + ex.getMessage());
+                } catch (IOException ex) {
+                    statusLabel.setText("<html>Could not load the parameters file. There was a problem opening the file.");
+                }
+                browseButton.setEnabled(true);
+            }
+            
+        }).start();
+    }
+    
     public void closeWindow() {
         this.setVisible(false);
         WindowRegistry.unregisterWindow(this);
@@ -251,7 +257,6 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup generationTimeButtonGroup;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JRadioButton justInTimeRadio;
-    private javax.swing.JButton loadButton;
     private javax.swing.JFileChooser paramFileChooser;
     private javax.swing.JPanel paramPanel;
     private javax.swing.JPanel settingsPanel;

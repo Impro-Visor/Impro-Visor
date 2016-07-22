@@ -5,11 +5,13 @@
  */
 package lstm.main;
 
+import lstm.architecture.InvalidParametersException;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.util.ErrorLog;
 import imp.util.PartialBackgroundGenerator;
+import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -68,41 +70,27 @@ public class LSTMGen implements PartialBackgroundGenerator{
         loaded = false;
     }
     
-    public void load() throws InvalidParametersException {
+    public void load() throws InvalidParametersException, IOException {
         if(params_path == null){
             throw new RuntimeException("Load called without providing parameters!");
         }
         NetworkMeatPacker packer = new NetworkMeatPacker();
-        String[] notFound = packer.pack(params_path, model);
-        if(notFound.length > 0){
-            System.err.println(notFound.length + " files were not able to be matched to the architecture!");
-            for (String fileName : notFound) {
-                System.err.println("\t" + fileName);
-            }
-            throw new InvalidParametersException(notFound);
-        }
+        packer.pack(params_path, model);
         model.reset();
         loaded = true;
     }
     
-    public void loadFromPath(String path) throws InvalidParametersException {
+    public void loadFromPath(String path) throws InvalidParametersException, IOException {
         setLoadPath(path);
         load();
     }
     
-    public void reload() throws InvalidParametersException{
+    public void reload() throws InvalidParametersException, IOException{
         if(!loaded) {
             load();
         } else {
             NetworkMeatPacker packer = new NetworkMeatPacker();
-            String[] notFound = packer.refresh(params_path, model, "initialstate");
-            if (notFound.length > 0) {
-                System.err.println(notFound.length + " files were not able to be matched to the architecture!");
-                for (String fileName : notFound) {
-                    System.err.println("\t" + fileName);
-                }
-                throw new InvalidParametersException(notFound);
-            }
+            packer.refresh(params_path, model, "initialstate");
             model.reset();
         }
     }
@@ -123,6 +111,10 @@ public class LSTMGen implements PartialBackgroundGenerator{
             reload();
         } catch (InvalidParametersException ex) {
             Logger.getLogger(LSTMGen.class.getName()).log(Level.WARNING, null, ex);
+            ErrorLog.log(ErrorLog.WARNING, "Could not load LSTM parameters!", true);
+            return;
+        } catch (IOException ex) {
+            Logger.getLogger(LSTMGen.class.getName()).log(Level.SEVERE, null, ex);
             ErrorLog.log(ErrorLog.WARNING, "Could not load LSTM parameters!", true);
             return;
         }

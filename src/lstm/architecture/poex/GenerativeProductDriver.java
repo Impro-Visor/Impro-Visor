@@ -7,6 +7,7 @@ package lstm.architecture.poex;
 
 import lstm.architecture.NetworkMeatPacker;
 import java.io.File;
+import java.io.IOException;
 import lstm.io.leadsheet.LeadSheetDataSequence;
 import lstm.architecture.CompressingAutoEncoder;
 import lstm.architecture.FullyConnectedLayer;
@@ -21,6 +22,7 @@ import lstm.filters.Operations;
 import lstm.io.leadsheet.LeadSheetIO;
 import lstm.main.LogTimer;
 import java.util.Random;
+import lstm.architecture.InvalidParametersException;
 import mikera.arrayz.INDArray;
 import mikera.vectorz.AVector;
 import mikera.vectorz.Vector;
@@ -32,7 +34,7 @@ import mikera.vectorz.Vector;
 public class GenerativeProductDriver {
     private static final boolean advanceDecoding = false; //should we start decoding as soon as possible?
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidParametersException, IOException {
         //here is just silly code for generating name based on an LSTM lol $wag
         LSTM lstm = new LSTM();
         FullyConnectedLayer fullLayer = new FullyConnectedLayer(Operations.None);
@@ -52,9 +54,7 @@ public class GenerativeProductDriver {
             }
         };
         
-        String[] notFound1 = (new NetworkMeatPacker()).pack(args[3], titleNetLoader);
-        for(String name : notFound1)
-            System.out.println(name);
+        (new NetworkMeatPacker()).pack(args[3], titleNetLoader);
         
         Random rand = new Random();
         String characterString = " !\"'(),-.01245679:?ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwxyz";
@@ -99,15 +99,7 @@ public class GenerativeProductDriver {
             
             //"pack" the network from weights and biases file directory
             LogTimer.log("Packing autoencoder from files");
-            String[] notFound = (new NetworkMeatPacker()).pack(args[2], genmodel);
-            if(notFound.length > 0)
-            {
-                System.err.println(notFound.length + " files were not able to be matched to the architecture!");
-                for(String fileName : notFound)
-                {
-                    System.err.println("\t" + fileName);
-                }
-            }
+            (new NetworkMeatPacker()).pack(args[2], genmodel);
             LeadSheetDataSequence outputSequence = inputSequence.copy();
             outputSequence.clearMelody();
             

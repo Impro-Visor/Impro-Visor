@@ -260,6 +260,12 @@ public class Preferences implements imp.Constants
 
   public static final String DEFAULT_LANGUAGE_LIST="(en,fr)";
 
+  public static final String LSTM_GEN_PARAMS="lstm-gen-params";
+
+  public static final String DEFAULT_LSTM_GEN_PARAMS="combination.ctome";
+  
+  
+
   /**
    * The ALWAYS_USE_BUTTONS are y or n standing for CHORD, BASS, DRUMS, STAVE.
    */
@@ -633,6 +639,7 @@ public static boolean getAlwaysUse(int index)
       out.println("(" + RECENT_STYLE_FILE + " " + DEFAULT_RECENT_STYLE_FILE + ")");
       out.println("(" + LANGUAGE + " " + DEFAULT_LANGUAGE + ")");
       out.println("(" + LANGUAGE_LIST + " " + DEFAULT_LANGUAGE_LIST + ")");
+      out.println("(" + LSTM_GEN_PARAMS + " " + DEFAULT_LSTM_GEN_PARAMS + ")");
       }
     catch( Exception e )
       {

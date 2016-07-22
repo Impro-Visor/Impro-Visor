@@ -45,6 +45,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="scDir"                  value="sc"                       />
     <property name="countsDir"              value="counts"                   />
     <property name="fractalsDir"            value="fractals"                 />
+    <property name="connectomesDir"         value="connectomes"              />
     <property name="transformsDir"          value="transforms"               />
     <property name="voicingsDir"            value="voicings"                 />
     <property name="packagingDir"           value="packaging"                />
@@ -288,6 +289,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
     <copy todir="${distDir}/fractals">
         <fileset dir="${fractalsDir}" includes="**/*.fractal" />
+    </copy>
+    <copy todir="${distDir}/connectomes">
+        <fileset dir="${connectomesDir}" includes="**/*.ctome" />
     </copy>
     <copy todir="${distDir}/transforms">
         <fileset dir="${transformsDir}" includes="**/*.transform" />

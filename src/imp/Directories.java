@@ -60,6 +60,11 @@ public static String transformDirName = "transforms";
 public static String fractalDirName = "fractals";
 
 /**
+ * Standard sub-directory for connectomes
+ */
+public static String connectomeDirName = "connectomes";
+
+/**
  * Standard sub-directory for transforms
  */
 public static String countsDirName = "counts";

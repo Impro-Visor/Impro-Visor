@@ -649,6 +649,11 @@ public static File getFractalDirectory()
   return new File(getUserDirectory(), Directories.fractalDirName);
   }
 
+public static File getConnectomeDirectory()
+  {
+  return new File(getUserDirectory(), Directories.connectomeDirName);
+  }
+
 public static File getCountsDirectory()
   {
   return new File(getUserDirectory(), Directories.countsDirName);

@@ -42,3 +42,4 @@
 (improv-menu-setting (Use Improvise Button))
 (language en)
 (language_list (en , fr))
+(lstm-gen-params combination.ctome)
