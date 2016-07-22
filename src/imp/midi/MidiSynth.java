@@ -656,13 +656,30 @@ public void prePlay(Score score,
             return;
           }
         
-        long hotSwapPos = -1;
         if(shouldHotSwap){
-            System.out.println("Hotswapping");
-//            sequencer.stop();
-            hotSwapPos = sequencer.getTickPosition();
+            Sequence origSeq = sequencer.getSequence();
+            Track[] origTracks = origSeq.getTracks();
+            Track[] newTracks = seq.getTracks();
+            assert origTracks.length == newTracks.length;
+            
+            long tickpos = sequencer.getTickPosition();
+            for(int tidx = 0; tidx < origTracks.length; tidx++){
+                for(int eidx = 0; eidx < origTracks[tidx].size(); eidx++){
+                    MidiEvent evt = origTracks[tidx].get(eidx);
+                    if(evt.getTick() > tickpos){
+                        origTracks[tidx].remove(evt);
+                        eidx--;
+                    }
+                }
+                for(int eidx = 0; eidx < newTracks[tidx].size(); eidx++){
+                    MidiEvent evt = newTracks[tidx].get(eidx);
+                    if(evt.getTick() > tickpos)
+                        origTracks[tidx].add(newTracks[tidx].get(eidx));
+                }
+            }
+        } else {
+            sequencer.setSequence(seq);
         }
-        sequencer.setSequence(seq);
         // needed? sequencer.addMetaEventListener(this);
 
         setTempo(tempo);
@@ -674,9 +691,7 @@ public void prePlay(Score score,
 
         setLoopCount(0);
 
-        if(shouldHotSwap) {
-            sequencer.setTickPosition(hotSwapPos);
-        } else {
+        if(!shouldHotSwap) {
             setSlot(startIndex);
         }
 

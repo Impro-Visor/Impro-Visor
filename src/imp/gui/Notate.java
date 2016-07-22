@@ -635,6 +635,7 @@ private LSTMGen lstmGen;
 private PartialBackgroundGenerator lazyGenerator;
 private int lazyGeneratedGoodUntil;
 private Future<MelodyPart> nextLazyPart;
+private final int lazyGeneratePreemptiveFactor = Constants.BEAT;
 
 /**
  * Constructs a new Notate JFrame.
@@ -26212,7 +26213,7 @@ public void actionPerformed(ActionEvent evt) {
       }
     previousSynthSlot = synthSlot;
 
-    if(nextLazyPart != null && slotInPlayback > lazyGeneratedGoodUntil) {
+    if(nextLazyPart != null && slotInPlayback > lazyGeneratedGoodUntil - lazyGeneratePreemptiveFactor) {
         addNextLazyGeneratedPart(true);
         lazyGenerateNext();
     }

@@ -11,6 +11,8 @@ import imp.util.Preferences;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Track;
 import javax.swing.JFileChooser;
 /**
  *
@@ -119,8 +121,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         settingsPanel.setLayout(new java.awt.GridBagLayout());
 
         generationTimeButtonGroup.add(aheadOfTimeRadio);
-        aheadOfTimeRadio.setSelected(true);
-        aheadOfTimeRadio.setText("Ahead of time (slower)");
+        aheadOfTimeRadio.setText("Ahead of time (safer)");
         aheadOfTimeRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aheadOfTimeRadioActionPerformed(evt);
@@ -131,6 +132,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         settingsPanel.add(aheadOfTimeRadio, gridBagConstraints);
 
         generationTimeButtonGroup.add(justInTimeRadio);
+        justInTimeRadio.setSelected(true);
         justInTimeRadio.setText("Just in time (faster)");
         justInTimeRadio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
