@@ -637,6 +637,10 @@ private int lazyGeneratedGoodUntil;
 private Future<MelodyPart> nextLazyPart;
 private final int lazyGeneratePreemptiveFactor = Constants.BEAT;
 
+private boolean isPassiveTrading;
+private int passiveTradingQuantum;
+private boolean passiveTradingImprovisorFirst;
+
 /**
  * Constructs a new Notate JFrame.
  *
@@ -10896,6 +10900,8 @@ public void stopPlaying(String reason)
     cancelLazyGeneration();
     setNormalMode();
     setShowConstructionLinesAndBoxes(showConstructionLinesMI.isSelected());
+    
+    isPassiveTrading = false;
     
     //from here end enables saving improv in the lickgenframe
     if(saveImprovCheckBoxMenuItem.isSelected())
@@ -21249,12 +21255,18 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     }
     
     setMode(Mode.GENERATED);
+    
+    isPassiveTrading = passiveTradingDialog.isVisible();
+    passiveTradingQuantum = passiveTradingDialog.getTradingQuantum();
+    passiveTradingImprovisorFirst = passiveTradingDialog.getImprovisorTradeFirst();
 
-    if( enableRecording )
+    if( isPassiveTrading && enableRecording )
       {
           
         enableRecording(); // TRIAL
       }
+    
+    
 
     if (saveImprovCheckBoxMenuItem.isSelected()){
         melodyList.add(pointr);
@@ -26214,6 +26226,26 @@ public void actionPerformed(ActionEvent evt) {
         totalSlotsElapsed += (synthSlot - previousSynthSlot);
       }
     previousSynthSlot = synthSlot;
+    
+    if(isPassiveTrading) {
+//        int relativePosition = (slotInPlayback
+//                                    - getCurrentSelectionStart()
+//                                    + (passiveTradingImprovisorFirst
+//                                        ? passiveTradingQuantum : 0))
+//                                % (2 * passiveTradingQuantum);
+//        System.out.println("Passive trading! Rel pos is " + relativePosition); // TODO remove
+        
+        boolean isUserTurn = (slotInPlayback
+                                    - getCurrentSelectionStart()
+                                    + (passiveTradingImprovisorFirst
+                                        ? passiveTradingQuantum : 0))
+                                % (2 * passiveTradingQuantum)
+                                < passiveTradingQuantum;
+        if(isUserTurn && midiRecorder.getSuspended())
+            midiRecorder.unSuspend();
+        else if(!isUserTurn && !midiRecorder.getSuspended())
+            midiRecorder.suspend();
+    }
 
     if(nextLazyPart != null && slotInPlayback > lazyGeneratedGoodUntil - lazyGeneratePreemptiveFactor) {
         addNextLazyGeneratedPart(true);

@@ -67,6 +67,8 @@ public class MidiRecorder implements Constants, Receiver
     
     int notesLost;
     int swingConversions;
+    
+    boolean isSuspended = false;
 
     public MidiRecorder(Notate notate, Score score)
     {
@@ -132,6 +134,8 @@ public class MidiRecorder implements Constants, Receiver
         //notate.setCurrentSelectionStartAndEnd(0);
         this.recordLatency = recordLatency;
         this.countInOffset = countInOffset;
+        
+        unSuspend(); // make sure we aren't suspended
     }
 
     int getCountInBias()
@@ -140,6 +144,29 @@ public class MidiRecorder implements Constants, Receiver
         return notate.getFirstChorus() ? countInOffset : 0;
     }
 
+    public boolean getSuspended(){
+        return isSuspended;
+    }
+    
+    public void suspend(){
+        if( !isSuspended )
+        {
+            isSuspended = true;
+            if(notePlaying) {
+                lastEvent = getTick();
+                handleNoteOff(prevNote, 0, 0);
+            }
+        }
+    }
+    
+    public void unSuspend(){
+        if( isSuspended )
+        {
+            isSuspended = false;
+            lastEvent = noteOff = noteOn = getTick();
+        }
+    }
+    
     /**
      * This function is called by others to send a MIDI message to this object
      * for processing.
@@ -147,7 +174,9 @@ public class MidiRecorder implements Constants, Receiver
     public void send(MidiMessage message, long timeStamp)
     {
         //System.out.println("midiRecorder received " + MidiFormatting.midiMessage2polylist(message));
-
+        if(isSuspended)
+            return; // Don't process this message since we are suspended
+        
         byte[] m = message.getMessage();
         int note, channel, velocity;
         int highNibble = (m[0] & 0xF0) >> 4;
