@@ -21152,6 +21152,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                 lstmGen.startGenerateTrading(chords, offset,
                         passiveTradingDialog.getImprovisorTradeFirst(),
                         passiveTradingDialog.getTradingQuantum());
+                
             } else {
                 lstmGen.startGenerate(chords, offset, 1920);
             }
@@ -21456,6 +21457,17 @@ public void addNextLazyGeneratedPart(boolean hotSwapIn){
     lazyGeneratedGoodUntil = getCurrentSelectionStart() + nextPart.size();
     nextPart = nextPart.copy();
     nextPart.addNote(Note.makeRest(selectionLen - nextPart.size()));
+    if(isPassiveTrading && hotSwapIn){
+        MelodyPart workingPart = getCurrentStave().getMelodyPart().copy();
+        int startPos = getCurrentSelectionStart()
+                        + (passiveTradingImprovisorFirst ? 0 : passiveTradingQuantum);
+        for(int partPos = startPos;
+                partPos < getCurrentSelectionEnd();
+                partPos += 2*passiveTradingQuantum) {
+            workingPart.newPasteOver(nextPart.extract(partPos, partPos+passiveTradingQuantum-1), partPos);
+        }
+        nextPart = workingPart;
+    }
     putLickWithoutRectify(nextPart, true, hotSwapIn);
 //    if(hotSwapIn){
 //        System.out.println("Swapping in at " + hotSwapTick);
