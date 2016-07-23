@@ -31,6 +31,7 @@ public class GenerativeProductModel implements Loadable {
     private PassthroughInputPart last_output_parts[];
     private int num_experts;
     private Random rand;
+    private double[] modifierExponents;
     
     public GenerativeProductModel(int outputSize, int beatVectorSize, int featureVectorSize, int lowbound, int highbound) {
         this.featureVectorSize = featureVectorSize;
@@ -62,7 +63,13 @@ public class GenerativeProductModel implements Loadable {
         this.encodings[0] = new IntervalRelativeNoteEncoding(lowbound, highbound);
         this.encodings[1] = new ChordRelativeNoteEncoding();
         
+        this.modifierExponents = new double[]{1.0, 1.0};
+        
         reset();
+    }
+    
+    public double[] getModifierExponents(){
+        return this.modifierExponents;
     }
     
     public void reset(){
@@ -95,7 +102,8 @@ public class GenerativeProductModel implements Loadable {
             
             AVector full_decoder_input = RelativeInputPart.combine(this.inputs[i], relpos, chord_root, chord_type);
             AVector activations = this.experts[i].process(full_decoder_input);
-            AVector probabilities = enc.getProbabilities(activations, chord_root, this.low_bound, this.high_bound);
+            AVector probabilities = enc.getProbabilities(activations, chord_root, this.low_bound, this.high_bound).copy();
+            probabilities.pow(modifierExponents[i]);
             
             if(accum_probabilities == null)
                 accum_probabilities = probabilities.mutable();

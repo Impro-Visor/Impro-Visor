@@ -70,7 +70,15 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         settingsPanel = new javax.swing.JPanel();
         aheadOfTimeRadio = new javax.swing.JRadioButton();
         justInTimeRadio = new javax.swing.JRadioButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        genModeLabel = new javax.swing.JLabel();
+        riskLevelLabel = new javax.swing.JLabel();
+        expertWeightingLabel = new javax.swing.JLabel();
+        riskLevelSlider = new javax.swing.JSlider();
+        expertWeightingSlider = new javax.swing.JSlider();
+        conservativeLabel = new javax.swing.JLabel();
+        adventurousLabel = new javax.swing.JLabel();
+        contourLabel = new javax.swing.JLabel();
+        pitchLabel = new javax.swing.JLabel();
         paramPanel = new javax.swing.JPanel();
         filePathLabel = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
@@ -134,6 +142,9 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         settingsPanel.add(aheadOfTimeRadio, gridBagConstraints);
 
@@ -147,16 +158,103 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         settingsPanel.add(justInTimeRadio, gridBagConstraints);
+
+        genModeLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        genModeLabel.setText("Generation Mode");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(genModeLabel, gridBagConstraints);
+
+        riskLevelLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        riskLevelLabel.setText("Risk Level");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(riskLevelLabel, gridBagConstraints);
+
+        expertWeightingLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        expertWeightingLabel.setText("Expert Weighting");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(expertWeightingLabel, gridBagConstraints);
+
+        riskLevelSlider.setMajorTickSpacing(50);
+        riskLevelSlider.setMinimum(0);
+        riskLevelSlider.setMinorTickSpacing(10);
+        riskLevelSlider.setPaintTicks(true);
+        riskLevelSlider.setValue(50);
+        riskLevelSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                riskLevelSliderStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
-        settingsPanel.add(filler1, gridBagConstraints);
+        settingsPanel.add(riskLevelSlider, gridBagConstraints);
+
+        expertWeightingSlider.setMajorTickSpacing(50);
+        expertWeightingSlider.setMinimum(0);
+        expertWeightingSlider.setMinorTickSpacing(10);
+        expertWeightingSlider.setPaintTicks(true);
+        expertWeightingSlider.setValue(50);
+        expertWeightingSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                expertWeightingSliderStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        settingsPanel.add(expertWeightingSlider, gridBagConstraints);
+
+        conservativeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        conservativeLabel.setText("Conservative");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        settingsPanel.add(conservativeLabel, gridBagConstraints);
+
+        adventurousLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        adventurousLabel.setText("Adventurous");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        settingsPanel.add(adventurousLabel, gridBagConstraints);
+
+        contourLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        contourLabel.setText("Contour");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        settingsPanel.add(contourLabel, gridBagConstraints);
+
+        pitchLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        pitchLabel.setText("Pitch");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        settingsPanel.add(pitchLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -215,6 +313,20 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_justInTimeRadioActionPerformed
 
+    private void riskLevelSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_riskLevelSliderStateChanged
+        updateProbabilityScaling();
+    }//GEN-LAST:event_riskLevelSliderStateChanged
+
+    private void expertWeightingSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_expertWeightingSliderStateChanged
+        updateProbabilityScaling();
+    }//GEN-LAST:event_expertWeightingSliderStateChanged
+
+    private void updateProbabilityScaling(){
+        double riskLevel = ((double) riskLevelSlider.getValue() - 50.0)/100.0;
+        double expertWeights = ((double) expertWeightingSlider.getValue() - 50.0)/50.0;
+        lstmGen.setProbabilityAdjust(riskLevel, expertWeights);
+    }
+    
     private void load() {
         browseButton.setEnabled(false);
         statusLabel.setText("Loading parameters file...");
@@ -250,15 +362,23 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel adventurousLabel;
     private javax.swing.JRadioButton aheadOfTimeRadio;
     private javax.swing.JButton browseButton;
+    private javax.swing.JLabel conservativeLabel;
+    private javax.swing.JLabel contourLabel;
+    private javax.swing.JLabel expertWeightingLabel;
+    private javax.swing.JSlider expertWeightingSlider;
     private javax.swing.JLabel filePathLabel;
-    private javax.swing.Box.Filler filler1;
+    private javax.swing.JLabel genModeLabel;
     private javax.swing.ButtonGroup generationTimeButtonGroup;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JRadioButton justInTimeRadio;
     private javax.swing.JFileChooser paramFileChooser;
     private javax.swing.JPanel paramPanel;
+    private javax.swing.JLabel pitchLabel;
+    private javax.swing.JLabel riskLevelLabel;
+    private javax.swing.JSlider riskLevelSlider;
     private javax.swing.JPanel settingsPanel;
     private javax.swing.Box.Filler statusFiller;
     private javax.swing.JLabel statusLabel;

@@ -12,6 +12,7 @@ import imp.data.Note;
 import imp.util.ErrorLog;
 import imp.util.PartialBackgroundGenerator;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -93,6 +94,22 @@ public class LSTMGen implements PartialBackgroundGenerator{
             packer.refresh(params_path, model, "initialstate");
             model.reset();
         }
+    }
+    
+    /**
+     * Set probability adjustment levels
+     * @param riskLevel How much risk to take. Range -inf to inf, 0 is default
+     * @param biasLevel How to bias the experts. Range -1 (interval only) to 1
+     * (chord only), 0 is default
+     */
+    public void setProbabilityAdjust(double riskLevel, double biasLevel) {
+        double epsilon = 1.0e-8;
+        double intervalScale = Math.exp(-riskLevel) * (1-biasLevel) + epsilon;
+        double chordScale = Math.exp(-riskLevel) * (1+biasLevel) + epsilon;
+        double[] modifiers = model.getModifierExponents();
+        modifiers[0] = intervalScale;
+        modifiers[1] = chordScale;
+//        System.out.println(Arrays.toString(modifiers));
     }
     
     /**
