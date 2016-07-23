@@ -10914,9 +10914,10 @@ public void stopPlaying(String reason)
 
 private void initSaveImprovisation()
 {
-  melodyList = new ArrayList<MelodyPart>();
-  pointr = new MelodyPart();
+  scoreToSave = null;
 }
+
+Score scoreToSave;
 
 /**
  * saveImprovisation was originally coded by Nathan Kim.
@@ -10924,55 +10925,20 @@ private void initSaveImprovisation()
  * the original improvisation plays rather than the new one.
  */
 private void saveImprovisation() {
-    Notate savNot = cloneLS();
-    while (!melodyList.isEmpty()) {
-        melodyList.get(0).setInstrument(instr);
-        savNot.addChorus(melodyList.get(0));
-        melodyList.remove(0);
+
+if( scoreToSave == null )
+  {
+    return;
     }
-    savNot.score.delPart(0);
     String originalStem = ImproVisor.getLastLeadsheetFileStem();
     String newStem = originalStem + "+";
 
-    ImproVisor.setLastLeadsheetFileStem(newStem); 
-    if( !savNot.saveAsLeadsheet() )
-      {
-        // User cancels save
-        ImproVisor.setLastLeadsheetFileStem(originalStem); 
-      }
-    // Reset for additional improvising
+    File newFile = new File(leadsheetDirName, newStem);
+    saveLeadsheet(newFile, scoreToSave);
+System.out.println("saving improvisation file: " + newStem);
+     
     initSaveImprovisation();
 }
-
-
-public Notate cloneLS()
-{
- Score newScore = getScore().copy();
-
-    
-    for (int x=1; x<scoreTab.getTabCount(); x++)
-    {
-        newScore.delPart(0);
-    }
-    
-    Notate newNotate =
-            new Notate(newScore,
-                       this.adv,
-                       this.impro,
-                       getX(),
-                       getY());
-
-    newNotate.updatePhiAndDelta(this.getPhiStatus(), this.getDeltaStatus());
-
-    newNotate.setPrefsDialog();
-    
-    // set the menu and button states
-
-    setItemStates();
-
-    return newNotate;
-}
-
 
 
 private void setStepInput(boolean active)
@@ -21029,10 +20995,6 @@ public void adjustSelection()
 int cycCount = 0;
 int shufCount = 0;
 
-// These are used for saving improvisation:
-ArrayList<MelodyPart> melodyList = new ArrayList<MelodyPart>();
-MelodyPart pointr = new MelodyPart();
-int instr;
 
 Polylist abstractMelody = null; // formerly called 'rhythm'.f Use in generate and associated methods
 
@@ -21046,8 +21008,6 @@ Polylist abstractMelody = null; // formerly called 'rhythm'.f Use in generate an
 public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improviseEndSlot)
   {
     abstractMelody = null;
-    
-    instr = getCurrentMelodyPart().getInstrument(); // for savImprov
     if (ifCycle){
         String temp;
         temp = gramList.get(cycCount).substring(0, gramList.get(cycCount).length() - GrammarFilter.EXTENSION.length());
@@ -21202,7 +21162,6 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
 
             //System.out.println("rhythm = " + rhythm);
             MelodyPart lick = generateLick(abstractMelody, improviseStartSlot, improviseEndSlot);
-            pointr = lick; //test
 
             // Critical point for recurrent generation
             if( lick != null )
@@ -21253,7 +21212,6 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
           {
             lickgenFrame.setRhythmFieldText(Formatting.prettyFormat(abstractMelody));
           }
-    }
     
     setMode(Mode.GENERATED);
     
@@ -21263,16 +21221,26 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
 
     if( isPassiveTrading && enableRecording )
       {
-          
         enableRecording(); // TRIAL
       }
     
-    
-
     if (saveImprovCheckBoxMenuItem.isSelected()){
-        melodyList.add(pointr);
-    } 
+        //melodyList.add(pointr);
+        if( scoreToSave == null )
+          {
+            scoreToSave = score.copy();
+          } 
+        else
+          {
+          MelodyPart part = score.getPart(0);
+          // CAUTION: Need to copy here, because part(0) is the one getting
+          // overwritten
+          scoreToSave.addPart(part.copy());
+          }
+      }
+    }
   }
+  
 
 private void generateUsingOutlines()
     {
@@ -21289,7 +21257,7 @@ private void generateUsingOutlines()
                                         avoidRepeats);
 
         MelodyPart solo = lickgen.generateSoloFromOutline(totalSlots);
-        pointr = solo; //TEST
+
         if( solo != null )
           {
             abstractMelody = lickgen.getRhythmFromSoloist(); //get the abstract melody for display
@@ -21338,8 +21306,6 @@ while( useCritic )
 
     MelodyPart lick = generateLick(abstractMelody, improviseStartSlot,
                                    improviseEndSlot);
-    pointr = lick;//TEST
-
     if( lick != null )
       {
         //Increment the count
