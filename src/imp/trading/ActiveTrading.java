@@ -294,7 +294,7 @@ public class ActiveTrading {
 
     }
 
-    public void userTurn() {
+     public void userTurn() {
         //System.out.println("User turn at slot: " + notate.getSlotInPlayback());
         phase = TradePhase.USER_TURN;
         int nextSectionIndex = (triggerIndex + 1) % triggers.size();
@@ -547,6 +547,15 @@ public class ActiveTrading {
             MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
             currentMelodyPart.altPasteOver(response, (triggers.get(triggerIndex) % adjustedLength));
             currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), triggers.get(triggerIndex) + slotsPerTurn);
+            if( notate.getSlotInPlayback() >= notate.getChordProg().size() - 2*slotsPerTurn )
+              {
+              //System.out.println("succeeded at " + notate.getSlotInPlayback() );
+              notate.saveImprovChorus();
+              }
+            else
+              {
+              //System.out.println("failed at " + notate.getSlotInPlayback() + ", slotsPerTurn = " + slotsPerTurn );
+              }
         } catch (ExceptionTradeModeNotFound ex) {
             Logger.getLogger(ActiveTrading.class.getName()).log(Level.SEVERE, null, ex);
         }

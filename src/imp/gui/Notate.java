@@ -169,6 +169,9 @@ public static final int MAX_TEMPO = 300;
 private static int aboutDialogWidth = 600;
 private static int aboutDialogHeight = 750;
 private static int million = 1000000;
+
+private int lastSave;
+
 /**
  * Tell whether advice is initially open or not.
  */
@@ -10658,7 +10661,7 @@ public void setMode(Mode mode)
             setStatus("Draw notes with the mouse (set slots first).");
             break;
         case GENERATING:
-            setStatus("Generating melody");
+            setStatus("Generating melody "+ recurrentIteration);
             break;
         case GENERATED:
             setStatus("Melody generated");
@@ -10931,7 +10934,7 @@ if( scoreToSave == null )
     return;
     }
     String originalStem = ImproVisor.getLastLeadsheetFileStem();
-    String newStem = originalStem + "+";
+    String newStem = originalStem + "+" + ".ls";
 
     File newFile = new File(leadsheetDirName, newStem);
     saveLeadsheet(newFile, scoreToSave);
@@ -12966,7 +12969,7 @@ public boolean putLick(MelodyPart lick)
       {
         rectifySelection(getCurrentStave(), start, stop);
       }
-
+    
     playCurrentSelection(false, 0, PlayScoreCommand.USEDRUMS, "putLick " + start + " - " + stop);
     ImproVisor.setPlayEntrySounds(true);
     return true;
@@ -13043,10 +13046,11 @@ public boolean putLickWithoutRectify(MelodyPart lick, boolean play, boolean hots
 
     getMelodyPart(stave).newPasteOver(lick, getCurrentSelectionStart(stave));
 
-    if( play )
+     if( play )
     {
         playCurrentSelection(false, 0, PlayScoreCommand.USEDRUMS, "putLick " + start + " - " + stop, hotswap);
     }
+     
     ImproVisor.setPlayEntrySounds(true);
 
     return true;
@@ -18107,6 +18111,9 @@ public void enableStopButton(boolean enabled)
 
 public void setPlaying(MidiPlayListener.Status playing, int transposition)
   {
+    lastSave = chordProg.size();
+    //System.out.println("setPlaying, lastSave = " + lastSave);
+
     Trace.log(2, "Notate: Play Status Changed to " + playing);
 
     // update the playbackManager
@@ -21007,6 +21014,7 @@ Polylist abstractMelody = null; // formerly called 'rhythm'.f Use in generate an
  */
 public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improviseEndSlot)
   {
+    //System.out.println("originalGenerate " + improviseStartSlot + " to " + improviseEndSlot);
     abstractMelody = null;
     if (ifCycle){
         String temp;
@@ -21223,24 +21231,29 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
       {
         enableRecording(); // TRIAL
       }
-    
+
+    }
+  }
+  
+public void saveImprovChorus()
+{
     if (saveImprovCheckBoxMenuItem.isSelected()){
         //melodyList.add(pointr);
         if( scoreToSave == null )
           {
             scoreToSave = score.copy();
+            //System.out.println("saving " + score.getPart(0));
           } 
         else
           {
-          MelodyPart part = score.getPart(0);
+          MelodyPart part = score.getPart(0).copy();
           // CAUTION: Need to copy here, because part(0) is the one getting
           // overwritten
-          scoreToSave.addPart(part.copy());
+          scoreToSave.addPart(part);
+          //System.out.println("saving " + part);
           }
-      }
-    }
-  }
-  
+      }    
+}
 
 private void generateUsingOutlines()
     {
@@ -26236,6 +26249,7 @@ public void actionPerformed(ActionEvent evt) {
         handleAutoImprov(synthSlot);
       }
 
+
     // The following variant was originally added to stop playback at the end of a selection
     // However, it also truncates the drum patterns etc. so that needs to be fixed.
 
@@ -26291,6 +26305,7 @@ public void actionPerformed(ActionEvent evt) {
       }
   } // actionPerformed
 
+
 /**
  * Handle automatic improvisation This is called at practically every slot
  * in straight improvisation or passive trading, but not in active trading.
@@ -26319,6 +26334,20 @@ private void handleAutoImprov(int slotInPlayback)
    // Danger: improviseSlotSlot and improviseEndSlot are instance variables
    // Right now, they seem to be set at 0 and length of chorus -1.
    
+       // Need to fix so this is only done once per chorus
+   
+
+   if( slotInPlayback < lastSave )
+     {
+        //System.out.print("slot = " + slotInPlayback);
+        saveImprovChorus();
+        lastSave = slotInPlayback;
+     }
+   else
+     {
+       //System.out.println("failed, lastSave = " + lastSave + ", vs. " + slotInPlayback );
+     }
+    
         originalGenerate(lickgen, improviseStartSlot, improviseEndSlot);
       }
   } // handleAutoImprov
