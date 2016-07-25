@@ -200,6 +200,8 @@ public class TradingResponseInfo {
             }
         }
         response = finalMelody;
+        rectifySolo();
+        mergeRepeatedPitches();
     }
     
     public MelodyPart userRhythm(){
@@ -288,6 +290,11 @@ public class TradingResponseInfo {
             int measureEndSlot = measureStartSlot + measure - 1;
             mpa[i] = mp.extract(measureStartSlot, measureEndSlot, true, true);
         }
+//        System.out.println("chopped:");
+//        for( MelodyPart p: mpa )
+//          {
+//            System.out.println("    " + p);
+//          }
         return mpa;
     }
 
@@ -497,6 +504,7 @@ public class TradingResponseInfo {
     //allows chord, color, and approach tones
     //allows repeat pitches
     public void rectifySolo(boolean onlyChordTones){
+        //System.out.println("\nbefore: " + response);
         RectifyPitchesCommand cmd;
         boolean chord, color, approach;
         chord = true;
@@ -509,12 +517,17 @@ public class TradingResponseInfo {
         }
         cmd = new RectifyPitchesCommand(response, 0, response.size()-1, responseChords, false, false, chord, color, approach);
         cmd.execute();
+        //System.out.println("after: " + response);
     }
     
     public void rectifySolo(){
         rectifySolo(false);
     }
 
+    public void mergeRepeatedPitches()
+    {
+        response = response.removeRepeatedNotes();
+    }
     //STEP 5 - retreive the response
     
     //retreive response
@@ -523,9 +536,10 @@ public class TradingResponseInfo {
     // can be modified, to remove notes selectively according to
     // certain restrictions.
     public MelodyPart getResponse(){
-        return response.removeRepeatedNotes();
+        mergeRepeatedPitches();
+        return response;
     }
-    
+   
     //ALL THE STEPS TOGETHER
     public MelodyPart musicianResponse(){
         //STEP 1
