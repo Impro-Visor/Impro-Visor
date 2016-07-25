@@ -180,10 +180,8 @@
         <Component class="javax.swing.JSlider" name="riskLevelSlider">
           <Properties>
             <Property name="majorTickSpacing" type="int" value="50"/>
-            <Property name="minimum" type="int" value="0"/>
             <Property name="minorTickSpacing" type="int" value="10"/>
             <Property name="paintTicks" type="boolean" value="true"/>
-            <Property name="value" type="int" value="50"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="riskLevelSliderStateChanged"/>
@@ -197,10 +195,8 @@
         <Component class="javax.swing.JSlider" name="expertWeightingSlider">
           <Properties>
             <Property name="majorTickSpacing" type="int" value="50"/>
-            <Property name="minimum" type="int" value="0"/>
             <Property name="minorTickSpacing" type="int" value="10"/>
             <Property name="paintTicks" type="boolean" value="true"/>
-            <Property name="value" type="int" value="50"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="expertWeightingSliderStateChanged"/>

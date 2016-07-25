@@ -102,11 +102,16 @@ public class GenerativeProductModel implements Loadable {
             
             AVector full_decoder_input = RelativeInputPart.combine(this.inputs[i], relpos, chord_root, chord_type);
             AVector activations = this.experts[i].process(full_decoder_input);
-            AVector probabilities = enc.getProbabilities(activations, chord_root, this.low_bound, this.high_bound).copy();
-            probabilities.pow(modifierExponents[i]);
+            AVector probabilities = enc.getProbabilities(activations, chord_root, this.low_bound, this.high_bound).copy().mutable();
+            
+            AVector articSlice = probabilities.subVector(2, probabilities.length()-2);
+            double initArticSum = articSlice.elementSum();
+            articSlice.pow(modifierExponents[i]);
+            double finalArticSum = articSlice.elementSum();
+            articSlice.multiply(initArticSum/finalArticSum);
             
             if(accum_probabilities == null)
-                accum_probabilities = probabilities.mutable();
+                accum_probabilities = probabilities;
             else
                 accum_probabilities.multiply(probabilities);
         }

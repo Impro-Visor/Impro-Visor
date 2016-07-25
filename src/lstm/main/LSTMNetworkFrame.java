@@ -322,7 +322,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_expertWeightingSliderStateChanged
 
     private void updateProbabilityScaling(){
-        double riskLevel = ((double) riskLevelSlider.getValue() - 50.0)/100.0;
+        double riskLevel = ((double) riskLevelSlider.getValue() - 50.0)/25.0;
         double expertWeights = ((double) expertWeightingSlider.getValue() - 50.0)/50.0;
         lstmGen.setProbabilityAdjust(riskLevel, expertWeights);
     }
