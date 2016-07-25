@@ -23,11 +23,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lstm.architecture.NetworkMeatPacker;
+import lstm.architecture.poex.ForcePlayPostprocessor;
 import lstm.architecture.poex.GenerativeProductModel;
+import lstm.architecture.poex.ProbabilityPostprocessor;
+import lstm.architecture.poex.RectifyPostprocessor;
 import lstm.encoding.EncodingParameters;
 import lstm.io.leadsheet.Constants;
 import lstm.io.leadsheet.DataPartIO;
 import lstm.io.leadsheet.LeadSheetDataSequence;
+import mikera.vectorz.AVector;
 
 /**
  *
@@ -52,6 +56,15 @@ public class LSTMGen implements PartialBackgroundGenerator{
     
     ExecutorService executor;
     
+    RectifyPostprocessor rectifier;
+    ForcePlayPostprocessor forcePlay;
+    int consecutiveRests;
+    int timestep;
+    int maxConsecutiveRests = Constants.WHOLE;
+    boolean shouldResetAfterTooLong = false;
+    boolean allowColorTones = true;
+    int resetQuantum = Constants.WHOLE;
+    
     public LSTMGen() {
         int outputSize = EncodingParameters.noteEncoder.getNoteLength();
         int beatSize = 9;
@@ -59,6 +72,9 @@ public class LSTMGen implements PartialBackgroundGenerator{
         int lowerBound = 48;
         int upperBound = 84+1;
         model = new GenerativeProductModel(outputSize, beatSize, featureVectorSize, lowerBound, upperBound);
+        
+        rectifier = new RectifyPostprocessor(lowerBound);
+        forcePlay = new ForcePlayPostprocessor();
         
         params_path = null;
         loaded = false;
@@ -94,6 +110,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
             packer.refresh(params_path, model, "initialstate");
             model.reset();
         }
+        consecutiveRests = 0;
     }
     
     /**
@@ -109,7 +126,39 @@ public class LSTMGen implements PartialBackgroundGenerator{
         double[] modifiers = model.getModifierExponents();
         modifiers[0] = intervalScale;
         modifiers[1] = chordScale;
-//        System.out.println(Arrays.toString(modifiers));
+    }
+    
+    public void setPostprocess(
+            boolean rectify,
+            boolean colorTonesOK,
+            boolean resetAfterRests,
+            boolean forcePlayAfterRests,
+            int maxNumRests)
+    {
+        assert !(resetAfterRests && forcePlayAfterRests);
+        shouldResetAfterTooLong = resetAfterRests;
+        allowColorTones = colorTonesOK;
+        maxConsecutiveRests = maxNumRests;
+        if(rectify){
+            if(forcePlayAfterRests){
+                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{
+                    rectifier,
+                    forcePlay,
+                });
+            } else {
+                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{
+                    rectifier,
+                });
+            }
+        } else {
+            if(forcePlayAfterRests){
+                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{
+                    forcePlay,
+                });
+            } else {
+                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{});
+            }
+        }
     }
     
     /**
@@ -118,7 +167,28 @@ public class LSTMGen implements PartialBackgroundGenerator{
      */
     private void runGenerate(int maxIter){
         for(int i=maxIter; i!=0 && chordSequence.hasNext(); i--){
-            outputSequence.pushStep(null, null, model.step(chordSequence.retrieve()));
+            if(consecutiveRests >= maxConsecutiveRests){
+                if(shouldResetAfterTooLong) {
+                    if(timestep % resetQuantum == 0){
+                        try {
+                            reload();
+                        } catch (InvalidParametersException ex) {
+                            Logger.getLogger(LSTMGen.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(LSTMGen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } else {
+                    forcePlay.forcePlayNext();
+                }
+            }
+            AVector curOutput = model.step(chordSequence.retrieve());
+            if(curOutput.get(0) == -1 || (curOutput.get(0) == -2 && consecutiveRests > 0))
+                consecutiveRests += Constants.RESOLUTION_SCALAR;
+            else
+                consecutiveRests = 0;
+            timestep += Constants.RESOLUTION_SCALAR;
+            outputSequence.pushStep(null, null, curOutput);
         }
     }
     
@@ -144,6 +214,10 @@ public class LSTMGen implements PartialBackgroundGenerator{
         } else {
             generationStep = step/Constants.RESOLUTION_SCALAR;
         }
+        
+        timestep = offset;
+        forcePlay.reset();
+        rectifier.start(chords, allowColorTones);
         
         done = false;
     }
@@ -230,6 +304,11 @@ public class LSTMGen implements PartialBackgroundGenerator{
                     chordSequence = DataPartIO.readChords(extracted, savedOffset + tradePos);
                     outputSequence = chordSequence.copy();
                     outputSequence.clearMelody();
+                    
+                    timestep = savedOffset + tradePos;
+                    forcePlay.reset();
+                    rectifier.start(extracted, allowColorTones);
+                    
                     runGenerate(-1);
                     DataPartIO.addToMelodyPart(outputSequence, accumMelody);
                     if (savedGenerateStart) {

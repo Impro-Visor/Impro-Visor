@@ -32,6 +32,7 @@ public class GenerativeProductModel implements Loadable {
     private int num_experts;
     private Random rand;
     private double[] modifierExponents;
+    private ProbabilityPostprocessor[] postprocessors;
     
     public GenerativeProductModel(int outputSize, int beatVectorSize, int featureVectorSize, int lowbound, int highbound) {
         this.featureVectorSize = featureVectorSize;
@@ -65,11 +66,20 @@ public class GenerativeProductModel implements Loadable {
         
         this.modifierExponents = new double[]{1.0, 1.0};
         
+        this.postprocessors = new ProbabilityPostprocessor[0];
+        
         reset();
     }
     
     public double[] getModifierExponents(){
         return this.modifierExponents;
+    }
+    
+    public ProbabilityPostprocessor[] getProbabilityPostprocessors(){
+        return postprocessors;
+    }
+    public void setProbabilityPostprocessors(ProbabilityPostprocessor[] p){
+        postprocessors = p;
     }
     
     public void reset(){
@@ -115,6 +125,9 @@ public class GenerativeProductModel implements Loadable {
             else
                 accum_probabilities.multiply(probabilities);
         }
+        
+        for(ProbabilityPostprocessor p : postprocessors)
+            accum_probabilities = p.postprocess(accum_probabilities);
         
         accum_probabilities.divide(accum_probabilities.elementSum());
         int sampled = NNUtilities.sample(this.rand, accum_probabilities);
