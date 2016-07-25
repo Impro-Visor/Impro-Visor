@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Track;
 import javax.swing.JFileChooser;
+import lstm.io.leadsheet.Constants;
 /**
  *
  * @author cssummer16
@@ -62,6 +63,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
 
         paramFileChooser = new javax.swing.JFileChooser();
         generationTimeButtonGroup = new javax.swing.ButtonGroup();
+        restLimitingGroup = new javax.swing.ButtonGroup();
         statusPanel = new javax.swing.JPanel();
         statusLabel = new javax.swing.JLabel();
         statusSeparator = new javax.swing.JSeparator();
@@ -79,6 +81,16 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         adventurousLabel = new javax.swing.JLabel();
         contourLabel = new javax.swing.JLabel();
         pitchLabel = new javax.swing.JLabel();
+        restLimitingLabel = new javax.swing.JLabel();
+        restLimitNoneRadio = new javax.swing.JRadioButton();
+        restLimitForceRadio = new javax.swing.JRadioButton();
+        restLimitResetRadio = new javax.swing.JRadioButton();
+        resetOptionPanel = new javax.swing.JPanel();
+        maxRestLengthLabel = new javax.swing.JLabel();
+        maxRestLength = new javax.swing.JComboBox<>();
+        rectificationLabel = new javax.swing.JLabel();
+        rectifyCheckbox = new javax.swing.JCheckBox();
+        colorTonesCheckbox = new javax.swing.JCheckBox();
         paramPanel = new javax.swing.JPanel();
         filePathLabel = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
@@ -191,13 +203,11 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         settingsPanel.add(expertWeightingLabel, gridBagConstraints);
 
         riskLevelSlider.setMajorTickSpacing(50);
-        riskLevelSlider.setMinimum(0);
         riskLevelSlider.setMinorTickSpacing(10);
         riskLevelSlider.setPaintTicks(true);
-        riskLevelSlider.setValue(50);
         riskLevelSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                riskLevelSliderStateChanged(evt);
+                updateProbabilityScaling(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -208,13 +218,11 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         settingsPanel.add(riskLevelSlider, gridBagConstraints);
 
         expertWeightingSlider.setMajorTickSpacing(50);
-        expertWeightingSlider.setMinimum(0);
         expertWeightingSlider.setMinorTickSpacing(10);
         expertWeightingSlider.setPaintTicks(true);
-        expertWeightingSlider.setValue(50);
         expertWeightingSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                expertWeightingSliderStateChanged(evt);
+                updateProbabilityScaling(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -256,6 +264,130 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         settingsPanel.add(pitchLabel, gridBagConstraints);
 
+        restLimitingLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        restLimitingLabel.setText("Rest Limiting");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        settingsPanel.add(restLimitingLabel, gridBagConstraints);
+
+        restLimitingGroup.add(restLimitNoneRadio);
+        restLimitNoneRadio.setSelected(true);
+        restLimitNoneRadio.setText("Don't limit rests");
+        restLimitNoneRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePostprocessing(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(restLimitNoneRadio, gridBagConstraints);
+
+        restLimitingGroup.add(restLimitForceRadio);
+        restLimitForceRadio.setText("Force network to play a note after long rest");
+        restLimitForceRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePostprocessing(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(restLimitForceRadio, gridBagConstraints);
+
+        restLimitingGroup.add(restLimitResetRadio);
+        restLimitResetRadio.setText("Reset network on next bar after long rest");
+        restLimitResetRadio.setToolTipText("");
+        restLimitResetRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePostprocessing(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(restLimitResetRadio, gridBagConstraints);
+
+        resetOptionPanel.setLayout(new java.awt.GridBagLayout());
+
+        maxRestLengthLabel.setText("Rest limit length: ");
+        resetOptionPanel.add(maxRestLengthLabel, new java.awt.GridBagConstraints());
+
+        maxRestLength.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quarter rest", "Half rest", "1 bar rest", "2 bar rest", "4 bar rest" }));
+        maxRestLength.setSelectedIndex(2);
+        maxRestLength.setEnabled(false);
+        maxRestLength.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePostprocessing(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.1;
+        resetOptionPanel.add(maxRestLength, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        settingsPanel.add(resetOptionPanel, gridBagConstraints);
+
+        rectificationLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        rectificationLabel.setText("Rectification");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        settingsPanel.add(rectificationLabel, gridBagConstraints);
+
+        rectifyCheckbox.setText("Rectify network output");
+        rectifyCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePostprocessing(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(rectifyCheckbox, gridBagConstraints);
+
+        colorTonesCheckbox.setSelected(true);
+        colorTonesCheckbox.setText("Allow color tones");
+        colorTonesCheckbox.setEnabled(false);
+        colorTonesCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePostprocessing(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(colorTonesCheckbox, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -266,7 +398,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         paramPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Network Parameters"));
         paramPanel.setLayout(new java.awt.GridBagLayout());
 
-        filePathLabel.setText("No parameters file selected.");
+        filePathLabel.setText("No connectome file selected.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -313,20 +445,26 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_justInTimeRadioActionPerformed
 
-    private void riskLevelSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_riskLevelSliderStateChanged
-        updateProbabilityScaling();
-    }//GEN-LAST:event_riskLevelSliderStateChanged
-
-    private void expertWeightingSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_expertWeightingSliderStateChanged
-        updateProbabilityScaling();
-    }//GEN-LAST:event_expertWeightingSliderStateChanged
-
-    private void updateProbabilityScaling(){
+    private void updateProbabilityScaling(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_updateProbabilityScaling
         double riskLevel = ((double) riskLevelSlider.getValue() - 50.0)/25.0;
         double expertWeights = ((double) expertWeightingSlider.getValue() - 50.0)/50.0;
         lstmGen.setProbabilityAdjust(riskLevel, expertWeights);
-    }
-    
+    }//GEN-LAST:event_updateProbabilityScaling
+
+    private void updatePostprocessing(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePostprocessing
+        maxRestLength.setEnabled(!restLimitNoneRadio.isSelected());
+        colorTonesCheckbox.setEnabled(rectifyCheckbox.isSelected());
+        
+        int restLen = Constants.QUARTER;
+        for(int i = maxRestLength.getSelectedIndex(); i > 0; i--)
+            restLen *= 2;
+        lstmGen.setPostprocess( rectifyCheckbox.isSelected(),
+                                colorTonesCheckbox.isSelected(),
+                                restLimitResetRadio.isSelected(),
+                                restLimitForceRadio.isSelected(),
+                                restLen );
+    }//GEN-LAST:event_updatePostprocessing
+
     private void load() {
         browseButton.setEnabled(false);
         statusLabel.setText("Loading parameters file...");
@@ -365,6 +503,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
     private javax.swing.JLabel adventurousLabel;
     private javax.swing.JRadioButton aheadOfTimeRadio;
     private javax.swing.JButton browseButton;
+    private javax.swing.JCheckBox colorTonesCheckbox;
     private javax.swing.JLabel conservativeLabel;
     private javax.swing.JLabel contourLabel;
     private javax.swing.JLabel expertWeightingLabel;
@@ -374,9 +513,19 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup generationTimeButtonGroup;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JRadioButton justInTimeRadio;
+    private javax.swing.JComboBox<String> maxRestLength;
+    private javax.swing.JLabel maxRestLengthLabel;
     private javax.swing.JFileChooser paramFileChooser;
     private javax.swing.JPanel paramPanel;
     private javax.swing.JLabel pitchLabel;
+    private javax.swing.JLabel rectificationLabel;
+    private javax.swing.JCheckBox rectifyCheckbox;
+    private javax.swing.JPanel resetOptionPanel;
+    private javax.swing.JRadioButton restLimitForceRadio;
+    private javax.swing.JRadioButton restLimitNoneRadio;
+    private javax.swing.JRadioButton restLimitResetRadio;
+    private javax.swing.ButtonGroup restLimitingGroup;
+    private javax.swing.JLabel restLimitingLabel;
     private javax.swing.JLabel riskLevelLabel;
     private javax.swing.JSlider riskLevelSlider;
     private javax.swing.JPanel settingsPanel;
