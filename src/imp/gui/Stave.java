@@ -5352,7 +5352,7 @@ public void play(int startAt)
 
 
 public void playSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message){
-    playSelection(playToEndOfChorus, loopCount, useDrums, message);
+    playSelection(playToEndOfChorus, loopCount, useDrums, message, true);
 }
 /**
  * Plays from the start of the current selection through to the end of chorus.
