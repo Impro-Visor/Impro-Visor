@@ -91,6 +91,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         rectificationLabel = new javax.swing.JLabel();
         rectifyCheckbox = new javax.swing.JCheckBox();
         colorTonesCheckbox = new javax.swing.JCheckBox();
+        mergeRepeatedCheckbox = new javax.swing.JCheckBox();
         paramPanel = new javax.swing.JPanel();
         filePathLabel = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
@@ -388,6 +389,20 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         settingsPanel.add(colorTonesCheckbox, gridBagConstraints);
 
+        mergeRepeatedCheckbox.setText("Merge repeated pitches");
+        mergeRepeatedCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePostprocessing(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 15;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        settingsPanel.add(mergeRepeatedCheckbox, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -406,7 +421,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         gridBagConstraints.weightx = 0.1;
         paramPanel.add(filePathLabel, gridBagConstraints);
 
-        browseButton.setText("Browse");
+        browseButton.setText("Load");
         browseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 browseButtonActionPerformed(evt);
@@ -460,6 +475,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
             restLen *= 2;
         lstmGen.setPostprocess( rectifyCheckbox.isSelected(),
                                 colorTonesCheckbox.isSelected(),
+                                mergeRepeatedCheckbox.isSelected(),
                                 restLimitResetRadio.isSelected(),
                                 restLimitForceRadio.isSelected(),
                                 restLen );
@@ -515,6 +531,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton justInTimeRadio;
     private javax.swing.JComboBox<String> maxRestLength;
     private javax.swing.JLabel maxRestLengthLabel;
+    private javax.swing.JCheckBox mergeRepeatedCheckbox;
     private javax.swing.JFileChooser paramFileChooser;
     private javax.swing.JPanel paramPanel;
     private javax.swing.JLabel pitchLabel;

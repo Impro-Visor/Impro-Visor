@@ -12,6 +12,7 @@ import imp.data.Note;
 import imp.util.ErrorLog;
 import imp.util.PartialBackgroundGenerator;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
@@ -25,6 +26,7 @@ import java.util.logging.Logger;
 import lstm.architecture.NetworkMeatPacker;
 import lstm.architecture.poex.ForcePlayPostprocessor;
 import lstm.architecture.poex.GenerativeProductModel;
+import lstm.architecture.poex.MergeRepeatedPostprocessor;
 import lstm.architecture.poex.ProbabilityPostprocessor;
 import lstm.architecture.poex.RectifyPostprocessor;
 import lstm.encoding.EncodingParameters;
@@ -58,6 +60,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
     
     RectifyPostprocessor rectifier;
     ForcePlayPostprocessor forcePlay;
+    MergeRepeatedPostprocessor repeatMerger;
     int consecutiveRests;
     int timestep;
     int maxConsecutiveRests = Constants.WHOLE;
@@ -75,6 +78,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
         
         rectifier = new RectifyPostprocessor(lowerBound);
         forcePlay = new ForcePlayPostprocessor();
+        repeatMerger = new MergeRepeatedPostprocessor(lowerBound);
         
         params_path = null;
         loaded = false;
@@ -131,6 +135,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
     public void setPostprocess(
             boolean rectify,
             boolean colorTonesOK,
+            boolean mergeRepeated,
             boolean resetAfterRests,
             boolean forcePlayAfterRests,
             int maxNumRests)
@@ -139,26 +144,16 @@ public class LSTMGen implements PartialBackgroundGenerator{
         shouldResetAfterTooLong = resetAfterRests;
         allowColorTones = colorTonesOK;
         maxConsecutiveRests = maxNumRests;
-        if(rectify){
-            if(forcePlayAfterRests){
-                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{
-                    rectifier,
-                    forcePlay,
-                });
-            } else {
-                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{
-                    rectifier,
-                });
-            }
-        } else {
-            if(forcePlayAfterRests){
-                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{
-                    forcePlay,
-                });
-            } else {
-                model.setProbabilityPostprocessors(new ProbabilityPostprocessor[]{});
-            }
-        }
+        
+        ArrayList<ProbabilityPostprocessor> postprocessors = new ArrayList<ProbabilityPostprocessor>(3);
+        if(rectify)
+            postprocessors.add(rectifier);
+        if(mergeRepeated)
+            postprocessors.add(repeatMerger);
+        if(forcePlayAfterRests)
+            postprocessors.add(forcePlay);
+        ProbabilityPostprocessor[] ppsArr = new ProbabilityPostprocessor[postprocessors.size()];
+        model.setProbabilityPostprocessors(postprocessors.toArray(ppsArr));
     }
     
     /**
@@ -183,6 +178,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
                 }
             }
             AVector curOutput = model.step(chordSequence.retrieve());
+            repeatMerger.noteWasPlayed((int)curOutput.get(0));
             if(curOutput.get(0) == -1 || (curOutput.get(0) == -2 && consecutiveRests > 0))
                 consecutiveRests += Constants.RESOLUTION_SCALAR;
             else
@@ -217,6 +213,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
         
         timestep = offset;
         forcePlay.reset();
+        repeatMerger.reset();
         rectifier.start(chords, allowColorTones);
         
         done = false;
@@ -307,6 +304,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
                     
                     timestep = savedOffset + tradePos;
                     forcePlay.reset();
+                    repeatMerger.reset();
                     rectifier.start(extracted, allowColorTones);
                     
                     runGenerate(-1);
