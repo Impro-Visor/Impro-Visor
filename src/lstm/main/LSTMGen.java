@@ -36,8 +36,9 @@ import lstm.io.leadsheet.LeadSheetDataSequence;
 import mikera.vectorz.AVector;
 
 /**
- *
- * @author cssummer16
+ * LSTMGen manages generation of licks using a generative product-of-experts
+ * neural network.
+ * @author Daniel Johnson
  */
 public class LSTMGen implements PartialBackgroundGenerator{
     GenerativeProductModel model;
@@ -86,11 +87,19 @@ public class LSTMGen implements PartialBackgroundGenerator{
         executor = new ThreadPoolExecutor(1,1,0,TimeUnit.SECONDS,new ArrayBlockingQueue<Runnable>(1));
     }
     
+    /**
+     * Set the path to the network connectome file
+     * @param path 
+     */
     public void setLoadPath(String path) {
         params_path = path;
         loaded = false;
     }
     
+    /**
+     * Load parameters from the current connectome file
+     * @param path 
+     */
     public void load() throws InvalidParametersException, IOException {
         if(params_path == null){
             throw new RuntimeException("Load called without providing parameters!");
@@ -101,11 +110,19 @@ public class LSTMGen implements PartialBackgroundGenerator{
         loaded = true;
     }
     
+    /**
+     * Helper to set the path to the network connectome file and also load it
+     */
     public void loadFromPath(String path) throws InvalidParametersException, IOException {
         setLoadPath(path);
         load();
     }
     
+    
+    /**
+     * Reload state from an already loaded connectome file. Since only the state
+     * of the network can change, this is all we need to update.
+     */
     public void reload() throws InvalidParametersException, IOException{
         if(!loaded) {
             load();
@@ -118,7 +135,8 @@ public class LSTMGen implements PartialBackgroundGenerator{
     }
     
     /**
-     * Set probability adjustment levels
+     * Set probability adjustment levels. These affect the behavior of the
+     * network.
      * @param riskLevel How much risk to take. Range -inf to inf, 0 is default
      * @param biasLevel How to bias the experts. Range -1 (interval only) to 1
      * (chord only), 0 is default
@@ -132,6 +150,18 @@ public class LSTMGen implements PartialBackgroundGenerator{
         modifiers[1] = chordScale;
     }
     
+    /**
+     * Set probability postprocessing modes. These specify how the output of the
+     * network is modified before sampling.
+     * @param rectify Should the network output be rectified?
+     * @param colorTonesOK Are color tones ok?
+     * @param mergeRepeated Should repeated pitches be merged into one note?
+     * @param resetAfterRests After a long rest, should we reset the network
+     * state?
+     * @param forcePlayAfterRests After a long rest, should we force the network
+     * to play?
+     * @param maxNumRests How many timesteps is a "long rest"?
+     */
     public void setPostprocess(
             boolean rectify,
             boolean colorTonesOK,
@@ -157,7 +187,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
     }
     
     /**
-     * Run generation
+     * Helper to run generation process.
      * @param maxIter Max iters to generate, or negative to generate until end of sequence.
      */
     private void runGenerate(int maxIter){
@@ -188,6 +218,13 @@ public class LSTMGen implements PartialBackgroundGenerator{
         }
     }
     
+    /**
+     * Start generation of a leadsheet.
+     * @param chords The chords to work with
+     * @param offset The offset for the beat (i.e. the timestep the chords start
+     * on)
+     * @param step How long should the generator generate at a time?
+     */
     public void startGenerate(ChordPart chords, int offset, int step){
         isTrading = false;
         try {
@@ -219,6 +256,14 @@ public class LSTMGen implements PartialBackgroundGenerator{
         done = false;
     }
     
+    /**
+     * Start generating a leadsheet in trading mode, with gaps for user input.
+     * @param chords The chords to work with
+     * @param offset The offset for the beat (i.e. the timestep the chords start
+     * on)
+     * @param generateStart Whether the network should generate first
+     * @param tradeQuantum Length of trading "turn" in timesteps
+     */
     public void startGenerateTrading(ChordPart chords, int offset, boolean generateStart, int tradeQuantum) {
         isTrading = true;
         savedChords = chords;
@@ -231,9 +276,20 @@ public class LSTMGen implements PartialBackgroundGenerator{
         done = false;
     }
     
+    /**
+     * Synchronously generate a melody over chords
+     * @param chords
+     * @return 
+     */
     public MelodyPart generate(ChordPart chords) {
         return generate(chords, 0);
     }
+    /**
+     * Synchronously generate a melody over chords
+     * @param chords
+     * @param offset
+     * @return 
+     */
     public MelodyPart generate(ChordPart chords, int offset) {
         startGenerate(chords, offset, -1);
         Future<MelodyPart> fpart = lazyGenerateMore();
@@ -249,9 +305,23 @@ public class LSTMGen implements PartialBackgroundGenerator{
         }
     }
     
+    /**
+     * Synchronously generate a trading response
+     * @param chords
+     * @param generateStart
+     * @param tradeQuantum
+     * @return 
+     */
     public MelodyPart generateTrading(ChordPart chords, boolean generateStart, int tradeQuantum) {
         return generateTrading(chords, 0, generateStart, tradeQuantum);
     }
+    /**
+     * Synchronously generate a trading response
+     * @param chords
+     * @param generateStart
+     * @param tradeQuantum
+     * @return 
+     */
     public MelodyPart generateTrading(ChordPart chords, int offset, boolean generateStart, int tradeQuantum) {
         startGenerateTrading(chords, offset, generateStart, tradeQuantum);
         MelodyPart part = null;

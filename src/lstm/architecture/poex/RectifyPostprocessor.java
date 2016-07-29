@@ -15,8 +15,8 @@ import mikera.vectorz.Vectorz;
 import polya.Polylist;
 
 /**
- *
- * @author cssummer16
+ * Postprocessor to rectify notes chosen by forcing them to be in the chord.
+ * @author Daniel Johnson
  */
 public class RectifyPostprocessor implements ProbabilityPostprocessor {
     private ChordPart chords;

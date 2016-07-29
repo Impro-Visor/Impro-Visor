@@ -8,8 +8,8 @@ package lstm.architecture.poex;
 import mikera.vectorz.AVector;
 
 /**
- *
- * @author cssummer16
+ * Postprocessor to merge repeated pitches.
+ * @author Daniel Johnson
  */
 public class MergeRepeatedPostprocessor implements ProbabilityPostprocessor {
     private int lowBound;

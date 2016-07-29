@@ -8,8 +8,9 @@ package lstm.architecture.poex;
 import mikera.vectorz.AVector;
 
 /**
- *
- * @author cssummer16
+ * Postprocessor to force the network to play. Used by LSTMGen to prevent long
+ * rests.
+ * @author Daniel Johnson
  */
 public class ForcePlayPostprocessor implements ProbabilityPostprocessor {
     private boolean shouldForce = false;
