@@ -8697,13 +8697,34 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator10">
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="lstmNetworkMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Deep Learning"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lstmNetworkMIActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="fractalMI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Division Improvisation"/>
+                <Property name="text" type="java.lang.String" value="Division"/>
                 <Property name="actionCommand" type="java.lang.String" value="Improvisation"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fractalMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+G"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="103"/>
+                <Property name="text" type="java.lang.String" value="Grammar"/>
+                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lickGeneratorMIActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="guideToneLine">
@@ -8717,23 +8738,10 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guideToneLineActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+G"/>
-                </Property>
-                <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Grammar Control Panel"/>
-                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lickGeneratorMIActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="intervalLearningMI">
               <Properties>
                 <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Interval Learning Panel"/>
+                <Property name="text" type="java.lang.String" value="Interval Learning "/>
                 <Property name="toolTipText" type="java.lang.String" value="Improvisation using interval learning"/>
               </Properties>
               <Events>
@@ -8766,19 +8774,11 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="transformMI">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Transform Control Panel"/>
+                <Property name="text" type="java.lang.String" value="Transform"/>
                 <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transformMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="lstmNetworkMI">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="LSTM Network Control Panel"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lstmNetworkMIActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -8788,20 +8788,30 @@
             <Property name="text" type="java.lang.String" value="Improv"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="passiveTradingMI">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="saveImprovCheckBoxMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Open Passive Trading"/>
+                <Property name="text" type="java.lang.String" value="Save Improvisation"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passiveTradingMIActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rememberImprovCheckBoxActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator1">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="tradingWindow">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Open Active Trading"/>
+                <Property name="text" type="java.lang.String" value="Active Trading"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradingWindowActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="passiveTradingMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Passive Trading"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passiveTradingMIActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator2">
@@ -8846,10 +8856,8 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="improvButtonGroup"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="LSTM Network"/>
+                <Property name="text" type="java.lang.String" value="Deep Learning"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterLstmSeparator">
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="guideToneRadio">
               <Properties>
@@ -8875,7 +8883,13 @@
                 <Property name="text" type="java.lang.String" value="Guide Tone &amp; Divide"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterGuideToneSeparator">
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="intervalsRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="improvButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Interval Learning"/>
+              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="themeWeaveRadio">
               <Properties>
@@ -8884,24 +8898,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Theme Weave"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="intervalsRadio">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="improvButtonGroup"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Use Interval Learning"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator1">
-            </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="saveImprovCheckBoxMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Save Improvisation"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rememberImprovCheckBoxActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

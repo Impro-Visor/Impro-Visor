@@ -58,7 +58,8 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         paramFileChooser = new javax.swing.JFileChooser();
@@ -100,7 +101,8 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         paramFileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Network connectome file", "ctome"));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("LSTM Network Control Panel");
+        setTitle("Deep Learning Control Panel");
+        setAlwaysOnTop(true);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         statusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Status"));
@@ -149,8 +151,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
 
         generationTimeButtonGroup.add(aheadOfTimeRadio);
         aheadOfTimeRadio.setText("Ahead of time (safer)");
-        aheadOfTimeRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        aheadOfTimeRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 aheadOfTimeRadioActionPerformed(evt);
             }
         });
@@ -164,8 +168,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         generationTimeButtonGroup.add(justInTimeRadio);
         justInTimeRadio.setSelected(true);
         justInTimeRadio.setText("Just in time (faster)");
-        justInTimeRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        justInTimeRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 justInTimeRadioActionPerformed(evt);
             }
         });
@@ -206,8 +212,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         riskLevelSlider.setMajorTickSpacing(50);
         riskLevelSlider.setMinorTickSpacing(10);
         riskLevelSlider.setPaintTicks(true);
-        riskLevelSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        riskLevelSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 updateProbabilityScaling(evt);
             }
         });
@@ -221,8 +229,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         expertWeightingSlider.setMajorTickSpacing(50);
         expertWeightingSlider.setMinorTickSpacing(10);
         expertWeightingSlider.setPaintTicks(true);
-        expertWeightingSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        expertWeightingSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 updateProbabilityScaling(evt);
             }
         });
@@ -277,8 +287,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         restLimitingGroup.add(restLimitNoneRadio);
         restLimitNoneRadio.setSelected(true);
         restLimitNoneRadio.setText("Don't limit rests");
-        restLimitNoneRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        restLimitNoneRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 updatePostprocessing(evt);
             }
         });
@@ -292,8 +304,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
 
         restLimitingGroup.add(restLimitForceRadio);
         restLimitForceRadio.setText("Force network to play a note after long rest");
-        restLimitForceRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        restLimitForceRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 updatePostprocessing(evt);
             }
         });
@@ -308,8 +322,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         restLimitingGroup.add(restLimitResetRadio);
         restLimitResetRadio.setText("Reset network on next bar after long rest");
         restLimitResetRadio.setToolTipText("");
-        restLimitResetRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        restLimitResetRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 updatePostprocessing(evt);
             }
         });
@@ -329,8 +345,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         maxRestLength.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quarter rest", "Half rest", "1 bar rest", "2 bar rest", "4 bar rest" }));
         maxRestLength.setSelectedIndex(2);
         maxRestLength.setEnabled(false);
-        maxRestLength.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        maxRestLength.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 updatePostprocessing(evt);
             }
         });
@@ -360,8 +378,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         settingsPanel.add(rectificationLabel, gridBagConstraints);
 
         rectifyCheckbox.setText("Rectify network output");
-        rectifyCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        rectifyCheckbox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 updatePostprocessing(evt);
             }
         });
@@ -376,8 +396,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         colorTonesCheckbox.setSelected(true);
         colorTonesCheckbox.setText("Allow color tones");
         colorTonesCheckbox.setEnabled(false);
-        colorTonesCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        colorTonesCheckbox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 updatePostprocessing(evt);
             }
         });
@@ -390,8 +412,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         settingsPanel.add(colorTonesCheckbox, gridBagConstraints);
 
         mergeRepeatedCheckbox.setText("Merge repeated pitches");
-        mergeRepeatedCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        mergeRepeatedCheckbox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 updatePostprocessing(evt);
             }
         });
@@ -422,8 +446,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
         paramPanel.add(filePathLabel, gridBagConstraints);
 
         browseButton.setText("Load");
-        browseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        browseButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 browseButtonActionPerformed(evt);
             }
         });
