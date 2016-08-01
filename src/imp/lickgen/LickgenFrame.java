@@ -6513,7 +6513,11 @@ private void updateUseSoloist()
     }
     
     public boolean [] getRectifyOptions(){
-        boolean [] options = {chordBox.isSelected(), colorBox.isSelected(), approachBox.isSelected()};
+        boolean [] options = 
+          {chordBox.isSelected(), 
+           colorBox.isSelected(), 
+           approachBox.isSelected(),
+           avoidRepeats};
         return options;
     }
 

@@ -981,6 +981,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
                                                     false,
                                                     true,
                                                     true,
+                                                    true,
                                                     true));
         notate.addChorus(fractalSolo); 
         notate.playCurrentSelection(true, 

@@ -2604,4 +2604,45 @@ public static int gcd(int a, int b)
         //System.out.println("old melody = " + this + "\nnew melody = " + result);
         return result;
     }
+    
+     /**
+     * removeRepeatedNotes() returns a new melody based on the current one,
+     * except that repeated notes are merged together into single notes.
+     */
+    public void removeRepeatedNotesInPlace()
+    {
+        int n = slots.size();
+        Note previousNote = null;
+        int previousIndex = 0;
+        for( int i = 0; i < n; i++ )
+          {
+            Unit thisUnit = slots.get(i);
+            if( thisUnit != null )
+              {
+              if( previousNote != null && ((Note)thisUnit).nonRest() )
+                {
+                Note thisNote = (Note)thisUnit;
+                if( thisNote.samePitch(previousNote) )
+                  {
+                    Note newNote = previousNote.copy();
+                    newNote.setRhythmValue(previousNote.getRhythmValue() + thisNote.getRhythmValue());
+    System.out.println("in beat " + i/BEAT + " merging notes " + previousNote.toLeadsheet() + " -> " + newNote.toLeadsheet());
+                    slots.set(i, null);
+                    slots.set(previousIndex, newNote);
+                    previousNote = newNote;
+                  }
+                else
+                  {
+                  previousNote = thisNote;
+                  previousIndex = i;
+                  }
+                }
+              else
+                {
+                  previousNote = (Note)thisUnit;
+                  previousIndex = i;
+                }
+              }
+          }
+    }
 }

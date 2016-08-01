@@ -162,7 +162,7 @@ public class TradingResponseInfo {
     public  static MelodyPart generateFromGrammar(int length, ChordPart chords, Notate notate){
         Grammar gram = new Grammar(notate.getGrammarFileName());
         MelodyPart generated = notate.getLickgenFrame().fillMelody(BEAT, gram.run(0, length, notate, false, false, -1), chords, 0);
-        RectifyPitchesCommand cmd = new RectifyPitchesCommand(generated, 0, generated.size()-1, chords, false, false, true, true, true);
+        RectifyPitchesCommand cmd = new RectifyPitchesCommand(generated, 0, generated.size()-1, chords, false, false, true, true, true, true);
         cmd.execute();
         return generated;
     }
@@ -515,7 +515,7 @@ public class TradingResponseInfo {
             color = true;
             approach = true;
         }
-        cmd = new RectifyPitchesCommand(response, 0, response.size()-1, responseChords, false, false, chord, color, approach);
+        cmd = new RectifyPitchesCommand(response, 0, response.size()-1, responseChords, false, false, chord, color, approach, true);
         cmd.execute();
         //System.out.println("after: " + response);
     }

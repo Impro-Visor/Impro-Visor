@@ -254,16 +254,23 @@ public class MelodyGenerator {
         }
         if(rectify){
             //post-rectification to chord, color, and approach tones
-            RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
-                                result.size()-1, chords,
-                                false, false,
-                                includeChord, includeColor, includeApproach);
+            RectifyPitchesCommand cmd = 
+                    new RectifyPitchesCommand(result, 
+                                              0,
+                                              result.size()-1, 
+                                              chords,
+                                              false, 
+                                              false,
+                                              includeChord, 
+                                              includeColor, 
+                                              includeApproach,
+                                              merge);
             cmd.execute();
         }
-        //merge same notes - good idea???
-        if(merge){
-            result = mergeSameNotes(result);
-        }
+//        //merge same notes - good idea???
+//        if(merge){
+//            result = mergeSameNotes(result);
+//        }
         return result;
     }
     
@@ -325,16 +332,23 @@ public class MelodyGenerator {
         }
         if(rectify){
             //post-rectification to chord, color, and approach tones
-            RectifyPitchesCommand cmd = new RectifyPitchesCommand(result, 0,
-                                result.size()-1, chords,
-                                false, false,
-                                includeChord, includeColor, includeApproach);
+            RectifyPitchesCommand cmd = 
+                    new RectifyPitchesCommand(result, 
+                                              0,
+                                              result.size()-1, 
+                                              chords,
+                                              false, 
+                                              false,
+                                              includeChord, 
+                                              includeColor, 
+                                              includeApproach,
+                                              merge);
             cmd.execute();
         }
-        //merge same notes - good idea???
-        if(merge){
-            result = mergeSameNotes(result);
-        }
+//        //merge same notes - good idea???
+//        if(merge){
+//            result = mergeSameNotes(result);
+//        }
         return result;
     }    
     

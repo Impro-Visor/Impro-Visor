@@ -561,6 +561,7 @@ public class FractalFrame extends javax.swing.JFrame {
                                                     false,
                                                     true,
                                                     true,
+                                                    true,
                                                     true));
         return fractalSolo;
     }
@@ -596,6 +597,7 @@ public class FractalFrame extends javax.swing.JFrame {
                                                     notate.getChordProg(),
                                                     false,
                                                     false,
+                                                    true,
                                                     true,
                                                     true,
                                                     true));

@@ -181,7 +181,17 @@ public MelodyPart flattenByResolution(MelodyPart melody,
     newMelody.pasteOver(flattenedPart, startingSlot);
     
     //move pitches in part we changed to nearest chord tone
-    RectifyPitchesCommand cmd = new RectifyPitchesCommand(newMelody, startingSlot, endingSlot, chords, false, false, true, false, false);
+    RectifyPitchesCommand cmd = 
+            new RectifyPitchesCommand(newMelody, 
+                                      startingSlot, 
+                                      endingSlot, 
+                                      chords, 
+                                      false, 
+                                      false, 
+                                      true, 
+                                      false, 
+                                      false,
+                                      false);
     cmd.execute();
     
     //concatenate repeat pitches in part we changed

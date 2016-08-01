@@ -80,6 +80,8 @@ public class RectifyPitchesCommand
   boolean colorTones = true;
   
   boolean approachTones = true;
+  
+  boolean mergeRepeatedPitches = true;
 
   /**
    * Creates a new Command that can resolve pitches of a set of Notes.
@@ -96,14 +98,22 @@ public class RectifyPitchesCommand
     this.direction = direction;     // preferred direction  (true = up)
     }
   
-  public RectifyPitchesCommand(MelodyPart part, int startIndex,
-                                int stopIndex, ChordPart chordProg,
-                                boolean directional, boolean direction,
-                                boolean chord, boolean color, boolean approach){
+  public RectifyPitchesCommand(MelodyPart part, 
+                              int startIndex,
+                              int stopIndex, 
+                              ChordPart chordProg,
+                              boolean directional, 
+                              boolean direction,
+                              boolean chord, 
+                              boolean color, 
+                              boolean approach,
+                              boolean mergeRepeatedPitches)
+    {
       this(part, startIndex, stopIndex, chordProg, directional, direction);
       this.chordTones = chord;
       this.colorTones = color;
       this.approachTones = approach;
+      this.mergeRepeatedPitches = mergeRepeatedPitches;
   }
 
 /**
@@ -308,6 +318,10 @@ public void execute()
                slotsRemaining -= value;
                }
            }
+        if( mergeRepeatedPitches )
+           {
+          part.removeRepeatedNotesInPlace();
+          }
       }
     catch( Exception ex )
       {

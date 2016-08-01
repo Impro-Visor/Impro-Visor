@@ -1052,6 +1052,7 @@ public MelodyPart getMelodyPart()
     return this.origPart;
   }
 
+
 /**
  * Returns the display Part of this Stave instance
  * @return Part         the displayed Part in the Stave
@@ -5317,14 +5318,18 @@ public void shiftPitch(int startIndex, int endIndex, boolean up,
 public void rectifySelection(int startIndex, int endIndex, boolean directional, boolean direction)
   {
     boolean [] options = notate.getLickgenFrame().getRectifyOptions();
+    MelodyPart melodyPart = getMelodyPart();
     notate.cm.execute(
-            new RectifyPitchesCommand(getMelodyPart(),
+            new RectifyPitchesCommand(melodyPart,
                                       startIndex,
                                       endIndex,
                                       getChordProg(),
                                       directional,
                                       direction,
-                                      options[0], options[1], options[2]));
+                                      options[0], 
+                                      options[1], 
+                                      options[2],
+                                      options[3]));
 
     if( startIndex == endIndex )
       {

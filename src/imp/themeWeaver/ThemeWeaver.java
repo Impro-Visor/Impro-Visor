@@ -3905,7 +3905,7 @@ private void closeWindow()
         int length = customSolo.getSize();
         ChordPart themeChords = notate.getChordProg().extract(0, length);
         //set chords of theme to be the chordpart extracted from length to length +length
-        cm.execute(new RectifyPitchesCommand(customSolo, 0, length, themeChords, false, false, true, false, false));
+        cm.execute(new RectifyPitchesCommand(customSolo, 0, length, themeChords, false, false, true, false, false, true));
         notate.setCurrentSelectionStart(0); //start selection at beginning
         
         notate.pasteMelody(customSolo); //paste solo into leadsheet
@@ -5262,7 +5262,7 @@ public void myGenerateSolo(ArrayList<ThemeUse> themeUses, CommandManager cm)
     solo.setSize(notate.getScoreLength());
     notate.setCurrentSelectionStart(0); //start selection at beginning
     //rectify pitches in entire solo
-    cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false, true, false, false));
+    cm.execute(new RectifyPitchesCommand(solo, 0, solo.getSize(), notate.getChordProg(), false, false, true, false, false, true));
     notate.pasteMelody(solo); //paste solo into leadsheet
     imp.ImproVisor.setPlayEntrySounds(true); //play solo
 }
