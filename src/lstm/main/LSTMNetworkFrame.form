@@ -74,7 +74,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="infoLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;To load a parameter file, click &lt;i&gt;Browse&lt;/i&gt;, select an LSTM parameter file (extension .nnpz), and then click &lt;i&gt;Load Parameters&lt;/i&gt;."/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;To load a connectome, click &lt;i&gt;Load&lt;/i&gt;, select a connectome file (extension .ctome), and then click &lt;i&gt;Open&lt;/i&gt;."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Constraints>

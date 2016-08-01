@@ -272,7 +272,15 @@ public class ProductCompressingAutoEncoder implements Loadable {
             default:
                 return false;
         }
-        int expert_idx = Integer.parseInt(car2);
-        return exps[expert_idx].load(data, cdr2);
+        
+        try {
+            int expertIdx = Integer.parseInt(car);
+            if(expertIdx >= 0 && expertIdx < num_experts)
+                return exps[expertIdx].load(data, cdr2);
+            else
+                return false;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 }

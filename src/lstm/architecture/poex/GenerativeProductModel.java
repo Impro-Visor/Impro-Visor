@@ -90,12 +90,19 @@ public class GenerativeProductModel implements Loadable {
     
     @Override
     public boolean load(INDArray data, String loadPath) {
-        // Expected format: (enc|dec)_#_<expert params>
+        // Expected format: #_<expert params>
         // i.e. enc_1_full_w
         String car = pathCar(loadPath);
         String cdr = pathCdr(loadPath);
-        int expert_idx = Integer.parseInt(car);
-        return this.experts[expert_idx].load(data, cdr);
+        try {
+            int expertIdx = Integer.parseInt(car);
+            if(expertIdx >= 0 && expertIdx < num_experts)
+                return this.experts[expertIdx].load(data, cdr);
+            else
+                return false;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
     
     public AVector step(DataStep currStep) {
