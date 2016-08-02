@@ -267,10 +267,10 @@ public class MelodyGenerator {
                                               merge);
             cmd.execute();
         }
-//        //merge same notes - good idea???
-//        if(merge){
-//            result = mergeSameNotes(result);
-//        }
+        //merge same notes - good idea???
+        if(merge){
+            result.removeRepeatedNotesInPlace();
+        }
         return result;
     }
     
@@ -345,52 +345,52 @@ public class MelodyGenerator {
                                               merge);
             cmd.execute();
         }
-//        //merge same notes - good idea???
-//        if(merge){
-//            result = mergeSameNotes(result);
-//        }
+        //merge same notes - good idea???
+        if(merge){
+            result.removeRepeatedNotesInPlace();
+        }
         return result;
     }    
     
-    //Merge Same Notes
-    
-    /**
-     * mergeSameNotes
-     * Merges consecutive notes that have the same pitch.
-     * This should probably be a command so that more people can use it.
-     * @param unmerged a MelodyPart whose consecutive same notes are to be merged.
-     * @return a MelodyPart whose consecutive same notes have been merged.
-     */
-    private MelodyPart mergeSameNotes(MelodyPart unmerged){
-        MelodyPart merged = new MelodyPart();
-        int duration = unmerged.getNote(0).getRhythmValue();
-        Note toAdd = unmerged.getNote(0);
-        int lastIndex = unmerged.getLastActiveSlot();
-        for(int i = 0; i + duration <= lastIndex; i += duration){
-            
-            Note curr = unmerged.getNote(i);
-            duration = curr.getRhythmValue();
-            Note next = unmerged.getNote(i + duration);
-            try{
-                if(curr.getPitch() == next.getPitch()){
-                    toAdd.setRhythmValue(toAdd.getRhythmValue() + next.getRhythmValue());
-                }else{
-                    merged.addNote(toAdd.copy());
-                    toAdd = next;
-                }
-            }catch(Exception e){
-                System.out.println("Something went wrong. Info below:");
-                System.out.println("i: "+i);
-                System.out.println("duration: "+duration);
-                System.out.println("curr: "+curr);
-                System.out.println("next: "+next);
-            }
-            
-        }
-        //add the last note
-        merged.addNote(toAdd);
-        return merged;
-    }
+//    //Merge Same Notes
+//    
+//    /**
+//     * mergeSameNotes
+//     * Merges consecutive notes that have the same pitch.
+//     * This should probably be a command so that more people can use it.
+//     * @param unmerged a MelodyPart whose consecutive same notes are to be merged.
+//     * @return a MelodyPart whose consecutive same notes have been merged.
+//     */
+//    private MelodyPart mergeSameNotes(MelodyPart unmerged){
+//        MelodyPart merged = new MelodyPart();
+//        int duration = unmerged.getNote(0).getRhythmValue();
+//        Note toAdd = unmerged.getNote(0);
+//        int lastIndex = unmerged.getLastActiveSlot();
+//        for(int i = 0; i + duration <= lastIndex; i += duration){
+//            
+//            Note curr = unmerged.getNote(i);
+//            duration = curr.getRhythmValue();
+//            Note next = unmerged.getNote(i + duration);
+//            try{
+//                if(curr.getPitch() == next.getPitch()){
+//                    toAdd.setRhythmValue(toAdd.getRhythmValue() + next.getRhythmValue());
+//                }else{
+//                    merged.addNote(toAdd.copy());
+//                    toAdd = next;
+//                }
+//            }catch(Exception e){
+//                System.out.println("Something went wrong. Info below:");
+//                System.out.println("i: "+i);
+//                System.out.println("duration: "+duration);
+//                System.out.println("curr: "+curr);
+//                System.out.println("next: "+next);
+//            }
+//            
+//        }
+//        //add the last note
+//        merged.addNote(toAdd);
+//        return merged;
+//    }
     
     //Utilities for choosing the first 2-3 notes of a melody:
     
