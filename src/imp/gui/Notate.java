@@ -22061,7 +22061,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
           {
             lickgenFrame.setRhythmFieldText(Formatting.prettyFormat(abstractMelody));
           }
-    
+    }
     setMode(Mode.GENERATED);
     
     isPassiveTrading = passiveTradingDialog.isVisible();
@@ -22069,12 +22069,10 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     passiveTradingImprovisorFirst = passiveTradingDialog.getImprovisorTradeFirst();
 
     if( isPassiveTrading && enableRecording )
-      {
+    {
         enableRecording(); // TRIAL
-      }
-
     }
-  }
+}
   
 public void saveImprovChorus()
 {
