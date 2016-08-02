@@ -37,7 +37,9 @@ import imp.util.Preferences;
 import imp.util.Trace;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -614,7 +616,6 @@ public class Critic implements imp.Constants {
     public Double gradeFromCritic(ArrayList<Note> noteList, ArrayList<Chord> chordList)
     {
         StringBuilder output = new StringBuilder();
-        AtomicBoolean error = new AtomicBoolean(false);
                
         // Create new Melody Part
         MelodyPart melody = new MelodyPart();
@@ -633,7 +634,7 @@ public class Critic implements imp.Constants {
         // Get classifications for all notes
         int [] classifications = Coloration.collectNoteColors(melody, chords);
     
-        while (currEnd <= size && !error.get())
+        while (currEnd <= size)
         {
             // Random grade needed for correct length of input
             int grade = 1;
@@ -659,39 +660,36 @@ public class Critic implements imp.Constants {
                     if (currStart == 0)
                     {
                         beatPosition = BitVectorGenerator.printNoteData(output, null, currNoteList.get(index), 
-                                currNoteClassification, beatPosition, error);
+                                currNoteClassification, beatPosition);
                     }
                     else
                     {   
                         // For correct distance to preceding note
                         Note prevNote = melody.getPrevNote(currStart);
                         beatPosition = BitVectorGenerator.printNoteData(output, prevNote, currNoteList.get(index), 
-                                currNoteClassification, beatPosition, error);
+                                currNoteClassification, beatPosition);
                     }
                 }
                 else
                 {
                     beatPosition = BitVectorGenerator.printNoteData(output, currNoteList.get(indexPrev), 
-                            currNoteList.get(index), currNoteClassification, beatPosition, error);
+                            currNoteList.get(index), currNoteClassification, beatPosition);
                 }
             }
             
-            if (!error.get())
-            {     
-                // Fix the length if the lick is too short or too long
-                if (output.length() > lickLength)
-                {
-                    output.delete(lickLength, output.length());
-                }
-
-                while (output.length() < lickLength)
-                {
-                    // Add a whole note rest landing on beat 1 
-                    output.append(BitVectorGenerator.WHOLE_REST);
-                }
-
-                grades.add(filter(output.toString()));
+   
+            // Fix the length if the lick is too short or too long
+            if (output.length() > lickLength) {
+                output.delete(lickLength, output.length());
             }
+
+            while (output.length() < lickLength) {
+                // Add a whole note rest landing on beat 1 
+                output.append(BitVectorGenerator.WHOLE_REST);
+            }
+
+            grades.add(filter(output.toString()));
+            
             
             // Move two beats ahead
             currStart += BEAT * 2;
@@ -700,7 +698,7 @@ public class Critic implements imp.Constants {
             output.delete(0, output.length());
         }
         
-        if (!error.get() && !grades.isEmpty())
+        if (!grades.isEmpty())
         {
             double accum = 0;
             for (Double d : grades)
@@ -755,12 +753,12 @@ public class Critic implements imp.Constants {
             {
                 // For correct distance to preceding note
                 beatPosition = BitVectorGenerator.printNoteData(output, prevNote, noteList.get(index), 
-                       currNoteClassification, beatPosition, error);            
+                       currNoteClassification, beatPosition);            
             }
             else
             {
                 beatPosition = BitVectorGenerator.printNoteData(output, noteList.get(indexPrev), 
-                        noteList.get(index), currNoteClassification, beatPosition, error);
+                        noteList.get(index), currNoteClassification, beatPosition);
             }
         }
 
@@ -790,49 +788,43 @@ public class Critic implements imp.Constants {
     /*
      * Initializes the network given a weight file
      */
-    public StringBuilder prepareNetwork(String weights) throws Exception
+    public StringBuilder prepareNetwork(String weights) throws IllegalArgumentException, IOException
     {
-        try 
-        {
-            File file = new File(ImproVisor.getVocabDirectory(), weights);
-            BufferedReader in = new BufferedReader(new FileReader(file));
-            StringBuilder output = new StringBuilder();
-            
-            // Parse first line, containing network stats
-            String[] networkInfo = in.readLine().split(" ");
-            int currPos = 0;
-            int thisInputDimension = Integer.parseInt(networkInfo[currPos++]);
-            lickLength = (thisInputDimension * 2) + 4;
-            int thisNumLayers = Integer.parseInt(networkInfo[currPos++]);
-            int[] thisLayerSize = new int[thisNumLayers];
-            ActivationFunction[] thisLayerType = new ActivationFunction[thisNumLayers];
-            
-            int j = 0;
-            int layers = currPos + 2 * thisNumLayers; 
-            for (int i = 2; i < layers; i+=2, j++)
-            {
-                thisLayerSize[j] = Integer.parseInt(networkInfo[currPos++]);
-                thisLayerType[j] = getLayerType(networkInfo[currPos++]);
-            }
+        File file = new File(weights);
+        BufferedReader in = new BufferedReader(new FileReader(file));
+        StringBuilder output = new StringBuilder();
 
-            output.append("length of input: ").append(thisInputDimension).append("\n");
-            output.append(thisNumLayers).append(" layers structured (from input to output) as: \n");
-            for( int i = 0; i < thisNumLayers; i++ )
-            {
-                output.append("    ").append(thisLayerType[i].getName()).append(" (").append(thisLayerSize[i]).append(" " + "neurons" + ")");
-                output.append("\n");
-            }
-            
-            network = new Network(thisNumLayers, thisLayerSize, thisLayerType, thisInputDimension);
-            network.fixWeights(in);
-            in.close();
-            
-            return output;
-        }
-        catch (Exception e) 
+        // Parse first line, containing network stats
+        String[] networkInfo = in.readLine().split(" ");
+        int currPos = 0;
+        int thisInputDimension = Integer.parseInt(networkInfo[currPos++]);
+        lickLength = (thisInputDimension * 2) + 4;
+        int thisNumLayers = Integer.parseInt(networkInfo[currPos++]);
+        int[] thisLayerSize = new int[thisNumLayers];
+        ActivationFunction[] thisLayerType = new ActivationFunction[thisNumLayers];
+
+        int j = 0;
+        int layers = currPos + 2 * thisNumLayers; 
+        for (int i = 2; i < layers; i+=2, j++)
         {
-            throw new Exception(e);
+            thisLayerSize[j] = Integer.parseInt(networkInfo[currPos++]);
+            thisLayerType[j] = getLayerType(networkInfo[currPos++]);
         }
+
+        output.append("length of input: ").append(thisInputDimension).append("\n");
+        output.append(thisNumLayers).append(" layers structured (from input to output) as: \n");
+        for( int i = 0; i < thisNumLayers; i++ )
+        {
+            output.append("    ").append(thisLayerType[i].getName()).append(" (").append(thisLayerSize[i]).append(" " + "neurons" + ")");
+            output.append("\n");
+        }
+
+        network = new Network(thisNumLayers, thisLayerSize, thisLayerType, thisInputDimension);
+        network.fixWeights(in);
+        in.close();
+
+        return output;
+        
     }
     
     /*

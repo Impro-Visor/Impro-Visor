@@ -2626,7 +2626,7 @@ public static int gcd(int a, int b)
                   {
                     Note newNote = previousNote.copy();
                     newNote.setRhythmValue(previousNote.getRhythmValue() + thisNote.getRhythmValue());
-    System.out.println("in beat " + i/BEAT + " merging notes " + previousNote.toLeadsheet() + " -> " + newNote.toLeadsheet());
+    //System.out.println("in beat " + i/BEAT + " merging notes " + previousNote.toLeadsheet() + " -> " + newNote.toLeadsheet());
                     slots.set(i, null);
                     slots.set(previousIndex, newNote);
                     previousNote = newNote;

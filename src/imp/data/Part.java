@@ -727,7 +727,7 @@ public void addUnit(Unit unit)
       }
      //Trace.log(0, "now slots.size() = " + slots.size() + ", index = " + index);
    
-    if( slots.get(index) == null )
+    if( slots.get(index) == null && unit != null )
       {
         unitCount++;
       }
@@ -1935,7 +1935,7 @@ private void saveSectionInfo(BufferedWriter out, SectionRecord record) throws IO
          * @return boolean      true if there is a next() Unit, false otherwise
          */
         public boolean hasNext() {
-            return (unitIndex < unitCount);
+            return (unitIndex < unitCount && nextIndex < slots.size() );
         }
 
         /**
