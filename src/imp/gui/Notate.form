@@ -8697,6 +8697,15 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator10">
             </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="controlsCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Controls"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="controlsCheckBoxActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="lstmNetworkMI">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deep Learning"/>
@@ -8819,9 +8828,21 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Passive Trading Options"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeCheckboxActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="lstmNetworkRadio">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="improvButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Use Deep Learning"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lstmNetworkRadioActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="grammarRadio">
@@ -8850,14 +8871,6 @@
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterGrammarSeparator">
-            </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="lstmNetworkRadio">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="improvButtonGroup"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Deep Learning"/>
-              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="guideToneRadio">
               <Properties>

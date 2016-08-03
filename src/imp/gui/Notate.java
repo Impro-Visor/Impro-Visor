@@ -2121,6 +2121,7 @@ public Critic getCritic()
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        controlsCheckBox = new javax.swing.JCheckBoxMenuItem();
         lstmNetworkMI = new javax.swing.JMenuItem();
         fractalMI = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
@@ -2136,11 +2137,11 @@ public Critic getCritic()
         passiveTradingMI = new javax.swing.JMenuItem();
         improvSeparator2 = new javax.swing.JPopupMenu.Separator();
         tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
+        lstmNetworkRadio = new javax.swing.JRadioButtonMenuItem();
         grammarRadio = new javax.swing.JRadioButtonMenuItem();
         transformRadio = new javax.swing.JRadioButtonMenuItem();
         grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
         afterGrammarSeparator = new javax.swing.JPopupMenu.Separator();
-        lstmNetworkRadio = new javax.swing.JRadioButtonMenuItem();
         guideToneRadio = new javax.swing.JRadioButtonMenuItem();
         guideToneTransformRadio = new javax.swing.JRadioButtonMenuItem();
         guideToneDivideRadio = new javax.swing.JRadioButtonMenuItem();
@@ -9797,6 +9798,17 @@ public Critic getCritic()
         utilitiesMenu.add(styleGenerator1);
         utilitiesMenu.add(jSeparator10);
 
+        controlsCheckBox.setText("Controls");
+        controlsCheckBox.setEnabled(false);
+        controlsCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                controlsCheckBoxActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(controlsCheckBox);
+
         lstmNetworkMI.setText("Deep Learning");
         lstmNetworkMI.addActionListener(new java.awt.event.ActionListener()
         {
@@ -9926,6 +9938,7 @@ public Critic getCritic()
         improvMenu.add(improvSeparator2);
 
         tradeCheckbox.setText("Passive Trading Options");
+        tradeCheckbox.setEnabled(false);
         tradeCheckbox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9934,6 +9947,17 @@ public Critic getCritic()
             }
         });
         improvMenu.add(tradeCheckbox);
+
+        improvButtonGroup.add(lstmNetworkRadio);
+        lstmNetworkRadio.setText("Use Deep Learning");
+        lstmNetworkRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                lstmNetworkRadioActionPerformed(evt);
+            }
+        });
+        improvMenu.add(lstmNetworkRadio);
 
         improvButtonGroup.add(grammarRadio);
         grammarRadio.setSelected(true);
@@ -9948,10 +9972,6 @@ public Critic getCritic()
         grammarDivideRadio.setText("Use Grammar & Divide");
         improvMenu.add(grammarDivideRadio);
         improvMenu.add(afterGrammarSeparator);
-
-        improvButtonGroup.add(lstmNetworkRadio);
-        lstmNetworkRadio.setText("Deep Learning");
-        improvMenu.add(lstmNetworkRadio);
 
         improvButtonGroup.add(guideToneRadio);
         guideToneRadio.setText("Guide Tone Line");
@@ -22061,7 +22081,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
           {
             lickgenFrame.setRhythmFieldText(Formatting.prettyFormat(abstractMelody));
           }
-    
+    }
     setMode(Mode.GENERATED);
     
     isPassiveTrading = passiveTradingDialog.isVisible();
@@ -22069,12 +22089,10 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     passiveTradingImprovisorFirst = passiveTradingDialog.getImprovisorTradeFirst();
 
     if( isPassiveTrading && enableRecording )
-      {
+    {
         enableRecording(); // TRIAL
-      }
-
     }
-  }
+}
   
 public void saveImprovChorus()
 {
@@ -23800,6 +23818,16 @@ private boolean isDotted = false;
     private void lstmNetworkMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lstmNetworkMIActionPerformed
         openLSTMNetworkFrame();
     }//GEN-LAST:event_lstmNetworkMIActionPerformed
+
+    private void lstmNetworkRadioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_lstmNetworkRadioActionPerformed
+    {//GEN-HEADEREND:event_lstmNetworkRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lstmNetworkRadioActionPerformed
+
+    private void controlsCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_controlsCheckBoxActionPerformed
+    {//GEN-HEADEREND:event_controlsCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_controlsCheckBoxActionPerformed
 
     private void openRealTimeQuantization()
     {
@@ -25757,6 +25785,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem contourPrefsMI;
     private javax.swing.JMenuItem contractMelodyBy2;
     private javax.swing.JMenuItem contractMelodyBy3;
+    private javax.swing.JCheckBoxMenuItem controlsCheckBox;
     private javax.swing.JButton copyBothBtn;
     private javax.swing.JMenuItem copyBothMI;
     private javax.swing.JMenuItem copyBothPMI;

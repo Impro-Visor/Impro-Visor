@@ -367,7 +367,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
                         accumMelody.addNote(Note.makeRest(savedTradeQuantum));
                     }
                     ChordPart extracted = savedChords.extract(chordStartPos, chordStartPos + savedTradeQuantum - 1);
-                    System.out.println("Extracted " + extracted.getSize());
+                    //System.out.println("Extracted " + extracted.getSize());
                     chordSequence = DataPartIO.readChords(extracted, savedOffset + tradePos);
                     outputSequence = chordSequence.copy();
                     outputSequence.clearMelody();
