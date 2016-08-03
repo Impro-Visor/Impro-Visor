@@ -3237,7 +3237,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="clearWeightFileButton">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Clear Weight File"/>
+                    <Property name="text" type="java.lang.String" value="Delete Weight File"/>
                     <Property name="toolTipText" type="java.lang.String" value="Delete the selected weight file."/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[300, 29]"/>
