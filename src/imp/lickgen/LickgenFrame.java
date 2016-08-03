@@ -4148,29 +4148,38 @@ public class LickgenFrame
     {//GEN-HEADEREND:event_gradeLickFromStaveButtonActionPerformed
         int start = notate.getCurrentStave().getSelectionStart();
         int end = notate.getCurrentStave().getSelectionEnd();
+        
+        if(end - start <= BEAT * 7){
+            JOptionPane.showMessageDialog(null,
+                new JLabel("<html><div style=\"text-align: center;\">"
+                    + "Selection is too short, critic<br/>"
+                    + "needs to see at least 8 beats."),
+                "Alert", JOptionPane.PLAIN_MESSAGE);
+        }else{
 
-        ArrayList<Note> noteList = new ArrayList<Note>();
-        ArrayList<Chord> chordList = new ArrayList<Chord>();
+            ArrayList<Note> noteList = new ArrayList<Note>();
+            ArrayList<Chord> chordList = new ArrayList<Chord>();
 
-        // Generate notes and chords over the lick
-        critic.generateNotesAndChords(noteList, chordList, start, end);
+            // Generate notes and chords over the lick
+            critic.generateNotesAndChords(noteList, chordList, start, end);
 
-        // Grade the lick, passing it through the critic filter
-        gradeFromCritic = critic.gradeFromCritic(noteList, chordList);
-        if (gradeFromCritic != null)
-        {
-            String formattedGrade = String.format("%.3f", gradeFromCritic);
-            lickFromStaveGradeTextField.setText(formattedGrade);
-        } else
-        {
-            lickFromStaveGradeTextField.setText("Error");
+            // Grade the lick, passing it through the critic filter
+            gradeFromCritic = critic.gradeFromCritic(noteList, chordList);
+            if (gradeFromCritic != null)
+            {
+                String formattedGrade = String.format("%.3f", gradeFromCritic);
+                lickFromStaveGradeTextField.setText(formattedGrade);
+            } else
+            {
+                lickFromStaveGradeTextField.setText("Error");
+            }
         }
     }//GEN-LAST:event_gradeLickFromStaveButtonActionPerformed
 
     private void regenerateLickForSoloButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_regenerateLickForSoloButtonActionPerformed
     {//GEN-HEADEREND:event_regenerateLickForSoloButtonActionPerformed
         gradeLickFromStaveButtonActionPerformed(null);
-        if (gradeFromCritic < criticGradeThreshold)
+        if (gradeFromCritic != null && gradeFromCritic < criticGradeThreshold)
         {
             generateLickButtonActionPerformed(null);
         }
