@@ -700,7 +700,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
         int currEnd = BEAT * 8 - 1;
         int size = melodyPart.size() - 1;
         
-        while (currEnd <= size && !error.get())
+        while (currEnd <= size)
         {
             // Add the grade
             output.append(String.valueOf(grade / 10.0));
@@ -726,20 +726,20 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
                     if (currStart == 0)
                     {
                         beatPosition = BitVectorGenerator.printNoteData(output, null, currNoteList.get(index), 
-                                currNoteClassification, beatPosition, error);
+                                currNoteClassification, beatPosition);
                     }
                     else
                     {   
                         // For correct distance to preceding note
                         Note prevNote = melodyPart.getPrevNote(currStart);
                         beatPosition = BitVectorGenerator.printNoteData(output, prevNote, currNoteList.get(index), 
-                                currNoteClassification, beatPosition, error);
+                                currNoteClassification, beatPosition);
                     }
                 }
                 else
                 {
                     beatPosition = BitVectorGenerator.printNoteData(output, currNoteList.get(indexPrev), 
-                            currNoteList.get(index), currNoteClassification, beatPosition, error);
+                            currNoteList.get(index), currNoteClassification, beatPosition);
                 }
             }
             
@@ -751,14 +751,8 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
             currEnd += BEAT * 2;     
         }
  
-        if (!error.get())
-        {
-            out.write(output.toString());
-        }
-        else
-        {
-            System.out.println("Error from parsing data: Will not save this lick.");
-        }
+        out.write(output.toString());
+        
     } 
     
 //    Commented out code is the old way of dealing with encoding a lick
