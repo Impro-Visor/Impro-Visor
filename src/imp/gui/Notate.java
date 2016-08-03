@@ -22198,30 +22198,33 @@ private void generateUsingOutlines()
                 Double gradeFromCritic = critic.gradeFromCritic(noteList, chordList);
 
                 // Stop the generation if we've gone too many times
-                if (gradeFromCritic != null
-                        && (count >= criticLimit || currTime >= totalTime)) {
+                if (count >= criticLimit || currTime >= totalTime){
                     JOptionPane.showMessageDialog(null,
                             new JLabel(
                                     "<html><div style=\"text-align: center;\">"
                                     + "Too many generation attempts, <br/>"
                                     + "cannot generate lick with desired grade."),
                             "Alert", JOptionPane.PLAIN_MESSAGE);
-
-                    //if( transformCheckBoxMenuItem.isSelected() )
-                    if (transformRadio.isSelected()) {
-                        ChordPart chords = getChordProg().
-                                extract(improviseStartSlot,
-                                        improviseEndSlot);
-                        transformFrame.applySubstitutions(lick, chords);
-                    } else if (grammarDivideRadio.isSelected()) {
-                        getCurrentMelodyPart().newPasteOver(lick, 0);
-                        fractalFrame.dividePastePlay();
-                    } else {
-                        putLick(lick);
+                    
+                    if (gradeFromCritic != null){
+                        //if( transformCheckBoxMenuItem.isSelected() )
+                        if (transformRadio.isSelected()) {
+                            ChordPart chords = getChordProg().
+                                    extract(improviseStartSlot,
+                                            improviseEndSlot);
+                            transformFrame.applySubstitutions(lick, chords);
+                        } else if (grammarDivideRadio.isSelected()) {
+                            getCurrentMelodyPart().newPasteOver(lick, 0);
+                            fractalFrame.dividePastePlay();
+                        } else {
+                            putLick(lick);
+                        }
+                        useCritic = false;
+                        lickgenFrame.setCounterForCriticTextField(count);
+                        lickgenFrame.setLickFromStaveGradeTextField(gradeFromCritic);
                     }
-                    useCritic = false;
-                    lickgenFrame.setCounterForCriticTextField(count);
-                    lickgenFrame.setLickFromStaveGradeTextField(gradeFromCritic);
+                    return;
+                    
                 } // If the grade is high enough, pass it through the filter
                 else if (gradeFromCritic != null && gradeFromCritic >= criticGrade) {
                     //if( transformCheckBoxMenuItem.isSelected() )
@@ -22240,6 +22243,7 @@ private void generateUsingOutlines()
                     lickgenFrame.setCounterForCriticTextField(count);
                     lickgenFrame.setLickFromStaveGradeTextField(gradeFromCritic);
                 }
+                
             } else {
                 //debug System.out.println("panic: generated null lick");
                 setMode(Mode.GENERATION_FAILED);
