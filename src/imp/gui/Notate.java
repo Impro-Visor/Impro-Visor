@@ -22140,115 +22140,95 @@ private void generateUsingOutlines()
           }
     }
 
-private void generateUsingCritic(Stave stave)
-{
-double criticGrade = lickgenFrame.getCriticGrade();
+    private void generateUsingCritic(Stave stave) {
+        double criticGrade = lickgenFrame.getCriticGradeThreshold();
 
 // To prevent lag from too many interations, we limit the number of times
 // the critic can test licks. We also limit the time of the iterations.
-final int criticLimit = 999;
-long currTime = System.currentTimeMillis();
-long totalTime = currTime + 20000;
-boolean useCritic = true;
+        final int criticLimit = 999;
+        long currTime = System.currentTimeMillis();
+        long totalTime = currTime + 20000;
+        boolean useCritic = true;
 // Keep track of the number of lick generations
-int count = 0;
+        int count = 0;
 
-while( useCritic )
-  {
-    abstractMelody = lickgen.generateRhythmFromGrammar(improviseStartSlot,
-                                               totalSlots);
+        while (useCritic) {
+            abstractMelody = lickgen.generateRhythmFromGrammar(improviseStartSlot,
+                    totalSlots);
 
-    MelodyPart lick = generateLick(abstractMelody, improviseStartSlot,
-                                   improviseEndSlot);
-    if( lick != null )
-      {
-        //Increment the count
-        count++;
-        currTime = System.currentTimeMillis();
+            MelodyPart lick = generateLick(abstractMelody, improviseStartSlot,
+                    improviseEndSlot);
+            if (lick != null) {
+                //Increment the count
+                count++;
+                currTime = System.currentTimeMillis();
 
-        ArrayList<Unit> units = lick.getUnitList();
-        ArrayList<ChordSymbol> symbols = stave.getChordProg().getChordSymbols();
-        ArrayList<Integer> durations = stave.getChordProg().getChordDurations();
-        ArrayList<Note> noteList = new ArrayList<Note>();
-        ArrayList<Chord> chordList = new ArrayList<Chord>();
+                ArrayList<Unit> units = lick.getUnitList();
+                ArrayList<ChordSymbol> symbols = stave.getChordProg().getChordSymbols();
+                ArrayList<Integer> durations = stave.getChordProg().getChordDurations();
+                ArrayList<Note> noteList = new ArrayList<Note>();
+                ArrayList<Chord> chordList = new ArrayList<Chord>();
 
-        // Add all notes and chords to the lists
-        for( Unit u : units )
-          {
-            noteList.add((Note) u);
-          }
-        for( int i = 0; i < symbols.size(); i++ )
-          {
-            chordList.add(new Chord(symbols.get(i), durations.get(i)));
-          }
+                // Add all notes and chords to the lists
+                for (Unit u : units) {
+                    noteList.add((Note) u);
+                }
+                for (int i = 0; i < symbols.size(); i++) {
+                    chordList.add(new Chord(symbols.get(i), durations.get(i)));
+                }
 
-        Double gradeFromCritic = critic.gradeFromCritic(noteList, chordList);
+                Double gradeFromCritic = critic.gradeFromCritic(noteList, chordList);
 
-        // Stop the generation if we've gone too many times
-        if( gradeFromCritic != null
-                && (count >= criticLimit || currTime >= totalTime) )
-          {
-            JOptionPane.showMessageDialog(null,
-                                          new JLabel(
-                                                  "<html><div style=\"text-align: center;\">"
-                                                  + "Too many generation attempts, <br/>"
-                                                  + "cannot generate lick with desired grade."),
-                                          "Alert", JOptionPane.PLAIN_MESSAGE);
+                // Stop the generation if we've gone too many times
+                if (gradeFromCritic != null
+                        && (count >= criticLimit || currTime >= totalTime)) {
+                    JOptionPane.showMessageDialog(null,
+                            new JLabel(
+                                    "<html><div style=\"text-align: center;\">"
+                                    + "Too many generation attempts, <br/>"
+                                    + "cannot generate lick with desired grade."),
+                            "Alert", JOptionPane.PLAIN_MESSAGE);
 
-            //if( transformCheckBoxMenuItem.isSelected() )
-            if( transformRadio.isSelected() )
-              {
-                ChordPart chords = getChordProg().
-                        extract(improviseStartSlot,
-                                improviseEndSlot);
-                transformFrame.applySubstitutions(lick, chords);
-              }
-            else if( grammarDivideRadio.isSelected() )
-              {
-                getCurrentMelodyPart().newPasteOver(lick, 0);
-                fractalFrame.dividePastePlay();
-              }
-            else
-              {
-                putLick(lick);
-              }
-            useCritic = false;
-            lickgenFrame.setCounterForCriticTextField(count);
-            lickgenFrame.setLickFromStaveGradeTextField(gradeFromCritic);
-          }
-        // If the grade is high enough, pass it through the filter
-        else if( gradeFromCritic != null && gradeFromCritic >= criticGrade )
-          {
-            //if( transformCheckBoxMenuItem.isSelected() )
-            if( transformRadio.isSelected() )
-              {
-                ChordPart chords = getChordProg().
-                        extract(improviseStartSlot,
-                                improviseEndSlot);
-                transformFrame.applySubstitutions(lick, chords);
-              }
-            else if( grammarDivideRadio.isSelected() )
-              {
-                getCurrentMelodyPart().newPasteOver(lick, 0);
-                fractalFrame.dividePastePlay();
-              }
-            else
-              {
-                putLick(lick);
-              }
-            useCritic = false;
-            lickgenFrame.setCounterForCriticTextField(count);
-            lickgenFrame.setLickFromStaveGradeTextField(gradeFromCritic);
-          }
-      }
-    else
-      {
-        //debug System.out.println("panic: generated null lick");
-        setMode(Mode.GENERATION_FAILED);
-        return;
-      }
-  } 
-}
+                    //if( transformCheckBoxMenuItem.isSelected() )
+                    if (transformRadio.isSelected()) {
+                        ChordPart chords = getChordProg().
+                                extract(improviseStartSlot,
+                                        improviseEndSlot);
+                        transformFrame.applySubstitutions(lick, chords);
+                    } else if (grammarDivideRadio.isSelected()) {
+                        getCurrentMelodyPart().newPasteOver(lick, 0);
+                        fractalFrame.dividePastePlay();
+                    } else {
+                        putLick(lick);
+                    }
+                    useCritic = false;
+                    lickgenFrame.setCounterForCriticTextField(count);
+                    lickgenFrame.setLickFromStaveGradeTextField(gradeFromCritic);
+                } // If the grade is high enough, pass it through the filter
+                else if (gradeFromCritic != null && gradeFromCritic >= criticGrade) {
+                    //if( transformCheckBoxMenuItem.isSelected() )
+                    if (transformRadio.isSelected()) {
+                        ChordPart chords = getChordProg().
+                                extract(improviseStartSlot,
+                                        improviseEndSlot);
+                        transformFrame.applySubstitutions(lick, chords);
+                    } else if (grammarDivideRadio.isSelected()) {
+                        getCurrentMelodyPart().newPasteOver(lick, 0);
+                        fractalFrame.dividePastePlay();
+                    } else {
+                        putLick(lick);
+                    }
+                    useCritic = false;
+                    lickgenFrame.setCounterForCriticTextField(count);
+                    lickgenFrame.setLickFromStaveGradeTextField(gradeFromCritic);
+                }
+            } else {
+                //debug System.out.println("panic: generated null lick");
+                setMode(Mode.GENERATION_FAILED);
+                return;
+            }
+        }
+    }
 
 /**
  * Retrieve the next lazy-generated part from the Future, and add it into the
