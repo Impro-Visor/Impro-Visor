@@ -118,7 +118,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <path id="ivy.classpath" path="${ivy.jar.file}" />
     
     <target name="download-ivy" unless="offline" >
-        <echo> Fetching ivy... </echo>
+        <echo level="info"> Downloading Ivy</echo>
         <mkdir dir="${ivy.jar.dir}"/>
         <!-- download Ivy from web site so that it can be used even without any special installation -->
         <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
@@ -143,14 +143,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     
     <!-- ivy to get dependencies and copy to project lib folder automatically -->
     <target name="resolve-deps" depends="init,init-ivy" description="retrieve dependencies with ivy">
-        <echo> Retrieving! ${ivy.settings.dir} </echo>
-        <ivy:retrieve/>
+        <ivy:retrieve log="quiet"/>
         <pathconvert property="lib-jars-str" refid="base.classpath">
             <mapper>
                 <globmapper from="${basedir}/*" to="*" handledirsep="true" />
             </mapper>
         </pathconvert>
-        <echo> Automatically setting NetBeans sources to match classpath: ${lib-jars-str}</echo>
+        <echo level="info"> Automatically setting NetBeans sources to match classpath: ${lib-jars-str}</echo>
         <replaceregexp
             file="nbproject/project.xml"
             match="(\x3cclasspath mode=\x22compile\x22\x3e)[^>]*(\x3c/classpath\x3e)"
