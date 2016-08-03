@@ -57,7 +57,7 @@ public class BitVectorGenerator implements Constants {
      * @throws IOException 
      */
     public static int printNoteData(StringBuilder out, Note notePrev, Note noteCurr, 
-                      int classification, int beatPos, AtomicBoolean error) {
+                      int classification, int beatPos) {
         
         char[] bits = {'0', ' ', '0', ' ', '0', ' ',
                        '0', ' ', '0', ' ', '0', ' ', '0', ' ', 
