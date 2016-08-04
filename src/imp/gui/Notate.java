@@ -11199,7 +11199,7 @@ private static int VoicingTableExtensionColumn = 4;
 
                 keyboard.setPresentChordDisplayText(c.toString());
                 voicingEntryTF.setText(v);
-                keyboard.showVoicingOnKeyboard(v);
+                keyboard.showVoicingOnKeyboard(c.toString(), v);
                 chordSearchTF.setText(c.toString());
 
                 String root = chordRootTF.getText();
@@ -20831,7 +20831,7 @@ public void keyboardPlayback(Chord currentChord, int tab, int slotInPlayback, in
         // If the playback is just beginning and the keyboard is blank
         if( v2.equals(EMPTY) )
           {
-            keyboard.showVoicingOnKeyboard(v1);
+            keyboard.showVoicingOnKeyboard(currentChordName, v1);
 
             setBassAndRootTFs(bass, root);
 
@@ -20851,7 +20851,7 @@ public void keyboardPlayback(Chord currentChord, int tab, int slotInPlayback, in
         // (if the chord has changed)
         else if( !keyboard.voicingsAreEqual(v1, v2) || !currentChordName.equals(presentChord) )
           {
-            keyboard.showVoicingOnKeyboard(v1);
+            keyboard.showVoicingOnKeyboard(currentChordName, v1);
 
             setBassAndRootTFs(bass, root);
 
@@ -20880,7 +20880,7 @@ public void keyboardPlayback(Chord currentChord, int tab, int slotInPlayback, in
         // If changing between chorus tabs
         if( tab != currentPlaybackTab )
           {
-            keyboard.showVoicingOnKeyboard(v1);
+            keyboard.showVoicingOnKeyboard(currentChordName, v1);
 
             setBassAndRootTFs(bass, root);
 
@@ -21074,7 +21074,7 @@ private void pianoKeyboardButtonActionPerformed(java.awt.event.ActionEvent evt) 
 
     if( !v.equals("") )
       {
-        keyboard.showVoicingOnKeyboard(v);
+        keyboard.showVoicingOnKeyboard("?", v);
       }
   }
 
@@ -21416,7 +21416,7 @@ private void voicingSequencePlayButtonActionPerformed(java.awt.event.ActionEvent
           }
 
         voicingEntryTF.setText(v);
-        keyboard.showVoicingOnKeyboard(v);
+        keyboard.showVoicingOnKeyboard("?", v);
 
         try
           {
@@ -21474,7 +21474,7 @@ private void displayVoicingfromList()
     int r = keyboard.findBass();
     String note = keyboard.findBassName(r);
     keyboard.setBass(note, r);
-    keyboard.showVoicingOnKeyboard(v);
+    keyboard.showVoicingOnKeyboard("?", v);
   }
 
 /**
@@ -21596,7 +21596,7 @@ private void chordRootTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 private void voicingEntryTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingEntryTFActionPerformed
 
-    keyboard.showVoicingOnKeyboard(voicingEntryTF.getText());
+    keyboard.showVoicingOnKeyboard("?", voicingEntryTF.getText());
 }//GEN-LAST:event_voicingEntryTFActionPerformed
 
 private void buildTableButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buildTableButtonKeyPressed
