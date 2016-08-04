@@ -39,27 +39,32 @@ import polya.Polylist;
 import polya.Tokenizer;
 
 import java.util.Calendar;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel; 
 import javax.swing.JSeparator; 
+import java.util.*; 
+import java.awt.Graphics; 
 
 
 /**
  *
- * @author  Emma Carlson, 2009
- * @author  Mira Jambusaria, 2016 -- labels
+ * @author  Emma Carlson (2009), 
+ * Mira Jambusaria and RObert Keller (2016) for labels and visichord integration
+ * 
  */
 
 public class VoicingKeyboard extends javax.swing.JFrame {
 
+    boolean debug = false;
+    
     Notate notate;
     boolean singleNoteMode = false;
     
     boolean turnOnOffLabels = true; 
     //if true, labels on. else, labels off 
     
+    int numberOfDisplayedPanes = 4;
+    //for staff display 
     /** Creates new form VoicingKeyboard
      * @param notate
      * @param x
@@ -125,12 +130,8 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         VisichordDialog = new javax.swing.JDialog();
-        jPanel2 = new javax.swing.JPanel();
+        voicingStaffPanel = new javax.swing.JPanel();
         clefLabel = new javax.swing.JLabel();
-        staff1 = new javax.swing.JLabel();
-        staff2 = new javax.swing.JLabel();
-        staff3 = new javax.swing.JLabel();
-        endStaff = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         keyboardLP = new javax.swing.JLayeredPane();
         keyA0 = new javax.swing.JLabel();
@@ -351,39 +352,25 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         windowMenuSeparator = new javax.swing.JSeparator();
 
         VisichordDialog.setTitle("Visichord Display");
-        VisichordDialog.setAlwaysOnTop(true);
         VisichordDialog.setBackground(new java.awt.Color(255, 255, 255));
+        VisichordDialog.setBounds(new java.awt.Rectangle(0, 23, 800, 450));
         VisichordDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        VisichordDialog.setMaximumSize(new java.awt.Dimension(700, 420));
-        VisichordDialog.setSize(new java.awt.Dimension(700, 420));
+        VisichordDialog.setMaximumSize(new java.awt.Dimension(1200, 450));
+        VisichordDialog.setMinimumSize(new java.awt.Dimension(800, 450));
+        VisichordDialog.setPreferredSize(new java.awt.Dimension(800, 450));
+        VisichordDialog.setSize(new java.awt.Dimension(800, 450));
         VisichordDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jPanel2.setMaximumSize(new java.awt.Dimension(700, 420));
-        jPanel2.setMinimumSize(new java.awt.Dimension(700, 420));
-        jPanel2.setName(""); // NOI18N
-        jPanel2.setOpaque(false);
-        jPanel2.setSize(new java.awt.Dimension(700, 420));
-        jPanel2.setLayout(null);
+        voicingStaffPanel.setMaximumSize(new java.awt.Dimension(700, 420));
+        voicingStaffPanel.setMinimumSize(new java.awt.Dimension(700, 420));
+        voicingStaffPanel.setName(""); // NOI18N
+        voicingStaffPanel.setOpaque(false);
+        voicingStaffPanel.setSize(new java.awt.Dimension(700, 420));
+        voicingStaffPanel.setLayout(null);
 
         clefLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/clefs.gif"))); // NOI18N
-        jPanel2.add(clefLabel);
+        voicingStaffPanel.add(clefLabel);
         clefLabel.setBounds(30, 80, 77, 260);
-
-        staff1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/staff.gif"))); // NOI18N
-        jPanel2.add(staff1);
-        staff1.setBounds(100, 110, 162, 200);
-
-        staff2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/staff.gif"))); // NOI18N
-        jPanel2.add(staff2);
-        staff2.setBounds(260, 110, 162, 200);
-
-        staff3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/staff.gif"))); // NOI18N
-        jPanel2.add(staff3);
-        staff3.setBounds(420, 110, 162, 200);
-
-        endStaff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/endStaff.gif"))); // NOI18N
-        jPanel2.add(endStaff);
-        endStaff.setBounds(580, 100, 30, 220);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -391,11 +378,10 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        VisichordDialog.getContentPane().add(jPanel2, gridBagConstraints);
+        VisichordDialog.getContentPane().add(voicingStaffPanel, gridBagConstraints);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Keyboard");
-        setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(1100, 370));
         setPreferredSize(new java.awt.Dimension(1100, 370));
         addWindowListener(new java.awt.event.WindowAdapter()
@@ -3320,15 +3306,16 @@ public void setVoicingEntryTFfromKeys()
 }
 
 /**
- * If a voicing is entered in the voicing entry text field, it is displayed
- * on the keyboard.
+ * Displays the indicated voicing, represented as an S expression,
+ * on the keyboard. This is only called from Notate.
+ * @param v
  */
 public void showVoicingOnKeyboard(String v)
 {
     clearKeyboard();
     
     String e = notate.extEntryTFText();
-    
+    if( debug ) System.out.println("showVoicingOnKeyboard " + v);
     Polylist voicing = notate.voicingToList(v);
     Polylist extension = notate.extensionToList(e);
     
@@ -3413,7 +3400,10 @@ private void clearKeyboardMIActionPerformed(java.awt.event.ActionEvent evt) {//G
 
     clearKeyboard();
     notate.clearVoicingEntryTF();
-    
+    for(int i = 0; i<numberOfDisplayedPanes; i++)
+    {
+        displayedPane[i].clearPanel();
+    }
 }//GEN-LAST:event_clearKeyboardMIActionPerformed
 
 private void addToSequenceMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToSequenceMIActionPerformed
@@ -3516,7 +3506,9 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_formWindowClosing
 
     private void chordStepBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordStepBackButtonActionPerformed
+        shiftRight();
         notate.chordStepBackDo();
+        showPanes();
     }//GEN-LAST:event_chordStepBackButtonActionPerformed
 
     private void chordReplayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordReplayButtonActionPerformed
@@ -3524,7 +3516,9 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_chordReplayButtonActionPerformed
 
     private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordStepForwardButtonActionPerformed
+        shiftLeft();
         notate.chordStepForwardDo();
+        showPanes();
     }//GEN-LAST:event_chordStepForwardButtonActionPerformed
 
     private void playChordButtonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_playChordButtonKeyTyped
@@ -3594,137 +3588,246 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
         lastChord=chordMidi;
     }
     
-    public JLabel [] barDisplay; 
-    public JPanel [] notePane; 
-    public int curChordPanel = 1; 
+    public JLabel [] staffDisplay; 
+    public int curChordIndex = numberOfDisplayedPanes-1;    //index number of last panel
+    public int indexInArray = numberOfDisplayedPanes - 1;                       //the index in the array of the chord displayed in the curChordIndex box
     
-    public int numStaffs = 3; 
+    public int numStaffs = 4;           //
     /* Various constants for sizes on the staffs */
     static int staffGap = 11;           // Pixel gap between staff lines
-    static int trebleBase = 111;         // Top line of the treble clef
-    static int bassBase = 254;          // Top line on the bass clef
-    static int staffWidth = 30;         // Width of extra staff lines
+    static int trebleBase = 110;        // Top line of the treble clef
+    static int bassBase = 253;          // Top line on the bass clef
+    static int staffWidth = 30;         // Width of ledger lines
     
  /* Various note constants */
     static int lowBLine = 2*7+4;        // Note value of lowest line on bass
     static int highBLine = 3*7+5;       // Note value of highest line on bass
     static int lowTLine = 4*7+2;        // Note value of lowest line on treble
     static int highTLine = 5*7+3;       // Note value of highest line on treble
-    static int highestLine = 7;       // Highest Space -- C8 
+    static int highestLine = 7;         // Highest Space -- C8 
     
     public void setVisichordDialog()
     {
-        VisichordDialog.setLocation(500, 500); 
+        VisichordDialog.setLocation(40, 440); 
         
-        drawStaffLines(4,3,3,4,0); 
-        drawStaffLines(4,3,3,4,1); 
-        drawStaffLines(4,3,3,4,2); 
-        
-        // Sample drawing of 3 chords
-        drawNote(60, 0); 
-        drawNote(64, 0);
-        drawNote(67, 0);
-        
-        drawNote(62, 1); 
-        drawNote(66, 1);
-        drawNote(69, 1);
-        
-        drawNote(72, 2); 
-        drawNote(76, 2);
-        drawNote(79, 2);
         VisichordDialog.setVisible(true);
     }
-    // this method is for testing -- to be deleted 
   
-    // Not being called currently:
-//     /** Display the note and accidental (if necessary) on the staff. */
-//        public void displayStaff(int MIDIvalue)
-//        {
-//            
-//            /* Now display the corresponding note on the staff.  The Y offset
-//             * is now set so the note lies right on the top line of the staff.
-//             * The X offset is simply half the width of the bar minus half
-//             * the width of the icon to center it properly */
-//            int offsetY = -wholeNote.getHeight()/2;
-//            int offsetX = notePane[curChordPanel-1].getWidth()/2
-//                - wholeNote.getWidth()/2;
-//            int aoffsetX;               // Accidental X offset
-//
-//            /* Get the absolute note value */
-//            int note = MIDIvalue;
-//
-//            int baseLine;               // Value of the base line, T or B
-//            if (note >= 48) {
-//                offsetY += trebleBase;
-//                baseLine = highTLine;
-//            } else {
-//                offsetY += bassBase;
-//                baseLine = highBLine;
-//            }
-//            offsetY += (baseLine - note)*staffGap/2 +
-//                      ((note < baseLine || (note - baseLine) % 2 == 0)? 1 : 0);
-//                                        // Adjust the Y offset down by the
-//                                        // necessary half steps.  Add 1 pixel
-//                                        // in the case of notes on even lines
-//                                        // and below the baseline to correct
-//                                        // for parity error.
-//
-//            /* Get the chord number relative to the current one */
-//            int relativeChord = curChordPanel - 1;
-//            /* Get the note character, and adjust down if it's higher than G */
-//            //deleted 
-//            
-//            /* Set the position of the whole note */
-//            wholeNote.setLocation(offsetX, offsetY);
-//            //wholeNote.setLocation(0, 0);
-//            notePane[curChordPanel -1].add(wholeNote); 
-//            
-//        }
         
-static final int MIDDLE_C_OFFSET_TREBLE = 142;    
-static final int MIDDLE_C_MIDI_VALUE = 60;
-static final int NOTE_ICON_WIDTH = 50;
-static final int NOTE_ICON_HEIGHT = 50;
-static final int OCTAVE_DISPLACEMENT = 40;
 
-// CAUTION: These offset are only good for the accidentl assignments shown
+static final int MIDDLE_C_OFFSET_TREBLE = 161;     //distance x for middleC on treble  
+static final int MIDDLE_C_OFFSET_BASS = 237;       //distance x for middleC on bass
+static final int MIDDLE_C_MIDI_VALUE = 60;         //midi value for middle C
+static final int NOTE_ICON_WIDTH = 20;             //width of note icon
+static final int NOTE_ICON_HEIGHT = 10;            //height of note icon
+static final int FLAT_ICON_WIDTH = 12;             //width of flat icon
+static final int FLAT_ICON_HEIGHT = 37;            //height of flat icon
+static final int SHARP_ICON_WIDTH = 12;            //width of sharp icon
+static final int SHARP_ICON_HEIGHT = 29;           //height of sharp icon
+static final int OCTAVE_DISPLACEMENT = 39;         //distance between two Cs 
+static final int LEDGER_LINES_ABOVE_TREBLE = 6;    //number of ledger lines above the treble clef 
+static final int LEDGER_LINES_BELOW_TREBLE = 1;    //number of ledger lines below the treble clef 
+static final int LEDGER_LINES_ABOVE_BASS = 1;      //number of ledger lines above the bass clef 
+static final int LEDGER_LINES_BELOW_BASS = 9;      //number of ledger lines below the bass clef 
+
+StaffPanel [] displayedPane;
+ArrayList <StaffPanel> savedPanes; 
+
+// CAUTION: These offset are only good for the accidental assignments shown
 // and for treble clef.
-                                             /* C, Db, D, Eb, E, F,  F#, G,  Ab,  A, Bb, B */
-static final int NOTE_OFFSET_WITHIN_OCTAVE[] = {0, 6, 6, 12,  12, 18, 18, 24, 30, 30, 36, 36}; 
+                                             /* C, C#, D, Eb, E,  F, F#,  G, G#,  A, Bb,  B */
+static final int NOTE_OFFSET_WITHIN_OCTAVE[] = {0, 0, 6, 11, 11, 17, 17, 22, 22, 28, 33, 33}; 
+static final int OFFSETX [] = {40, 81, 121};  // list of 3 columns where the note can lie 
 static final int NOTE_OCTAVE_STEP = 4;
 
     public void drawNote(int MIDIvalue, int panelNumber)
         {
-            // This code is for treble clef only
-            int offsetX = 50;
 
-            int octave = (MIDIvalue - MIDDLE_C_MIDI_VALUE) / 12;
+            int offsetX = displayedPane[panelNumber].getPanel().getWidth()/2 - (wholeNoteIcon.getIconWidth()/2);
+            
+            int offsetY = MIDDLE_C_OFFSET_TREBLE; 
+            int accidentalX = offsetX - flatIcon.getIconWidth() +2; 
+            int octave = MIDIvalue / 12; 
+            int distAway = 5 - octave; 
+            int index = (Math.abs((MIDIvalue - MIDDLE_C_MIDI_VALUE))%12); 
+            if (distAway > 0) //move down bass  
+            {
+                int offsetWithinOctave = 0; 
+                if(index == 0) //C -- this extra if is for index out of bounds error
+                {
+                    offsetWithinOctave = NOTE_OFFSET_WITHIN_OCTAVE[0];
+                }
+                else
+                {
+                    offsetWithinOctave = NOTE_OFFSET_WITHIN_OCTAVE[12 - index];
+                    index = 12 - index;
+                }
+                
+                offsetY = MIDDLE_C_OFFSET_BASS + distAway*OCTAVE_DISPLACEMENT - offsetWithinOctave; 
+            }
+            else //move up treble 
+            {
             int offsetWithinOctave = NOTE_OFFSET_WITHIN_OCTAVE[(MIDIvalue - MIDDLE_C_MIDI_VALUE)%12];
-            int offsetY = MIDDLE_C_OFFSET_TREBLE - octave*OCTAVE_DISPLACEMENT - offsetWithinOctave;  
+                offsetY = MIDDLE_C_OFFSET_TREBLE - Math.abs(distAway)*OCTAVE_DISPLACEMENT - offsetWithinOctave;
+            }
+            String accidental = isAccidental(index);
+            JLabel sharp = new JLabel(sharpIcon); 
+            JLabel flat = new JLabel(flatIcon);
+            
+            int accidentalY = offsetY;
+            if (accidental == "flat")
+            {
+                displayedPane[panelNumber].addAccidental(MIDIvalue, flat);
+                accidentalY = accidentalY - flatIcon.getIconWidth();
+                flat.setBounds(accidentalX, accidentalY, FLAT_ICON_WIDTH, FLAT_ICON_HEIGHT);
+            }
+            else if (accidental == "sharp") 
+            {
+                displayedPane[panelNumber].addAccidental(MIDIvalue, sharp);
+                accidentalY = accidentalY - sharpIcon.getIconWidth();
+                sharp.setBounds(accidentalX, accidentalY, SHARP_ICON_WIDTH, SHARP_ICON_HEIGHT);
+            }
+            if(displayedPane[panelNumber].hasBorderY(MIDIvalue, offsetY)) //move over if next to another note
+            {
+                
+                if (displayedPane[panelNumber].isAccidental(MIDIvalue)) // if accidental, go to right
+                {  
+                    offsetX = OFFSETX[0]; 
+                            //offsetX - wholeNoteIcon.getIconWidth() - 5;
+                    if(accidental == "flat")
+                    {
+                        accidentalX = OFFSETX[0] - FLAT_ICON_WIDTH; 
+                                //accidentalX - wholeNoteIcon.getIconWidth() - 5; 
+                        flat.setBounds(accidentalX, accidentalY, FLAT_ICON_WIDTH, FLAT_ICON_HEIGHT);
+                    }
+                    else
+                    {
+                        accidentalX = OFFSETX[0] - SHARP_ICON_WIDTH; 
+                        //accidentalX = accidentalX - wholeNoteIcon.getIconWidth() - 5 ; 
+                        sharp.setBounds(accidentalX, accidentalY, SHARP_ICON_WIDTH, SHARP_ICON_HEIGHT);
+                    }
+                }
+                else //if normal note, go to left 
+                {
+                    offsetX = OFFSETX[2]; 
+                            //offsetX + wholeNoteIcon.getIconWidth() + flatIcon.getIconWidth();
+                }
+            }
             
             JLabel wholeNote = new JLabel(wholeNoteIcon);
-            notePane[panelNumber].add(wholeNote); // NOte is added here
+            showLine(panelNumber, offsetY);
+            displayedPane[panelNumber].addNote(MIDIvalue, wholeNote); // Note is added here
             wholeNote.setBounds(offsetX, offsetY, NOTE_ICON_WIDTH, NOTE_ICON_HEIGHT);
         }
+    
+    public void shiftLeft()
+    {
+        if( debug ) System.out.println("\nshiftLeft");
+        //showPanes();
+        
+        StaffPanel p = new StaffPanel("");
+        p.copyPane(displayedPane[0]);
+        savedPanes.add(p);
+
+        if( debug ) System.out.println("copy display pane 0 to savedPanes");
+
+        for(int i = 1; i < displayedPane.length; i++)
+          {
+            if( debug ) System.out.println("copy display pane " + i + " to pane " + (i-1));
+            displayedPane[i-1].copyPane(displayedPane[i]);
+            //displayedPane[i].clearPanel();
+          }   
+        displayedPane[displayedPane.length - 1].clearPanel();
+    }
+    
+
+    public void shiftRight()
+    {
+        if( debug ) System.out.println("\nshiftRight");
+        //showPanes();
+
+        for( int i = displayedPane.length-1; i > 0; i-- )
+        {
+             displayedPane[i].clearPanel();
+             displayedPane[i].copyPane(displayedPane[i-1]);
+             if( debug ) System.out.println("copy display pane " + (i-1) + " to " + i);
+        } 
+        
+        int savedPaneTopIndex = savedPanes.size() - 1;
+        if( savedPaneTopIndex >= 0 )
+          {
+          displayedPane[0].copyPane(savedPanes.get(savedPaneTopIndex));
+          savedPanes.remove(savedPaneTopIndex);
+          if( debug ) System.out.println("copy savedPane top to pane 0");
+          }
+    }
+    
+
+    private void showPanes()
+    {
+        int index = 0;
+        for( StaffPanel  p: savedPanes ) 
+          {
+            if( debug ) System.out.println("savedPane   " + index + ": " + p);
+            index++;
+          }
+        
+        index = 0;
+        for( StaffPanel p: displayedPane )
+          {
+            if( debug ) System.out.println("displayPane " + index + ": " + p);
+            index++;            
+          }
+    }
+    
+    public void removeNote(int MIDIvalue, int panelNumber)
+    {
+        displayedPane[panelNumber].removeNote(MIDIvalue); 
+    }
+
+    /* C, C#, D, Eb, E,  F, F#,  G, G#,  A, Bb,  B */
+    public String isAccidental(int index)
+    {
+        switch( index )
+          {
+            case 1:
+            case 6:
+            case 8:
+                return "sharp";
+            case 3:
+            case 10:
+                return "flat";
+            default:
+                return "natural";
+          }
+    }
     
     /**
      * Draws the specified number of ledger lines below the bass clef,
      * above the bass clef, below and above the treble clef for the specified
-     * chord. */
-    public void drawStaffLines(int belowBass, int aboveBass,
-                               int belowTreble, int aboveTreble,
+     * chord. Start invisible  
+     * @param belowBass
+     * @param aboveBass
+     * @param belowTreble
+     * @param aboveTreble
+     * @param chordNum
+     */
+    public void drawStaffLines(int belowBass, 
+                               int aboveBass,
+                               int belowTreble, 
+                               int aboveTreble,
                                int chordNum)
     {
         /* Set the base x and y positions, starting with the lines above
          * the treble clef */
-        int xPos = staffIcon.getIconWidth()/2 - staffWidth/2; //
-        int yPos = trebleBase; //starts on top line
+        int xPos = staffIcon.getIconWidth()/2 - staffWidth/2;
+        int yPos = trebleBase;
 
         /* Draw the specified number of lines above the treble clef, changing
          * the y position by the space between the lines */
         for (int i = 0; i < aboveTreble; i++) {
-            yPos -= staffGap; //gap of 11 
-            drawStaffLine(xPos, yPos, chordNum);
+            yPos -= staffGap;
+            drawStaffLine(xPos, yPos, chordNum, i);
         }
 
         /* Set the initial y position to the bottom of the treble clef,
@@ -3732,36 +3835,102 @@ static final int NOTE_OCTAVE_STEP = 4;
         yPos = trebleBase + 4*staffGap;
         for (int i = 0; i < belowTreble; i++) {
             yPos += staffGap;
-            drawStaffLine(xPos, yPos, chordNum);
+            drawStaffLine(xPos, yPos, chordNum, i + aboveTreble);
         }
 
         /* Draw the lines above the bass clef */
         yPos = bassBase;
         for (int i = 0; i < aboveBass; i++) {
             yPos -= staffGap;
-            drawStaffLine(xPos, yPos, chordNum);
+            drawStaffLine(xPos, yPos, chordNum, i + aboveTreble + belowTreble);
         }
 
         /* Draw the lines below the bass clef */
         yPos = bassBase + 4*staffGap;
         for (int i = 0; i < belowBass; i++) {
             yPos += staffGap;
-            drawStaffLine(xPos, yPos, chordNum);
+            drawStaffLine(xPos, yPos, chordNum, i + aboveTreble + belowTreble + aboveBass);
         }
     }
 
     /**
      * Draw a ledger line at the specified x, y position for the given
      * chord. */
-    public void drawStaffLine(int xPos, int yPos, int panelNum)
+    public void drawStaffLine(int xPos, int yPos, int panelNum, int index)
     {
         JSeparator line = new JSeparator();
-        line.setBackground(Color.black);
-        line.setForeground(Color.black);
+        line.setBackground(new Color(240, 240, 240));
+        line.setForeground(new Color(240, 240, 240));
         line.setBounds(xPos, yPos, staffWidth, 1);
-        //set border taken out 
-        notePane[panelNum].add(line);
+        displayedPane[panelNum].getPanel().add(line);
+        displayedPane[panelNum].setLedgerLine(line, index);
+        displayedPane[panelNum].repaint();
     }
+    
+    public void showLine(int panelNum, int yOffset)
+    {
+        int [] array;
+        int xPos = displayedPane[panelNum ].getPanel().getWidth()/2 - staffWidth/2;
+        if(yOffset < trebleBase) //above treble
+        {
+            array = new int [LEDGER_LINES_ABOVE_TREBLE]; 
+            for(int i = 0; i< array.length; i++)
+            {
+                array[i] = trebleBase - i * staffGap; 
+            }
+//            for(int i = 0; i < array.length; i++)
+//            {
+//                if(array [i] - yOffset < 6)
+//                {
+//                    displayedPane[panelNum].drawLedgerLine(xPos, array[i]);
+//                }
+//            }
+            for (int i = 0; i < array.length; i++) 
+            {
+                //System.out.println("numbers: " + array[i]); 
+                displayedPane[panelNum].drawLedgerLine(xPos, array[i]);
+            }
+            //ok so we know the yOffset for the note, and we know the spacing for all the 
+            //ledger lines so we can use this and calculate where to draw the line 
+            
+            //ok each gap is 11 apart   treblebase + 11 * num 
+            //how to calculate num? 
+            
+//            for(int i = 0; i< displayedPane[panelNum].getNotes().length; i++)
+//            {
+//                int ledgerIndex =0; 
+//                if(displayedPane[panelNum].getNotes()[i] != null)
+//                {
+//                    int xPos = displayedPane[panelNum].getNotes()[i].getX(); 
+//                    //int yPos = displayedPane[panelNum].getNotes()[i].getY(); 
+//                    int ledgerX = displayedPane[panelNum].getLedgerLine(ledgerIndex).getX(); 
+//                    if(Math.abs(ledgerX - xPos) <=6 )
+//                    {
+//                        displayedPane[panelNum].getLedgerLine(ledgerIndex).setForeground(Color.black); 
+//                    } 
+//                }
+//            }
+        }
+//        if(yOffset > MIDDLE_C) //below treble
+//        {
+//            //staffPanels[panelNum].setLedgerLine(line, index);
+//            //staffPanels[panelNum].getLedgerLine(9).setForeground(Color.black);
+//        }
+//        if(60 > MIDIvalue && MIDIvalue > 58)  //aboveBass
+//        { 
+//            //staffPanels[panelNum].getLedgerLine(10).setForeground(Color.black);
+//        }
+        if(yOffset > bassBase + 4 * staffGap)  //below bass 
+        {
+            array = new int [LEDGER_LINES_BELOW_BASS]; 
+            for(int i = 0; i< array.length; i++)
+            {
+                array[i] = bassBase + (4+i) * staffGap; 
+            }
+        }
+        //visichordDialog.repaint(); 
+    }
+    
     
     /**
      * saves current voicing in the Advisor which makes its way to My.voc eventually
@@ -3838,11 +4007,11 @@ public String nameToBass(String name)
  * the range at one octave above the specified low range.
  * 
  * @param lowRange
- * @param highRange
+     * @return 
  */
 public int setBassHighRange(int lowRange)
 {
-    int highRange = C_EIGHTH + 1;
+    int highRange; // was = C_EIGHTH + 1;
     highRange = lowRange + 11;
     PianoKey high = pianoKeys()[highRange - A];
     String name = high.getName();
@@ -3879,6 +4048,7 @@ public String findBassName(int midiValue)
 /**
  * Sets the chord root key to a given MIDI value.
  * 
+ * @param bassNote
  * @param midiValue
  */
 public void setBass(String bassNote, int midiValue)
@@ -3923,26 +4093,41 @@ public boolean enharmonic(String s1, String s2)
 
 public String enharmonicNote(String note)
 {
-    if (note.equals("Db"))
-    { note = "C#"; }
-    else if (note.equals("C#"))
-    { note = "Db"; }
-    else if (note.equals("D#"))
-    { note = "Eb"; }
-    else if (note.equals("Eb"))
-    { note = "D#"; }
-    else if (note.equals("F#"))
-    { note = "Gb"; }
-    else if (note.equals("Gb"))
-    { note = "F#"; }
-    else if (note.equals("G#"))
-    { note = "Ab"; }
-    else if (note.equals("Ab"))
-    { note = "G#"; }
-    else if (note.equals("A#"))
-    { note = "Bb"; }
-    else if (note.equals("Bb"))
-    { note = "A#"; }
+        switch( note )
+          {
+            case "Db":
+                note = "C#";
+                break;
+            case "C#":
+                note = "Db";
+                break;
+            case "D#":
+                note = "Eb";
+                break;
+            case "Eb":
+                note = "D#";
+                break;
+            case "F#":
+                note = "Gb";
+                break;
+            case "Gb":
+                note = "F#";
+                break;
+            case "G#":
+                note = "Ab";
+                break;
+            case "Ab":
+                note = "G#";
+                break;
+            case "A#":
+                note = "Bb";
+                break;
+            case "Bb":
+                note = "A#";
+                break;
+            default:
+                break;
+          }
     
     return note;
     
@@ -4055,7 +4240,6 @@ public void pressKey(PianoKey keyPlayed)
 {
     JLabel label = keyPlayed.getLabel();
     int x  = keyPlayed.getMIDI();  
-    
     Icon onIcon = keyPlayed.getOnIcon();
     Icon offIcon = keyPlayed.getOffIcon();
     Icon rootIcon = keyPlayed.getBassIcon();
@@ -4068,13 +4252,14 @@ public void pressKey(PianoKey keyPlayed)
             label.setIcon(rootIconOn);
             if(turnOnOffLabels)
             {labels[x-21].setForeground(Color.black);}
-            
+            drawNote(x, curChordIndex); 
         }
         else 
         {
             label.setIcon(onIcon);
             if(turnOnOffLabels)
             {labels[x-21].setForeground(Color.black);}  
+            drawNote(x, curChordIndex); 
         }
     }
     else if (!keyPlayed.isPressed()) 
@@ -4084,11 +4269,14 @@ public void pressKey(PianoKey keyPlayed)
             label.setIcon(rootIcon);
             if(turnOnOffLabels)
             {labels[x-21].setForeground(Color.black);}           
+            drawNote(x, curChordIndex); 
         }
         else 
         {
             label.setIcon(offIcon);
             labels[x-21].setForeground(new Color (240,240,240));            
+            removeNote(x, curChordIndex); 
+            //visichordDialog.repaint(); 
         }
     }
 forcePaint();
@@ -4209,11 +4397,9 @@ private void forcePaint()
     private javax.swing.JLabel ctrlShiftClickExtLabel;
     private javax.swing.JMenuItem downHalfStepMI;
     private javax.swing.JMenuItem downOctaveMI;
-    private javax.swing.JLabel endStaff;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel keyA0;
@@ -4315,9 +4501,6 @@ private void forcePaint()
     private javax.swing.JLabel presentChordDisplay;
     private javax.swing.JMenuItem resetChordDisplayMI;
     private javax.swing.JMenuItem singleNoteModeMI;
-    private javax.swing.JLabel staff1;
-    private javax.swing.JLabel staff2;
-    private javax.swing.JLabel staff3;
     private javax.swing.JMenuItem startPlayMI;
     private javax.swing.JMenuItem startSelPlayMI;
     private javax.swing.JMenuItem stopPlayMI;
@@ -4326,6 +4509,7 @@ private void forcePaint()
     private javax.swing.JMenuItem upHalfStepMI;
     private javax.swing.JMenuItem upOctaveMI;
     private javax.swing.JMenu voicingModeMenu;
+    private javax.swing.JPanel voicingStaffPanel;
     private javax.swing.JMenu voicingTransposeMenu;
     private javax.swing.JPanel whiteKeyLabels;
     private javax.swing.JMenu windowMenu;
@@ -4342,6 +4526,8 @@ public PianoKey[] pkeys;
  *  the array of PianoKeyLabels for this Keyboard
  */
 public JLabel[] labels;
+
+public JPanel notePane[];
 
 /**
  * Initialize all keys.
@@ -4569,27 +4755,54 @@ private void initKeys()
  
     // Set up NotePanes for chords
     
-    int numberOfNotePanes = 3;
+    int numberOfPanes = 4;
     
     java.awt.Dimension notePaneDimension = new java.awt.Dimension(162, 335);
     int paneBase = 100;
     int paneDisplacement = 160;
     
-    notePane = new javax.swing.JPanel[numberOfNotePanes];
-    
-    for( int i = 0; i < numberOfNotePanes; i++ )
+    staffDisplay = new javax.swing.JLabel[numberOfPanes];
+    displayedPane = new StaffPanel[numberOfPanes];
+    savedPanes = new ArrayList();
+    for( int i = 0; i < numberOfPanes; i++ ) 
       {
-      notePane[i] = new javax.swing.JPanel();
-        
-      notePane[i].setMaximumSize(notePaneDimension);
-      notePane[i].setMinimumSize(notePaneDimension);
-      notePane[i].setPreferredSize(notePaneDimension);
-      notePane[i].setOpaque(false);
-      notePane[i].setLayout(null);
-      notePane[i].setBounds(paneBase + i*paneDisplacement, 10, 162, 370);
+      staffDisplay[i] = new javax.swing.JLabel(staffIcon); 
+    
+      staffDisplay[i].setOpaque(false);
+      staffDisplay[i].setBackground(Color.white);
+      staffDisplay[i].setFocusable(false);
+      staffDisplay[i].setBounds(paneBase + i*paneDisplacement, 25, 162, 370);
       
-      jPanel2.add(notePane[i]);
+      voicingStaffPanel.add(staffDisplay[i]);
+      
+      //notePanes.add(new StaffPanel());
       }
+    
+    for( int i = 0; i < numberOfPanes; i++ )
+      {
+      JPanel panel = new javax.swing.JPanel();
+      displayedPane[i] = new StaffPanel("XX");
+        
+      panel.setMaximumSize(notePaneDimension);
+      panel.setMinimumSize(notePaneDimension);
+      panel.setPreferredSize(notePaneDimension);
+      panel.setDoubleBuffered(true);
+      panel.setOpaque(false);
+      panel.setLayout(null);
+      panel.setBounds(paneBase + i*paneDisplacement, 10, 162, 370);
+      
+      voicingStaffPanel.add(panel);
+      displayedPane[i].setPanel(panel);
+      }
+    
+//    JLabel endStaff = new JLabel (staffEndIcon);
+//    
+//      endStaff.setMaximumSize(notePaneDimension);
+//      endStaff.setMinimumSize(notePaneDimension);
+//      endStaff.setPreferredSize(notePaneDimension);
+//      endStaff.setBounds((int) staffDisplay[staffDisplay.length - 1].getX() + staffIcon.getIconWidth(), 25, 27, 370);
+//      voicingStaffPanel.add(endStaff); 
+    
 }
        
 /**
@@ -4614,4 +4827,295 @@ public void closeWindow()
     notate.closeKeyboard();
     WindowRegistry.unregisterWindow(this);
   }    
+
+    /**
+     * StaffPanel is a class that holds one Panel in displayedPane and has a few
+ methods useful for organizing the notes on the panel
+     */
+    class StaffPanel extends JPanel
+      {
+        private String chordName;
+        public JLabel[] notes;             //stores all notes displayed on panel
+        public JLabel[] accidentals;       //stores all accidentals displayed on panel
+        public JSeparator[] ledgerLines;   //contains all the ledger lines 
+        public JPanel panel;               //the actual panel
+        public Graphics g;
+
+        /**
+         * constructor for StaffPanel
+         */
+        public StaffPanel(String chordName)
+        {
+            super();
+            this.chordName = chordName;
+            panel = new JPanel();
+            notes = new JLabel[127];
+            accidentals = new JLabel[127];
+            ledgerLines = new JSeparator[17];
+            g = panel.getGraphics();
+        }
+
+        /**
+         * addNote adds the note to the panel and to the notes array
+         *
+         * @param MIDIvalue midi value of the note
+         * @param label     the actual note being added
+         */
+        public void addNote(int MIDIvalue, JLabel label)
+        {
+            panel.add(label);
+            notes[MIDIvalue] = label;
+        }
+
+        /**
+         * getPanel returns the internal panel
+         *
+         * @return panel
+         */
+        public JPanel getPanel()
+        {
+            return panel;
+        }
+
+        /**
+         * getNotes allows an outsider to access the notes array
+         *
+         * @return array of all notes in panel
+         */
+        public JLabel[] getNotes()
+        {
+            return notes;
+        }
+
+        /**
+         * getAccidentals allows an outsider to access the accidental array
+         *
+         * @return array of all accidental in panel
+         */
+        public JLabel[] getAccidentals()
+        {
+            return accidentals;
+        }
+
+        /**
+         * getLedgerLine allows an outsider to access the ledger lines array
+         *
+         * @return array of all ledger lines in panel
+         */
+        public JSeparator[] getLedgerLines()
+        {
+            return ledgerLines;
+        }
+
+        /**
+         * getLedgerLine allows an outsider to access the ledger lines array
+         *
+         * @return ledgerLine with at specific index
+         */
+        public JSeparator getLedgerLine(int index)
+        {
+            return ledgerLines[index];
+        }
+
+        /**
+         * addAccidental adds the accidental to the panel
+         * and to the accidental array in the index at the same MIDI value
+         *
+         * @param MIDIvalue midi value of the note
+         * @param label     the actual accidental being added
+         */
+        public void addAccidental(int MIDIvalue, JLabel label)
+        {
+            panel.add(label);
+            accidentals[MIDIvalue] = label;
+        }
+
+        /**
+         * setPanel sets the internal panel to p
+         *
+         * @param p the new panel
+         */
+        public void setPanel(JPanel p)
+        {
+            panel = p;
+        }
+
+        /**
+         * copyPane clears the original panel, then moves all the data from
+         * panel p into this panel
+         *
+         * @param p panel with all the data to move over
+         */
+        public void copyPane(StaffPanel p)
+        {
+            clearPanel();
+            chordName = p.chordName;
+            for( int i = 0; i < notes.length; i++ )
+              {
+                notes[i] = p.getNotes()[i];
+                accidentals[i] = p.getAccidentals()[i];
+                if( notes[i] != null )
+                  {
+                    panel.add(notes[i]);
+                  }
+                if( accidentals[i] != null )
+                  {
+                    panel.add(accidentals[i]);
+                  }
+              }
+            panel.repaint();
+        }
+
+        /**
+         * clears the panel and the arrays
+         */
+        public void clearPanel()
+        {
+            panel.removeAll();
+            for( int i = 0; i < notes.length; i++ )
+              {
+                notes[i] = null;
+                accidentals[i] = null;
+              }
+            panel.repaint();
+        }
+
+        /**
+         * removeNote removes the note from the panel and from the arrays
+         *
+         * @param MIDIvalue uses the MIDIvalue to determine what note to remove
+         */
+        public void removeNote(int MIDIvalue)
+        {
+            if( notes[MIDIvalue] == null )
+              {
+                //check to make sure there is something there to take out
+              }
+            else
+              {
+                panel.remove(notes[MIDIvalue]);
+                notes[MIDIvalue] = null;
+              }
+            if( accidentals[MIDIvalue] == null )
+              {
+                //check to make sure there is something there to take out
+              }
+            else
+              {
+                panel.remove(accidentals[MIDIvalue]);
+                accidentals[MIDIvalue] = null;
+              }
+
+        }
+
+        public void drawLedgerLine(int xStart, int yStart)
+        {
+          panel.getGraphics().drawLine(xStart, yStart, xStart + staffWidth, yStart);
+        }
+
+        public void clearLedgerLine(int xStart, int yStart)
+        {
+          panel.getGraphics().clearRect(xStart, yStart, 0, 0);
+        }
+
+        /**
+         * hasBorder check to see if there are notes around the note with that
+         * midi value
+         * if the Y offset is less than 6 away, then it will move it over
+         *
+         * @param MIDIvalue the note that we are going to compare to
+         * @param offsetY   where on the staff it is
+         * @return true if any note is around it
+         */
+        public boolean hasBorderY(int MIDIvalue, int offsetY)
+        {
+            //check the notes around it  
+            for( int i = MIDIvalue - 2; i <= MIDIvalue + 2; i++ )
+              {
+                if( notes[i] != null && i != MIDIvalue )
+                  {
+                    int yPos = notes[i].getY();
+                    int differenceY = offsetY - yPos;
+                    if( Math.abs(differenceY) <= 6 && notes[i].getX() != OFFSETX[2] )
+                      {
+                        return true;
+                      }
+                  }
+              }
+            return false;
+        }
+
+        /**
+         * hasBorderX checks if there is a note already in the 3rd X spot
+         *
+         * @param MIDIvalue the note that we are going to compare to
+         * @param offsetX   where on the staff it is
+         * @return true if any note is around it
+         */
+        public boolean hasBorderX(int MIDIvalue, int offsetX)
+        {
+            //check the notes around it  
+            int center = panel.getWidth() / 2 - (wholeNoteIcon.getIconWidth() / 2);
+            for( int i = MIDIvalue - 2; i <= MIDIvalue + 2; i++ )
+              {
+                if( notes[i] != null && i != MIDIvalue )
+                  {
+                    int xPos = notes[i].getX();
+                    if( xPos == center )
+                      {
+                        //make sure you aren't comparing to the center of the panel
+                      }
+                    else
+                      {
+                        int differenceX = offsetX - xPos;
+                        if( differenceX == 0 )
+                          {
+                            if( debug ) System.out.println("differenceX: " + differenceX);
+                            return true;
+                          }
+                      }
+
+                  }
+              }
+            return false;
+        }
+
+        /**
+         * isAccidental check to see if the note is an accidental
+         *
+         * @param MIDIvalue the note to check
+         * @return true if accidental
+         */
+        public boolean isAccidental(int MIDIvalue)
+        {
+            return accidentals[MIDIvalue] != null;
+        }
+
+        public void setLedgerLine(JSeparator line, int index)
+        {
+            ledgerLines[index] = line;
+            if( debug ) System.out.println("activated" + index);
+        }
+
+        public String getName()
+        {
+            return "panel: " + panel;
+        }
+
+        public String toString()
+        {
+            StringBuilder buffer = new StringBuilder();
+            int index = 0;
+            for( JLabel n : notes )
+              {
+                if( n != null )
+                  {
+                    buffer.append(" " + index);
+                  }
+                index++;
+              }
+
+            return buffer.toString();
+        }
+      } // end StaffPanel
 }
