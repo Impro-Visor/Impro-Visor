@@ -435,8 +435,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
     
     public void addFromFile(boolean overwrite) {
         JFileChooser openDialog = new JFileChooser(ImproVisor.getNNetDataDirectory());
-        openDialog.setAcceptAllFileFilterUsed(false);
-        openDialog.addChoosableFileFilter(new FileFilter() {
+        openDialog.setFileFilter(new FileFilter() {
 
             public boolean accept(File pathname) {
                 if (pathname.isDirectory())
