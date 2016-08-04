@@ -10510,22 +10510,26 @@ public void toCritic()
   {
     if( lickgenFrame.toCriticSelected() )
       {
-        String s = JOptionPane.showInputDialog("Select the number of measures\n"
+        String s = JOptionPane.showInputDialog("<html><div style=\"text-align: center;\">"
+                + "Select the number of measures<br/>"
                 + "for the graded licks", 2);
 
         if( s != null && s.length() > 0 )
           {
             int measureNum;
-
-            try
-              {
-                measureNum = Integer.parseInt(s);
+              try {
+                  measureNum = Integer.parseInt(s);
+              } catch (NumberFormatException e) {
+                  JOptionPane.showMessageDialog(null,
+                          new JLabel("<html><div style=\"text-align: center;\">"
+                                  + "Could not understand input,<br/>"
+                                  + "setting number of measures to 2."),
+                          "Alert", JOptionPane.PLAIN_MESSAGE);
+                  measureNum = 2;
               }
-            catch( Exception e )
-              {
-                measureNum = 2;
-              }
-
+                
+            
+            
             lickgenFrame.showCriticGrades();
 
             getCurrentStave().lockSelectionWidth(measureNum * WHOLE);
