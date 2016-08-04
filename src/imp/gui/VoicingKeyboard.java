@@ -3408,7 +3408,7 @@ private void clearKeyboardMIActionPerformed(java.awt.event.ActionEvent evt) {//G
     notate.clearVoicingEntryTF();
     for(int i = 0; i<numberOfDisplayedPanes; i++)
     {
-        displayPane[i].clearPanel();
+        displayPane[i].clear();
     }
 }//GEN-LAST:event_clearKeyboardMIActionPerformed
 
@@ -3526,7 +3526,6 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
         shiftLeft();
         notate.chordStepForwardDo();
         displayPane[displayPane.length - 1].setChordName(currentChordName);
-        displayPane[displayPane.length - 1].repaint();
         showPanes();
         System.out.println("currentChordName = " + currentChordName);
     }//GEN-LAST:event_chordStepForwardButtonActionPerformed
@@ -3652,7 +3651,7 @@ static final int NOTE_OCTAVE_STEP = 4;
 
 public void drawNote(int midi, int panelNumber)
     {
-    int offsetX = displayPane[panelNumber].getPanel().getWidth()/2 - (wholeNoteIcon.getIconWidth()/2);
+    int offsetX = displayPane[panelNumber].getWidth()/2 - (wholeNoteIcon.getIconWidth()/2);
 
     int offsetY = MIDDLE_C_OFFSET_TREBLE; 
     int accidentalX = offsetX - flatIcon.getIconWidth() +2; 
@@ -3745,9 +3744,9 @@ public void shiftLeft()
       {
         if( debug ) System.out.println("copy display pane " + i + " to pane " + (i-1));
         displayPane[i-1].copyPane(displayPane[i]);
-        //displayedPane[i].clearPanel();
+        //displayedPane[i].clear();
       }   
-    displayPane[displayPane.length - 1].clearPanel();
+    displayPane[displayPane.length - 1].clear();
     }
     
 
@@ -3757,7 +3756,7 @@ public void shiftRight()
 
     for( int i = displayPane.length-1; i > 0; i-- )
     {
-         displayPane[i].clearPanel();
+         displayPane[i].clear();
          displayPane[i].copyPane(displayPane[i-1]);
          if( debug ) System.out.println("copy display pane " + (i-1) + " to " + i);
     } 
@@ -3872,15 +3871,14 @@ public void drawStaffLine(int xPos, int yPos, int panelNum, int index)
         line.setBackground(new Color(240, 240, 240));
         line.setForeground(new Color(240, 240, 240));
         line.setBounds(xPos, yPos, staffWidth, 1);
-        displayPane[panelNum].getPanel().add(line);
+        displayPane[panelNum].add(line);
         displayPane[panelNum].setLedgerLine(line, index);
-        displayPane[panelNum].repaint();
     }
     
 public void showLine(int panelNum, int yOffset)
     {
         int [] array;
-        int xPos = displayPane[panelNum].getPanel().getWidth()/2 - staffWidth/2;
+        int xPos = displayPane[panelNum].getWidth()/2 - staffWidth/2;
         if(yOffset < trebleBase) //above treble
         {
             array = new int [LEDGER_LINES_ABOVE_TREBLE]; 
@@ -4774,48 +4772,22 @@ private void initKeys()
     int paneBase = 100;
     int paneDisplacement = 160;
     
+    savedPanes = new ArrayList();
     staffDisplay = new javax.swing.JLabel[numberOfPanes];
     displayPane = new ChordPane[numberOfPanes];
-    savedPanes = new ArrayList();
     for( int i = 0; i < numberOfPanes; i++ ) 
       {
       staffDisplay[i] = new javax.swing.JLabel(staffIcon); 
-    
       staffDisplay[i].setOpaque(false);
       staffDisplay[i].setBackground(Color.white);
       staffDisplay[i].setFocusable(false);
       staffDisplay[i].setBounds(paneBase + i*paneDisplacement, 25, 162, 370);
-      
       voicingStaffPanel.add(staffDisplay[i]);
       
-      //notePanes.add(new ChordPane());
-      }
-    
-    for( int i = 0; i < numberOfPanes; i++ )
-      {
-      JPanel panel = new javax.swing.JPanel();
       displayPane[i] = new ChordPane("Y"); //currentChordName);
-        
-      panel.setMaximumSize(notePaneDimension);
-      panel.setMinimumSize(notePaneDimension);
-      panel.setPreferredSize(notePaneDimension);
-      panel.setDoubleBuffered(true);
-      panel.setOpaque(false);
-      panel.setLayout(null);
-      panel.setBounds(paneBase + i*paneDisplacement, 10, 162, 370);
-      
-      voicingStaffPanel.add(panel);
-      displayPane[i].setPanel(panel);
-      }
-    
-//    JLabel endStaff = new JLabel (staffEndIcon);
-//    
-//      endStaff.setMaximumSize(notePaneDimension);
-//      endStaff.setMinimumSize(notePaneDimension);
-//      endStaff.setPreferredSize(notePaneDimension);
-//      endStaff.setBounds((int) staffDisplay[staffDisplay.length - 1].getX() + staffIcon.getIconWidth(), 25, 27, 370);
-//      voicingStaffPanel.add(endStaff); 
-    
+      displayPane[i].setBounds(paneBase + i*paneDisplacement, 10, 162, 370);
+      voicingStaffPanel.add(displayPane[i]);
+      }  
 }
        
 /**
@@ -4852,8 +4824,9 @@ public void closeWindow()
         public JLabel[] notes;             //stores all notes displayed on panel
         public JLabel[] accidentals;       //stores all accidentals displayed on panel
         public JSeparator[] ledgerLines;   //contains all the ledger lines 
-        public JPanel panel;               //the actual panel
         public Graphics g;
+        
+        java.awt.Dimension notePaneDimension = new java.awt.Dimension(162, 335);
 
         /**
          * constructor for StaffPanel
@@ -4861,14 +4834,20 @@ public void closeWindow()
         public ChordPane(String chordName)
         {
             super();
-            panel = new JPanel();
             this.chordName = chordName;
             chordLabel = makeChordLabel(chordName);
-            panel.add(chordLabel);            
+            add(chordLabel);            
             notes = new JLabel[127];
             accidentals = new JLabel[127];
             ledgerLines = new JSeparator[17];
-            g = panel.getGraphics();
+            setMaximumSize(notePaneDimension);
+            setMinimumSize(notePaneDimension);
+            setPreferredSize(notePaneDimension);
+            setDoubleBuffered(true);
+            setOpaque(false);
+            setLayout(null);
+            setBounds(100, 10, 162, 370);
+            g = getGraphics();
 
         }
         
@@ -4895,19 +4874,10 @@ public void closeWindow()
          */
         public void addNote(int MIDIvalue, JLabel label)
         {
-            panel.add(label);
+            add(label);
             notes[MIDIvalue] = label;
         }
 
-        /**
-         * getPanel returns the internal panel
-         *
-         * @return panel
-         */
-        public JPanel getPanel()
-        {
-            return panel;
-        }
 
         /**
          * getNotes allows an outsider to access the notes array
@@ -4958,19 +4928,10 @@ public void closeWindow()
          */
         public void addAccidental(int MIDIvalue, JLabel label)
         {
-            panel.add(label);
+            add(label);
             accidentals[MIDIvalue] = label;
         }
 
-        /**
-         * setPanel sets the internal panel to p
-         *
-         * @param p the new panel
-         */
-        public void setPanel(JPanel p)
-        {
-            panel = p;
-        }
 
         /**
          * copyPane clears the original panel, then moves all the data from
@@ -4980,37 +4941,37 @@ public void closeWindow()
          */
         public void copyPane(ChordPane p)
         {
-            clearPanel();
+            removeAll();
             chordLabel = makeChordLabel(chordName);
-            panel.add(chordLabel);
+            add(chordLabel);
             for( int i = 0; i < notes.length; i++ )
               {
                 notes[i] = p.getNotes()[i];
                 accidentals[i] = p.getAccidentals()[i];
                 if( notes[i] != null )
                   {
-                    panel.add(notes[i]);
+                    add(notes[i]);
                   }
                 if( accidentals[i] != null )
                   {
-                    panel.add(accidentals[i]);
+                    add(accidentals[i]);
                   }
               }            
-            panel.repaint();
+            repaint();
         }
 
         /**
          * clears the panel and the arrays
          */
-        public void clearPanel()
+        public void clear()
         {
-            panel.removeAll();
+            removeAll();
             for( int i = 0; i < notes.length; i++ )
               {
                 notes[i] = null;
                 accidentals[i] = null;
               }
-            panel.repaint();
+            repaint();
         }
 
         /**
@@ -5026,7 +4987,7 @@ public void closeWindow()
               }
             else
               {
-                panel.remove(notes[MIDIvalue]);
+                remove(notes[MIDIvalue]);
                 notes[MIDIvalue] = null;
               }
             if( accidentals[MIDIvalue] == null )
@@ -5035,7 +4996,7 @@ public void closeWindow()
               }
             else
               {
-                panel.remove(accidentals[MIDIvalue]);
+                remove(accidentals[MIDIvalue]);
                 accidentals[MIDIvalue] = null;
               }
 
@@ -5043,12 +5004,12 @@ public void closeWindow()
 
         public void drawLedgerLine(int xStart, int yStart)
         {
-          panel.getGraphics().drawLine(xStart, yStart, xStart + staffWidth, yStart);
+          getGraphics().drawLine(xStart, yStart, xStart + staffWidth, yStart);
         }
 
         public void clearLedgerLine(int xStart, int yStart)
         {
-          panel.getGraphics().clearRect(xStart, yStart, 0, 0);
+          getGraphics().clearRect(xStart, yStart, 0, 0);
         }
 
         /**
@@ -5088,7 +5049,7 @@ public void closeWindow()
         public boolean hasBorderX(int MIDIvalue, int offsetX)
         {
             //check the notes around it  
-            int center = panel.getWidth() / 2 - (wholeNoteIcon.getIconWidth() / 2);
+            int center = getWidth() / 2 - (wholeNoteIcon.getIconWidth() / 2);
             for( int i = MIDIvalue - 2; i <= MIDIvalue + 2; i++ )
               {
                 if( notes[i] != null && i != MIDIvalue )
@@ -5130,10 +5091,10 @@ public void closeWindow()
             if( debug ) System.out.println("activated" + index);
         }
 
-        public String getName()
-        {
-            return "panel: " + panel;
-        }
+//        public String getName()
+//        {
+//            return "panel: " + panel;
+//        }
 
         public String toString()
         {
