@@ -3320,7 +3320,7 @@ public void showVoicingOnKeyboard(String chordName, String v)
     clearKeyboard();
     
     String e = notate.extEntryTFText();
-    if( true ) System.out.println("showVoicingOnKeyboard " + chordName + " " + v);
+    if( debug ) System.out.println("showVoicingOnKeyboard " + chordName + " " + v);
     currentChordName = chordName;
     Polylist voicing = notate.voicingToList(v);
     Polylist extension = notate.extensionToList(e);
@@ -3527,7 +3527,7 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
         notate.chordStepForwardDo();
         displayPane[displayPane.length - 1].setChordName(currentChordName);
         showPanes();
-        System.out.println("currentChordName = " + currentChordName);
+        if( debug ) System.out.println("currentChordName = " + currentChordName);
     }//GEN-LAST:event_chordStepForwardButtonActionPerformed
 
     private void playChordButtonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_playChordButtonKeyTyped
@@ -3735,7 +3735,7 @@ public void shiftLeft()
     if( debug ) System.out.println("\nshiftLeft");
 
     ChordPane p = new ChordPane("X");
-    p.copyPane(displayPane[0]);
+    p.copyFrom(displayPane[0]);
     savedPanes.add(p);
 
     if( debug ) System.out.println("copy display pane 0 to savedPanes");
@@ -3743,8 +3743,8 @@ public void shiftLeft()
     for(int i = 1; i < displayPane.length; i++)
       {
         if( debug ) System.out.println("copy display pane " + i + " to pane " + (i-1));
-        displayPane[i-1].copyPane(displayPane[i]);
-        //displayedPane[i].clear();
+        displayPane[i-1].copyFrom(displayPane[i]);
+        displayPane[i].clear();
       }   
     displayPane[displayPane.length - 1].clear();
     }
@@ -3757,14 +3757,14 @@ public void shiftRight()
     for( int i = displayPane.length-1; i > 0; i-- )
     {
          displayPane[i].clear();
-         displayPane[i].copyPane(displayPane[i-1]);
+         displayPane[i].copyFrom(displayPane[i-1]);
          if( debug ) System.out.println("copy display pane " + (i-1) + " to " + i);
     } 
 
     int savedPaneTopIndex = savedPanes.size() - 1;
     if( savedPaneTopIndex >= 0 )
       {
-      displayPane[0].copyPane(savedPanes.get(savedPaneTopIndex));
+      displayPane[0].copyFrom(savedPanes.get(savedPaneTopIndex));
       savedPanes.remove(savedPaneTopIndex);
       if( debug ) System.out.println("copy savedPane top to pane 0");
       }
@@ -4934,20 +4934,21 @@ public void closeWindow()
 
 
         /**
-         * copyPane clears the original panel, then moves all the data from
-         * panel p into this panel
+         * copyFrom clears this ChordPane, then moves all the data from
+ ChordPane p into this one
          *
          * @param p panel with all the data to move over
          */
-        public void copyPane(ChordPane p)
+        public void copyFrom(ChordPane p)
         {
-            removeAll();
+            clear();
+            chordName = p.chordName;
             chordLabel = makeChordLabel(chordName);
             add(chordLabel);
             for( int i = 0; i < notes.length; i++ )
               {
-                notes[i] = p.getNotes()[i];
-                accidentals[i] = p.getAccidentals()[i];
+                notes[i] = p.notes[i];
+                accidentals[i] = p.accidentals[i];
                 if( notes[i] != null )
                   {
                     add(notes[i]);
@@ -4966,6 +4967,7 @@ public void closeWindow()
         public void clear()
         {
             removeAll();
+            chordLabel = null;
             for( int i = 0; i < notes.length; i++ )
               {
                 notes[i] = null;
