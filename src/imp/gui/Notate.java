@@ -10530,7 +10530,6 @@ public void toCritic()
                 
             
             
-            lickgenFrame.showCriticGrades();
 
             getCurrentStave().lockSelectionWidth(measureNum * WHOLE);
 
@@ -10544,8 +10543,6 @@ public void toCritic()
     else
       {
         getCurrentStave().unlockSelectionWidth();
-
-        lickgenFrame.showAllGrades();
       }
   }
 

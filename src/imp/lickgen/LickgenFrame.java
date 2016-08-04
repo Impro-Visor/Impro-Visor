@@ -280,11 +280,13 @@ public class LickgenFrame
         grade9Btn.setUI(new MetalButtonUI());
         grade10Btn = new javax.swing.JButton();
         grade10Btn.setUI(new MetalButtonUI());
-        gradeBadBtn = new javax.swing.JButton();
-        gradeAverageBtn = new javax.swing.JButton();
-        gradeGoodBtn = new javax.swing.JButton();
         continuallyGenerateCheckBox = new javax.swing.JCheckBox();
         styleRecognitionButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(1, 1), new java.awt.Dimension(1, 1), new java.awt.Dimension(1, 1));
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(1, 1), new java.awt.Dimension(1, 1), new java.awt.Dimension(1, 1));
         ProbFillClearPanel = new javax.swing.JPanel();
         clearProbsButton = new javax.swing.JButton();
         FillProbsButton = new javax.swing.JButton();
@@ -1377,10 +1379,9 @@ public class LickgenFrame
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         lickGradeButtonsPanel.add(gradeLabel, gridBagConstraints);
 
         saveLickTF.setText("<Generated Lick>");
@@ -1389,11 +1390,9 @@ public class LickgenFrame
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridwidth = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weighty = 0.2;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         lickGradeButtonsPanel.add(saveLickTF, gridBagConstraints);
 
         saveLickWithLabelLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -1464,7 +1463,7 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridx = 9;
         gridBagConstraints.gridy = 1;
         lickGradeButtonsPanel.add(grade4Btn, gridBagConstraints);
 
@@ -1478,7 +1477,7 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 1;
         lickGradeButtonsPanel.add(grade5Btn, gridBagConstraints);
 
@@ -1492,7 +1491,7 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridx = 11;
         gridBagConstraints.gridy = 1;
         lickGradeButtonsPanel.add(grade6Btn, gridBagConstraints);
 
@@ -1506,7 +1505,7 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 11;
+        gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickGradeButtonsPanel.add(grade7Btn, gridBagConstraints);
@@ -1521,7 +1520,7 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridx = 14;
         gridBagConstraints.gridy = 1;
         lickGradeButtonsPanel.add(grade8Btn, gridBagConstraints);
 
@@ -1535,7 +1534,7 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 13;
+        gridBagConstraints.gridx = 15;
         gridBagConstraints.gridy = 1;
         lickGradeButtonsPanel.add(grade9Btn, gridBagConstraints);
 
@@ -1549,61 +1548,10 @@ public class LickgenFrame
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridx = 16;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickGradeButtonsPanel.add(grade10Btn, gridBagConstraints);
-
-        gradeBadBtn.setText("Bad");
-        gradeBadBtn.setToolTipText("Grade for a bad jazz lick.");
-        gradeBadBtn.setMaximumSize(new java.awt.Dimension(70, 29));
-        gradeBadBtn.setMinimumSize(new java.awt.Dimension(70, 29));
-        gradeBadBtn.setPreferredSize(new java.awt.Dimension(70, 29));
-        gradeBadBtn.setVisible(false);
-        gradeBadBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeBadBtnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        lickGradeButtonsPanel.add(gradeBadBtn, gridBagConstraints);
-
-        gradeAverageBtn.setText("Average");
-        gradeAverageBtn.setToolTipText("Grade for an average jazz lick.");
-        gradeAverageBtn.setVisible(false);
-        gradeAverageBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeAverageBtnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        lickGradeButtonsPanel.add(gradeAverageBtn, gridBagConstraints);
-
-        gradeGoodBtn.setText("Good");
-        gradeGoodBtn.setToolTipText("Grade for a good jazz lick.");
-        gradeGoodBtn.setVisible(false);
-        gradeGoodBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeGoodBtnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        lickGradeButtonsPanel.add(gradeGoodBtn, gridBagConstraints);
 
         continuallyGenerateCheckBox.setSelected(true);
         continuallyGenerateCheckBox.setToolTipText("After grading, continually generate new licks.");
@@ -1637,10 +1585,45 @@ public class LickgenFrame
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridwidth = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.2;
         lickGradeButtonsPanel.add(styleRecognitionButton, gridBagConstraints);
+
+        jLabel1.setText("Bad");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        lickGradeButtonsPanel.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setText("Average");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        lickGradeButtonsPanel.add(jLabel2, gridBagConstraints);
+
+        jLabel3.setText("Good");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        lickGradeButtonsPanel.add(jLabel3, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+        lickGradeButtonsPanel.add(filler3, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 13;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+        lickGradeButtonsPanel.add(filler4, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -4367,21 +4350,6 @@ public class LickgenFrame
         }
     }//GEN-LAST:event_clearProbsButtonActionPerformed
 
-    private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_gradeGoodBtnActionPerformed
-    {//GEN-HEADEREND:event_gradeGoodBtnActionPerformed
-        triageAndGenerate(9);
-    }//GEN-LAST:event_gradeGoodBtnActionPerformed
-
-    private void gradeAverageBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_gradeAverageBtnActionPerformed
-    {//GEN-HEADEREND:event_gradeAverageBtnActionPerformed
-        triageAndGenerate(5);
-    }//GEN-LAST:event_gradeAverageBtnActionPerformed
-
-    private void gradeBadBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_gradeBadBtnActionPerformed
-    {//GEN-HEADEREND:event_gradeBadBtnActionPerformed
-        triageAndGenerate(1);
-    }//GEN-LAST:event_gradeBadBtnActionPerformed
-
     private void grade10BtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grade10BtnActionPerformed
     {//GEN-HEADEREND:event_grade10BtnActionPerformed
         triageAndGenerate(10);
@@ -5931,40 +5899,6 @@ private void updateUseSoloist()
       }
   }
 
-    public void showCriticGrades() {
-        grade1Btn.setVisible(false);
-        grade2Btn.setVisible(false);
-        grade3Btn.setVisible(false);
-        grade4Btn.setVisible(false);
-        grade5Btn.setVisible(false);
-        grade6Btn.setVisible(false);
-        grade7Btn.setVisible(false);
-        grade8Btn.setVisible(false);
-        grade9Btn.setVisible(false);
-        grade10Btn.setVisible(false);
-
-        gradeBadBtn.setVisible(true);
-        gradeAverageBtn.setVisible(true);
-        gradeGoodBtn.setVisible(true);
-    }
-
-    public void showAllGrades() {
-        grade1Btn.setVisible(true);
-        grade2Btn.setVisible(true);
-        grade3Btn.setVisible(true);
-        grade4Btn.setVisible(true);
-        grade5Btn.setVisible(true);
-        grade6Btn.setVisible(true);
-        grade7Btn.setVisible(true);
-        grade8Btn.setVisible(true);
-        grade9Btn.setVisible(true);
-        grade10Btn.setVisible(true);
-
-        gradeBadBtn.setVisible(false);
-        gradeAverageBtn.setVisible(false);
-        gradeGoodBtn.setVisible(false);
-    }
-
     // Return min duration text field
     public int getMinDuration() {
         return minDuration;
@@ -6095,6 +6029,8 @@ private void updateUseSoloist()
     private javax.swing.JTextField epochLimitTextField;
     private javax.swing.JButton fillMelodyButton;
     private javax.swing.JButton fillRelativePitchMelodyButton;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
     private javax.swing.JLabel finalLabel;
     private javax.swing.JButton forwardGradeSoloButton;
     private javax.swing.JTextField gapField;
@@ -6120,14 +6056,14 @@ private void updateUseSoloist()
     private javax.swing.JButton grade8Btn;
     private javax.swing.JButton grade9Btn;
     private javax.swing.JButton gradeAllMeasuresButton;
-    private javax.swing.JButton gradeAverageBtn;
-    private javax.swing.JButton gradeBadBtn;
-    private javax.swing.JButton gradeGoodBtn;
     private javax.swing.JLabel gradeLabel;
     private javax.swing.JButton gradeLickFromStaveButton;
     private javax.swing.JPanel grammarLearningPanel;
     private javax.swing.JMenu grammarMenu1;
     private javax.swing.JLabel intervalLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTable layerDataTable;
     private javax.swing.JScrollPane layerInfoScrollPane;
     private javax.swing.JTextField leapProbField;
