@@ -74,6 +74,8 @@ public class HelpDialog extends javax.swing.JDialog {
         guideToneHelpTextArea = new javax.swing.JTextArea();
         fractalHelpPane = new javax.swing.JScrollPane();
         fractalHelpTextArea = new javax.swing.JTextArea();
+        CriticHelpPane = new javax.swing.JScrollPane();
+        criticHelpTextArea = new javax.swing.JTextArea();
         deepLearningHelpPane = new javax.swing.JScrollPane();
         deepLearningHelpTextArea = new javax.swing.JTextArea();
 
@@ -270,6 +272,15 @@ public class HelpDialog extends javax.swing.JDialog {
 
         helpTabbedPane.addTab("Division", null, fractalHelpPane, "");
 
+        criticHelpTextArea.setEditable(false);
+        criticHelpTextArea.setColumns(20);
+        criticHelpTextArea.setRows(5);
+        criticHelpTextArea.setText("Help for Critic\n\nThe critic feature allows you to grade solos using a trained artificial neural \nnetwork, a machine learning technique loosely inspired by the human brain.\n\nNeural network critics can be trained using Impro-Visor or loaded from \nweight files (both using the \"Neural Network Learning\" tab of the Grammar\n Control Window, accessible via Utilities > Grammar). Note that these weight \nfiles are different than the Deep Learning connectomes, which, while also\n neural network weights, use a different format. Once a critic is loaded, it \ncan grade solos, generate solos above a certain grade (using grammars) and \nload several neural network critics in parallel to guess which musician would \nhave been most likely to play a given passage.\n\nTraining\n\nTo train the critic, you need a .training.data file of saved licks and grades to \nserve as examples for the neural network. One such file comes with \nImpro-Visor currently. Further training files can be generated from Grammar \nOptions > Show Critic Exporter at the top of the Grammar Control Window. \nIf the option just above it, \"Send Licks to Critic\" is selected, the \"Lick Saving \nand Grading\" panel will save a lick with label and grade. Licks saved here \nwill appear in the Critic Exporter window, where you can save them to \n.training.data files for neural network training.\n\nOnce you have a .training.data file, you can train a critic by going to the \n\"Neural Network Learning\" tab of the grammar controls. First, set up your\n neural network structure by adding and removing layers (with the add/remove \nlayer buttons) and changing the number of neurons and activation function in \neach layer (by double clicking on the relevant value). After your network is set \nup, click \"Generate Weight File\" to train the network and save the weights \nwith the name designated by the \"weight file\" field.\n\nLoading Weights\n\nIn order to use the critic feature, you have to load a generated weight file. \nOnce you have loaded a weight file, the \"Melody Generator\" tab of the Grammar \nControl Window changes to include the Critic Options panel.\n\nUsing the Critic to Grade\n\nFrom the Critic Options panel, you can grade a lick you have selected in the main \nImpro-Visor window. Grades are assigned by the neural network based on the \ntraining data used to generate the weight file. If you select less than the entire \npiece in the main window, you can use the \"Step Forward\" and \"Step Backward\" \nbuttons to move the selection forwards and backwards in the piece, and use the \n\"Grade Selected Lick\" and \"Generate Better Lick\" (described below) on only that \nselection. For example, if you have four bars selected, \"Step Forward\" will \nchange your selection to the next four bars instead. \"Offset by Measure\" allows \nyou to move your selection by exactly one measure instead. \"Reset Selection\" will \nundo all changes made to the selection range using the Critic Options panel.\n\nUsing the Critic to Generate Licks\n\nThe panel can also use the critic to generate licks (still using grammars, not any \nsort of deep learning) with better grades. When you push the \"Generate Better Lick\" \nbutton, the system will generate licks with the grammar selected in the main notate \nwindow until it produces one that scores above the threshold in the \"Grade\" box to \nthe left, and deposits the number of solos it generated and threw out because they \nwere below that threshold in the \"Counter\" box. If it takes too many samples, \nImpro-Visor will display an error message. The system also works without a threshold\nif the \"Use Critic\" box is unchecked. The \"Correct All\" button is equivalent to pressing \nthe \"Generate Better Lick\" button, then \"Step Forwards\" until the selection reaches \nthe end of the current chorus.\n\nGuess Musician Feature\n\nUnrelated to the Neural Network Learning interface, you can use the Lick Saving and \nGrading panel to identify which grading scheme a given passage scores best under, \nwhich can be used to guess the musician most likely to play that passage, if you have\nweights from training the neural network on pieces by that musician. To use this \nfeature, the vocab/style-recognition-weights folder in the Impro-Visor files directory\nmust contain a .weights.save file for each musician. These files do not come bundled\nwith Impro-Visor by default, you will have to either contact the developers or train \nthem yourself. If you do have these weight files, you can click \"Prepare Critics\" to set \nup several neural network critics in parallel. Once that happens, the button's text will \nchange to \"Guess Musician\", which you can press to identify which musician the \npassage selected in the main Impro-Visor window best resembles.");
+        criticHelpTextArea.setToolTipText("");
+        CriticHelpPane.setViewportView(criticHelpTextArea);
+
+        helpTabbedPane.addTab("Critic", null, CriticHelpPane, "");
+
         deepLearningHelpTextArea.setEditable(false);
         deepLearningHelpTextArea.setColumns(20);
         deepLearningHelpTextArea.setRows(5);
@@ -308,6 +319,7 @@ public class HelpDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane CriticHelpPane;
     private javax.swing.JScrollPane SoloGenerator;
     private javax.swing.JTextArea alphaCommandList;
     private javax.swing.JScrollPane alphaCommandPane;
@@ -315,6 +327,7 @@ public class HelpDialog extends javax.swing.JDialog {
     private javax.swing.JTextArea audioInputPaneText;
     private javax.swing.JTextArea chordList;
     private javax.swing.JScrollPane chordListingPane;
+    private javax.swing.JTextArea criticHelpTextArea;
     private javax.swing.JTextArea customSoloGenInstructions;
     private javax.swing.JScrollPane customSoloGenerator;
     private javax.swing.JScrollPane deepLearningHelpPane;
