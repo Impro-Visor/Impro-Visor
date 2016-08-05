@@ -21973,7 +21973,12 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
         return;
     }
 
-    if (lstmNetworkRadio.isSelected() && lstmNetworkRadio.isEnabled()) {
+    if (lstmNetworkRadio.isSelected()) {
+        if(!lstmNetworkRadio.isEnabled()) {
+            ErrorLog.log(ErrorLog.WARNING, "Can't improvise in Deep Learning mode: Connectome is not loaded!", true);
+            setMode(Mode.GENERATION_FAILED);
+            return;
+        }
         ChordPart chords = getChordProg().extract(improviseStartSlot,
                 improviseEndSlot);
         int offset = getCurrentSelectionStart();

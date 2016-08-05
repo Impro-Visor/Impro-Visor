@@ -35,6 +35,7 @@ public class NetworkMeatPacker {
     public void refresh (String meatFolderOrZipPath, Loadable network, String filter) throws InvalidParametersException, FileNotFoundException, IOException
     {
         String[] namesNotFound = null;
+        int numEntries = 0;
         File meatFileOrFolder = new File(meatFolderOrZipPath);
         if(meatFileOrFolder.isDirectory())
         {
@@ -43,6 +44,7 @@ public class NetworkMeatPacker {
                                     public boolean accept(File dir, String name) { return !name.equals(".DS_Store") && name.contains(filter);}
                                 });
             boolean[] found = new boolean[meatFiles.length];
+            numEntries = meatFiles.length;
             int numFound = 0;
             for(int i = 0; i < meatFiles.length; i++)
             {
@@ -67,7 +69,6 @@ public class NetworkMeatPacker {
             ZipInputStream zin = new ZipInputStream(new BufferedInputStream(fis));
             ZipEntry entry;
             while((entry = zin.getNextEntry()) != null) {
-
                 if(entry.getName().contains(filter) && !(entry.getName().contains(".DS_Store")))
                 {
                     String loadPath = network.pathCdr(entry.getName()).replaceFirst(".csv", "");
@@ -75,6 +76,7 @@ public class NetworkMeatPacker {
                     boolean found = network.load(lstm.nickd4j.ReadWriteUtilities.readNumpyCSVReader(zreader), loadPath);
                     if(!found)
                         namesNotFoundList.add(entry.getName());
+                    numEntries++;
                 }
             }
             namesNotFound = new String[namesNotFoundList.size()];
@@ -85,6 +87,20 @@ public class NetworkMeatPacker {
             throw new InvalidParametersException("No parameters file found.");
         }
         if(namesNotFound.length > 0)
-            throw new InvalidParametersException("Parameters file contents were invalid.", namesNotFound);
+            throw new InvalidParametersException("Parameters file contents were invalid for this type of network.", namesNotFound);
+        
+        // If the user selects a file with .ctome extension, but that file is not
+        // an appropriately formatted .ctome file, the ZipInputStream will open
+        // it but not find any entries. We know that any valid .ctome file must
+        // have some entries, since those are the parameter files. So if the
+        // number of found entries is 0, this must be an invalid parameters file.
+        if(numEntries == 0)
+            throw new InvalidParametersException("Parameters file was not a proper connectome file.", namesNotFound);
+        
+        // With the current Loadable interface, it is not possible to find out
+        // if any parameters that should have been loaded weren't provided. This
+        // means that if someone prepares a .ctome file with SOME valid
+        // parameters but not all of them, the network may be loaded in an
+        // invalid state. Right now, we assume this doesn't happen.
     }
 }
