@@ -101,7 +101,11 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Deep Learning Control Panel");
-        setAlwaysOnTop(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         statusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Status"));
@@ -481,6 +485,10 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
                                 restLimitForceRadio.isSelected(),
                                 restLen );
     }//GEN-LAST:event_updatePostprocessing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        closeWindow();
+    }//GEN-LAST:event_formWindowClosed
 
     private void load() {
         browseButton.setEnabled(false);
