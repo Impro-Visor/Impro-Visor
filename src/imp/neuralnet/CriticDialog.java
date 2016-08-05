@@ -148,6 +148,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
         appendFile = new javax.swing.JButton();
         deleteSelected = new javax.swing.JButton();
         deleteAll = new javax.swing.JButton();
+        newFile = new javax.swing.JButton();
 
         changeNameMenuItem.setText("Change Name(s)");
         changeNameMenuItem.setToolTipText("Change the name of all the selected licks.");
@@ -226,7 +227,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel1.add(saveFile, gridBagConstraints);
@@ -238,7 +239,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         jPanel1.add(saveAsFile, gridBagConstraints);
 
@@ -249,7 +250,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         jPanel1.add(openFile, gridBagConstraints);
 
@@ -260,32 +261,43 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel1.add(appendFile, gridBagConstraints);
 
-        deleteSelected.setText("Delete Selected");
+        deleteSelected.setText("Remove Selected Row");
         deleteSelected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteSelectedActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         jPanel1.add(deleteSelected, gridBagConstraints);
 
-        deleteAll.setText("Delete All");
+        deleteAll.setText("Remove All Rows");
         deleteAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteAllActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         jPanel1.add(deleteAll, gridBagConstraints);
+
+        newFile.setText("New");
+        newFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newFileActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        jPanel1.add(newFile, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -429,6 +441,13 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
                 + "Number of Rows: " + dataTable.getSelectedRows().length), 
                   "Info", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_numRowsMenuItemActionPerformed
+
+    private void newFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFileActionPerformed
+        currentFile = null;
+        dataModel.clear();
+        updateLabel();
+        errorLabel.setText(null);
+    }//GEN-LAST:event_newFileActionPerformed
 
     // File to be read from or written to
     File currentFile = null;
@@ -1020,6 +1039,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
     private javax.swing.JLabel fileLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton newFile;
     private javax.swing.JMenuItem numRowsMenuItem;
     private javax.swing.JButton openFile;
     private javax.swing.JButton saveAsFile;
