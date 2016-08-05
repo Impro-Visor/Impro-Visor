@@ -31,7 +31,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="srcDir"                 value="src"                      />
     <property name="impDir"                 value="src/imp"                  />
     <property name="jmDir"                  value="src/jm"                   />
-    <property name="lstmDir"                value="src/lstm"                 />
     <property name="polyaDir"               value="src/polya"                />
     <property name="testDir"                value="test"                     />
     <property name="buildDir"               value="build"                    />
@@ -157,7 +156,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </target>
 <!-- ivy end -->
 
-<target name="imp" depends="buildInit,libInit,init,jm,lstm " description="compile imp">
+<target name="imp" depends="buildInit,libInit,init,jm,resolve-deps" description="compile imp">
     <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
          <classpath refid="base.classpath" />
          <include name="imp/**/*.java"/>
@@ -169,14 +168,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
      <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
          <classpath refid="base.classpath" />
          <include name="jm/**/*.java"/>
-         <exclude name="**/package-info.java"/>
-     </javac>
-</target>
-
-<target name="lstm" depends="buildInit,libInit,init,resolve-deps" description="compile lstm">
-     <javac srcdir="${srcDir}" destdir="${buildDir}" debug="true" includeantruntime="false">
-         <classpath refid="base.classpath" />
-         <include name="lstm/**/*.java"/>
          <exclude name="**/package-info.java"/>
      </javac>
 </target>
@@ -211,15 +202,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
 </target>
 
-<target name="buildLstm" depends="buildInit,libInit,lstm" description="compile lstm in build">
-    <copy todir="${buildDir}">
-        <fileset dir="${srcDir}">
-            <include name="lstm/**/*.class" />
-            <exclude name="**/package-info.java" />
-        </fileset>
-    </copy>
-</target>
-
 <target name="buildPolya" depends="buildInit,libInit,polya" description="compile polya in build">
     <copy todir="${buildDir}">
         <fileset dir="${srcDir}">
@@ -229,10 +211,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
 </target>
 
-<target name="compile" depends="polya,imp,jm,lstm" description="compile the source">
+<target name="compile" depends="polya,imp,jm" description="compile the source">
 </target>
 
-<target name="build" depends="buildPolya,buildImp,buildJm,buildLstm" description="build the source in build">
+<target name="build" depends="buildPolya,buildImp,buildJm" description="build the source in build">
 </target>
 
 <target name="dist" depends="distInit,build" description="make a distribution">
@@ -425,7 +407,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
  <target name="cleanBuild" depends="buildInit,init" description="removes build directory contents">
     <delete includeemptydirs="true">
-        <fileset dir="${buildDir}" includes="imp/** jm/** lstm/** polya/**" />
+        <fileset dir="${buildDir}" includes="imp/** jm/** polya/**" />
     </delete>
  </target>
 
