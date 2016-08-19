@@ -105,7 +105,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
             throw new RuntimeException("Load called without providing parameters!");
         }
         NetworkConnectomeLoader packer = new NetworkConnectomeLoader();
-        packer.pack(params_path, model);
+        packer.load(params_path, model);
         model.reset();
         loaded = true;
     }

@@ -98,11 +98,11 @@ public class ProductCompressingAutoEncoder implements Loadable {
         this.decoder_inputs[1][4] = this.last_output_parts[1];
         
         this.encoder_expert_encodings = new RelativeNoteEncoding[2];
-        this.encoder_expert_encodings[0] = new IntervalRelativeNoteEncoding(lowbound, highbound);
-        this.encoder_expert_encodings[1] = new ChordRelativeNoteEncoding();
+        this.encoder_expert_encodings[0] = new IntervalRelativeNoteEncoding(lowbound, highbound,true);
+        this.encoder_expert_encodings[1] = new ChordRelativeNoteEncoding(true);
         this.decoder_expert_encodings = new RelativeNoteEncoding[2];
-        this.decoder_expert_encodings[0] = new IntervalRelativeNoteEncoding(lowbound, highbound);
-        this.decoder_expert_encodings[1] = new ChordRelativeNoteEncoding();
+        this.decoder_expert_encodings[0] = new IntervalRelativeNoteEncoding(lowbound, highbound,true);
+        this.decoder_expert_encodings[1] = new ChordRelativeNoteEncoding(true);
         
         for(int i=0; i<this.num_experts; i++) {
             this.encoder_expert_encodings[i].reset();

@@ -11,6 +11,7 @@ import mikera.vectorz.AVector;
 import mikera.vectorz.Vector;
 import mikera.vectorz.impl.ZeroVector;
 import imp.lstm.utilities.NNUtilities;
+import mikera.vectorz.impl.Vector0;
 
 /**
  *
@@ -21,45 +22,60 @@ public class IntervalRelativeNoteEncoding implements RelativeNoteEncoding {
     private Random random;
     private int low_bound;
     private int high_bound;
+    boolean withArtic;
     
-    public IntervalRelativeNoteEncoding(int low_bound, int high_bound){
+    public IntervalRelativeNoteEncoding(int low_bound, int high_bound, boolean withArtic){
         this.random = new Random();
         this.low_bound = low_bound;
         this.high_bound = high_bound;
+        this.withArtic = withArtic;
     }
     
     @Override
     public AVector reset() {
         this.relpos = this.low_bound + this.random.nextInt(this.high_bound-this.low_bound);
-        return NNUtilities.onehot(0, this.activation_width());
+        return NNUtilities.onehot(0, this.activation_width(true));
     }
 
     @Override
     public AVector encode(int midi_number, int chord_root) {
         if(midi_number == -1)
-            return NNUtilities.onehot(0, this.activation_width());
+            return NNUtilities.onehot(0, this.activation_width(true));
         else if(midi_number == -2)
-            return NNUtilities.onehot(1, this.activation_width());
+            return NNUtilities.onehot(1, this.activation_width(true));
         else {
             int delta = midi_number - this.relpos;
             if (delta > 12 || delta < -12)
                 delta = delta % 12;
             this.relpos = midi_number;
             int index = delta + 12 + 2;
-            return NNUtilities.onehot(index, this.activation_width());
+            return NNUtilities.onehot(index, this.activation_width(true));
         }
     }
 
     @Override
     public int activation_width() {
-        return 1+1+(12+1+12);
+        return activation_width(withArtic);
+    }
+    
+    public int activation_width(boolean includingArticBits) {
+        if(includingArticBits)
+            return 1+1+(12+1+12);
+        else
+            return (12+1+12);
     }
 
     @Override
     public AVector getProbabilities(AVector activations, int chord_root, int low_bound, int high_bound) {
         AVector probs = Operations.Softmax.operate(activations);
-        AVector absolute_probs = probs.subVector(0, 2);
-        AVector relative_probs = probs.subVector(2, activations.length()-2);
+        AVector absolute_probs,relative_probs;
+        if(withArtic) {
+            absolute_probs = probs.subVector(0, 2);
+            relative_probs = probs.subVector(2, activations.length()-2);
+        } else {
+            absolute_probs = Vector0.INSTANCE;
+            relative_probs = activations;
+        }
         
         int start_diff = low_bound - (this.relpos - 12);
         int startidx = Math.max(0, start_diff);
@@ -76,6 +92,9 @@ public class IntervalRelativeNoteEncoding implements RelativeNoteEncoding {
             padded = padded.join(ZeroVector.create(endpadding));
         padded = padded.mutable();
         padded.divide(padded.elementSum());
+        if(!withArtic) {
+            padded = Vector.of(1,1).join(padded);
+        }
         return padded;
     }
 

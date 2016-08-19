@@ -24,6 +24,7 @@ public class GenerativeProductModel implements Loadable {
     private int featureVectorSize;
     private int low_bound;
     private int high_bound;
+    private boolean normalizeArticOnly;
     private Expert[] experts;
     private RelativeInputPart[][] inputs;
     private RelativeNoteEncoding[] encodings;
@@ -33,24 +34,26 @@ public class GenerativeProductModel implements Loadable {
     private Random rand;
     private double[] modifierExponents;
     private ProbabilityPostprocessor[] postprocessors;
+    private String configuration;
     
     public GenerativeProductModel(int outputSize, int beatVectorSize, int featureVectorSize, int lowbound, int highbound) {
         this.featureVectorSize = featureVectorSize;
         this.low_bound = lowbound;
         this.high_bound = highbound;
         this.rand = new Random();
-        this.num_experts = 2;
         
-        this.experts = new Expert[2];
+        this.experts = new Expert[3];
         this.experts[0] = new Expert(Operations.None);
         this.experts[1] = new Expert(Operations.None);
+        this.experts[2] = new Expert(Operations.None);
         
         this.beat_part = new PassthroughInputPart(beatVectorSize);
-        this.last_output_parts = new PassthroughInputPart[2];
+        this.last_output_parts = new PassthroughInputPart[3];
         this.last_output_parts[0] = new PassthroughInputPart(outputSize);
         this.last_output_parts[1] = new PassthroughInputPart(outputSize);
+        this.last_output_parts[2] = new PassthroughInputPart(outputSize);
         
-        this.inputs = new RelativeInputPart[2][4];
+        this.inputs = new RelativeInputPart[3][4];
         this.inputs[0][0] = this.beat_part;
         this.inputs[0][1] = new PositionInputPart(lowbound, highbound, 2);
         this.inputs[0][2] = new ChordInputPart();
@@ -59,16 +62,49 @@ public class GenerativeProductModel implements Loadable {
         this.inputs[1][1] = new PositionInputPart(lowbound, highbound, 2);
         this.inputs[1][2] = new ChordInputPart();
         this.inputs[1][3] = this.last_output_parts[1];
+        this.inputs[2][0] = this.beat_part;
+        this.inputs[2][1] = new PositionInputPart(lowbound, highbound, 2);
+        this.inputs[2][2] = new ChordInputPart();
+        this.inputs[2][3] = this.last_output_parts[2];
         
-        this.encodings = new RelativeNoteEncoding[2];
-        this.encodings[0] = new IntervalRelativeNoteEncoding(lowbound, highbound);
-        this.encodings[1] = new ChordRelativeNoteEncoding();
-        
-        this.modifierExponents = new double[]{1.0, 1.0};
+        this.modifierExponents = new double[]{1.0, 1.0, 1.0};
         
         this.postprocessors = new ProbabilityPostprocessor[0];
         
+        configure(null);
+    }
+    
+    @Override
+    public boolean configure(String configInfo){
+        if(configInfo == null)
+            configInfo = "generative_product_interval_chords";
+                
+        if(configInfo.equals(configuration))
+            return true;
+        
+        switch(configInfo){
+            case "generative_product_interval_chords":
+                this.num_experts = 2;
+                this.encodings = new RelativeNoteEncoding[2];
+                this.encodings[0] = new IntervalRelativeNoteEncoding(this.low_bound, this.high_bound, true);
+                this.encodings[1] = new ChordRelativeNoteEncoding(true);
+                this.normalizeArticOnly = false;
+                break;
+            case "generative_product_interval_chords_rhythm":
+                this.num_experts = 3;
+                this.encodings = new RelativeNoteEncoding[3];
+                this.encodings[0] = new IntervalRelativeNoteEncoding(this.low_bound, this.high_bound, false);
+                this.encodings[1] = new ChordRelativeNoteEncoding(false);
+                this.encodings[2] = new RhythmOnlyNoteEncoding();
+                this.normalizeArticOnly = true;
+                break;
+            default:
+                return false;
+        }
+        
+        configuration = configInfo;
         reset();
+        return true;
     }
     
     public double[] getModifierExponents(){
@@ -136,7 +172,14 @@ public class GenerativeProductModel implements Loadable {
         for(ProbabilityPostprocessor p : postprocessors)
             accum_probabilities = p.postprocess(accum_probabilities);
         
-        accum_probabilities.divide(accum_probabilities.elementSum());
+        if(normalizeArticOnly){
+            AVector nonArticNotes = accum_probabilities.subVector(0,2);
+            AVector articNotes = accum_probabilities.subVector(2,accum_probabilities.length()-2);
+            articNotes.divide(articNotes.elementSum());
+            articNotes.multiply(1-nonArticNotes.elementSum());
+        }else{
+            accum_probabilities.divide(accum_probabilities.elementSum());
+        }
         int sampled = NNUtilities.sample(this.rand, accum_probabilities);
         int midival;
         if(sampled == 0)

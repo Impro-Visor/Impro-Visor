@@ -93,7 +93,7 @@ public class Driver {
         };
 
         LogTimer.log("Packing name generator from files...");
-        (new NetworkConnectomeLoader()).pack(nameGeneratorParamsPath, titleNetLoader);
+        (new NetworkConnectomeLoader()).load(nameGeneratorParamsPath, titleNetLoader);
 
         String characterString = " !\"'[],-.01245679:?ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwxyz";
 
@@ -108,7 +108,7 @@ public class Driver {
 
         //"pack" the network from weights and biases file directory
         LogTimer.log("Packing autoencoder from files");
-        (new NetworkConnectomeLoader()).pack(autoEncoderParamsPath, autoencoder);
+        (new NetworkConnectomeLoader()).load(autoEncoderParamsPath, autoencoder);
 
         File[] songFiles;
         if (iterateOverCorpus) {

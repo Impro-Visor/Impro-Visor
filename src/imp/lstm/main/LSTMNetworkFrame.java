@@ -509,6 +509,7 @@ public class LSTMNetworkFrame extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     statusLabel.setText("<html>Could not load the parameters file. There was a problem opening the file. Make sure the file is still in the correct location.");
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     statusLabel.setText("<html>Could not load the parameters file. There was a problem parsing the file. It is possible that the parameters are malformed.");
                 }
                 browseButton.setEnabled(true);

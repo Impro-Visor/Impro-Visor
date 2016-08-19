@@ -6,9 +6,13 @@
 package imp.lstm.utilities;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import mikera.arrayz.INDArray;
@@ -141,5 +145,10 @@ public class ReadWriteUtilities {
         else
             throw new RuntimeException("Converting 3+dimensional arrays to numpy csv format unsupported.");
 
+    }
+
+    public static String readTextLine(Reader reader) throws IOException {
+        BufferedReader bufReader = new BufferedReader(reader);
+        return bufReader.readLine();
     }
 }

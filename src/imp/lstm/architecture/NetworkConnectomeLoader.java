@@ -9,6 +9,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,11 +29,15 @@ import mikera.arrayz.INDArray;
  */
 public class NetworkConnectomeLoader {
     
-    public void pack (String meatFolderOrZipPath, Loadable network) throws InvalidParametersException, IOException{
-        refresh(meatFolderOrZipPath, network, "");
+    public void load(String meatFolderOrZipPath, Loadable network) throws InvalidParametersException, IOException{
+        load(meatFolderOrZipPath, network, "", true);
     }
     
-    public void refresh (String meatFolderOrZipPath, Loadable network, String filter) throws InvalidParametersException, FileNotFoundException, IOException
+    public void refresh(String meatFolderOrZipPath, Loadable network, String filter) throws InvalidParametersException, FileNotFoundException, IOException{
+        load(meatFolderOrZipPath, network,filter,false);
+    }
+
+    public void load(String meatFolderOrZipPath, Loadable network, String filter, boolean configure) throws InvalidParametersException, FileNotFoundException, IOException
     {
         String[] namesNotFound = null;
         int numEntries = 0;
@@ -45,9 +50,33 @@ public class NetworkConnectomeLoader {
                                 });
             boolean[] found = new boolean[meatFiles.length];
             numEntries = meatFiles.length;
+            
+            if(configure){
+                boolean configured = false;
+                for(int i = 0; i < meatFiles.length; i++)
+                {
+                    if(meatFiles[i].getName().contains("config.txt")){
+                        boolean configureSuccess = network.configure(imp.lstm.utilities.ReadWriteUtilities.readTextLine(new FileReader(meatFiles[i])));
+                        if(configureSuccess) {
+                            configured=true;
+                            break;
+                        } else
+                            throw new InvalidParametersException("Parameters file contents were invalid for this type of network.");
+                    }
+                }
+                if(!configured){
+                    boolean configureSuccess = network.configure(null);
+                    if (!configureSuccess) {
+                        throw new InvalidParametersException("Parameters file contents were invalid for this type of network.");
+                    }
+                }
+            }
+            
             int numFound = 0;
             for(int i = 0; i < meatFiles.length; i++)
             {
+                if(meatFiles[i].getName().contains("config.txt"))
+                    continue;
                 //System.out.println(meatFiles[i].getPath());
                 found[i] = network.load(imp.lstm.utilities.ReadWriteUtilities.readNumpyCSVFile(meatFiles[i].getPath()), network.pathCdr(meatFiles[i].getName()).replaceFirst(".csv", ""));
                 if(found[i])
@@ -65,11 +94,32 @@ public class NetworkConnectomeLoader {
         {
             // Try to read it as a zip file of params
             ArrayList<String> namesNotFoundList = new ArrayList<String>();
-            FileInputStream fis = new FileInputStream(meatFileOrFolder);
-            ZipInputStream zin = new ZipInputStream(new BufferedInputStream(fis));
+            ZipInputStream zin;
             ZipEntry entry;
+            if(configure){
+                boolean configured = false;
+                zin = new ZipInputStream(new BufferedInputStream(new FileInputStream(meatFileOrFolder)));
+                while((entry = zin.getNextEntry()) != null) {
+                    if (entry.getName().contains("config.txt")) {
+                        boolean configureSuccess = network.configure(imp.lstm.utilities.ReadWriteUtilities.readTextLine(new InputStreamReader(zin)));
+                        if (configureSuccess) {
+                            configured = true;
+                            break;
+                        } else {
+                            throw new InvalidParametersException("Parameters file contents were invalid for this type of network.");
+                        }
+                    }
+                }
+                if(!configured){
+                    boolean configureSuccess = network.configure(null);
+                    if (!configureSuccess) {
+                        throw new InvalidParametersException("Parameters file contents were invalid for this type of network.");
+                    }
+                }
+            }
+            zin = new ZipInputStream(new BufferedInputStream(new FileInputStream(meatFileOrFolder)));
             while((entry = zin.getNextEntry()) != null) {
-                if(entry.getName().contains(filter) && !(entry.getName().contains(".DS_Store")))
+                if(entry.getName().contains(filter) && !(entry.getName().contains(".DS_Store")) && !entry.getName().contains("config.txt"))
                 {
                     String loadPath = network.pathCdr(entry.getName()).replaceFirst(".csv", "");
                     Reader zreader = new InputStreamReader(zin);

@@ -54,7 +54,7 @@ public class GenerativeProductDriver {
             }
         };
         
-        (new NetworkConnectomeLoader()).pack(args[3], titleNetLoader);
+        (new NetworkConnectomeLoader()).load(args[3], titleNetLoader);
         
         Random rand = new Random();
         String characterString = " !\"'(),-.01245679:?ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwxyz";
@@ -99,7 +99,7 @@ public class GenerativeProductDriver {
             
             //"pack" the network from weights and biases file directory
             LogTimer.log("Packing autoencoder from files");
-            (new NetworkConnectomeLoader()).pack(args[2], genmodel);
+            (new NetworkConnectomeLoader()).load(args[2], genmodel);
             LeadSheetDataSequence outputSequence = inputSequence.copy();
             outputSequence.clearMelody();
             
