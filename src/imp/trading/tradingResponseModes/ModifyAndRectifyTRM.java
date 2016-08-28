@@ -27,10 +27,10 @@ import imp.data.MelodyPart;
  *
  * @author Zach Kondak
  */
-public class ModifyAndRectifyTRM extends TradingResponseMode {
+public class ModifyAndRectifyTRM extends BlockResponseMode {
 
-    public ModifyAndRectifyTRM(TradingResponseInfo responseInfo, String message) {
-        super(responseInfo, message);
+    public ModifyAndRectifyTRM(String message) {
+        super(message);
     }
     
     @Override

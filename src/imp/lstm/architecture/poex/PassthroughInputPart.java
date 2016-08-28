@@ -12,12 +12,10 @@ import mikera.vectorz.AVector;
  * @author cssummer16
  */
 public class PassthroughInputPart extends RelativeInputPart {
-    private int width;
     private AVector next_result;
     private int valid_ct;
     
-    public PassthroughInputPart(int width) {
-        this.width = width;
+    public PassthroughInputPart() {
         this.next_result = null;
         this.valid_ct = 0;
     }
@@ -29,11 +27,7 @@ public class PassthroughInputPart extends RelativeInputPart {
     public void provide(AVector next_result) {
         this.provide(next_result,1);
     }
-    
-    @Override
-    public int get_width() {
-        return this.width;
-    }
+
 
     @Override
     public AVector generate(int relativePosition, int chordRoot, AVector chordTypeData) {

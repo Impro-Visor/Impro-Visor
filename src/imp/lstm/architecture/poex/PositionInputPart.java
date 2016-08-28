@@ -23,10 +23,6 @@ public class PositionInputPart extends RelativeInputPart {
         this.num_divisions = num_divisions;
     }
 
-    @Override
-    public int get_width() {
-        return this.num_divisions;
-    }
     
     @Override
     public AVector generate(int relativePosition, int chordRoot, AVector chordTypeData) {

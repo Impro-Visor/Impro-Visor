@@ -19,4 +19,8 @@ public class InvalidParametersException extends Exception {
     public InvalidParametersException(String message){
         this(message, null);
     }
+    
+    public String[] getInvalidParameters(){
+        return invalid_parameters;
+    }
 }

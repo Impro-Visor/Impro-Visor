@@ -27,10 +27,10 @@ import imp.data.MelodyPart;
  *
  * @author Zach Kondak
  */
-public class ChopAndMemorizeTRM extends TradingResponseMode{
+public class ChopAndMemorizeTRM extends BlockResponseMode{
 
-    public ChopAndMemorizeTRM(TradingResponseInfo responseInfo, String message) {
-        super(responseInfo, message);
+    public ChopAndMemorizeTRM(String message) {
+        super(message);
     }
     
     public MelodyPart generateResponse(){

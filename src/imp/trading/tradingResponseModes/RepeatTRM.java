@@ -26,10 +26,10 @@ import imp.data.MelodyPart;
  *
  * @author Zach Kondak
  */
-public class RepeatTRM extends TradingResponseMode{
+public class RepeatTRM extends BlockResponseMode{
 
-    public RepeatTRM(TradingResponseInfo responseInfo, String message) {
-        super(responseInfo, message);
+    public RepeatTRM(String message) {
+        super(message);
     }
 
     @Override

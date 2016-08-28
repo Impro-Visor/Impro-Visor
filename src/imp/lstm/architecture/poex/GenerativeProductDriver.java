@@ -95,7 +95,7 @@ public class GenerativeProductDriver {
             int inputSize = 34;
             int outputSize = EncodingParameters.noteEncoder.getNoteLength();
             int featureVectorSize = 100;
-            GenerativeProductModel genmodel = new GenerativeProductModel(outputSize, 9, featureVectorSize, 48, 84+1); //create our network
+            GenerativeProductModel genmodel = new GenerativeProductModel(48, 84+1); //create our network
             
             //"pack" the network from weights and biases file directory
             LogTimer.log("Packing autoencoder from files");

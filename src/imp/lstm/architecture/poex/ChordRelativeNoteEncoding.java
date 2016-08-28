@@ -24,20 +24,20 @@ public class ChordRelativeNoteEncoding implements RelativeNoteEncoding {
     
     @Override
     public AVector reset() {
-        return NNUtilities.onehot(0, this.activation_width(true));
+        return NNUtilities.onehot(0, this.activation_width());
     }
 
     @Override
     public AVector encode(int midi_number, int chord_root) {
         if(midi_number == -1)
-            return NNUtilities.onehot(0, this.activation_width(true));
+            return NNUtilities.onehot(0, this.activation_width());
         else if(midi_number == -2)
-            return NNUtilities.onehot(1, this.activation_width(true));
+            return NNUtilities.onehot(1, this.activation_width());
         else {
             int rel_idx = (midi_number - chord_root) % 12;
             if (rel_idx<0)
                 rel_idx += 12;
-            return NNUtilities.onehot(rel_idx+2, this.activation_width(true));
+            return NNUtilities.onehot(rel_idx+2, this.activation_width());
         }
     }
 

@@ -17,11 +17,6 @@ public interface Loadable {
     
     public boolean load(INDArray data, String loadPath);
     
-    public default boolean configure(String configureInfo)
-    {
-        return true;
-    }
-
     public default String pathCar(String loadPath)
     {
         return loadPath.replaceFirst(SEPARATOR + ".*", "");

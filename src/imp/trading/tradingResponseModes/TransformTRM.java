@@ -27,10 +27,10 @@ import imp.data.MelodyPart;
  *
  * @author Zach Kondak
  */
-public class TransformTRM extends TradingResponseMode{
+public class TransformTRM extends BlockResponseMode{
 
-    public TransformTRM(TradingResponseInfo responseInfo, String message) {
-        super(responseInfo, message);
+    public TransformTRM(String message) {
+        super(message);
     }
     
     @Override

@@ -37,6 +37,7 @@ import imp.lickgen.LickGen;
 import imp.lickgen.transformations.NoteChordPair;
 import imp.lickgen.transformations.Transform;
 import imp.lickgen.transformations.TransformLearning;
+import imp.midi.StreamingMidiRecorder;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -70,7 +71,7 @@ public class TradingResponseInfo {
     //HAS NOTHING TO DO WITH PHRASE CLASS
     private PhraseTable phrases;
     
-    public TradingResponseInfo(Notate notate, int [] metre, int tradeLength){
+    public TradingResponseInfo(Notate notate, int [] metre, int tradeLength) {
         this.notate = notate;
         this.lickGen = notate.getLickGen();
         this.beatFinder = new BeatFinder(metre);
@@ -82,13 +83,29 @@ public class TradingResponseInfo {
         phrases = new PhraseTable(notate);
     }
     
-    public void updateResponse(MelodyPart response,ChordPart soloChords, ChordPart responseChords, int nextSection, Transform musician){
-        this.response = response;
-        this.originalMelody = response.copy();
-        this.stop = response.size()-1;
+    public Notate getNotate()
+    {
+        return notate;
+    }
+    
+    public ChordPart getResponseChords()
+    {
+        return responseChords;
+    }
+    public void updateResponse(MelodyPart originalMelody,ChordPart soloChords, ChordPart responseChords, int nextSection){
+        
+        if(originalMelody != null) {
+            this.response = originalMelody;
+            this.originalMelody = originalMelody.copy();
+            this.stop = response.size()-1;
+        }
         this.soloChords = soloChords;
         this.responseChords = responseChords;
         this.nextSection = nextSection;
+    }
+    
+    public void setMusician(Transform musician)
+    {
         this.musician = musician;
     }
     

@@ -31,6 +31,11 @@ public class DataPartIO {
         restPart.addNote(Note.makeRest(chords.size()));
         return readParts(chords, restPart, beat_timestep_start);
     }
+    
+    public static LeadSheetDataSequence readJustChords(ChordPart chords, int beat_timestep_start) {
+        return readParts(chords, null, beat_timestep_start);
+    }
+    
     public static LeadSheetDataSequence readParts(ChordPart chords, MelodyPart melody) {
         return readParts(chords, melody, 0);
     }
@@ -42,22 +47,24 @@ public class DataPartIO {
         NoteEncoder noteEncoder = EncodingParameters.noteEncoder;
         
         int noteSteps = 0;
-        for(Note note : melody.getNoteList()) {
-            if(note.isRest())
-            {
-                AVector encoding = noteEncoder.encode(-1);
-                for(int remaining = (note.getRhythmValue()/Constants.RESOLUTION_SCALAR); remaining > 0 ; remaining--) {
-                    sequence.pushStep(null, null, encoding);
-                    noteSteps++;
+        if(melody != null) {
+            for(Note note : melody.getNoteList()) {
+                if(note.isRest())
+                {
+                    AVector encoding = noteEncoder.encode(-1);
+                    for(int remaining = (note.getRhythmValue()/Constants.RESOLUTION_SCALAR); remaining > 0 ; remaining--) {
+                        sequence.pushStep(null, null, encoding);
+                        noteSteps++;
+                    }
                 }
-            }
-            else
-            {
-                noteSteps++;
-                sequence.pushStep(null, null, noteEncoder.encode(note.getPitch()));
-                for(int remaining = (note.getRhythmValue() /Constants.RESOLUTION_SCALAR) - 1; remaining > 0 ; remaining--) {
-                    sequence.pushStep(null, null, noteEncoder.encode(noteEncoder.getSustainKey()));
+                else
+                {
                     noteSteps++;
+                    sequence.pushStep(null, null, noteEncoder.encode(note.getPitch()));
+                    for(int remaining = (note.getRhythmValue() /Constants.RESOLUTION_SCALAR) - 1; remaining > 0 ; remaining--) {
+                        sequence.pushStep(null, null, noteEncoder.encode(noteEncoder.getSustainKey()));
+                        noteSteps++;
+                    }
                 }
             }
         }
@@ -87,7 +94,9 @@ public class DataPartIO {
         }
 //        System.out.println("Note steps: " + noteSteps + " Chord steps: " + chordSteps);
         
-        for(int i = 0; i < noteSteps; i++)
+        int numSteps = (melody != null) ? noteSteps : chordSteps;
+        //System.out.println(numSteps);
+        for(int i = 0; i < numSteps; i++)
         {
             int timeStep = beat_timestep_start + i;
             AVector beat = Vector.createLength(9);

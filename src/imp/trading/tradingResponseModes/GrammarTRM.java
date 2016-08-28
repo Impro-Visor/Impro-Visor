@@ -27,10 +27,10 @@ import imp.data.MelodyPart;
  *
  * @author Zach Kondak
  */
-public class GrammarTRM extends TradingResponseMode{
+public class GrammarTRM extends BlockResponseMode{
 
-    public GrammarTRM(TradingResponseInfo responseInfo, String message) {
-        super(responseInfo, message);
+    public GrammarTRM(String message) {
+        super(message);
     }
     
     @Override

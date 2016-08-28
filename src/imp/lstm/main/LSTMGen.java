@@ -75,7 +75,7 @@ public class LSTMGen implements PartialBackgroundGenerator{
         int featureVectorSize = 100;
         int lowerBound = 48;
         int upperBound = 84+1;
-        model = new GenerativeProductModel(outputSize, beatSize, featureVectorSize, lowerBound, upperBound);
+        model = new GenerativeProductModel(lowerBound, upperBound);
         
         rectifier = new RectifyPostprocessor(lowerBound);
         forcePlay = new ForcePlayPostprocessor();

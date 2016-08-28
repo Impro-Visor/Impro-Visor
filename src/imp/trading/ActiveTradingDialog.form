@@ -86,6 +86,27 @@
                 <Property name="text" type="java.lang.String" value="Chop and Memorize"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeAutoencoder">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="modeSelector"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Autoencoder"/>
+                <Property name="toolTipText" type="java.lang.String" value="Simply repeat user input."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeAutoencoderActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="tradeRepeatStream">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="modeSelector"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Stream Repeat"/>
+                <Property name="toolTipText" type="java.lang.String" value="Simply repeat user input."/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="tradeMusicianMenu">

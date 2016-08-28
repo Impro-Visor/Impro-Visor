@@ -21,7 +21,6 @@ import imp.lstm.utilities.NNUtilities;
  * @author cssummer16
  */
 public class GenerativeProductModel implements Loadable {
-    private int featureVectorSize;
     private int low_bound;
     private int high_bound;
     private boolean normalizeArticOnly;
@@ -36,8 +35,7 @@ public class GenerativeProductModel implements Loadable {
     private ProbabilityPostprocessor[] postprocessors;
     private String configuration;
     
-    public GenerativeProductModel(int outputSize, int beatVectorSize, int featureVectorSize, int lowbound, int highbound) {
-        this.featureVectorSize = featureVectorSize;
+    public GenerativeProductModel(int lowbound, int highbound) {
         this.low_bound = lowbound;
         this.high_bound = highbound;
         this.rand = new Random();
@@ -47,11 +45,11 @@ public class GenerativeProductModel implements Loadable {
         this.experts[1] = new Expert(Operations.None);
         this.experts[2] = new Expert(Operations.None);
         
-        this.beat_part = new PassthroughInputPart(beatVectorSize);
-        this.last_output_parts = new PassthroughInputPart[3];
-        this.last_output_parts[0] = new PassthroughInputPart(outputSize);
-        this.last_output_parts[1] = new PassthroughInputPart(outputSize);
-        this.last_output_parts[2] = new PassthroughInputPart(outputSize);
+        this.beat_part = new PassthroughInputPart();
+        this.last_output_parts = new PassthroughInputPart[2];
+        this.last_output_parts[0] = new PassthroughInputPart();
+        this.last_output_parts[1] = new PassthroughInputPart();
+        this.last_output_parts[2] = new PassthroughInputPart();
         
         this.inputs = new RelativeInputPart[3][4];
         this.inputs[0][0] = this.beat_part;
@@ -69,6 +67,7 @@ public class GenerativeProductModel implements Loadable {
         
         this.modifierExponents = new double[]{1.0, 1.0, 1.0};
         
+        this.modifierExponents = new double[]{1.0, 1.0};
         this.postprocessors = new ProbabilityPostprocessor[0];
         
         configure(null);
@@ -82,6 +81,7 @@ public class GenerativeProductModel implements Loadable {
         if(configInfo.equals(configuration))
             return true;
         
+        this.postprocessors = new ProbabilityPostprocessor[0];
         switch(configInfo){
             case "generative_product_interval_chords":
                 this.num_experts = 2;

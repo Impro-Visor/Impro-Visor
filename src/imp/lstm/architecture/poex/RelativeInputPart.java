@@ -13,7 +13,6 @@ import mikera.vectorz.impl.Vector0;
  * @author cssummer16
  */
 public abstract class RelativeInputPart {
-    public abstract int get_width();
     public abstract AVector generate(int relativePosition, int chordRoot, AVector chordTypeData);
     public static AVector combine(RelativeInputPart[] parts, int relativePosition, int chordRoot, AVector chordTypeData) {
         AVector current = Vector0.INSTANCE;

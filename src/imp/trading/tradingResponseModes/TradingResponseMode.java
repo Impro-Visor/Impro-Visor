@@ -20,27 +20,38 @@
  */
 package imp.trading.tradingResponseModes;
 
-import imp.trading.ExceptionGenerateResponseNotDefined;
 import imp.trading.TradingResponseInfo;
 import imp.data.MelodyPart;
+import java.util.concurrent.Future;
 
 /**
- *
+ * 
  * @author Zach Kondak
+ * @author Nicholas Weintraut Redesign for concurrency and data streaming result
  */
 public abstract class TradingResponseMode {
 
     protected TradingResponseInfo responseInfo;
     protected String message;
     
-    TradingResponseMode(TradingResponseInfo responseInfo, String message){
-        this.responseInfo = responseInfo;
+    TradingResponseMode(String message) {
         this.message = message;
     }
-
-    public MelodyPart generateResponse() throws ExceptionGenerateResponseNotDefined {
-        throw new ExceptionGenerateResponseNotDefined("Every TradinResponseMode must override method generateResponse()");
+    
+    public void setResponseInfo(TradingResponseInfo responseInfo)
+    {
+        this.responseInfo = responseInfo;
     }
+    
+    public abstract void onStartTrading();
+    
+    public abstract Future<MelodyPart>[] generateResponseStructure();
+    
+    public abstract void signalFinish();
+    
+    public abstract void endGeneration();
+    
+    public abstract MelodyPart getDefaultMelodyPart();
     
     public void printTradeType() {
         System.out.println(message);

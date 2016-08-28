@@ -102,7 +102,7 @@ public class Driver {
         int inputSize = 34;
         int outputSize = EncodingParameters.noteEncoder.getNoteLength();
         int featureVectorSize = 100;
-        ProductCompressingAutoEncoder autoencoder = new ProductCompressingAutoEncoder(24, 9, inputSize, outputSize, featureVectorSize, 48, 84 + 1, false); //create our network
+        ProductCompressingAutoencoder autoencoder = new ProductCompressingAutoencoder(24, 48, 84 + 1, false); //create our network
 
         int numInterpolationDivisions = 5;
 
