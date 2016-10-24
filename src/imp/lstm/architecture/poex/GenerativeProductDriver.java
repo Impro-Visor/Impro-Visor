@@ -14,7 +14,7 @@ import imp.lstm.architecture.FullyConnectedLayer;
 import imp.lstm.architecture.LSTM;
 import imp.lstm.architecture.LeadsheetAutoencoderInputManager;
 import imp.lstm.architecture.Loadable;
-import imp.lstm.architecture.poex.ProductCompressingAutoEncoder;
+import imp.lstm.architecture.poex.ProductCompressingAutoencoder;
 import imp.lstm.encoding.EncodingParameters;
 import imp.lstm.encoding.Group;
 import imp.lstm.filters.GroupedSoftMaxSampler;

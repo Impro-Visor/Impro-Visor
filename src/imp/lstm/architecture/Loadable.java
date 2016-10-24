@@ -22,6 +22,11 @@ public interface Loadable {
         return loadPath.replaceFirst(SEPARATOR + ".*", "");
     }
     
+    public default boolean configure(String configureInfo)
+    {
+        return true;
+    }
+    
     public default String pathCdr(String loadPath)
     {
         return loadPath.replaceFirst("[^" + SEPARATOR + "]*" + SEPARATOR, "");

@@ -46,7 +46,7 @@ public class GenerativeProductModel implements Loadable {
         this.experts[2] = new Expert(Operations.None);
         
         this.beat_part = new PassthroughInputPart();
-        this.last_output_parts = new PassthroughInputPart[2];
+        this.last_output_parts = new PassthroughInputPart[3];
         this.last_output_parts[0] = new PassthroughInputPart();
         this.last_output_parts[1] = new PassthroughInputPart();
         this.last_output_parts[2] = new PassthroughInputPart();

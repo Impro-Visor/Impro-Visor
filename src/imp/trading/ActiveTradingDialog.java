@@ -47,12 +47,10 @@ import java.util.Comparator;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SpinnerNumberModel;
-import lstm.architecture.MelodyPartTester;
 
 public class ActiveTradingDialog extends javax.swing.JDialog implements TradeListener, ActionListener {
  
     private final ActiveTrading activeTrading;
-    private final NNActiveTrading nnActiveTrading;
     private boolean tradingNow = false;
     private boolean userFirst = true;
     private boolean isUserInputError = false;
@@ -71,7 +69,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         this.notate = notate;
         initComponents();
         activeTrading = new ActiveTrading(notate, swingCheckBox);
-        nnActiveTrading = new NNActiveTrading(notate);
         notate.populateGenericGrammarMenu(tradeGrammarMenu);
         populateMusicianList();
         Component[] modes = modeMenu.getMenuComponents();

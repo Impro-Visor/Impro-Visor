@@ -21,12 +21,12 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lstm.architecture.DataStep;
-import lstm.architecture.InvalidParametersException;
-import lstm.architecture.NetworkMeatPacker;
-import lstm.architecture.poex.ProductCompressingAutoencoder;
-import lstm.io.leadsheet.DataPartIO;
-import lstm.io.leadsheet.LeadSheetDataSequence;
+import imp.lstm.architecture.DataStep;
+import imp.lstm.architecture.InvalidParametersException;
+import imp.lstm.architecture.NetworkConnectomeLoader;
+import imp.lstm.architecture.poex.ProductCompressingAutoencoder;
+import imp.lstm.io.leadsheet.DataPartIO;
+import imp.lstm.io.leadsheet.LeadSheetDataSequence;
 import mikera.vectorz.AVector;
 import mikera.vectorz.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,7 +56,7 @@ public class AutoencoderTRM extends TradingResponseMode {
         numFeaturesPerPart = 2;
         autoencoder = new ProductCompressingAutoencoder(24, 48, 84 + 1, false);
         try {
-            (new NetworkMeatPacker()).pack(autoencoderParamsPath, autoencoder);
+            (new NetworkConnectomeLoader()).load(autoencoderParamsPath, autoencoder);
         } catch (InvalidParametersException ex) {
             for(String name : ex.getInvalidParameters())
                 System.out.println(name);
@@ -217,7 +217,7 @@ public class AutoencoderTRM extends TradingResponseMode {
                 }
                 try {
                    
-                    (new NetworkMeatPacker()).refresh(autoencoderParamsPath, autoencoder, "initialstate");
+                    (new NetworkConnectomeLoader()).refresh(autoencoderParamsPath, autoencoder, "initialstate");
                 } catch (InvalidParametersException ex) {
                     Logger.getLogger(AutoencoderTRM.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
