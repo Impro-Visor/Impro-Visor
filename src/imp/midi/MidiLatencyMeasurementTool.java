@@ -244,7 +244,7 @@ public class MidiLatencyMeasurementTool
                     break;
                 }
 
-                System.out.println("Key down: " + midiSynth.getSequencer().getMicrosecondPosition());
+                //System.out.println("Key down: " + midiSynth.getSequencer().getMicrosecondPosition());
                 long delay
                         = (2 * (midiSynth.getSequencer().getMicrosecondPosition() - timeStart));
                 tableModel.addMeasurement(((double) delay) / 1000);
@@ -262,7 +262,7 @@ public class MidiLatencyMeasurementTool
     public void noteOn(int note, int channel) {
         timeStart = midiSynth.getSequencer().getMicrosecondPosition();
          
-         System.out.println("Note On: " + timeStart);
+         //System.out.println("Note On: " + timeStart);
     }
 
     /**

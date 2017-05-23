@@ -2307,7 +2307,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
 {
     int gcd = gcd(quanta[0], quanta[1]);
     
-    System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
+    //System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
     
     MelodyPart result = this; // will be replaced if part is non-empty
     
@@ -2372,7 +2372,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
            } // while
       }
    //System.out.println("quantized melody: " + result);
-   System.out.println(notesLost + " notes lost in quantization");
+   //System.out.println(notesLost + " notes lost in quantization");
 
     // Handle converting swing-eighth situations to appear as normal eights
     // including when second third of triplet is sixteenths etc.
