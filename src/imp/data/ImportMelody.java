@@ -301,7 +301,7 @@ public static int noteArray2ImpPart(ArrayList<jm.music.data.Note> origNoteArray,
           }
       } // end of outer while
 
-    System.out.println("notes lost in quantization: " + notesLost);
+    //System.out.println("notes lost in quantization: " + notesLost);
     return slot;
   }
 
