@@ -5357,7 +5357,7 @@ public void play(int startAt)
 
 
 public void playSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message){
-    playSelection(playToEndOfChorus, loopCount, useDrums, message, true);
+    playSelection(playToEndOfChorus, loopCount, useDrums, message, false);  // WAS true before 23 May 2017
 }
 /**
  * Plays from the start of the current selection through to the end of chorus.
@@ -5426,7 +5426,6 @@ public void playSelection(int startIndex, int stopIndex, int loopCount, boolean 
     notate.setKeyboardPlayback(true);
     
     Score score = notate.getScore();
-
     new PlayScoreCommand(score, 
                          startIndex, 
                          true,
