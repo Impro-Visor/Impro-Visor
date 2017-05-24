@@ -83,12 +83,16 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         setInvisible(); 
         
         setVisichordDialog(); 
-        
-        //setNotes(); 
-        setVisible(true); 
-        
     }
     
+@Override
+public void toFront() {
+  super.toFront();
+  if( visichordDialog != null )
+    {
+    visichordDialog.toFront();
+    }
+}
     Notate getNotate()
     {
       return notate;
