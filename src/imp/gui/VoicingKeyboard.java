@@ -364,11 +364,12 @@ public class VoicingKeyboard extends javax.swing.JFrame {
         visichordDialog.setSize(new java.awt.Dimension(800, 450));
         visichordDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        voicingStaffPanel.setBackground(new java.awt.Color(255, 255, 255));
+        voicingStaffPanel.setBounds(new java.awt.Rectangle(0, 0, 900, 420));
         voicingStaffPanel.setMaximumSize(new java.awt.Dimension(700, 420));
         voicingStaffPanel.setMinimumSize(new java.awt.Dimension(700, 420));
         voicingStaffPanel.setName(""); // NOI18N
         voicingStaffPanel.setOpaque(false);
-        voicingStaffPanel.setSize(new java.awt.Dimension(700, 420));
         voicingStaffPanel.setLayout(null);
 
         clefLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/clefs.gif"))); // NOI18N
@@ -3318,6 +3319,7 @@ String currentChordName;
  */
 public void showVoicingOnKeyboard(String chordName, String v)
 {
+    shiftLeft();
     clearKeyboard();
     
     String e = notate.extEntryTFText();
@@ -3525,7 +3527,6 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_chordReplayButtonActionPerformed
 
     private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordStepForwardButtonActionPerformed
-        shiftLeft();
         notate.chordStepForwardDo();
         displayPane[displayPane.length - 1].setChordName(currentChordName);
         showPanes();
@@ -3619,7 +3620,8 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     
     public void setVisichordDialog()
     {
-        visichordDialog.setLocation(40, 440); 
+        // Position chord display below keyboard
+        visichordDialog.setLocation(getX(), getY()+380); 
         
         visichordDialog.setVisible(true);
     }
@@ -4771,7 +4773,6 @@ private void initKeys()
     
     int numberOfPanes = 4;
     
-    java.awt.Dimension notePaneDimension = new java.awt.Dimension(162, 335);
     int paneBase = 100;
     int paneDisplacement = 160;
     
