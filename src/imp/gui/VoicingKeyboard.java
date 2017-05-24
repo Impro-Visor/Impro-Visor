@@ -64,7 +64,7 @@ public class VoicingKeyboard extends javax.swing.JFrame {
     boolean turnOnOffLabels = true; 
     //if true, labels on. else, labels off 
     
-    int numberOfDisplayedPanes = 4;
+    int numberOfDisplayedPanes = 6;
     
     java.awt.Font chordLabelFont = new java.awt.Font("Arial", 1, 18);
 
@@ -356,20 +356,21 @@ public class VoicingKeyboard extends javax.swing.JFrame {
 
         visichordDialog.setTitle("Visichord Display");
         visichordDialog.setBackground(new java.awt.Color(255, 255, 255));
-        visichordDialog.setBounds(new java.awt.Rectangle(0, 23, 800, 450));
+        visichordDialog.setBounds(new java.awt.Rectangle(0, 23, 100, 450));
         visichordDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         visichordDialog.setMaximumSize(new java.awt.Dimension(1200, 450));
-        visichordDialog.setMinimumSize(new java.awt.Dimension(800, 450));
-        visichordDialog.setPreferredSize(new java.awt.Dimension(800, 450));
-        visichordDialog.setSize(new java.awt.Dimension(800, 450));
+        visichordDialog.setMinimumSize(new java.awt.Dimension(1100, 450));
+        visichordDialog.setPreferredSize(new java.awt.Dimension(900, 450));
+        visichordDialog.setSize(new java.awt.Dimension(1100, 450));
         visichordDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         voicingStaffPanel.setBackground(new java.awt.Color(255, 255, 255));
-        voicingStaffPanel.setBounds(new java.awt.Rectangle(0, 0, 900, 420));
-        voicingStaffPanel.setMaximumSize(new java.awt.Dimension(700, 420));
-        voicingStaffPanel.setMinimumSize(new java.awt.Dimension(700, 420));
+        voicingStaffPanel.setBounds(new java.awt.Rectangle(0, 0, 1100, 420));
+        voicingStaffPanel.setMaximumSize(new java.awt.Dimension(1100, 420));
+        voicingStaffPanel.setMinimumSize(new java.awt.Dimension(1100, 420));
         voicingStaffPanel.setName(""); // NOI18N
         voicingStaffPanel.setOpaque(false);
+        voicingStaffPanel.setPreferredSize(new java.awt.Dimension(1100, 420));
         voicingStaffPanel.setLayout(null);
 
         clefLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/clefs.gif"))); // NOI18N
@@ -3604,7 +3605,7 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     public int curChordIndex = numberOfDisplayedPanes-1;    //index number of last panel
     public int indexInArray = numberOfDisplayedPanes - 1;                       //the index in the array of the chord displayed in the curChordIndex box
     
-    public int numStaffs = 4;           //
+    public int numStaffs = 6;           //
     /* Various constants for sizes on the staffs */
     static int staffGap = 11;           // Pixel gap between staff lines
     static int trebleBase = 110;        // Top line of the treble clef
@@ -4771,7 +4772,7 @@ private void initKeys()
  
     // Set up NotePanes for chords
     
-    int numberOfPanes = 4;
+    int numberOfPanes = 6;
     
     int paneBase = 100;
     int paneDisplacement = 160;
