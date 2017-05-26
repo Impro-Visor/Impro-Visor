@@ -22293,8 +22293,8 @@ public void addNextLazyGeneratedPart(boolean hotSwapIn){
             System.out.println("Interrupted while waiting for generation. Trying again...");
             // try again
         } catch (ExecutionException ex) {
-            ErrorLog.log(ErrorLog.WARNING, "ExecutionException in lazy generator");
-            ex.printStackTrace();
+            //ErrorLog.log(ErrorLog.WARNING, "ExecutionException in lazy generator");
+            //ex.printStackTrace();
             return;
         }
     }
