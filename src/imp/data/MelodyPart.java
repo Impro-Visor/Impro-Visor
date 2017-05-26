@@ -2340,7 +2340,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
                  if( inputSlot < outputSlot )
                    {
                      // Lose thisNote
-                     System.out.println("note lost at beat " + (inputSlot/BEAT) + ": " + thisNote.toLeadsheet());
+                     //System.out.println("note lost at beat " + (inputSlot/BEAT) + ": " + thisNote.toLeadsheet());
                      notesLost++;
                    }
                  else

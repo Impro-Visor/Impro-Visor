@@ -1508,7 +1508,6 @@ public Critic getCritic()
         midiQuantizationPanel = new javax.swing.JPanel();
         recordingLatency = new javax.swing.JLabel();
         recordingLatencySpinner = new javax.swing.JSpinner();
-        openQuantizationButton = new javax.swing.JButton();
         echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
@@ -2117,6 +2116,7 @@ public Critic getCritic()
         stepKeyboardMI = new javax.swing.JMenuItem();
         fluidVoicings = new javax.swing.JMenuItem();
         voicingTestMI = new javax.swing.JMenuItem();
+        quantizeMI = new javax.swing.JMenuItem();
         pianoKeyboardMI = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
@@ -4069,21 +4069,6 @@ public Critic getCritic()
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         midiQuantizationPanel.add(recordingLatencySpinner, gridBagConstraints);
-
-        openQuantizationButton.setText("Open Quantization");
-        openQuantizationButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                openQuantizationButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.4;
-        midiQuantizationPanel.add(openQuantizationButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -9758,6 +9743,18 @@ public Critic getCritic()
         });
         utilitiesMenu.add(voicingTestMI);
 
+        quantizeMI.setMnemonic('v');
+        quantizeMI.setText("Quantize Chorus");
+        quantizeMI.setToolTipText("Editor for chord voicings");
+        quantizeMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                quantizeMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(quantizeMI);
+
         pianoKeyboardMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         pianoKeyboardMI.setMnemonic('K');
         pianoKeyboardMI.setText("Voicing Keyboard");
@@ -9799,7 +9796,7 @@ public Critic getCritic()
         utilitiesMenu.add(styleGenerator1);
         utilitiesMenu.add(jSeparator10);
 
-        controlsCheckBox.setText("Controls");
+        controlsCheckBox.setText("Improv Controls");
         controlsCheckBox.setEnabled(false);
         controlsCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -23822,10 +23819,6 @@ private boolean isDotted = false;
         quantizationDialog.setVisible(true);
     }//GEN-LAST:event_openQuantizeDialogMIActionPerformed
 
-    private void openQuantizationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openQuantizationButtonActionPerformed
-    openRealTimeQuantization();
-    }//GEN-LAST:event_openQuantizationButtonActionPerformed
-
     private void lstmNetworkMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lstmNetworkMIActionPerformed
         openLSTMNetworkFrame();
     }//GEN-LAST:event_lstmNetworkMIActionPerformed
@@ -23840,11 +23833,16 @@ private boolean isDotted = false;
         // TODO add your handling code here:
     }//GEN-LAST:event_controlsCheckBoxActionPerformed
 
+    private void quantizeMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_quantizeMIActionPerformed
+    {//GEN-HEADEREND:event_quantizeMIActionPerformed
+        quantizationDialog.setVisible(true);
+    }//GEN-LAST:event_quantizeMIActionPerformed
+
     private void openRealTimeQuantization()
     {
         realtimeQuantizationDialog.setVisible(true);
         realtimeQuantizationDialog.setTitle("Real-Time Input Quantization");
-        //realtimeQuantizationDialog.hideQuantizeButton();        
+        realtimeQuantizationDialog.hideQuantizeButton();        
     }
     
     /**
@@ -26151,7 +26149,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton openBtn;
     private javax.swing.JMenuItem openLeadsheetEditorMI;
     private javax.swing.JMenuItem openLeadsheetMI;
-    private javax.swing.JButton openQuantizationButton;
     private javax.swing.JMenuItem openQuantizeDialogMI;
     private javax.swing.JMenu openRecentLeadsheetMenu;
     private javax.swing.JMenu openRecentLeadsheetNewWindowMenu;
@@ -26204,6 +26201,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem printMI;
     private javax.swing.ButtonGroup productionBtnGrp;
     private javax.swing.JButton purgeCache;
+    private javax.swing.JMenuItem quantizeMI;
     private javax.swing.JPopupMenu quantizePopupMenu;
     private javax.swing.JMenuItem quitMI;
     private javax.swing.JRadioButton quoteRadioButton;
