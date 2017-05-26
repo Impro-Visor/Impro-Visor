@@ -362,9 +362,7 @@ public void toFront() {
         visichordDialog.setBackground(new java.awt.Color(255, 255, 255));
         visichordDialog.setBounds(new java.awt.Rectangle(0, 23, 100, 450));
         visichordDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        visichordDialog.setMaximumSize(new java.awt.Dimension(1200, 450));
         visichordDialog.setMinimumSize(new java.awt.Dimension(1100, 450));
-        visichordDialog.setPreferredSize(new java.awt.Dimension(900, 450));
         visichordDialog.setSize(new java.awt.Dimension(1100, 450));
         visichordDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -3521,7 +3519,7 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_formWindowClosing
 
     private void chordStepBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordStepBackButtonActionPerformed
-        shiftRight();
+        //shiftRight(); // FIX: Does not work as desired, so out for now.
         notate.chordStepBackDo();
         currentChordName = getPresentChordDisplayText();
         showPanes();
