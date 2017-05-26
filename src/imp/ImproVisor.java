@@ -1,7 +1,7 @@
 /**
- * This Java Class is part of the Impro-Visor Application v. 8.11
+ * This Java Class is part of the Impro-Visor Application v. 9.0
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ import polya.*;
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "8.11";
+    public static final String version = "9.0";
     
     private static boolean firstTime = false;
     
@@ -554,6 +554,7 @@ public static void establishUserDirectory(File homeDir)
       copyDir(Directories.styleExtractDirName, homeDir);
       copyDir(Directories.midiDirName,         homeDir);
       copyDir(Directories.voicingDirName,      homeDir);
+      copyDir(Directories.connectomeDirName,   homeDir);
       }
     else
       {
