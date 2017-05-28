@@ -66,6 +66,11 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         currentSelection = grammarName;
     }
     
+    public String getGrammarName()
+    {
+        return grammarJlist.getSelectedValue();
+    }
+     
     public int getGrammarIndex()
     {
        return grammarJlist.getSelectedIndex();
@@ -75,6 +80,8 @@ public class GrammarMenuDialog extends javax.swing.JDialog
     {
        return (1 + getGrammarIndex()) % grammarJlist.getModel().getSize() ;
     }
+    
+
     /**
      * This method is called from within the constructor to
      * initialize the form.

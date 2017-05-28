@@ -969,17 +969,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     passiveTradingDialog.setSize(800, 200);
     passiveTradingDialog.setVisible(false);
     
-    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingDialog); //orig
-
-    lickgenFrame = new LickgenFrame(this, lickgen, cm);
-    transformFrame = new TransformFrame(this, lickgen, cm);
-    fractalFrame = new FractalFrame(this, cm);
-    intervalLearningFrame = new IntervalLearningFrame(this);
-    
-    lstmGen = new LSTMGen();
-    lstmNetworkFrame = new LSTMNetworkFrame(this, lstmGen);
-    lstmNetworkRadio.setEnabled(false);
-    
     grammarMenuDialog = new GrammarMenuDialog(this, false);
     grammarList = grammarMenuDialog.getGrammarList();
     grammarListModel = grammarMenuDialog.getGrammarListModel();
@@ -988,6 +977,17 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     String defaultGrammarFileName = Preferences.getPreference(Preferences.DEFAULT_GRAMMAR_FILE);
     int nameLength = defaultGrammarFileName.length() - ".grammar".length();
     setGrammarName(defaultGrammarFileName.substring(0, nameLength));
+
+    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingDialog); //orig
+    lickgenFrame = new LickgenFrame(this, lickgen, cm);
+    transformFrame = new TransformFrame(this, lickgen, cm);
+    fractalFrame = new FractalFrame(this, cm);
+    intervalLearningFrame = new IntervalLearningFrame(this);
+    
+    lstmGen = new LSTMGen();
+    lstmNetworkFrame = new LSTMNetworkFrame(this, lstmGen);
+    lstmNetworkRadio.setEnabled(false);
+
     postInitComponents();
 
     globalBtn.setFocusPainted(false);
@@ -22549,12 +22549,13 @@ public void deleteTab()
       }
   }
 
+
 private void pauseMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseMIActionPerformed
     pauseBtnActionPerformed(null);
 }//GEN-LAST:event_pauseMIActionPerformed
 
 private void notateGrammarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notateGrammarMenuActionPerformed
-    grammarMenuDialog.setVisible(true);
+    openGrammarMenuDialog();
 }//GEN-LAST:event_notateGrammarMenuActionPerformed
 
 private void notateGrammarMenuStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_notateGrammarMenuStateChanged
@@ -23882,9 +23883,14 @@ private boolean isDotted = false;
         // TODO add your handling code here:
     }//GEN-LAST:event_grammarRadioActionPerformed
 
-    private void openGrammarMenuDialog()
+    public void openGrammarMenuDialog()
     {
         grammarMenuDialog.setVisible(true);
+    }
+    
+    public String getGrammarName()
+    {
+        return grammarMenuDialog.getGrammarName();
     }
     
     private void openRealTimeQuantization()
