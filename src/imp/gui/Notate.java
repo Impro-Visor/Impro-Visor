@@ -12380,8 +12380,6 @@ public void volumeSliderChanged(JSlider volumeSlider)
         preferencesDialog.setVisible(false);
 
         requestFocusInWindow();
-        //stop midi latency test
-        this.midiLatencyMeasurement.stop();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void savePrefsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePrefsBtnActionPerformed
@@ -15332,7 +15330,6 @@ private void savePrefs()
 
         requestFocusInWindow();
       }
-    this.midiLatencyMeasurement.stop();
   }
 
 

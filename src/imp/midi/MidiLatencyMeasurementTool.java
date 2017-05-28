@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -13,21 +13,16 @@
  * for a particular purpose. See the GNU General Public License for more
  * details.
  *
- *
  * You should have received a copy of the GNU General Public License along with
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 package imp.midi;
 
-import imp.midi.MidiSynth;
 import imp.Constants;
 import imp.data.*;
 import imp.gui.Notate;
 import imp.util.ErrorLog;
-import imp.midi.MidiManager;
-import imp.midi.MidiNoteListener;
-import imp.midi.MidiPlayListener;
 import javax.sound.midi.*;
 import java.util.Vector;
 import javax.swing.*;
@@ -36,7 +31,7 @@ import javax.swing.table.*;
 
 /**
  *
- * @author mhunt
+ * @author mhunt, restored by Zach Kondak I think
  */
 public class MidiLatencyMeasurementTool
         extends javax.swing.JPanel
@@ -54,7 +49,9 @@ public class MidiLatencyMeasurementTool
 
     private long timeStart;
 
+    @Override
     public void close() {
+        stop();
        }
     
 
