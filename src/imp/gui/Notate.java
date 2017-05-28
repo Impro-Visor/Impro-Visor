@@ -11468,6 +11468,11 @@ public void setStatus(String text)
     statusMenu.repaint();
   }
 
+public void setMode(Mode mode)
+{
+    setMode(mode, "");
+}
+
 /**
  *
  * Set the mode flag internally for Notate
@@ -11479,7 +11484,7 @@ public void setStatus(String text)
  * a mode switch, and hence this method is private.
  *
  */
-public void setMode(Mode mode)
+public void setMode(Mode mode, String modifier)
   {
     previousMode = this.mode;
 
@@ -11508,7 +11513,7 @@ public void setMode(Mode mode)
             setStatus("Generating melody "+ recurrentIteration);
             break;
         case GENERATED:
-            setStatus("Melody generated");
+            setStatus("Using " + modifier);
             break;
         case ROADMAP:
             setStatus("Creating Roadmap");
@@ -11782,7 +11787,7 @@ if( scoreToSave == null )
 
     File newFile = new File(leadsheetDirName, newStem);
     saveLeadsheet(newFile, scoreToSave);
-System.out.println("saving improvisation file: " + newStem);
+    System.out.println("saving improvisation file: " + newStem);
      
     initSaveImprovisation();
 }
@@ -21860,6 +21865,8 @@ Polylist abstractMelody = null; // formerly called 'rhythm'.f Use in generate an
  */
 public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improviseEndSlot)
   {
+    String modifier = "";
+    
     //System.out.println("originalGenerate " + improviseStartSlot + " to " + improviseEndSlot);
     abstractMelody = null;
     if (ifCycle){
@@ -21964,7 +21971,8 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     }
 
     if (lstmNetworkRadio.isSelected()) {
-        if(!lstmNetworkRadio.isEnabled()) {
+      modifier = " deep learning";
+      if(!lstmNetworkRadio.isEnabled()) {
             ErrorLog.log(ErrorLog.WARNING, "Can't improvise in Deep Learning mode: Connectome is not loaded!", true);
             setMode(Mode.GENERATION_FAILED);
             return;
@@ -21996,9 +22004,12 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
             }
             putLickWithoutRectify(lick, true);
         }
+ 
     } else {
         // use grammar
 
+        modifier = "grammar " + getGrammarName();
+        
         // outLines is the same as soloist
         if( useOutlines )
           {
@@ -22078,7 +22089,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
             lickgenFrame.setRhythmFieldText(Formatting.prettyFormat(abstractMelody));
           }
     }
-    setMode(Mode.GENERATED);
+    setMode(Mode.GENERATED, modifier);
     
     isPassiveTrading = passiveTradingDialog.isVisible();
     passiveTradingQuantum = passiveTradingDialog.getTradingQuantum();
@@ -24585,7 +24596,7 @@ public void grammarSelected(String stem, int mode)
   }
 
 public String getSelectedGrammar(){
-    return null; 
+    return getGrammarName(); 
 }
 
 public void openCorpus()
