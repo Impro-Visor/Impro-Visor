@@ -24505,6 +24505,10 @@ private void setGrammarName(String grammarName)
     grammarMenuDialog.setGrammarName(grammarName);
     grammarRadio.setText("Use grammar " + grammarName);
     notateGrammarMenu.setText(grammarName);
+    if( lickgenFrame != null )
+      {
+        lickgenFrame.setGrammarName(grammarName);
+      }
 }
 
 private void notateGrammarMenuActOpt(java.awt.event.ActionEvent evt)
