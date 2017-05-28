@@ -1119,8 +1119,6 @@ public static void setDefaultButton(JDialog dialog, JButton button)
  */
 public void postInitComponents()
   {
-    notateGrammarMenu.setText(getDefaultGrammarName());
-
     voicingTestFrame.pack();
 
     voicingTestFrame.setSize(875, 525);
@@ -2157,7 +2155,6 @@ public Critic getCritic()
         guideToneDivideRadio = new javax.swing.JRadioButtonMenuItem();
         intervalsRadio = new javax.swing.JRadioButtonMenuItem();
         themeWeaveRadio = new javax.swing.JRadioButtonMenuItem();
-        notateGrammarMenu = new javax.swing.JMenu();
         windowMenu = new javax.swing.JMenu();
         closeWindowMI = new javax.swing.JMenuItem();
         cascadeMI = new javax.swing.JMenuItem();
@@ -10018,43 +10015,6 @@ public Critic getCritic()
         improvMenu.add(themeWeaveRadio);
 
         menuBar.add(improvMenu);
-
-        notateGrammarMenu.setText(getDefaultGrammarName());
-        notateGrammarMenu.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                notateGrammarMenuStateChanged(evt);
-            }
-        });
-        notateGrammarMenu.addMenuListener(new javax.swing.event.MenuListener()
-        {
-            public void menuSelected(javax.swing.event.MenuEvent evt)
-            {
-                notateGrammarMenuMenuSelected(evt);
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt)
-            {
-            }
-            public void menuCanceled(javax.swing.event.MenuEvent evt)
-            {
-            }
-        });
-        notateGrammarMenu.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
-                notateGrammarMenuMousePressed(evt);
-            }
-        });
-        notateGrammarMenu.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                notateGrammarMenuActionPerformed(evt);
-            }
-        });
-        menuBar.add(notateGrammarMenu);
 
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
@@ -21914,7 +21874,6 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
         //System.out.println("cycle, cycCount = " + cycCount);
         String temp;
         temp = gramList.get(cycCount).substring(0, gramList.get(cycCount).length() - GrammarFilter.EXTENSION.length());
-        notateGrammarMenu.setText(temp + "(Cycle)");
         setGrammarName(temp);
         grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + gramList.get(cycCount);
         fullName = gramList.get(cycCount);
@@ -21927,7 +21886,6 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     else if (ifShuffle){       
         String temp;
         temp = shufGramList.get(shufCount).substring(0, shufGramList.get(shufCount).length() - GrammarFilter.EXTENSION.length());
-        notateGrammarMenu.setText(temp + "(Shuffle)");
         setGrammarName(temp);
         grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + shufGramList.get(shufCount);
         fullName = shufGramList.get(shufCount);
@@ -22553,16 +22511,6 @@ public void deleteTab()
 private void pauseMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseMIActionPerformed
     pauseBtnActionPerformed(null);
 }//GEN-LAST:event_pauseMIActionPerformed
-
-private void notateGrammarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notateGrammarMenuActionPerformed
-    openGrammarMenuDialog();
-}//GEN-LAST:event_notateGrammarMenuActionPerformed
-
-private void notateGrammarMenuStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_notateGrammarMenuStateChanged
-}//GEN-LAST:event_notateGrammarMenuStateChanged
-
-private void notateGrammarMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_notateGrammarMenuMenuSelected
-}//GEN-LAST:event_notateGrammarMenuMenuSelected
 
 private void transposeSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_transposeSpinnerStateChanged
     setPlayTransposed();
@@ -23684,11 +23632,6 @@ private boolean isDotted = false;
         themeWeaver.setVisible(true);
     }//GEN-LAST:event_soloGeneratorMIActionPerformed
 
-    private void notateGrammarMenuMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_notateGrammarMenuMousePressed
-    {//GEN-HEADEREND:event_notateGrammarMenuMousePressed
-        //populateNotateGrammarMenu();
-    }//GEN-LAST:event_notateGrammarMenuMousePressed
-
 //    public void originalQuantize()
 //    {
 //        MelodyPart originalPart = getCurrentMelodyPart();
@@ -24504,7 +24447,6 @@ private void setGrammarName(String grammarName)
 {
     grammarMenuDialog.setGrammarName(grammarName);
     grammarRadio.setText("Use grammar " + grammarName);
-    notateGrammarMenu.setText(grammarName);
     if( lickgenFrame != null )
       {
         lickgenFrame.setGrammarName(grammarName);
@@ -24512,31 +24454,40 @@ private void setGrammarName(String grammarName)
 }
 
 private void notateGrammarMenuActOpt(java.awt.event.ActionEvent evt)
-  { 
-    JMenuItem item = (JMenuItem) evt.getSource();
-    String stem = item.getText();
-    if (ifCycle){
-        for (int x = 0; x < gramList.size(); x++){
-        if (gramList.get(x).equals(fullName)){
-            cycCount = x;
-        }
+    {
+        JMenuItem item = (JMenuItem) evt.getSource();
+        String stem = item.getText();
+        if( ifCycle )
+          {
+            for( int x = 0; x < gramList.size(); x++ )
+              {
+                if( gramList.get(x).equals(fullName) )
+                  {
+                    cycCount = x;
+                  }
+              }
+            String temp = gramList.get(cycCount).substring(0, gramList.get(
+                                                           cycCount).length() - GrammarFilter.EXTENSION.
+                                                           length());
+            setGrammarName(temp);
+          }
+        if( ifShuffle )
+          {
+            Collections.shuffle(shufGramList);
+            for( int x = 0; x < shufGramList.size(); x++ )
+              {
+                if( fullName.equals(shufGramList.get(x)) )
+                  {
+                    shufCount = x;
+                  }
+              }
+            String temp = shufGramList.get(shufCount).substring(0, shufGramList.
+                                                                get(shufCount).
+                                                                length() - GrammarFilter.EXTENSION.
+                                                                length());
+            setGrammarName(temp);
+          }
     }
-        String temp = gramList.get(cycCount).substring(0, gramList.get(cycCount).length() - GrammarFilter.EXTENSION.length());
-        setGrammarName(temp);
-        notateGrammarMenu.setText(temp + "(Cycle)");
-    }
-    if (ifShuffle){
-        Collections.shuffle(shufGramList);
-        for (int x = 0; x < shufGramList.size(); x++){
-            if (fullName.equals(shufGramList.get(x))){
-                shufCount = x;
-            }
-        }
-        String temp = shufGramList.get(shufCount).substring(0, shufGramList.get(shufCount).length() - GrammarFilter.EXTENSION.length());
-        setGrammarName(temp);
-        notateGrammarMenu.setText(temp + "(Shuffle)");
-    }
-  }
 
 String fullName = getDefaultGrammarName() + GrammarFilter.EXTENSION;
 
@@ -24548,7 +24499,6 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     shufCount = 0;
     JMenuItem item = (JMenuItem) evt.getSource();
     String stem = item.getText();
-    notateGrammarMenu.setText(stem);
     setGrammarName(stem);
     if(traderDialog != null){
         traderDialog.refreshSelectedGrammar(stem);
@@ -24635,7 +24585,7 @@ public void grammarSelected(String stem, int mode)
   }
 
 public String getSelectedGrammar(){
-    return notateGrammarMenu.getText();
+    return null; 
 }
 
 public void openCorpus()
@@ -24694,9 +24644,6 @@ private void populateNotateGrammarMenu()
         });
 
         // Setup grammar menu items involving trading
-        notateGrammarMenu.removeAll();
-        notateGrammarMenu.add(new JLabel("Grammar"));
-        
        //Add Cycle and Shuffle options at top
        
        cycle.addActionListener(new java.awt.event.ActionListener() {
@@ -24715,11 +24662,8 @@ private void populateNotateGrammarMenu()
        
        group.add(cycle);
        group.add(shuffle);
-       notateGrammarMenu.add(cycle);
-       notateGrammarMenu.add(shuffle);
        
        grammarMenuSeparator = new javax.swing.JSeparator();
-       notateGrammarMenu.add(grammarMenuSeparator);
        
         // Add names of grammar files
         for (String name : fileName) {
@@ -24733,7 +24677,6 @@ private void populateNotateGrammarMenu()
                 int len = name.length();
                 String stem = name.substring(0, len - GrammarFilter.EXTENSION.length());
                 JMenuItem item = new JMenuItem(stem);
-                notateGrammarMenu.add(item);
                 
                 grammarListModel.addElement(stem);
                 
@@ -26263,7 +26206,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton newVoicingSaveButton;
     private javax.swing.JComboBox newVoicingTypeCB;
     private javax.swing.JLabel newVoicingTypeLabel;
-    private javax.swing.JMenu notateGrammarMenu;
     private javax.swing.JLabel noteColoringLabel;
     private javax.swing.JButton noteCursorBtn;
     private javax.swing.JToggleButton noteLen16Btn;
