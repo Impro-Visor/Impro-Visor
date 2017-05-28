@@ -1,8 +1,8 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2015 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College XML export code
+ * is also Copyright (C) 2009-2017 Nicolas Froment (aka Lasconic).
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -645,6 +645,10 @@ private boolean isPassiveTrading;
 private int passiveTradingQuantum;
 private boolean passiveTradingImprovisorFirst;
 
+private javax.swing.JList grammarList;
+GrammarMenuDialog grammarMenuDialog;
+DefaultListModel grammarListModel;
+
 /**
  * Constructs a new Notate JFrame.
  *
@@ -938,7 +942,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     ChordDescription.load(ImproVisor.getVocabDirectory() + File.separator + musicxmlFile);
 
     initComponents();
-
+    
     sectionTable.setModel(sectionTableModel);
     sectionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     sectionTable.addMouseListener(new MouseAdapter()
@@ -976,9 +980,14 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     lstmNetworkFrame = new LSTMNetworkFrame(this, lstmGen);
     lstmNetworkRadio.setEnabled(false);
     
+    grammarMenuDialog = new GrammarMenuDialog(this, false);
+    grammarList = grammarMenuDialog.getGrammarList();
+    grammarListModel = grammarMenuDialog.getGrammarListModel();
     
     populateNotateGrammarMenu();
-
+    String defaultGrammarFileName = Preferences.getPreference(Preferences.DEFAULT_GRAMMAR_FILE);
+    int nameLength = defaultGrammarFileName.length() - ".grammar".length();
+    setGrammarName(defaultGrammarFileName.substring(0, nameLength));
     postInitComponents();
 
     globalBtn.setFocusPainted(false);
@@ -1066,8 +1075,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
           }
       }
 
-    },
-                                                    AWTEvent.KEY_EVENT_MASK);
+    }, AWTEvent.KEY_EVENT_MASK);
 
     setVolumeDefaults();
 
@@ -2140,6 +2148,7 @@ public Critic getCritic()
         tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
         lstmNetworkRadio = new javax.swing.JRadioButtonMenuItem();
         grammarRadio = new javax.swing.JRadioButtonMenuItem();
+        openGrammarMenuDialogMI = new javax.swing.JMenuItem();
         transformRadio = new javax.swing.JRadioButtonMenuItem();
         grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
         afterGrammarSeparator = new javax.swing.JPopupMenu.Separator();
@@ -9960,7 +9969,24 @@ public Critic getCritic()
         improvButtonGroup.add(grammarRadio);
         grammarRadio.setSelected(true);
         grammarRadio.setText("Use Grammar");
+        grammarRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                grammarRadioActionPerformed(evt);
+            }
+        });
         improvMenu.add(grammarRadio);
+
+        openGrammarMenuDialogMI.setLabel("     Choose Grammar");
+        openGrammarMenuDialogMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                openGrammarMenuDialogMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(openGrammarMenuDialogMI);
 
         improvButtonGroup.add(transformRadio);
         transformRadio.setText("Use Grammar & Transform");
@@ -11088,7 +11114,7 @@ public void openGrammar()
 
 public void setGrammar(String grammarName)
   {
-    notateGrammarMenu.setText(grammarName);
+    setGrammarName(grammarName);
     String extendedName = grammarName + GrammarFilter.EXTENSION;
     grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + extendedName;
     lickgen.loadGrammar(grammarFilename);
@@ -21877,23 +21903,32 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     //System.out.println("originalGenerate " + improviseStartSlot + " to " + improviseEndSlot);
     abstractMelody = null;
     if (ifCycle){
+        if( cycCount == 0 )
+          {
+            cycCount = grammarMenuDialog.getGrammarIndex();
+          }
+        if( cycCount >= gramList.size() )
+          {
+            cycCount = 0;
+          }
+        //System.out.println("cycle, cycCount = " + cycCount);
         String temp;
         temp = gramList.get(cycCount).substring(0, gramList.get(cycCount).length() - GrammarFilter.EXTENSION.length());
         notateGrammarMenu.setText(temp + "(Cycle)");
+        setGrammarName(temp);
         grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + gramList.get(cycCount);
         fullName = gramList.get(cycCount);
         lickgen.loadGrammar(grammarFilename);
         lickgenFrame.resetTriageParameters(false);
         Preferences.setPreference(Preferences.DEFAULT_GRAMMAR_FILE, gramList.get(cycCount));
         cycCount++;
-        if (cycCount == gramList.size()){cycCount = 0;} 
     }
     
-    else if (ifShuffle){
-       
+    else if (ifShuffle){       
         String temp;
         temp = shufGramList.get(shufCount).substring(0, shufGramList.get(shufCount).length() - GrammarFilter.EXTENSION.length());
         notateGrammarMenu.setText(temp + "(Shuffle)");
+        setGrammarName(temp);
         grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + shufGramList.get(shufCount);
         fullName = shufGramList.get(shufCount);
         lickgen.loadGrammar(grammarFilename);
@@ -21902,8 +21937,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
         shufCount++;
         if (shufCount == shufGramList.size()){shufCount = 0; Collections.shuffle(shufGramList);} 
     }
-
-
+    
     saveConstructionLineState = showConstructionLinesMI.isSelected();
     // Don't construction show lines while generating
     setShowConstructionLinesAndBoxes(false);
@@ -22520,7 +22554,7 @@ private void pauseMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 }//GEN-LAST:event_pauseMIActionPerformed
 
 private void notateGrammarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notateGrammarMenuActionPerformed
-    //populateNotateGrammarMenu();
+    grammarMenuDialog.setVisible(true);
 }//GEN-LAST:event_notateGrammarMenuActionPerformed
 
 private void notateGrammarMenuStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_notateGrammarMenuStateChanged
@@ -23838,6 +23872,21 @@ private boolean isDotted = false;
         quantizationDialog.setVisible(true);
     }//GEN-LAST:event_quantizeMIActionPerformed
 
+    private void openGrammarMenuDialogMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openGrammarMenuDialogMIActionPerformed
+    {//GEN-HEADEREND:event_openGrammarMenuDialogMIActionPerformed
+        openGrammarMenuDialog();
+    }//GEN-LAST:event_openGrammarMenuDialogMIActionPerformed
+
+    private void grammarRadioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarRadioActionPerformed
+    {//GEN-HEADEREND:event_grammarRadioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_grammarRadioActionPerformed
+
+    private void openGrammarMenuDialog()
+    {
+        grammarMenuDialog.setVisible(true);
+    }
+    
     private void openRealTimeQuantization()
     {
         realtimeQuantizationDialog.setVisible(true);
@@ -24444,20 +24493,29 @@ public void keyPressed(java.awt.event.KeyEvent evt)
 boolean ifCycle = false;
 boolean ifShuffle = false;
 //action for cycle/shuffle buttons
+
+private void setGrammarName(String grammarName)
+{
+    grammarMenuDialog.setGrammarName(grammarName);
+    grammarRadio.setText("Use grammar " + grammarName);
+    notateGrammarMenu.setText(grammarName);
+}
+
 private void notateGrammarMenuActOpt(java.awt.event.ActionEvent evt)
   { 
     JMenuItem item = (JMenuItem) evt.getSource();
     String stem = item.getText();
-    if (stem.equals("Cycle")){ifCycle = true; ifShuffle = false; shufCount = 0;
+    if (ifCycle){
         for (int x = 0; x < gramList.size(); x++){
         if (gramList.get(x).equals(fullName)){
             cycCount = x;
         }
     }
         String temp = gramList.get(cycCount).substring(0, gramList.get(cycCount).length() - GrammarFilter.EXTENSION.length());
+        setGrammarName(temp);
         notateGrammarMenu.setText(temp + "(Cycle)");
     }
-    if (stem.equals("Shuffle")){ifShuffle = true; ifCycle = false; cycCount = 0;
+    if (ifShuffle){
         Collections.shuffle(shufGramList);
         for (int x = 0; x < shufGramList.size(); x++){
             if (fullName.equals(shufGramList.get(x))){
@@ -24465,11 +24523,13 @@ private void notateGrammarMenuActOpt(java.awt.event.ActionEvent evt)
             }
         }
         String temp = shufGramList.get(shufCount).substring(0, shufGramList.get(shufCount).length() - GrammarFilter.EXTENSION.length());
+        setGrammarName(temp);
         notateGrammarMenu.setText(temp + "(Shuffle)");
     }
   }
 
 String fullName = getDefaultGrammarName() + GrammarFilter.EXTENSION;
+
 private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
   {
     group.clearSelection();
@@ -24479,6 +24539,7 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     JMenuItem item = (JMenuItem) evt.getSource();
     String stem = item.getText();
     notateGrammarMenu.setText(stem);
+    setGrammarName(stem);
     if(traderDialog != null){
         traderDialog.refreshSelectedGrammar(stem);
     }
@@ -24492,6 +24553,74 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     if (stem.startsWith(SKIP_GRAMMAR_FILES_STARTING_WITH)){
         cycCount = 0;
         shufCount = 0;
+    }
+  }
+
+/**
+ * grammarSelected is called from GrammarMenuDialog when a grammar is selected,
+ * or when the mode (Chosen, Cycle, or Shuffle) is changed.
+ * @param stem
+ * @param mode 
+ */
+public void grammarSelected(String stem, int mode)
+  {
+    group.clearSelection();
+    switch(mode)
+      {
+        case GrammarMenuDialog.CHOSEN:
+          ifCycle = false;
+          ifShuffle = false; 
+          break;
+        case GrammarMenuDialog.CYCLE:
+          ifCycle = true;
+          ifShuffle = false; 
+          cycCount = grammarMenuDialog.getNextGrammarIndex();
+          break;
+       case GrammarMenuDialog.SHUFFLE:
+          ifCycle = false;
+          ifShuffle = true; 
+          break;
+      }
+
+    shufCount = 0;
+    setGrammarName(stem);
+    if(traderDialog != null){
+        traderDialog.refreshSelectedGrammar(stem);
+    }
+    fullName = stem + GrammarFilter.EXTENSION;
+    grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + fullName;
+    lickgen.loadGrammar(grammarFilename);
+    lickgenFrame.resetTriageParameters(false);
+    Preferences.setPreference(Preferences.DEFAULT_GRAMMAR_FILE, fullName);
+
+    // If cycling or shuffle the grammar, skip files beginning with _
+    if (stem.startsWith(SKIP_GRAMMAR_FILES_STARTING_WITH)){
+        cycCount = 0;
+        shufCount = 0;
+    }
+    
+      if( ifCycle )
+        {
+          for( int x = 0; x < gramList.size(); x++ )
+            {
+              if( gramList.get(x).equals(fullName) )
+                {
+                  cycCount = x;
+                }
+            }
+        }
+
+      else if( ifShuffle )
+        {
+          Collections.shuffle(shufGramList);
+          for( int x = 0; x < shufGramList.size(); x++ )
+            {
+              if( fullName.equals(shufGramList.get(x)) )
+                {
+                  shufCount = x;
+                }
+            }
+
     }
   }
 
@@ -24595,15 +24724,17 @@ private void populateNotateGrammarMenu()
                 String stem = name.substring(0, len - GrammarFilter.EXTENSION.length());
                 JMenuItem item = new JMenuItem(stem);
                 notateGrammarMenu.add(item);
+                
+                grammarListModel.addElement(stem);
+                
                 item.addActionListener(new java.awt.event.ActionListener()
                 {
                     public void actionPerformed(java.awt.event.ActionEvent evt)
                     {
                         notateGrammarMenuAction(evt);
-                    }
-                    
+                    }     
                 });
-                
+               
             }
         }
       }
@@ -26147,6 +26278,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel okcancelPanel3;
     private javax.swing.JMenuItem oneAutoMI;
     private javax.swing.JButton openBtn;
+    private javax.swing.JMenuItem openGrammarMenuDialogMI;
     private javax.swing.JMenuItem openLeadsheetEditorMI;
     private javax.swing.JMenuItem openLeadsheetMI;
     private javax.swing.JMenuItem openQuantizeDialogMI;
