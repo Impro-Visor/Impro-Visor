@@ -57,7 +57,7 @@ public class AdviceForNote extends Advice {
      * Converts the Advice into a Part and returns that.
      * @return Part     the Advice in Part form, ready to be inserted
      */
-    public Part getPart() {
+    public Part getPart(int target) {
         int beatValue = ((BEAT*4)/metre[1]);
         Part newPart = new Part();
         newPart.setMetre(metre[0], metre[1]);
@@ -66,13 +66,6 @@ public class AdviceForNote extends Advice {
         note.setRhythmValue(beatValue/2);
 
         newPart.addUnit(note);
-        
-// rk: Playing is now done in PasteCommand
-
-//          {
-//          Command playNote = new PlayNoteCommand(note);
-//          playNote.execute();
-//          }
         
         return newPart;
     }
