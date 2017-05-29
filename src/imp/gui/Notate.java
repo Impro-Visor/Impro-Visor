@@ -24542,7 +24542,7 @@ public void grammarSelected(String stem, int mode)
         case GrammarMenuDialog.CYCLE:
           ifCycle = true;
           ifShuffle = false; 
-          cycCount = grammarMenuDialog.getNextGrammarIndex();
+          //cycCount = grammarMenuDialog.getGrammarIndex();
           break;
        case GrammarMenuDialog.SHUFFLE:
           ifCycle = false;
@@ -24573,11 +24573,11 @@ public void grammarSelected(String stem, int mode)
             {
               if( gramList.get(x).equals(fullName) )
                 {
-                  cycCount = x;
+                  cycCount = 1+x;
+                  break;
                 }
             }
         }
-
       else if( ifShuffle )
         {
           Collections.shuffle(shufGramList);
@@ -24585,7 +24585,8 @@ public void grammarSelected(String stem, int mode)
             {
               if( fullName.equals(shufGramList.get(x)) )
                 {
-                  shufCount = x;
+                  shufCount = 1+x;
+                  break;
                 }
             }
 
