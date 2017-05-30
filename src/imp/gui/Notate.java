@@ -2119,11 +2119,12 @@ public Critic getCritic()
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         createRoadMapCheckBox = new javax.swing.JCheckBoxMenuItem();
         utilitiesMenu = new javax.swing.JMenu();
+        adviceMI = new javax.swing.JMenuItem();
         stepKeyboardMI = new javax.swing.JMenuItem();
-        fluidVoicings = new javax.swing.JMenuItem();
-        voicingTestMI = new javax.swing.JMenuItem();
         quantizeMI = new javax.swing.JMenuItem();
         pianoKeyboardMI = new javax.swing.JMenuItem();
+        voicingTestMI = new javax.swing.JMenuItem();
+        fluidVoicings = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
@@ -2131,6 +2132,7 @@ public Critic getCritic()
         controlsCheckBox = new javax.swing.JCheckBoxMenuItem();
         lstmNetworkMI = new javax.swing.JMenuItem();
         fractalMI = new javax.swing.JMenuItem();
+        grammarChooserMI = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
         guideToneLine = new javax.swing.JMenuItem();
         intervalLearningMI = new javax.swing.JMenuItem();
@@ -9714,6 +9716,17 @@ public Critic getCritic()
         utilitiesMenu.setMnemonic('U');
         utilitiesMenu.setText("Utilities");
 
+        adviceMI.setText("Advice");
+        adviceMI.setToolTipText("Opwn window containing advice options.");
+        adviceMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                openAdviceMenu(evt);
+            }
+        });
+        utilitiesMenu.add(adviceMI);
+
         stepKeyboardMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         stepKeyboardMI.setText("Advising Keyboard");
         stepKeyboardMI.setToolTipText("Note entry keyboard that can advise on note choices");
@@ -9726,32 +9739,9 @@ public Critic getCritic()
         });
         utilitiesMenu.add(stepKeyboardMI);
 
-        fluidVoicings.setText("Fluid Voicing Editor");
-        fluidVoicings.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                fluidVoicingsActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(fluidVoicings);
-
-        voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-        voicingTestMI.setMnemonic('v');
-        voicingTestMI.setText("Voicing Editor");
-        voicingTestMI.setToolTipText("Editor for chord voicings");
-        voicingTestMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                voicingTestMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(voicingTestMI);
-
         quantizeMI.setMnemonic('v');
         quantizeMI.setText("Quantize Chorus");
-        quantizeMI.setToolTipText("Editor for chord voicings");
+        quantizeMI.setToolTipText("Quantize the current chorus into coarser units. Creates a new chorus.");
         quantizeMI.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9773,12 +9763,36 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(pianoKeyboardMI);
+
+        voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        voicingTestMI.setMnemonic('v');
+        voicingTestMI.setText("Voicing Editor");
+        voicingTestMI.setToolTipText("Editor for chord voicings");
+        voicingTestMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                voicingTestMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(voicingTestMI);
+
+        fluidVoicings.setText("Fluid Voicing Editor");
+        fluidVoicings.setToolTipText("Editor for fluid voicings.");
+        fluidVoicings.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                fluidVoicingsActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(fluidVoicings);
         utilitiesMenu.add(jSeparator4);
 
         openLeadsheetEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         openLeadsheetEditorMI.setMnemonic('l');
         openLeadsheetEditorMI.setText("Leadsheet Textual Editor");
-        openLeadsheetEditorMI.setToolTipText("Open file editor for leadsheet.");
+        openLeadsheetEditorMI.setToolTipText("Editor for leadsheet in textual notation.");
         openLeadsheetEditorMI.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9814,6 +9828,7 @@ public Critic getCritic()
         utilitiesMenu.add(controlsCheckBox);
 
         lstmNetworkMI.setText("Deep Learning");
+        lstmNetworkMI.setToolTipText("Improvise using a recurrent neural network.");
         lstmNetworkMI.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9824,6 +9839,7 @@ public Critic getCritic()
         utilitiesMenu.add(lstmNetworkMI);
 
         fractalMI.setText("Division");
+        fractalMI.setToolTipText("Improvise by dividing notes into smaller notes.");
         fractalMI.setActionCommand("Improvisation");
         fractalMI.addActionListener(new java.awt.event.ActionListener()
         {
@@ -9834,9 +9850,21 @@ public Critic getCritic()
         });
         utilitiesMenu.add(fractalMI);
 
-        lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        grammarChooserMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        grammarChooserMI.setMnemonic('g');
+        grammarChooserMI.setText("Grammar Chooser");
+        grammarChooserMI.setToolTipText("Open grammar chooser.");
+        grammarChooserMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                grammarChooserMIActionPerformed(evt);
+            }
+        });
+        utilitiesMenu.add(grammarChooserMI);
+
         lickGeneratorMI.setMnemonic('g');
-        lickGeneratorMI.setText("Grammar");
+        lickGeneratorMI.setText("Grammar Control");
         lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
         lickGeneratorMI.addActionListener(new java.awt.event.ActionListener()
         {
@@ -9849,6 +9877,7 @@ public Critic getCritic()
 
         guideToneLine.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         guideToneLine.setText("Guide Tone Line");
+        guideToneLine.setToolTipText("Generate a guide tone line.");
         guideToneLine.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9895,7 +9924,7 @@ public Critic getCritic()
         utilitiesMenu.add(customSoloGeneratorMI);
 
         transformMI.setText("Transform");
-        transformMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
+        transformMI.setToolTipText("Multi-tab control for improvisation using transformations, grammar editing, and transform editing.");
         transformMI.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -13294,8 +13323,7 @@ private final Color adviceBtnColorClosed = new Color(238, 212, 212);
     }//GEN-LAST:event_drawButtonActionPerformed
 
     private void advicePMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advicePMIActionPerformed
-
-        adviceMIActionPerformed(null);
+        openAdviceFrame();
     }//GEN-LAST:event_advicePMIActionPerformed
 
     private void playMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playMenuActionPerformed
@@ -14221,6 +14249,11 @@ private void openAdviceFrame()
     setMode(Mode.ADVICE);
   }
 
+private void adviceMIActionPerformed(java.awt.event.ActionEvent evt)
+{
+    openAdviceFrame();
+}
+        
 private void redoAdvice()
   {
     Trace.log(2, "redo advice");
@@ -17932,7 +17965,7 @@ void enterMelody()
  * Shows the advice frame or removes it.
  *
  */
-    private void adviceMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adviceMIActionPerformed
+    private void quantizeMI1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adviceMIActionPerformed
 
         if( oneSlotSelected() )
           {
@@ -22005,7 +22038,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     } else {
         // use grammar
 
-        modifier = "grammar " + getGrammarName();
+        modifier = " " + getGrammarName() + "grammar";
         
         // outLines is the same as soloist
         if( useOutlines )
@@ -23252,10 +23285,6 @@ private void recordMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:
       recordFromMidi();
   }//GEN-LAST:event_recordMIActionPerformed
 
-    private void stepKeyboardMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepKeyboardMIActionPerformed
-        openStepKeyboard();
-    }//GEN-LAST:event_stepKeyboardMIActionPerformed
-
 private int indexOfLastChordPlayed = 0;
 
 public void chordReplayDo(){
@@ -23833,6 +23862,22 @@ private boolean isDotted = false;
     {//GEN-HEADEREND:event_grammarRadioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_grammarRadioActionPerformed
+
+    private void stepKeyboardMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_stepKeyboardMIActionPerformed
+    {//GEN-HEADEREND:event_stepKeyboardMIActionPerformed
+        openStepKeyboard();
+    }//GEN-LAST:event_stepKeyboardMIActionPerformed
+
+    private void openAdviceMenu(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openAdviceMenu
+    {//GEN-HEADEREND:event_openAdviceMenu
+        showAdviceButton.setSelected(true);
+        showAdviceButtonActionPerformed(null);
+    }//GEN-LAST:event_openAdviceMenu
+
+    private void grammarChooserMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarChooserMIActionPerformed
+    {//GEN-HEADEREND:event_grammarChooserMIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_grammarChooserMIActionPerformed
 
     public void openGrammarMenuDialog()
     {
@@ -25764,6 +25809,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem addTabPopupMenuItem;
     private javax.swing.JMenuItem adjustParallaxDelayMI;
     protected javax.swing.JFrame adviceFrame;
+    private javax.swing.JMenuItem adviceMI;
     private javax.swing.JMenuItem advicePMI;
     private javax.swing.JList adviceScrollListBricks;
     private javax.swing.JList adviceScrollListCells;
@@ -26002,6 +26048,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton globalPreferencesBtn;
     private javax.swing.JMenuItem globalPrefsMI;
     private javax.swing.JTabbedPane globalTabs;
+    private javax.swing.JMenuItem grammarChooserMI;
     private javax.swing.JRadioButtonMenuItem grammarDivideRadio;
     private javax.swing.ButtonGroup grammarExtractionButtonGroup;
     private javax.swing.JRadioButtonMenuItem grammarRadio;

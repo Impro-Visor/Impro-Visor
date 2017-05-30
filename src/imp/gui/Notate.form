@@ -8605,6 +8605,15 @@
             <Property name="text" type="java.lang.String" value="Utilities"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="adviceMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Advice"/>
+                <Property name="toolTipText" type="java.lang.String" value="Opwn window containing advice options."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openAdviceMenu"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="stepKeyboardMI">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
@@ -8617,32 +8626,11 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stepKeyboardMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="fluidVoicings">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Fluid Voicing Editor"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fluidVoicingsActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="voicingTestMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+I"/>
-                </Property>
-                <Property name="mnemonic" type="int" value="118"/>
-                <Property name="text" type="java.lang.String" value="Voicing Editor"/>
-                <Property name="toolTipText" type="java.lang.String" value="Editor for chord voicings"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="voicingTestMIActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="quantizeMI">
               <Properties>
                 <Property name="mnemonic" type="int" value="118"/>
                 <Property name="text" type="java.lang.String" value="Quantize Chorus"/>
-                <Property name="toolTipText" type="java.lang.String" value="Editor for chord voicings"/>
+                <Property name="toolTipText" type="java.lang.String" value="Quantize the current chorus into coarser units. Creates a new chorus."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quantizeMIActionPerformed"/>
@@ -8661,6 +8649,28 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pianoKeyboardMIActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="voicingTestMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+I"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="118"/>
+                <Property name="text" type="java.lang.String" value="Voicing Editor"/>
+                <Property name="toolTipText" type="java.lang.String" value="Editor for chord voicings"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="voicingTestMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="fluidVoicings">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fluid Voicing Editor"/>
+                <Property name="toolTipText" type="java.lang.String" value="Editor for fluid voicings."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fluidVoicingsActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="openLeadsheetEditorMI">
@@ -8670,7 +8680,7 @@
                 </Property>
                 <Property name="mnemonic" type="int" value="108"/>
                 <Property name="text" type="java.lang.String" value="Leadsheet Textual Editor"/>
-                <Property name="toolTipText" type="java.lang.String" value="Open file editor for leadsheet."/>
+                <Property name="toolTipText" type="java.lang.String" value="Editor for leadsheet in textual notation."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openLeadsheetEditorMIActionPerformed"/>
@@ -8706,6 +8716,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="lstmNetworkMI">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Deep Learning"/>
+                <Property name="toolTipText" type="java.lang.String" value="Improvise using a recurrent neural network."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lstmNetworkMIActionPerformed"/>
@@ -8714,19 +8725,30 @@
             <MenuItem class="javax.swing.JMenuItem" name="fractalMI">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Division"/>
+                <Property name="toolTipText" type="java.lang.String" value="Improvise by dividing notes into smaller notes."/>
                 <Property name="actionCommand" type="java.lang.String" value="Improvisation"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fractalMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
+            <MenuItem class="javax.swing.JMenuItem" name="grammarChooserMI">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+G"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Grammar"/>
+                <Property name="text" type="java.lang.String" value="Grammar Chooser"/>
+                <Property name="toolTipText" type="java.lang.String" value="Open grammar chooser."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="grammarChooserMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
+              <Properties>
+                <Property name="mnemonic" type="int" value="103"/>
+                <Property name="text" type="java.lang.String" value="Grammar Control"/>
                 <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
               </Properties>
               <Events>
@@ -8739,6 +8761,7 @@
                   <KeyStroke key="Shift+Ctrl+G"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Guide Tone Line"/>
+                <Property name="toolTipText" type="java.lang.String" value="Generate a guide tone line."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guideToneLineActionPerformed"/>
@@ -8781,7 +8804,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="transformMI">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Transform"/>
-                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
+                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for improvisation using transformations, grammar editing, and transform editing."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transformMIActionPerformed"/>
