@@ -1,6 +1,6 @@
 
 Welcome to Impro-Visor (Improvisation Advisor) Version 9.0,
-from Prof. Robert Keller at Harvey Mudd College, May 29, 2017.
+from Prof. Robert Keller at Harvey Mudd College, May 30, 2017.
 
 Release notes for this version may be found at the end.
 
@@ -97,9 +97,9 @@ I am pleased to acknowledge contributions from the following developers:
  Mark Heimann, Nava Dallal, Carli Lessard, Alex Putman, Becki Yukman
  Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
  Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, David Siah,
- Mira Jambusaria, Daniel Johnson, Sam Goree, 
+ Mira Jambusaria, Daniel Johnson, and Sam Goree.
 
-We hope you enjoy using the program. 
+We hope you enjoy using Impro-Visor. 
 
 Sincerely,
 

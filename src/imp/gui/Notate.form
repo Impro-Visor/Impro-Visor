@@ -3376,17 +3376,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertPhraseAfterPMIActionPerformed"/>
           </Events>
         </MenuItem>
-        <Component class="javax.swing.JSeparator" name="jSeparator23">
-        </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="advicePMI">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Advice"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="advicePMI.addActionListener(new java.awt.event.ActionListener() {&#xa;    public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;        adviceMIActionPerformed(evt);&#xa;    }&#xa;});"/>
-          </AuxValues>
-        </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator11">
         </Component>
         <MenuItem class="javax.swing.JCheckBoxMenuItem" name="autoFillMI">
@@ -7509,12 +7498,6 @@
     </Container>
     <Component class="javax.swing.ButtonGroup" name="noteLenBtnGrp">
     </Component>
-    <Container class="javax.swing.JPopupMenu" name="quantizePopupMenu">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-    </Container>
     <Component class="javax.swing.ButtonGroup" name="improvButtonGroup">
     </Component>
     <Component class="javax.swing.ButtonGroup" name="whoPlaysFirstGroup">

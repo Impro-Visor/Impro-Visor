@@ -1597,15 +1597,6 @@ public Critic getCritic()
         insertPhraseBeforePMI = new javax.swing.JMenuItem();
         insertSectionAfterPMI = new javax.swing.JMenuItem();
         insertPhraseAfterPMI = new javax.swing.JMenuItem();
-        jSeparator23 = new javax.swing.JSeparator();
-        advicePMI = new javax.swing.JMenuItem();
-        advicePMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                adviceMIActionPerformed(evt);
-            }
-        });
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         autoFillMI = new javax.swing.JCheckBoxMenuItem();
         adviceFrame = new javax.swing.JFrame();
@@ -1852,7 +1843,6 @@ public Critic getCritic()
         noteLenTripletCheckBox = new javax.swing.JCheckBox();
         noteLenDottedCheckBox = new javax.swing.JCheckBox();
         noteLenBtnGrp = new javax.swing.ButtonGroup();
-        quantizePopupMenu = new javax.swing.JPopupMenu();
         improvButtonGroup = new javax.swing.ButtonGroup();
         whoPlaysFirstGroup = new javax.swing.ButtonGroup();
         numberOfBarsGroup = new javax.swing.ButtonGroup();
@@ -4438,11 +4428,6 @@ public Critic getCritic()
             }
         });
         popupMenu.add(insertPhraseAfterPMI);
-        popupMenu.add(jSeparator23);
-
-        advicePMI.setText("Advice");
-        advicePMI.setEnabled(false);
-        popupMenu.add(advicePMI);
         popupMenu.add(jSeparator11);
 
         autoFillMI.setSelected(true);
@@ -22038,7 +22023,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     } else {
         // use grammar
 
-        modifier = " " + getGrammarName() + "grammar";
+        modifier = " " + getGrammarName() + " grammar";
         
         // outLines is the same as soloist
         if( useOutlines )
@@ -25623,12 +25608,7 @@ protected void setItemStates()
 
         saveSelectionAsLick.setEnabled(true);
 
-        // advice enabled
-
-        advicePMI.setEnabled(true);
-
         reverseMelody.setEnabled(true);
-
         invertMelody.setEnabled(true);
         expandMelodyBy2.setEnabled(true);
         expandMelodyBy3.setEnabled(true);
@@ -25668,10 +25648,7 @@ protected void setItemStates()
         transposeMelodyUpHarmonically.setEnabled(false);
         transposeMelodyDownHarmonically.setEnabled(false);
 
-        advicePMI.setEnabled(false);
-
         reverseMelody.setEnabled(false);
-
         invertMelody.setEnabled(false);
         expandMelodyBy2.setEnabled(true);
         expandMelodyBy3.setEnabled(true);
@@ -25810,7 +25787,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem adjustParallaxDelayMI;
     protected javax.swing.JFrame adviceFrame;
     private javax.swing.JMenuItem adviceMI;
-    private javax.swing.JMenuItem advicePMI;
     private javax.swing.JList adviceScrollListBricks;
     private javax.swing.JList adviceScrollListCells;
     private javax.swing.JList adviceScrollListIdioms;
@@ -26156,7 +26132,6 @@ private ImageIcon pauseButton =
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator21;
     private javax.swing.JSeparator jSeparator22;
-    private javax.swing.JSeparator jSeparator23;
     private javax.swing.JSeparator jSeparator29;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator30;
@@ -26342,7 +26317,6 @@ private ImageIcon pauseButton =
     private javax.swing.ButtonGroup productionBtnGrp;
     private javax.swing.JButton purgeCache;
     private javax.swing.JMenuItem quantizeMI;
-    private javax.swing.JPopupMenu quantizePopupMenu;
     private javax.swing.JMenuItem quitMI;
     private javax.swing.JRadioButton quoteRadioButton;
     private javax.swing.JCheckBox quotes;
