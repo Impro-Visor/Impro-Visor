@@ -33,6 +33,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="impDir"                 value="src/imp"                  />
     <property name="jmDir"                  value="src/jm"                   />
     <property name="polyaDir"               value="src/polya"                />
+    <property name="mikeraDir"              value="src/mikera"               />
     <property name="testDir"                value="test"                     />
     <property name="buildDir"               value="build"                    />
     <property name="libDir"                 value="lib"                      />
@@ -181,6 +182,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </javac>
 </target>
 
+<target name="mikera" depends="buildInit,libInit,init" description="compile mikera">
+    <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
+        <classpath refid="base.classpath" />
+        <include name="mikera/**/*.java"/>
+        <exclude name="**/package-info.java"/>
+    </javac>
+</target>
+
 <target name="buildImp" depends="buildInit,libInit,imp" description="compile imp in build">
     <copy todir="${buildDir}">
         <fileset dir="${srcDir}">
@@ -212,10 +221,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
 </target>
 
-<target name="compile" depends="polya,imp,jm" description="compile the source">
+<target name="buildMikera" depends="buildInit,libInit,mikera" description="compile mikera in build">
+    <copy todir="${buildDir}">
+        <fileset dir="${srcDir}">
+            <include name="mikera/**/*.class" />
+            <exclude name="**/package-info.java" />
+        </fileset>
+    </copy>
 </target>
 
-<target name="build" depends="buildPolya,buildImp,buildJm" description="build the source in build">
+<target name="compile" depends="polya,imp,jm,mikera" description="compile the source">
+</target>
+
+<target name="build" depends="buildPolya,buildImp,buildJm,buildMikera" description="build the source in build">
 </target>
 
 <target name="dist" depends="distInit,build" description="make a distribution">

@@ -1,5 +1,5 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 8.11,
+Welcome to Impro-Visor (Improvisation Advisor) Version 9.0,
 from Prof. Robert Keller at Harvey Mudd College, May 29, 2017.
 
 Release notes for this version may be found at the end.
