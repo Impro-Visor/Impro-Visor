@@ -20,7 +20,7 @@
     (swing 0.55)
     (comp-swing 0.55)
     (bass-high g-)
-    (bass-low g---)
+    (bass-low g--)
     (bass-base c--)
     (chord-high a)
     (chord-low c-)
