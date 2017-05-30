@@ -1,16 +1,12 @@
 
 Welcome to Impro-Visor (Improvisation Advisor) Version 8.11,
-from Prof. Bob Keller at Harvey Mudd College, May 31, 2016.
+from Prof. Robert Keller at Harvey Mudd College, May 29, 2017.
 
 Release notes for this version may be found at the end.
 
 If you need help, please post to the Yahoo! impro-visor user group:
 
-    http://launch.groups.yahoo.com/group/impro-visor/
-
-From the group, you may also obtain The Imaginary Book which contains a
-large number of chords-only leadsheets, as well as other useful
-resources.
+     https://groups.yahoo.com/neo/groups/impro-visor/info
 
 Impro-Visor is free and runs on any platform that supports Java 1.7 or
 later, including:
@@ -100,7 +96,8 @@ I am pleased to acknowledge contributions from the following developers:
  Nate Tarrh, Brian Kwak, Kelly Lee, Willem Engen, Eric Chicot,
  Mark Heimann, Nava Dallal, Carli Lessard, Alex Putman, Becki Yukman
  Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
- Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, and David Siah
+ Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, David Siah,
+ Mira Jambusaria, Daniel Johnson, Sam Goree, 
 
 We hope you enjoy using the program. 
 
@@ -112,6 +109,29 @@ Harvey Mudd College
 Claremont, CA 91711
 
 Please send issues to: keller@cs.hmc.edu
+
+===============================================================================
+Release notes for Impro-Visor 9.0
+
+ This release adds improvisation using deep learning, in the form of a recurrent
+ LSTM (long short-term memory) neural network. This form of learning is captured
+ using a "connectome" (.ctome) file, of which several examples are in the 
+ connectomes directory.
+
+ Unlike grammar learning, which is self-contained in Impro-Visor, the learning
+ of a connectome is done by a separate Python program that may be found in the
+ github repository. Also, learning takes quite a bit longer than for grammars.
+ A paper describing our approach will appear in the International Conference on
+ Computational Creativity, June 2017, entitled "Learning to Create Jazz Using a
+ Product of Experts", by Daniel Johnson, Robert M. Keller, and Nicholas 
+ Weintraut.
+
+ Also added is a chord voicing visualizer on a grand staff. This is a partial
+ port from a former stand-alone app called "Visichord", which was a software
+ development class project constructed by Adrian Mettler, Gabriel Neer,
+ Erika Rice Sherpelz, and Jeffrey Sherpelz.
+
+ There are a few changes in the user interface.
 
 ===============================================================================
 Release notes for Impro-Visor 8.11
