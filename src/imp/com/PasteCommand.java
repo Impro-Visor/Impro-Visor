@@ -107,6 +107,7 @@ public class PasteCommand implements Command, Constants {
         this.dest = dest;
         this.startSlot = startSlot;
         this.play = play;
+        this.undoable = true;
     }
 
     /**
@@ -186,22 +187,26 @@ public class PasteCommand implements Command, Constants {
      * Undoes the pasting.
      */
     public void undo() {
-// For the time being, undo of chord pasting is disabled.
+        if( !undoable )
+          {
+            return;
+          }
+// For the time being, undo of chord pasting should be disabled.
 // The reason is that undoing a recent paste causes a crash
 // wherein 120 slots appear and the application effectively freezes.
 
-//        if( source != null && dest != null )
-//          {
-//	  if(restInserted)
-//	      dest.delUnit(stopIndex);
-//
-//	  dest.pasteSlots(oldSection, startSlot);
-//          }
-//
-//        if( chordSource != null && chordDest != null )
-//          {
-//          chordDest.pasteSlots(oldChordSection, startSlot);
-//          }
+        if( source != null && dest != null )
+          {
+	  if(restInserted)
+	      dest.delUnit(stopIndex);
+
+	  dest.pasteSlots(oldSection, startSlot);
+          }
+
+        if( chordSource != null && chordDest != null )
+          {
+          chordDest.pasteSlots(oldChordSection, startSlot);
+          }
     }
 
     /**

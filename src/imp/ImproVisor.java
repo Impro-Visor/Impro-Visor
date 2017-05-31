@@ -1,5 +1,5 @@
 /**
- * This Java Class is part of the Impro-Visor Application v. 9.0
+ * This Java Class is part of the Impro-Visor Application v. 9.01
  *
  * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
@@ -45,7 +45,7 @@ import polya.*;
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "9.0";
+    public static final String version = "9.01";
     
     private static boolean firstTime = false;
     

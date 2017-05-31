@@ -18032,9 +18032,11 @@ void pasteChords()
 
         if( impro.chordsClipboardNonEmpty() )
           {
-            cm.execute(new SafePasteCommand(impro.getChordsClipboard(),
-                                            getCurrentStave().getChordProg(),
-                                            getCurrentSelectionStart(), !alwaysPasteOver, true, this));
+            cm.execute(new PasteCommand(impro.getChordsClipboard(),
+                                        getCurrentStave().getChordProg(),
+                                        getCurrentSelectionStart(), 
+                                        false, 
+                                        false));
           }
 
         paintCurrentStaveImmediately("paste Chords");
