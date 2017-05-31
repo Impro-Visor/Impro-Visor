@@ -88,7 +88,7 @@ public class PasteCommand implements Command, Constants {
     /**
      * true since the pasting can be undone
      */
-    protected boolean undoable = true;
+    protected boolean undoable = false;
 
     /**
      * whether to play when pasting
@@ -180,30 +180,28 @@ public class PasteCommand implements Command, Constants {
 
       chordDest.pasteOver(chordSource, startSlot);
       }
-   // if( play && source instanceof MelodyPart && ImproVisor.getPlay() )
-     // {
-        // This interferes with pasting advice. We'll leave it out for now.
-      //ImproVisor.playCurrentSelection(false, 0);
-      // old way: new PlayPartCommand(((MelodyPart)source)).execute();
-    //  }
     }
 
     /**
      * Undoes the pasting.
      */
     public void undo() {
-        if( source != null && dest != null )
-          {
-	  if(restInserted)
-	      dest.delUnit(stopIndex);
+// For the time being, undo of chord pasting is disabled.
+// The reason is that undoing a recent paste causes a crash
+// wherein 120 slots appear and the application effectively freezes.
 
-	  dest.pasteSlots(oldSection, startSlot);
-          }
-
-        if( chordSource != null && chordDest != null )
-          {
-          chordDest.pasteSlots(oldChordSection, startSlot);
-          }
+//        if( source != null && dest != null )
+//          {
+//	  if(restInserted)
+//	      dest.delUnit(stopIndex);
+//
+//	  dest.pasteSlots(oldSection, startSlot);
+//          }
+//
+//        if( chordSource != null && chordDest != null )
+//          {
+//          chordDest.pasteSlots(oldChordSection, startSlot);
+//          }
     }
 
     /**

@@ -224,17 +224,20 @@ public int getNextUniqueChordIndex(int slotIndex)
     
     Chord nextChord = currentChord;
     int nextChordIndex = currentChordIndex;
-
-    while( nextChord.getName().equals(currentChord.getName()) )
+    while( nextChord == null || nextChord.getName().equals(currentChord.getName()) )
       {
-        nextChordIndex = getNextIndex(nextChordIndex);
+        nextChordIndex = getNextChordIndex(nextChordIndex);
         if( nextChordIndex >= size )
           {
             return -1;
           }
         nextChord = getChord(nextChordIndex);
       }
-    return nextChordIndex;
+  if( nextChordIndex >= size )
+          {
+            return -1;
+          }
+  return nextChordIndex;
   }
     
     public int getPrevUniqueChordIndex(int slotIndex)
@@ -275,7 +278,15 @@ public int getNextUniqueChordIndex(int slotIndex)
      * @return Chord            the Chord after the specified index
      */
     public int getNextChordIndex(int slotIndex) {
-        return getNextUniqueChordIndex(slotIndex);
+      for( int i = slotIndex + 1; i < size; i++ )
+        {
+        Unit unit = slots.get(i);
+        if( unit != null && unit instanceof Chord )
+          {
+           return i;
+          }
+      }
+   return size;
     }
 
     /**
@@ -284,7 +295,15 @@ public int getNextUniqueChordIndex(int slotIndex)
      * @return Chord            the Chord before the specified index
      */
     public Chord getPrevChord(int slotIndex) {
-        return (Chord)getPrevUnit(slotIndex);
+        for( int i = slotIndex-1; i >= 0; i-- )
+          {
+            Unit unit = slots.get(i);
+            if( unit != null && unit instanceof Chord )
+              {
+                return (Chord)unit;
+              }
+          }
+        return null;
     }
     
     public void getMetre(int metre[]){

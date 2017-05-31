@@ -1237,10 +1237,10 @@ public int getNextIndex(int slotIndex)
         Unit unit = slots.get(i);
         if( unit != null )
           {
-            return i;
+           return i;
           }
       }
-    return size;
+   return size;
     
 
 //    
