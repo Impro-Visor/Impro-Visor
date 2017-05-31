@@ -1,5 +1,5 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 9.0,
+Welcome to Impro-Visor (Improvisation Advisor) Version 9.01,
 from Prof. Robert Keller at Harvey Mudd College, May 30, 2017.
 
 Release notes for this version may be found at the end.
@@ -109,6 +109,17 @@ Harvey Mudd College
 Claremont, CA 91711
 
 Please send issues to: keller@cs.hmc.edu
+
+===============================================================================
+Release notes for Impro-Visor 9.01
+
+ This release provides a bug work-around. In recent versions, pasting a chord, 
+ then undoing caused 120 slots to appear, the app would freeze, and the 
+ leadsheet contents would be lost. I just identified the trigger of the problem,
+ but the fix seems complicated, so better to do without the undo of pasting of
+ a chord for now than to suffer a catastrophic loss. A pasted chord can still
+ be cut, but to return to a chord over which pasting occurs will require 
+ re-entering the latter chord.
 
 ===============================================================================
 Release notes for Impro-Visor 9.0
