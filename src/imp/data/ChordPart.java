@@ -627,7 +627,7 @@ public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.Chor
             addChord(chord);
             
             String styleName = chordBlock.getStyleName();
-            if( styleName.equals(Style.USE_PREVIOUS_STYLE) )
+            if( styleName == null )
               {
                 styleName = previousStyleName;
               }

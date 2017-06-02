@@ -62,6 +62,8 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
     public static final String DICTIONARY_EXT = ".dictionary";
 
+    public static String defaultStyleName = "no-style";
+    
     private int keyColorationOffset = 0;
     
     private String defaultDictionaryName = "My";
@@ -163,7 +165,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
     public String roadMapTitle = "Untitled";
     
     /** Default style name */
-    public String styleName = "swing";
+    public String styleName = defaultStyleName;
     
     /** Style of this piece */
     public Style style = Advisor.getStyle(styleName);
@@ -240,6 +242,8 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         setStyle(style);
         
         //settings.generateColors(.3f);
+        
+        styleComboBox.setSelectedItem(defaultStyleName);
     }
 
     /** This method is called from within the constructor to
@@ -3844,7 +3848,9 @@ public void setVolumeSlider(int volume)
           {
             return;
           }
-        block.add(previewPanel.getBlock());
+        Block newBlock = previewPanel.getBlock();
+        newBlock.setStyleName(getStyle().getName());
+        block.add(newBlock);
         roadMapPanel.addBlocksBeforeSelection(block, true);
         roadMapPanel.placeBricks();
     }
@@ -4298,11 +4304,15 @@ public void setParent(Notate notate)
          
         ChordPart chordPart = new ChordPart();
         //ArrayList<Block> blocks = roadMapPanel.getSelection();
-       
+            
+        Style style = getStyle();
+        
+          chordPart.setStyle(style);
         chordPart.addFromRoadMapChordBlocks(getChordsInSelection(), 
-                                            getFirstStylenameInSelection());
+                                            styleName);
  
         Score score = new Score(chordPart);
+        score.setStyle(style);
         score.setMetre(getMetre());
         score.setTempo(getTempo());
         score.setTransposition(roadMapTransposition);
