@@ -7369,7 +7369,10 @@ if( pianoRollCheckBox.isSelected() )
   }
 else
   {
-    pianoRoll.closeWindow();
+    if( pianoRoll != null )
+      {
+      pianoRoll.closeWindow();
+      }
     unusePianoRoll();
     trackWithPianoRoll.setSelected(false);
   }

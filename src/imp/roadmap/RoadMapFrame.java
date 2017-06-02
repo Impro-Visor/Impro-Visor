@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,7 +164,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
     /** Title of this piece */
     public String roadMapTitle = "Untitled";
     
-    /** Default style name */
+    /** Default selectedStyle name */
     public String styleName = defaultStyleName;
     
     /** Style of this piece */
@@ -187,16 +187,13 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
     
     private boolean jSliderIgnoreStateChangedEvt = false;
     
-    private ArrayList<String> styleNames = new ArrayList<String>();
-  /**
-   *
-   * The file chooser for opening the dictionary
-   *
-   */
+    private ArrayList<String> styleNames = new ArrayList<>();
     
-  private JFileChooser dictionaryfc = new JFileChooser();;
+    /* The file chooser for opening the dictionary */
+    
+    private JFileChooser dictionaryfc = new JFileChooser();;
 
-  public int roadMapTransposition = 0;
+    public int roadMapTransposition = 0;
    
     private RoadMapFrame() {} // Not for you.
     
@@ -2703,9 +2700,8 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
                 Leadsheet.readLeadSheet(tokenizer, score);
                 
-                System.out.println(score.getPart(0));
-                if( score.getPart(0).size() > 120 )
-                    ErrorLog.log(ErrorLog.WARNING, "Melody notes entered with chord part will be ignored.");
+//                if( score.getPart(0).size() > 120 )
+//                    ErrorLog.log(ErrorLog.WARNING, "Melody notes entered with chord part will be ignored.");
 
             roadMapPanel.addBlocksBeforeSelection(score.getChordProg().toBlockList(), true); 
             roadMapPanel.placeBricks();
@@ -3894,7 +3890,6 @@ public void setVolumeSlider(int volume)
                 setPreviewKey();
                 setPreviewDuration();
             }
-            
         }
     }
     
@@ -4208,13 +4203,14 @@ public void setVolumeSlider(int volume)
     // End of variables declaration//GEN-END:variables
 
  
-    /** Sends the currently-selected blocks to a new Notate window called auxNotate.
-     * Any existing associate with that window is detached and lost.
-     *
-     * If no blocks are selected, selects them all first.
-     *
-     * If the road map is empty, does nothing.
-     */
+/** 
+ * Sends the currently-selected blocks to a new Notate window called auxNotate.
+ * Any existing associate with that window is detached and lost.
+ *
+ * If no blocks are selected, selects them all first.
+ *
+ * If the road map is empty, does nothing.
+ */
     
 public void saveToNewNotate()
   {
@@ -4242,9 +4238,6 @@ public void saveToNewNotate()
     score.setDefaultLayout();
     score.setRoadmapLayout(settings.barsPerLine);
 
-    //System.out.println("new score: " +  score);
-
-
     if( auxNotate == null )
       {
         // Save As ... branch
@@ -4264,7 +4257,6 @@ public void saveToNewNotate()
         auxNotate.saveLeadsheet();
       }
 
-
     deselectBricks();
   }
 
@@ -4274,21 +4266,20 @@ public void setParent(Notate notate)
     this.notate = notate;
   }
 
-
-    
-    /** Call from auxNotate when deleted to prevent dangling reference. */
-    public void resetAuxNotate()
+/** Call from auxNotate when deleted to prevent dangling reference. */
+public void resetAuxNotate()
     {
         auxNotate = null;
     }
 
-    /** Plays the currently-selected blocks. The style is determined from the
-     * Notate window where this roadmap was opened.
-     *
-     * If no blocks are selected, selects them all first.
-     *
-     * If the road map is empty, does nothing.
-     */
+/** 
+ * Plays the currently-selected blocks in the style determined from the
+ * style menu
+ *
+ * If no blocks are selected, all blocks are selected first.
+ *
+ * If the road map is empty, does nothing.
+*/
     
     public void playSelection() {
         if (roadMapPanel.getNumBlocks() < 1)
@@ -4305,14 +4296,14 @@ public void setParent(Notate notate)
         ChordPart chordPart = new ChordPart();
         //ArrayList<Block> blocks = roadMapPanel.getSelection();
             
-        Style style = getStyle();
+        Style selectedStyle = getStyle();
         
-          chordPart.setStyle(style);
+        chordPart.setStyle(selectedStyle);
         chordPart.addFromRoadMapChordBlocks(getChordsInSelection(), 
                                             styleName);
  
         Score score = new Score(chordPart);
-        score.setStyle(style);
+        score.setStyle(selectedStyle);
         score.setMetre(getMetre());
         score.setTempo(getTempo());
         score.setTransposition(roadMapTransposition);
@@ -4539,10 +4530,10 @@ public void analyzeInBackground(boolean showJoinsOnCompletion)
                                        (int)notate.getDefaultTempo());
     }
 
-    /** Returns the style */ 
+    /** Returns the selectedStyle */ 
     public Style getStyle()
     {
-        return style;
+        return (Style)styleComboBox.getSelectedItem(); //style;
     }
 
     /** Gets the current playback slot from notate */
@@ -4929,7 +4920,7 @@ public void setStyle(Style style)
   {
     this.style = style;
     styleComboBox.setSelectedItem(style);
-    //System.out.println("setting Style to " + style.toString());
+    //System.out.println("setting Style to " + selectedStyle.toString());
   }
 
 public RoadMap getRoadMap()
