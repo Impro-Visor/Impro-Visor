@@ -3194,6 +3194,7 @@ private void keyPressedDictionaryTree(java.awt.event.KeyEvent evt)//GEN-FIRST:ev
 private void styleChosen(java.awt.event.ActionEvent evt)//GEN-FIRST:event_styleChosen
   {//GEN-HEADEREND:event_styleChosen
     style = (Style)styleComboBox.getSelectedItem();
+    setStyle(style);
     roadMapScrollPane.requestFocus();
   }//GEN-LAST:event_styleChosen
 
@@ -4912,15 +4913,24 @@ private void setShowJoins(boolean value)
     //System.out.println("showJoins = " + value);
     settings.showJoins = value;
   }
-private void setShowStartingNote(){
-    
-}
+
 
 public void setStyle(Style style)
   {
     this.style = style;
     styleComboBox.setSelectedItem(style);
-    //System.out.println("setting Style to " + selectedStyle.toString());
+    String name = style.getName();
+    if( !styleNames.isEmpty() )
+      {
+        styleNames.set(0, name);
+        ArrayList<Block> blocks = roadMapPanel.getBlocks();
+        if( !blocks.isEmpty() )
+          {
+           blocks.get(0).setStyleName(name);
+           }
+        roadMapPanel.drawStyles();
+      }
+    //System.out.println("setting Style to " + name);
   }
 
 public RoadMap getRoadMap()
@@ -4934,22 +4944,26 @@ public String toString()
     {
         return roadMapPanel.toString();
     }
+
 public void updatePhiAndDelta(boolean phi, boolean delta){
     setPhiStatus(phi);
     setDeltaStatus(delta);
     settings.setPhi(phi);
-    settings.setDelta(delta);
-    
+    settings.setDelta(delta);    
 }
+
 public void setPhiStatus(boolean phi){
     replaceWithPhiCheckBoxMI.setState(phi);
 }
+
 public void setDeltaStatus(boolean delta){
     replaceWithDeltaCheckBoxMI.setState(delta);
 }
+
 public boolean getPhiStatus(){
     return replaceWithPhiCheckBoxMI.getState();
 }
+
 public boolean getDeltaStatus(){
     return replaceWithDeltaCheckBoxMI.getState();
 }
@@ -4987,6 +5001,11 @@ public String getComposer()
 public void setStyleNames(ArrayList<String> styles)
 {
         styleNames = styles;
+        if( !styleNames.isEmpty() )
+          {
+            setStyle(Style.getStyle(styleNames.get(0)));
+          }
+        //System.out.println("styleNames = " + styles);
 }
 
 

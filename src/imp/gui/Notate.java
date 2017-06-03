@@ -27003,6 +27003,7 @@ public void openEmptyRoadmap()
     roadmapFrame = new RoadMapFrame(this);
     roadmapFrame.setRoadMapFrameHeight();
     roadmapFrame.setRoadMapTitle("Untitled");
+    roadmapFrame.setStyleNames(getChordProg().getSectionRecordStyleNames());
     roadmapFrame.updatePhiAndDelta(getPhiStatus(), getDeltaStatus());
     roadmapFrame.makeVisible(false);
     roadmapFrame.setVisible(true);

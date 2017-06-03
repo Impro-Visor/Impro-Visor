@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ public class RoadMapPanel extends JPanel {
     RoadMapSettings settings;
     
     /** RoadMapFrame containing this panel */
-    RoadMapFrame view;
+    RoadMapFrame frame;
     
     /** Playline in RoadMapPanel */
     Rectangle playline;
@@ -116,7 +116,7 @@ public class RoadMapPanel extends JPanel {
     /** Creates new form RoadMapPanel */
     protected RoadMapPanel(RoadMapFrame view)
     {
-        this.view = view;
+        this.frame = view;
         settings = view.getSettings();
     }
     
@@ -603,9 +603,10 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
               {
                 newBlocks.addAll(block.getSubBlocks());
               }
-             for ( Block b : newBlocks )
+            String name = blocks.get(0).getStyleName();
+            for ( Block b : newBlocks )
               {
-                b.setStyleName(blocks.get(0).getStyleName());
+                b.setStyleName(name);
               }
                  
             replaceSelection(newBlocks);
@@ -626,8 +627,8 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
 //                    text += chordText;
                     c = chord.getChord().copy();
                     //System.out.println(c);
-                    c.saveLeadsheet(out, view.getMetre(), false);
-                    //Chord.flushChordBuffer(out, view.getMetre(), false, false);
+                    c.saveLeadsheet(out, frame.getMetre(), false);
+                    //Chord.flushChordBuffer(out, frame.getMetre(), false, false);
                 }
                 out.close();
             } catch (IOException e) {
@@ -898,7 +899,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
           return;
         }
  
-       view.setBackground(buffer);
+       frame.setBackground(buffer);
        drawGrid();
        drawText();
        drawBricks(settings.showJoins);
@@ -914,9 +915,9 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
        {
         drawStartingNote();
        }
-       if(view.isPlaying()) {
+       if(frame.isPlaying()) {
            drawPlaySection();
-           setPlayLine(view.getMidiSlot() - view.getMidiSlot()%(settings.slotsPerBeat/2));
+           setPlayLine(frame.getMidiSlot() - frame.getMidiSlot()%(settings.slotsPerBeat/2));
            drawPlayLine();
        }
        drawRollover();
@@ -1013,8 +1014,8 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
        //Graphics2D g = (Graphics2D)this.g; 
        g2d.setFont(settings.titleFont);
        g2d.setColor(settings.textColor);
-       g2d.drawString(view.roadMapTitle, settings.xOffset, settings.yOffset - settings.lineSpacing);
-       String composerName = view.getComposer(); 
+       g2d.drawString(frame.roadMapTitle, settings.xOffset, settings.yOffset - settings.lineSpacing);
+       String composerName = frame.getComposer(); 
        g2d.setFont(settings.basicFont);
        g2d.drawString( composerName, 
                      settings.xOffset, 
@@ -1022,7 +1023,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         /* 
         g.setFont(settings.basicFont);
         FontMetrics metrics = g.getFontMetrics();
-        String text = view.style + " " + view.tempo + " bpm";
+        String text = frame.style + " " + frame.tempo + " bpm";
         int width = metrics.stringWidth(text);
         g2d.drawString(text,settings.getCutoff() - width, settings.yOffset - 5); 
         //g.drawString(text,settings.xOffset,settings.yOffset-5);
@@ -1045,7 +1046,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         g2d.setFont(settings.basicFont);
         
         ArrayList<String> joinList = roadMap.getJoins();
-        ArrayList<String> styleList = view.getStyleNames();
+        ArrayList<String> styleList = frame.getStyleNames();
         
         int yAdjust = 1;
         
@@ -1243,7 +1244,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
        g.setFont(settings.titleFont);
        g.setColor(Color.BLACK);
        
-      Note firstNote = view.getFirstNote();
+      Note firstNote = frame.getFirstNote();
       if (firstNote != null)
       {
       
@@ -1310,7 +1311,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
     
     public void drawStyles()
     {
-        ArrayList<String> styleList = view.getStyleNames();
+        ArrayList<String> styleList = frame.getStyleNames();
         int yAdjust = 1;
         int temp = 0;
 
@@ -1318,19 +1319,15 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
             GraphicBrick brick = graphicMap.get(ind);  
             int x = brick.x();
             int y = brick.y();
-            String styleName = "style";
             brick.draw(g2d);        
-        
-             
+                     
             if (ind == 0 || (ind > 0 && graphicMap.get(ind - 1).getBlock().isSectionEnd()))
                 {
                     if (temp < styleList.size())
                     {
-                
-                    styleName = styleList.get(temp);
+                    String styleName = styleList.get(temp);
                     
                     String stylePrint = margin + styleName + margin;
-                    
                     //int length = settings.getBlockLength(brick.getBlock());
                 
                     FontMetrics metrics = g2d.getFontMetrics();
