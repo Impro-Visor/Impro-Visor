@@ -1314,8 +1314,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
         ArrayList<String> styleList = frame.getStyleNames();
         int yAdjust = 1;
         int temp = 0;
-
-       for( int ind = 0; ind < graphicMap.size(); ind++ ) {
+        for( int ind = 0; ind < graphicMap.size(); ind++ ) {
             GraphicBrick brick = graphicMap.get(ind);  
             int x = brick.x();
             int y = brick.y();
@@ -1351,9 +1350,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
                         g2d.drawString(stylePrint, styleX, styleY+yAdjust+offset);
                     temp++;
                     }
-                }
-            
-        
+                }        
         }
     }
 }

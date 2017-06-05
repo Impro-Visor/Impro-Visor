@@ -3518,7 +3518,7 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     }//GEN-LAST:event_formWindowClosing
 
     private void chordStepBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordStepBackButtonActionPerformed
-        //shiftRight(); // FIX: Does not work as desired, so out for now.
+        shiftRight(); // FIX: Does not work as desired, so out for now.
         notate.chordStepBackDo();
         currentChordName = getPresentChordDisplayText();
         showPanes();
