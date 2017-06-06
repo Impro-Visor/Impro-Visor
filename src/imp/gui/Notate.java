@@ -9749,7 +9749,6 @@ public Critic getCritic()
         });
         utilitiesMenu.add(pianoKeyboardMI);
 
-        voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         voicingTestMI.setMnemonic('v');
         voicingTestMI.setText("Voicing Editor");
         voicingTestMI.setToolTipText("Editor for chord voicings");
