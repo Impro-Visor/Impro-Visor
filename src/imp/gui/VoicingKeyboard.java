@@ -65,8 +65,6 @@ public class VoicingKeyboard extends javax.swing.JFrame {
     
     int numberOfDisplayedPanes = 6;
     
-    java.awt.Font chordLabelFont = new java.awt.Font("Arial", 1, 18);
-
     /** Creates new form VoicingKeyboard
      * @param notate
      * @param x
@@ -2322,7 +2320,7 @@ public javax.swing.ImageIcon blackBassKeyPressed =
     new javax.swing.ImageIcon(
             getClass().getResource("/imp/gui/graphics/clefs.gif"));
  
- public javax.swing.ImageIcon wholeNoteIcon = 
+ public final javax.swing.ImageIcon wholeNoteIcon = 
     new javax.swing.ImageIcon(
             getClass().getResource("/imp/gui/graphics/wholeNote.gif"));
 
@@ -2411,8 +2409,6 @@ private void keyboardLPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:
     // Getting the position of the mouse click
     int y = evt.getY();
     int x = evt.getX();
-    
-    
     
     if (y < WKHEIGHT && !playback)
     {
@@ -3319,9 +3315,12 @@ String currentChordName;
  * @param chordName
  * @param v
  */
-public void showVoicingOnKeyboard(String chordName, String v)
+public void showVoicingOnKeyboard(String chordName, String v, boolean shift)
 {
-    shiftLeft();
+    if( shift )
+      {
+        shiftLeft();
+      }
     clearKeyboard();
     
     String e = notate.extEntryTFText();
@@ -3438,21 +3437,16 @@ private void playChordMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_playChordMIActionPerformed
 
 private void startPlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startPlayMIActionPerformed
-
     playback = true;
     notate.playScore();
-
 }//GEN-LAST:event_startPlayMIActionPerformed
 
 private void stopPlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopPlayMIActionPerformed
-
     playback = false;
     notate.stopPlaying();
     clearKeyboard();
     notate.clearVoicingEntryTF();
-    resetChordDisplay();
-    
-    
+    resetChordDisplay();    
 }//GEN-LAST:event_stopPlayMIActionPerformed
 
 private void startSelPlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSelPlayMIActionPerformed
@@ -3476,22 +3470,18 @@ private void resetChordDisplayMIActionPerformed(java.awt.event.ActionEvent evt) 
 }//GEN-LAST:event_resetChordDisplayMIActionPerformed
 
 private void pausePlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausePlayMIActionPerformed
-
-    if (playback)
+  if (playback)
     {
         notate.pauseToKeyboard();
-    }
-    
+    }   
 }//GEN-LAST:event_pausePlayMIActionPerformed
 
 private void closeWindowMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowMIActionPerformed
-    
-    closeWindow();
+        closeWindow();
 }//GEN-LAST:event_closeWindowMIActionPerformed
 
 private void cascadeMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cascadeMIActionPerformed
-    
-    WindowRegistry.cascadeWindows(this);
+       WindowRegistry.cascadeWindows(this);
 }//GEN-LAST:event_cascadeMIActionPerformed
 
 private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_windowMenuMenuSelected
@@ -3504,11 +3494,10 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
     
     windowMenu.add(windowMenuSeparator);
     
-    for(WindowMenuItem w : WindowRegistry.getWindows()) {
-        
-        windowMenu.add(w.getMI(this));      // these are static, and calling getMI updates the name on them too in case the window title changed
-        
-    }
+    for(WindowMenuItem w : WindowRegistry.getWindows()) 
+      {
+      windowMenu.add(w.getMI(this));      // these are static, and calling getMI updates the name on them too in case the window title changed
+      }
     
     windowMenu.repaint();
 }//GEN-LAST:event_windowMenuMenuSelected
@@ -3628,17 +3617,15 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
         visichordDialog.setVisible(true);
     }
   
-        
-
 static final int MIDDLE_C_OFFSET_TREBLE = 161;     //distance midi for middleC on treble  
 static final int MIDDLE_C_OFFSET_BASS = 237;       //distance midi for middleC on bass
 static final int MIDDLE_C_MIDI_VALUE = 60;         //midi value for middle C
 static final int NOTE_ICON_WIDTH = 20;             //width of note icon
 static final int NOTE_ICON_HEIGHT = 10;            //height of note icon
-static final int FLAT_ICON_WIDTH = 12;             //width of flat icon
-static final int FLAT_ICON_HEIGHT = 37;            //height of flat icon
-static final int SHARP_ICON_WIDTH = 12;            //width of sharp icon
-static final int SHARP_ICON_HEIGHT = 29;           //height of sharp icon
+static final int FLAT_ICON_WIDTH = 12;             //width of flatLabel icon
+static final int FLAT_ICON_HEIGHT = 37;            //height of flatLabel icon
+static final int SHARP_ICON_WIDTH = 12;            //width of sharpLabel icon
+static final int SHARP_ICON_HEIGHT = 29;           //height of sharpLabel icon
 static final int OCTAVE_DISPLACEMENT = 39;         //distance between two Cs 
 static final int LEDGER_LINES_ABOVE_TREBLE = 6;    //number of ledger lines above the treble clef 
 static final int LEDGER_LINES_BELOW_TREBLE = 1;    //number of ledger lines below the treble clef 
@@ -3652,7 +3639,7 @@ ArrayList <ChordPane> savedPanes;
 // and for treble clef.
                                              /* C, C#, D, Eb, E,  F, F#,  G, G#,  A, Bb,  B */
 static final int NOTE_OFFSET_WITHIN_OCTAVE[] = {0, 0, 6, 11, 11, 17, 17, 22, 22, 28, 33, 33}; 
-static final int OFFSETX [] = {60, 81, 101};  // list of 3 columns where the note can lie 
+public static final int OFFSETX [] = {60, 81, 101};  // list of 3 columns where the note can lie 
 static final int NOTE_OCTAVE_STEP = 4;
 
 public void drawNote(int midi, int panelNumber)
@@ -3685,21 +3672,21 @@ public void drawNote(int midi, int panelNumber)
         offsetY = MIDDLE_C_OFFSET_TREBLE - Math.abs(distAway)*OCTAVE_DISPLACEMENT - offsetWithinOctave;
     }
     String accidental = isAccidental(index);
-    JLabel sharp = new JLabel(sharpIcon); 
-    JLabel flat = new JLabel(flatIcon);
+    JLabel sharpLabel = new JLabel(sharpIcon); 
+    JLabel flatLabel = new JLabel(flatIcon);
 
     int accidentalY = offsetY;
     if (accidental.equals("flat"))
     {
-        displayPane[panelNumber].addAccidental(midi, flat);
+        displayPane[panelNumber].addAccidental(midi, flatLabel);
         accidentalY = accidentalY - flatIcon.getIconWidth();
-        flat.setBounds(accidentalX, accidentalY, FLAT_ICON_WIDTH, FLAT_ICON_HEIGHT);
+        flatLabel.setBounds(accidentalX, accidentalY, FLAT_ICON_WIDTH, FLAT_ICON_HEIGHT);
     }
     else if (accidental.equals("sharp"))
     {
-        displayPane[panelNumber].addAccidental(midi, sharp);
+        displayPane[panelNumber].addAccidental(midi, sharpLabel);
         accidentalY = accidentalY - sharpIcon.getIconWidth();
-        sharp.setBounds(accidentalX, accidentalY, SHARP_ICON_WIDTH, SHARP_ICON_HEIGHT);
+        sharpLabel.setBounds(accidentalX, accidentalY, SHARP_ICON_WIDTH, SHARP_ICON_HEIGHT);
     }
     if(displayPane[panelNumber].hasBorderY(midi, offsetY)) //move over if next to another note
     {
@@ -3712,13 +3699,13 @@ public void drawNote(int midi, int panelNumber)
             {
                 accidentalX = OFFSETX[0] - FLAT_ICON_WIDTH; 
                         //accidentalX - wholeNoteIcon.getIconWidth() - 5; 
-                flat.setBounds(accidentalX, accidentalY, FLAT_ICON_WIDTH, FLAT_ICON_HEIGHT);
+                flatLabel.setBounds(accidentalX, accidentalY, FLAT_ICON_WIDTH, FLAT_ICON_HEIGHT);
             }
             else
             {
                 accidentalX = OFFSETX[0] - SHARP_ICON_WIDTH; 
                 //accidentalX = accidentalX - wholeNoteIcon.getIconWidth() - 5 ; 
-                sharp.setBounds(accidentalX, accidentalY, SHARP_ICON_WIDTH, SHARP_ICON_HEIGHT);
+                sharpLabel.setBounds(accidentalX, accidentalY, SHARP_ICON_WIDTH, SHARP_ICON_HEIGHT);
             }
         }
         else //if normal note, go to left 
@@ -4819,321 +4806,5 @@ public void closeWindow()
     WindowRegistry.unregisterWindow(this);
   }    
 
-    /**
-     * ChordPane is a class that holds one Panel in displayPane and has a few
- methods useful for organizing the notes on the panel
-     */
-    class ChordPane extends JPanel
-      {
-        private String chordName;
-        private JLabel chordLabel;
-        public JLabel[] notes;             //stores all notes displayed on panel
-        public JLabel[] accidentals;       //stores all accidentals displayed on panel
-        public JSeparator[] ledgerLines;   //contains all the ledger lines 
-        public Graphics g;
-        
-        private static final int NOTE_VALUES = 128;
-        
-        private final java.awt.Rectangle chordLabelBounds = 
-                new java.awt.Rectangle(70, 0, 100, 100);
-        
-        private final java.awt.Rectangle chordPaneBounds = 
-                new java.awt.Rectangle(100, 10, 162, 370);
-        
-        private final java.awt.Dimension chordPaneDimension = 
-                new java.awt.Dimension(162, 370);
-        /**
-         * constructor for StaffPanel
-         */
-        public ChordPane(String chordName)
-        {
-            super();
-            setChordName(chordName);          
-            notes = new JLabel[NOTE_VALUES];
-            accidentals = new JLabel[NOTE_VALUES];
-            ledgerLines = new JSeparator[17];
-            setBounds(chordPaneBounds);
-            setMaximumSize(chordPaneDimension);
-            setMinimumSize(chordPaneDimension);
-            setPreferredSize(chordPaneDimension);
-            setDoubleBuffered(true);
-            setOpaque(false);
-            setLayout(null);
-            g = getGraphics();
-            setChordName(chordName);
-        }
-        
-        public JLabel makeChordLabel(String chordName)
-            {
-            JLabel label = new JLabel(chordName);
-            label.setForeground(Color.BLACK);
-            label.setBounds(chordLabelBounds);
-            label.setFont(chordLabelFont);
-            label.setVisible(true); 
-            return label;
-            }
-        
-        public void setChordName(String chordName)
-        {
-            if( chordLabel != null )
-              {
-              remove(chordLabel);
-              }
-            this.chordName = chordName;
-            chordLabel = makeChordLabel(chordName);
-            add(chordLabel);
-            repaint();
-        }
 
-        /**
-         * addNote adds the note to the panel and to the notes array
-         *
-         * @param MIDIvalue midi value of the note
-         * @param label     the actual note being added
-         */
-        public void addNote(int MIDIvalue, JLabel label)
-        {
-            add(label);
-            notes[MIDIvalue] = label;
-        }
-
-
-        /**
-         * getNotes allows an outsider to access the notes array
-         *
-         * @return array of all notes in panel
-         */
-        public JLabel[] getNotes()
-        {
-            return notes;
-        }
-
-        /**
-         * getAccidentals allows an outsider to access the accidental array
-         *
-         * @return array of all accidental in panel
-         */
-        public JLabel[] getAccidentals()
-        {
-            return accidentals;
-        }
-
-        /**
-         * getLedgerLine allows an outsider to access the ledger lines array
-         *
-         * @return array of all ledger lines in panel
-         */
-        public JSeparator[] getLedgerLines()
-        {
-            return ledgerLines;
-        }
-
-        /**
-         * getLedgerLine allows an outsider to access the ledger lines array
-         *
-         * @return ledgerLine with at specific index
-         */
-        public JSeparator getLedgerLine(int index)
-        {
-            return ledgerLines[index];
-        }
-
-        /**
-         * addAccidental adds the accidental to the panel
-         * and to the accidental array in the index at the same MIDI value
-         *
-         * @param MIDIvalue midi value of the note
-         * @param label     the actual accidental being added
-         */
-        public void addAccidental(int MIDIvalue, JLabel label)
-        {
-            add(label);
-            accidentals[MIDIvalue] = label;
-        }
-
-
-        /**
-         * copyFrom clears this ChordPane, then copies all the data from
-         * ChordPane p into this one
-         *
-         * @param p panel with all the data to move over
-         */
-        public void copyFrom(ChordPane p)
-        {
-            clear();
-            chordName = p.chordName;
-            chordLabel = makeChordLabel(chordName);
-            add(chordLabel);
-            for( int i = 0; i < notes.length; i++ )
-              {
-                notes[i] = p.notes[i];
-                accidentals[i] = p.accidentals[i];
-                if( notes[i] != null )
-                  {
-                    add(notes[i]);
-                  }
-                if( accidentals[i] != null )
-                  {
-                    add(accidentals[i]);
-                  }
-              }            
-            repaint();
-        }
-
-        /**
-         * clears the panel and the arrays
-         */
-        public void clear()
-        {
-            removeAll();
-            chordLabel = null;
-            for( int i = 0; i < notes.length; i++ )
-              {
-                notes[i] = null;
-                accidentals[i] = null;
-              }
-            repaint();
-        }
-
-        /**
-         * removeNote removes the note from the panel and from the arrays
-         *
-         * @param MIDIvalue uses the MIDIvalue to determine what note to remove
-         */
-        public void removeNote(int MIDIvalue)
-        {
-            if( notes[MIDIvalue] == null )
-              {
-                //check to make sure there is something there to take out
-              }
-            else
-              {
-                remove(notes[MIDIvalue]);
-                notes[MIDIvalue] = null;
-              }
-            if( accidentals[MIDIvalue] == null )
-              {
-                //check to make sure there is something there to take out
-              }
-            else
-              {
-                remove(accidentals[MIDIvalue]);
-                accidentals[MIDIvalue] = null;
-              }
-
-        }
-
-        public void drawLedgerLine(int xStart, int yStart)
-        {
-          g.drawLine(xStart, yStart, xStart + staffWidth, yStart);
-        }
-
-        public void clearLedgerLine(int xStart, int yStart)
-        {
-          g.clearRect(xStart, yStart, 0, 0);
-        }
-
-        /**
-         * hasBorder check to see if there are notes around the note with that
-         * midi value
-         * if the Y offset is less than 6 away, then it will move it over
-         *
-         * @param MIDIvalue the note that we are going to compare to
-         * @param offsetY   where on the staff it is
-         * @return true if any note is around it
-         */
-        public boolean hasBorderY(int MIDIvalue, int offsetY)
-        {
-            //check the notes around it  
-            for( int i = MIDIvalue - 2; i <= MIDIvalue + 2; i++ )
-              {
-                if( notes[i] != null && i != MIDIvalue )
-                  {
-                    int yPos = notes[i].getY();
-                    int differenceY = offsetY - yPos;
-                    if( Math.abs(differenceY) <= 6 && notes[i].getX() != OFFSETX[2] )
-                      {
-                        return true;
-                      }
-                  }
-              }
-            return false;
-        }
-
-        /**
-         * hasBorderX checks if there is a note already in the 3rd X spot
-         *
-         * @param MIDIvalue the note that we are going to compare to
-         * @param offsetX   where on the staff it is
-         * @return true if any note is around it
-         */
-        public boolean hasBorderX(int MIDIvalue, int offsetX)
-        {
-            //check the notes around it  
-            int center = getWidth() / 2 - (wholeNoteIcon.getIconWidth() / 2);
-            for( int i = MIDIvalue - 2; i <= MIDIvalue + 2; i++ )
-              {
-                if( notes[i] != null && i != MIDIvalue )
-                  {
-                    int xPos = notes[i].getX();
-                    if( xPos == center )
-                      {
-                        //make sure you aren't comparing to the center of the panel
-                      }
-                    else
-                      {
-                        int differenceX = offsetX - xPos;
-                        if( differenceX == 0 )
-                          {
-                            if( debug ) System.out.println("differenceX: " + differenceX);
-                            return true;
-                          }
-                      }
-
-                  }
-              }
-            return false;
-        }
-
-        /**
-         * isAccidental check to see if the note is an accidental
-         *
-         * @param MIDIvalue the note to check
-         * @return true if accidental
-         */
-        public boolean isAccidental(int MIDIvalue)
-        {
-            return accidentals[MIDIvalue] != null;
-        }
-
-        public void setLedgerLine(JSeparator line, int index)
-        {
-            ledgerLines[index] = line;
-            if( debug ) System.out.println("activated" + index);
-        }
-
-
-        @Override
-        public String toString()
-        {
-            StringBuilder buffer = new StringBuilder();
-            if( chordLabel != null )
-              {
-              buffer.append(chordLabel.getText());
-              buffer.append(": ");
-              }
-            int index = 0;
-            for( JLabel n : notes )
-              {
-                if( n != null )
-                  {
-                    buffer.append(index);
-                    buffer.append(" ");
-                  }
-                index++;
-              }
-
-            return buffer.toString();
-        }
-      } // end class ChordPane
 }

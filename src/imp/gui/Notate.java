@@ -1068,9 +1068,9 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
                 lickgenFrame.setVisible(false);
               }
 
-            if( voicingTestFrame.isVisible() && voicingTestFrame.isActive() )
+            if( voicingEditorFrame.isVisible() && voicingEditorFrame.isActive() )
               {
-                voicingTestFrame.setVisible(false);
+                voicingEditorFrame.setVisible(false);
               }
           }
       }
@@ -1119,11 +1119,11 @@ public static void setDefaultButton(JDialog dialog, JButton button)
  */
 public void postInitComponents()
   {
-    voicingTestFrame.pack();
+    voicingEditorFrame.pack();
 
-    voicingTestFrame.setSize(875, 525);
+    voicingEditorFrame.setSize(875, 525);
 
-    voicingTestFrame.setLocationRelativeTo(this);
+    voicingEditorFrame.setLocationRelativeTo(this);
 
     melodyInst.setDialog(preferencesDialog);
 
@@ -1673,7 +1673,7 @@ public Critic getCritic()
         lineLabel = new javax.swing.JLabel();
         okMeasBtn = new javax.swing.JButton();
         measErrorLabel = new javax.swing.JLabel();
-        voicingTestFrame = new javax.swing.JFrame();
+        voicingEditorFrame = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         chordRootLabel = new javax.swing.JLabel();
@@ -5485,11 +5485,11 @@ public Critic getCritic()
         gridBagConstraints.weightx = 1.0;
         overrideFrame.getContentPane().add(measErrorLabel, gridBagConstraints);
 
-        voicingTestFrame.setTitle("Chord Voicing Utility");
-        voicingTestFrame.setAlwaysOnTop(true);
-        voicingTestFrame.getRootPane().setDefaultButton(buildTableButton);
-        voicingTestFrame.setSize(600, 400);
-        voicingTestFrame.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
+        voicingEditorFrame.setTitle("Chord Voicing Utility");
+        voicingEditorFrame.setAlwaysOnTop(true);
+        voicingEditorFrame.getRootPane().setDefaultButton(buildTableButton);
+        voicingEditorFrame.setSize(600, 400);
+        voicingEditorFrame.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel2.setMinimumSize(new java.awt.Dimension(760, 700));
         jPanel2.setPreferredSize(new java.awt.Dimension(760, 700));
@@ -6109,7 +6109,7 @@ public Critic getCritic()
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel2.add(dummyPanel, gridBagConstraints);
 
-        voicingTestFrame.getContentPane().add(jPanel2);
+        voicingEditorFrame.getContentPane().add(jPanel2);
 
         newVoicingDialog.setTitle("Add Chord Voicing");
         newVoicingDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -10713,7 +10713,7 @@ private void turnStepInputOff()
             if( row == -1 )
               {
                 populateChordSelMenu();
-                chordSelectionMenu.show(voicingTestFrame, 525, 75);
+                chordSelectionMenu.show(voicingEditorFrame, 525, 75);
                 return;
               }
 
@@ -11198,7 +11198,7 @@ private static int VoicingTableExtensionColumn = 4;
 
                 keyboard.setPresentChordDisplayText(c.toString());
                 voicingEntryTF.setText(v);
-                keyboard.showVoicingOnKeyboard(c.toString(), v);
+                keyboard.showVoicingOnKeyboard(c.toString(), v, false);
                 chordSearchTF.setText(c.toString());
 
                 String root = chordRootTF.getText();
@@ -11382,14 +11382,14 @@ private boolean initLocationVoicingFrame = false;
 
         if( !initLocationVoicingFrame )
           {
-            voicingTestFrame.setLocationRelativeTo(this);
+            voicingEditorFrame.setLocationRelativeTo(this);
 
             initLocationVoicingFrame = true;
           }
 
         buildVoicingTable();
 
-        voicingTestFrame.setVisible(true);
+        voicingEditorFrame.setVisible(true);
 
         if( playingStopped() )
           {
@@ -11413,7 +11413,7 @@ private boolean initLocationVoicingFrame = false;
             String v = keyboard.voicingFromKeyboard();
             String currentChord = keyboard.getPresentChordDisplayText();
 
-            if( voicingTestFrame != null && voicingTestFrame.isVisible() )
+            if( voicingEditorFrame != null && voicingEditorFrame.isVisible() )
               {
                 selectVoicing(v, currentChord);
               }
@@ -15057,8 +15057,8 @@ public void closeWindow()
         styleEditor.dispose();
     }
     
-    if(voicingTestFrame != null){
-        voicingTestFrame.dispose();
+    if(voicingEditorFrame != null){
+        voicingEditorFrame.dispose();
     }
     
     if(themeWeaver != null){
@@ -20569,7 +20569,7 @@ public void pauseToKeyboard()
     String v = keyboard.voicingFromKeyboard();
     String currentChord = keyboard.getPresentChordDisplayText();
 
-    if( voicingTestFrame != null && voicingTestFrame.isVisible() )
+    if( voicingEditorFrame != null && voicingEditorFrame.isVisible() )
       {
         selectVoicing(v, currentChord);
       }
@@ -20838,7 +20838,7 @@ public void keyboardPlayback(Chord currentChord, int tab, int slotInPlayback, in
         // If the playback is just beginning and the keyboard is blank
         if( v2.equals(EMPTY) )
           {
-            keyboard.showVoicingOnKeyboard(currentChordName, v1);
+            keyboard.showVoicingOnKeyboard(currentChordName, v1, true);
 
             setBassAndRootTFs(bass, root);
 
@@ -20858,7 +20858,7 @@ public void keyboardPlayback(Chord currentChord, int tab, int slotInPlayback, in
         // (if the chord has changed)
         else if( !keyboard.voicingsAreEqual(v1, v2) || !currentChordName.equals(presentChord) )
           {
-            keyboard.showVoicingOnKeyboard(currentChordName, v1);
+            keyboard.showVoicingOnKeyboard(currentChordName, v1, true);
 
             setBassAndRootTFs(bass, root);
 
@@ -20887,7 +20887,7 @@ public void keyboardPlayback(Chord currentChord, int tab, int slotInPlayback, in
         // If changing between chorus tabs
         if( tab != currentPlaybackTab )
           {
-            keyboard.showVoicingOnKeyboard(currentChordName, v1);
+            keyboard.showVoicingOnKeyboard(currentChordName, v1, true);
 
             setBassAndRootTFs(bass, root);
 
@@ -21081,7 +21081,7 @@ private void pianoKeyboardButtonActionPerformed(java.awt.event.ActionEvent evt) 
 
     if( !v.equals("") )
       {
-        keyboard.showVoicingOnKeyboard("?", v);
+        keyboard.showVoicingOnKeyboard("", v, false);
       }
   }
 
@@ -21264,7 +21264,6 @@ public void addToVoicingSequence()
   }
 
 private void voicingSequenceAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingSequenceAddButtonActionPerformed
-
     addToVoicingSequence();
 }//GEN-LAST:event_voicingSequenceAddButtonActionPerformed
 
@@ -21423,7 +21422,7 @@ private void voicingSequencePlayButtonActionPerformed(java.awt.event.ActionEvent
           }
 
         voicingEntryTF.setText(v);
-        keyboard.showVoicingOnKeyboard("?", v);
+        keyboard.showVoicingOnKeyboard("", v, false);
 
         try
           {
@@ -21481,7 +21480,7 @@ private void displayVoicingfromList()
     int r = keyboard.findBass();
     String note = keyboard.findBassName(r);
     keyboard.setBass(note, r);
-    keyboard.showVoicingOnKeyboard("?", v);
+    keyboard.showVoicingOnKeyboard("?", v, false);
   }
 
 /**
@@ -21603,7 +21602,7 @@ private void chordRootTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 private void voicingEntryTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingEntryTFActionPerformed
 
-    keyboard.showVoicingOnKeyboard("?", voicingEntryTF.getText());
+    keyboard.showVoicingOnKeyboard("?", voicingEntryTF.getText(), false);
 }//GEN-LAST:event_voicingEntryTFActionPerformed
 
 private void buildTableButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buildTableButtonKeyPressed
@@ -26468,6 +26467,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel visAdvicePanel;
     private javax.swing.JTextField voicing;
     private javax.swing.JButton voicingDeleteButton;
+    private javax.swing.JFrame voicingEditorFrame;
     private javax.swing.JLabel voicingEntryLabel;
     private javax.swing.JTextField voicingEntryTF;
     private javax.swing.JLabel voicingLabel;
@@ -26482,7 +26482,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton voicingSequenceRemoveButton;
     private javax.swing.JLabel voicingSequenceUpArrow;
     private javax.swing.JTable voicingTable;
-    private javax.swing.JFrame voicingTestFrame;
     private javax.swing.JMenuItem voicingTestMI;
     private javax.swing.ButtonGroup whoPlaysFirstGroup;
     private javax.swing.JMenu windowMenu;
@@ -26504,7 +26503,7 @@ private ImageIcon pauseButton =
     }
     
     public javax.swing.JFrame getVoicingTestFrame(){
-        return voicingTestFrame;
+        return voicingEditorFrame;
     }
     
     public JButton getPlay(){

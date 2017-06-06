@@ -4736,13 +4736,13 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JFrame" name="voicingTestFrame">
+    <Container class="javax.swing.JFrame" name="voicingEditorFrame">
       <Properties>
         <Property name="title" type="java.lang.String" value="Chord Voicing Utility"/>
         <Property name="alwaysOnTop" type="boolean" value="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="voicingTestFrame.getRootPane().setDefaultButton(buildTableButton);&#xa;voicingTestFrame.setSize(600, 400);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="voicingEditorFrame.getRootPane().setDefaultButton(buildTableButton);&#xa;voicingEditorFrame.setSize(600, 400);"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
