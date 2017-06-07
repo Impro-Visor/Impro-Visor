@@ -2716,7 +2716,7 @@ private boolean drawPart(MelodyPart part, Graphics g)
     int inext;
 
     // the color indices for the notes in the part
-    int[] noteColors = this.collectNoteColors(part);
+    int[] noteColors = this.collectNoteColors(part).getColor();
 
     // box a group of tied notes
     boolean boxTies = false;
@@ -3318,6 +3318,10 @@ private boolean drawPart(MelodyPart part, Graphics g)
       }
 
     this.setSize(panelWidth, panelHeight);
+
+   float percentRedDuration;
+   percentRedDuration= (float) collectNoteColors(part).getredDuration() / part.size();
+  
   return true;
   }
 
@@ -3737,26 +3741,48 @@ boolean sameBeat(int i, int j)
  * Returns an array of color values to use in drawing the notes.
  * @return int[]  color values of notes
  */
-public int[] collectNoteColors(MelodyPart part) {
+public NoteStatistics collectNoteColors(MelodyPart part) 
+{
         int number = part.size();
+    int redCount = 0;
+    long redDuration = 0;
+    int RED_VALUE = 1; 
 
         int[] color = new int[number];
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < number; i++) 
+        {           
             Note curNote = part.getNote(i);
-            if (curNote != null) {
+            if (curNote != null) 
+            {
                 Note origNote = this.getMelodyPart().getNote(i);
                 color[i] = determineColor(curNote, origNote,
                         i, false, color);
             }
         }
-        for(int i = 0; i < number; i++) {
+        for(int i = 0; i < number; i++) 
+        {
             Note curNote = part.getNote(i);
-            if (curNote != null && curNote.isTied() && !curNote.firstTied() && part.getPrevIndex(i) >= 0) {
+            if (curNote != null && curNote.isTied() && !curNote.firstTied() && part.getPrevIndex(i) >= 0) 
+            {
                 color[i] = color[part.getPrevIndex(i)];                
             }
+            //used to calculate total number of red notes 
+            if (color[i] == RED_VALUE)
+            {
+                redCount++;
         }
-        return color;
+            
     }
+        //used to calculate duration of all red notes
+        for( int i = 0; i < cstrLines.length; i++ )
+        {
+            if (color[i] == RED_VALUE)
+            {
+                redDuration += part.getNote(i).getRhythmValue();   
+            }          
+        }
+        return new NoteStatistics(color, redCount, redDuration);
+}
 
 /**
  * Determines the color of a given note.  Takes in the note you're coloring,
