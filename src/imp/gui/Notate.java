@@ -11498,7 +11498,13 @@ public void setMode(Mode mode)
  *
  */
 public void setMode(Mode mode, String modifier)
-  {
+  { 
+    MelodyPart currentPart = getCurrentStave().getDisplayPart();
+    int RED_COUNT = getCurrentStave().collectNoteColors(currentPart).getredCount();
+    float RED_DUR_PERCENT = getCurrentStave().collectNoteColors(currentPart).getredDurationPercent();
+    int ROUNDED_RED_PERCENT = (int)(RED_DUR_PERCENT);
+    String redNoteTool = (" " + RED_COUNT + " red notes (" + ROUNDED_RED_PERCENT  + "%) ");
+    
     previousMode = this.mode;
 
     if( mode == null )
@@ -11511,7 +11517,7 @@ public void setMode(Mode mode, String modifier)
     switch( mode )
       {
         case NORMAL:
-            setStatus("Play, Enter chords & melody, Open file, etc.");
+            setStatus("Stopped," + redNoteTool);
             break;
         case RECORDING:
             setStatus("Chorus " + recurrentIteration);
@@ -11547,10 +11553,10 @@ public void setMode(Mode mode, String modifier)
             setStatus("Edit leadsheet textually");
             break;
         case PLAYING:
-            setStatus("Playing");
+            setStatus("Playing," + redNoteTool);
             break;
         case PLAYING_PAUSED:
-            setStatus("Playing Paused");
+            setStatus("Playing Paused," + redNoteTool);
             break;
         case IMPORTING_MIDI:
             setStatus("Importing MIDI");
