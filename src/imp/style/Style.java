@@ -931,16 +931,15 @@ public class Style
    * duration, and returns that Pattern.
    * @param <T>       a type variable (referring to a type of Pattern)
    * @param patterns  a ArrayList of T objects to choose from
-   * @param duration  an int determining the duration to fill
+   * @param desiredDuration  an int determining the desiredDuration to fill
    * @return the Pattern chosen
    */
-  private static <T extends Pattern> T getPattern(ArrayList<T> patterns,
-                                                    int duration)
+  private <T extends Pattern> T getPattern(ArrayList<T> patterns,
+                                           int desiredDuration)
     {
-    // this ArrayList will hold patterns that are the correct duration
-    ArrayList<T> goodPatterns = new ArrayList<T>();
+    ArrayList<T> goodPatterns = new ArrayList<>();
 
-    // find the largest pattern duration that is less than duration
+    // find the largest pattern desiredDuration that is less than desiredDuration
     int largestDuration = 0;
     for( int i = 0; i < patterns.size(); i++ )
       {
@@ -948,33 +947,32 @@ public class Style
       int tempDuration = temp.getDuration();
 
       if( tempDuration > largestDuration &&
-              tempDuration <= duration )
+              tempDuration <= desiredDuration )
         {
         largestDuration = tempDuration;
         }
       }
 
-    // if we don't have a short enough pattern, we'll play nothing
     if( largestDuration == 0 )
       {
       // NEW: Instead of playing nothing, find the shortest pattern
-      // that is longer than duration and truncate it.
-      int shortestDuration = Integer.MAX_VALUE;
-      T shortestPattern = null;
+      // that is longer than desiredDuration and truncate its desiredDuration.
+      T shortestPattern = patterns.get(0);
+      int shortestDuration = shortestPattern.getDuration();
 
-      for( int i = 0; i < patterns.size(); i++ )
+      for( int i = 1; i < patterns.size(); i++ )
         {
         T temp = patterns.get(i);
         int tempDuration = temp.getDuration();
 
-        if( tempDuration >= duration &&
+        if( tempDuration >= desiredDuration &&
                 tempDuration < shortestDuration )
           {
-          shortestDuration = tempDuration;
           shortestPattern = temp;
+          shortestDuration = tempDuration;
           }
         }
-      return null;
+      return shortestPattern;
       }
 
     // sum the weights of the patterns we are choosing from
@@ -1155,7 +1153,7 @@ private Polylist makeChordline(
             MelodyPart dM = new MelodyPart();
             dM.addNote(new Rest(duration));
             duration = 0;
-            LinkedList<Polylist> L = new LinkedList<Polylist>();
+            LinkedList<Polylist> L = new LinkedList<>();
             L.add(v);
             c = new ChordPatternVoiced(L, dM);
           }
@@ -1238,7 +1236,7 @@ private Polylist makeChordline(
                   currentChord.setVoicing(filtered);
                   }
                 Polylist L = voicing;
-                
+    System.out.println("slot " + time + ": chord = " + currentChord);            
                 // All notes in the voicing are rendered at the same start time
                 
                 Sequence ms = seq.getSequence();
@@ -1477,7 +1475,7 @@ public long render(MidiSequence seq,
     Chord next = null;
     Chord prev = null;
 
-    LinkedList<MelodySymbol> bassline = new LinkedList<MelodySymbol>();
+    LinkedList<MelodySymbol> bassline = new LinkedList<>();
 
     int index = startIndex;
     ChordSymbol chord;
