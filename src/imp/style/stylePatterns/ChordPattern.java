@@ -515,7 +515,6 @@ public ChordPattern makePattern(Polylist L)
  */
 private void addRule(String rule, String duration)
   {
-
     rules.add(rule);
     durations.add(duration);
   }
@@ -556,35 +555,52 @@ public int getDuration()
 
 public ArrayList<ChordPattern> splitChordPattern(int desiredDuration)
 {
+    //System.out.println("Splitting for desired " + desiredDuration + " " + this);
     ArrayList<ChordPattern> result = new ArrayList<>();
     ChordPattern prefix = new ChordPattern();
     ChordPattern suffix = new ChordPattern();
     Iterator<String> r = rules.iterator();
     Iterator<String> d = durations.iterator();
     
-    int accumulatedDuration = 0;
-    
     String rule;
     String dur;
+    int slots = 0;
     // copy first part of pattern to prefix
-    while( r.hasNext() && accumulatedDuration <= desiredDuration)
+    
+    int accumulatedDuration = 0;
+    int difference = accumulatedDuration - desiredDuration;
+    
+    while( r.hasNext() && difference < 0 )
       {
         rule = r.next();
         dur = d.next();
-        if( !rule.equals(VOLUME_STRING) )
-          {
-            accumulatedDuration += Duration.getDuration(dur);
-          }
-        if( accumulatedDuration <= desiredDuration )
+        
+        if( rule.equals(VOLUME_STRING) )
           {
             prefix.rules.add(rule);
             prefix.durations.add(dur);
           }
         else
           {
-            // initialize suffix
-            suffix.rules.add(rule);
-            suffix.durations.add(dur);           
+            slots =  Duration.getDuration(dur);
+            accumulatedDuration += slots;
+            difference = accumulatedDuration - desiredDuration;
+            if( difference <= 0 )
+              {
+              prefix.rules.add(rule);
+              prefix.durations.add(dur);
+              }
+            else
+              {
+              if( difference > 0 )
+                {
+                // split a single rule
+                prefix.rules.add(rule);
+                prefix.durations.add(Note.getDurationString(slots-difference));
+                suffix.rules.add(rule);
+                suffix.durations.add(Note.getDurationString(difference));           
+                }
+              }
           }
       }
  

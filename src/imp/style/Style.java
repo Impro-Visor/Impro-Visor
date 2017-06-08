@@ -1003,6 +1003,16 @@ public class Style
   
   ChordPattern residualChordPattern = null;
   
+  private void setResidualChordPattern(ChordPattern pattern)
+  {
+      if( pattern != null && pattern.getDuration() == 0 )
+        {
+          pattern = null;
+        }
+      //System.out.println("residualChordPattern = " + pattern);
+      residualChordPattern = pattern;
+  }
+  
   /**
    * Similar to getPattern, but specialized to ChordPattern
    * @param <T>       a type variable (referring to a type of Pattern)
@@ -1013,67 +1023,72 @@ public class Style
   private ChordPattern getChordPattern(ArrayList<ChordPattern> patterns,
                                            int desiredDuration)
     {
+    //System.out.println("\ngetChordPattern of duration " + desiredDuration);
+    // If there is a residual pattern, use it.
     if( residualChordPattern != null )
       {
       if( residualChordPattern.getDuration() <= desiredDuration )
         {
           ChordPattern result = residualChordPattern;
-          residualChordPattern = null;
+          //System.out.println("Using all of residual: " + result);
+          setResidualChordPattern(null);
           return result;
         }
       ArrayList<ChordPattern> result = residualChordPattern.splitChordPattern(desiredDuration);
-      residualChordPattern = result.get(1);
+      setResidualChordPattern(result.get(1));
       return result.get(0);
       }
+    
+    // Otherwise search for a pattern.
+    
     ArrayList<ChordPattern> goodPatterns = new ArrayList<>();
 
-    // find the largest pattern that is less than desiredDuration
-    int largestDuration = 0;
-    for( int i = 0; i < patterns.size(); i++ )
-      {
-      ChordPattern temp = patterns.get(i);
-      int tempDuration = temp.getDuration();
+//    // Find the largest pattern that is less than desiredDuration, if any.
+//    int largestDuration = 0;
+//    for( int i = 0; i < patterns.size(); i++ )
+//      {
+//      ChordPattern temp = patterns.get(i);
+//      int tempDuration = temp.getDuration();
+//
+//      if( tempDuration > largestDuration &&
+//              tempDuration <= desiredDuration )
+//        {
+//        largestDuration = tempDuration;
+//        }
+//      }
 
-      if( tempDuration > largestDuration &&
-              tempDuration <= desiredDuration )
-        {
-        largestDuration = tempDuration;
-        }
-      }
-
-    if( largestDuration == 0 )
-      {
-      //System.out.println("All patterns are longer than desired: " + desiredDuration);
-      // All patterns are longer than desiredDuration.
-      // Instead of playing nothing, find the shortest pattern
-      // that is longer than desiredDuration and splitChordPattern it to desiredDuration.
-      // Where does truncation happen??
-      ChordPattern shortestPattern = patterns.get(0);
-      int shortestDuration = shortestPattern.getDuration();
-
-      for( int i = 1; i < patterns.size(); i++ )
-        {
-        ChordPattern temp = patterns.get(i);
-        int tempDuration = temp.getDuration();
-
-        if( tempDuration < shortestDuration )
-          {
-          shortestPattern = temp;
-          shortestDuration = tempDuration;
-          }
-        }
-      ArrayList<ChordPattern> result = shortestPattern.splitChordPattern(desiredDuration);
-      residualChordPattern = result.get(1);
-      //System.out.println("Returing truncated pattern " + result);
-      return result.get(0);
-      }
+//    if( largestDuration == 0 )
+//      {
+//      //System.out.println("All patterns are longer than desired: " + desiredDuration);
+//      // Instead of playing nothing, find the shortest pattern
+//      // that is longer than desiredDuration and splitChordPattern it to desiredDuration.
+// 
+//      ChordPattern shortestPattern = patterns.get(0);
+//      int shortestDuration = shortestPattern.getDuration();
+//
+//      for( int i = 1; i < patterns.size(); i++ )
+//        {
+//        ChordPattern temp = patterns.get(i);
+//        int tempDuration = temp.getDuration();
+//
+//        if( tempDuration < shortestDuration )
+//          {
+//          shortestPattern = temp;
+//          shortestDuration = tempDuration;
+//          }
+//        }
+//      ArrayList<ChordPattern> result = shortestPattern.splitChordPattern(desiredDuration);
+//      residualChordPattern = result.get(1);
+//      //System.out.println("Returing truncated pattern " + result);
+//      return result.get(0);
+//      }
 
     // There are patterns not longer than the desired duration.
-    // sum the weights of the patterns we are choosing from
+    // Sum the weights of the patterns.
     double sum = 0;
     for( int i = 0; i < patterns.size(); i++ )
       {
-      if( patterns.get(i).getDuration() <= largestDuration ) // was ==
+      //if( patterns.get(i).getDuration() <= largestDuration ) // was ==
         {
         sum += patterns.get(i).getWeight();
         goodPatterns.add(patterns.get(i));
@@ -1088,10 +1103,19 @@ public class Style
       weights += goodPatterns.get(i).getWeight();
       if( random < weights )
         {
-        return goodPatterns.get(i);
+        ChordPattern selectedPattern = goodPatterns.get(i);
+        if( selectedPattern.getDuration() <= desiredDuration )
+          {
+            // If selectedPattern is not too long, use it.
+            return selectedPattern;
+          }
+        // Otherwise split the selected pattern and use the first half.
+        ArrayList<ChordPattern> result = selectedPattern.splitChordPattern(desiredDuration);
+        setResidualChordPattern(result.get(1));
+        return result.get(0);
         }
       }
-    // should not occur
+    System.out.println("no ChordPattern of duration " + desiredDuration + " found");
     return null;
     }
 
