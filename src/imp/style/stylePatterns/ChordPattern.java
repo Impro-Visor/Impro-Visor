@@ -547,29 +547,58 @@ public int getDuration()
     return duration;
   }
 
+/**
+ * Returns an ArrayList of exactly two chord patterns, splitting
+ * up this pattern. But the second pattern will be null if empty.
+ * @param desiredDuration
+ * @return 
+ */
 
-public ChordPattern truncate(int desiredDuration)
+public ArrayList<ChordPattern> splitChordPattern(int desiredDuration)
 {
-    ChordPattern result = new ChordPattern();
+    ArrayList<ChordPattern> result = new ArrayList<>();
+    ChordPattern prefix = new ChordPattern();
+    ChordPattern suffix = new ChordPattern();
     Iterator<String> r = rules.iterator();
     Iterator<String> d = durations.iterator();
     
     int accumulatedDuration = 0;
     
+    String rule;
+    String dur;
+    // copy first part of pattern to prefix
     while( r.hasNext() && accumulatedDuration <= desiredDuration)
       {
-        String rule = r.next();
-        String dur = d.next();
+        rule = r.next();
+        dur = d.next();
         if( !rule.equals(VOLUME_STRING) )
           {
             accumulatedDuration += Duration.getDuration(dur);
           }
         if( accumulatedDuration <= desiredDuration )
           {
-            result.rules.add(rule);
-            result.durations.add(dur);
+            prefix.rules.add(rule);
+            prefix.durations.add(dur);
+          }
+        else
+          {
+            // initialize suffix
+            suffix.rules.add(rule);
+            suffix.durations.add(dur);           
           }
       }
+ 
+    // copy remainder of pattern to suffix
+    while( r.hasNext() )
+      {
+      rule = r.next();
+      dur = d.next();
+      suffix.rules.add(rule);
+      suffix.durations.add(dur);                   
+      }
+
+    result.add(prefix);
+    result.add(suffix);
     return result;
 }
 
