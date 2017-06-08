@@ -1135,7 +1135,7 @@ private Polylist makeChordline(
         // A pattern can contain volume information.
         
         ChordPattern pattern = getPattern(chordPatterns, duration);
-
+System.out.println("pattern = " + pattern);
         ChordPatternVoiced c;
         
         if( pattern == null  || constantBass )
@@ -1205,7 +1205,7 @@ private Polylist makeChordline(
         
         durationMelody.setSwing(accompanimentSwing);
         durationMelody.makeSwing();
-
+        //System.out.println("duration melody = " + durationMelody);
         Part.PartIterator i = durationMelody.iterator();
 
         //System.out.println("chord line = " + chords);
@@ -1236,7 +1236,7 @@ private Polylist makeChordline(
                   currentChord.setVoicing(filtered);
                   }
                 Polylist L = voicing;
-    System.out.println("slot " + time + ": chord = " + currentChord);            
+                //System.out.println("bar " + (1 + time/1920) + ": chord = " + currentChord);            
                 // All notes in the voicing are rendered at the same start time
                 
                 Sequence ms = seq.getSequence();
@@ -1250,7 +1250,6 @@ private Polylist makeChordline(
                       note = ns.toNote();
                       note.setRhythmValue(dur);
                       note.setVolume(volume);  // note of chord
-//System.out.println("rendering chord note " + note + " with volume " + volume);
                       note.render(ms, seq.getChordTrack(), time, offTime, ImproVisor.getChordChannel(), transposition);
                       }
                     else if( ob instanceof VolumeSymbol )
