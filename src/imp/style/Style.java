@@ -1571,6 +1571,7 @@ public long render(MidiSequence seq,
                    boolean constantBass)
         throws InvalidMidiDataException
   {
+    setResidualChordPattern(null);
     boolean hasStyle = !noStyle();
     // to trace sequencing info:
     //System.out.println("Sequencing Style: " + this + " startIndex = " + startIndex
