@@ -71,7 +71,7 @@ public abstract class BlockResponseMode extends TradingResponseMode {
     public void signalFinish()
     {
         futureResponse.complete(generateResponse());
-        System.out.println(generateResponse());
+        //System.out.println(generateResponse());
     }
     
     public abstract MelodyPart generateResponse();
