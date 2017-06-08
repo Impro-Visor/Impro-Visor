@@ -997,7 +997,81 @@ public class Style
         return goodPatterns.get(i);
         }
       }
+    // should not occur
+    return null;
+    }
 
+  /**
+   * Similar to getPattern, but specialized to ChordPattern
+   * @param <T>       a type variable (referring to a type of Pattern)
+   * @param patterns  a ArrayList of T objects to choose from
+   * @param desiredDuration  an int determining the desiredDuration to fill
+   * @return the Pattern chosen
+   */
+  private ChordPattern getChordPattern(ArrayList<ChordPattern> patterns,
+                                           int desiredDuration)
+    {
+    ArrayList<ChordPattern> goodPatterns = new ArrayList<>();
+
+    // find the largest pattern desiredDuration that is less than desiredDuration
+    int largestDuration = 0;
+    for( int i = 0; i < patterns.size(); i++ )
+      {
+      ChordPattern temp = patterns.get(i);
+      int tempDuration = temp.getDuration();
+
+      if( tempDuration > largestDuration &&
+              tempDuration <= desiredDuration )
+        {
+        largestDuration = tempDuration;
+        }
+      }
+
+    if( largestDuration == 0 )
+      {
+      // NEW: Instead of playing nothing, find the shortest pattern
+      // that is longer than desiredDuration and truncate its desiredDuration.
+      ChordPattern shortestPattern = patterns.get(0);
+      int shortestDuration = shortestPattern.getDuration();
+
+      for( int i = 1; i < patterns.size(); i++ )
+        {
+        ChordPattern temp = patterns.get(i);
+        int tempDuration = temp.getDuration();
+
+        if( tempDuration >= desiredDuration &&
+                tempDuration < shortestDuration )
+          {
+          shortestPattern = temp;
+          shortestDuration = tempDuration;
+          }
+        }
+      return shortestPattern;
+      }
+
+    // sum the weights of the patterns we are choosing from
+    double sum = 0;
+    for( int i = 0; i < patterns.size(); i++ )
+      {
+      if( patterns.get(i).getDuration() == largestDuration )
+        {
+        sum += patterns.get(i).getWeight();
+        goodPatterns.add(patterns.get(i));
+        }
+      }
+
+    // randomly choose one of the "good patterns"
+    int random = gen.nextInt((int)sum);
+    double weights = 0;
+    for( int i = 0; i < goodPatterns.size(); i++ )
+      {
+      weights += goodPatterns.get(i).getWeight();
+      if( random < weights )
+        {
+        return goodPatterns.get(i);
+        }
+      }
+    // should not occur
     return null;
     }
 
@@ -1134,8 +1208,8 @@ private Polylist makeChordline(
         // Get a pattern for this chord.
         // A pattern can contain volume information.
         
-        ChordPattern pattern = getPattern(chordPatterns, duration);
-System.out.println("pattern = " + pattern);
+        ChordPattern pattern = getChordPattern(chordPatterns, duration);
+        //System.out.println("pattern = " + pattern);
         ChordPatternVoiced c;
         
         if( pattern == null  || constantBass )
