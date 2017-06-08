@@ -23867,7 +23867,7 @@ private boolean isDotted = false;
 
     private void grammarChooserMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarChooserMIActionPerformed
     {//GEN-HEADEREND:event_grammarChooserMIActionPerformed
-        // TODO add your handling code here:
+        openGrammarMenuDialog();
     }//GEN-LAST:event_grammarChooserMIActionPerformed
 
     public void openGrammarMenuDialog()
