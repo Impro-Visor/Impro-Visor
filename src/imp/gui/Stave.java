@@ -3757,7 +3757,7 @@ public NoteStatistics collectNoteColors(MelodyPart part)
                                       i, false, color);
           if( color[i] == RED_VALUE )
             {
-            //System.out.println("red in bar #" + (1 + i/480));
+            //System.out.println("red in bar #" + 1 + i/480);
             redCount++;
             redDuration += part.getNote(i).getRhythmValue();  
             }

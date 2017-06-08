@@ -548,6 +548,31 @@ public int getDuration()
   }
 
 
+public ChordPattern truncate(int desiredDuration)
+{
+    ChordPattern result = new ChordPattern();
+    Iterator<String> r = rules.iterator();
+    Iterator<String> d = durations.iterator();
+    
+    int accumulatedDuration = 0;
+    
+    while( r.hasNext() && accumulatedDuration <= desiredDuration)
+      {
+        String rule = r.next();
+        String dur = d.next();
+        if( !rule.equals(VOLUME_STRING) )
+          {
+            accumulatedDuration += Duration.getDuration(dur);
+          }
+        if( accumulatedDuration <= desiredDuration )
+          {
+            result.rules.add(rule);
+            result.durations.add(dur);
+          }
+      }
+    return result;
+}
+
 /**
  * Realizes the Pattern into a sequencable Polylist.
  * @param chord     the ChordSymbol to voice
@@ -563,14 +588,14 @@ public int getDuration()
  *         the voicings.
  */
 
-public ChordPatternVoiced applyRules(ChordSymbol chord, Polylist lastChord)
+public ChordPatternVoiced applyRules(ChordSymbol chord, Polylist lastChord, Style style)
   {
   Iterator<String> i = rules.iterator();
   Iterator<String> j = durations.iterator();
   
   lastChord = BassPattern.filterOutStrings(lastChord);
 
-  //System.out.println("applyRules in: Chord = " + chord + ", rules = " + rules + ", durations = " + durations);
+  //System.out.println("applyRules in: Chord = " + chord + " previous Voicing = " + lastChord + ", rules = " + rules + ", durations = " + durations);
 
   String chordRoot = chord.getRootString();
   ChordForm chordForm = chord.getChordForm();
@@ -597,7 +622,7 @@ public ChordPatternVoiced applyRules(ChordSymbol chord, Polylist lastChord)
     if( rule.equals(STRIKE_STRING) )
     {
         durationMelody.addNote(new Rest(Duration.getDuration(duration)));
-         
+        //System.out.println("durationMelody = " + durationMelody);
         Polylist voicing = findVoicing(chord, lastChord, style);
 
         if( voicing == null )
@@ -605,7 +630,7 @@ public ChordPatternVoiced applyRules(ChordSymbol chord, Polylist lastChord)
           voicing = Polylist.nil;
           //break;
           }
-
+        //System.out.println("voicing = " + voicing);
         chordLine.add(voicing.cons(new VolumeSymbol(volume)));
         lastChord = voicing; 
     }
@@ -623,7 +648,9 @@ public ChordPatternVoiced applyRules(ChordSymbol chord, Polylist lastChord)
     }
     
     else
-    {
+      {
+      System.out.println("default rule form encountered: " + rule);
+      // When is this used?? When is the rule part an integer?
         int interval = Integer.parseInt(rule);
          
         durationMelody.addNote(new Rest(Duration.getDuration(duration)));
@@ -668,7 +695,7 @@ public ChordPatternVoiced applyRules(ChordSymbol chord, Polylist lastChord)
             
         //System.out.println("The duration melody is: " + durationMelody);
         //System.out.println("The chord line is: " + chordLine);
-    }
+      }
     }
 
   ChordPatternVoiced result = new ChordPatternVoiced(chordLine, durationMelody);
@@ -726,6 +753,7 @@ public static boolean goodVoicing(ChordSymbol chord, Polylist lastChord,
 public static Polylist findVoicing(ChordSymbol chord, Polylist lastChord,
                                    Style style)
   {
+  //System.out.println("findVoicing " + chord + " " + lastChord + " " + style);
   return findVoicing(chord, lastChord, style, true);
   }
 
@@ -741,6 +769,7 @@ public static Polylist findVoicing(ChordSymbol chord, Polylist lastChord,
 public static Polylist findVoicing(ChordSymbol chord, Polylist lastChord,
                                    Style style, boolean verbose)
   {
+  //System.out.println("findVoicing " + chord + " " + lastChord + " " + style + " " + verbose);
   Polylist voicing = findVoicingAndExtension(chord, lastChord, style, verbose);
 
   if( voicing == null )
@@ -767,6 +796,7 @@ public static Polylist findVoicingAndExtension(ChordSymbol chord,
                                                Polylist lastChord, Style style,
                                                boolean verbose)
   {
+  //System.out.println("findVoicingAndExtension " + chord + " " + lastChord + " " + style + " " + verbose);
   Polylist voicings = getVoicingAndExtensionList(chord, lastChord, style,
           verbose);
   if( voicings == null )
@@ -815,6 +845,8 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
                                                   Style style, 
                                                   boolean verbose)
   {
+  //System.out.println("getVoicingAndExtensionList " + chord + " " + lastChord + " " + style + " " + verbose);
+
     //Form Chord Voicing
     //Start
     //---------------------------------------------------------------------------------------------//
@@ -918,7 +950,7 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
   ChordForm chordForm = chord.getChordForm();
   Key key = chordForm.getKey(chordRoot);
   int rise = PitchClass.findRise(chordRoot);
-//System.out.println("getVoicingsAndExtensionList " + chord + " style = " + style + " getVoicing() = " + voicing);
+  //System.out.println("getVoicingsAndExtensionList " + chord + " style = " + style + " getVoicing() = " + voicing);
 
   if( voicing.nonEmpty() )
     {
@@ -962,8 +994,6 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
       {
       return Polylist.list(v);
       }
-          
-    
         //return Polylist.list(v);
     }
   else
@@ -973,13 +1003,13 @@ public static Polylist getVoicingAndExtensionList(ChordSymbol chord,
     
     Polylist voicings = chordForm.getVoicings(chordRoot, key,
             style.getVoicingType());
-//System.out.println("chord = " + chord + ", voicings = " + voicings);
+    //System.out.println("chord = " + chord + ", voicings = " + voicings);
     // pick out the good voicings based on the previous chord and
     // the range
     
     voicings = chooseVoicings(lastChord, voicings,
             style.getChordLow(), style.getChordHigh());
-//System.out.println("chord = " + chord + ", voicings after choosing = " + voicings);
+    //System.out.println("chord = " + chord + ", voicings after choosing = " + voicings);
 
     // if none of the specified voicings fit in the range
     // or no voicings are specified, then generate voicings
@@ -1035,7 +1065,7 @@ public static Polylist chooseVoicings(Polylist lastChord, Polylist voicings,
     {
     Polylist voicing = (Polylist)venum.nextElement();
     
-//System.out.println("in chooseVoicings " + voicing + ", lastChord = " + lastChord);
+    //System.out.println("in chooseVoicings " + voicing + ", lastChord = " + lastChord);
     Polylist v = (Polylist)voicing.first();
     Polylist e = (Polylist)voicing.second();
 
@@ -1155,6 +1185,7 @@ public static Polylist placeVoicing(Polylist lastChord, Polylist voicing,
                                     Polylist extension,
                                     NoteSymbol low, NoteSymbol high)
   {
+  //System.out.println("placeVoicing " + lastChord + " " + voicing + " " + extension + " " + low + " " + high);
   NoteSymbol oldNote = (NoteSymbol)voicing.first();
   voicing = placeVoicing(lastChord, voicing, low, high);
   if( voicing == null )
@@ -1179,6 +1210,7 @@ public static Polylist placeVoicing(Polylist lastChord, Polylist voicing,
 public static Polylist placeVoicing(Polylist lastChord, Polylist voicing,
                                     NoteSymbol low, NoteSymbol high)
   {
+  //System.out.println("placeVoicing " + lastChord + " " + voicing + " " + low + " " + high);
   if( lastChord.isEmpty() )
     {
     lastChord = Polylist.list(low, high); // rk 8/6/07

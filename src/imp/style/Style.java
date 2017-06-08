@@ -1000,7 +1000,9 @@ public class Style
     // should not occur
     return null;
     }
-
+  
+  ChordPattern residualChordPattern = null;
+  
   /**
    * Similar to getPattern, but specialized to ChordPattern
    * @param <T>       a type variable (referring to a type of Pattern)
@@ -1011,9 +1013,14 @@ public class Style
   private ChordPattern getChordPattern(ArrayList<ChordPattern> patterns,
                                            int desiredDuration)
     {
+    if( residualChordPattern != null )
+      {
+        // use residual chord pattern
+        return residualChordPattern;
+      }
     ArrayList<ChordPattern> goodPatterns = new ArrayList<>();
 
-    // find the largest pattern desiredDuration that is less than desiredDuration
+    // find the largest pattern that is less than desiredDuration
     int largestDuration = 0;
     for( int i = 0; i < patterns.size(); i++ )
       {
@@ -1029,8 +1036,11 @@ public class Style
 
     if( largestDuration == 0 )
       {
-      // NEW: Instead of playing nothing, find the shortest pattern
-      // that is longer than desiredDuration and truncate its desiredDuration.
+      //System.out.println("All patterns are longer than desired: " + desiredDuration);
+      // All patterns are longer than desiredDuration.
+      // Instead of playing nothing, find the shortest pattern
+      // that is longer than desiredDuration and truncate it to desiredDuration.
+      // Where does truncation happen??
       ChordPattern shortestPattern = patterns.get(0);
       int shortestDuration = shortestPattern.getDuration();
 
@@ -1039,21 +1049,23 @@ public class Style
         ChordPattern temp = patterns.get(i);
         int tempDuration = temp.getDuration();
 
-        if( tempDuration >= desiredDuration &&
-                tempDuration < shortestDuration )
+        if( tempDuration < shortestDuration )
           {
           shortestPattern = temp;
           shortestDuration = tempDuration;
           }
         }
-      return shortestPattern;
+      ChordPattern result = shortestPattern.truncate(desiredDuration);
+      //System.out.println("Returing truncated pattern " + result);
+      return result;
       }
 
+    // There are patterns not longer than the desired duration.
     // sum the weights of the patterns we are choosing from
     double sum = 0;
     for( int i = 0; i < patterns.size(); i++ )
       {
-      if( patterns.get(i).getDuration() == largestDuration )
+      if( patterns.get(i).getDuration() <= largestDuration ) // was ==
         {
         sum += patterns.get(i).getWeight();
         goodPatterns.add(patterns.get(i));
@@ -1255,7 +1267,8 @@ private Polylist makeChordline(
             // we get a polylist containing the chords (each in a polylist)
             // and a "duration melody" which is a MelodyPart representing
             // the durations of each currentChord
-            c = pattern.applyRules(symbol, previousChord);
+            c = pattern.applyRules(symbol, previousChord, this);
+            //System.out.println("\nResult of applyRules to " + symbol + ": " + c);
           }
         
         // Uncomment to show how chord patterns are voiced:
