@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -20,6 +20,7 @@
 package imp.cluster;
 
 import static imp.Constants.BEAT;
+import imp.cluster.motif.CreateMotifGrammar;
 import imp.data.ChordPart;
 import imp.data.Duration;
 import imp.data.Note;
@@ -38,10 +39,18 @@ import polya.Polylist;
  *
  * @author Jon Gillick, Kevin Tang
  * Includes additions by Mark Heimann to support processing of rules with expanded information
+ * and additions by Joseph Yaconelli to incorporate motif grammar learning
  */
 
 public class CreateGrammar implements imp.Constants {
 
+    // switch to use motif grammar or not.
+    private static boolean MOTIF_GRAMMAR_ON = true;
+    // properties to set for motif grammar
+    private static int MOTIF_WINDOW_SIZE = 4;
+    private static double MOTIFNESS      = 0.7;
+    
+    
     private static final int SEG_LENGTH = 3;  //length of the word SEG
     private static final int XNOTATIONDELIMITER_LENGTH = 11;
     private static final int BRICKTYPEDELIMITER_LENGTH = 12; //"(Brick-type ".length
@@ -69,6 +78,16 @@ public class CreateGrammar implements imp.Constants {
         //make initial calls to read from the file
         Polylist[] rules = getRulesFromWriter(inWriter);
         String[] ruleStrings = getRuleStringsFromWriter(inWriter);
+        
+        // FOR TESTING
+        /*
+        System.out.println("------------BEGIN INPUTTED RULE PRINTING---------");
+        for (String s : ruleStrings){
+            System.out.println(s);
+        }
+        System.out.println("-------------END INPUTTED RULE PRINTING----------");
+        */
+        
         //initialize vectors
         Vector<DataPoint> dataPoints = new Vector<DataPoint>();
 
@@ -84,6 +103,26 @@ public class CreateGrammar implements imp.Constants {
 
         Cluster[] clusters = getClusters(dataPoints, averages, dataPoints.size() / repsPerCluster);
 
+        // use clusters to create grammar for global motif structure
+        /**
+         * TODO: change "magic numbers" to user input
+         */
+        if(MOTIF_GRAMMAR_ON){
+            
+            int magicWindowSizeSlide = MOTIF_WINDOW_SIZE;
+            double magicMotifness    = MOTIFNESS;
+
+            
+            //System.out.println("Motifness:" + magicMotifness + "\tWindow Size: " + magicWindowSizeSlide);
+            
+            
+            Polylist[] motifGrammar = CreateMotifGrammar.create(repsPerCluster,
+                    clusters, dataPoints, magicWindowSizeSlide, magicWindowSizeSlide, magicMotifness);
+        
+            CreateMotifGrammar.writeMotifGrammar(motifGrammar, outFile);
+        }
+        
+        
         //create grammar with Markov chains and create soloist file
         if (Markov) {
 
@@ -207,6 +246,22 @@ public class CreateGrammar implements imp.Constants {
         }
     }
 
+    public static void setMotifGrammarUse(boolean status){
+        MOTIF_GRAMMAR_ON = status;
+        //System.out.println("Motif Grammar use set to: " + MOTIF_GRAMMAR_ON);
+    }
+    
+    public static void setMotifness(float m){
+        MOTIFNESS = m;
+        //System.out.printf("Motifness set to: %1.2f\n", MOTIFNESS);
+
+    }
+    
+    public static void setMotifWindowSizeAndSlide(int sizeAndSlide){
+        MOTIF_WINDOW_SIZE = sizeAndSlide;
+        //System.out.println("Window size and slide set to: " +  MOTIF_WINDOW_SIZE);
+    }
+    
     public static Vector<float[]> getChainProbabilitiesForGrammar(Vector<NGram> ngrams) {
         for (int i = 0; i < ngrams.size(); i++) {
             NGram current = ngrams.get(i);
@@ -570,6 +625,7 @@ public class CreateGrammar implements imp.Constants {
 
         //create new melody part with the original melody and the start index
         IndexedMelodyPart exactMelody = new IndexedMelodyPart(melody);
+        
         //make sure there are no merged rests that last too long
         int slots = segLength * BEAT;
         if (exactMelody.getSize() > slots) {
