@@ -1068,9 +1068,9 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
                 lickgenFrame.setVisible(false);
               }
 
-            if( voicingEditorFrame.isVisible() && voicingEditorFrame.isActive() )
+            if( voicingTestFrame.isVisible() && voicingTestFrame.isActive() )
               {
-                voicingEditorFrame.setVisible(false);
+                voicingTestFrame.setVisible(false);
               }
           }
       }
@@ -1119,11 +1119,11 @@ public static void setDefaultButton(JDialog dialog, JButton button)
  */
 public void postInitComponents()
   {
-    voicingEditorFrame.pack();
+    voicingTestFrame.pack();
 
-    voicingEditorFrame.setSize(875, 525);
+    voicingTestFrame.setSize(875, 525);
 
-    voicingEditorFrame.setLocationRelativeTo(this);
+    voicingTestFrame.setLocationRelativeTo(this);
 
     melodyInst.setDialog(preferencesDialog);
 
@@ -1329,6 +1329,24 @@ public Critic getCritic()
     {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        adviceFrame = new javax.swing.JFrame();
+        adviceTargetSpinner = new javax.swing.JSpinner();
+        adviceFilterTextField = new javax.swing.JTextField();
+        adviceTabbedPane = new javax.swing.JTabbedPane();
+        scrollNotes = new javax.swing.JScrollPane();
+        adviceTree = new javax.swing.JTree();
+        scrollScales = new javax.swing.JScrollPane();
+        adviceScrollListScales = new javax.swing.JList();
+        scrollCells = new javax.swing.JScrollPane();
+        adviceScrollListCells = new javax.swing.JList();
+        scrollIdioms = new javax.swing.JScrollPane();
+        adviceScrollListIdioms = new javax.swing.JList();
+        scrollLicks = new javax.swing.JScrollPane();
+        adviceScrollListLicks = new javax.swing.JList();
+        scrollQuotes = new javax.swing.JScrollPane();
+        adviceScrollListQuotes = new javax.swing.JList();
+        scrollBricks = new javax.swing.JScrollPane();
+        adviceScrollListBricks = new javax.swing.JList();
         preferencesDialog = new javax.swing.JDialog();
         buttonPanel = new javax.swing.JPanel();
         globalBtn = new javax.swing.JToggleButton();
@@ -1599,23 +1617,6 @@ public Critic getCritic()
         insertPhraseAfterPMI = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         autoFillMI = new javax.swing.JCheckBoxMenuItem();
-        adviceFrame = new javax.swing.JFrame();
-        adviceTargetSpinner = new javax.swing.JSpinner();
-        adviceTabbedPane = new javax.swing.JTabbedPane();
-        scrollNotes = new javax.swing.JScrollPane();
-        adviceTree = new javax.swing.JTree();
-        scrollScales = new javax.swing.JScrollPane();
-        adviceScrollListScales = new javax.swing.JList();
-        scrollCells = new javax.swing.JScrollPane();
-        adviceScrollListCells = new javax.swing.JList();
-        scrollIdioms = new javax.swing.JScrollPane();
-        adviceScrollListIdioms = new javax.swing.JList();
-        scrollLicks = new javax.swing.JScrollPane();
-        adviceScrollListLicks = new javax.swing.JList();
-        scrollQuotes = new javax.swing.JScrollPane();
-        adviceScrollListQuotes = new javax.swing.JList();
-        scrollBricks = new javax.swing.JScrollPane();
-        adviceScrollListBricks = new javax.swing.JList();
         keySigBtnGroup = new javax.swing.ButtonGroup();
         saveLickFrame = new javax.swing.JFrame();
         enterLickTitle = new javax.swing.JTextField();
@@ -1673,7 +1674,7 @@ public Critic getCritic()
         lineLabel = new javax.swing.JLabel();
         okMeasBtn = new javax.swing.JButton();
         measErrorLabel = new javax.swing.JLabel();
-        voicingEditorFrame = new javax.swing.JFrame();
+        voicingTestFrame = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         chordRootLabel = new javax.swing.JLabel();
@@ -2165,6 +2166,313 @@ public Critic getCritic()
         jSeparator32 = new javax.swing.JSeparator();
         helpAboutMI = new javax.swing.JMenuItem();
         statusMenu = new javax.swing.JMenu();
+
+        adviceFrame.setTitle("Advice Directory");
+        adviceFrame.setAlwaysOnTop(true);
+        adviceFrame.setFocusCycleRoot(false);
+        adviceFrame.setMinimumSize(new java.awt.Dimension(600, 400));
+        adviceFrame.setName("adviceFrame"); // NOI18N
+        adviceFrame.addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                adviceWindowClosing(evt);
+            }
+        });
+        adviceFrame.addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentHidden(java.awt.event.ComponentEvent evt)
+            {
+                adviceFrameComponentHidden(evt);
+            }
+        });
+        adviceFrame.addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusGained(java.awt.event.FocusEvent evt)
+            {
+                adviceFocusGained(evt);
+            }
+        });
+        adviceFrame.getContentPane().setLayout(new java.awt.GridBagLayout());
+
+        adviceTargetSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"c-", "c#-", "d-", "eb-", "e-", "f-", "f#-", "g-", "ab-", "a-", "bb-", "b-", "c", "c#", "d", "eb", "e", "f", "f#", "g", "ab", "a", "bb", "b", "c+", "c#+", "d+", "eb+", "e+", "f+", "f+#", "g+", "ab+", "a+", "bb+", "b+"}));
+        adviceTargetSpinner.setToolTipText("Select the target pitch center for Advice melodies.");
+        adviceTargetSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Target Center", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        adviceTargetSpinner.setMaximumSize(new java.awt.Dimension(150, 50));
+        adviceTargetSpinner.setMinimumSize(new java.awt.Dimension(150, 50));
+        adviceTargetSpinner.setPreferredSize(new java.awt.Dimension(150, 50));
+        adviceTargetSpinner.setValue("c+");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        adviceFrame.getContentPane().add(adviceTargetSpinner, gridBagConstraints);
+
+        adviceFilterTextField.setBackground(new java.awt.Color(238, 238, 238));
+        adviceFilterTextField.setBorder(javax.swing.BorderFactory.createTitledBorder("Filter"));
+        adviceFilterTextField.setMaximumSize(new java.awt.Dimension(2147483647, 50));
+        adviceFilterTextField.setMinimumSize(new java.awt.Dimension(200, 50));
+        adviceFilterTextField.setPreferredSize(new java.awt.Dimension(200, 50));
+        adviceFilterTextField.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                adviceFilterTextFieldChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        adviceFrame.getContentPane().add(adviceFilterTextField, gridBagConstraints);
+
+        adviceTabbedPane.setMinimumSize(new java.awt.Dimension(500, 400));
+        adviceTabbedPane.setPreferredSize(new java.awt.Dimension(500, 400));
+        adviceTabbedPane.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceTabbedPaneMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt)
+            {
+                adviceTabbedPaneMouseReleased(evt);
+            }
+        });
+
+        scrollNotes.setDoubleBuffered(true);
+        scrollNotes.setMinimumSize(new java.awt.Dimension(100, 100));
+        scrollNotes.setPreferredSize(new java.awt.Dimension(300, 200));
+        scrollNotes.addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusGained(java.awt.event.FocusEvent evt)
+            {
+                adviceFocusGained(evt);
+            }
+        });
+
+        adviceTree.setMaximumSize(new java.awt.Dimension(400, 800));
+        adviceTree.setMinimumSize(new java.awt.Dimension(50, 50));
+        adviceTree.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mousePressed(java.awt.event.MouseEvent evt)
+            {
+                adviceTreeMousePressed(evt);
+            }
+        });
+        adviceTree.addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusGained(java.awt.event.FocusEvent evt)
+            {
+                adviceFocusGained(evt);
+            }
+        });
+        adviceTree.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceTreeKeyPressed(evt);
+            }
+        });
+        scrollNotes.setViewportView(adviceTree);
+
+        adviceTabbedPane.addTab("Notes", scrollNotes);
+
+        scrollScales.setMinimumSize(new java.awt.Dimension(100, 100));
+        scrollScales.setPreferredSize(new java.awt.Dimension(300, 200));
+
+        adviceScrollListScales.setModel(new javax.swing.AbstractListModel()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        adviceScrollListScales.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceScrollListScalesMouseClicked(evt);
+            }
+        });
+        adviceScrollListScales.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListScalesKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListScalesKeyReleased(evt);
+            }
+        });
+        scrollScales.setViewportView(adviceScrollListScales);
+
+        adviceTabbedPane.addTab("Scales", scrollScales);
+
+        scrollCells.setMinimumSize(new java.awt.Dimension(100, 100));
+        scrollCells.setPreferredSize(new java.awt.Dimension(300, 200));
+
+        adviceScrollListCells.setModel(new javax.swing.AbstractListModel()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        adviceScrollListCells.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        adviceScrollListCells.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceScrollListCellsMouseClicked(evt);
+            }
+        });
+        adviceScrollListCells.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListCellsKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListCellsKeyReleased(evt);
+            }
+        });
+        scrollCells.setViewportView(adviceScrollListCells);
+
+        adviceTabbedPane.addTab("Cells", scrollCells);
+
+        scrollIdioms.setMinimumSize(new java.awt.Dimension(100, 100));
+        scrollIdioms.setPreferredSize(new java.awt.Dimension(300, 200));
+
+        adviceScrollListIdioms.setModel(new javax.swing.AbstractListModel()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        adviceScrollListIdioms.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceScrollListIdiomsMouseClicked(evt);
+            }
+        });
+        adviceScrollListIdioms.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListIdiomsKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListIdiomsKeyReleased(evt);
+            }
+        });
+        scrollIdioms.setViewportView(adviceScrollListIdioms);
+
+        adviceTabbedPane.addTab("Idioms", scrollIdioms);
+
+        scrollLicks.setMinimumSize(new java.awt.Dimension(100, 100));
+        scrollLicks.setPreferredSize(new java.awt.Dimension(300, 200));
+
+        adviceScrollListLicks.setModel(new javax.swing.AbstractListModel()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        adviceScrollListLicks.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceScrollListLicksMouseClicked(evt);
+            }
+        });
+        adviceScrollListLicks.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListLicksKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListLicksKeyReleased(evt);
+            }
+        });
+        scrollLicks.setViewportView(adviceScrollListLicks);
+
+        adviceTabbedPane.addTab("Licks", scrollLicks);
+
+        scrollQuotes.setMinimumSize(new java.awt.Dimension(100, 100));
+        scrollQuotes.setPreferredSize(new java.awt.Dimension(300, 200));
+
+        adviceScrollListQuotes.setModel(new javax.swing.AbstractListModel()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        adviceScrollListQuotes.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceScrollListQuotesMouseClicked(evt);
+            }
+        });
+        adviceScrollListQuotes.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListQuotesKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListQuotesKeyReleased(evt);
+            }
+        });
+        scrollQuotes.setViewportView(adviceScrollListQuotes);
+
+        adviceTabbedPane.addTab("Quotes", scrollQuotes);
+
+        scrollBricks.setMinimumSize(new java.awt.Dimension(100, 100));
+        scrollBricks.setPreferredSize(new java.awt.Dimension(300, 200));
+
+        adviceScrollListBricks.setModel(new javax.swing.AbstractListModel()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        adviceScrollListBricks.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceScrollListBricksMouseClicked(evt);
+            }
+        });
+        adviceScrollListBricks.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListBricksKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListBricksKeyReleased(evt);
+            }
+        });
+        scrollBricks.setViewportView(adviceScrollListBricks);
+
+        adviceTabbedPane.addTab("Bricks", scrollBricks);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        adviceFrame.getContentPane().add(adviceTabbedPane, gridBagConstraints);
 
         preferencesDialog.setTitle("Preferences and Settings");
         preferencesDialog.setAlwaysOnTop(true);
@@ -4441,293 +4749,6 @@ public Critic getCritic()
         });
         popupMenu.add(autoFillMI);
 
-        adviceFrame.setTitle("Advice Directory");
-        adviceFrame.setAlwaysOnTop(true);
-        adviceFrame.setFocusCycleRoot(false);
-        adviceFrame.setMinimumSize(new java.awt.Dimension(600, 400));
-        adviceFrame.setName("adviceFrame"); // NOI18N
-        adviceFrame.addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
-                adviceWindowClosing(evt);
-            }
-        });
-        adviceFrame.addComponentListener(new java.awt.event.ComponentAdapter()
-        {
-            public void componentHidden(java.awt.event.ComponentEvent evt)
-            {
-                adviceFrameComponentHidden(evt);
-            }
-        });
-        adviceFrame.addFocusListener(new java.awt.event.FocusAdapter()
-        {
-            public void focusGained(java.awt.event.FocusEvent evt)
-            {
-                adviceFocusGained(evt);
-            }
-        });
-        adviceFrame.getContentPane().setLayout(new java.awt.GridBagLayout());
-
-        adviceTargetSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"c-", "c#-", "d-", "eb-", "e-", "f-", "f#-", "g-", "ab-", "a-", "bb-", "b-", "c", "c#", "d", "eb", "e", "f", "f#", "g", "ab", "a", "bb", "b", "c+", "c#+", "d+", "eb+", "e+", "f+", "f+#", "g+", "ab+", "a+", "bb+", "b+"}));
-        adviceTargetSpinner.setToolTipText("Select the target pitch center for Advice melodies.");
-        adviceTargetSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Target Center", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        adviceTargetSpinner.setMaximumSize(new java.awt.Dimension(150, 50));
-        adviceTargetSpinner.setMinimumSize(new java.awt.Dimension(150, 50));
-        adviceTargetSpinner.setPreferredSize(new java.awt.Dimension(150, 50));
-        adviceTargetSpinner.setValue("c+");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        adviceFrame.getContentPane().add(adviceTargetSpinner, gridBagConstraints);
-
-        adviceTabbedPane.setMinimumSize(new java.awt.Dimension(500, 400));
-        adviceTabbedPane.setPreferredSize(new java.awt.Dimension(500, 400));
-        adviceTabbedPane.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceTabbedPaneMouseClicked(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt)
-            {
-                adviceTabbedPaneMouseReleased(evt);
-            }
-        });
-
-        scrollNotes.setDoubleBuffered(true);
-        scrollNotes.setMinimumSize(new java.awt.Dimension(100, 100));
-        scrollNotes.setPreferredSize(new java.awt.Dimension(300, 200));
-        scrollNotes.addFocusListener(new java.awt.event.FocusAdapter()
-        {
-            public void focusGained(java.awt.event.FocusEvent evt)
-            {
-                adviceFocusGained(evt);
-            }
-        });
-
-        adviceTree.setMaximumSize(new java.awt.Dimension(400, 800));
-        adviceTree.setMinimumSize(new java.awt.Dimension(50, 50));
-        adviceTree.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
-                adviceTreeMousePressed(evt);
-            }
-        });
-        adviceTree.addFocusListener(new java.awt.event.FocusAdapter()
-        {
-            public void focusGained(java.awt.event.FocusEvent evt)
-            {
-                adviceFocusGained(evt);
-            }
-        });
-        adviceTree.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                adviceTreeKeyPressed(evt);
-            }
-        });
-        scrollNotes.setViewportView(adviceTree);
-
-        adviceTabbedPane.addTab("Notes", scrollNotes);
-
-        scrollScales.setMinimumSize(new java.awt.Dimension(100, 100));
-        scrollScales.setPreferredSize(new java.awt.Dimension(300, 200));
-
-        adviceScrollListScales.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        adviceScrollListScales.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceScrollListScalesMouseClicked(evt);
-            }
-        });
-        adviceScrollListScales.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListScalesKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListScalesKeyReleased(evt);
-            }
-        });
-        scrollScales.setViewportView(adviceScrollListScales);
-
-        adviceTabbedPane.addTab("Scales", scrollScales);
-
-        scrollCells.setMinimumSize(new java.awt.Dimension(100, 100));
-        scrollCells.setPreferredSize(new java.awt.Dimension(300, 200));
-
-        adviceScrollListCells.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        adviceScrollListCells.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        adviceScrollListCells.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceScrollListCellsMouseClicked(evt);
-            }
-        });
-        adviceScrollListCells.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListCellsKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListCellsKeyReleased(evt);
-            }
-        });
-        scrollCells.setViewportView(adviceScrollListCells);
-
-        adviceTabbedPane.addTab("Cells", scrollCells);
-
-        scrollIdioms.setMinimumSize(new java.awt.Dimension(100, 100));
-        scrollIdioms.setPreferredSize(new java.awt.Dimension(300, 200));
-
-        adviceScrollListIdioms.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        adviceScrollListIdioms.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceScrollListIdiomsMouseClicked(evt);
-            }
-        });
-        adviceScrollListIdioms.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListIdiomsKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListIdiomsKeyReleased(evt);
-            }
-        });
-        scrollIdioms.setViewportView(adviceScrollListIdioms);
-
-        adviceTabbedPane.addTab("Idioms", scrollIdioms);
-
-        scrollLicks.setMinimumSize(new java.awt.Dimension(100, 100));
-        scrollLicks.setPreferredSize(new java.awt.Dimension(300, 200));
-
-        adviceScrollListLicks.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        adviceScrollListLicks.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceScrollListLicksMouseClicked(evt);
-            }
-        });
-        adviceScrollListLicks.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListLicksKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListLicksKeyReleased(evt);
-            }
-        });
-        scrollLicks.setViewportView(adviceScrollListLicks);
-
-        adviceTabbedPane.addTab("Licks", scrollLicks);
-
-        scrollQuotes.setMinimumSize(new java.awt.Dimension(100, 100));
-        scrollQuotes.setPreferredSize(new java.awt.Dimension(300, 200));
-
-        adviceScrollListQuotes.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        adviceScrollListQuotes.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceScrollListQuotesMouseClicked(evt);
-            }
-        });
-        adviceScrollListQuotes.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListQuotesKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListQuotesKeyReleased(evt);
-            }
-        });
-        scrollQuotes.setViewportView(adviceScrollListQuotes);
-
-        adviceTabbedPane.addTab("Quotes", scrollQuotes);
-
-        scrollBricks.setMinimumSize(new java.awt.Dimension(100, 100));
-        scrollBricks.setPreferredSize(new java.awt.Dimension(300, 200));
-
-        adviceScrollListBricks.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        adviceScrollListBricks.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceScrollListBricksMouseClicked(evt);
-            }
-        });
-        adviceScrollListBricks.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListBricksKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
-                adviceScrollListBricksKeyReleased(evt);
-            }
-        });
-        scrollBricks.setViewportView(adviceScrollListBricks);
-
-        adviceTabbedPane.addTab("Bricks", scrollBricks);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        adviceFrame.getContentPane().add(adviceTabbedPane, gridBagConstraints);
-
         saveLickFrame.setAlwaysOnTop(true);
         saveLickFrame.getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -5485,11 +5506,11 @@ public Critic getCritic()
         gridBagConstraints.weightx = 1.0;
         overrideFrame.getContentPane().add(measErrorLabel, gridBagConstraints);
 
-        voicingEditorFrame.setTitle("Chord Voicing Utility");
-        voicingEditorFrame.setAlwaysOnTop(true);
-        voicingEditorFrame.getRootPane().setDefaultButton(buildTableButton);
-        voicingEditorFrame.setSize(600, 400);
-        voicingEditorFrame.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
+        voicingTestFrame.setTitle("Chord Voicing Utility");
+        voicingTestFrame.setAlwaysOnTop(true);
+        voicingTestFrame.getRootPane().setDefaultButton(buildTableButton);
+        voicingTestFrame.setSize(600, 400);
+        voicingTestFrame.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel2.setMinimumSize(new java.awt.Dimension(760, 700));
         jPanel2.setPreferredSize(new java.awt.Dimension(760, 700));
@@ -6109,7 +6130,7 @@ public Critic getCritic()
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel2.add(dummyPanel, gridBagConstraints);
 
-        voicingEditorFrame.getContentPane().add(jPanel2);
+        voicingTestFrame.getContentPane().add(jPanel2);
 
         newVoicingDialog.setTitle("Add Chord Voicing");
         newVoicingDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -9749,6 +9770,7 @@ public Critic getCritic()
         });
         utilitiesMenu.add(pianoKeyboardMI);
 
+        voicingTestMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         voicingTestMI.setMnemonic('v');
         voicingTestMI.setText("Voicing Editor");
         voicingTestMI.setToolTipText("Editor for chord voicings");
@@ -10712,7 +10734,7 @@ private void turnStepInputOff()
             if( row == -1 )
               {
                 populateChordSelMenu();
-                chordSelectionMenu.show(voicingEditorFrame, 525, 75);
+                chordSelectionMenu.show(voicingTestFrame, 525, 75);
                 return;
               }
 
@@ -11381,14 +11403,14 @@ private boolean initLocationVoicingFrame = false;
 
         if( !initLocationVoicingFrame )
           {
-            voicingEditorFrame.setLocationRelativeTo(this);
+            voicingTestFrame.setLocationRelativeTo(this);
 
             initLocationVoicingFrame = true;
           }
 
         buildVoicingTable();
 
-        voicingEditorFrame.setVisible(true);
+        voicingTestFrame.setVisible(true);
 
         if( playingStopped() )
           {
@@ -11412,7 +11434,7 @@ private boolean initLocationVoicingFrame = false;
             String v = keyboard.voicingFromKeyboard();
             String currentChord = keyboard.getPresentChordDisplayText();
 
-            if( voicingEditorFrame != null && voicingEditorFrame.isVisible() )
+            if( voicingTestFrame != null && voicingTestFrame.isVisible() )
               {
                 selectVoicing(v, currentChord);
               }
@@ -11498,13 +11520,7 @@ public void setMode(Mode mode)
  *
  */
 public void setMode(Mode mode, String modifier)
-  { 
-    MelodyPart currentPart = getCurrentStave().getDisplayPart();
-    int RED_COUNT = getCurrentStave().collectNoteColors(currentPart).getredCount();
-    float RED_DUR_PERCENT = getCurrentStave().collectNoteColors(currentPart).getredDurationPercent();
-    int ROUNDED_RED_PERCENT = (int)(RED_DUR_PERCENT);
-    String redNoteTool = (" " + RED_COUNT + " red notes (" + ROUNDED_RED_PERCENT  + "%) ");
-    
+  {
     previousMode = this.mode;
 
     if( mode == null )
@@ -11517,7 +11533,7 @@ public void setMode(Mode mode, String modifier)
     switch( mode )
       {
         case NORMAL:
-            setStatus("Stopped," + redNoteTool);
+            setStatus("Play, Enter chords & melody, Open file, etc.");
             break;
         case RECORDING:
             setStatus("Chorus " + recurrentIteration);
@@ -11553,10 +11569,10 @@ public void setMode(Mode mode, String modifier)
             setStatus("Edit leadsheet textually");
             break;
         case PLAYING:
-            setStatus("Playing," + redNoteTool);
+            setStatus("Playing");
             break;
         case PLAYING_PAUSED:
-            setStatus("Playing Paused," + redNoteTool);
+            setStatus("Playing Paused");
             break;
         case IMPORTING_MIDI:
             setStatus("Importing MIDI");
@@ -15062,8 +15078,8 @@ public void closeWindow()
         styleEditor.dispose();
     }
     
-    if(voicingEditorFrame != null){
-        voicingEditorFrame.dispose();
+    if(voicingTestFrame != null){
+        voicingTestFrame.dispose();
     }
     
     if(themeWeaver != null){
@@ -20574,7 +20590,7 @@ public void pauseToKeyboard()
     String v = keyboard.voicingFromKeyboard();
     String currentChord = keyboard.getPresentChordDisplayText();
 
-    if( voicingEditorFrame != null && voicingEditorFrame.isVisible() )
+    if( voicingTestFrame != null && voicingTestFrame.isVisible() )
       {
         selectVoicing(v, currentChord);
       }
@@ -21086,7 +21102,7 @@ private void pianoKeyboardButtonActionPerformed(java.awt.event.ActionEvent evt) 
 
     if( !v.equals("") )
       {
-        keyboard.showVoicingOnKeyboard("", v, false);
+        keyboard.showVoicingOnKeyboard("?", v, false);
       }
   }
 
@@ -21269,6 +21285,7 @@ public void addToVoicingSequence()
   }
 
 private void voicingSequenceAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicingSequenceAddButtonActionPerformed
+
     addToVoicingSequence();
 }//GEN-LAST:event_voicingSequenceAddButtonActionPerformed
 
@@ -21427,7 +21444,7 @@ private void voicingSequencePlayButtonActionPerformed(java.awt.event.ActionEvent
           }
 
         voicingEntryTF.setText(v);
-        keyboard.showVoicingOnKeyboard("", v, false);
+        keyboard.showVoicingOnKeyboard("?", v, false);
 
         try
           {
@@ -23867,8 +23884,12 @@ private boolean isDotted = false;
 
     private void grammarChooserMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarChooserMIActionPerformed
     {//GEN-HEADEREND:event_grammarChooserMIActionPerformed
-        openGrammarMenuDialog();
+        // TODO add your handling code here:
     }//GEN-LAST:event_grammarChooserMIActionPerformed
+
+    private void adviceFilterTextFieldChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adviceFilterTextFieldChanged
+        redoAdvice();
+    }//GEN-LAST:event_adviceFilterTextFieldChanged
 
     public void openGrammarMenuDialog()
     {
@@ -25107,27 +25128,52 @@ public void polylistToMenus(Polylist item)
           {
             if( node instanceof AdviceForScale )  // avoid single note advice here
               {
-                adviceMenuItemsScales.add(node);
+                  AdviceForScale a = (AdviceForScale)node;                
+                 if (a.getName().contains(adviceFilterTextField.getText()))
+                  {
+                      adviceMenuItemsScales.add(node);
+                  }
               }
             else if( node instanceof AdviceForCell )
               {
-                adviceMenuItemsCells.add(node);
+                  AdviceForCell a = (AdviceForCell)node;
+                  //System.out.println("name = " + a.getName() + " advice = " + node);
+                  if (a.getName().contains(adviceFilterTextField.getText()))
+                  {
+                      adviceMenuItemsCells.add(node);
+                  }     
               }
             else if( node instanceof AdviceForIdiom )
               {
-                adviceMenuItemsIdioms.add(node);
+                  AdviceForIdiom a = (AdviceForIdiom)node;
+                  if (a.getName().contains(adviceFilterTextField.getText()))
+                  {
+                      adviceMenuItemsIdioms.add(node);
+                  }
               }
             else if( node instanceof AdviceForLick )
               {
-                adviceMenuItemsLicks.add(node);
+                 AdviceForLick a = (AdviceForLick)node;
+                 if (a.getName().contains(adviceFilterTextField.getText()))
+                  {
+                      adviceMenuItemsLicks.add(node);
+                  }
               }
             else if( node instanceof AdviceForQuote )
               {
-                adviceMenuItemsQuotes.add(node);
+                AdviceForQuote a = (AdviceForQuote)node;
+                if (a.getName().contains(adviceFilterTextField.getText()))
+                  {
+                      adviceMenuItemsQuotes.add(node);
+                  }
               }
             else if( node instanceof AdviceForBrick )
               {
-                adviceMenuItemsBricks.add(node);
+                AdviceForBrick a = (AdviceForBrick)node;
+                 if (a.getName().contains(adviceFilterTextField.getText()))
+                  {
+                      adviceMenuItemsBricks.add(node);
+                  }
               }
             else
               {
@@ -25791,6 +25837,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton addTabBtn;
     private javax.swing.JMenuItem addTabPopupMenuItem;
     private javax.swing.JMenuItem adjustParallaxDelayMI;
+    private javax.swing.JTextField adviceFilterTextField;
     protected javax.swing.JFrame adviceFrame;
     private javax.swing.JMenuItem adviceMI;
     private javax.swing.JList adviceScrollListBricks;
@@ -26472,7 +26519,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel visAdvicePanel;
     private javax.swing.JTextField voicing;
     private javax.swing.JButton voicingDeleteButton;
-    private javax.swing.JFrame voicingEditorFrame;
     private javax.swing.JLabel voicingEntryLabel;
     private javax.swing.JTextField voicingEntryTF;
     private javax.swing.JLabel voicingLabel;
@@ -26487,6 +26533,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton voicingSequenceRemoveButton;
     private javax.swing.JLabel voicingSequenceUpArrow;
     private javax.swing.JTable voicingTable;
+    private javax.swing.JFrame voicingTestFrame;
     private javax.swing.JMenuItem voicingTestMI;
     private javax.swing.ButtonGroup whoPlaysFirstGroup;
     private javax.swing.JMenu windowMenu;
@@ -26508,7 +26555,7 @@ private ImageIcon pauseButton =
     }
     
     public javax.swing.JFrame getVoicingTestFrame(){
-        return voicingEditorFrame;
+        return voicingTestFrame;
     }
     
     public JButton getPlay(){

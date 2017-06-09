@@ -60,6 +60,15 @@ public class Advice implements Constants {
         // The blank is so that this entry will NOT be selected by letter in the advice window.
         return " " + name;
     }
+    
+    /**
+     * Gets the name of the piece of Advice
+     * @return String     the name of the Advice
+     */
+    public String getName()
+    {
+        return name;
+    }
 
     /**
      * Inserts the Advice into the Part at a specified index
