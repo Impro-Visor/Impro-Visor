@@ -1532,6 +1532,7 @@ public Critic getCritic()
         midiQuantizationPanel = new javax.swing.JPanel();
         recordingLatency = new javax.swing.JLabel();
         recordingLatencySpinner = new javax.swing.JSpinner();
+        openQuantizationButton = new javax.swing.JButton();
         echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
@@ -4375,6 +4376,21 @@ public Critic getCritic()
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         midiQuantizationPanel.add(recordingLatencySpinner, gridBagConstraints);
+
+        openQuantizationButton.setText("Recording Quantization");
+        openQuantizationButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                openQuantizationButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.4;
+        midiQuantizationPanel.add(openQuantizationButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -11521,6 +11537,12 @@ public void setMode(Mode mode)
  */
 public void setMode(Mode mode, String modifier)
   {
+    MelodyPart currentPart = getCurrentStave().getDisplayPart();
+    int RED_COUNT = getCurrentStave().collectNoteColors(currentPart).getredCount();
+    float RED_DUR_PERCENT = getCurrentStave().collectNoteColors(currentPart).getredDurationPercent();
+    int ROUNDED_RED_PERCENT = (int)(RED_DUR_PERCENT);
+    String redNoteTool = (" " + RED_COUNT + " red notes (" + ROUNDED_RED_PERCENT  + "%) ");
+    
     previousMode = this.mode;
 
     if( mode == null )
@@ -11533,7 +11555,7 @@ public void setMode(Mode mode, String modifier)
     switch( mode )
       {
         case NORMAL:
-            setStatus("Play, Enter chords & melody, Open file, etc.");
+            setStatus("Stopped," + redNoteTool);
             break;
         case RECORDING:
             setStatus("Chorus " + recurrentIteration);
@@ -11569,10 +11591,10 @@ public void setMode(Mode mode, String modifier)
             setStatus("Edit leadsheet textually");
             break;
         case PLAYING:
-            setStatus("Playing");
+            setStatus("Playing," + redNoteTool);
             break;
         case PLAYING_PAUSED:
-            setStatus("Playing Paused");
+            setStatus("Playing Paused," + redNoteTool);
             break;
         case IMPORTING_MIDI:
             setStatus("Importing MIDI");
@@ -21102,7 +21124,7 @@ private void pianoKeyboardButtonActionPerformed(java.awt.event.ActionEvent evt) 
 
     if( !v.equals("") )
       {
-        keyboard.showVoicingOnKeyboard("?", v, false);
+        keyboard.showVoicingOnKeyboard("", v, false);
       }
   }
 
@@ -21444,7 +21466,7 @@ private void voicingSequencePlayButtonActionPerformed(java.awt.event.ActionEvent
           }
 
         voicingEntryTF.setText(v);
-        keyboard.showVoicingOnKeyboard("?", v, false);
+        keyboard.showVoicingOnKeyboard("", v, false);
 
         try
           {
@@ -23884,12 +23906,17 @@ private boolean isDotted = false;
 
     private void grammarChooserMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarChooserMIActionPerformed
     {//GEN-HEADEREND:event_grammarChooserMIActionPerformed
-        // TODO add your handling code here:
+        openGrammarMenuDialog();
     }//GEN-LAST:event_grammarChooserMIActionPerformed
 
     private void adviceFilterTextFieldChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adviceFilterTextFieldChanged
         redoAdvice();
     }//GEN-LAST:event_adviceFilterTextFieldChanged
+
+    private void openQuantizationButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openQuantizationButtonActionPerformed
+    {//GEN-HEADEREND:event_openQuantizationButtonActionPerformed
+        openRealTimeQuantization();
+    }//GEN-LAST:event_openQuantizationButtonActionPerformed
 
     public void openGrammarMenuDialog()
     {
@@ -26317,6 +26344,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem openGrammarMenuDialogMI;
     private javax.swing.JMenuItem openLeadsheetEditorMI;
     private javax.swing.JMenuItem openLeadsheetMI;
+    private javax.swing.JButton openQuantizationButton;
     private javax.swing.JMenuItem openQuantizeDialogMI;
     private javax.swing.JMenu openRecentLeadsheetMenu;
     private javax.swing.JMenu openRecentLeadsheetNewWindowMenu;
