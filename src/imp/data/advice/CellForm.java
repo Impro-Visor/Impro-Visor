@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 
 package imp.data.advice;
 
-import imp.data.advice.Advisor;
 import polya.*;
 import imp.*;
 import imp.data.ChordForm;
@@ -98,15 +97,18 @@ static public Polylist makeCellForms(Polylist arg, int serial, boolean marked, P
 
   Polylist chordElement = Polylist.assoc(CHORDS, arg);
 
+  Polylist chordList;
+  
   if( chordElement == null || chordElement.isEmpty() )
 	{
-	ErrorLog.log(ErrorLog.SEVERE, "Ignoring cell or idiom without chords: " + arg);
-        return accum;
+        chordList = Polylist.nil;
+//	ErrorLog.log(ErrorLog.SEVERE, "Ignoring cell or idiom without chords: " + arg);
+//        return accum;
 	}
-
-  // In case there is punctuation from saving through the GUI:
-
-  Polylist chordList = Advisor.dePunctuate(chordElement.rest());
+  else
+    {
+      chordList = Advisor.dePunctuate(chordElement.rest());
+    }
 
 
   Polylist notesElement = Polylist.assoc(NOTES, arg);
@@ -118,6 +120,23 @@ static public Polylist makeCellForms(Polylist arg, int serial, boolean marked, P
     }
 
   notes = notesElement.rest();
+
+  if( type == 2 ) // FIX: RHYTHM_CELL
+    {
+    CellForm form = new CellForm();
+    form.type = 2;
+    form.notes = NoteSymbol.makeNoteSymbolList(notes, 0);
+
+    form.chordName = "C";
+
+    form.numSlots = NoteSymbol.getDuration(form.notes);
+    form.name = " " + (marked ? "* " : "") + name;
+
+    form.serial = serial;
+    Advisor.purgeCache();     // so that new cell will be seen
+    accum = accum.cons(form);
+    return accum;
+    }
 
   // NOTE: An input cell can create one CellForm per chord listed, 
   // so we return a list rather than a single form

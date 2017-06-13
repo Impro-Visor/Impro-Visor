@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,12 +105,16 @@ static final int PLAIN_CELL = 0;
 
 static final int IDIOM_CELL = 1;
 
+static final int RHYTHM_CELL = 2;
+
 // lick flavors
 static final int PLAIN_LICK = 0;
 
 static final int QUOTE_LICK = 1;
 
 static final int BRICK_LICK = 2;
+
+private static Polylist rhythms = Polylist.nil;
 
 /**
  * contains "cells" of notes
@@ -150,6 +154,8 @@ static final String ADVICE = "advice";
 static final String APPROACH = "approach";
 
 static final String BRICK = "brick";
+
+static final String RHYTHM = "rhythm";
 
 static final String CELL = "cell";
 
@@ -208,7 +214,7 @@ public static final Polylist licksIgnore = Polylist.list(BAR, SLASH);
 // Figure out which components of advice to show;
 static final int NONE = 0;
 
-static final int ALL = 2047;
+static final int ALL = 4195;
 
 static final int CHORDTREE = 1;
 
@@ -222,15 +228,17 @@ static final int SUBSTREE = 16;
 
 static final int EXTSTREE = 32;
 
-static final int CELLTREE = 64;
+static final int RHYTHMTREE = 64;
 
-static final int IDIOMTREE = 128;
+static final int CELLTREE = 128;
 
-static final int LICKTREE = 256;
+static final int IDIOMTREE = 256;
 
-static final int QUOTETREE = 512;
+static final int LICKTREE = 512;
 
-static final int BRICKTREE = 1024;
+static final int QUOTETREE = 1024;
+
+static final int BRICKTREE = 2048;
 
 private static boolean styleProcessed = false;
 
@@ -283,6 +291,7 @@ public void setRules(Polylist rules)
   chords = Polylist.nil;
   scales = Polylist.nil;
 
+  rhythms = Polylist.nil;
   // Don't redo styles on new vocabulary
   //styles = Polylist.nil;
   //backupStyles = Polylist.nil;
@@ -304,6 +313,7 @@ public void setRules(Polylist rules)
 
   cells[PLAIN_CELL] = cells[PLAIN_CELL].reverse();
   cells[IDIOM_CELL] = cells[IDIOM_CELL].reverse();
+  //rhythms = rhythms.reverse();
 
   licks[PLAIN_LICK] = licks[PLAIN_LICK].reverse();
   licks[QUOTE_LICK] = licks[QUOTE_LICK].reverse();
@@ -329,6 +339,12 @@ public void setRules(Polylist rules)
       form.showForm(System.out);
       }
 
+    System.out.println("\nrhythms:");
+    it = rhythms.reverse().elements();
+    while( it.hasMoreElements() )
+      {
+      System.out.println(it.nextElement());
+      }
     System.out.println("\ncells:");
     it = cells[PLAIN_CELL].reverse().elements();
     while( it.hasMoreElements() )
@@ -525,7 +541,7 @@ public void addRules()
 
 
 /**
- * Add a single "rule" (chord, scale, cell, idiom, lick, or quote)
+ * Add a single "rule" (chord, scale, rhythm, cell, idiom, lick, or quote)
  * to the database.
  */
 public static boolean addOneRule(Object ob, int serial, boolean marked,
@@ -534,7 +550,6 @@ public static boolean addOneRule(Object ob, int serial, boolean marked,
   Trace.log(2, "addOneRule " + serial + ": " + ob);
   if( ob instanceof Polylist )
     {
-
     Polylist first = (Polylist)ob;
 
     Trace.log(2, "length of " + ob + " is " + first.length());
@@ -590,6 +605,11 @@ public static boolean addOneRule(Object ob, int serial, boolean marked,
         readStyles();
         }
       return true;
+      }
+    else if( dispatch.equals(RHYTHM) )
+      {
+      //System.out.println("adding rhythm " + first.rest());
+      return addCell(RHYTHM_CELL, first.rest(), serial, marked);
       }
     else if( dispatch.equals(CELL) )
       {
@@ -808,14 +828,21 @@ public static boolean updateStyle(Polylist style)
 
 
 /**
- * Add a Cell or Idiom form to the database.
+ * Add a Cell, Idiom, or Rhythm form to the database.
  */
 static boolean addCell(int flavor, Polylist cell, int serial, boolean marked)
   {
-  Trace.log(3, "adding cells " + serial + " of flavor " + flavor + ": " + cell);
-
+  if( flavor == RHYTHM_CELL )
+    {
+      //System.out.println("adding cell " + serial + " of flavor " + flavor + ": " + cell);
+      rhythms = CellForm.makeCellForms(cell, serial, marked, rhythms,
+          flavor);
+    }
+  else
+    {
   cells[flavor] = CellForm.makeCellForms(cell, serial, marked, cells[flavor],
           flavor);
+    }
 
   return true;
   }
@@ -1205,6 +1232,19 @@ public Polylist getAdviceTree(ChordSymbol chordSymbol,
       if( extensions.nonEmpty() )
         {
         advice = advice.cons(extensions.cons(" chord extensions"));
+        }
+
+      // add rhythms to tree
+
+      Polylist rhythmTree = getCellTree(RHYTHM_CELL,
+              chordSymbol,
+              note,
+              extensions,
+              Polylist.nil,
+              key);
+      if( rhythmTree.nonEmpty() && (RHYTHMTREE & mask) != 0 )
+        {
+        advice = advice.cons(rhythmTree.cons(" rhythms"));
         }
 
       // add cells to tree
@@ -2321,6 +2361,7 @@ public Polylist getCellTree(int flavor, ChordSymbol chordSymbol, Note firstNote,
 
   Polylist cellTreeRel[] = new Polylist[numCellBuckets + 1];
 
+  Polylist rhythmTree = Polylist.nil;
   for( int i = 0; i <= numCellBuckets; i++ )
     {
     cellTreeId[i] = Polylist.nil;
@@ -2338,7 +2379,8 @@ public Polylist getCellTree(int flavor, ChordSymbol chordSymbol, Note firstNote,
 
   // get an enumerationof all cells
 
-  PolylistEnum e = cells[flavor].elements();
+  PolylistEnum e = flavor == RHYTHM_CELL ? rhythms.elements() :
+          cells[flavor].elements();
 
   // Use lastUsedSerialNo to eliminate duplicates. The same original 
   // cell could be in more than one list entry because of multiple
@@ -2355,22 +2397,39 @@ public Polylist getCellTree(int flavor, ChordSymbol chordSymbol, Note firstNote,
 
     // A cell should be used at most once for a given chord
 
+    int caseNo = 0;
+      
     if( serialNo > lastUsedSerialNo )
       {
+       String cellName = cell.getName();
+
+      AdviceForMelody advice = null;
+
+       if( flavor == RHYTHM_CELL)
+          {
+            advice = 
+                new AdviceForRhythm(cellName,
+                serialNo,
+                cell.getNotes(chordRoot, key),
+                chordRoot,
+                key,
+                metre,
+                firstNote,
+                cell.getProfileNumber());
+          rhythmTree = rhythmTree.cons(advice);
+          }
+      else
+         {
       Trace.log(2,
               "testing cell " + cell + " against chord on sheet " + chordNameOnSheet);
 
       String CcellChord = cell.getChordName();
-
-      String cellName = cell.getName();
 
       String CchordNameOnSheet = Key.makeRoot(CROOT, chordNameOnSheet);
 
       // There are three possible cases relating the chord specified
       // in the cell to the chord on the sheet.
       // case 0 is no relation.
-
-      int caseNo = 0;
 
       // case 1 is that the chords are the same, or 
       // the chord on the sheet is an extension of the one in the cell
@@ -2398,7 +2457,7 @@ public Polylist getCellTree(int flavor, ChordSymbol chordSymbol, Note firstNote,
         String transposedCellName =
                 cell.getProfile() + "  [" + Key.makeRoot(chordRoot, CcellChord) + "] " + cellName + " " + transposedNotes.toString();
 
-        AdviceForMelody advice = // Cell vs. Idiom; should be refactored
+        advice = // Cell vs. Idiom; should be refactored
                 flavor == PLAIN_CELL
                 ? new AdviceForCell(transposedCellName,
                 serialNo,
@@ -2408,15 +2467,21 @@ public Polylist getCellTree(int flavor, ChordSymbol chordSymbol, Note firstNote,
                 metre,
                 firstNote,
                 cell.getProfileNumber())
-                : new AdviceForIdiom(transposedCellName,
+                : 
+                flavor == IDIOM_CELL ? new AdviceForIdiom(transposedCellName,
                 serialNo,
                 transposedNotes,
                 chordRoot,
                 key,
                 metre,
                 firstNote,
-                cell.getProfileNumber());
+                cell.getProfileNumber())
+                :
+                null;
+        }
 
+         }
+       
         int index = cell.getHalfBeats();
 
         if( index > numCellBuckets )	// last index catches all larger values
@@ -2424,13 +2489,12 @@ public Polylist getCellTree(int flavor, ChordSymbol chordSymbol, Note firstNote,
           index = numCellBuckets;
           }
 
-        if( (firstNote == null) || advice.startsWith(firstNote) )
+        if( advice != null )
           {
+          if ((firstNote == null) || advice.startsWith(firstNote))
+            {
           switch( caseNo )
             {
-            case 0:
-              break;
-
             case 1:
               cellTreeId[index] = cellTreeId[index].cons(advice);
               lastUsedSerialNo = serialNo;
@@ -2440,15 +2504,21 @@ public Polylist getCellTree(int flavor, ChordSymbol chordSymbol, Note firstNote,
               cellTreeRel[index] = cellTreeRel[index].cons(advice);
               lastUsedSerialNo = serialNo;
               break;
-
             }
           }
         }
       }
     }
 
-  Polylist collectiveTree = Polylist.nil;
+    if( flavor == 2 )
+      { // Returning EMPTY BAD
+        //System.out.println("returning rhythmTree = " + rhythmTree);
+        return rhythmTree;
+      }
 
+  
+  Polylist collectiveTree = Polylist.nil;
+  
   Polylist subtree = buildCellTree(cellTreeRel);
 
   // Collect second sub-tree, cells starting with identical chords

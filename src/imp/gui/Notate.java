@@ -242,6 +242,7 @@ public static final int MAX_MEASURES_PER_LINE = 15;
 public StaveType DEFAULT_STAVE_TYPE = Preferences.getStaveTypeFromPreferences();
 protected Polylist adviceList;
 ArrayList<Object> adviceMenuItemsScales;
+ArrayList<Object> adviceMenuItemsRhythms;
 ArrayList<Object> adviceMenuItemsCells;
 ArrayList<Object> adviceMenuItemsIdioms;
 ArrayList<Object> adviceMenuItemsLicks;
@@ -1337,6 +1338,8 @@ public Critic getCritic()
         adviceTree = new javax.swing.JTree();
         scrollScales = new javax.swing.JScrollPane();
         adviceScrollListScales = new javax.swing.JList();
+        scrollRhythms = new javax.swing.JScrollPane();
+        adviceScrollListRhythms = new javax.swing.JList<>();
         scrollCells = new javax.swing.JScrollPane();
         adviceScrollListCells = new javax.swing.JList();
         scrollIdioms = new javax.swing.JScrollPane();
@@ -2231,13 +2234,13 @@ public Critic getCritic()
         adviceTabbedPane.setPreferredSize(new java.awt.Dimension(500, 400));
         adviceTabbedPane.addMouseListener(new java.awt.event.MouseAdapter()
         {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceTabbedPaneMouseClicked(evt);
-            }
             public void mouseReleased(java.awt.event.MouseEvent evt)
             {
                 adviceTabbedPaneMouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceTabbedPaneMouseClicked(evt);
             }
         });
 
@@ -2309,6 +2312,54 @@ public Critic getCritic()
         scrollScales.setViewportView(adviceScrollListScales);
 
         adviceTabbedPane.addTab("Scales", scrollScales);
+
+        scrollRhythms.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                scrollRhythmsMouseClicked(evt);
+            }
+        });
+        scrollRhythms.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                scrollRhythmsKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                scrollRhythmsKeyReleased(evt);
+            }
+        });
+
+        adviceScrollListRhythms.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        adviceScrollListRhythms.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        adviceScrollListRhythms.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceScrollListRhythmsMouseClicked(evt);
+            }
+        });
+        adviceScrollListRhythms.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListRhythmsKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                adviceScrollListRhythmsKeyReleased(evt);
+            }
+        });
+        scrollRhythms.setViewportView(adviceScrollListRhythms);
+
+        adviceTabbedPane.addTab("Rhythms", scrollRhythms);
 
         scrollCells.setMinimumSize(new java.awt.Dimension(100, 100));
         scrollCells.setPreferredSize(new java.awt.Dimension(300, 200));
@@ -23918,6 +23969,58 @@ private boolean isDotted = false;
         openRealTimeQuantization();
     }//GEN-LAST:event_openQuantizationButtonActionPerformed
 
+    private void adviceScrollListRhythmsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_adviceScrollListRhythmsMouseClicked
+    {//GEN-HEADEREND:event_adviceScrollListRhythmsMouseClicked
+        adviceSelected(adviceScrollListRhythms.getSelectedValue());
+    }//GEN-LAST:event_adviceScrollListRhythmsMouseClicked
+
+    private void adviceScrollListRhythmsKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_adviceScrollListRhythmsKeyPressed
+    {//GEN-HEADEREND:event_adviceScrollListRhythmsKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adviceScrollListRhythmsKeyPressed
+
+    private void adviceScrollListRhythmsKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_adviceScrollListRhythmsKeyReleased
+    {//GEN-HEADEREND:event_adviceScrollListRhythmsKeyReleased
+        switch( evt.getKeyCode() )
+          {
+            case java.awt.event.KeyEvent.VK_UP:
+            case java.awt.event.KeyEvent.VK_DOWN:
+                adviceSelected(adviceScrollListRhythms.getSelectedValue());
+                break;
+
+            default:
+                // Delegate to main window
+                adviceKeyPressed(evt);
+                break;
+          }        // TODO add your handling code here:
+    }//GEN-LAST:event_adviceScrollListRhythmsKeyReleased
+
+    private void scrollRhythmsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_scrollRhythmsMouseClicked
+    {//GEN-HEADEREND:event_scrollRhythmsMouseClicked
+        adviceSelected(adviceScrollListRhythms.getSelectedValue());        // TODO add your handling code here:
+    }//GEN-LAST:event_scrollRhythmsMouseClicked
+
+    private void scrollRhythmsKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_scrollRhythmsKeyPressed
+    {//GEN-HEADEREND:event_scrollRhythmsKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scrollRhythmsKeyPressed
+
+    private void scrollRhythmsKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_scrollRhythmsKeyReleased
+    {//GEN-HEADEREND:event_scrollRhythmsKeyReleased
+    switch( evt.getKeyCode() )
+        {
+            case java.awt.event.KeyEvent.VK_UP:
+            case java.awt.event.KeyEvent.VK_DOWN:
+            adviceSelected(adviceScrollListRhythms.getSelectedValue());
+            break;
+
+            default:
+            // Delegate to main window
+            adviceKeyPressed(evt);
+            break;
+        }
+    }//GEN-LAST:event_scrollRhythmsKeyReleased
+
     public void openGrammarMenuDialog()
     {
         grammarMenuDialog.setVisible(true);
@@ -25161,6 +25264,15 @@ public void polylistToMenus(Polylist item)
                       adviceMenuItemsScales.add(node);
                   }
               }
+            else if ( node instanceof AdviceForRhythm )
+              {
+                AdviceForRhythm a = (AdviceForRhythm) node;
+                //System.out.println("rhythm name = " + a.getName() + " advice = " + node);
+                if (a.getName().contains(adviceFilterTextField.getText()))
+                {
+                    adviceMenuItemsRhythms.add(node);
+                }
+              }
             else if( node instanceof AdviceForCell )
               {
                   AdviceForCell a = (AdviceForCell)node;
@@ -25217,11 +25329,13 @@ public void polylistToMenus(Polylist item)
 
     adviceScrollListScales.setModel(new javax.swing.AbstractListModel()
     {
+    @Override
     public int getSize()
       {
         return menuContentsScales.length;
       }
 
+    @Override
     public Object getElementAt(int i)
       {
         return menuContentsScales[i];
@@ -25229,16 +25343,34 @@ public void polylistToMenus(Polylist item)
 
     });
 
+    final Object[] menuContentsRhythms = adviceMenuItemsRhythms.toArray();
 
+    adviceScrollListRhythms.setModel(new javax.swing.AbstractListModel()
+    {
+        @Override
+        public int getSize()
+        {
+            return menuContentsRhythms.length;
+        }
+        @Override
+        public Object getElementAt(int i)
+        {
+            return menuContentsRhythms[i];
+        }
+        
+    });
+    
     final Object[] menuContentsCells = adviceMenuItemsCells.toArray();
 
     adviceScrollListCells.setModel(new javax.swing.AbstractListModel()
     {
+    @Override
     public int getSize()
       {
         return menuContentsCells.length;
       }
 
+    @Override
     public Object getElementAt(int i)
       {
         return menuContentsCells[i];
@@ -25250,11 +25382,13 @@ public void polylistToMenus(Polylist item)
 
     adviceScrollListIdioms.setModel(new javax.swing.AbstractListModel()
     {
+    @Override
     public int getSize()
       {
         return menuContentsIdioms.length;
       }
 
+    @Override
     public Object getElementAt(int i)
       {
         return menuContentsIdioms[i];
@@ -25266,6 +25400,7 @@ public void polylistToMenus(Polylist item)
 
     adviceScrollListLicks.setModel(new javax.swing.AbstractListModel()
     {
+    @Override
     public int getSize()
       {
         return menuContentsLicks.length;
@@ -25282,11 +25417,13 @@ public void polylistToMenus(Polylist item)
 
     adviceScrollListQuotes.setModel(new javax.swing.AbstractListModel()
     {
+    @Override
     public int getSize()
       {
         return menuContentsQuotes.length;
       }
 
+    @Override
     public Object getElementAt(int i)
       {
         return menuContentsQuotes[i];
@@ -25299,11 +25436,13 @@ public void polylistToMenus(Polylist item)
 
     adviceScrollListBricks.setModel(new javax.swing.AbstractListModel()
     {
+    @Override
     public int getSize()
       {
         return menuContentsBricks.length;
       }
 
+    @Override
     public Object getElementAt(int i)
       {
         return menuContentsBricks[i];
@@ -25365,6 +25504,7 @@ public void displayAdviceTree(int selectedIndex, int row, Note note)
           }
 
         adviceMenuItemsScales = new ArrayList<Object>();
+        adviceMenuItemsRhythms = new ArrayList<Object>();
         adviceMenuItemsCells = new ArrayList<Object>();
         adviceMenuItemsIdioms = new ArrayList<Object>();
         adviceMenuItemsLicks = new ArrayList<Object>();
@@ -25872,6 +26012,7 @@ private ImageIcon pauseButton =
     private javax.swing.JList adviceScrollListIdioms;
     private javax.swing.JList adviceScrollListLicks;
     private javax.swing.JList adviceScrollListQuotes;
+    private javax.swing.JList<String> adviceScrollListRhythms;
     private javax.swing.JList adviceScrollListScales;
     private javax.swing.JTabbedPane adviceTabbedPane;
     private javax.swing.JSpinner adviceTargetSpinner;
@@ -26461,6 +26602,7 @@ private ImageIcon pauseButton =
     private javax.swing.JScrollPane scrollLicks;
     private javax.swing.JScrollPane scrollNotes;
     private javax.swing.JScrollPane scrollQuotes;
+    private javax.swing.JScrollPane scrollRhythms;
     private javax.swing.JScrollPane scrollScales;
     private javax.swing.JLabel sectionLabel;
     private javax.swing.JButton sectionPreferencesBtn;
