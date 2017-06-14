@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -5589,6 +5589,10 @@ public String extract(String title, ExtractMode mode, int grade,
 
         switch( mode )
           {
+            case RHYTHM:
+                out.write("rhythm (notes ");
+                break;
+                
             case CELL:
                 out.write("cell (notes ");
                 break;
@@ -5612,6 +5616,7 @@ public String extract(String title, ExtractMode mode, int grade,
 
         switch( mode )
           {
+            case RHYTHM:
             case CELL:
             case IDIOM:
             case LICK:
@@ -5629,6 +5634,10 @@ public String extract(String title, ExtractMode mode, int grade,
                 else
                   {
                     prevNote = prevNote.copy();
+                    if( mode == ExtractMode.RHYTHM )
+                          {
+                          prevNote.setPitch(60);
+                          }
                   }
 
                 int index = startIndex + 1;
@@ -5638,6 +5647,10 @@ public String extract(String title, ExtractMode mode, int grade,
                     Note unit = (Note) melody.getUnit(index);
                     if( unit != null )
                       {
+                        if( mode == ExtractMode.RHYTHM )
+                          {
+                          unit.setPitch(60);
+                          }
                         int duration = index - prevIndex;
                         //System.out.println("stopIndex = " + stopIndex + ", prevIndex = " + prevIndex + ", duration = " + duration);
                         prevNote.setRhythmValue(duration);
@@ -5679,6 +5692,9 @@ public String extract(String title, ExtractMode mode, int grade,
         // Get chord or render
         switch( mode )
           {
+            case RHYTHM:
+                out.write(")");
+                break;
             case CELL:
             case IDIOM:
                 out.write(")(chords ");
@@ -5710,6 +5726,8 @@ public String extract(String title, ExtractMode mode, int grade,
 
         switch( mode )
           {
+            case RHYTHM:
+                break;
             case CELL:
             case IDIOM:
             case LICK:
@@ -5776,6 +5794,9 @@ public String extract(String title, ExtractMode mode, int grade,
 
         switch( mode )
           {
+            case RHYTHM:
+                out.write(") (name " + title);
+                break;
             case CELL:
             case IDIOM:
                 //prevChord.saveLeadsheet(out, metre, false);
@@ -5837,8 +5858,9 @@ public String extract(String title, ExtractMode mode, int grade,
 /**
  * Saves the current selection to the vocabulary file.
  * Unlike other extracts, this extracts text, not a Part.
- * @param title the title of the selection
- * @param asLick true if saving as lick, false if as cell
+     * @param startIndex
+     * @param stopIndex
+     * @return 
  */
 public Polylist extractChordNamePolylist(int startIndex, int stopIndex)
   {

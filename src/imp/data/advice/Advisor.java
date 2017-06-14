@@ -567,7 +567,7 @@ public static boolean addOneRule(Object ob, int serial, boolean marked,
     for( int i = 0; i < first.length(); ++i )
       {
       Object nth = first.nth(i);
-      if( nth instanceof Polylist )
+      if( nth instanceof Polylist && ((Polylist)nth).nonEmpty() )
         {
         if( ((String)((Polylist)nth).first()).equals("grade") )
           {
@@ -608,7 +608,6 @@ public static boolean addOneRule(Object ob, int serial, boolean marked,
       }
     else if( dispatch.equals(RHYTHM) )
       {
-      //System.out.println("adding rhythm " + first.rest());
       return addCell(RHYTHM_CELL, first.rest(), serial, marked);
       }
     else if( dispatch.equals(CELL) )
@@ -840,7 +839,7 @@ static boolean addCell(int flavor, Polylist cell, int serial, boolean marked)
     }
   else
     {
-  cells[flavor] = CellForm.makeCellForms(cell, serial, marked, cells[flavor],
+    cells[flavor] = CellForm.makeCellForms(cell, serial, marked, cells[flavor],
           flavor);
     }
 
