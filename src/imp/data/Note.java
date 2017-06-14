@@ -787,6 +787,7 @@ public void setEnharmonic(boolean[] enh)
  * Returns a copy of the Note
  * @return Note     a copy of the Note
  */
+@Override
 public Note copy()
   {
   Note newNote = new Note(pitch, accidental, rhythmValue);

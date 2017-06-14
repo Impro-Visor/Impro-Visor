@@ -42,10 +42,22 @@ public class Rest extends Note {
         super(REST, Accidental.NOTHING);
     }
 
+/**
+ * Returns a copy of the Rest
+ * @return Rest     a copy of the Rest
+ */
+@Override
+public Note copy()
+  {
+  Note newNote = new Rest(rhythmValue);
+  return newNote;
+  }
+
     /**
      * Returns a String representation of the Note
      * @return String   the String representation of the Note
      */
+    @Override
     public String toString() {
         String noteData = new String("REST: [RhythmValue = " + 
                                                  rhythmValue + "]");

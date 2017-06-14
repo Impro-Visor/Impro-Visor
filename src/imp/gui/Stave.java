@@ -5634,7 +5634,7 @@ public String extract(String title, ExtractMode mode, int grade,
                 else
                   {
                     prevNote = prevNote.copy();
-                    if( mode == ExtractMode.RHYTHM )
+                    if( mode == ExtractMode.RHYTHM && !(prevNote instanceof Rest))
                           {
                           prevNote.setPitch(60);
                           }
@@ -5647,16 +5647,18 @@ public String extract(String title, ExtractMode mode, int grade,
                     Note unit = (Note) melody.getUnit(index);
                     if( unit != null )
                       {
-                        if( mode == ExtractMode.RHYTHM )
+                        unit = unit.copy();
+                        //System.out.println("unit = " + unit + " prev = " + prevNote);
+                        if( mode == ExtractMode.RHYTHM && !(unit instanceof Rest) )
                           {
-                          unit.setPitch(60);
+                          unit.setPitch(60); // C above middle C
                           }
                         int duration = index - prevIndex;
                         //System.out.println("stopIndex = " + stopIndex + ", prevIndex = " + prevIndex + ", duration = " + duration);
                         prevNote.setRhythmValue(duration);
                         prevNote.saveLeadsheet(out, metre, false); // no linebreaks
 
-                        prevNote = unit.copy();
+                        prevNote = unit;
                         prevIndex = index;
                         //unit.saveLeadsheet(out, metre, false); // no linebreaks
                       }
