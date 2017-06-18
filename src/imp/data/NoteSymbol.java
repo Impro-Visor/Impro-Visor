@@ -150,7 +150,12 @@ public class NoteSymbol extends MelodySymbol
        return makeNoteSymbol(new Note(midiValue));
      }
 
-    public static NoteSymbol makeNoteSymbol(String string, int transposition)
+   public static NoteSymbol makeNoteSymbol(int midiValue, int duration)
+     {
+       return makeNoteSymbol(new Note(midiValue, duration));
+     }
+
+   public static NoteSymbol makeNoteSymbol(String string, int transposition)
      {
      int len = string.length();
 
@@ -743,16 +748,24 @@ public static Polylist makeNoteSymbolList(Polylist stringList, int rise)
               {
                 String string = (String) L.first();
                 Double prob = ((Number) L.second()).doubleValue();
-                NoteSymbol ns = makeNoteSymbol(string).transpose(rise);
-                ns.setProbability(prob);
-                R = R.cons(ns);
+                NoteSymbol ns = makeNoteSymbol(string);
+                if( ns != null ) // Ignore invalid NoteSymbol
+                  {
+                  ns = ns.transpose(rise);
+                  ns.setProbability(prob);
+                  R = R.cons(ns);
+                  }
               }
           }
         else
           {
             String string = (String) stringList.first();
-            NoteSymbol ns = makeNoteSymbol(string).transpose(rise);
-            R = R.cons(ns);
+            NoteSymbol ns = makeNoteSymbol(string);
+            if( ns != null ) // Ignore invalid NoteSymbol
+              {
+              ns = ns.transpose(rise);
+              R = R.cons(ns);
+              }
           }
         stringList = stringList.rest();
       }

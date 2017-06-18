@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * Currently this is not used, as it was not fully developed.
  * StreamRepeatTRM defines a response mode for Active Trading which generates the response using an Autoencoder Neural Network while the user is playing.
  * @author Nicholas Weintraut
  */

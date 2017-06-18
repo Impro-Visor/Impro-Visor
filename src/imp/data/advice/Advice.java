@@ -43,6 +43,8 @@ public class Advice implements Constants {
      */
     protected String name;
 
+    protected String chordRoot;
+    
     /**
      * Creates a new piece of Advice.
      * @param name      a String containing the display name for the Advice

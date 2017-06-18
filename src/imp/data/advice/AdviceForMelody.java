@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,6 @@
  * merchantability or fitness for a particular purpose.  See the
  * GNU General Public License for more details.
  *
-
  * You should have received a copy of the GNU General Public License
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -43,31 +42,24 @@ public class AdviceForMelody extends Advice {
     /**
      * the notes in the cell
      */
-    private Polylist notes;
-
-    /**
-     * the root of the chord to transpose to
-     */
-    private String chordRoot;
+    protected Polylist notes;
     
     /**
      * the key of the chord to transpose to
      */
-    private Key key;
+    protected Key key;
     
-    private int[] metre = new int[2];
+    protected int[] metre = new int[2];
 
     MelodyPart newPart;
 
     Note firstNote;
 
-    private int serial;
+    protected int serial;
 
-    private int profileNumber;
+    protected int profileNumber;
 
-    boolean mark = false;
-
-    
+    boolean mark = false;    
 
     public AdviceForMelody(String name, Polylist notes, String chordRoot, Key key, int[] metre, int profileNumber)
       {

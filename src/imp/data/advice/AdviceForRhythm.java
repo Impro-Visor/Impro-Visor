@@ -22,6 +22,7 @@ package imp.data.advice;
 
 import imp.data.Key;
 import imp.data.Note;
+import imp.data.NoteSymbol;
 import polya.*;
 
 /**
@@ -51,4 +52,36 @@ public class AdviceForRhythm
     super(name, serial, notes, chordRoot, key, metre, firstNote, profileNumber);
     }
 
+  public AdviceForMelody makeAdviceForMelody(Polylist newNoteSymbols)
+  {
+      AdviceForMelody parent = (AdviceForMelody)this;
+      if( newNoteSymbols.isEmpty() )
+        {
+          return parent;
+        }
+      Polylist L = parent.notes;
+      Polylist M = Polylist.nil;
+      PolylistBuffer buffer = new PolylistBuffer();
+      int i = 0;
+      while( L.nonEmpty() )
+        {
+        if( M.isEmpty() )
+          {
+            M = newNoteSymbols;
+          }
+        NoteSymbol noteSymbol = (NoteSymbol)L.first();
+        if( noteSymbol.isRest() )
+          {
+            buffer.append(noteSymbol);
+          }
+        else
+          {
+            NoteSymbol newPitchNoteSymbol = (NoteSymbol)M.first();
+            buffer.append(NoteSymbol.makeNoteSymbol(newPitchNoteSymbol.getMIDI(), noteSymbol.getDuration()));
+          }
+        L = L.rest();
+        M = M.rest();
+        }
+      return new AdviceForMelody(name, serial, buffer.toPolylist(), chordRoot, key, metre, profileNumber);
+  }
 }

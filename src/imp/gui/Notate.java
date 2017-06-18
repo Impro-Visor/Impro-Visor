@@ -1014,7 +1014,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     setDefaultButton(duplicateLickDialog, ignoreDuplicate);
 
     sectionInfo = score.getChordProg().getSectionInfo().copy();
-
+    
     setTempo(score.getTempo());
 
     showAdviceButton.setSelected(adviceInitiallyOpen);
@@ -1331,8 +1331,9 @@ public Critic getCritic()
         java.awt.GridBagConstraints gridBagConstraints;
 
         adviceFrame = new javax.swing.JFrame();
-        adviceTargetSpinner = new javax.swing.JSpinner();
         adviceFilterTextField = new javax.swing.JTextField();
+        adviceTargetSpinner = new javax.swing.JSpinner();
+        advicePitchesTextField = new javax.swing.JTextField();
         adviceTabbedPane = new javax.swing.JTabbedPane();
         scrollNotes = new javax.swing.JScrollPane();
         adviceTree = new javax.swing.JTree();
@@ -2200,19 +2201,6 @@ public Critic getCritic()
         });
         adviceFrame.getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        adviceTargetSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"c-", "c#-", "d-", "eb-", "e-", "f-", "f#-", "g-", "ab-", "a-", "bb-", "b-", "c", "c#", "d", "eb", "e", "f", "f#", "g", "ab", "a", "bb", "b", "c+", "c#+", "d+", "eb+", "e+", "f+", "f+#", "g+", "ab+", "a+", "bb+", "b+"}));
-        adviceTargetSpinner.setToolTipText("Select the target pitch center for Advice melodies.");
-        adviceTargetSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Target Center", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        adviceTargetSpinner.setMaximumSize(new java.awt.Dimension(150, 50));
-        adviceTargetSpinner.setMinimumSize(new java.awt.Dimension(150, 50));
-        adviceTargetSpinner.setPreferredSize(new java.awt.Dimension(150, 50));
-        adviceTargetSpinner.setValue("c+");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        adviceFrame.getContentPane().add(adviceTargetSpinner, gridBagConstraints);
-
         adviceFilterTextField.setBackground(new java.awt.Color(238, 238, 238));
         adviceFilterTextField.setBorder(javax.swing.BorderFactory.createTitledBorder("Filter"));
         adviceFilterTextField.setMaximumSize(new java.awt.Dimension(2147483647, 50));
@@ -2226,10 +2214,41 @@ public Critic getCritic()
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         adviceFrame.getContentPane().add(adviceFilterTextField, gridBagConstraints);
+
+        adviceTargetSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"c-", "c#-", "d-", "eb-", "e-", "f-", "f#-", "g-", "ab-", "a-", "bb-", "b-", "c", "c#", "d", "eb", "e", "f", "f#", "g", "ab", "a", "bb", "b", "c+", "c#+", "d+", "eb+", "e+", "f+", "f+#", "g+", "ab+", "a+", "bb+", "b+"}));
+        adviceTargetSpinner.setToolTipText("Select the target pitch center for Advice melodies.");
+        adviceTargetSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Target Center", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        adviceTargetSpinner.setMaximumSize(new java.awt.Dimension(115, 50));
+        adviceTargetSpinner.setMinimumSize(new java.awt.Dimension(115, 50));
+        adviceTargetSpinner.setPreferredSize(new java.awt.Dimension(115, 50));
+        adviceTargetSpinner.setValue("c+");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        adviceFrame.getContentPane().add(adviceTargetSpinner, gridBagConstraints);
+
+        advicePitchesTextField.setBackground(new java.awt.Color(238, 238, 238));
+        advicePitchesTextField.setBorder(javax.swing.BorderFactory.createTitledBorder("Pitches"));
+        advicePitchesTextField.setMaximumSize(new java.awt.Dimension(2147483647, 50));
+        advicePitchesTextField.setMinimumSize(new java.awt.Dimension(200, 50));
+        advicePitchesTextField.setPreferredSize(new java.awt.Dimension(200, 50));
+        advicePitchesTextField.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                advicePitchesTextFieldChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        adviceFrame.getContentPane().add(advicePitchesTextField, gridBagConstraints);
 
         adviceTabbedPane.setMinimumSize(new java.awt.Dimension(500, 400));
         adviceTabbedPane.setPreferredSize(new java.awt.Dimension(500, 400));
@@ -2521,7 +2540,7 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -4820,9 +4839,7 @@ public Critic getCritic()
         saveLickFrame.setTitle("Save Selection");
         saveLickFrame.setAlwaysOnTop(true);
         saveLickFrame.setLocation(new java.awt.Point(0, 25));
-        saveLickFrame.setMaximumSize(new java.awt.Dimension(900, 300));
         saveLickFrame.setMinimumSize(new java.awt.Dimension(900, 300));
-        saveLickFrame.setPreferredSize(new java.awt.Dimension(900, 300));
         saveLickFrame.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lickTItleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -17882,9 +17899,26 @@ public void moveLeft()
 
         setItemStates();
     }//GEN-LAST:event_adviceTreeMousePressed
-
+/**
+ * Using the selected Advice object, insert a melody at the current selection
+ * point. In the case of AdviceForRhythm, use the Pitches field in the Advice
+ * menu to make an AdviceForMelody from the AdviceForRhythm. The notes in the
+ * Pitches field are used for their pitches only, not their durations.
+ * The durations are determined by the durations in the AdviceForRhythm.
+ */
+    
 void adviceSelected(Object object)
   {
+    if( object instanceof AdviceForRhythm )
+      {
+        // Convert AdviceForRhythm into AdviceForMelody, using the Pitches field.
+        AdviceForRhythm rhythmAdvice = (AdviceForRhythm)object;
+
+        String newPitchesString = advicePitchesTextField.getText();
+        Polylist newPitchesPolylist = Polylist.PolylistFromString(newPitchesString);
+        Polylist newPitches = NoteSymbol.makeNoteSymbolList(newPitchesPolylist, 0);
+        object = rhythmAdvice.makeAdviceForMelody(newPitches);
+      }
     if( object instanceof Advice && getCurrentSelectionStart() != OUT_OF_BOUNDS )
       {
         if( adviceUsed )
@@ -20077,7 +20111,7 @@ public void newNotate()
     
     ChordPart chords = new ChordPart();
     
-    chords.addChord(new Chord("NC")); // Necessary to preven screw-ups
+    chords.addChord(new Chord("NC")); // Some chord is ecessary to preven screw-ups
 
     newScore.setChordProg(chords);
 
@@ -24071,6 +24105,11 @@ private boolean isDotted = false;
         saveSelectionMode = ExtractMode.RHYTHM;
     }//GEN-LAST:event_rhythmRadioButtonActionPerformed
 
+    private void advicePitchesTextFieldChanged(java.awt.event.ActionEvent evt)//GEN-FIRST:event_advicePitchesTextFieldChanged
+    {//GEN-HEADEREND:event_advicePitchesTextFieldChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_advicePitchesTextFieldChanged
+
     public void openGrammarMenuDialog()
     {
         grammarMenuDialog.setVisible(true);
@@ -26057,6 +26096,7 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField adviceFilterTextField;
     protected javax.swing.JFrame adviceFrame;
     private javax.swing.JMenuItem adviceMI;
+    private javax.swing.JTextField advicePitchesTextField;
     private javax.swing.JList adviceScrollListBricks;
     private javax.swing.JList adviceScrollListCells;
     private javax.swing.JList adviceScrollListIdioms;

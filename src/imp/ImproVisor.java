@@ -45,7 +45,7 @@ import polya.*;
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "9.01";
+    public static final String version = "9.1";
     
     private static boolean firstTime = false;
     
