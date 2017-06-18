@@ -25543,8 +25543,13 @@ public void polylistToMenus(Polylist item)
 /**
  * major sub-trees to be excluded from Notes advice tree
  */
-static Polylist excludeFromTree = Polylist.list(" scale tones", " cells",
-                                                " idioms", " licks", " quotes", " bricks"); // TODO: Should " bricks" be in this?
+static Polylist excludeFromTree = Polylist.list(" scale tones", 
+                                                " rhythms", 
+                                                " cells",
+                                                " idioms", 
+                                                " licks", 
+                                                " quotes", 
+                                                " bricks"); 
 
 /**
  * Display the advice tree for the chords around the given index
