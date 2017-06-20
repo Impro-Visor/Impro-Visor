@@ -273,7 +273,7 @@ public class NoteSymbol extends MelodySymbol
     return probability;
     }
 
-    public NoteSymbol getRestSymbol(int duration)
+    public static NoteSymbol getRestSymbol(int duration)
     {
     return new NoteSymbol(null, 0, duration);
     }

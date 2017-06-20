@@ -77,7 +77,15 @@ public class AdviceForRhythm
         else
           {
             NoteSymbol newPitchNoteSymbol = (NoteSymbol)M.first();
-            buffer.append(NoteSymbol.makeNoteSymbol(newPitchNoteSymbol.getMIDI(), noteSymbol.getDuration()));
+            int dur = noteSymbol.getDuration();
+            if( newPitchNoteSymbol.isRest() )
+              {
+              buffer.append(NoteSymbol.getRestSymbol(dur));
+              }
+            else
+              {
+              buffer.append(NoteSymbol.makeNoteSymbol(newPitchNoteSymbol.getMIDI(), dur));
+              }
           }
         L = L.rest();
         M = M.rest();
