@@ -21,9 +21,11 @@
 package imp.data;
 
 import imp.Constants;
+import imp.data.advice.AdviceForMelody;
 import java.io.Serializable;
 import java.util.ArrayList;
 import polya.Polylist;
+import polya.PolylistBuffer;
 
 /**
  * A NoteSymbol represents a note symbolically, and is typically created
@@ -935,7 +937,55 @@ public static final Accidental accidentalByKey[][] = {
                                          { S, S,  N,  S,  N,  S, S,  N, S,  N, S, N}, /* f# */
                                          { S, S,  N,  S,  N,  S, S,  N, S,  N, S, N}  /* c# */
                                          };
+/**
+ * newPitchesForNotes makes from a Polylist notes of NoteSymbols a new
+ * Polylist of NoteSymbols, with the same durations as in notes, but
+ * with pitches determined from Polylist pitches of NoteSymbols.
+ * If there are few NoteSymbols in pitches than there are in notes,
+ * then pitches is used again from the beginning, and so on, until
+ * all NoteSymbols in notes are used up.
+ * @param notes
+ * @param pitches
+ * @return 
+ */
 
-
-
+static public Polylist newPitchesForNotes(Polylist notes, Polylist pitches)
+  {
+      if( pitches.isEmpty() )
+        {
+          return notes;
+        }
+      Polylist L = notes;
+      Polylist M = Polylist.nil;
+      PolylistBuffer buffer = new PolylistBuffer();
+      int i = 0;
+      while( L.nonEmpty() )
+        {
+        if( M.isEmpty() )
+          {
+            M = pitches;
+          }
+        NoteSymbol noteSymbol = (NoteSymbol)L.first();
+        if( noteSymbol.isRest() )
+          {
+            buffer.append(noteSymbol);
+          }
+        else
+          {
+            NoteSymbol newPitchNoteSymbol = (NoteSymbol)M.first();
+            int dur = noteSymbol.getDuration();
+            if( newPitchNoteSymbol.isRest() )
+              {
+              buffer.append(NoteSymbol.getRestSymbol(dur));
+              }
+            else
+              {
+              buffer.append(NoteSymbol.makeNoteSymbol(newPitchNoteSymbol.getMIDI(), dur));
+              }
+          }
+        L = L.rest();
+        M = M.rest();
+        }
+      return buffer.toPolylist();
+  }
 }

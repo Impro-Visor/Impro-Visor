@@ -52,44 +52,13 @@ public class AdviceForRhythm
     super(name, serial, notes, chordRoot, key, metre, firstNote, profileNumber);
     }
 
-  public AdviceForMelody makeAdviceForMelody(Polylist newNoteSymbols)
+  public AdviceForMelody makeAdviceForMelody(Polylist pitches)
   {
       AdviceForMelody parent = (AdviceForMelody)this;
-      if( newNoteSymbols.isEmpty() )
-        {
-          return parent;
-        }
-      Polylist L = parent.notes;
-      Polylist M = Polylist.nil;
-      PolylistBuffer buffer = new PolylistBuffer();
-      int i = 0;
-      while( L.nonEmpty() )
-        {
-        if( M.isEmpty() )
-          {
-            M = newNoteSymbols;
-          }
-        NoteSymbol noteSymbol = (NoteSymbol)L.first();
-        if( noteSymbol.isRest() )
-          {
-            buffer.append(noteSymbol);
-          }
-        else
-          {
-            NoteSymbol newPitchNoteSymbol = (NoteSymbol)M.first();
-            int dur = noteSymbol.getDuration();
-            if( newPitchNoteSymbol.isRest() )
-              {
-              buffer.append(NoteSymbol.getRestSymbol(dur));
-              }
-            else
-              {
-              buffer.append(NoteSymbol.makeNoteSymbol(newPitchNoteSymbol.getMIDI(), dur));
-              }
-          }
-        L = L.rest();
-        M = M.rest();
-        }
-      return new AdviceForMelody(name, serial, buffer.toPolylist(), chordRoot, key, metre, profileNumber);
+      
+      Polylist newNotes = NoteSymbol.newPitchesForNotes(parent.notes, pitches);
+      
+      return new AdviceForMelody(name, serial, newNotes, chordRoot, key, metre, profileNumber);
   }
+  
 }
