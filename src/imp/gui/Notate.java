@@ -1348,55 +1348,42 @@ public Critic getCritic()
         scrollNotes = new javax.swing.JScrollPane();
         adviceTree = new javax.swing.JTree();
         scalesSplitPane = new javax.swing.JSplitPane();
-        scrollScales = new javax.swing.JScrollPane();
-        adviceScrollListScales = new javax.swing.JList();
-        scalesSplitPane2 = new javax.swing.JSplitPane();
         scrollRecentScales = new javax.swing.JScrollPane();
         adviceRecentScrollListScales = new javax.swing.JList<>();
-        scalesClearRecentButton = new javax.swing.JButton();
+        scrollScales = new javax.swing.JScrollPane();
+        adviceScrollListScales = new javax.swing.JList();
         cellsSplitPane = new javax.swing.JSplitPane();
         scrollCells = new javax.swing.JScrollPane();
         adviceScrollListCells = new javax.swing.JList();
-        cellsSplitPane2 = new javax.swing.JSplitPane();
         scrollRecentCells = new javax.swing.JScrollPane();
         adviceRecentScrollListCells = new javax.swing.JList<>();
-        cellsClearRecentButton = new javax.swing.JButton();
         rhythmsSplitPane = new javax.swing.JSplitPane();
-        scrollRhythms = new javax.swing.JScrollPane();
-        adviceScrollListRhythms = new javax.swing.JList<>();
-        rhythmsSplitPane2 = new javax.swing.JSplitPane();
         scrollRecentRhythms = new javax.swing.JScrollPane();
         adviceRecentScrollListRhythms = new javax.swing.JList<>();
-        rhythmsClearRecentButton = new javax.swing.JButton();
+        scrollRhythms = new javax.swing.JScrollPane();
+        adviceScrollListRhythms = new javax.swing.JList<>();
         idiomsSplitPane = new javax.swing.JSplitPane();
-        scrollIdioms = new javax.swing.JScrollPane();
-        adviceScrollListIdioms = new javax.swing.JList();
-        idiomsSplitPane2 = new javax.swing.JSplitPane();
         scrollRecentIdioms = new javax.swing.JScrollPane();
         adviceRecentScrollListIdioms = new javax.swing.JList<>();
-        idiomsClearRecentButton = new javax.swing.JButton();
+        scrollIdioms = new javax.swing.JScrollPane();
+        adviceScrollListIdioms = new javax.swing.JList();
         licksSplitPane = new javax.swing.JSplitPane();
-        scrollLicks = new javax.swing.JScrollPane();
-        adviceScrollListLicks = new javax.swing.JList();
-        licksSplitPane2 = new javax.swing.JSplitPane();
         scrollRecentLicks = new javax.swing.JScrollPane();
         adviceRecentScrollListLicks = new javax.swing.JList<>();
-        licksClearRecentButton = new javax.swing.JButton();
+        scrollLicks = new javax.swing.JScrollPane();
+        adviceScrollListLicks = new javax.swing.JList();
         quotesSplitPane = new javax.swing.JSplitPane();
         scrollQuotes = new javax.swing.JScrollPane();
         adviceScrollListQuotes = new javax.swing.JList();
-        quotesSplitPane2 = new javax.swing.JSplitPane();
         scrollRecentQuotes = new javax.swing.JScrollPane();
         adviceRecentScrollListQuotes = new javax.swing.JList<>();
-        quotesClearRecentButton = new javax.swing.JButton();
         bricksSplitPane = new javax.swing.JSplitPane();
-        scrollBricks = new javax.swing.JScrollPane();
-        adviceScrollListBricks = new javax.swing.JList();
-        bricksSplitPane2 = new javax.swing.JSplitPane();
         scrollRecentBricks = new javax.swing.JScrollPane();
         adviceRecentScrollListBricks = new javax.swing.JList<>();
-        bricksClearRecentButton = new javax.swing.JButton();
+        scrollBricks = new javax.swing.JScrollPane();
+        adviceScrollListBricks = new javax.swing.JList();
         adviceTransferNoteSelectionToTextWindowButton = new javax.swing.JButton();
+        clearRecentButton = new javax.swing.JButton();
         preferencesDialog = new javax.swing.JDialog();
         buttonPanel = new javax.swing.JPanel();
         globalBtn = new javax.swing.JToggleButton();
@@ -2265,14 +2252,14 @@ public Critic getCritic()
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = -7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.insets = new java.awt.Insets(12, 18, 0, 0);
         adviceFrame.getContentPane().add(adviceFilterTextField, gridBagConstraints);
 
+        adviceTargetSpinner.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         adviceTargetSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"c-", "c#-", "d-", "eb-", "e-", "f-", "f#-", "g-", "ab-", "a-", "bb-", "b-", "c", "c#", "d", "eb", "e", "f", "f#", "g", "ab", "a", "bb", "b", "c+", "c#+", "d+", "eb+", "e+", "f+", "f+#", "g+", "ab+", "a+", "bb+", "b+"}));
         adviceTargetSpinner.setToolTipText("Select the target pitch center for Advice melodies.");
-        adviceTargetSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Target Center", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        adviceTargetSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Center", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         adviceTargetSpinner.setMaximumSize(new java.awt.Dimension(115, 50));
         adviceTargetSpinner.setMinimumSize(new java.awt.Dimension(115, 50));
         adviceTargetSpinner.setPreferredSize(new java.awt.Dimension(115, 50));
@@ -2281,9 +2268,8 @@ public Critic getCritic()
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = -2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 0);
         adviceFrame.getContentPane().add(adviceTargetSpinner, gridBagConstraints);
 
         advicePitchesTextField.setToolTipText("Use these pitches with Rhythms");
@@ -2302,13 +2288,12 @@ public Critic getCritic()
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = -7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 0);
         adviceFrame.getContentPane().add(advicePitchesTextField, gridBagConstraints);
 
-        adviceTabbedPane.setMinimumSize(new java.awt.Dimension(500, 400));
-        adviceTabbedPane.setPreferredSize(new java.awt.Dimension(500, 400));
+        adviceTabbedPane.setMinimumSize(new java.awt.Dimension(600, 400));
+        adviceTabbedPane.setPreferredSize(new java.awt.Dimension(600, 400));
         adviceTabbedPane.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseReleased(java.awt.event.MouseEvent evt)
@@ -2334,18 +2319,18 @@ public Critic getCritic()
 
         adviceTree.setMaximumSize(new java.awt.Dimension(400, 800));
         adviceTree.setMinimumSize(new java.awt.Dimension(50, 50));
-        adviceTree.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
-                adviceTreeMousePressed(evt);
-            }
-        });
         adviceTree.addFocusListener(new java.awt.event.FocusAdapter()
         {
             public void focusGained(java.awt.event.FocusEvent evt)
             {
                 adviceFocusGained(evt);
+            }
+        });
+        adviceTree.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mousePressed(java.awt.event.MouseEvent evt)
+            {
+                adviceTreeMousePressed(evt);
             }
         });
         adviceTree.addKeyListener(new java.awt.event.KeyAdapter()
@@ -2361,6 +2346,18 @@ public Critic getCritic()
 
         scalesSplitPane.setDividerLocation(64);
         scalesSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        adviceRecentScrollListScales.setToolTipText("");
+        adviceRecentScrollListScales.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceRecentScrollListScalesMouseClicked(evt);
+            }
+        });
+        scrollRecentScales.setViewportView(adviceRecentScrollListScales);
+
+        scalesSplitPane.setTopComponent(scrollRecentScales);
 
         scrollScales.setMinimumSize(new java.awt.Dimension(100, 100));
         scrollScales.setPreferredSize(new java.awt.Dimension(300, 200));
@@ -2392,33 +2389,6 @@ public Critic getCritic()
         scrollScales.setViewportView(adviceScrollListScales);
 
         scalesSplitPane.setBottomComponent(scrollScales);
-
-        scalesSplitPane2.setDividerLocation(500);
-
-        adviceRecentScrollListScales.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        adviceRecentScrollListScales.setToolTipText("");
-        adviceRecentScrollListScales.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceRecentScrollListScalesMouseClicked(evt);
-            }
-        });
-        scrollRecentScales.setViewportView(adviceRecentScrollListScales);
-
-        scalesSplitPane2.setTopComponent(scrollRecentScales);
-
-        scalesClearRecentButton.setText("Clear Recent");
-        scalesClearRecentButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                scalesClearRecentButtonActionPerformed(evt);
-            }
-        });
-        scalesSplitPane2.setRightComponent(scalesClearRecentButton);
-
-        scalesSplitPane.setTopComponent(scalesSplitPane2);
 
         adviceTabbedPane.addTab("Scales", scalesSplitPane);
 
@@ -2457,8 +2427,6 @@ public Critic getCritic()
 
         cellsSplitPane.setBottomComponent(scrollCells);
 
-        cellsSplitPane2.setDividerLocation(500);
-
         adviceRecentScrollListCells.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
@@ -2468,24 +2436,31 @@ public Critic getCritic()
         });
         scrollRecentCells.setViewportView(adviceRecentScrollListCells);
 
-        cellsSplitPane2.setTopComponent(scrollRecentCells);
-
-        cellsClearRecentButton.setText("Clear Recent");
-        cellsClearRecentButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cellsClearRecentButtonActionPerformed(evt);
-            }
-        });
-        cellsSplitPane2.setRightComponent(cellsClearRecentButton);
-
-        cellsSplitPane.setTopComponent(cellsSplitPane2);
+        cellsSplitPane.setTopComponent(scrollRecentCells);
 
         adviceTabbedPane.addTab("Cells", cellsSplitPane);
 
         rhythmsSplitPane.setDividerLocation(64);
         rhythmsSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        scrollRecentRhythms.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                scrollRecentRhythmsMouseClicked(evt);
+            }
+        });
+
+        adviceRecentScrollListRhythms.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceRecentScrollListRhythmsMouseClicked(evt);
+            }
+        });
+        scrollRecentRhythms.setViewportView(adviceRecentScrollListRhythms);
+
+        rhythmsSplitPane.setTopComponent(scrollRecentRhythms);
 
         scrollRhythms.addMouseListener(new java.awt.event.MouseAdapter()
         {
@@ -2535,35 +2510,21 @@ public Critic getCritic()
 
         rhythmsSplitPane.setBottomComponent(scrollRhythms);
 
-        rhythmsSplitPane2.setDividerLocation(500);
-
-        adviceRecentScrollListRhythms.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceRecentScrollListRhythmsMouseClicked(evt);
-            }
-        });
-        scrollRecentRhythms.setViewportView(adviceRecentScrollListRhythms);
-
-        rhythmsSplitPane2.setTopComponent(scrollRecentRhythms);
-
-        rhythmsClearRecentButton.setText("Clear Recent");
-        rhythmsClearRecentButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                rhythmsClearRecentButtonActionPerformed(evt);
-            }
-        });
-        rhythmsSplitPane2.setRightComponent(rhythmsClearRecentButton);
-
-        rhythmsSplitPane.setTopComponent(rhythmsSplitPane2);
-
         adviceTabbedPane.addTab("Rhythms", rhythmsSplitPane);
 
         idiomsSplitPane.setDividerLocation(64);
         idiomsSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        adviceRecentScrollListIdioms.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceRecentScrollListIdiomsMouseClicked(evt);
+            }
+        });
+        scrollRecentIdioms.setViewportView(adviceRecentScrollListIdioms);
+
+        idiomsSplitPane.setTopComponent(scrollRecentIdioms);
 
         scrollIdioms.setMinimumSize(new java.awt.Dimension(100, 100));
         scrollIdioms.setPreferredSize(new java.awt.Dimension(300, 200));
@@ -2596,35 +2557,21 @@ public Critic getCritic()
 
         idiomsSplitPane.setBottomComponent(scrollIdioms);
 
-        idiomsSplitPane2.setDividerLocation(500);
-
-        adviceRecentScrollListIdioms.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceRecentScrollListIdiomsMouseClicked(evt);
-            }
-        });
-        scrollRecentIdioms.setViewportView(adviceRecentScrollListIdioms);
-
-        idiomsSplitPane2.setTopComponent(scrollRecentIdioms);
-
-        idiomsClearRecentButton.setText("Clear Recent");
-        idiomsClearRecentButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                idiomsClearRecentButtonActionPerformed(evt);
-            }
-        });
-        idiomsSplitPane2.setRightComponent(idiomsClearRecentButton);
-
-        idiomsSplitPane.setTopComponent(idiomsSplitPane2);
-
         adviceTabbedPane.addTab("Idioms", idiomsSplitPane);
 
         licksSplitPane.setDividerLocation(64);
         licksSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        adviceRecentScrollListLicks.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceRecentScrollListLicksMouseClicked(evt);
+            }
+        });
+        scrollRecentLicks.setViewportView(adviceRecentScrollListLicks);
+
+        licksSplitPane.setTopComponent(scrollRecentLicks);
 
         scrollLicks.setMinimumSize(new java.awt.Dimension(100, 100));
         scrollLicks.setPreferredSize(new java.awt.Dimension(300, 200));
@@ -2656,31 +2603,6 @@ public Critic getCritic()
         scrollLicks.setViewportView(adviceScrollListLicks);
 
         licksSplitPane.setBottomComponent(scrollLicks);
-
-        licksSplitPane2.setDividerLocation(500);
-
-        adviceRecentScrollListLicks.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceRecentScrollListLicksMouseClicked(evt);
-            }
-        });
-        scrollRecentLicks.setViewportView(adviceRecentScrollListLicks);
-
-        licksSplitPane2.setTopComponent(scrollRecentLicks);
-
-        licksClearRecentButton.setText("Clear Recent");
-        licksClearRecentButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                licksClearRecentButtonActionPerformed(evt);
-            }
-        });
-        licksSplitPane2.setRightComponent(licksClearRecentButton);
-
-        licksSplitPane.setTopComponent(licksSplitPane2);
 
         adviceTabbedPane.addTab("Licks", licksSplitPane);
 
@@ -2718,8 +2640,6 @@ public Critic getCritic()
 
         quotesSplitPane.setBottomComponent(scrollQuotes);
 
-        quotesSplitPane2.setDividerLocation(500);
-
         adviceRecentScrollListQuotes.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
@@ -2729,24 +2649,23 @@ public Critic getCritic()
         });
         scrollRecentQuotes.setViewportView(adviceRecentScrollListQuotes);
 
-        quotesSplitPane2.setTopComponent(scrollRecentQuotes);
-
-        quotesClearRecentButton.setText("Clear Recent");
-        quotesClearRecentButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                quotesClearRecentButtonActionPerformed(evt);
-            }
-        });
-        quotesSplitPane2.setRightComponent(quotesClearRecentButton);
-
-        quotesSplitPane.setTopComponent(quotesSplitPane2);
+        quotesSplitPane.setTopComponent(scrollRecentQuotes);
 
         adviceTabbedPane.addTab("Quotes", quotesSplitPane);
 
         bricksSplitPane.setDividerLocation(64);
         bricksSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        adviceRecentScrollListBricks.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                adviceRecentScrollListBricksMouseClicked(evt);
+            }
+        });
+        scrollRecentBricks.setViewportView(adviceRecentScrollListBricks);
+
+        bricksSplitPane.setTopComponent(scrollRecentBricks);
 
         scrollBricks.setMinimumSize(new java.awt.Dimension(100, 100));
         scrollBricks.setPreferredSize(new java.awt.Dimension(300, 200));
@@ -2779,45 +2698,23 @@ public Critic getCritic()
 
         bricksSplitPane.setBottomComponent(scrollBricks);
 
-        bricksSplitPane2.setDividerLocation(500);
-
-        adviceRecentScrollListBricks.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                adviceRecentScrollListBricksMouseClicked(evt);
-            }
-        });
-        scrollRecentBricks.setViewportView(adviceRecentScrollListBricks);
-
-        bricksSplitPane2.setTopComponent(scrollRecentBricks);
-
-        bricksClearRecentButton.setText("Clear Recent");
-        bricksClearRecentButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                bricksClearRecentButtonActionPerformed(evt);
-            }
-        });
-        bricksSplitPane2.setRightComponent(bricksClearRecentButton);
-
-        bricksSplitPane.setTopComponent(bricksSplitPane2);
-
         adviceTabbedPane.addTab("Bricks", bricksSplitPane);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.ipadx = 141;
-        gridBagConstraints.ipady = -45;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 18, 6, 20);
         adviceFrame.getContentPane().add(adviceTabbedPane, gridBagConstraints);
 
+        adviceTransferNoteSelectionToTextWindowButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         adviceTransferNoteSelectionToTextWindowButton.setToolTipText("Transfer selection in leadsheet to Pitches");
-        adviceTransferNoteSelectionToTextWindowButton.setLabel("Transfer");
+        adviceTransferNoteSelectionToTextWindowButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        adviceTransferNoteSelectionToTextWindowButton.setLabel("From Leadsheet");
+        adviceTransferNoteSelectionToTextWindowButton.setMaximumSize(new java.awt.Dimension(126, 25));
+        adviceTransferNoteSelectionToTextWindowButton.setMinimumSize(new java.awt.Dimension(126, 25));
+        adviceTransferNoteSelectionToTextWindowButton.setPreferredSize(new java.awt.Dimension(126, 25));
         adviceTransferNoteSelectionToTextWindowButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -2830,9 +2727,33 @@ public Critic getCritic()
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.insets = new java.awt.Insets(21, 6, 0, 0);
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         adviceFrame.getContentPane().add(adviceTransferNoteSelectionToTextWindowButton, gridBagConstraints);
+
+        clearRecentButton.setBackground(new java.awt.Color(255, 255, 255));
+        clearRecentButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        clearRecentButton.setText("Clear Recent");
+        clearRecentButton.setToolTipText("Clear recently selected items");
+        clearRecentButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        clearRecentButton.setMaximumSize(new java.awt.Dimension(166, 25));
+        clearRecentButton.setMinimumSize(new java.awt.Dimension(166, 25));
+        clearRecentButton.setPreferredSize(new java.awt.Dimension(166, 25));
+        clearRecentButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                clearRecentButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+        adviceFrame.getContentPane().add(clearRecentButton, gridBagConstraints);
 
         preferencesDialog.setTitle("Preferences and Settings");
         preferencesDialog.setAlwaysOnTop(true);
@@ -18199,19 +18120,7 @@ public void moveLeft()
     
 void adviceSelected(Object object)
 {
-    if( object instanceof AdviceForRhythm )
-      {
-        // Convert AdviceForRhythm into AdviceForMelody, using the Pitches field.
-        AdviceForRhythm rhythmAdvice = (AdviceForRhythm)object;
-
-        String newPitchesString = advicePitchesTextField.getText();
-        Polylist newPitchesPolylist = Polylist.PolylistFromString(newPitchesString);
-        Polylist newPitches = NoteSymbol.makeNoteSymbolList(newPitchesPolylist, 0);
-        object = rhythmAdvice.makeAdviceForMelody(newPitches);
-
-      }
-
-    if( object instanceof Advice && getCurrentSelectionStart() != OUT_OF_BOUNDS )
+     if( object instanceof Advice && getCurrentSelectionStart() != OUT_OF_BOUNDS )
       {
         if( adviceUsed )
           {
@@ -18233,11 +18142,72 @@ void adviceSelected(Object object)
         getCurrentStave().repaint();
       }
     adviceJListRecentlyUsedUpdate(object);
+
+  }
+
+/**
+ * Using the selected Advice object, insert a melody at the current selection
+ * point. In the case of AdviceForRhythm, use the Pitches field in the Advice
+ * menu to make an AdviceForMelody from the AdviceForRhythm. The notes in the
+ * Pitches field are used for their pitches only, not their durations.
+ * The durations are determined by the durations in the AdviceForRhythm.
+ */
+    
+void adviceForRhythmSelected(Object object)
+{
+    if( object instanceof AdviceForRhythm )
+      {
+        // Note: Update RecentlyUsed list here, rather than after object
+        // is converted to AdviceForMelody.
+        
+        adviceForRhythmJListRecentlyUsedUpdate(object);
+        // Convert AdviceForRhythm into AdviceForMelody, using the Pitches field.
+        AdviceForRhythm rhythmAdvice = (AdviceForRhythm)object;
+
+        String newPitchesString = advicePitchesTextField.getText();
+        Polylist newPitchesPolylist = Polylist.PolylistFromString(newPitchesString);
+        Polylist newPitches = NoteSymbol.makeNoteSymbolList(newPitchesPolylist, 0);
+        object = rhythmAdvice.makeAdviceForMelody(newPitches);
+      }
+
+    if( getCurrentSelectionStart() != OUT_OF_BOUNDS )
+      {
+        if( adviceUsed )
+          {
+
+            Trace.log(2, "advice used => undo");
+
+            cm.undo();
+          }
+
+        setAdviceUsed();
+
+        ((Advice) object).insertInPart(score.getPart(currTabIndex),
+                                       getCurrentSelectionStart(), cm, this);
+
+        if( ImproVisor.getPlay() )
+          {
+            ImproVisor.playCurrentSelection(false, 0, PlayScoreCommand.USEDRUMS);
+          }
+        getCurrentStave().repaint();
+      }   
   }
 
 public String getAdviceTargetCenter()
 {
     return (String)adviceTargetSpinner.getValue();
+}
+
+/**
+ * adds the recently selected advice items into the upper JList in the advice dialog
+ */
+public void adviceForRhythmJListRecentlyUsedUpdate(Object obj) 
+{
+     if (!adviceRecentRhythms.contains(obj))         //new rhythm added
+        {
+            adviceRecentRhythms.add(obj);
+        }
+        adviceRecentScrollListRhythms.setModel(new RecentRhythmsListModel());
 }
 
 /**
@@ -18250,14 +18220,6 @@ public void adviceJListRecentlyUsedUpdate(Object obj)
         if (!adviceRecentScales.contains(obj))
         {
             adviceRecentScales.add(obj);
-        }
-    }
-    else if (obj instanceof AdviceForRhythm)
-    {
-        //new rhythm added
-        if (!adviceRecentRhythms.contains(obj))
-        {
-            adviceRecentRhythms.add(obj);
         }
     }
     else if (obj instanceof AdviceForCell)
@@ -18296,8 +18258,6 @@ public void adviceJListRecentlyUsedUpdate(Object obj)
         }
     }
 
-        adviceRecentScrollListRhythms.setModel(new RecentRhythmsListModel());
-        
         adviceRecentScrollListScales.setModel(new RecentScalesListModel());
         
         adviceRecentScrollListCells.setModel(new RecentCellsListModel());
@@ -18443,6 +18403,21 @@ public class RecentBricksListModel extends AbstractListModel
         fireContentsChanged(this, 0, getSize());
     }
 }
+
+//public void adviceJListRecentRhythmUpdate(Object obj)
+//{
+//    if (obj instanceof AdviceForMelody)
+//    {
+//        
+//        //new rhythm added
+//        if (!adviceRecentRhythms.contains(obj))
+//        {
+//            adviceRecentRhythms.add(obj);
+//        }
+//    }
+//    adviceRecentScrollListRhythms.setModel(new RecentRhythmsListModel());
+// 
+//}
 /**
  *
  * Displays an internal frame that allows the user to override the number
@@ -24099,7 +24074,7 @@ public void setMaxPitch(int value)
     }//GEN-LAST:event_enterLickTitleActionPerformed
 
     private void adviceTabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adviceTabbedPaneMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_adviceTabbedPaneMouseClicked
 
     private void adviceTabbedPaneMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adviceTabbedPaneMouseReleased
@@ -24546,7 +24521,7 @@ private boolean isDotted = false;
 
     private void adviceScrollListRhythmsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_adviceScrollListRhythmsMouseClicked
     {//GEN-HEADEREND:event_adviceScrollListRhythmsMouseClicked
-        adviceSelected(adviceScrollListRhythms.getSelectedValue());
+        adviceForRhythmSelected(adviceScrollListRhythms.getSelectedValue());
     }//GEN-LAST:event_adviceScrollListRhythmsMouseClicked
 
     private void adviceScrollListRhythmsKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_adviceScrollListRhythmsKeyPressed
@@ -24560,7 +24535,7 @@ private boolean isDotted = false;
           {
             case java.awt.event.KeyEvent.VK_UP:
             case java.awt.event.KeyEvent.VK_DOWN:
-                adviceSelected(adviceScrollListRhythms.getSelectedValue());
+                adviceForRhythmSelected(adviceScrollListRhythms.getSelectedValue());
                 break;
 
             default:
@@ -24572,7 +24547,7 @@ private boolean isDotted = false;
 
     private void scrollRhythmsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_scrollRhythmsMouseClicked
     {//GEN-HEADEREND:event_scrollRhythmsMouseClicked
-        adviceSelected(adviceScrollListRhythms.getSelectedValue());        // TODO add your handling code here:
+        adviceForRhythmSelected(adviceScrollListRhythms.getSelectedValue());        // TODO add your handling code here:
     }//GEN-LAST:event_scrollRhythmsMouseClicked
 
     private void scrollRhythmsKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_scrollRhythmsKeyPressed
@@ -24586,7 +24561,7 @@ private boolean isDotted = false;
         {
             case java.awt.event.KeyEvent.VK_UP:
             case java.awt.event.KeyEvent.VK_DOWN:
-            adviceSelected(adviceScrollListRhythms.getSelectedValue());
+            adviceForRhythmSelected(adviceScrollListRhythms.getSelectedValue());
             break;
 
             default:
@@ -24619,7 +24594,7 @@ private boolean isDotted = false;
     }//GEN-LAST:event_adviceRecentScrollListScalesMouseClicked
 
     private void adviceRecentScrollListRhythmsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adviceRecentScrollListRhythmsMouseClicked
-        adviceSelected(adviceRecentScrollListRhythms.getSelectedValue());
+         adviceForRhythmSelected(adviceRecentScrollListRhythms.getSelectedValue());
     }//GEN-LAST:event_adviceRecentScrollListRhythmsMouseClicked
 
     private void adviceRecentScrollListIdiomsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adviceRecentScrollListIdiomsMouseClicked
@@ -24642,40 +24617,48 @@ private boolean isDotted = false;
         adviceSelected(adviceRecentScrollListCells.getSelectedValue());
     }//GEN-LAST:event_adviceRecentScrollListCellsMouseClicked
 
-    private void scalesClearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scalesClearRecentButtonActionPerformed
-      RecentScalesListModel model = (RecentScalesListModel) adviceRecentScrollListScales.getModel();
-      model.clear();
-    }//GEN-LAST:event_scalesClearRecentButtonActionPerformed
+    private void clearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearRecentButtonActionPerformed
+      if (adviceTabbedPane.getSelectedIndex() == 1)
+      {
+             RecentScalesListModel model = (RecentScalesListModel) adviceRecentScrollListScales.getModel();
+             model.clear();
+      }
+      else if (adviceTabbedPane.getSelectedIndex() == 2)
+      {
+             RecentCellsListModel model = (RecentCellsListModel) adviceRecentScrollListCells.getModel();
+             model.clear();
+      }
+      else if (adviceTabbedPane.getSelectedIndex() == 3)
+      {
+             RecentRhythmsListModel model = (RecentRhythmsListModel) adviceRecentScrollListRhythms.getModel();
+             model.clear();
+      }
+      else if (adviceTabbedPane.getSelectedIndex() == 4)
+      {
+             RecentIdiomsListModel model = (RecentIdiomsListModel) adviceRecentScrollListIdioms.getModel();
+             model.clear();
+      }
+      else if (adviceTabbedPane.getSelectedIndex() == 5)
+      {
+             RecentLicksListModel model = (RecentLicksListModel) adviceRecentScrollListLicks.getModel();
+             model.clear();
+      }
+      else if (adviceTabbedPane.getSelectedIndex() == 6)
+      {
+             RecentQuotesListModel model = (RecentQuotesListModel) adviceRecentScrollListQuotes.getModel();
+             model.clear();
+      }
+      else if (adviceTabbedPane.getSelectedIndex() == 7)
+      {
+             RecentBricksListModel model = (RecentBricksListModel) adviceRecentScrollListBricks.getModel();
+             model.clear();
+      }
 
-    private void cellsClearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cellsClearRecentButtonActionPerformed
-      RecentCellsListModel model = (RecentCellsListModel) adviceRecentScrollListCells.getModel();
-       model.clear();
-    }//GEN-LAST:event_cellsClearRecentButtonActionPerformed
+    }//GEN-LAST:event_clearRecentButtonActionPerformed
 
-    private void rhythmsClearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rhythmsClearRecentButtonActionPerformed
-        RecentRhythmsListModel model = (RecentRhythmsListModel) adviceRecentScrollListRhythms.getModel();
-        model.clear();
-    }//GEN-LAST:event_rhythmsClearRecentButtonActionPerformed
-
-    private void idiomsClearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idiomsClearRecentButtonActionPerformed
-        RecentIdiomsListModel model = (RecentIdiomsListModel) adviceRecentScrollListIdioms.getModel();
-        model.clear();
-    }//GEN-LAST:event_idiomsClearRecentButtonActionPerformed
-
-    private void licksClearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licksClearRecentButtonActionPerformed
-        RecentLicksListModel model = (RecentLicksListModel) adviceRecentScrollListLicks.getModel();
-        model.clear();
-    }//GEN-LAST:event_licksClearRecentButtonActionPerformed
-
-    private void quotesClearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quotesClearRecentButtonActionPerformed
-        RecentQuotesListModel model = (RecentQuotesListModel) adviceRecentScrollListQuotes.getModel();
-        model.clear();
-    }//GEN-LAST:event_quotesClearRecentButtonActionPerformed
-
-    private void bricksClearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bricksClearRecentButtonActionPerformed
-        RecentBricksListModel model = (RecentBricksListModel) adviceRecentScrollListBricks.getModel();
-        model.clear();
-    }//GEN-LAST:event_bricksClearRecentButtonActionPerformed
+    private void scrollRecentRhythmsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scrollRecentRhythmsMouseClicked
+      
+    }//GEN-LAST:event_scrollRecentRhythmsMouseClicked
 
     public void openGrammarMenuDialog()
     {
@@ -26739,9 +26722,7 @@ private ImageIcon pauseButton =
     private javax.swing.JLabel breakpointLabel;
     private javax.swing.JTextField breakpointTF;
     private javax.swing.JRadioButton brickRadioButton;
-    private javax.swing.JButton bricksClearRecentButton;
     private javax.swing.JSplitPane bricksSplitPane;
-    private javax.swing.JSplitPane bricksSplitPane2;
     private javax.swing.JButton buildTableButton;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel cachePanel;
@@ -26756,9 +26737,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem cascadeMI;
     private javax.swing.JRadioButton cellRadioButton;
     private javax.swing.JCheckBox cells;
-    private javax.swing.JButton cellsClearRecentButton;
     private javax.swing.JSplitPane cellsSplitPane;
-    private javax.swing.JSplitPane cellsSplitPane2;
     private javax.swing.JLabel channelSelectLabel;
     private javax.swing.JSpinner chordChannelSpinner;
     private javax.swing.ButtonGroup chordColorBtnGrp;
@@ -26790,6 +26769,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton clearButton;
     private javax.swing.JMenuItem clearHistoryMI;
     private javax.swing.JButton clearRangeBtn;
+    private javax.swing.JButton clearRecentButton;
     private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.ButtonGroup colorColorBtnGrp;
     private javax.swing.JLabel colorToneLabel;
@@ -26944,9 +26924,7 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField highRangeTF2;
     private javax.swing.JRadioButton idiomRadioButton;
     private javax.swing.JCheckBox idioms;
-    private javax.swing.JButton idiomsClearRecentButton;
     private javax.swing.JSplitPane idiomsSplitPane;
-    private javax.swing.JSplitPane idiomsSplitPane2;
     private javax.swing.JButton ignoreDuplicate;
     private javax.swing.JMenuItem importMidiMI;
     private javax.swing.ButtonGroup improvButtonGroup;
@@ -27078,9 +27056,7 @@ private ImageIcon pauseButton =
     private javax.swing.JRadioButton lickRadioButton;
     private javax.swing.JLabel lickTItleLabel;
     private javax.swing.JCheckBox licks;
-    private javax.swing.JButton licksClearRecentButton;
     private javax.swing.JSplitPane licksSplitPane;
-    private javax.swing.JSplitPane licksSplitPane2;
     private javax.swing.JLabel lineLabel;
     private javax.swing.JLabel lineLabel1;
     private javax.swing.JMenuItem loadAdvMI;
@@ -27226,9 +27202,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem quitMI;
     private javax.swing.JRadioButton quoteRadioButton;
     private javax.swing.JCheckBox quotes;
-    private javax.swing.JButton quotesClearRecentButton;
     private javax.swing.JSplitPane quotesSplitPane;
-    private javax.swing.JSplitPane quotesSplitPane2;
     private javax.swing.JButton rangeFilterBtn;
     private javax.swing.JLabel rangeToLabel;
     private javax.swing.JLabel rangeToLabel2;
@@ -27261,9 +27235,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem reverseMelody;
     private javax.swing.JMenuItem revertToSavedMI;
     private javax.swing.JRadioButton rhythmRadioButton;
-    private javax.swing.JButton rhythmsClearRecentButton;
     private javax.swing.JSplitPane rhythmsSplitPane;
-    private javax.swing.JSplitPane rhythmsSplitPane2;
     private javax.swing.JSlider rmsThresholdSlider1;
     private javax.swing.JMenuItem roadMapThisAnalyze;
     private javax.swing.JMenu roadmapMenu;
@@ -27285,9 +27257,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem saveSelectionAsLick;
     private javax.swing.ButtonGroup saveTypeButtonGroup;
     private javax.swing.JCheckBox scaleTones;
-    private javax.swing.JButton scalesClearRecentButton;
     private javax.swing.JSplitPane scalesSplitPane;
-    private javax.swing.JSplitPane scalesSplitPane2;
     private javax.swing.JTabbedPane scoreTab;
     private javax.swing.JTextField scoreTitleTF;
     private javax.swing.JScrollPane scrollBricks;
