@@ -302,10 +302,6 @@ public class MidiRecorder implements Constants, Receiver
      */
     private void setNote(int index, Note noteToAdd) //THIS COULD BE It
     {
-        if( index == lastIndex )
-          {
-            return;
-          }
         try
           {
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));

@@ -1,6 +1,6 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 9.01,
-from Prof. Robert Keller at Harvey Mudd College, May 30, 2017.
+Welcome to Impro-Visor (Improvisation Advisor) Version 9.1,
+from Prof. Robert Keller at Harvey Mudd College, June 19, 2017.
 
 Release notes for this version may be found at the end.
 
@@ -97,7 +97,9 @@ I am pleased to acknowledge contributions from the following developers:
  Mark Heimann, Nava Dallal, Carli Lessard, Alex Putman, Becki Yukman
  Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
  Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, David Siah,
- Mira Jambusaria, Daniel Johnson, and Sam Goree.
+ Mira Jambusaria, Daniel Johnson, Sam Goree, Samantha Long, and 
+ Joseph Yaconelli.
+
 
 We hope you enjoy using Impro-Visor. 
 
@@ -109,6 +111,21 @@ Harvey Mudd College
 Claremont, CA 91711
 
 Please send issues to: keller@cs.hmc.edu
+
+===============================================================================
+Release notes for Impro-Visor 9.10
+
+ A new Advice tab is added called Rhythms. This provides an assortment of
+ rhythms for entry into a leadsheet. The rhythms can be given pitches, or left
+ as a single pitch, corresponding to the root of the chord.
+
+ A report is generated for a chorus as to how many red notes there are, and
+ the amount of space occupied by them in the chorus overall.
+
+ A bug reported with roadmaps that start blank and have chords added to them
+ not playing.
+
+ The imaginary book and various other leadsheets is now included in release.
 
 ===============================================================================
 Release notes for Impro-Visor 9.01
