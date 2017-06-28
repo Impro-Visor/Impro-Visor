@@ -18220,6 +18220,7 @@ public void adviceJListRecentlyUsedUpdate(Object obj)
         if (!adviceRecentScales.contains(obj))
         {
             adviceRecentScales.add(obj);
+            adviceRecentScrollListScales.setModel(new RecentScalesListModel());
         }
     }
     else if (obj instanceof AdviceForCell)
@@ -18227,27 +18228,32 @@ public void adviceJListRecentlyUsedUpdate(Object obj)
         if (!adviceRecentCells.contains(obj))
         {
             adviceRecentCells.add(obj);
+            adviceRecentScrollListCells.setModel(new RecentCellsListModel());
         }
     }
     else if (obj instanceof AdviceForIdiom)
     {
         if (!adviceRecentIdioms.contains(obj))
         {
-            adviceRecentIdioms.add(obj);
-        }
+            adviceRecentIdioms.add(obj);       
+            adviceRecentScrollListIdioms.setModel(new RecentIdiomsListModel());
+          }
     }
     else if (obj instanceof AdviceForLick)
     {
         if (!adviceRecentLicks.contains(obj))
         {
             adviceRecentLicks.add(obj);
+            adviceRecentScrollListLicks.setModel(new RecentLicksListModel());
         }
     }
     else if (obj instanceof AdviceForQuote)
     {
         if (!adviceRecentQuotes.contains(obj))
         {
-            adviceRecentQuotes.add(obj);
+            adviceRecentQuotes.add(obj);        
+            adviceRecentScrollListQuotes.setModel(new RecentQuotesListModel());
+        
         }
     }
     else if (obj instanceof AdviceForBrick)
@@ -18255,20 +18261,10 @@ public void adviceJListRecentlyUsedUpdate(Object obj)
         if (!adviceRecentBricks.contains(obj))
         {
             adviceRecentBricks.add(obj);
+            adviceRecentScrollListBricks.setModel(new RecentBricksListModel());
         }
     }
 
-        adviceRecentScrollListScales.setModel(new RecentScalesListModel());
-        
-        adviceRecentScrollListCells.setModel(new RecentCellsListModel());
-       
-        adviceRecentScrollListIdioms.setModel(new RecentIdiomsListModel());
-        
-        adviceRecentScrollListLicks.setModel(new RecentLicksListModel());
-        
-        adviceRecentScrollListQuotes.setModel(new RecentQuotesListModel());
-        
-        adviceRecentScrollListBricks.setModel(new RecentBricksListModel());
 }
 
 public class RecentScalesListModel extends AbstractListModel
