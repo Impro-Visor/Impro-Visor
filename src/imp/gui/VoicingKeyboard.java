@@ -53,7 +53,7 @@ import java.awt.Graphics;
  * 
  */
 
-public class VoicingKeyboard extends javax.swing.JFrame {
+public class VoicingKeyboard extends javax.swing.JDialog {
 
     boolean debug = false;
     
