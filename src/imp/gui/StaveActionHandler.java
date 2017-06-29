@@ -2030,7 +2030,7 @@ void redoAdvice(int selectedIndex)
       Notate window = ImproVisor.getCurrentWindow();
       if( window != null )
        {
-        window.closeAdviceFrame();
+        window.closeAdviceDialog();
        }
 
       notate.setStatus("To get advice, there must be a chord in effect.");
