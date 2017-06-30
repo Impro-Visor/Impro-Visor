@@ -85,7 +85,7 @@ import java.util.Stack;
  * @author David Morrison, Nava Dallal, Amelia Sheppard
  */
 @SuppressWarnings("serial")
-public class ThemeWeaver extends javax.swing.JFrame
+public class ThemeWeaver extends javax.swing.JDialog
 {
 
 String TITLE = "Theme Weaver";
@@ -245,8 +245,7 @@ public void setTableColumnWidths()
  */
 @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         nameErrorMessage = new javax.swing.JDialog();
@@ -443,17 +442,13 @@ public void setTableColumnWidths()
         nameErrorMessage.setMinimumSize(new java.awt.Dimension(600, 400));
         nameErrorMessage.getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        nameField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        nameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameFieldActionPerformed(evt);
             }
         });
-        nameField.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        nameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 nameFieldKeyPressed(evt);
             }
         });
@@ -479,10 +474,8 @@ public void setTableColumnWidths()
         nameErrorMessage.getContentPane().add(namePicked, gridBagConstraints);
 
         CancelButton.setText("Cancel");
-        CancelButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        CancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButtonActionPerformed(evt);
             }
         });
@@ -494,10 +487,8 @@ public void setTableColumnWidths()
         nameErrorMessage.getContentPane().add(CancelButton, gridBagConstraints);
 
         OkButton.setText("Ok");
-        OkButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        OkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OkButtonActionPerformed(evt);
             }
         });
@@ -539,17 +530,13 @@ public void setTableColumnWidths()
         enteredIncorrectly.getContentPane().add(tryAgain, gridBagConstraints);
 
         cellOkbutton.setText("Ok");
-        cellOkbutton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cellOkbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cellOkbuttonActionPerformed(evt);
             }
         });
-        cellOkbutton.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        cellOkbutton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 cellOkbuttonKeyPressed(evt);
             }
         });
@@ -599,17 +586,13 @@ public void setTableColumnWidths()
         resetCheck.getContentPane().add(youSure, gridBagConstraints);
 
         YesButton.setText("Yes, Continue");
-        YesButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        YesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 YesButtonActionPerformed(evt);
             }
         });
-        YesButton.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        YesButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 YesButtonKeyPressed(evt);
             }
         });
@@ -621,10 +604,8 @@ public void setTableColumnWidths()
         resetCheck.getContentPane().add(YesButton, gridBagConstraints);
 
         NoButton.setText("No, Cancel");
-        NoButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        NoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NoButtonActionPerformed(evt);
             }
         });
@@ -639,10 +620,8 @@ public void setTableColumnWidths()
 
         rangeTooSmall.setAlwaysOnTop(true);
         rangeTooSmall.setMinimumSize(new java.awt.Dimension(900, 500));
-        rangeTooSmall.addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowOpened(java.awt.event.WindowEvent evt)
-            {
+        rangeTooSmall.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
                 rangeTooSmallWindowOpened(evt);
             }
         });
@@ -656,10 +635,8 @@ public void setTableColumnWidths()
         rangeTooSmall.getContentPane().add(tryAgain1, gridBagConstraints);
 
         cellOkbutton1.setText("Ok");
-        cellOkbutton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cellOkbutton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cellOkbutton1ActionPerformed(evt);
             }
         });
@@ -693,17 +670,13 @@ public void setTableColumnWidths()
         resetCheck1.getContentPane().add(youSure1, gridBagConstraints);
 
         YesButton1.setText("Yes, Continue");
-        YesButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        YesButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 YesButton1ActionPerformed(evt);
             }
         });
-        YesButton1.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        YesButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 YesButton1KeyPressed(evt);
             }
         });
@@ -714,10 +687,8 @@ public void setTableColumnWidths()
         resetCheck1.getContentPane().add(YesButton1, gridBagConstraints);
 
         NoButton1.setText("No, Cancel");
-        NoButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        NoButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NoButton1ActionPerformed(evt);
             }
         });
@@ -738,10 +709,8 @@ public void setTableColumnWidths()
         deleteThemeDialog.getContentPane().add(areYouSure, gridBagConstraints);
 
         yesdeletethemeButton.setText("Yes");
-        yesdeletethemeButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        yesdeletethemeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yesdeletethemeButtonActionPerformed(evt);
             }
         });
@@ -752,10 +721,8 @@ public void setTableColumnWidths()
         deleteThemeDialog.getContentPane().add(yesdeletethemeButton, gridBagConstraints);
 
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
@@ -786,10 +753,8 @@ public void setTableColumnWidths()
         noRowSelected.getContentPane().add(tryAgain2, gridBagConstraints);
 
         cellOkbutton2.setText("Ok");
-        cellOkbutton2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cellOkbutton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cellOkbutton2ActionPerformed(evt);
             }
         });
@@ -824,10 +789,8 @@ public void setTableColumnWidths()
         enterAnInteger.getContentPane().add(tryAgain3, gridBagConstraints);
 
         cellOkbutton3.setText("Ok");
-        cellOkbutton3.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cellOkbutton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cellOkbutton3ActionPerformed(evt);
             }
         });
@@ -855,17 +818,13 @@ public void setTableColumnWidths()
         sideslipPreference.setLocationByPlatform(true);
         sideslipPreference.setMinimumSize(new java.awt.Dimension(200, 300));
         sideslipPreference.setSize(new java.awt.Dimension(750, 600));
-        sideslipPreference.addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        sideslipPreference.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 sideslipPreferencewindowClosed(evt);
             }
         });
-        sideslipPreference.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        sideslipPreference.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 sideslipPreferenceformKeyPressed(evt);
             }
         });
@@ -876,10 +835,8 @@ public void setTableColumnWidths()
         probUpOrDown.setMinorTickSpacing(1);
         probUpOrDown.setPaintLabels(true);
         probUpOrDown.setPaintTicks(true);
-        probUpOrDown.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
-        {
-            public void mouseDragged(java.awt.event.MouseEvent evt)
-            {
+        probUpOrDown.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
                 probUpOrDownMouseDragged(evt);
             }
         });
@@ -932,10 +889,8 @@ public void setTableColumnWidths()
 
         probHalf.setText("0.4");
         probHalf.setToolTipText("");
-        probHalf.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        probHalf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 probHalfActionPerformed(evt);
             }
         });
@@ -947,10 +902,8 @@ public void setTableColumnWidths()
         sideslipPreference.getContentPane().add(probHalf, gridBagConstraints);
 
         probWhole.setText("0.4");
-        probWhole.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        probWhole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 probWholeActionPerformed(evt);
             }
         });
@@ -963,10 +916,8 @@ public void setTableColumnWidths()
 
         probThird.setText("0.2");
         probThird.setToolTipText("");
-        probThird.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        probThird.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 probThirdActionPerformed(evt);
             }
         });
@@ -997,17 +948,13 @@ public void setTableColumnWidths()
         expandPreference.setLocationByPlatform(true);
         expandPreference.setMinimumSize(new java.awt.Dimension(200, 300));
         expandPreference.setSize(new java.awt.Dimension(700, 600));
-        expandPreference.addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        expandPreference.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 expandPreferencewindowClosed(evt);
             }
         });
-        expandPreference.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        expandPreference.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 expandPreferenceformKeyPressed(evt);
             }
         });
@@ -1084,17 +1031,13 @@ public void setTableColumnWidths()
         probShiftForwardorBackSlider.setMinorTickSpacing(1);
         probShiftForwardorBackSlider.setPaintLabels(true);
         probShiftForwardorBackSlider.setPaintTicks(true);
-        probShiftForwardorBackSlider.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
-        {
-            public void mouseDragged(java.awt.event.MouseEvent evt)
-            {
+        probShiftForwardorBackSlider.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
                 probShiftForwardorBackSliderMouseDragged(evt);
             }
         });
-        probShiftForwardorBackSlider.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseReleased(java.awt.event.MouseEvent evt)
-            {
+        probShiftForwardorBackSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
                 probShiftForwardorBackSliderMouseReleased(evt);
             }
         });
@@ -1123,17 +1066,13 @@ public void setTableColumnWidths()
         customizeSolo.setLocation(new java.awt.Point(10, 10));
         customizeSolo.setLocationByPlatform(true);
         customizeSolo.setSize(new java.awt.Dimension(1100, 950));
-        customizeSolo.addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        customizeSolo.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 customizeSolowindowClosed(evt);
             }
         });
-        customizeSolo.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        customizeSolo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 customizeSoloformKeyPressed(evt);
             }
         });
@@ -1162,10 +1101,8 @@ public void setTableColumnWidths()
         themeList1.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
         themeList1.setPreferredSize(new java.awt.Dimension(200, 200));
         themeList1.setVisibleRowCount(30);
-        themeList1.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        themeList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 themeList1Clicked(evt);
             }
         });
@@ -1201,10 +1138,8 @@ public void setTableColumnWidths()
 
         transposeButton.setText("Transpose");
         transposeButton.setToolTipText("");
-        transposeButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        transposeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 transposeButtonActionPerformed(evt);
             }
         });
@@ -1214,10 +1149,8 @@ public void setTableColumnWidths()
         jPanel4.add(transposeButton, gridBagConstraints);
 
         invertButton.setText("Invert");
-        invertButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        invertButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 invertButtonActionPerformed(evt);
             }
         });
@@ -1228,10 +1161,8 @@ public void setTableColumnWidths()
         jPanel4.add(invertButton, gridBagConstraints);
 
         reverseButton.setText("Reverse");
-        reverseButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        reverseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reverseButtonActionPerformed(evt);
             }
         });
@@ -1242,10 +1173,8 @@ public void setTableColumnWidths()
         jPanel4.add(reverseButton, gridBagConstraints);
 
         expandButton.setText("Expand");
-        expandButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        expandButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 expandButtonActionPerformed(evt);
             }
         });
@@ -1256,10 +1185,8 @@ public void setTableColumnWidths()
         jPanel4.add(expandButton, gridBagConstraints);
 
         sideslipButton.setText("Side Slip");
-        sideslipButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        sideslipButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideslipButtonActionPerformed(evt);
             }
         });
@@ -1270,10 +1197,8 @@ public void setTableColumnWidths()
         jPanel4.add(sideslipButton, gridBagConstraints);
 
         barlineshiftButton.setText("Bar Line Shift");
-        barlineshiftButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        barlineshiftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barlineshiftButtonActionPerformed(evt);
             }
         });
@@ -1285,10 +1210,8 @@ public void setTableColumnWidths()
 
         resetTransformationChoicesButton.setText("Reset Choices");
         resetTransformationChoicesButton.setToolTipText("");
-        resetTransformationChoicesButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        resetTransformationChoicesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetTransformationChoicesButtonActionPerformed(evt);
             }
         });
@@ -1304,10 +1227,8 @@ public void setTableColumnWidths()
 
         transposeUpRadioButton.setText("Transpose Up");
         transposeUpRadioButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        transposeUpRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        transposeUpRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 transposeUpRadioButtonActionPerformed(evt);
             }
         });
@@ -1317,10 +1238,8 @@ public void setTableColumnWidths()
         jPanel7.add(transposeUpRadioButton, gridBagConstraints);
 
         transposeDownRadioButton.setText("Transpose Down");
-        transposeDownRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        transposeDownRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 transposeDownRadioButtonActionPerformed(evt);
             }
         });
@@ -1342,10 +1261,8 @@ public void setTableColumnWidths()
         jPanel7.add(jLabel33, gridBagConstraints);
 
         halfStepRadioButton.setText("Half");
-        halfStepRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        halfStepRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 halfStepRadioButtonActionPerformed(evt);
             }
         });
@@ -1355,10 +1272,8 @@ public void setTableColumnWidths()
         jPanel7.add(halfStepRadioButton, gridBagConstraints);
 
         wholeStepRadioButton.setText("Whole");
-        wholeStepRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        wholeStepRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 wholeStepRadioButtonActionPerformed(evt);
             }
         });
@@ -1368,10 +1283,8 @@ public void setTableColumnWidths()
         jPanel7.add(wholeStepRadioButton, gridBagConstraints);
 
         thirdRadioButton.setText("Third");
-        thirdRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        thirdRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 thirdRadioButtonActionPerformed(evt);
             }
         });
@@ -1389,10 +1302,8 @@ public void setTableColumnWidths()
         jPanel8.setLayout(new java.awt.GridBagLayout());
 
         expandBy2RadioButton.setText("Expand By 2");
-        expandBy2RadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        expandBy2RadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 expandBy2RadioButtonActionPerformed(evt);
             }
         });
@@ -1402,10 +1313,8 @@ public void setTableColumnWidths()
         jPanel8.add(expandBy2RadioButton, gridBagConstraints);
 
         expandBy3RadioButton.setText("Expand By 3");
-        expandBy3RadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        expandBy3RadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 expandBy3RadioButtonActionPerformed(evt);
             }
         });
@@ -1434,10 +1343,8 @@ public void setTableColumnWidths()
         jPanel10.add(jLabel35, gridBagConstraints);
 
         halfStepRadioButton1.setText("Half");
-        halfStepRadioButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        halfStepRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 halfStepRadioButton1ActionPerformed(evt);
             }
         });
@@ -1447,10 +1354,8 @@ public void setTableColumnWidths()
         jPanel10.add(halfStepRadioButton1, gridBagConstraints);
 
         wholeStepRadioButton1.setText("Whole");
-        wholeStepRadioButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        wholeStepRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 wholeStepRadioButton1ActionPerformed(evt);
             }
         });
@@ -1460,10 +1365,8 @@ public void setTableColumnWidths()
         jPanel10.add(wholeStepRadioButton1, gridBagConstraints);
 
         thirdRadioButton1.setText("Third");
-        thirdRadioButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        thirdRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 thirdRadioButton1ActionPerformed(evt);
             }
         });
@@ -1473,10 +1376,8 @@ public void setTableColumnWidths()
         jPanel10.add(thirdRadioButton1, gridBagConstraints);
 
         sideslipUpRadioButton.setText("Side Slip Up");
-        sideslipUpRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        sideslipUpRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideslipUpRadioButtonActionPerformed(evt);
             }
         });
@@ -1486,10 +1387,8 @@ public void setTableColumnWidths()
         jPanel10.add(sideslipUpRadioButton, gridBagConstraints);
 
         sideslipDownRadioButton.setText("Side Slip Down");
-        sideslipDownRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        sideslipDownRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideslipDownRadioButtonActionPerformed(evt);
             }
         });
@@ -1507,10 +1406,8 @@ public void setTableColumnWidths()
         jPanel9.setLayout(new java.awt.GridBagLayout());
 
         shiftBackwardRadioButton.setText("Shift Backwards");
-        shiftBackwardRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        shiftBackwardRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 shiftBackwardRadioButtonActionPerformed(evt);
             }
         });
@@ -1520,10 +1417,8 @@ public void setTableColumnWidths()
         jPanel9.add(shiftBackwardRadioButton, gridBagConstraints);
 
         shiftForwardRadioButton.setText("Shift Forwards");
-        shiftForwardRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        shiftForwardRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 shiftForwardRadioButtonActionPerformed(evt);
             }
         });
@@ -1545,10 +1440,8 @@ public void setTableColumnWidths()
         jPanel9.add(jLabel37, gridBagConstraints);
 
         eighthShiftRadioButton.setText("Eighth");
-        eighthShiftRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        eighthShiftRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eighthShiftRadioButtonActionPerformed(evt);
             }
         });
@@ -1558,10 +1451,8 @@ public void setTableColumnWidths()
         jPanel9.add(eighthShiftRadioButton, gridBagConstraints);
 
         quarterShiftRadioButton.setText("Quarter");
-        quarterShiftRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        quarterShiftRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quarterShiftRadioButtonActionPerformed(evt);
             }
         });
@@ -1622,10 +1513,8 @@ public void setTableColumnWidths()
         jPanel6.add(jLabel30, gridBagConstraints);
 
         playThemeButton.setText("Click To Play Theme");
-        playThemeButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        playThemeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playThemeButtonActionPerformed(evt);
             }
         });
@@ -1647,10 +1536,8 @@ public void setTableColumnWidths()
         jPanel12.setLayout(new java.awt.GridBagLayout());
 
         resetSoloButton.setText("Reset Solo");
-        resetSoloButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        resetSoloButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetSoloButtonActionPerformed(evt);
             }
         });
@@ -1663,10 +1550,8 @@ public void setTableColumnWidths()
         jPanel12.add(resetSoloButton, gridBagConstraints);
 
         rectifySoloButton.setText("Rectify Pitches");
-        rectifySoloButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        rectifySoloButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rectifySoloButtonActionPerformed(evt);
             }
         });
@@ -1679,10 +1564,8 @@ public void setTableColumnWidths()
         rectifySoloButton.getAccessibleContext().setAccessibleDescription("Changes pitches so they fit with the corresponding chord on the leadsheet.");
 
         undoEditButton.setText("Undo Edit");
-        undoEditButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        undoEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 undoEditButtonActionPerformed(evt);
             }
         });
@@ -1695,10 +1578,8 @@ public void setTableColumnWidths()
         undoEditButton.getAccessibleContext().setAccessibleDescription("Undo the last added theme. You can only revert by one addition.");
 
         fillSoloButton.setText("Fill Solo");
-        fillSoloButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        fillSoloButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fillSoloButtonActionPerformed(evt);
             }
         });
@@ -1711,10 +1592,8 @@ public void setTableColumnWidths()
 
         keepEditsFromLeadsheetCheckBox.setText("Keep Edits Made In The Leadsheet");
         keepEditsFromLeadsheetCheckBox.setSelected(true);
-        keepEditsFromLeadsheetCheckBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        keepEditsFromLeadsheetCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 keepEditsFromLeadsheetCheckBoxActionPerformed(evt);
             }
         });
@@ -1725,10 +1604,8 @@ public void setTableColumnWidths()
         jPanel12.add(keepEditsFromLeadsheetCheckBox, gridBagConstraints);
 
         redoEditButton.setText("Redo Edit");
-        redoEditButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        redoEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 redoEditButtonActionPerformed(evt);
             }
         });
@@ -1748,10 +1625,8 @@ public void setTableColumnWidths()
         jPanel6.add(jPanel12, gridBagConstraints);
 
         pasteToLeadsheetButton.setText("Paste Theme To Leadsheet");
-        pasteToLeadsheetButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pasteToLeadsheetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pasteToLeadsheetButtonActionPerformed(evt);
             }
         });
@@ -1764,10 +1639,8 @@ public void setTableColumnWidths()
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
-        barNumberTextField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        barNumberTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barNumberTextFieldActionPerformed(evt);
             }
         });
@@ -1838,17 +1711,13 @@ public void setTableColumnWidths()
         setMinimumSize(new java.awt.Dimension(1000, 800));
         setPreferredSize(new java.awt.Dimension(1100, 820));
         setSize(new java.awt.Dimension(1100, 820));
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 ThemeWeaver.this.windowClosed(evt);
             }
         });
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
         });
@@ -1861,8 +1730,7 @@ public void setTableColumnWidths()
         soloTableScrollPane.setRowHeaderView(null);
 
         soloTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -1874,19 +1742,15 @@ public void setTableColumnWidths()
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null}
             },
-            new String []
-            {
+            new String [] {
                 "Name", "Theme Length", "Theme", "Prob. to Use", "Prob. to Transpose", "Prob. to Invert", "Prob. to Reverse", "Prob. to Expand", "Prob. to Side Slip", "Prob. to Bar Line Shift"
             }
-        )
-        {
-            Class[] types = new Class []
-            {
+        ) {
+            Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
-            public Class getColumnClass(int columnIndex)
-            {
+            public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
@@ -1898,24 +1762,18 @@ public void setTableColumnWidths()
         soloTable.setSelectionBackground(javax.swing.UIManager.getDefaults().getColor("CheckBoxMenuItem.selectionBackground"));
         soloTable.setShowGrid(true);
         soloTable.getTableHeader().setReorderingAllowed(false);
-        soloTable.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        soloTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 soloTableMouseClicked(evt);
             }
         });
-        soloTable.addComponentListener(new java.awt.event.ComponentAdapter()
-        {
-            public void componentShown(java.awt.event.ComponentEvent evt)
-            {
+        soloTable.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
                 soloTableComponentShown(evt);
             }
         });
-        soloTable.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        soloTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 soloTableKeyPressed(evt);
             }
         });
@@ -1942,17 +1800,13 @@ public void setTableColumnWidths()
         themeList.setLayoutOrientation(javax.swing.JList.VERTICAL_WRAP);
         themeList.setPreferredSize(null);
         themeList.setVisibleRowCount(30);
-        themeList.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        themeList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 themeListClicked(evt);
             }
         });
-        themeList.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        themeList.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 themeListKeyPressed(evt);
             }
         });
@@ -2002,10 +1856,8 @@ public void setTableColumnWidths()
         themeIntervalTextField.setText("8");
         themeIntervalTextField.setMaximumSize(new java.awt.Dimension(50, 2147483647));
         themeIntervalTextField.setMinimumSize(new java.awt.Dimension(50, 28));
-        themeIntervalTextField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        themeIntervalTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 themeIntervalTextFieldActionPerformed(evt);
             }
         });
@@ -2028,10 +1880,8 @@ public void setTableColumnWidths()
         themeProbTextField.setText("0.5");
         themeProbTextField.setMaximumSize(new java.awt.Dimension(50, 2147483647));
         themeProbTextField.setMinimumSize(new java.awt.Dimension(50, 28));
-        themeProbTextField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        themeProbTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 themeProbTextFieldActionPerformed(evt);
             }
         });
@@ -2053,10 +1903,8 @@ public void setTableColumnWidths()
 
         generateSoloJButton.setText("Generate Solo");
         generateSoloJButton.setToolTipText("Creates a solo from the themes in the table and displays and plays the solo in the leadsheet window");
-        generateSoloJButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        generateSoloJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generateSoloJButtonActionPerformed(evt);
             }
         });
@@ -2069,10 +1917,8 @@ public void setTableColumnWidths()
 
         stopPlaytoggle.setBackground(new java.awt.Color(255, 255, 255));
         stopPlaytoggle.setText("Stop Playing");
-        stopPlaytoggle.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        stopPlaytoggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopPlaytoggleActionPerformed(evt);
             }
         });
@@ -2084,10 +1930,8 @@ public void setTableColumnWidths()
 
         deleteThemebutton.setText("Delete Theme From File");
         deleteThemebutton.setPreferredSize(new java.awt.Dimension(78, 29));
-        deleteThemebutton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        deleteThemebutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteThemebuttonActionPerformed(evt);
             }
         });
@@ -2126,10 +1970,8 @@ public void setTableColumnWidths()
 
         currentSelectionJButton.setText("Use Current Selection in Leadsheet Window as Theme");
         currentSelectionJButton.setToolTipText("Adds the selection from the window into the first empty theme cell in the table");
-        currentSelectionJButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        currentSelectionJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 currentSelectionJButtonActionPerformed(evt);
             }
         });
@@ -2144,10 +1986,8 @@ public void setTableColumnWidths()
 
         Reset.setText("Reset Table");
         Reset.setToolTipText("Clears the table of all themes currently entered");
-        Reset.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ResetActionPerformed(evt);
             }
         });
@@ -2160,10 +2000,8 @@ public void setTableColumnWidths()
         jPanel1.add(Reset, gridBagConstraints);
 
         expandPreferenceButton.setText("Open Expand Preferences");
-        expandPreferenceButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        expandPreferenceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 expandPreferenceButtonActionPerformed(evt);
             }
         });
@@ -2175,10 +2013,8 @@ public void setTableColumnWidths()
         jPanel1.add(expandPreferenceButton, gridBagConstraints);
 
         jButton1.setText("Open Side Slip Preferences");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
@@ -2189,10 +2025,8 @@ public void setTableColumnWidths()
         jPanel1.add(jButton1, gridBagConstraints);
 
         barLineShiftPreferencesButton.setText("Open Bar Line Shift Preferences");
-        barLineShiftPreferencesButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        barLineShiftPreferencesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barLineShiftPreferencesButtonActionPerformed(evt);
             }
         });
@@ -2203,10 +2037,8 @@ public void setTableColumnWidths()
         jPanel1.add(barLineShiftPreferencesButton, gridBagConstraints);
 
         deleteRowbutton.setText("Delete Selected Row");
-        deleteRowbutton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        deleteRowbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteRowbuttonActionPerformed(evt);
             }
         });
@@ -2218,10 +2050,8 @@ public void setTableColumnWidths()
 
         generateThemeJButton.setText("Generate Theme");
         generateThemeJButton.setToolTipText("Generates a theme for every non empty length cell in the table that doesn't have a corresponding theme");
-        generateThemeJButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        generateThemeJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generateThemeJButtonActionPerformed(evt);
             }
         });
@@ -2252,10 +2082,8 @@ public void setTableColumnWidths()
         jPanel3.add(setAllProbTextField, gridBagConstraints);
 
         setAllProbButton.setText("Set Probabilities");
-        setAllProbButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        setAllProbButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 setAllProbButtonActionPerformed(evt);
             }
         });
@@ -2272,10 +2100,8 @@ public void setTableColumnWidths()
         jPanel1.add(jPanel3, gridBagConstraints);
 
         jButton2.setText("Set All Probabilities Equal To 1st Theme");
-        jButton2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
@@ -2287,10 +2113,8 @@ public void setTableColumnWidths()
 
         setProbToZeroButton.setText("Reset Theme Probabilites To Zero");
         setProbToZeroButton.setToolTipText("");
-        setProbToZeroButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        setProbToZeroButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 setProbToZeroButtonActionPerformed(evt);
             }
         });
@@ -2323,10 +2147,8 @@ public void setTableColumnWidths()
 
         rangeChooserButton.setText("Choose Range");
         rangeChooserButton.setToolTipText("");
-        rangeChooserButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        rangeChooserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rangeChooserButtonActionPerformed(evt);
             }
         });
@@ -2356,10 +2178,8 @@ public void setTableColumnWidths()
         trans2ComboBox.addItem("Bar Line Shift");
         trans2ComboBox.setSelectedItem("Invert");
         transformationComboBoxes[1] = trans2ComboBox;
-        trans2ComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        trans2ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 trans2ComboBoxActionPerformed(evt);
             }
         });
@@ -2378,10 +2198,8 @@ public void setTableColumnWidths()
         trans1ComboBox.addItem("Bar Line Shift");
         trans1ComboBox.setSelectedItem("Transpose");
         transformationComboBoxes[0] = trans1ComboBox;
-        trans1ComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        trans1ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 trans1ComboBoxActionPerformed(evt);
             }
         });
@@ -2397,10 +2215,8 @@ public void setTableColumnWidths()
         trans3ComboBox.addItem("Bar Line Shift");
         trans3ComboBox.setSelectedItem("Reverse");
         transformationComboBoxes[2] = trans3ComboBox;
-        trans3ComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        trans3ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 trans3ComboBoxActionPerformed(evt);
             }
         });
@@ -2415,10 +2231,8 @@ public void setTableColumnWidths()
         trans4ComboBox.addItem("Bar Line Shift");
         trans4ComboBox.setSelectedItem("Expand");
         transformationComboBoxes[3] = trans4ComboBox;
-        trans4ComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        trans4ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 trans4ComboBoxActionPerformed(evt);
             }
         });
@@ -2433,10 +2247,8 @@ public void setTableColumnWidths()
         trans5ComboBox.addItem("Bar Line Shift");
         trans5ComboBox.setSelectedItem("Side Slip");
         transformationComboBoxes[4] = trans5ComboBox;
-        trans5ComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        trans5ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 trans5ComboBoxActionPerformed(evt);
             }
         });
@@ -2517,10 +2329,8 @@ public void setTableColumnWidths()
 
         loadThemesMI.setText("Load Themes File");
         loadThemesMI.setToolTipText("Load a new vocabulary.");
-        loadThemesMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        loadThemesMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadThemesMIActionPerformed(evt);
             }
         });
@@ -2528,10 +2338,8 @@ public void setTableColumnWidths()
 
         saveAsAdvice.setText("Save Themes As");
         saveAsAdvice.setToolTipText("Save the current vocabulary in a file.");
-        saveAsAdvice.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        saveAsAdvice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveAsThemesActionPerformed(evt);
             }
         });
@@ -2540,10 +2348,8 @@ public void setTableColumnWidths()
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         exitMenuItem.setText("Close this window."); // NOI18N
         exitMenuItem.setToolTipText("Closes this window."); // NOI18N
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitMenuItemexitMIhandler(evt);
             }
         });
@@ -2553,27 +2359,21 @@ public void setTableColumnWidths()
 
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window"); // NOI18N
-        windowMenu.addMenuListener(new javax.swing.event.MenuListener()
-        {
-            public void menuSelected(javax.swing.event.MenuEvent evt)
-            {
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
                 windowMenuMenuSelected(evt);
             }
-            public void menuDeselected(javax.swing.event.MenuEvent evt)
-            {
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt)
-            {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
         closeWindowMI.setMnemonic('C');
         closeWindowMI.setText("Close Window"); // NOI18N
         closeWindowMI.setToolTipText("Closes the current window (exits program if there are no other windows)"); // NOI18N
-        closeWindowMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindowMIActionPerformed(evt);
             }
         });
@@ -2582,10 +2382,8 @@ public void setTableColumnWidths()
         cascadeMI.setMnemonic('A');
         cascadeMI.setText("Cascade Windows"); // NOI18N
         cascadeMI.setToolTipText("Rearrange windows into a cascade.\n"); // NOI18N
-        cascadeMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cascadeMIActionPerformed(evt);
             }
         });
