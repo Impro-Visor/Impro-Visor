@@ -39,7 +39,7 @@ import javax.swing.*;
  * @author  Robert Keller, Sayuri Soejima
  * June 2008
  */
-public class PianoRoll extends JFrame
+public class PianoRoll extends JDialog
   {
 String DEFAULT_DURATION_STRING = "8";
 
@@ -494,8 +494,7 @@ public void paint(Graphics g)
    */
   @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         barCreatePopupMenu = new javax.swing.JPopupMenu();
@@ -588,10 +587,8 @@ public void paint(Graphics g)
         addNewBar.setToolTipText("Add a new bar by clicking");
         addNewBar.setMinimumSize(new java.awt.Dimension(200, 100));
         addNewBar.setSelected(true);
-        addNewBar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        addNewBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewBarActionPerformed(evt);
             }
         });
@@ -602,10 +599,8 @@ public void paint(Graphics g)
         pasteBar.setEnabled(false);
         pasteBar.setMinimumSize(new java.awt.Dimension(200, 100));
         pasteBar.setSelected(true);
-        pasteBar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pasteBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pasteBarActionPerformed(evt);
             }
         });
@@ -622,10 +617,8 @@ public void paint(Graphics g)
         copyBar.setToolTipText("Copy bar");
         copyBar.setMinimumSize(new java.awt.Dimension(200, 100));
         copyBar.setSelected(true);
-        copyBar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        copyBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 copyBarActionPerformed(evt);
             }
         });
@@ -635,10 +628,8 @@ public void paint(Graphics g)
         cutBar.setToolTipText("Cut bar");
         cutBar.setMinimumSize(new java.awt.Dimension(200, 100));
         cutBar.setSelected(true);
-        cutBar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cutBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cutBarActionPerformed(evt);
             }
         });
@@ -648,10 +639,8 @@ public void paint(Graphics g)
         deleteBar.setToolTipText("Delete this bar");
         deleteBar.setMinimumSize(new java.awt.Dimension(200, 100));
         deleteBar.setSelected(true);
-        deleteBar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        deleteBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBarActionPerformed(evt);
             }
         });
@@ -660,24 +649,18 @@ public void paint(Graphics g)
         barEditorFrame.setTitle("Bass Bar Editor");
         barEditorFrame.setAlwaysOnTop(true);
         barEditorFrame.setName("barEditorFrame"); // NOI18N
-        barEditorFrame.addComponentListener(new java.awt.event.ComponentAdapter()
-        {
-            public void componentHidden(java.awt.event.ComponentEvent evt)
-            {
+        barEditorFrame.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
                 barEditorFrameComponentHidden(evt);
             }
         });
-        barEditorFrame.addFocusListener(new java.awt.event.FocusAdapter()
-        {
-            public void focusGained(java.awt.event.FocusEvent evt)
-            {
+        barEditorFrame.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
                 barEditorFrameadviceFocusGained(evt);
             }
         });
-        barEditorFrame.addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+        barEditorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 barEditorFrameadviceWindowClosing(evt);
             }
         });
@@ -689,17 +672,13 @@ public void paint(Graphics g)
         barEditorContents.setToolTipText("Bar contents (in the Style language)");
         barEditorContents.setMinimumSize(new java.awt.Dimension(200, 29));
         barEditorContents.setPreferredSize(new java.awt.Dimension(200, 29));
-        barEditorContents.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        barEditorContents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barEditorContentsActionPerformed(evt);
             }
         });
-        barEditorContents.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        barEditorContents.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 barEditorContentsKeyPressed(evt);
             }
         });
@@ -723,10 +702,8 @@ public void paint(Graphics g)
         barEditorFrame.getContentPane().add(editLabel, gridBagConstraints);
 
         okEditBtn.setText("Set");
-        okEditBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        okEditBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okEditBtnActionPerformed(evt);
             }
         });
@@ -739,10 +716,8 @@ public void paint(Graphics g)
         barEditorFrame.getContentPane().add(okEditBtn, gridBagConstraints);
 
         cancelEditButton.setText("Close");
-        cancelEditButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cancelEditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelEditButtonActionPerformed(evt);
             }
         });
@@ -788,10 +763,8 @@ public void paint(Graphics g)
 
         noteTypeButtonGroup.add(chordToneButton);
         chordToneButton.setText("Chord tone");
-        chordToneButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        chordToneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chordToneButtonActionPerformed(evt);
             }
         });
@@ -847,10 +820,8 @@ public void paint(Graphics g)
 
         scalePitchButtonGroup.add(pitch2Button);
         pitch2Button.setText("2");
-        pitch2Button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pitch2Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pitch2ButtonActionPerformed(evt);
             }
         });
@@ -886,10 +857,8 @@ public void paint(Graphics g)
 
         scalePitchButtonGroup.add(pitch6Button);
         pitch6Button.setText("6");
-        pitch6Button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pitch6Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pitch6ButtonActionPerformed(evt);
             }
         });
@@ -974,10 +943,8 @@ public void paint(Graphics g)
 
         directionButtonGroup.add(downDirection);
         downDirection.setText("Down");
-        downDirection.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        downDirection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 downDirectionActionPerformed(evt);
             }
         });
@@ -1066,10 +1033,8 @@ public void paint(Graphics g)
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Piano Roll Style Pattern Editor");
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 closePianoRollWindow(evt);
             }
         });
@@ -1083,10 +1048,8 @@ public void paint(Graphics g)
         bassEditorToggleButton1.setMinimumSize(new java.awt.Dimension(140, 20));
         bassEditorToggleButton1.setOpaque(true);
         bassEditorToggleButton1.setPreferredSize(new java.awt.Dimension(140, 20));
-        bassEditorToggleButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        bassEditorToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bassEditorToggleButton1ActionPerformed(evt);
             }
         });
@@ -1144,10 +1107,8 @@ public void paint(Graphics g)
         barVolumeTF.setMaximumSize(new java.awt.Dimension(60, 2147483647));
         barVolumeTF.setMinimumSize(new java.awt.Dimension(60, 28));
         barVolumeTF.setPreferredSize(new java.awt.Dimension(60, 28));
-        barVolumeTF.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        barVolumeTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barVolumeTFActionPerformed(evt);
             }
         });
@@ -1165,10 +1126,8 @@ public void paint(Graphics g)
         barVolumeSlider.setMaximumSize(new java.awt.Dimension(500, 29));
         barVolumeSlider.setMinimumSize(new java.awt.Dimension(500, 29));
         barVolumeSlider.setPreferredSize(new java.awt.Dimension(500, 29));
-        barVolumeSlider.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
+        barVolumeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 barVolumeSliderStateChanged(evt);
             }
         });
@@ -1181,10 +1140,8 @@ public void paint(Graphics g)
 
         barVolumeImpliedCheckBox.setSelected(true);
         barVolumeImpliedCheckBox.setText("Implied");
-        barVolumeImpliedCheckBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        barVolumeImpliedCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barVolumeImpliedCheckBoxActionPerformed(evt);
             }
         });
@@ -1223,10 +1180,8 @@ public void paint(Graphics g)
         tempoComboBox.setToolTipText("Change tempo for the style editor.");
         tempoComboBox.setMinimumSize(new java.awt.Dimension(100, 27));
         tempoComboBox.setPreferredSize(new java.awt.Dimension(100, 27));
-        tempoComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tempoComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tempoComboBoxActionPerformed(evt);
             }
         });
@@ -1247,10 +1202,8 @@ public void paint(Graphics g)
         pixelsPerBeatTextField.setText("120");
         pixelsPerBeatTextField.setMinimumSize(new java.awt.Dimension(40, 19));
         pixelsPerBeatTextField.setPreferredSize(new java.awt.Dimension(40, 19));
-        pixelsPerBeatTextField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pixelsPerBeatTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pixelsPerBeatTextFieldActionPerformed(evt);
             }
         });
@@ -1264,10 +1217,8 @@ public void paint(Graphics g)
 
         pixelsPerBeatComboBox.setMaximumRowCount(4);
         pixelsPerBeatComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "120", "90", "60" }));
-        pixelsPerBeatComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pixelsPerBeatComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pixelsPerBeatComboBoxActionPerformed(evt);
             }
         });
@@ -1291,10 +1242,8 @@ public void paint(Graphics g)
         ticksPerBeatTextField.setText("8");
         ticksPerBeatTextField.setMinimumSize(new java.awt.Dimension(40, 19));
         ticksPerBeatTextField.setPreferredSize(new java.awt.Dimension(40, 19));
-        ticksPerBeatTextField.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        ticksPerBeatTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ticksPerBeatTextFieldActionPerformed(evt);
             }
         });
@@ -1309,10 +1258,8 @@ public void paint(Graphics g)
         ticksPerBeatComboBox.setMaximumRowCount(20);
         ticksPerBeatComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "120", "60", "40", "30", "20", "15", "12", "9", "8", "7", "6", "5", "4", "3", "2", "1" }));
         ticksPerBeatComboBox.setSelectedIndex(8);
-        ticksPerBeatComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        ticksPerBeatComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ticksPerBeatComboBoxActionPerformed(evt);
             }
         });
@@ -1339,10 +1286,8 @@ public void paint(Graphics g)
 
         importButton.setText("From Style Editor Column");
         importButton.setDefaultCapable(false);
-        importButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        importButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 importButtonActionPerformed(evt);
             }
         });
@@ -1356,10 +1301,8 @@ public void paint(Graphics g)
 
         exportButton.setText("To Style Editor Column ");
         exportButton.setActionCommand("From Piano Roll to Style Editor Column\n");
-        exportButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        exportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportButtonActionPerformed(evt);
             }
         });
@@ -1374,10 +1317,8 @@ public void paint(Graphics g)
         importFromColumnTF.setToolTipText("Style editor column number from which pattern is imported to pianoroll.");
         importFromColumnTF.setMinimumSize(new java.awt.Dimension(50, 28));
         importFromColumnTF.setPreferredSize(new java.awt.Dimension(50, 28));
-        importFromColumnTF.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        importFromColumnTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 importFromColumnTFActionPerformed(evt);
             }
         });
@@ -1391,10 +1332,8 @@ public void paint(Graphics g)
         exportToColumnTF.setToolTipText("Style editor column number to which pattern is exported from pianoroll.");
         exportToColumnTF.setMinimumSize(new java.awt.Dimension(50, 28));
         exportToColumnTF.setPreferredSize(new java.awt.Dimension(50, 28));
-        exportToColumnTF.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        exportToColumnTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportToColumnTFActionPerformed(evt);
             }
         });
@@ -1405,10 +1344,8 @@ public void paint(Graphics g)
 
         importFromColumnComboBox.setMaximumRowCount(30);
         importFromColumnComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", " " }));
-        importFromColumnComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        importFromColumnComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 importFromColumnComboBoxActionPerformed(evt);
             }
         });
@@ -1419,10 +1356,8 @@ public void paint(Graphics g)
 
         exportToColumnComboBox.setMaximumRowCount(30);
         exportToColumnComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", " " }));
-        exportToColumnComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        exportToColumnComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportToColumnComboBoxActionPerformed(evt);
             }
         });
@@ -1435,10 +1370,8 @@ public void paint(Graphics g)
         fileStepBackBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         fileStepBackBtn.setMaximumSize(new java.awt.Dimension(30, 30));
         fileStepBackBtn.setMinimumSize(new java.awt.Dimension(30, 30));
-        fileStepBackBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        fileStepBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileStepBackBtnActionPerformed(evt);
             }
         });
@@ -1453,10 +1386,8 @@ public void paint(Graphics g)
         fileStepForwardBtn.setMaximumSize(new java.awt.Dimension(30, 30));
         fileStepForwardBtn.setMinimumSize(new java.awt.Dimension(30, 30));
         fileStepForwardBtn.setPreferredSize(new java.awt.Dimension(30, 30));
-        fileStepForwardBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        fileStepForwardBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pianoRollButtonStepForwardBtnActionPerformed(evt);
             }
         });
@@ -1485,10 +1416,8 @@ public void paint(Graphics g)
         playBassButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         playBassButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         playBassButton.setOpaque(true);
-        playBassButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        playBassButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playBassButtonActionPerformed(evt);
             }
         });
@@ -1502,10 +1431,8 @@ public void paint(Graphics g)
         playChordButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         playChordButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         playChordButton.setOpaque(true);
-        playChordButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        playChordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playChordButtonActionPerformed(evt);
             }
         });
@@ -1521,10 +1448,8 @@ public void paint(Graphics g)
         playPercussionButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         playPercussionButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
         playPercussionButton.setOpaque(true);
-        playPercussionButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        playPercussionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playPercussionButtonActionPerformed(evt);
             }
         });
@@ -1551,10 +1476,8 @@ public void paint(Graphics g)
         loopToggleButton.setMinimumSize(new java.awt.Dimension(200, 20));
         loopToggleButton.setOpaque(true);
         loopToggleButton.setPreferredSize(new java.awt.Dimension(200, 20));
-        loopToggleButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        loopToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loopToggleButtonActionPerformed(evt);
             }
         });
@@ -1574,10 +1497,8 @@ public void paint(Graphics g)
         SaveEntireStyleButton.setMinimumSize(new java.awt.Dimension(200, 20));
         SaveEntireStyleButton.setOpaque(true);
         SaveEntireStyleButton.setPreferredSize(new java.awt.Dimension(200, 20));
-        SaveEntireStyleButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        SaveEntireStyleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveEntireStyleButtonActionPerformed(evt);
             }
         });
@@ -1590,27 +1511,21 @@ public void paint(Graphics g)
 
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
-        windowMenu.addMenuListener(new javax.swing.event.MenuListener()
-        {
-            public void menuSelected(javax.swing.event.MenuEvent evt)
-            {
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
                 windowMenuMenuSelected(evt);
             }
-            public void menuDeselected(javax.swing.event.MenuEvent evt)
-            {
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt)
-            {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
         closeWindowMI.setMnemonic('C');
         closeWindowMI.setText("Close Window");
         closeWindowMI.setToolTipText("Closes the current window (exits program if there are no other windows)");
-        closeWindowMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindowMIActionPerformed(evt);
             }
         });
@@ -1618,10 +1533,8 @@ public void paint(Graphics g)
 
         cascadeMI.setMnemonic('A');
         cascadeMI.setText("Cascade Windows");
-        cascadeMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cascadeMIActionPerformed(evt);
             }
         });
