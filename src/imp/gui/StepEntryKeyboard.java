@@ -2368,7 +2368,7 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
         if (label.getIcon() != icon)
             label.setIcon(icon);
 
-        forcePaint();
+        //forcePaint();
     }
     
     /**
