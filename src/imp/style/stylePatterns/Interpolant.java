@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,42 +20,14 @@
 
 package imp.style.stylePatterns;
 
-import imp.data.Chord;
-import imp.data.ChordForm;
-import imp.data.ChordSymbol;
 import imp.data.Duration;
-import imp.data.Key;
 import imp.data.Leadsheet;
-import imp.data.MelodyPart;
-import imp.data.Note;
-import imp.data.NoteSymbol;
-import imp.data.PitchClass;
-import imp.data.Rest;
-import imp.style.Style;
-import imp.data.VolumeSymbol;
-import imp.data.advice.ScaleForm;
-import imp.data.advice.Advisor;
-import imp.util.ErrorLog;
-import imp.voicing.HandManager;
-import imp.voicing.VoicingDebug;
-import imp.voicing.VoicingDistanceCalculator;
-import imp.voicing.VoicingGenerator;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.LinkedHashMap;
 import polya.Polylist;
-import polya.PolylistBuffer;
-import polya.PolylistEnum;
 
 /**
- * Contains a rhythmic pattern for use in a chord accompaniment and methods
- * needed to realize that rhythmic pattern with voice leading according
- * to a chord progression.
- * @see Style
- * @author Stephen Jones, Robert Keller, Carli Lessard
+ * 
+ * @author Isys Johnson
  */
 
 public class Interpolant

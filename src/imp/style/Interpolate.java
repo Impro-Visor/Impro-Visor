@@ -1,25 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This Java Class is part of the Impro-Visor Application
+ *
+ * Copyright (C) 2017 Robert Keller and Harvey Mudd College
+ *
+ * Impro-Visor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Impro-Visor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * merchantability or fitness for a particular purpose.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Impro-Visor; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package imp.style;
 
 
 import imp.data.Chord;
-import imp.data.ChordPart;
-import imp.data.ChordSymbol;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.ChordBlock;
 import imp.style.stylePatterns.Interpolant;
 import java.util.ArrayList;
 import polya.Polylist;
-import polya.PolylistBuffer;
-import polya.PolylistEnum;
 
 /**
  *
- * @author cssummer17
+ * @author Isys Johnson
  */
 public class Interpolate {
     private static final Polylist INTERPOLANTLIST_TABLE = 
@@ -98,8 +108,8 @@ public class Interpolate {
         
         if (currentChord.getRhythmValue() <= 120) steps = 0;
         else steps = currentChord.getRhythmValue()/120 -1;
-       // System.out.println("ChordDex: " + chordDex + " steps: " +steps);
-        System.out.println("currentChord in Interpolate: " + currentChord);
+        // System.out.println("ChordDex: " + chordDex + " steps: " +steps);
+        //System.out.println("currentChord in Interpolate: " + currentChord);
         boolean overrun = false;
         for(int a = 0; a < steps; a++) {
             if (chords.length() == 1 && steps <= 5) list = list.append(Polylist.list(false));

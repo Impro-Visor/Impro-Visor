@@ -894,7 +894,7 @@ protected void addBlocks(ArrayList<Block> blocks, Boolean selectBlocks)
     /** Draw all elements of the roadmap*/
     protected void draw()
     { 
-      if( buffer == null )
+      if( buffer == null || g2d == null )
         {
           return;
         }
