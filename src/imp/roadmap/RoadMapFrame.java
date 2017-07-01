@@ -25,6 +25,7 @@ import imp.data.advice.Advisor;
 import imp.ImproVisor;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.Brick;
+import imp.roadmap.brickdictionary.BrickDictionaryEditorDialog;
 import imp.roadmap.brickdictionary.BrickLibrary;
 import imp.roadmap.brickdictionary.ChordBlock;
 import imp.roadmap.cykparser.CYKParser;
@@ -173,7 +174,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
     /** Time signature of this piece */
     public int[] metre = {4,4};
     
-    private SourceEditorDialog dictionaryEditor = null;
+    private BrickDictionaryEditorDialog dictionaryEditor = null;
     
     private static int DICTIONARY_EDITOR_ROWS = 3000;
     private static int DICTIONARY_EDITOR_WIDTH = 700;
@@ -4774,7 +4775,7 @@ public String getDictionaryFilename()
 
 private void openDictionaryEditor()
   {
-      dictionaryEditor = new SourceEditorDialog(this, false, notate, null,
+      dictionaryEditor = new BrickDictionaryEditorDialog(this, false, notate, null,
             SourceEditorDialog.DICTIONARY);
 
     dictionaryEditor.setRows(DICTIONARY_EDITOR_ROWS);

@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package imp.gui;
+package imp.roadmap.brickdictionary;
 
 import imp.com.*;
 import imp.data.Score;
+import imp.gui.Notate;
 import imp.roadmap.RoadMapFrame;
 import imp.util.BasicEditor;
 
@@ -29,14 +30,14 @@ import imp.util.BasicEditor;
  *
  * @author  david
  */
-public class SourceEditorDialog extends javax.swing.JDialog implements BasicEditor
+public class BrickDictionaryEditorDialog extends javax.swing.JDialog implements BasicEditor
 {
      /**
      * Used as a prefix on editor window titles
      */
     
     Notate parent;
-    java.awt.Frame frameParent;
+    RoadMapFrame frameParent;
     CommandManager cm;
     int type;
     
@@ -53,7 +54,7 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
     private boolean firstTime = true;
    
     /** Creates new form sourceEditorDialog */
-    public SourceEditorDialog(java.awt.Frame parent, boolean modal, Notate p, CommandManager cm, int type)
+    public BrickDictionaryEditorDialog(RoadMapFrame parent, boolean modal, Notate p, CommandManager cm, int type)
     {
         super(parent, modal);
         frameParent = parent;
@@ -170,6 +171,9 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
             case STYLE:
                 cm.execute(new StylesToEditorCommand(this));
                 break;
+            case DICTIONARY:
+                new DictionaryToEditorCommand(((RoadMapFrame)frameParent).getDictionaryFilename(), this).execute();
+                break;
         }
     if( firstTime )
       {
@@ -197,7 +201,9 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
                 cm.execute(new EditorToStylesCommand(this));
                 //parent.reloadStyles();
                 break;
-        }
+            case DICTIONARY:
+                new EditorToDictionaryCommand(frameParent, this).execute();
+                break;        }
     }//GEN-LAST:event_editorToSourceButtonActionPerformed
 
 private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:event_windowClosingHandler
