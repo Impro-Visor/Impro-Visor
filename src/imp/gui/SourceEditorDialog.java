@@ -27,7 +27,7 @@ import imp.util.BasicEditor;
 
 /**
  *
- * @author  david
+ * @author  David Morrison
  */
 public class SourceEditorDialog extends javax.swing.JDialog implements BasicEditor
 {
@@ -36,7 +36,6 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
      */
     
     Notate parent;
-    java.awt.Frame frameParent;
     CommandManager cm;
     int type;
     
@@ -45,18 +44,16 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
     public static final int LEADSHEET = 0;
     public static final int GRAMMAR = 1;
     public static final int STYLE = 2;
-    public static final int DICTIONARY = 3;
-    public static final String[] typeStr = {"Leadsheet", "Grammar", "Style", "Dictionary"};
+     public static final String[] typeStr = {"Leadsheet", "Grammar", "Style"};
 
     public static String editorTitlePrefix = "Editor for: ";
     
     private boolean firstTime = true;
    
     /** Creates new form sourceEditorDialog */
-    public SourceEditorDialog(java.awt.Frame parent, boolean modal, Notate p, CommandManager cm, int type)
+    public SourceEditorDialog(boolean modal, Notate p, CommandManager cm, int type)
     {
-        super(parent, modal);
-        frameParent = parent;
+        super(p, modal);
         this.parent = p;
         this.cm = cm;
         this.type = type;
@@ -208,14 +205,9 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
                 parent.setNormalMode();
                 break;
             case GRAMMAR:
-
                 break;
             case STYLE:
-
                 break;
-            case DICTIONARY:
-
-                break;    
          }
   }//GEN-LAST:event_windowClosingHandler
     
@@ -224,8 +216,6 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
         editorToSourceButtonActionPerformed(evt);
 
     }
-    
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton editorToSourceButton;

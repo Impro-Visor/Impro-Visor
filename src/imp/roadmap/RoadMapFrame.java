@@ -59,7 +59,7 @@ import polya.Tokenizer;
  * @author August Toman-Yih
  */
 
-public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener {
+public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListener {
 
     public static final String DICTIONARY_EXT = ".dictionary";
 
@@ -592,7 +592,6 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         preferencesDialog.setTitle("Roadmap Info"); // NOI18N
         preferencesDialog.setMinimumSize(new java.awt.Dimension(400, 200));
         preferencesDialog.setName("preferencesDialog"); // NOI18N
-        preferencesDialog.getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel2.setName("jPanel2"); // NOI18N
 
@@ -832,7 +831,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         reloadButton.setText("Reload Dictionary"); // NOI18N
         reloadButton.setToolTipText("Reloads the dictionary, in case it was edited externally."); // NOI18N
-        reloadButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        reloadButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reloadButton.setMaximumSize(new java.awt.Dimension(182, 40));
         reloadButton.setMinimumSize(new java.awt.Dimension(115, 40));
         reloadButton.setName("reloadButton"); // NOI18N
@@ -856,7 +855,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         deleteButton.setText("Delete from Dictionary"); // NOI18N
         deleteButton.setToolTipText("Makes the selected brick \"invisible\" in the dictionary."); // NOI18N
-        deleteButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        deleteButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         deleteButton.setMaximumSize(new java.awt.Dimension(182, 40));
         deleteButton.setMinimumSize(new java.awt.Dimension(115, 40));
         deleteButton.setName("deleteButton"); // NOI18N
@@ -916,7 +915,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         fileStepBackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/fileStepperBack.png"))); // NOI18N
         fileStepBackBtn.setToolTipText("Browse previous leadsheet file in the current directory.\n"); // NOI18N
-        fileStepBackBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        fileStepBackBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         fileStepBackBtn.setFocusable(false);
         fileStepBackBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         fileStepBackBtn.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -934,7 +933,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         fileStepForwardBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/fileStepperFront.png"))); // NOI18N
         fileStepForwardBtn.setToolTipText("Browse next leadsheet file in the current directory.\n"); // NOI18N
-        fileStepForwardBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        fileStepForwardBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         fileStepForwardBtn.setFocusable(false);
         fileStepForwardBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         fileStepForwardBtn.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -980,7 +979,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         breakButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         breakButton.setText("Break"); // NOI18N
         breakButton.setToolTipText("Break this brick into constitutent parts."); // NOI18N
-        breakButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        breakButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         breakButton.setFocusable(false);
         breakButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         breakButton.setMaximumSize(new java.awt.Dimension(50, 30));
@@ -1000,7 +999,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         flattenButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         flattenButton.setText("Flatten"); // NOI18N
         flattenButton.setToolTipText("Flatten selected bricks into their constituent chords."); // NOI18N
-        flattenButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        flattenButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         flattenButton.setFocusable(false);
         flattenButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         flattenButton.setMaximumSize(new java.awt.Dimension(50, 30));
@@ -1020,7 +1019,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         selectAllBricksButton.setFont(new java.awt.Font("Lucida Grande 12", 0, 12)); // NOI18N
         selectAllBricksButton.setText("Select All"); // NOI18N
         selectAllBricksButton.setToolTipText("Select all bricks.\n"); // NOI18N
-        selectAllBricksButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        selectAllBricksButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         selectAllBricksButton.setFocusable(false);
         selectAllBricksButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         selectAllBricksButton.setMaximumSize(new java.awt.Dimension(60, 30));
@@ -1039,7 +1038,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
 
         analyzeButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         analyzeButton.setToolTipText("Analyze the selection into bricks."); // NOI18N
-        analyzeButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        analyzeButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         analyzeButton.setFocusable(false);
         analyzeButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         analyzeButton.setLabel("Analyze"); // NOI18N
@@ -1060,7 +1059,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         newBrickButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         newBrickButton.setText("Define Brick"); // NOI18N
         newBrickButton.setToolTipText("Define a new brick in the dictionary."); // NOI18N
-        newBrickButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        newBrickButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         newBrickButton.setFocusable(false);
         newBrickButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newBrickButton.setMaximumSize(new java.awt.Dimension(80, 30));
@@ -1080,7 +1079,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         keyColorationButton.setBackground(new java.awt.Color(153, 204, 255));
         keyColorationButton.setFont(new java.awt.Font("Arial 11", 0, 12)); // NOI18N
         keyColorationButton.setToolTipText("Turn note coloration off or on."); // NOI18N
-        keyColorationButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        keyColorationButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         keyColorationButton.setFocusable(false);
         keyColorationButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         keyColorationButton.setLabel("<html><center>Gray</center></html>");
@@ -1099,7 +1098,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         });
         toolBar.add(keyColorationButton);
 
-        masterVolumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume", 2, 0, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
+        masterVolumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
         masterVolumePanel.setToolTipText("Control playback volume."); // NOI18N
         masterVolumePanel.setMaximumSize(new java.awt.Dimension(120, 40));
         masterVolumePanel.setMinimumSize(new java.awt.Dimension(100, 40));
@@ -1134,7 +1133,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         loopToggleButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         loopToggleButton.setText("Loop"); // NOI18N
         loopToggleButton.setToolTipText("Loop the playback until stop is pressed, or loop is toggled."); // NOI18N
-        loopToggleButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        loopToggleButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         loopToggleButton.setFocusable(false);
         loopToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         loopToggleButton.setMaximumSize(new java.awt.Dimension(60, 30));
@@ -1156,7 +1155,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
         playButton.setText("\n"); // NOI18N
         playButton.setToolTipText("Play the selection.\n"); // NOI18N
-        playButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        playButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         playButton.setFocusable(false);
         playButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         playButton.setMaximumSize(new java.awt.Dimension(40, 30));
@@ -1176,7 +1175,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         stopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif"))); // NOI18N
         stopButton.setText(" "); // NOI18N
         stopButton.setToolTipText("Stop playing the selection.\n"); // NOI18N
-        stopButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        stopButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         stopButton.setFocusable(false);
         stopButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         stopButton.setMaximumSize(new java.awt.Dimension(40, 30));
@@ -1196,7 +1195,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         playOnClickToggleButton.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         playOnClickToggleButton.setText("<html><center>\nPlay on\n<br>\nClick\n</center></html>\n");
         playOnClickToggleButton.setToolTipText("Play brick when brick is clicked.\n"); // NOI18N
-        playOnClickToggleButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        playOnClickToggleButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         playOnClickToggleButton.setFocusable(false);
         playOnClickToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         playOnClickToggleButton.setMaximumSize(new java.awt.Dimension(60, 30));
@@ -1213,7 +1212,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         });
         toolBar.add(playOnClickToggleButton);
 
-        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (BPM) & Style\n", 2, 0, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
+        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (BPM) & Style\n", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
         tempoPanel.setToolTipText("Set the playback tempo."); // NOI18N
         tempoPanel.setMaximumSize(new java.awt.Dimension(300, 50));
         tempoPanel.setMinimumSize(new java.awt.Dimension(250, 50));
@@ -1318,7 +1317,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         barsPerLineComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", " " }));
         barsPerLineComboBox.setSelectedIndex(7);
         barsPerLineComboBox.setToolTipText("Set the maximum number of bars per line.\n"); // NOI18N
-        barsPerLineComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bars/Line ", 2, 2, new java.awt.Font("Lucida Grande 12", 0, 12))); // NOI18N
+        barsPerLineComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bars/Line ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Lucida Grande 12", 0, 12))); // NOI18N
         barsPerLineComboBox.setMaximumSize(new java.awt.Dimension(80, 45));
         barsPerLineComboBox.setMinimumSize(new java.awt.Dimension(80, 30));
         barsPerLineComboBox.setName("barsPerLineComboBox"); // NOI18N
@@ -1343,7 +1342,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         featureWidthSlider.setMinimum(60);
         featureWidthSlider.setToolTipText("Slide to adjust visual width of bricks. Double-click to constrain the setting so that it changes with the window width."); // NOI18N
         featureWidthSlider.setValue(settings.measureLength);
-        featureWidthSlider.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Width", 2, 0, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
+        featureWidthSlider.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Width", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
         featureWidthSlider.setFocusable(false);
         featureWidthSlider.setMaximumSize(new java.awt.Dimension(200, 40));
         featureWidthSlider.setMinimumSize(new java.awt.Dimension(100, 40));
@@ -1366,7 +1365,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         toolBar.add(featureWidthSlider);
 
         transposeSpinner.setToolTipText("Transposes the playback the specified number of half steps (e.g. use -2 for Bb instruments, +3 for Eb).");
-        transposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transpose", 2, 0, new java.awt.Font("Lucida Grande", 0, 10))); // NOI18N
+        transposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transpose", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 10))); // NOI18N
         transposeSpinner.setMaximumSize(new java.awt.Dimension(65, 45));
         transposeSpinner.setMinimumSize(new java.awt.Dimension(65, 45));
         transposeSpinner.setName(""); // NOI18N
@@ -1487,7 +1486,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         gridBagConstraints.weighty = 0.75;
         getContentPane().add(roadMapScrollPane, gridBagConstraints);
 
-        previewScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Brick preview (select from Dictionary)\n", 1, 0));
+        previewScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Brick preview (select from Dictionary)\n", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         previewScrollPane.setToolTipText("Provides a preview of a brick selected from the Brick Dictionary."); // NOI18N
         previewScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         previewScrollPane.setDoubleBuffered(true);
@@ -1523,7 +1522,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         clearButton.setBackground(new java.awt.Color(255, 255, 51));
         clearButton.setText("<html><center>\nClear<br>\nText\n</center></html>"); // NOI18N
         clearButton.setToolTipText("Clear the textual entry field."); // NOI18N
-        clearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        clearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         clearButton.setMaximumSize(new java.awt.Dimension(46, 30));
         clearButton.setMinimumSize(new java.awt.Dimension(46, 30));
         clearButton.setName("clearButton"); // NOI18N
@@ -1547,7 +1546,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         insertBrickButton.setBackground(new java.awt.Color(0, 255, 0));
         insertBrickButton.setText("<html>\n<center>\nInsert\n<br>\nBrick\n</center>\n</html>"); // NOI18N
         insertBrickButton.setToolTipText("Enter the previewed brick into the roadmap."); // NOI18N
-        insertBrickButton.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        insertBrickButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         insertBrickButton.setMaximumSize(new java.awt.Dimension(46, 38));
         insertBrickButton.setMinimumSize(new java.awt.Dimension(46, 38));
         insertBrickButton.setName("insertBrickButton"); // NOI18N
@@ -4775,8 +4774,7 @@ public String getDictionaryFilename()
 
 private void openDictionaryEditor()
   {
-      dictionaryEditor = new BrickDictionaryEditorDialog(this, false, notate, null,
-            SourceEditorDialog.DICTIONARY);
+      dictionaryEditor = new BrickDictionaryEditorDialog(this, false, notate, null);
 
     dictionaryEditor.setRows(DICTIONARY_EDITOR_ROWS);
     dictionaryEditor.setSize(DICTIONARY_EDITOR_WIDTH, DICTIONARY_EDITOR_HEIGHT);

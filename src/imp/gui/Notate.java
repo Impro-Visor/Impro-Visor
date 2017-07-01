@@ -799,12 +799,12 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     midiLatencyMeasurement = new MidiLatencyMeasurementTool(this);
     
 
-    leadsheetEditor = new SourceEditorDialog(null, false, this, cm,
+    leadsheetEditor = new SourceEditorDialog(false, this, cm,
                                              SourceEditorDialog.LEADSHEET);
 
     leadsheetEditor.setRows(LEADSHEET_EDITOR_ROWS);
 
-    grammarEditor = new SourceEditorDialog(null, false, this, cm,
+    grammarEditor = new SourceEditorDialog(false, this, cm,
                                            SourceEditorDialog.GRAMMAR);
 
     grammarEditor.setRows(GRAMMAR_EDITOR_ROWS);
