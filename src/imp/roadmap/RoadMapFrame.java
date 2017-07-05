@@ -879,12 +879,11 @@ public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListene
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Road Map\n"); // NOI18N
-        setBounds(new java.awt.Rectangle(25, 25, 500, 800));
-        setMaximumSize(new java.awt.Dimension(500, 800));
-        setMinimumSize(new java.awt.Dimension(500, 800));
+        setBounds(new java.awt.Rectangle(25, 25, 800, 500));
+        setMinimumSize(new java.awt.Dimension(800, 500));
         setName("Form"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(500, 800));
-        setSize(new java.awt.Dimension(500, 800));
+        setPreferredSize(new java.awt.Dimension(1295, 720));
+        setSize(new java.awt.Dimension(800, 500));
         addComponentListener(new java.awt.event.ComponentAdapter()
         {
             public void componentResized(java.awt.event.ComponentEvent evt)
@@ -2487,6 +2486,7 @@ public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListene
         setJMenuBar(roadmapMenuBar);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /* IMPORTANT: Any menu item with accelerators should include the conditional
