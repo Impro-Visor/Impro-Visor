@@ -2185,7 +2185,6 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder justification="2" title="Tempo and Style">
                   <Border PropertyName="innerBorder" info="null"/>
-                  <ResourceString PropertyName="titleX" bundle="imp/roadmap/Bundle.properties" key="RoadMapFrame.tempoPanel.border.title" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                   <Font PropertyName="font" name="Lucida Grande" size="12" style="0"/>
                 </TitledBorder>
               </Border>
@@ -2305,7 +2304,6 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder justification="2" title="Transpose">
                   <Border PropertyName="innerBorder" info="null"/>
-                  <ResourceString PropertyName="titleX" bundle="imp/roadmap/Bundle.properties" key="RoadMapFrame.transposeSpinner.border.title" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                   <Font PropertyName="font" name="Lucida Grande" size="12" style="0"/>
                 </TitledBorder>
               </Border>
