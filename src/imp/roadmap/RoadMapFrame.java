@@ -1284,8 +1284,7 @@ public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListene
         });
         secondToolBar.add(playOnClickToggleButton);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("imp/roadmap/Bundle"); // NOI18N
-        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("RoadMapFrame.tempoPanel.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
+        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo and Style", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
         tempoPanel.setToolTipText("Set the playback tempo."); // NOI18N
         tempoPanel.setMaximumSize(new java.awt.Dimension(300, 50));
         tempoPanel.setMinimumSize(new java.awt.Dimension(250, 50));
@@ -1387,7 +1386,7 @@ public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListene
         secondToolBar.add(tempoPanel);
 
         transposeSpinner.setToolTipText("Transposes the playback the specified number of half steps (e.g. use -2 for Bb instruments, +3 for Eb).");
-        transposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("RoadMapFrame.transposeSpinner.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
+        transposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transpose", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 12))); // NOI18N
         transposeSpinner.setMaximumSize(new java.awt.Dimension(80, 45));
         transposeSpinner.setMinimumSize(new java.awt.Dimension(75, 45));
         transposeSpinner.setName(""); // NOI18N
