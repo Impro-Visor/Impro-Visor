@@ -282,7 +282,7 @@ public class LeadsheetPreview extends javax.swing.JPanel implements PropertyChan
         if(status != MidiPlayListener.Status.STOPPED) {
             midiSynth.pause();
         } else {
-            playLeadsheet(0);
+            playLeadsheet(Transposition.none);
         }
     }//GEN-LAST:event_playBtnActionPerformed
 
@@ -299,7 +299,7 @@ public class LeadsheetPreview extends javax.swing.JPanel implements PropertyChan
             playbackManager.setTotalTimeSeconds(previewTableModel.score.getTotalTime());
             //previewTableModel.score.setVolumes(midiSynth);
             if( wasPlaying )
-              playLeadsheet(0);
+              playLeadsheet(Transposition.none);
         }
     }
         
@@ -311,7 +311,7 @@ public class LeadsheetPreview extends javax.swing.JPanel implements PropertyChan
         return previewTableModel.score.getTitle();
     }
     
-    public void playLeadsheet(int transposition) {
+    public void playLeadsheet(Transposition transposition) {
         Score score = previewTableModel.score;
         if( score == null )
           {
@@ -349,7 +349,7 @@ public class LeadsheetPreview extends javax.swing.JPanel implements PropertyChan
     }
 
     MidiPlayListener.Status status = MidiPlayListener.Status.STOPPED;
-    public void setPlaying(MidiPlayListener.Status playing, int transposition) {
+    public void setPlaying(MidiPlayListener.Status playing, Transposition transposition) {
         playbackManager.setPlaying(playing, transposition);
         
         MidiPlayListener.Status oldStatus = status;

@@ -334,7 +334,7 @@ static final int UNKNOWN = -1;
                case PLAYBACK_TRANSPOSE:
                 if( item.nonEmpty() && item.first() instanceof Long )
                   {
-                  score.setTransposition(((Long)item.first()).intValue());
+                  score.setTransposition(new Transposition(0, 0, ((Long)item.first()).intValue()));
                   }
                 break;
 

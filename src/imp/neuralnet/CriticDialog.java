@@ -371,7 +371,7 @@ public class CriticDialog extends javax.swing.JDialog implements Constants {
                                      ImproVisor.getLastMidiSynth(),
                                      ImproVisor.getCurrentWindow(),
                                      0, 
-                                     0,
+                                     Transposition.none,
                                      false,
                                      BEAT * 4).execute();
             }

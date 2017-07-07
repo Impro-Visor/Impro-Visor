@@ -194,7 +194,7 @@ public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListene
     
     private JFileChooser dictionaryfc = new JFileChooser();;
 
-    public int roadMapTransposition = 0;
+    public Transposition roadMapTransposition = Transposition.none;
    
     private RoadMapFrame() {} // Not for you.
     
@@ -4347,7 +4347,7 @@ public void resetAuxNotate()
         score.setMasterVolume(volume); 
         setVolumeSlider(volume);
          
-        setPlaying(MidiPlayListener.Status.PLAYING, 0);
+        setPlaying(MidiPlayListener.Status.PLAYING, Transposition.none);
          
         if( loopToggleButton.isSelected() )
           {
@@ -4369,7 +4369,7 @@ public void resetAuxNotate()
     {
         if(isPlaying()) {
             notate.stopPlayAscore();
-            setPlaying(MidiPlayListener.Status.STOPPED, 0);
+            setPlaying(MidiPlayListener.Status.STOPPED, Transposition.none);
         }
     }
     
@@ -4381,7 +4381,7 @@ public void resetAuxNotate()
     }
 
     /** Set the playback status */
-    public void setPlaying(MidiPlayListener.Status playing, int transposition)
+    public void setPlaying(MidiPlayListener.Status playing, Transposition transposition)
     {
         isPlaying = playing;
         if(isPlaying()) {
@@ -4399,11 +4399,11 @@ public void resetAuxNotate()
     {
         if(status)
           {
-            setPlaying(MidiPlayListener.Status.PLAYING,0);
+            setPlaying(MidiPlayListener.Status.PLAYING, Transposition.none);
           }
         else
           {
-            setPlaying(MidiPlayListener.Status.STOPPED,0);
+            setPlaying(MidiPlayListener.Status.STOPPED, Transposition.none);
           }
     }
     
@@ -5050,19 +5050,20 @@ public ArrayList<String> getStyleNames()
     setTransposition(getTransposition());
 }
     
-public void setTransposition(int transposition)
+public void setTransposition(Transposition transposition)
   {
     if( transposeSpinner != null )
       {
-        transposeSpinner.setValue(transposition);
+        transposeSpinner.setValue(transposition.getChordTransposition());
       }
 
     roadMapTransposition = transposition;
   } 
 
-public int getTransposition()
+public Transposition getTransposition()
   {
-    return Integer.parseInt(transposeSpinner.getValue().toString());
+    int value = Integer.parseInt(transposeSpinner.getValue().toString());
+    return new Transposition(value, value, 0);
   }
 
 }

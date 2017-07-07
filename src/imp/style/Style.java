@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ import imp.data.NoteSymbol;
 import imp.data.Part;
 import imp.data.PitchClass;
 import imp.data.Rest;
+import imp.data.Transposition;
 import imp.data.VolumeSymbol;
 import imp.util.Preferences;
 import imp.voicing.AVPFileCreator;
@@ -1214,7 +1215,7 @@ private Polylist makeChordline(
         Chord currentChord,
         Polylist previousChord,
         int duration,
-        int transposition,
+        Transposition transposition,
         int endLimitIndex,
         boolean constantBass)
         throws InvalidMidiDataException
@@ -1369,7 +1370,11 @@ private Polylist makeChordline(
                       note = ns.toNote();
                       note.setRhythmValue(dur);
                       note.setVolume(volume);  // note of chord
-                      note.render(ms, seq.getChordTrack(), time, offTime, ImproVisor.getChordChannel(), transposition);
+                      note.render(ms, 
+                                  seq.getChordTrack(), 
+                                  time, offTime, 
+                                  ImproVisor.getChordChannel(), 
+                                  transposition.getChordTransposition());
                       }
                     else if( ob instanceof VolumeSymbol )
                       {
@@ -1527,7 +1532,7 @@ System.out.println("mystery code on bassline " + bassline);
                      ChordPart chordPart, 
                      int startIndex, 
                      int endIndex, 
-                     int transposition, 
+                     Transposition transposition, 
                      int endLimitIndex,
                      boolean constantBass)
           throws InvalidMidiDataException
@@ -1565,12 +1570,14 @@ public long render(MidiSequence seq,
                    ChordPart chordPart,
                    int startIndex,
                    int endIndex,
-                   int transposition,
+                   Transposition transposition,
                    boolean useDrums,
                    int endLimitIndex,
                    boolean constantBass)
         throws InvalidMidiDataException
   {
+    int chordTransposition = transposition.getChordTransposition();
+    int bassTransposition = transposition.getBassTransposition();
     setResidualChordPattern(null);
     boolean hasStyle = !noStyle();
     // to trace sequencing info:
@@ -1648,7 +1655,7 @@ public long render(MidiSequence seq,
                                        this,
                                        prev,
                                        rhythmValue,
-                                       transposition,
+                                       chordTransposition,
                                        endLimitIndex);
             prev = currentChord;
             if( endIndex <= index )
@@ -1717,7 +1724,7 @@ public long render(MidiSequence seq,
                         nextChord,
                         previousBassNote,
                         rhythmValue,
-                        transposition,
+                        bassTransposition,
                         constantBass);
 
             // Sets previousBassNote to last NoteSymbol in bassline
@@ -1800,7 +1807,7 @@ public long render(MidiSequence seq,
                           ImproVisor.getBassChannel(),
                           startTime,
                           seq.getBassTrack(),
-                          transposition,
+                          bassTransposition,
                           endLimitIndex);
       }
 

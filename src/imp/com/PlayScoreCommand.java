@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -68,7 +68,7 @@ private int endLimitIndex;
 private boolean undoable = false;
 private MidiPlayListener listener;
 private int loopCount = 0;
-private int transposition = 0;
+private Transposition transposition = Transposition.none;
 private int offset;
 /**
  * The duration of the accompanying chord for single-note entry
@@ -92,7 +92,7 @@ public PlayScoreCommand(Score score,
                         MidiSynth ms,
                         MidiPlayListener listener,
                         int loopCount,
-                        int transposition)
+                        Transposition transposition)
   {
     this(score,
          startTime,
@@ -112,7 +112,7 @@ public PlayScoreCommand(Score score,
                         MidiSynth ms,
                         MidiPlayListener listener,
                         int loopCount,
-                        int transposition,
+                        Transposition transposition,
                         boolean useDrums,
                         int endLimitIndex)
   {
@@ -135,7 +135,7 @@ public PlayScoreCommand(Score score,
                         MidiSynth ms,
                         MidiPlayListener listener,
                         int loopCount,
-                        int transposition,
+                        Transposition transposition,
                         boolean useDrums,
                         int endLimitIndex,
                         boolean isTradingMelody)
@@ -172,7 +172,7 @@ public PlayScoreCommand(Score score,
                         MidiSynth ms,
                         MidiPlayListener listener,
                         int loopCount,
-                        int transposition,
+                        Transposition transposition,
                         boolean useDrums,
                         int endLimitIndex,
                         boolean isTradingMelody,
@@ -197,7 +197,7 @@ public PlayScoreCommand(Score score,
                         MidiSynth ms,
                         MidiPlayListener listener,
                         int loopCount,
-                        int transposition,
+                        Transposition transposition,
                         boolean useDrums,
                         int endLimitIndex)
   {
@@ -220,7 +220,7 @@ public PlayScoreCommand(Score score,
                         MidiSynth ms,
                         MidiPlayListener listener,
                         int loopCount,
-                        int transposition,
+                        Transposition transposition,
                         boolean useDrums,
                         int endLimitIndex,
                         boolean isTradingMelody)
@@ -246,7 +246,7 @@ public PlayScoreCommand(Score score,
                         MidiSynth ms,
                         MidiPlayListener listener,
                         int loopCount,
-                        int transposition,
+                        Transposition transposition,
                         boolean useDrums,
                         int endLimitIndex,
                         boolean isTradingMelody,

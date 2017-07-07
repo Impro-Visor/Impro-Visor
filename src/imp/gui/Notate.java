@@ -10332,7 +10332,7 @@ public void playChordAtIndex(int index)
     chordToPlay.setRhythmValue(480);
     try
       {
-        midiSynth2.play(tempScore, 0, 0, 0, false, 480, 0);
+        midiSynth2.play(tempScore, 0, 0, Transposition.none, false, 480, 0);
       }
     catch( Exception e )
       {
@@ -10785,11 +10785,12 @@ private void playVoicing(ChordSymbol o, boolean literal)
                          4 * BEAT).execute();
   }
 
-public void setTransposition(int transposition)
+public void setTransposition(Transposition transposition)
   {
+    int chordTransposition = transposition.getChordTransposition();
     if( transposeSpinner != null )
       {
-        transposeSpinner.setValue(transposition);
+        transposeSpinner.setValue(chordTransposition);
       }
 
     if( score != null )
@@ -13679,9 +13680,10 @@ private void setPlayTransposed()
     setTransposition(getTransposition());
   }
 
-public int getTransposition()
+public Transposition getTransposition()
   {
-    return Integer.parseInt(transposeSpinner.getValue().toString());
+    int value = Integer.parseInt(transposeSpinner.getValue().toString());
+    return new Transposition(value, value, 0);
   }
 
     private void tempoSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tempoSetActionPerformed
@@ -18543,7 +18545,7 @@ public void playAscore(Score score, String style, int loopCount)
 
     int startTime = 0;
     boolean swing = true;
-    int transposition = 0;
+    Transposition transposition = Transposition.none;
     boolean useDrums = true;
     int endLimitIndex = -1; // score.getLength()-1;
     //System.out.println("playing score of length " + score.getLength());
@@ -18578,7 +18580,7 @@ public void playAscoreWithStyle(Score score, int loopCount)
     int volume = allVolumeToolBarSlider.getValue();
     int startTime = 0;
     boolean swing = true;
-    int transposition = 0;
+    Transposition transposition = Transposition.none;
     boolean useDrums = true;
     int endLimitIndex = -1; // score.getLength()-1;
     //System.out.println("playing score of length " + score.getLength());
@@ -18726,7 +18728,7 @@ public void enableStopButton(boolean enabled)
     stopBtn.setEnabled(enabled);
   }
 
-public void setPlaying(MidiPlayListener.Status playing, int transposition)
+public void setPlaying(MidiPlayListener.Status playing, Transposition transposition)
   {
     lastSave = chordProg.size();
     //System.out.println("setPlaying, lastSave = " + lastSave);
@@ -27581,7 +27583,7 @@ public int getSlotsPerMeasure()
     return score.getSlotsPerMeasure();
 }
 
-public void playAscoreWithStyle(Score score, int loopCount, int newTranspos)
+public void playAscoreWithStyle(Score score, int loopCount, Transposition transposition)
   {
     int volume = allVolumeToolBarSlider.getValue();
     int startTime = 0;
@@ -27603,7 +27605,7 @@ public void playAscoreWithStyle(Score score, int loopCount, int newTranspos)
                          midiSynth3,
                          this,
                          loopCount,
-                         newTranspos,
+                         transposition,
                          useDrums,
                          endLimitIndex).execute();
   }

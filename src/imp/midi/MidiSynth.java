@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ package imp.midi;
 
 import imp.Constants;
 import imp.data.Score;
+import imp.data.Transposition;
 import imp.style.Style;
 import imp.util.*;
 import java.util.ArrayList;
@@ -361,7 +362,7 @@ public boolean almostFinishedPlaying(int n)
 public void play(Score score,
                  long startTime,
                  int loopCount,
-                 int transposition)
+                 Transposition transposition)
     throws InvalidMidiDataException
   {
     play(score,
@@ -375,7 +376,7 @@ public void play(Score score,
 public void play(Score score,
                  long startTime,
                  int loopCount,
-                 int transposition,
+                 Transposition transposition,
                  boolean useDrums)
     throws InvalidMidiDataException
   {
@@ -391,7 +392,7 @@ public void play(Score score,
 public void play(Score score,
                  long startIndex,
                  int loopCount,
-                 int transposition,
+                 Transposition transposition,
                  boolean useDrums,
                  int endLimitIndex)
     throws InvalidMidiDataException
@@ -420,7 +421,7 @@ public void play(Score score,
 public void origPlay(Score score,
                  long startIndex,
                  int loopCount,
-                 int transposition,
+                 Transposition transposition,
                  boolean useDrums,
                  int endLimitIndex,
                  int countInOffset)
@@ -552,7 +553,7 @@ public void origPlay(Score score,
 public void play(Score score,
                  long startIndex,
                  int loopCount,
-                 int transposition,
+                 Transposition transposition,
                  boolean useDrums,
                  int endLimitIndex,
                  int countInOffset)
@@ -572,7 +573,7 @@ public void play(Score score,
 public void prePlay(Score score,
                     long startIndex,
                     int loopCount,
-                    int transposition,
+                    Transposition transposition,
                     boolean useDrums,
                     int endLimitIndex,
                     int countInOffset)
@@ -591,7 +592,7 @@ public void prePlay(Score score,
 public void prePlay(Score score,
                     long startIndex,
                     int loopCount,
-                    int transposition,
+                    Transposition transposition,
                     boolean useDrums,
                     int endLimitIndex,
                     int countInOffset,
@@ -617,7 +618,7 @@ public void prePlay(Score score,
 public void prePlay(Score score,
                     long startIndex,
                     int loopCount,
-                    int transposition,
+                    Transposition transposition,
                     boolean useDrums,
                     int endLimitIndex,
                     int countInOffset,
@@ -750,7 +751,7 @@ public void prePlay(Score score,
   }
 
 
-public void actualPlay(int transposition)
+public void actualPlay(Transposition transposition)
   {
     // Here's where the playback actually starts:
 
@@ -827,13 +828,13 @@ public void pause()
       {
         sequencer.start();
         paused = false;
-        playListener.setPlaying(MidiPlayListener.Status.PLAYING, 0);
+        playListener.setPlaying(MidiPlayListener.Status.PLAYING, Transposition.none);
       }
     else
       {
         sequencer.stop();
         paused = true;
-        playListener.setPlaying(MidiPlayListener.Status.PAUSED, 0);
+        playListener.setPlaying(MidiPlayListener.Status.PAUSED, Transposition.none);
       }
   }
 
@@ -878,7 +879,7 @@ public void stop(String reason)
     // this should be the LAST thing this function does before returning
     if( playListener != null )
       {
-        playListener.setPlaying(MidiPlayListener.Status.STOPPED, 0);
+        playListener.setPlaying(MidiPlayListener.Status.STOPPED, Transposition.none);
         //System.out.println("Sequencer stopped from stop()");
       }
 

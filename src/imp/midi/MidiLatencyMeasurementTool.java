@@ -175,7 +175,7 @@ public class MidiLatencyMeasurementTool
         midiSynth.registerReceiver(this);
         midiSynth.registerNoteListener(this);
         midiSynth.setPlayListener(this);
-        startPlay(0);
+        startPlay(Transposition.none);
     }
 
     public void stopLatencyMeasurement() {
@@ -186,7 +186,7 @@ public class MidiLatencyMeasurementTool
         midiSynth.stop("stop");
     }
 
-    public void startPlay(int transposition) {
+    public void startPlay(Transposition transposition) {
         try {
             midiSynth.play(testScore, 0, 1000, transposition);
         } catch (Exception e) {
@@ -196,7 +196,7 @@ public class MidiLatencyMeasurementTool
 
     MidiPlayListener.Status playStatus;
 
-    public void setPlaying(MidiPlayListener.Status playing, int transposition) {
+    public void setPlaying(MidiPlayListener.Status playing, Transposition transposition) {
         playStatus = playing;
         switch (playing) {
             case PLAYING:

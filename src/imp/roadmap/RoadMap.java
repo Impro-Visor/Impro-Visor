@@ -20,6 +20,7 @@
 
 package imp.roadmap;
 
+import imp.data.Transposition;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.Brick;
 import imp.roadmap.brickdictionary.ChordBlock;

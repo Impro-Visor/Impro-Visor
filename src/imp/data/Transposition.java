@@ -27,6 +27,8 @@ package imp.data;
  */
 public class Transposition
   {
+    public static Transposition none = new Transposition(0, 0, 0);
+    
     int chordTransposition;
     int bassTransposition;
     int melodyTransposition;

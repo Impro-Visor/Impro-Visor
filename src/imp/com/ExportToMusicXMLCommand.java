@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor API.
  *
- * Copyright (C) 2009 Nicolas Froment (aka Lasconic),
+ * Copyright (C) 2009-2017 Nicolas Froment (aka Lasconic),
  * Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
@@ -64,13 +64,13 @@ public class ExportToMusicXMLCommand implements Command, Constants {
 	 */
 	private boolean undoable = false;
 	private int melodyPartIndex;
-	private int transposition;
+	private Transposition transposition;
 
 	/**
 	 * Creates a new Command that can save a Score to a File. file the File to
 	 * save to score the Score to save
 	 */
-	public ExportToMusicXMLCommand(File file, Score score, int melodyPartIndex, int transposition) {
+	public ExportToMusicXMLCommand(File file, Score score, int melodyPartIndex, Transposition transposition) {
 		this.file = file;
 		this.score = score;
 		this.melodyPartIndex = melodyPartIndex;
@@ -99,7 +99,7 @@ public class ExportToMusicXMLCommand implements Command, Constants {
 	}
 
 	// Initialize the render and write the header chunk.
-	private void write(OutputStreamWriter osw, int transposition) throws IOException {
+	private void write(OutputStreamWriter osw, Transposition transposition) throws IOException {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String title = score.getTitle();

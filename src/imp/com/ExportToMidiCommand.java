@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ package imp.com;
 import imp.Constants;
 import imp.ImproVisor;
 import imp.data.Score;
+import imp.data.Transposition;
 import imp.util.ErrorLog;
 import java.io.*;
 import javax.sound.midi.*;
@@ -64,14 +65,14 @@ public class ExportToMidiCommand implements Command, Constants
      */
     private final boolean undoable = false;
     
-    private final int transposition;
+    private final Transposition transposition;
 
     /**
      * Creates a new Command that can save a Score to a File.
      * file      the File to save to
      * score     the Score to save
      */
-    public ExportToMidiCommand(File file, Score score, int toExport, int transposition) 
+    public ExportToMidiCommand(File file, Score score, int toExport, Transposition transposition) 
     {
         this.file = file;
         this.score = score;
@@ -106,7 +107,7 @@ public class ExportToMidiCommand implements Command, Constants
     }
     
     // Initialize the sequence and write the header chunk.
-    private void write(DataOutputStream dos, int transposition) throws IOException
+    private void write(DataOutputStream dos, Transposition transposition) throws IOException
     {
         Sequence seq = null;
         

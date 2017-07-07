@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 package imp.data;
 
+import imp.data.Transposition;
 import imp.style.SectionInfo;
 import imp.style.SectionRecord;
 import imp.style.Style;
@@ -432,7 +433,7 @@ public boolean hasOneSection()
 public long render(MidiSequence seq,
                    long time,
                    Track track,
-                   int transposition,
+                   Transposition transposition,
                    boolean useDrums,
                    int endLimitIndex,
                    boolean constantBass)

@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -178,7 +178,7 @@ public class Score implements Constants, Serializable {
      * The playback transposition of the Score
      */
     
-    private int transposition = 0;
+    private Transposition transposition = Transposition.none;
 
     private int chordFontSize = 16; // Default
 
@@ -288,12 +288,12 @@ public class Score implements Constants, Serializable {
         setCountIn(null);
     }
 
-    public int getTransposition()
+    public Transposition getTransposition()
     {
       return transposition;
     }
     
-    public void setTransposition(int transposition)
+    public void setTransposition(Transposition transposition)
     {
       this.transposition = transposition;
     }
@@ -935,7 +935,7 @@ public class Score implements Constants, Serializable {
      * @return Sequence  the MIDI render
      */
     public Sequence render(short ppqn, 
-                           int transposition)
+                           Transposition transposition)
                     throws InvalidMidiDataException {
 
         int endIndex = chordProg.size();    // correct?
@@ -956,7 +956,7 @@ public class Score implements Constants, Serializable {
      * @return Sequence  the MIDI render
      */
     public Sequence render(short ppqn,
-            int transposition,
+            Transposition transposition,
             boolean useDrums,
             int endLimitIndex)
             throws InvalidMidiDataException {
@@ -979,7 +979,7 @@ public class Score implements Constants, Serializable {
      */
 
     public Sequence render(short ppqn, 
-                           int transposition, 
+                           Transposition transposition, 
                            boolean useDrums, 
                            int endLimitIndex,
                            boolean isTradingMelody)
@@ -999,7 +999,7 @@ public class Score implements Constants, Serializable {
                         ImproVisor.getMelodyChannel(),
                         time,
                         seq.getMelodyTrack(),
-                        transposition,
+                        transposition.getMelodyTransposition(),
                         endLimitIndex,
                         isTradingMelody);
             }
@@ -1020,7 +1020,7 @@ public class Score implements Constants, Serializable {
                 time = countInProg.render(seq,
                         time,
                         seq.getChordTrack(),
-                        0,
+                        Transposition.none,
                         true,
                         endLimitIndex,
                         constantBass);
@@ -1037,7 +1037,7 @@ public class Score implements Constants, Serializable {
                         ImproVisor.getMelodyChannel(),
                         time,
                         seq.getMelodyTrack(),
-                        transposition,
+                        transposition.getMelodyTransposition(),
                         endLimitIndex);
                 //System.out.println("melTime = " + melTime);
 

@@ -232,7 +232,7 @@ public void updateTimeSlider(boolean updateSlider)
       }
   }
 
-    public void setPlaying(MidiPlayListener.Status playing, int transposition) {
+    public void setPlaying(MidiPlayListener.Status playing, Transposition transposition) {
         MidiPlayListener.Status oldStatus = status;
         status = playing;
         switch(playing) {

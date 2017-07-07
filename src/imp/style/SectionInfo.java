@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import imp.midi.MidiSequence;
 import imp.Constants;
 import imp.data.Chord;
 import imp.data.ChordPart;
+import imp.data.Transposition;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.ChordBlock;
 import imp.util.Preferences;
@@ -650,7 +651,7 @@ public String getStyleNameAtSlot(int slot)
 public long render(MidiSequence seq, 
                    long time, 
                    Track track,
-                   int transposition, 
+                   Transposition transposition, 
                    boolean useDrums, 
                    int endLimitIndex,
                    boolean constantBass)
