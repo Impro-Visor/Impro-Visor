@@ -1,5 +1,5 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 9.1,
+Welcome to Impro-Visor (Improvisation Advisor) Version 9.2 BETA,
 from Prof. Robert Keller at Harvey Mudd College, June 19, 2017.
 
 Release notes for this version may be found at the end.
@@ -113,7 +113,10 @@ Claremont, CA 91711
 Please send issues to: keller@cs.hmc.edu
 
 ===============================================================================
-Release notes for Impro-Visor 9.10
+Release notes for Impro-Visor 9.2
+
+===============================================================================
+Release notes for Impro-Visor 9.1
 
  A new Advice tab is added called Rhythms. This provides an assortment of
  rhythms for entry into a leadsheet. The rhythms can be given pitches, or left
