@@ -21,6 +21,11 @@
 package imp.cluster;
 
 import java.util.Comparator;
+import imp.generalCluster.Cluster;
+import imp.generalCluster.DataPoint;
+import imp.generalCluster.IndexedMelodyPart;
+import imp.generalCluster.JCA;
+import imp.generalCluster.ClusterSet;
 
 /**
  *

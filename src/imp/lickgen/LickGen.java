@@ -24,7 +24,7 @@ import imp.style.stylePatterns.BassPatternElement;
 import imp.data.advice.Advisor;
 import imp.Constants;
 import imp.ImproVisor;
-import imp.cluster.*;
+import imp.generalCluster.*;
 import imp.data.*;
 import imp.gui.Notate;
 import imp.trading.PassiveTradingDialog;
@@ -41,6 +41,11 @@ import java.util.Random;
 import java.util.Vector;
 import polya.Polylist;
 import polya.PolylistEnum;
+import imp.generalCluster.Cluster;
+import imp.generalCluster.DataPoint;
+import imp.generalCluster.IndexedMelodyPart;
+import imp.generalCluster.JCA;
+import imp.generalCluster.ClusterSet;
 
 /**
  @author David Morrison

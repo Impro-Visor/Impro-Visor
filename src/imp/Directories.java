@@ -131,6 +131,11 @@ public static String styleRecognitionDirName = "style-recognition-weights";
 
 static String errorLogFilename = "Impro-Visor-ErrorLog.txt";
 
+/**
+ * Standard sub-directory for rhythm cluster
+ */
+public static String rhythmClusterDirName = "clusterFiles"; // was "grammars";
+
 
 }
 

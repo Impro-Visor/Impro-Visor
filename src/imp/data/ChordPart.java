@@ -710,7 +710,7 @@ public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.Chor
           {
             return null;
           }
-        return roadmap.getBlockAtSlot(slot);
+        return roadmap.getBlockAtSlot2(slot);
       }
     
     public ArrayList<SectionRecord> getSectionRecords()

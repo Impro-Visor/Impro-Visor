@@ -358,6 +358,8 @@ private boolean useNoteCursor = false;
  */
 private RoadMapFrame createdByRoadmap = null;
 
+private String rhythmClusterName;
+
 synchronized public void setPlaybackStop(int slot, String message)
   {
     stopPlaybackAtSlot = slot;
@@ -988,6 +990,8 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     String defaultGrammarFileName = Preferences.getPreference(Preferences.DEFAULT_GRAMMAR_FILE);
     int nameLength = defaultGrammarFileName.length() - ".grammar".length();
     setGrammarName(defaultGrammarFileName.substring(0, nameLength));
+
+    rhythmClusterName = extractClusterName(Preferences.getPreference(Preferences.CLUSTER_FILENAME));
 
     lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingDialog); //orig
     lickgenFrame = new LickgenFrame(this, lickgen, cm);
@@ -10472,6 +10476,7 @@ private String getChordRedirectName(int row)
       }
     return null;
   }
+
 
 public void saveGrammarAs()
   {
@@ -23416,6 +23421,11 @@ private boolean isDotted = false;
 //          }      
 //    }
     
+    
+  public QuantizationDialog getQuantizationDialog(){
+      return quantizationDialog;
+  }  
+    
   public void newQuantize(boolean toSwing)
     {
         int[] quanta = quantizationDialog.getQuanta();
@@ -24389,6 +24399,14 @@ boolean ifCycle = false;
 boolean ifShuffle = false;
 //action for cycle/shuffle buttons
 
+public void setRhythmClusterName(String clusterName)
+{           
+    rhythmClusterName = clusterName;
+}
+
+public String getRhythmClusterName(){
+    return rhythmClusterName;
+}
 private void setGrammarName(String grammarName)
 {
     grammarMenuDialog.setGrammarName(grammarName);
@@ -24454,6 +24472,34 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     lickgen.loadGrammar(grammarFilename);
     lickgenFrame.resetTriageParameters(false);
     Preferences.setPreference(Preferences.DEFAULT_GRAMMAR_FILE, fullName);
+
+    // If cycling or shuffle the grammar, skip files beginning with _
+    if (stem.startsWith(SKIP_GRAMMAR_FILES_STARTING_WITH)){
+        cycCount = 0;
+        shufCount = 0;
+    }
+  }
+
+
+private void notateRhythmClusterMenuAction(java.awt.event.ActionEvent evt)
+  {
+    File directory = ImproVisor.getRhythmClusterDirectory();
+      
+    group.clearSelection();
+    ifCycle = false;
+    ifShuffle = false;
+    shufCount = 0;
+    JMenuItem item = (JMenuItem) evt.getSource();
+    String stem = item.getText();
+    setRhythmClusterName(stem);
+   // String clusterFileName = directory + "/" + stem + ".cluster";
+   String clusterFileName = stem + ".cluster";
+    Preferences.setPreference(Preferences.CLUSTER_FILENAME, clusterFileName);
+    if(traderDialog != null){
+        traderDialog.refreshSelectedRhythmCluster(stem);
+    }
+
+    //lickgenFrame.resetTriageParameters(false);
 
     // If cycling or shuffle the grammar, skip files beginning with _
     if (stem.startsWith(SKIP_GRAMMAR_FILES_STARTING_WITH)){
@@ -24571,7 +24617,7 @@ JCheckBoxMenuItem cycle = new JCheckBoxMenuItem("Cycle");
 JCheckBoxMenuItem shuffle = new JCheckBoxMenuItem("Shuffle");
 ButtonGroup group = new ButtonGroup();
 
-private void populateNotateGrammarMenu()
+public void populateNotateGrammarMenu()
   {
     File directory = ImproVisor.getGrammarDirectory();
     //System.out.println("populating from " + directory);
@@ -24685,6 +24731,66 @@ public void populateGenericGrammarMenu(JMenu menu){
                 public void actionPerformed(java.awt.event.ActionEvent evt)
                   {
                     notateGrammarMenuAction(evt);
+                  }
+
+                });
+                
+              }
+          }
+      }
+}
+
+ArrayList<String> rhythmClusterList = new ArrayList<String>();
+ArrayList<String> shufRhythmClusterList = new ArrayList<String>();
+
+public void populateRhythmClusterMenu(JMenu menu){
+    String rhythmClusterExtension = ".cluster";
+    File directory = ImproVisor.getRhythmClusterDirectory();
+    //System.out.println("populating from " + directory);
+    if( directory.isDirectory() )
+      {
+        String fileName[] = directory.list();
+
+        // 6-25-13 Hayden Blauzvern
+        // Fix for Linux, where the file list is not in alphabetic order
+        Arrays.sort(fileName, new Comparator<String>()
+        {
+        public int compare(String s1, String s2)
+          {
+            return s1.toUpperCase().compareTo(s2.toUpperCase());
+          }
+
+        });
+
+        // Setup grammar menu items involving trading
+        menu.removeAll();
+        menu.setText("RhythmCluster");
+        menu.add(new JLabel("Rhythm Cluster"));
+        
+       
+        // Add names of rhythm cluster files
+
+        for( int i = 0; i < fileName.length; i++ )
+          {
+            String name = fileName[i];
+
+            if( name.endsWith(rhythmClusterExtension) )
+              {
+                if( !name.startsWith("_")){
+                    rhythmClusterList.add(name);
+                    shufRhythmClusterList.add(name);
+                }
+                  
+                int len = name.length();
+                String stem = name.substring(0, len - rhythmClusterExtension.length());
+                JMenuItem item = new JMenuItem(stem);
+                menu.add(item);
+                item.addActionListener(new java.awt.event.ActionListener()
+                {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                  {
+                      //need to make RhythmClusterMenuAction
+                    notateRhythmClusterMenuAction(evt);
                   }
 
                 });
@@ -26799,6 +26905,12 @@ public ChordPart getChordProg()
     return score.getChordProg();
   }
 
+public ActiveTradingDialog getActiveTradingDialog()
+{
+    return traderDialog;
+}
+
+
 public void setLickTitle(String title)
   {
     enterLickTitle.setText(title);
@@ -27495,4 +27607,24 @@ public void playAscoreWithStyle(Score score, int loopCount, int newTranspos)
                          useDrums,
                          endLimitIndex).execute();
   }
+
+public String extractClusterName(String fullPath){
+    int slashIndex = fullPath.lastIndexOf("/");
+    if((slashIndex + 1) > (fullPath.length() - 1) || slashIndex < 0){
+        return fullPath;
+    }
+    String afterSlash = fullPath.substring(slashIndex + 1);
+    
+    int dotIndex = afterSlash.lastIndexOf(".");
+    if(dotIndex < 0){
+        return fullPath;
+    }
+    
+    return afterSlash.substring(0, dotIndex);
+    
+    
+    
+    
+}
+
 } //Notate

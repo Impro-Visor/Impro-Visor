@@ -21,9 +21,13 @@ package imp.trading;
 
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
+import imp.data.RhythmCluster;
 import imp.gui.Notate;
+import imp.gui.QuantizationDialog;
+import imp.lickgen.LickgenFrame;
 import imp.lickgen.transformations.Transform;
 import imp.trading.tradingResponseModes.*;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -47,6 +51,7 @@ public class TradingResponseController {
     //the amount of time (in nanoseconds) which we would like to wait for the melody to be complete after the finish signal is sent
     private long desiredFinishDuration;
     boolean generationCancelled;
+    private Notate notate;
     
     
 
@@ -59,6 +64,7 @@ public class TradingResponseController {
         generationCancelled = false;
         //desired finish duration is 1 second = 1000000000 nanoseconds
         desiredFinishDuration = 20000000;
+        this.notate = notate;
     }
     
     public void onStartTrading() {
@@ -151,6 +157,10 @@ public class TradingResponseController {
     
     public MelodyPart response(){
             return ((BlockResponseMode) responseMode).generateResponse();
+    }
+
+    public TradingResponseInfo getTradingResponseInfo() {
+        return responseInfo;
     }
 
 }

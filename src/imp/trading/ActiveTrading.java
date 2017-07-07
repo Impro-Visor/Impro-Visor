@@ -30,6 +30,7 @@ import imp.data.Score;
 import imp.gui.Notate;
 import imp.lickgen.transformations.Transform;
 import imp.midi.MidiManager;
+import imp.trading.tradingResponseModes.CorrectRhythmTRM;
 import imp.trading.tradingResponseModes.GrammarTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.util.TransformFilter;
@@ -459,6 +460,10 @@ public class ActiveTrading {
                 tradeListener.tradingStopped();
             }
         }
+    }
+
+    public TradingResponseController getTradeResponseController(){
+        return this.tradeResponseController;
     }
 
     /**

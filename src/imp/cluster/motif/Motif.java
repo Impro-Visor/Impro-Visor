@@ -20,7 +20,7 @@
 
 package imp.cluster.motif;
 
-import imp.cluster.IndexedMelodyPart;
+import imp.generalCluster.IndexedMelodyPart;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;

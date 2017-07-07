@@ -2,7 +2,7 @@
          xmlns:ivy="antlib:org.apache.ivy.ant">
 
 <description>
-Build-file for Impro-Visor 9.01
+Build-file for Impro-Visor 9.2
 
 Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
 
@@ -23,11 +23,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     
 <target name="init">
     <property name="appName"                value="Impro-Visor"              />
-    <property name="distDir"                value="improvisor901"            />
-    <property name="dist-mac"               value="improvisor901-mac"        />
-    <property name="dist-win"               value="improvisor901-win"        />
-    <property name="zipName"                value="improvisor901.zip"        />
-    <property name="zipMacName"             value="improvisor901mac.zip"     />
+    <property name="distDir"                value="improvisor920"            />
+    <property name="dist-mac"               value="improvisor920-mac"        />
+    <property name="dist-win"               value="improvisor920-win"        />
+    <property name="zipName"                value="improvisor920.zip"        />
+    <property name="zipMacName"             value="improvisor920mac.zip"     />
     <property name="miscDir"                value="improvisor"               />
     <property name="srcDir"                 value="src"                      />
     <property name="impDir"                 value="src/imp"                  />
@@ -261,6 +261,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
         <fileset dir="${vocabDir}" includes="**/*.prefs" />
     </copy>
     <copy todir="${distDir}/vocab">
+        <fileset dir="${vocabDir}" includes="**/*.cluster" />
+    </copy>
+    <copy todir="${distDir}/vocab">
+        <fileset dir="${vocabDir}" includes="**/*.rhythms" />
+    </copy>
+    <copy todir="${distDir}/vocab">
         <fileset dir="${vocabDir}" includes="**/*.xml" />
     </copy>
     <copy todir="${distDir}/vocab">
@@ -411,7 +417,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 </target>
 
 <target name="zipSrc" depends="cleanSrc" description="zips up the source">
-    <zip destfile="improvisor901-src.zip" basedir="${srcDir}" />
+    <zip destfile="improvisor920-src.zip" basedir="${srcDir}" />
 </target>
 
 <target name="cleanJavadoc" depends="init" description="">
@@ -563,6 +569,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     
     <copy todir="${dist-win}/vocab">
         <fileset dir="${vocabDir}" includes="**/*.prefs" />
+    </copy>
+    <copy todir="${dist-win}/vocab">
+        <fileset dir="${vocabDir}" includes="**/*.cluster" />
+    </copy>
+    <copy todir="${dist-win}/vocab">
+        <fileset dir="${vocabDir}" includes="**/*.rhythms" />
     </copy>
     
     <copy todir="${dist-win}/leadsheets">

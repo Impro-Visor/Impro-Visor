@@ -34,6 +34,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import polya.Polylist;
+import imp.generalCluster.Cluster;
+import imp.generalCluster.DataPoint;
+import imp.generalCluster.IndexedMelodyPart;
+import imp.generalCluster.JCA;
+import imp.generalCluster.ClusterSet;
 
 /**
  *

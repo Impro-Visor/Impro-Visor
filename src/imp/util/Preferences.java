@@ -264,6 +264,17 @@ public class Preferences implements imp.Constants
 
   public static final String DEFAULT_LSTM_GEN_PARAMS="combination.ctome";
   
+  public static final String MY_RHYTHMS_FILE = "my-rhythms-file";
+  
+  public static final String DEFAULT_MY_RHYTHMS_FILENAME = "My.rhythms";
+
+  public static final String CLUSTER_FILENAME = "rhythm-cluster-filename";
+  
+  public static final String DEFAULT_CLUSTER_FILENAME = "default.cluster";
+  
+
+
+  
   
 
   /**
@@ -640,6 +651,10 @@ public static boolean getAlwaysUse(int index)
       out.println("(" + LANGUAGE + " " + DEFAULT_LANGUAGE + ")");
       out.println("(" + LANGUAGE_LIST + " " + DEFAULT_LANGUAGE_LIST + ")");
       out.println("(" + LSTM_GEN_PARAMS + " " + DEFAULT_LSTM_GEN_PARAMS + ")");
+      
+      //Added defaults
+      out.println("("+CLUSTER_FILENAME + " " + DEFAULT_CLUSTER_FILENAME+")");
+      out.println("("+MY_RHYTHMS_FILE + " " +  DEFAULT_MY_RHYTHMS_FILENAME+")");
       }
     catch( Exception e )
       {

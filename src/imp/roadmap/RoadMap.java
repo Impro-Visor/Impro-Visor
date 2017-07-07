@@ -465,6 +465,22 @@ public class RoadMap {
         return null;
       }
     
+    public Block getBlockAtSlot2(int slot)
+      {
+        int accumulator = 0;
+        for( Block block:blocks )
+          {
+            if( accumulator <= slot && slot < accumulator+block.getDuration())
+              {
+                //System.out.println(block + " acc: "+accumulator);
+                return block;
+              }
+            //System.out.println(block +" acc: "+accumulator);
+            accumulator += block.getDuration();
+          }
+        return null;
+      }
+    
     public String getFirstStyleAtOrBefore(int index)
     {   
         for( int i = index; i >= 0; i-- )

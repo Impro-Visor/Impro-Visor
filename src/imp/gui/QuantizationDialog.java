@@ -413,7 +413,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         quantizeButton.setVisible(false);
     }
     
-    private void setNoteQuantizationBoxesOn(int level)
+    //changed to public
+    public void setNoteQuantizationBoxesOn(int level)
     {
         noteNoneBox.setSelected(false);
         switch( level )
@@ -534,7 +535,8 @@ public class QuantizationDialog extends javax.swing.JDialog
           }
     }
  
-private void setTripletQuantizationBoxesOff(int level)
+    //changed to public
+public void setTripletQuantizationBoxesOff(int level)
     {
          // Note that most cases intentionally fall through to the next.
        switch( level )
@@ -612,7 +614,21 @@ private void setAbsorbRestBoxesOff()
                 restAbsorption = 0;
     }
 
-private void setQuantization(int index, int value)
+public void setRhythmHelperQuantization(){
+    unsetQuantization(1);
+    setQuantization(1, 30);
+    setQuantization(0, 30);
+    setTripletQuantizationBoxesOff(80);
+    setNoteQuantizationBoxesOn(30);//set the 16th note quantization box to checked
+}
+
+public void setDefaultQuantization(){
+    setTripletQuantizationBoxesOn(80);
+    setNoteQuantizationBoxesOn(80);
+}
+
+//changed to public
+public void setQuantization(int index, int value)
 {
     //System.out.println("setQuantization(" + index + ", " + value + ")");
     javax.swing.JTextField field[] = {noteQuantumTextField, tripletQuantumTextField};
@@ -621,7 +637,7 @@ private void setQuantization(int index, int value)
     field[index].setText("" + value);
 }
 
-private void unsetQuantization(int index)
+public void unsetQuantization(int index)
 {
     //System.out.println("sunetQuantization(" + index + ")");
     javax.swing.JTextField field[] = {noteQuantumTextField, tripletQuantumTextField};

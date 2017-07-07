@@ -20,9 +20,9 @@
 
 package imp.cluster.motif;
 
-import imp.cluster.Cluster;
-import static imp.cluster.CreateGrammar.getClusterReps;
-import imp.cluster.DataPoint;
+import imp.generalCluster.Cluster;
+import static imp.generalCluster.CreateGrammar.getClusterReps;
+import imp.generalCluster.DataPoint;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

@@ -26,10 +26,14 @@ package imp.trading;
  */
 
 import imp.ImproVisor;
+import imp.data.RhythmCluster;
 import imp.gui.Notate;
+import imp.gui.QuantizationDialog;
+import imp.lickgen.LickgenFrame;
 import imp.trading.tradingResponseModes.AbstractTRM;
 import imp.trading.tradingResponseModes.AutoencoderTRM;
 import imp.trading.tradingResponseModes.ChopAndMemorizeTRM;
+import imp.trading.tradingResponseModes.CorrectRhythmTRM;
 import imp.trading.tradingResponseModes.GrammarTRM;
 import imp.trading.tradingResponseModes.ModifyAndRectifyTRM;
 import imp.trading.tradingResponseModes.RepeatAndRectifyTRM;
@@ -37,11 +41,14 @@ import imp.trading.tradingResponseModes.RepeatTRM;
 import imp.trading.tradingResponseModes.StreamRepeatTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.trading.tradingResponseModes.TransformTRM;
+import imp.util.NonExistentParameterException;
+import imp.util.Preferences;
 import imp.util.TransformFilter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import javax.swing.JMenu;
@@ -56,6 +63,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private boolean isUserInputError = false;
     private final Integer initialTradeLength = 4;
     public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 0);
+    UserRhythmSelecterDialog userRhythmSelecterDialog;
 
     private final Notate notate;
     
@@ -133,6 +141,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeGrammarSolo = new javax.swing.JRadioButtonMenuItem();
         tradeStore = new javax.swing.JRadioButtonMenuItem();
         tradeAutoencoder = new javax.swing.JRadioButtonMenuItem();
+        RhythmHelperMenuItem = new javax.swing.JRadioButtonMenuItem();
         tradeMusicianMenu = new javax.swing.JMenu();
         tradeGrammarMenu = new javax.swing.JMenu();
         tradePlayMenu = new javax.swing.JMenu();
@@ -143,9 +152,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         setBackground(new java.awt.Color(204, 204, 255));
         setBounds(new java.awt.Rectangle(25, 0, 800, 200));
         setLocation(new java.awt.Point(25, 0));
-        setMaximumSize(new java.awt.Dimension(800, 200));
         setMinimumSize(new java.awt.Dimension(800, 200));
-        setPreferredSize(new java.awt.Dimension(800, 200));
         setSize(new java.awt.Dimension(800, 200));
         addComponentListener(new java.awt.event.ComponentAdapter()
         {
@@ -586,6 +593,17 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         });
         modeMenu.add(tradeAutoencoder);
 
+        modeSelector.add(RhythmHelperMenuItem);
+        RhythmHelperMenuItem.setText("Rhythm Helper");
+        RhythmHelperMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                RhythmHelperMenuItemActionPerformed(evt);
+            }
+        });
+        modeMenu.add(RhythmHelperMenuItem);
+
         mainTradeMenuBar.add(modeMenu);
 
         tradeMusicianMenu.setText("Transform ");
@@ -656,6 +674,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private void startOrStopTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startOrStopTradingButtonActionPerformed
         if( tradingNow )
           {
+            if(getFromDropDown(modeMenu).equals("Rhythm Helper")){
+            showUserRhythmSelecterDialog();
+            }
             stopTrading();
           }
         else
@@ -682,6 +703,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     private void tradeStopMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeStopMenuItemActionPerformed
         stopTrading();
+        if(getFromDropDown(modeMenu).equals("Rhythm Helper")){
+            showUserRhythmSelecterDialog();
+        }
     }//GEN-LAST:event_tradeStopMenuItemActionPerformed
 
     private void tradePlayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradePlayMenuItemActionPerformed
@@ -717,6 +741,23 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         // TODO add your handling code here:
     }//GEN-LAST:event_tradeAutoencoderActionPerformed
 
+    private void RhythmHelperMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RhythmHelperMenuItemActionPerformed
+        updateTradeMode();
+        QuantizationDialog qd = notate.getQuantizationDialog();
+        qd.unsetQuantization(1);
+        qd.setQuantization(1, 30);
+        qd.setQuantization(0, 30);
+        qd.setTripletQuantizationBoxesOff(80);
+        qd.setNoteQuantizationBoxesOn(30);//set the 16th note quantization box to checked
+        LickgenFrame lg = notate.getLickgenFrame();
+        lg.uncheckAvoidNotes();
+    }//GEN-LAST:event_RhythmHelperMenuItemActionPerformed
+                                         
+
+    private void tradeGrammarMenuActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        // TODO add your handling code here:
+    }                                                
+
     private float tryFloat(String number) {
         float newNumber;
         try {
@@ -727,6 +768,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             newNumber = 0;
         }
         return newNumber;
+    }
+        
+    public String getTradeModeName(){
+        return activeTrading.getTradeModeName();
+        
     }
         
     public void updateGUIComponents() {
@@ -751,6 +797,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         activeTrading.setNotateDefaults();
         updateGUIComponents();
         setVisible(true);
+        setMenuAndStatusToGrammarOrRhythmCluster(getFromDropDown(modeMenu));
     }
 
     private void startTrading()
@@ -765,12 +812,31 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
          tradingNow = true;
          notate.setToTrade();
     }
+    private void showUserRhythmSelecterDialog(){
+        TradingResponseController tradeResponseController = activeTrading.getTradeResponseController();
+        userRhythmSelecterDialog = new UserRhythmSelecterDialog(tradeResponseController.getTradingResponseInfo());
+        userRhythmSelecterDialog.setLocation(userRhythmSelecterDialog.INITIAL_OPEN_POINT);
+        userRhythmSelecterDialog.setSize(800, 200);
+        userRhythmSelecterDialog.setVisible(true);
+    }
     
     private void stopTrading()
     {
         activeTrading.stopTrading(); 
         tradingNow = false;
         notate.setNotToTrade();
+        
+        
+
+        
+        System.out.println("\nstopping trading, about to show rhythmSelectorDialog.........");
+        
+        
+
+        
+        this.setVisible(false);
+        
+        System.out.println("\nsetVisible to true for rhythmSelectorDialog.........");
     }
     
     private void updateProcessTimeText() {
@@ -785,6 +851,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     private void updateTradeMode(){
         String newMode = getFromDropDown(modeMenu);
+        setMenuAndStatusToGrammarOrRhythmCluster(newMode);
         TradingResponseMode tradeMode;
         //make these visible in case one of the trade mode options disabled them
         tradeLengthSpinner.setVisible(true);
@@ -825,6 +892,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 //                grammarStatus.setVisible(false);
 //                transformStatus.setVisible(false);
 //                break;
+            case "Rhythm Helper":
+                tradeMode = new CorrectRhythmTRM("Correct Rhythm");
+                break;
             default:
                 tradeMode = null;
                 break;
@@ -836,6 +906,49 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         else {
             modeStatus.setText("Mode: NOT RECOGNIZED");
         }
+    }
+
+    private void setMenuAndStatusToGrammarOrRhythmCluster(String tradeMode){
+        if(tradeMode.equals("Rhythm Helper")){
+            createRhythmClusterMenuAndStatus();
+        }else{
+            notate.populateNotateGrammarMenu();
+            notate.populateGenericGrammarMenu(tradeGrammarMenu);
+            refreshSelectedGrammar("Grammar");
+           
+        }
+    }
+    
+    public void createRhythmClusterMenuAndStatus(){
+        populateRhythmClusterMenu();
+        setGrammarStatusToRhythmCluster();
+    }
+    
+    public void populateRhythmClusterMenu(){
+        notate.populateRhythmClusterMenu(tradeGrammarMenu);  
+    }
+      
+    public void setGrammarStatusToRhythmCluster(){
+   
+        System.out.println("rhythm cluster name: " + notate.getRhythmClusterName());
+        
+        grammarStatus.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
+        
+        System.out.println("setting text for trade grammar menu to rhythmCluster....");
+        tradeGrammarMenu.setText("RhythmCluster");
+        System.out.println("trade grammar menu text is: " + tradeGrammarMenu.getText());
+        
+    }
+    
+    public String getClusterFileNameFromPreferences(){
+        String rtn = "";
+        try{
+            rtn = Preferences.getPreferenceQuietly(Preferences.CLUSTER_FILENAME);    
+        }catch(NonExistentParameterException e){
+            System.out.println("No cluster file name found in preferences!");
+        }
+        
+        return rtn;
     }
 
     private void updateLoop() {
@@ -892,6 +1005,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             }
         }
         return selection;
+    }
+
+    public void refreshSelectedRhythmCluster(String gram) {
+        //tradeGrammarMenu.setText(gram);
+        grammarStatus.setText("RhythmCluster: " + notate.getRhythmClusterName());
     }
 
     public void refreshSelectedGrammar(String gram) {
@@ -951,8 +1069,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         updateTradeMode();
     }
 
-
+    public int getUpdatedTradeLength() {
+        return activeTrading.getMeasures();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButtonMenuItem RhythmHelperMenuItem;
     private javax.swing.JPanel controlsPanel;
     private javax.swing.JCheckBox countToggle;
     private javax.swing.ButtonGroup grammarGroup;

@@ -45,7 +45,7 @@ import polya.*;
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "9.1";
+    public static final String version = "9.2";
     
     private static boolean firstTime = false;
     
@@ -638,6 +638,12 @@ public static File getMidiDirectory()
 public static File getGrammarDirectory()
   {
   return new File(getUserDirectory(), Directories.grammarDirName);
+  }
+
+public static File getRhythmClusterDirectory()
+  {
+    File f = new File(getUserDirectory(), Directories.vocabDirName);
+    return new File(f, Directories.rhythmClusterDirName);
   }
 
 public static File getTransformDirectory()

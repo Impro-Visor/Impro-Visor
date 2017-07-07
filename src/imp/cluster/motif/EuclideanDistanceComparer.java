@@ -20,7 +20,7 @@
 
 package imp.cluster.motif;
 
-import imp.cluster.DataPoint;
+import imp.generalCluster.DataPoint;
 import java.util.Comparator;
 
 /**
