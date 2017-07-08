@@ -55,4 +55,19 @@ public class Transposition
     {
         return melodyTransposition;
     }
+    
+    public Transposition newChordTransposition(int value)
+    {
+        return new Transposition(value, bassTransposition, melodyTransposition);
+    }
+    
+    public Transposition newBassTransposition(int value)
+    {
+        return new Transposition(chordTransposition, value, melodyTransposition);
+    }
+        
+    public Transposition newMelodyTransposition(int value)
+    {
+        return new Transposition(chordTransposition, bassTransposition, value);
+    }
   }
