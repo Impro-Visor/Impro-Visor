@@ -29,21 +29,17 @@ public class Transposition
   {
     public static Transposition none = new Transposition(0, 0, 0);
     
-    int chordTransposition;
     int bassTransposition;
+    int chordTransposition;
     int melodyTransposition;
 
-    public Transposition(int chordTransposition, int bassTransposition,
+    public Transposition(int bassTransposition, 
+                         int chordTransposition, 
                          int melodyTransposition)
     {
-        this.chordTransposition  = chordTransposition;
         this.bassTransposition   = bassTransposition;
+        this.chordTransposition  = chordTransposition;
         this.melodyTransposition = melodyTransposition;
-    }
-
-    public int getChordTransposition()
-    {
-        return chordTransposition;
     }
 
     public int getBassTransposition()
@@ -51,23 +47,33 @@ public class Transposition
         return bassTransposition;
     }
 
+    public int getChordTransposition()
+    {
+        return chordTransposition;
+    }
+
     public int getMelodyTransposition()
     {
         return melodyTransposition;
     }
     
-    public Transposition newChordTransposition(int value)
-    {
-        return new Transposition(value, bassTransposition, melodyTransposition);
-    }
-    
     public Transposition newBassTransposition(int value)
     {
-        return new Transposition(chordTransposition, value, melodyTransposition);
+        return new Transposition(value, chordTransposition, melodyTransposition);
     }
         
+    public Transposition newChordTransposition(int value)
+    {
+        return new Transposition(bassTransposition, value, melodyTransposition);
+    }
+    
     public Transposition newMelodyTransposition(int value)
     {
-        return new Transposition(chordTransposition, bassTransposition, value);
+        return new Transposition(bassTransposition, chordTransposition, value);
+    }
+    
+    public String toString()
+    {
+        return bassTransposition + " " + chordTransposition + " " + melodyTransposition;
     }
   }

@@ -332,10 +332,30 @@ static final int UNKNOWN = -1;
                 break;
 
                case PLAYBACK_TRANSPOSE:
-                if( item.nonEmpty() && item.first() instanceof Long )
-                  {
-                  score.setTransposition(new Transposition(0, 0, ((Long)item.first()).intValue()));
-                  }
+                 {
+                 switch( item.length() )
+                   {
+                   case 1: // old version, bass and chords the same
+                          if( item.first() instanceof Long )
+                            {
+                            int value1 = ((Long)item.first()).intValue();
+                            score.setTransposition(new Transposition(value1, value1, 0));
+                            }
+                          break;
+                   case 3: // new version, bass, chords and melody
+                           if( item.first() instanceof Long &&
+                               item.second() instanceof Long &&
+                               item.third() instanceof Long )
+                            {
+                            int value1 = ((Long)item.first()).intValue();
+                            int value2 = ((Long)item.second()).intValue();
+                            int value3 = ((Long)item.third()).intValue();
+                            
+                            score.setTransposition(new Transposition(value1, value2, value3));
+                            }
+                          break;
+                   }
+                 }
                 break;
 
                case CHORD_FONT_SIZE:
