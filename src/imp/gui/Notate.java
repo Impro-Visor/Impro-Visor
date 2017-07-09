@@ -120,6 +120,7 @@ public static final int HELP_DIALOG_WIDTH = 980;
 public static final int HELP_DIALOG_HEIGHT = 600;
 private static final long serialVersionUID = 1L;
 private static final int DEFAULT_SLIDER_VOLUME = 80;
+SaveLickDialog saveLickDialog = new SaveLickDialog(this, true);
 RoadMapFrame roadmapFrame = null;
 LickgenFrame lickgenFrame;
 TransformFrame transformFrame;
@@ -1666,18 +1667,6 @@ public Critic getCritic()
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         autoFillMI = new javax.swing.JCheckBoxMenuItem();
         keySigBtnGroup = new javax.swing.ButtonGroup();
-        saveLickFrame = new javax.swing.JFrame();
-        lickTItleLabel = new javax.swing.JLabel();
-        enterLickTitle = new javax.swing.JTextField();
-        lineLabel1 = new javax.swing.JLabel();
-        cancelLickTitle = new javax.swing.JButton();
-        okSaveButton = new javax.swing.JButton();
-        rhythmRadioButton = new javax.swing.JRadioButton();
-        cellRadioButton = new javax.swing.JRadioButton();
-        idiomRadioButton = new javax.swing.JRadioButton();
-        lickRadioButton = new javax.swing.JRadioButton();
-        quoteRadioButton = new javax.swing.JRadioButton();
-        brickRadioButton = new javax.swing.JRadioButton();
         defLoadStaveBtnGroup = new javax.swing.ButtonGroup();
         duplicateLickDialog = new javax.swing.JDialog();
         ignoreDuplicate = new javax.swing.JButton();
@@ -2766,7 +2755,6 @@ public Critic getCritic()
         preferencesDialog.setAlwaysOnTop(true);
         preferencesDialog.setFocusCycleRoot(false);
         preferencesDialog.setMinimumSize(new java.awt.Dimension(800, 650));
-        preferencesDialog.setPreferredSize(new java.awt.Dimension(800, 650));
         preferencesDialog.getRootPane().setDefaultButton(savePrefsBtn);
         preferencesDialog.addWindowListener(new java.awt.event.WindowAdapter()
         {
@@ -5159,248 +5147,6 @@ public Critic getCritic()
             }
         });
         popupMenu.add(autoFillMI);
-
-        saveLickFrame.setTitle("Save Selection");
-        saveLickFrame.setAlwaysOnTop(true);
-        saveLickFrame.setLocation(new java.awt.Point(0, 25));
-        saveLickFrame.setMinimumSize(new java.awt.Dimension(900, 300));
-        saveLickFrame.getContentPane().setLayout(new java.awt.GridBagLayout());
-
-        lickTItleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        lickTItleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lickTItleLabel.setText("Save Selection in Vocabulary");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.5;
-        saveLickFrame.getContentPane().add(lickTItleLabel, gridBagConstraints);
-
-        enterLickTitle.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        enterLickTitle.setToolTipText("The name to be given to the selection (need not be unique)");
-        enterLickTitle.addFocusListener(new java.awt.event.FocusAdapter()
-        {
-            public void focusGained(java.awt.event.FocusEvent evt)
-            {
-                enterLickTitleGetsFocus(evt);
-            }
-        });
-        enterLickTitle.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                enterLickTitleActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 4);
-        saveLickFrame.getContentPane().add(enterLickTitle, gridBagConstraints);
-
-        lineLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        lineLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lineLabel1.setText("Name this: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(lineLabel1, gridBagConstraints);
-
-        cancelLickTitle.setBackground(java.awt.Color.red);
-        cancelLickTitle.setText("Cancel");
-        cancelLickTitle.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cancelLickTitle.setDefaultCapable(false);
-        cancelLickTitle.setOpaque(true);
-        cancelLickTitle.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cancelLickTitleActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(cancelLickTitle, gridBagConstraints);
-
-        okSaveButton.setBackground(java.awt.Color.green);
-        okSaveButton.setText("Save This");
-        okSaveButton.setToolTipText("Saves the item in the vocabulary file.");
-        okSaveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        okSaveButton.setOpaque(true);
-        okSaveButton.setSelected(true);
-        okSaveButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                okSaveButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(okSaveButton, gridBagConstraints);
-
-        saveTypeButtonGroup.add(rhythmRadioButton);
-        rhythmRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        rhythmRadioButton.setText("Rhythm");
-        rhythmRadioButton.setToolTipText("Save as rhythm when saving.");
-        rhythmRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        rhythmRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        rhythmRadioButton.setNextFocusableComponent(idiomRadioButton);
-        rhythmRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
-        rhythmRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                rhythmRadioButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.16;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(rhythmRadioButton, gridBagConstraints);
-
-        saveTypeButtonGroup.add(cellRadioButton);
-        cellRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        cellRadioButton.setText("Cell");
-        cellRadioButton.setToolTipText("Save as cell when saving.");
-        cellRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        cellRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        cellRadioButton.setNextFocusableComponent(idiomRadioButton);
-        cellRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
-        cellRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cellRadioButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.16;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(cellRadioButton, gridBagConstraints);
-
-        saveTypeButtonGroup.add(idiomRadioButton);
-        idiomRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        idiomRadioButton.setText("Idiom");
-        idiomRadioButton.setToolTipText("Save as idiom when saving.");
-        idiomRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        idiomRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        idiomRadioButton.setNextFocusableComponent(lickRadioButton);
-        idiomRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
-        idiomRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                idiomRadioButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.16;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(idiomRadioButton, gridBagConstraints);
-
-        saveTypeButtonGroup.add(lickRadioButton);
-        lickRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        lickRadioButton.setSelected(true);
-        lickRadioButton.setText("Lick");
-        lickRadioButton.setToolTipText("Save as lick when saving.");
-        lickRadioButton.setNextFocusableComponent(quoteRadioButton);
-        lickRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                lickRadioButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.16;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(lickRadioButton, gridBagConstraints);
-
-        saveTypeButtonGroup.add(quoteRadioButton);
-        quoteRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        quoteRadioButton.setText("Quote");
-        quoteRadioButton.setToolTipText("Save as quote when saving.");
-        quoteRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        quoteRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        quoteRadioButton.setNextFocusableComponent(cellRadioButton);
-        quoteRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
-        quoteRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                quoteRadioButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.16;
-        gridBagConstraints.weighty = 1.0;
-        saveLickFrame.getContentPane().add(quoteRadioButton, gridBagConstraints);
-
-        saveTypeButtonGroup.add(brickRadioButton);
-        brickRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        brickRadioButton.setText("Brick");
-        brickRadioButton.setToolTipText("Save as brick when saving");
-        brickRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        brickRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        brickRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
-        brickRadioButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                brickRadioButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.16;
-        saveLickFrame.getContentPane().add(brickRadioButton, gridBagConstraints);
 
         duplicateLickDialog.setAlwaysOnTop(true);
         duplicateLickDialog.setModal(true);
@@ -13847,24 +13593,8 @@ private final Color adviceBtnColorClosed = new Color(238, 212, 212);
                     }//GEN-LAST:event_helpMenuActionPerformed
 
     private void enterLickTitleAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterLickTitleAction
-        okSaveButtonActionPerformed(evt);
+        
     }//GEN-LAST:event_enterLickTitleAction
-
-    private void cellRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cellRadioButtonActionPerformed
-        saveSelectionMode = ExtractMode.CELL;
-    }//GEN-LAST:event_cellRadioButtonActionPerformed
-
-    private void idiomRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idiomRadioButtonActionPerformed
-        saveSelectionMode = ExtractMode.IDIOM;
-    }//GEN-LAST:event_idiomRadioButtonActionPerformed
-
-    private void quoteRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quoteRadioButtonActionPerformed
-        saveSelectionMode = ExtractMode.QUOTE;
-    }//GEN-LAST:event_quoteRadioButtonActionPerformed
-
-    private void lickRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lickRadioButtonActionPerformed
-        saveSelectionMode = ExtractMode.LICK;
-    }//GEN-LAST:event_lickRadioButtonActionPerformed
 
     private void saveDuplicateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDuplicateActionPerformed
         ignoreDuplicateLick = SAVE;
@@ -14030,21 +13760,6 @@ private boolean initLocationLeadsheetEditor = false;
         openSaveLickFrame();
     }//GEN-LAST:event_saveSelectionAsLickActionPerformed
 
-    private void enterLickTitleGetsFocus(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_enterLickTitleGetsFocus
-
-        disableAccelerators();        // to prevent keys from triggering
-    }//GEN-LAST:event_enterLickTitleGetsFocus
-
-    private void okSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okSaveButtonActionPerformed
-
-        lickTitle = enterLickTitle.getText();
-
-        String saveSelection = getCurrentStave().getSaveSelection(lickTitle, saveSelectionMode, 0);
-        //System.out.println("saveSelection = ");
-
-        saveLick(saveSelection);
-    }//GEN-LAST:event_okSaveButtonActionPerformed
-
 /**
  * Return an array of labels that have appropriate enharmonics for the black
  * notes.
@@ -14146,9 +13861,13 @@ public String[] getNoteLabels(int location)
  *
  * @param saveSelection
  */
-private void saveLick(String saveSelection)
+
+public void saveSelection(String lickTitle)
   {
-    saveLickFrame.setVisible(false);
+   String saveSelection = getCurrentStave().getSaveSelection(lickTitle, saveSelectionMode, 0);
+        //System.out.println("saveSelection = ");
+    
+    saveLickDialog.setVisible(false);
 
     if( saveSelection != null )
       {
@@ -14177,7 +13896,7 @@ public void triageLick(String lickName, int grade)
       }
     else
       {
-        saveLick(saveSelection);
+        saveSelection(saveSelection);
       }
   }
 
@@ -14568,13 +14287,6 @@ private void setLickEnharmonics(MelodyPart lick)
       }
   }
 
-    private void cancelLickTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelLickTitleActionPerformed
-
-        saveLickFrame.setVisible(false);
-
-        staveRequestFocus();
-    }//GEN-LAST:event_cancelLickTitleActionPerformed
-
 public void openSaveLickFrame()
   {
     Trace.log(2, "Opening save lick selection frame");
@@ -14585,17 +14297,14 @@ public void openSaveLickFrame()
 
     disableAccelerators();
 
-    saveLickFrame.setSize(new Dimension(500, 250));
+    saveLickDialog.setSize(new Dimension(500, 250));
 
-    saveLickFrame.setLocation(40, 60);
+    saveLickDialog.setLocation(40, 60);
 
-    saveLickFrame.setVisible(true);
+    saveLickDialog.setVisible(true);
 
-    saveLickFrame.getRootPane().setDefaultButton(okSaveButton);
+    saveLickDialog.requestFocus();
 
-    saveLickFrame.requestFocus();
-
-    enterLickTitle.requestFocusInWindow();
   }
 
 public String getLickTitle()
@@ -24199,15 +23908,6 @@ public void setMaxPitch(int value)
           }
     }//GEN-LAST:event_adviceScrollListBricksKeyReleased
 
-    private void brickRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brickRadioButtonActionPerformed
-        saveSelectionMode = ExtractMode.BRICK;
-        System.out.println("selectionMode = " + saveSelectionMode);
-    }//GEN-LAST:event_brickRadioButtonActionPerformed
-
-    private void enterLickTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterLickTitleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_enterLickTitleActionPerformed
-
     private void adviceTabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adviceTabbedPaneMouseClicked
 
     }//GEN-LAST:event_adviceTabbedPaneMouseClicked
@@ -24710,11 +24410,6 @@ private boolean isDotted = false;
             break;
         }
     }//GEN-LAST:event_scrollRhythmsKeyReleased
-
-    private void rhythmRadioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_rhythmRadioButtonActionPerformed
-    {//GEN-HEADEREND:event_rhythmRadioButtonActionPerformed
-        saveSelectionMode = ExtractMode.RHYTHM;
-    }//GEN-LAST:event_rhythmRadioButtonActionPerformed
 
     private void advicePitchesTextFieldChanged(java.awt.event.ActionEvent evt)//GEN-FIRST:event_advicePitchesTextFieldChanged
     {//GEN-HEADEREND:event_advicePitchesTextFieldChanged
@@ -27013,7 +26708,6 @@ private ImageIcon pauseButton =
     private javax.swing.JRadioButton blueOtherBtn;
     private javax.swing.JLabel breakpointLabel;
     private javax.swing.JTextField breakpointTF;
-    private javax.swing.JRadioButton brickRadioButton;
     private javax.swing.JSplitPane bricksSplitPane;
     private javax.swing.JButton buildTableButton;
     private javax.swing.JPanel buttonPanel;
@@ -27024,10 +26718,8 @@ private ImageIcon pauseButton =
     private javax.swing.JButton cancelBtn1;
     private javax.swing.JButton cancelBtn2;
     private javax.swing.JButton cancelBtn3;
-    private javax.swing.JButton cancelLickTitle;
     private javax.swing.JButton cancelTruncate;
     private javax.swing.JMenuItem cascadeMI;
-    private javax.swing.JRadioButton cellRadioButton;
     private javax.swing.JCheckBox cells;
     private javax.swing.JSplitPane cellsSplitPane;
     private javax.swing.JLabel channelSelectLabel;
@@ -27160,7 +26852,6 @@ private ImageIcon pauseButton =
     private javax.swing.JCheckBox enableCache;
     private javax.swing.JMenuItem enterBothMI;
     private javax.swing.JMenuItem enterChordsMI;
-    private javax.swing.JTextField enterLickTitle;
     private javax.swing.JTextField enterMeasures;
     private javax.swing.JMenuItem enterMelodyMI;
     private javax.swing.JMenuItem enterTextMI;
@@ -27218,7 +26909,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenu helpMenu;
     private javax.swing.JTextField highRangeTF;
     private javax.swing.JTextField highRangeTF2;
-    private javax.swing.JRadioButton idiomRadioButton;
     private javax.swing.JCheckBox idioms;
     private javax.swing.JSplitPane idiomsSplitPane;
     private javax.swing.JButton ignoreDuplicate;
@@ -27351,12 +27041,9 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel leadsheetSpecificPanel;
     private javax.swing.JLabel leadsheetTitleLabel;
     private javax.swing.JMenuItem lickGeneratorMI;
-    private javax.swing.JRadioButton lickRadioButton;
-    private javax.swing.JLabel lickTItleLabel;
     private javax.swing.JCheckBox licks;
     private javax.swing.JSplitPane licksSplitPane;
     private javax.swing.JLabel lineLabel;
-    private javax.swing.JLabel lineLabel1;
     private javax.swing.JMenuItem loadAdvMI;
     private javax.swing.JToggleButton loopButton;
     private javax.swing.JPanel loopPanel;
@@ -27433,7 +27120,6 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField numStavesPerPage;
     private javax.swing.ButtonGroup numberOfBarsGroup;
     private javax.swing.JButton okMeasBtn;
-    private javax.swing.JButton okSaveButton;
     private javax.swing.JPanel okcancelPanel;
     private javax.swing.JPanel okcancelPanel1;
     private javax.swing.JPanel okcancelPanel2;
@@ -27498,7 +27184,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton purgeCache;
     private javax.swing.JMenuItem quantizeMI;
     private javax.swing.JMenuItem quitMI;
-    private javax.swing.JRadioButton quoteRadioButton;
     private javax.swing.JCheckBox quotes;
     private javax.swing.JSplitPane quotesSplitPane;
     private javax.swing.JButton rangeFilterBtn;
@@ -27532,7 +27217,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem resolvePitches;
     private javax.swing.JMenuItem reverseMelody;
     private javax.swing.JMenuItem revertToSavedMI;
-    private javax.swing.JRadioButton rhythmRadioButton;
     private javax.swing.JSplitPane rhythmsSplitPane;
     private javax.swing.JSlider rmsThresholdSlider1;
     private javax.swing.JMenuItem roadMapThisAnalyze;
@@ -27547,7 +27231,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton saveDuplicate;
     private javax.swing.JCheckBoxMenuItem saveImprovCheckBoxMenuItem;
     private javax.swing.JMenuItem saveLeadsheetMI;
-    private javax.swing.JFrame saveLickFrame;
     private javax.swing.JButton savePrefsBtn;
     private javax.swing.JButton savePrefsBtn1;
     private javax.swing.JButton savePrefsBtn2;
@@ -27988,12 +27671,6 @@ public ActiveTradingDialog getActiveTradingDialog()
 {
     return traderDialog;
 }
-
-
-public void setLickTitle(String title)
-  {
-    enterLickTitle.setText(title);
-  }
 
 public int getTotalSlots()
   {
