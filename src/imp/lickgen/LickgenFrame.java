@@ -5315,9 +5315,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
 
     private void saveLickButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveLickButtonActionPerformed
     {//GEN-HEADEREND:event_saveLickButtonActionPerformed
-        notate.setLickTitle("<Generated Lick>");
-
-        notate.openSaveLickFrame();
+        notate.openSaveLickFrame("<Generated Lick>");
     }//GEN-LAST:event_saveLickButtonActionPerformed
 
     private void stopLickButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_stopLickButtonActionPerformed

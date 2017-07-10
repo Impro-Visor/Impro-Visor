@@ -1221,9 +1221,7 @@ public class TransformPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_substitutorStopLeadsheetButtonActionPerformed
 
     private void substitutorSaveLeadsheetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_substitutorSaveLeadsheetButtonActionPerformed
-        notate.setLickTitle("<Generated Lick>");
-
-        notate.openSaveLickFrame();
+        notate.openSaveLickFrame("<Generated Lick>");
     }//GEN-LAST:event_substitutorSaveLeadsheetButtonActionPerformed
 
     private void saveSubstitutionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSubstitutionsButtonActionPerformed

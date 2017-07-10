@@ -13862,16 +13862,15 @@ public String[] getNoteLabels(int location)
  * @param saveSelection
  */
 
-public void saveSelection(String lickTitle)
+public void saveSelection(Constants.ExtractMode extractionMode, String lickTitle)
   {
-   String saveSelection = getCurrentStave().getSaveSelection(lickTitle, saveSelectionMode, 0);
-        //System.out.println("saveSelection = ");
-    
-    saveLickDialog.setVisible(false);
+   String string = getCurrentStave().getSaveSelection(lickTitle, extractionMode);  
+   
+   saveLickDialog.setVisible(false);
 
-    if( saveSelection != null )
+    if( string != null )
       {
-        Polylist selectionAsList = parseListFromString(saveSelection);
+        Polylist selectionAsList = parseListFromString(string);
 
         if( Advisor.addUserRule(selectionAsList) )
           {
@@ -13886,17 +13885,17 @@ public void saveSelection(String lickTitle)
 
 public void triageLick(String lickName, int grade)
   {
-    String saveSelection = getCurrentStave().getSaveSelection(lickName, Stave.ExtractMode.LICK, grade);
+    String string = getCurrentStave().getSaveSelection(lickName, Stave.ExtractMode.LICK, grade);
 
     if( lickgenFrame.toCriticSelected() )
       {
-        criticDialog.add(saveSelection, grade);
+        criticDialog.add(string, grade);
 
         criticDialog.setVisible(true);
       }
     else
       {
-        saveSelection(saveSelection);
+        //saveSelection(string); FIX ?
       }
   }
 
@@ -14296,15 +14295,31 @@ public void openSaveLickFrame()
     setStatus("Edit save information.");
 
     disableAccelerators();
+    
+    saveLickDialog.setVisible(true);
 
-    saveLickDialog.setSize(new Dimension(500, 250));
+    saveLickDialog.requestFocus();
+  }
 
-    saveLickDialog.setLocation(40, 60);
+public void openSaveLickFrame(String string)
+  {
+    Trace.log(2, "Opening save lick selection frame");
+
+    adviceDialog.setVisible(false);        // avoid interference of key strokes
+
+    setStatus("Edit save information.");
+
+    disableAccelerators();
+    
+    saveLickDialog.setSaveName(string);
+
+    //saveLickDialog.setSize(new Dimension(500, 250));
+
+    //saveLickDialog.setLocation(40, 60);
 
     saveLickDialog.setVisible(true);
 
     saveLickDialog.requestFocus();
-
   }
 
 public String getLickTitle()

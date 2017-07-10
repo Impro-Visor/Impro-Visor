@@ -5,6 +5,8 @@
  */
 package imp.gui;
 
+import imp.Constants;
+
 /**
  *
  * @author keller
@@ -12,6 +14,8 @@ package imp.gui;
 public class SaveLickDialog extends javax.swing.JDialog
   {
     Notate notate;
+    
+    Constants.ExtractMode saveSelectionMode;
 
     /**
      * Creates new form SaveLick
@@ -24,6 +28,11 @@ public class SaveLickDialog extends javax.swing.JDialog
         setSize(850, 300);
         getRootPane().setDefaultButton(okSaveButton);
         enterLickTitle.requestFocusInWindow();
+    }
+    
+    public void setSaveName(String string)
+    {
+        enterLickTitle.setText(string);
     }
 
     /**
@@ -38,6 +47,7 @@ public class SaveLickDialog extends javax.swing.JDialog
     {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        saveLickButtonGroup = new javax.swing.ButtonGroup();
         lickTItleLabel = new javax.swing.JLabel();
         enterLickTitle = new javax.swing.JTextField();
         lineLabel = new javax.swing.JLabel();
@@ -51,15 +61,30 @@ public class SaveLickDialog extends javax.swing.JDialog
         brickRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(850, 300));
-        setPreferredSize(new java.awt.Dimension(850, 300));
+        setMinimumSize(new java.awt.Dimension(1000, 325));
+        setPreferredSize(new java.awt.Dimension(1000, 325));
+        setSize(new java.awt.Dimension(1000, 325));
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lickTItleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         lickTItleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lickTItleLabel.setText("Save Selection in Vocabulary");
+        lickTItleLabel.setText("Save Selection in Vocabulary as ...");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.ipadx = 653;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(31, 45, 0, 46);
+        getContentPane().add(lickTItleLabel, gridBagConstraints);
 
         enterLickTitle.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        enterLickTitle.setText("unnamed");
         enterLickTitle.setToolTipText("The name to be given to the selection (need not be unique)");
+        enterLickTitle.setMaximumSize(new java.awt.Dimension(2147483647, 30));
+        enterLickTitle.setMinimumSize(new java.awt.Dimension(200, 30));
+        enterLickTitle.setPreferredSize(new java.awt.Dimension(400, 30));
         enterLickTitle.addFocusListener(new java.awt.event.FocusAdapter()
         {
             public void focusGained(java.awt.event.FocusEvent evt)
@@ -74,10 +99,30 @@ public class SaveLickDialog extends javax.swing.JDialog
                 enterLickTitleActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(35, 0, 0, 5);
+        getContentPane().add(enterLickTitle, gridBagConstraints);
 
         lineLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         lineLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lineLabel.setText("Name this: ");
+        lineLabel.setText("Save with name: ");
+        lineLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lineLabel.setMaximumSize(new java.awt.Dimension(150, 30));
+        lineLabel.setMinimumSize(new java.awt.Dimension(150, 30));
+        lineLabel.setPreferredSize(new java.awt.Dimension(150, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 45, 0, 0);
+        getContentPane().add(lineLabel, gridBagConstraints);
 
         cancelLickTitle.setBackground(java.awt.Color.red);
         cancelLickTitle.setText("Cancel");
@@ -91,8 +136,18 @@ public class SaveLickDialog extends javax.swing.JDialog
                 cancelLickTitleActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 35;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 5, 5, 5);
+        getContentPane().add(cancelLickTitle, gridBagConstraints);
 
         okSaveButton.setBackground(java.awt.Color.green);
+        okSaveButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         okSaveButton.setText("Save This");
         okSaveButton.setToolTipText("Saves the item in the vocabulary file.");
         okSaveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -105,13 +160,23 @@ public class SaveLickDialog extends javax.swing.JDialog
                 okSaveButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 35;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 5, 5, 5);
+        getContentPane().add(okSaveButton, gridBagConstraints);
 
+        saveLickButtonGroup.add(rhythmRadioButton);
         rhythmRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         rhythmRadioButton.setText("Rhythm");
         rhythmRadioButton.setToolTipText("Save as rhythm when saving.");
-        rhythmRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        rhythmRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        rhythmRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
+        rhythmRadioButton.setMargin(new java.awt.Insets(1, 5, 0, 0));
+        rhythmRadioButton.setMinimumSize(new java.awt.Dimension(150, 50));
+        rhythmRadioButton.setPreferredSize(new java.awt.Dimension(150, 50));
         rhythmRadioButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -119,13 +184,21 @@ public class SaveLickDialog extends javax.swing.JDialog
                 rhythmRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        getContentPane().add(rhythmRadioButton, gridBagConstraints);
 
+        saveLickButtonGroup.add(cellRadioButton);
         cellRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         cellRadioButton.setText("Cell");
         cellRadioButton.setToolTipText("Save as cell when saving.");
-        cellRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        cellRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        cellRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
+        cellRadioButton.setMargin(new java.awt.Insets(1, 5, 0, 0));
+        cellRadioButton.setMinimumSize(new java.awt.Dimension(150, 50));
+        cellRadioButton.setPreferredSize(new java.awt.Dimension(150, 50));
         cellRadioButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -133,13 +206,21 @@ public class SaveLickDialog extends javax.swing.JDialog
                 cellRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        getContentPane().add(cellRadioButton, gridBagConstraints);
 
+        saveLickButtonGroup.add(idiomRadioButton);
         idiomRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         idiomRadioButton.setText("Idiom");
         idiomRadioButton.setToolTipText("Save as idiom when saving.");
-        idiomRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        idiomRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        idiomRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
+        idiomRadioButton.setMargin(new java.awt.Insets(1, 5, 0, 0));
+        idiomRadioButton.setMinimumSize(new java.awt.Dimension(150, 50));
+        idiomRadioButton.setPreferredSize(new java.awt.Dimension(150, 50));
         idiomRadioButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -147,11 +228,22 @@ public class SaveLickDialog extends javax.swing.JDialog
                 idiomRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        getContentPane().add(idiomRadioButton, gridBagConstraints);
 
+        saveLickButtonGroup.add(lickRadioButton);
         lickRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         lickRadioButton.setSelected(true);
         lickRadioButton.setText("Lick");
         lickRadioButton.setToolTipText("Save as lick when saving.");
+        lickRadioButton.setMargin(new java.awt.Insets(1, 5, 0, 0));
+        lickRadioButton.setMinimumSize(new java.awt.Dimension(150, 50));
+        lickRadioButton.setPreferredSize(new java.awt.Dimension(150, 50));
         lickRadioButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -159,13 +251,21 @@ public class SaveLickDialog extends javax.swing.JDialog
                 lickRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        getContentPane().add(lickRadioButton, gridBagConstraints);
 
+        saveLickButtonGroup.add(quoteRadioButton);
         quoteRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         quoteRadioButton.setText("Quote");
         quoteRadioButton.setToolTipText("Save as quote when saving.");
-        quoteRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        quoteRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        quoteRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
+        quoteRadioButton.setMargin(new java.awt.Insets(1, 5, 0, 0));
+        quoteRadioButton.setMinimumSize(new java.awt.Dimension(150, 50));
+        quoteRadioButton.setPreferredSize(new java.awt.Dimension(150, 50));
         quoteRadioButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -173,13 +273,21 @@ public class SaveLickDialog extends javax.swing.JDialog
                 quoteRadioButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        getContentPane().add(quoteRadioButton, gridBagConstraints);
 
+        saveLickButtonGroup.add(brickRadioButton);
         brickRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         brickRadioButton.setText("Brick");
         brickRadioButton.setToolTipText("Save as brick when saving");
-        brickRadioButton.setMaximumSize(new java.awt.Dimension(150, 20));
-        brickRadioButton.setMinimumSize(new java.awt.Dimension(150, 20));
-        brickRadioButton.setPreferredSize(new java.awt.Dimension(150, 20));
+        brickRadioButton.setMargin(new java.awt.Insets(1, 5, 0, 0));
+        brickRadioButton.setMinimumSize(new java.awt.Dimension(150, 50));
+        brickRadioButton.setPreferredSize(new java.awt.Dimension(150, 50));
         brickRadioButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -187,69 +295,13 @@ public class SaveLickDialog extends javax.swing.JDialog
                 brickRadioButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 949, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 45, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lickTItleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(rhythmRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(cellRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(idiomRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(lickRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(quoteRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(brickRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(enterLickTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(cancelLickTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0)
-                            .addComponent(okSaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 46, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 31, Short.MAX_VALUE)
-                    .addComponent(lickTItleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(26, 26, 26)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lickRadioButton)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(2, 2, 2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(rhythmRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cellRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(idiomRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(quoteRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(brickRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGap(35, 35, 35)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(5, 5, 5)
-                            .addComponent(lineLabel))
-                        .addComponent(enterLickTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cancelLickTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(okSaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 32, Short.MAX_VALUE)))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        getContentPane().add(brickRadioButton, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -261,7 +313,7 @@ public class SaveLickDialog extends javax.swing.JDialog
 
     private void enterLickTitleActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_enterLickTitleActionPerformed
     {//GEN-HEADEREND:event_enterLickTitleActionPerformed
-        // TODO add your handling code here:
+           okSaveButtonActionPerformed(evt);
     }//GEN-LAST:event_enterLickTitleActionPerformed
 
     private void cancelLickTitleActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cancelLickTitleActionPerformed
@@ -271,40 +323,43 @@ public class SaveLickDialog extends javax.swing.JDialog
 
     private void okSaveButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_okSaveButtonActionPerformed
     {//GEN-HEADEREND:event_okSaveButtonActionPerformed
-         notate.saveSelection(enterLickTitle.getText());        
+        String text = enterLickTitle.getText().trim();
+        if( text.equals("") )
+          {
+            text = "unnamed";
+          }
+        notate.saveSelection(saveSelectionMode, text);        
     }//GEN-LAST:event_okSaveButtonActionPerformed
 
     private void rhythmRadioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_rhythmRadioButtonActionPerformed
     {//GEN-HEADEREND:event_rhythmRadioButtonActionPerformed
-        // TODO add your handling code here:
+        saveSelectionMode = Constants.ExtractMode.RHYTHM;
     }//GEN-LAST:event_rhythmRadioButtonActionPerformed
 
     private void cellRadioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cellRadioButtonActionPerformed
     {//GEN-HEADEREND:event_cellRadioButtonActionPerformed
-        // TODO add your handling code here:
+        saveSelectionMode = Constants.ExtractMode.CELL;
     }//GEN-LAST:event_cellRadioButtonActionPerformed
 
     private void idiomRadioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_idiomRadioButtonActionPerformed
     {//GEN-HEADEREND:event_idiomRadioButtonActionPerformed
-        // TODO add your handling code here:
+        saveSelectionMode = Constants.ExtractMode.IDIOM;
     }//GEN-LAST:event_idiomRadioButtonActionPerformed
 
     private void lickRadioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_lickRadioButtonActionPerformed
     {//GEN-HEADEREND:event_lickRadioButtonActionPerformed
-        // TODO add your handling code here:
+        saveSelectionMode = Constants.ExtractMode.LICK;
     }//GEN-LAST:event_lickRadioButtonActionPerformed
 
     private void quoteRadioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_quoteRadioButtonActionPerformed
     {//GEN-HEADEREND:event_quoteRadioButtonActionPerformed
-        // TODO add your handling code here:
+        saveSelectionMode = Constants.ExtractMode.QUOTE;
     }//GEN-LAST:event_quoteRadioButtonActionPerformed
 
     private void brickRadioButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_brickRadioButtonActionPerformed
     {//GEN-HEADEREND:event_brickRadioButtonActionPerformed
-        // TODO add your handling code here:
+        saveSelectionMode = Constants.ExtractMode.BRICK;
     }//GEN-LAST:event_brickRadioButtonActionPerformed
-
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton brickRadioButton;
@@ -318,5 +373,6 @@ public class SaveLickDialog extends javax.swing.JDialog
     private javax.swing.JButton okSaveButton;
     private javax.swing.JRadioButton quoteRadioButton;
     private javax.swing.JRadioButton rhythmRadioButton;
+    private javax.swing.ButtonGroup saveLickButtonGroup;
     // End of variables declaration//GEN-END:variables
   }
