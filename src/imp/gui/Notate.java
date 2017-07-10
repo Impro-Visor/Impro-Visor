@@ -1769,77 +1769,6 @@ public Critic getCritic()
         deleteVoicingCancelButton = new javax.swing.JButton();
         deleteVoicingLabel = new javax.swing.JLabel();
         generatorButtonGroup = new javax.swing.ButtonGroup();
-        midiStyleSpec = new javax.swing.JFrame();
-        jPanel10 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        bassTabPanel = new javax.swing.JPanel();
-        jPanel15 = new javax.swing.JPanel();
-        bassStyleSpecScrollPane = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jPanel17 = new javax.swing.JPanel();
-        jPanel18 = new javax.swing.JPanel();
-        jPanel21 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel19 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jPanel20 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        okcancelPanel1 = new javax.swing.JPanel();
-        cancelBtn1 = new javax.swing.JButton();
-        resetBtn1 = new javax.swing.JButton();
-        savePrefsBtn1 = new javax.swing.JButton();
-        drumTabPanel = new javax.swing.JPanel();
-        jPanel22 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
-        jPanel23 = new javax.swing.JPanel();
-        jPanel24 = new javax.swing.JPanel();
-        jPanel25 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jPanel26 = new javax.swing.JPanel();
-        jPanel27 = new javax.swing.JPanel();
-        jLabel21 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        okcancelPanel2 = new javax.swing.JPanel();
-        cancelBtn2 = new javax.swing.JButton();
-        resetBtn2 = new javax.swing.JButton();
-        savePrefsBtn2 = new javax.swing.JButton();
-        chordTabPanel = new javax.swing.JPanel();
-        jPanel28 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jList4 = new javax.swing.JList();
-        jPanel29 = new javax.swing.JPanel();
-        jPanel30 = new javax.swing.JPanel();
-        jPanel31 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jPanel32 = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel25 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jPanel33 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        okcancelPanel3 = new javax.swing.JPanel();
-        cancelBtn3 = new javax.swing.JButton();
-        resetBtn3 = new javax.swing.JButton();
-        savePrefsBtn3 = new javax.swing.JButton();
         truncatePartDialog = new javax.swing.JDialog();
         cancelTruncate = new javax.swing.JButton();
         acceptTruncate = new javax.swing.JButton();
@@ -6498,655 +6427,6 @@ public Critic getCritic()
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
         deleteVoicingDialog.getContentPane().add(deleteVoicingLabel, gridBagConstraints);
 
-        midiStyleSpec.getContentPane().setLayout(new java.awt.GridBagLayout());
-
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Style Specification"));
-        jPanel10.setMinimumSize(new java.awt.Dimension(500, 700));
-        jPanel10.setPreferredSize(new java.awt.Dimension(500, 700));
-        jPanel10.setLayout(new java.awt.GridBagLayout());
-
-        jTabbedPane1.setMinimumSize(new java.awt.Dimension(475, 675));
-        jTabbedPane1.setPreferredSize(new java.awt.Dimension(475, 675));
-
-        bassTabPanel.setMinimumSize(new java.awt.Dimension(470, 670));
-        bassTabPanel.setPreferredSize(new java.awt.Dimension(470, 670));
-        bassTabPanel.setLayout(new java.awt.GridBagLayout());
-
-        jPanel15.setMinimumSize(new java.awt.Dimension(460, 650));
-        jPanel15.setPreferredSize(new java.awt.Dimension(460, 650));
-        jPanel15.setLayout(new java.awt.GridBagLayout());
-
-        bassStyleSpecScrollPane.setMinimumSize(new java.awt.Dimension(450, 470));
-        bassStyleSpecScrollPane.setPreferredSize(new java.awt.Dimension(450, 470));
-
-        jList1.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        bassStyleSpecScrollPane.setViewportView(jList1);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel15.add(bassStyleSpecScrollPane, gridBagConstraints);
-
-        jPanel17.setMinimumSize(new java.awt.Dimension(450, 170));
-        jPanel17.setPreferredSize(new java.awt.Dimension(450, 170));
-        jPanel17.setLayout(new java.awt.GridBagLayout());
-
-        jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel18.setMinimumSize(new java.awt.Dimension(450, 100));
-        jPanel18.setPreferredSize(new java.awt.Dimension(450, 120));
-        jPanel18.setLayout(new java.awt.GridBagLayout());
-
-        jPanel21.setBorder(javax.swing.BorderFactory.createTitledBorder("Advanced"));
-        jPanel21.setMinimumSize(new java.awt.Dimension(115, 105));
-        jPanel21.setPreferredSize(new java.awt.Dimension(115, 105));
-        jPanel21.setLayout(new java.awt.GridBagLayout());
-
-        jButton1.setText("Re-Generate");
-        jPanel21.add(jButton1, new java.awt.GridBagConstraints());
-
-        jButton2.setText("Advanced");
-        jButton2.setMaximumSize(new java.awt.Dimension(95, 23));
-        jButton2.setMinimumSize(new java.awt.Dimension(95, 23));
-        jButton2.setPreferredSize(new java.awt.Dimension(95, 23));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel21.add(jButton2, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel18.add(jPanel21, gridBagConstraints);
-
-        jPanel19.setBorder(javax.swing.BorderFactory.createTitledBorder("Bass Settings"));
-        jPanel19.setMinimumSize(new java.awt.Dimension(150, 105));
-        jPanel19.setPreferredSize(new java.awt.Dimension(150, 105));
-        jPanel19.setLayout(new java.awt.GridBagLayout());
-
-        jLabel16.setText("Bass High: ");
-        jLabel16.setMaximumSize(new java.awt.Dimension(65, 15));
-        jLabel16.setMinimumSize(new java.awt.Dimension(65, 15));
-        jLabel16.setPreferredSize(new java.awt.Dimension(65, 15));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel19.add(jLabel16, gridBagConstraints);
-
-        jTextField5.setText("jTextField5");
-        jTextField5.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField5.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel19.add(jTextField5, gridBagConstraints);
-
-        jLabel17.setText("Bass Low:");
-        jLabel17.setMaximumSize(new java.awt.Dimension(48, 15));
-        jLabel17.setMinimumSize(new java.awt.Dimension(48, 15));
-        jLabel17.setPreferredSize(new java.awt.Dimension(48, 15));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel19.add(jLabel17, gridBagConstraints);
-
-        jTextField6.setText("jTextField6");
-        jTextField6.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField6.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel19.add(jTextField6, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel18.add(jPanel19, gridBagConstraints);
-
-        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder("Global Settings"));
-        jPanel20.setMinimumSize(new java.awt.Dimension(150, 105));
-        jPanel20.setPreferredSize(new java.awt.Dimension(150, 105));
-        jPanel20.setLayout(new java.awt.GridBagLayout());
-
-        jLabel15.setText("Style Name: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel20.add(jLabel15, gridBagConstraints);
-
-        jTextField4.setText("jTextField4");
-        jTextField4.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField4.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel20.add(jTextField4, gridBagConstraints);
-
-        jLabel14.setText("Swing Value: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel20.add(jLabel14, gridBagConstraints);
-
-        jTextField7.setText("jTextField7");
-        jTextField7.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField7.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel20.add(jTextField7, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel18.add(jPanel20, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel17.add(jPanel18, gridBagConstraints);
-
-        okcancelPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        okcancelPanel1.setMinimumSize(new java.awt.Dimension(450, 40));
-        okcancelPanel1.setPreferredSize(new java.awt.Dimension(450, 40));
-        okcancelPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        cancelBtn1.setText("Cancel");
-        cancelBtn1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cancelBtn1ActionPerformed(evt);
-            }
-        });
-        okcancelPanel1.add(cancelBtn1);
-
-        resetBtn1.setText("Reset");
-        resetBtn1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                resetBtn1ActionPerformed(evt);
-            }
-        });
-        okcancelPanel1.add(resetBtn1);
-
-        savePrefsBtn1.setText("Save Style");
-        savePrefsBtn1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                savePrefsBtn1ActionPerformed(evt);
-            }
-        });
-        okcancelPanel1.add(savePrefsBtn1);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        jPanel17.add(okcancelPanel1, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel15.add(jPanel17, gridBagConstraints);
-
-        bassTabPanel.add(jPanel15, new java.awt.GridBagConstraints());
-
-        jTabbedPane1.addTab("Bass", bassTabPanel);
-
-        drumTabPanel.setMinimumSize(new java.awt.Dimension(470, 670));
-        drumTabPanel.setPreferredSize(new java.awt.Dimension(470, 670));
-        drumTabPanel.setLayout(new java.awt.GridBagLayout());
-
-        jPanel22.setMinimumSize(new java.awt.Dimension(460, 650));
-        jPanel22.setPreferredSize(new java.awt.Dimension(460, 650));
-        jPanel22.setLayout(new java.awt.GridBagLayout());
-
-        jScrollPane3.setMinimumSize(new java.awt.Dimension(450, 470));
-        jScrollPane3.setPreferredSize(new java.awt.Dimension(450, 470));
-
-        jList2.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList2);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel22.add(jScrollPane3, gridBagConstraints);
-
-        jPanel23.setMinimumSize(new java.awt.Dimension(450, 170));
-        jPanel23.setPreferredSize(new java.awt.Dimension(450, 170));
-        jPanel23.setLayout(new java.awt.GridBagLayout());
-
-        jPanel24.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel24.setMinimumSize(new java.awt.Dimension(450, 100));
-        jPanel24.setPreferredSize(new java.awt.Dimension(450, 120));
-        jPanel24.setLayout(new java.awt.GridBagLayout());
-
-        jPanel25.setBorder(javax.swing.BorderFactory.createTitledBorder("Advanced"));
-        jPanel25.setMinimumSize(new java.awt.Dimension(115, 105));
-        jPanel25.setPreferredSize(new java.awt.Dimension(115, 105));
-        jPanel25.setLayout(new java.awt.GridBagLayout());
-
-        jButton3.setText("Re-Generate");
-        jPanel25.add(jButton3, new java.awt.GridBagConstraints());
-
-        jButton4.setText("Advanced");
-        jButton4.setMaximumSize(new java.awt.Dimension(95, 23));
-        jButton4.setMinimumSize(new java.awt.Dimension(95, 23));
-        jButton4.setPreferredSize(new java.awt.Dimension(95, 23));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel25.add(jButton4, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel24.add(jPanel25, gridBagConstraints);
-
-        jPanel26.setBorder(javax.swing.BorderFactory.createTitledBorder("Drum Settings"));
-        jPanel26.setMinimumSize(new java.awt.Dimension(150, 105));
-        jPanel26.setPreferredSize(new java.awt.Dimension(150, 105));
-        jPanel26.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel24.add(jPanel26, gridBagConstraints);
-
-        jPanel27.setBorder(javax.swing.BorderFactory.createTitledBorder("Global Settings"));
-        jPanel27.setMinimumSize(new java.awt.Dimension(150, 105));
-        jPanel27.setPreferredSize(new java.awt.Dimension(150, 105));
-        jPanel27.setLayout(new java.awt.GridBagLayout());
-
-        jLabel21.setText("Style Name: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel27.add(jLabel21, gridBagConstraints);
-
-        jTextField10.setText("jTextField4");
-        jTextField10.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField10.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel27.add(jTextField10, gridBagConstraints);
-
-        jLabel22.setText("Swing Value: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel27.add(jLabel22, gridBagConstraints);
-
-        jTextField11.setText("jTextField7");
-        jTextField11.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField11.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel27.add(jTextField11, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel24.add(jPanel27, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel23.add(jPanel24, gridBagConstraints);
-
-        okcancelPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        okcancelPanel2.setMinimumSize(new java.awt.Dimension(450, 40));
-        okcancelPanel2.setPreferredSize(new java.awt.Dimension(450, 40));
-        okcancelPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        cancelBtn2.setText("Cancel");
-        cancelBtn2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cancelBtn2ActionPerformed(evt);
-            }
-        });
-        okcancelPanel2.add(cancelBtn2);
-
-        resetBtn2.setText("Reset");
-        resetBtn2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                resetBtn2ActionPerformed(evt);
-            }
-        });
-        okcancelPanel2.add(resetBtn2);
-
-        savePrefsBtn2.setText("Save Style");
-        savePrefsBtn2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                savePrefsBtn2ActionPerformed(evt);
-            }
-        });
-        okcancelPanel2.add(savePrefsBtn2);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        jPanel23.add(okcancelPanel2, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel22.add(jPanel23, gridBagConstraints);
-
-        drumTabPanel.add(jPanel22, new java.awt.GridBagConstraints());
-
-        jTabbedPane1.addTab("Drum", drumTabPanel);
-
-        chordTabPanel.setMinimumSize(new java.awt.Dimension(470, 670));
-        chordTabPanel.setPreferredSize(new java.awt.Dimension(470, 670));
-        chordTabPanel.setLayout(new java.awt.GridBagLayout());
-
-        jPanel28.setMinimumSize(new java.awt.Dimension(460, 650));
-        jPanel28.setPreferredSize(new java.awt.Dimension(460, 650));
-        jPanel28.setLayout(new java.awt.GridBagLayout());
-
-        jScrollPane4.setMinimumSize(new java.awt.Dimension(450, 470));
-        jScrollPane4.setPreferredSize(new java.awt.Dimension(450, 470));
-
-        jList4.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(jList4);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel28.add(jScrollPane4, gridBagConstraints);
-
-        jPanel29.setMinimumSize(new java.awt.Dimension(450, 170));
-        jPanel29.setPreferredSize(new java.awt.Dimension(450, 170));
-        jPanel29.setLayout(new java.awt.GridBagLayout());
-
-        jPanel30.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel30.setMinimumSize(new java.awt.Dimension(450, 100));
-        jPanel30.setPreferredSize(new java.awt.Dimension(450, 120));
-        jPanel30.setLayout(new java.awt.GridBagLayout());
-
-        jPanel31.setBorder(javax.swing.BorderFactory.createTitledBorder("Advanced"));
-        jPanel31.setMinimumSize(new java.awt.Dimension(115, 105));
-        jPanel31.setPreferredSize(new java.awt.Dimension(115, 105));
-        jPanel31.setLayout(new java.awt.GridBagLayout());
-
-        jButton5.setText("Re-Generate");
-        jPanel31.add(jButton5, new java.awt.GridBagConstraints());
-
-        jButton6.setText("Advanced");
-        jButton6.setMaximumSize(new java.awt.Dimension(95, 23));
-        jButton6.setMinimumSize(new java.awt.Dimension(95, 23));
-        jButton6.setPreferredSize(new java.awt.Dimension(95, 23));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel31.add(jButton6, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel30.add(jPanel31, gridBagConstraints);
-
-        jPanel32.setBorder(javax.swing.BorderFactory.createTitledBorder("Chordal Settings"));
-        jPanel32.setMinimumSize(new java.awt.Dimension(150, 105));
-        jPanel32.setPreferredSize(new java.awt.Dimension(150, 105));
-        jPanel32.setLayout(new java.awt.GridBagLayout());
-
-        jLabel18.setText("Chord High: ");
-        jLabel18.setMaximumSize(new java.awt.Dimension(53, 15));
-        jLabel18.setMinimumSize(new java.awt.Dimension(53, 15));
-        jLabel18.setPreferredSize(new java.awt.Dimension(53, 15));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel32.add(jLabel18, gridBagConstraints);
-
-        jTextField8.setText("jTextField5");
-        jTextField8.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField8.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel32.add(jTextField8, gridBagConstraints);
-
-        jLabel20.setText("Chord Low:");
-        jLabel20.setMaximumSize(new java.awt.Dimension(48, 15));
-        jLabel20.setMinimumSize(new java.awt.Dimension(48, 15));
-        jLabel20.setPreferredSize(new java.awt.Dimension(48, 15));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel32.add(jLabel20, gridBagConstraints);
-
-        jTextField9.setText("jTextField6");
-        jTextField9.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField9.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel32.add(jTextField9, gridBagConstraints);
-
-        jLabel25.setText("Chord Voicing:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel32.add(jLabel25, gridBagConstraints);
-
-        jRadioButton1.setText("Open");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel32.add(jRadioButton1, gridBagConstraints);
-
-        jRadioButton2.setText("Closed");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel32.add(jRadioButton2, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel30.add(jPanel32, gridBagConstraints);
-
-        jPanel33.setBorder(javax.swing.BorderFactory.createTitledBorder("Global Settings"));
-        jPanel33.setMinimumSize(new java.awt.Dimension(150, 105));
-        jPanel33.setPreferredSize(new java.awt.Dimension(150, 105));
-        jPanel33.setLayout(new java.awt.GridBagLayout());
-
-        jLabel23.setText("Style Name: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel33.add(jLabel23, gridBagConstraints);
-
-        jTextField12.setText("jTextField4");
-        jTextField12.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField12.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanel33.add(jTextField12, gridBagConstraints);
-
-        jLabel24.setText("Swing Value: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel33.add(jLabel24, gridBagConstraints);
-
-        jTextField13.setText("jTextField7");
-        jTextField13.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField13.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel33.add(jTextField13, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel30.add(jPanel33, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel29.add(jPanel30, gridBagConstraints);
-
-        okcancelPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        okcancelPanel3.setMinimumSize(new java.awt.Dimension(450, 40));
-        okcancelPanel3.setPreferredSize(new java.awt.Dimension(450, 40));
-        okcancelPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        cancelBtn3.setText("Cancel");
-        cancelBtn3.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cancelBtn3ActionPerformed(evt);
-            }
-        });
-        okcancelPanel3.add(cancelBtn3);
-
-        resetBtn3.setText("Reset");
-        resetBtn3.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                resetBtn3ActionPerformed(evt);
-            }
-        });
-        okcancelPanel3.add(resetBtn3);
-
-        savePrefsBtn3.setText("Save Style");
-        savePrefsBtn3.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                savePrefsBtn3ActionPerformed(evt);
-            }
-        });
-        okcancelPanel3.add(savePrefsBtn3);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        jPanel29.add(okcancelPanel3, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel28.add(jPanel29, gridBagConstraints);
-
-        chordTabPanel.add(jPanel28, new java.awt.GridBagConstraints());
-
-        jTabbedPane1.addTab("Chordal", chordTabPanel);
-
-        jPanel10.add(jTabbedPane1, new java.awt.GridBagConstraints());
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        midiStyleSpec.getContentPane().add(jPanel10, gridBagConstraints);
-
         truncatePartDialog.setAlwaysOnTop(true);
         truncatePartDialog.setModal(true);
         truncatePartDialog.setName("duplicateLickDialog"); // NOI18N
@@ -10457,42 +9737,6 @@ public Critic getCritic()
               this.getY() + WindowRegistry.defaultYnewWindowStagger);
       se.setVisible(true);
   }//GEN-LAST:event_styleGenerator1ActionPerformed
-
-    private void savePrefsBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePrefsBtn3ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_savePrefsBtn3ActionPerformed
-
-    private void resetBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtn3ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_resetBtn3ActionPerformed
-
-    private void cancelBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtn3ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_cancelBtn3ActionPerformed
-
-    private void savePrefsBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePrefsBtn2ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_savePrefsBtn2ActionPerformed
-
-    private void resetBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtn2ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_resetBtn2ActionPerformed
-
-    private void cancelBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtn2ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_cancelBtn2ActionPerformed
-
-    private void savePrefsBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePrefsBtn1ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_savePrefsBtn1ActionPerformed
-
-    private void resetBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtn1ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_resetBtn1ActionPerformed
-
-    private void cancelBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtn1ActionPerformed
-// TODO add your handling code here:
-    }//GEN-LAST:event_cancelBtn1ActionPerformed
 
   private void mouseEnteredTabPanel(java.awt.event.MouseEvent evt)//GEN-FIRST:event_mouseEnteredTabPanel
   {//GEN-HEADEREND:event_mouseEnteredTabPanel
@@ -26708,8 +25952,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel bassPanel;
     private javax.swing.JRadioButton bassStave;
     private javax.swing.JRadioButton bassStaveBtn;
-    private javax.swing.JScrollPane bassStyleSpecScrollPane;
-    private javax.swing.JPanel bassTabPanel;
     private javax.swing.JSlider bassVolume;
     private javax.swing.JRadioButton blackApproachBtn;
     private javax.swing.JRadioButton blackChordBtn;
@@ -26730,9 +25972,6 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField cacheSize;
     private javax.swing.JPanel cacheTab;
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JButton cancelBtn1;
-    private javax.swing.JButton cancelBtn2;
-    private javax.swing.JButton cancelBtn3;
     private javax.swing.JButton cancelTruncate;
     private javax.swing.JMenuItem cascadeMI;
     private javax.swing.JCheckBox cells;
@@ -26756,7 +25995,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton chordStepBackButton;
     private javax.swing.JButton chordStepForwardButton;
     private javax.swing.JCheckBox chordSubs;
-    private javax.swing.JPanel chordTabPanel;
     private javax.swing.JLabel chordToneLabel;
     private javax.swing.JCheckBox chordTones;
     private javax.swing.JSlider chordVolume;
@@ -26853,7 +26091,6 @@ private ImageIcon pauseButton =
     private javax.swing.JSpinner drumChannelSpinner;
     private javax.swing.JCheckBox drumMute;
     private javax.swing.JPanel drumPanel;
-    private javax.swing.JPanel drumTabPanel;
     private javax.swing.JSlider drumVolume;
     private javax.swing.JPanel dummyPanel;
     private javax.swing.JDialog duplicateLickDialog;
@@ -26943,64 +26180,21 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem intervalLearningMI;
     private javax.swing.JRadioButtonMenuItem intervalsRadio;
     private javax.swing.JMenuItem invertMelody;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
-    private javax.swing.JList jList4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
-    private javax.swing.JPanel jPanel24;
-    private javax.swing.JPanel jPanel25;
-    private javax.swing.JPanel jPanel26;
-    private javax.swing.JPanel jPanel27;
-    private javax.swing.JPanel jPanel28;
-    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel30;
-    private javax.swing.JPanel jPanel31;
-    private javax.swing.JPanel jPanel32;
-    private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
@@ -27024,22 +26218,11 @@ private ImageIcon pauseButton =
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane7;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JSlider k_constantSlider1;
     private javax.swing.ButtonGroup keySigBtnGroup;
     private javax.swing.JLabel keySignatureLabel;
@@ -27098,7 +26281,6 @@ private ImageIcon pauseButton =
     private javax.swing.JButton midiPreferencesBtn;
     private javax.swing.JMenuItem midiPrefsMI;
     private javax.swing.JPanel midiQuantizationPanel;
-    private javax.swing.JFrame midiStyleSpec;
     private javax.swing.JSpinner minPitchSpinner1;
     private javax.swing.JButton mixerBtn;
     private javax.swing.JDialog mixerDialog;
@@ -27136,9 +26318,6 @@ private ImageIcon pauseButton =
     private javax.swing.ButtonGroup numberOfBarsGroup;
     private javax.swing.JButton okMeasBtn;
     private javax.swing.JPanel okcancelPanel;
-    private javax.swing.JPanel okcancelPanel1;
-    private javax.swing.JPanel okcancelPanel2;
-    private javax.swing.JPanel okcancelPanel3;
     private javax.swing.JMenuItem oneAutoMI;
     private javax.swing.JButton openBtn;
     private javax.swing.JMenuItem openGrammarMenuDialogMI;
@@ -27226,9 +26405,6 @@ private ImageIcon pauseButton =
     private javax.swing.JCheckBoxMenuItem replaceWithPhi;
     private javax.swing.JCheckBox replaceWithPhiCheckBox;
     private javax.swing.JButton resetBtn;
-    private javax.swing.JButton resetBtn1;
-    private javax.swing.JButton resetBtn2;
-    private javax.swing.JButton resetBtn3;
     private javax.swing.JMenuItem resolvePitches;
     private javax.swing.JMenuItem reverseMelody;
     private javax.swing.JMenuItem revertToSavedMI;
@@ -27247,9 +26423,6 @@ private ImageIcon pauseButton =
     private javax.swing.JCheckBoxMenuItem saveImprovCheckBoxMenuItem;
     private javax.swing.JMenuItem saveLeadsheetMI;
     private javax.swing.JButton savePrefsBtn;
-    private javax.swing.JButton savePrefsBtn1;
-    private javax.swing.JButton savePrefsBtn2;
-    private javax.swing.JButton savePrefsBtn3;
     private javax.swing.JMenuItem saveSelectionAsLick;
     private javax.swing.ButtonGroup saveTypeButtonGroup;
     private javax.swing.JCheckBox scaleTones;
