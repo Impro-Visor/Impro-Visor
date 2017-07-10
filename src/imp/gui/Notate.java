@@ -134,6 +134,7 @@ static int GRAMMAR_EDITOR_ROWS = 10000;
 AboutDialog aboutDialog = new AboutDialog(this, false);
 ErrorDialog errorDialog = ErrorLog.getDialog();
 HelpDialog helpDialog = new HelpDialog(this, false);
+DuplicateLickWarningDialog duplicateLickDialog = new DuplicateLickWarningDialog(this, true);
 ViewAdjustmentDialog viewAdjustmentDialog = new ViewAdjustmentDialog(this, false);
 QuantizationDialog quantizationDialog = new QuantizationDialog(this, false);
 QuantizationDialog realtimeQuantizationDialog = new QuantizationDialog(this, false);
@@ -762,6 +763,8 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     // so that the window menu can construct a list of windows
 
     WindowRegistry.registerWindow(this);
+    
+    LickLog.setDialog(this, duplicateLickDialog);
 
     // the glass pane, when set visible, will disable mouse events
 
@@ -1023,10 +1026,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     setItemStates();
 
     //okErrorBtn = ErrorLog.setDialog(errorDialog);
-
-    LickLog.setDialog(duplicateLickDialog, duplicateLickText, this);
-
-    setDefaultButton(duplicateLickDialog, ignoreDuplicate);
 
     sectionInfo = score.getChordProg().getSectionInfo().copy();
     
@@ -1668,13 +1667,6 @@ public Critic getCritic()
         autoFillMI = new javax.swing.JCheckBoxMenuItem();
         keySigBtnGroup = new javax.swing.ButtonGroup();
         defLoadStaveBtnGroup = new javax.swing.ButtonGroup();
-        duplicateLickDialog = new javax.swing.JDialog();
-        ignoreDuplicate = new javax.swing.JButton();
-        saveDuplicate = new javax.swing.JButton();
-        duplicateLickScroll = new javax.swing.JScrollPane();
-        duplicateLickText = new javax.swing.JTextPane();
-        duplicateLickLabel = new javax.swing.JLabel();
-        overwriteLickButton = new javax.swing.JButton();
         saveTypeButtonGroup = new javax.swing.ButtonGroup();
         staveChoiceButtonGroup = new javax.swing.ButtonGroup();
         chordColorBtnGrp = new javax.swing.ButtonGroup();
@@ -5076,130 +5068,6 @@ public Critic getCritic()
             }
         });
         popupMenu.add(autoFillMI);
-
-        duplicateLickDialog.setAlwaysOnTop(true);
-        duplicateLickDialog.setModal(true);
-        duplicateLickDialog.setName("duplicateLickDialog"); // NOI18N
-        duplicateLickDialog.setResizable(false);
-        duplicateLickDialog.addComponentListener(new java.awt.event.ComponentAdapter()
-        {
-            public void componentShown(java.awt.event.ComponentEvent evt)
-            {
-                duplicateLickDialogComponentShown(evt);
-            }
-        });
-        duplicateLickDialog.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                duplicateLickDialogKeyPressed(evt);
-            }
-        });
-        duplicateLickDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
-
-        ignoreDuplicate.setBackground(java.awt.Color.green);
-        ignoreDuplicate.setText("Ignore This One");
-        ignoreDuplicate.setToolTipText("Do not save the duplicate in the vocabulary.");
-        ignoreDuplicate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        ignoreDuplicate.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                ignoreDuplicateActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        duplicateLickDialog.getContentPane().add(ignoreDuplicate, gridBagConstraints);
-
-        saveDuplicate.setBackground(java.awt.Color.yellow);
-        saveDuplicate.setText("Save This Anyway");
-        saveDuplicate.setToolTipText("Saves the lick in the vocabulary");
-        saveDuplicate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        saveDuplicate.setDefaultCapable(false);
-        saveDuplicate.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                saveDuplicateActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        duplicateLickDialog.getContentPane().add(saveDuplicate, gridBagConstraints);
-
-        duplicateLickScroll.setMinimumSize(new java.awt.Dimension(200, 100));
-        duplicateLickScroll.setPreferredSize(new java.awt.Dimension(500, 300));
-
-        duplicateLickText.setEditable(false);
-        duplicateLickScroll.setViewportView(duplicateLickText);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 15;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        duplicateLickDialog.getContentPane().add(duplicateLickScroll, gridBagConstraints);
-
-        duplicateLickLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        duplicateLickLabel.setText("Duplicate Lick/Quote Warning");
-        duplicateLickLabel.setToolTipText("");
-        duplicateLickLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 15;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        duplicateLickDialog.getContentPane().add(duplicateLickLabel, gridBagConstraints);
-
-        overwriteLickButton.setBackground(java.awt.Color.red);
-        overwriteLickButton.setText("Overwrite Lick");
-        overwriteLickButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        overwriteLickButton.setDefaultCapable(false);
-        overwriteLickButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                overwriteLickButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        duplicateLickDialog.getContentPane().add(overwriteLickButton, gridBagConstraints);
 
         mixerDialog.setTitle("Mixer");
         mixerDialog.setAlwaysOnTop(true);
@@ -10078,14 +9946,6 @@ private void turnStepInputOff()
         hideFakeModalDialog(preferencesDialog);
     }//GEN-LAST:event_preferencesDialogWindowClosing
 
-    private void overwriteLickButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_overwriteLickButtonActionPerformed
-
-    {//GEN-HEADEREND:event_overwriteLickButtonActionPerformed
-        ignoreDuplicateLick = OVERWRITE;
-
-        duplicateLickDialog.setVisible(false);
-    }//GEN-LAST:event_overwriteLickButtonActionPerformed
-
     private void insertVoicingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertVoicingButtonActionPerformed
 
         Style currentStyle =
@@ -12839,24 +12699,6 @@ private final Color adviceBtnColorClosed = new Color(238, 212, 212);
     private void enterLickTitleAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterLickTitleAction
         
     }//GEN-LAST:event_enterLickTitleAction
-
-    private void saveDuplicateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDuplicateActionPerformed
-        ignoreDuplicateLick = SAVE;
-
-        duplicateLickDialog.setVisible(false);
-    }//GEN-LAST:event_saveDuplicateActionPerformed
-
-    private void duplicateLickDialogKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_duplicateLickDialogKeyPressed
-    }//GEN-LAST:event_duplicateLickDialogKeyPressed
-
-    private void duplicateLickDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_duplicateLickDialogComponentShown
-    }//GEN-LAST:event_duplicateLickDialogComponentShown
-
-    private void ignoreDuplicateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ignoreDuplicateActionPerformed
-        ignoreDuplicateLick = IGNORE;
-
-        duplicateLickDialog.setVisible(false);
-    }//GEN-LAST:event_ignoreDuplicateActionPerformed
 
     private void colorTonesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_colorTonesActionPerformed
 
@@ -26093,10 +25935,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel drumPanel;
     private javax.swing.JSlider drumVolume;
     private javax.swing.JPanel dummyPanel;
-    private javax.swing.JDialog duplicateLickDialog;
-    private javax.swing.JLabel duplicateLickLabel;
-    private javax.swing.JScrollPane duplicateLickScroll;
-    private javax.swing.JTextPane duplicateLickText;
     private javax.swing.JCheckBoxMenuItem earlyScrollCheckBoxMI;
     private javax.swing.JCheckBox echoMidiCheckBox;
     private javax.swing.JMenu editMenu;
@@ -26163,7 +26001,6 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField highRangeTF2;
     private javax.swing.JCheckBox idioms;
     private javax.swing.JSplitPane idiomsSplitPane;
-    private javax.swing.JButton ignoreDuplicate;
     private javax.swing.JMenuItem importMidiMI;
     private javax.swing.ButtonGroup improvButtonGroup;
     private javax.swing.JMenu improvMenu;
@@ -26331,7 +26168,6 @@ private ImageIcon pauseButton =
     private javax.swing.JLabel otherLabel;
     protected javax.swing.JFrame overrideFrame;
     private javax.swing.JMenuItem overrideMeasPMI;
-    private javax.swing.JButton overwriteLickButton;
     private javax.swing.JPanel partBarsPanel;
     private javax.swing.JTextField partBarsTF1;
     private javax.swing.JLabel partComposerLabel;
@@ -26419,7 +26255,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem saveAsAdvice;
     private javax.swing.JMenuItem saveAsLeadsheetMI;
     private javax.swing.JButton saveBtn;
-    private javax.swing.JButton saveDuplicate;
     private javax.swing.JCheckBoxMenuItem saveImprovCheckBoxMenuItem;
     private javax.swing.JMenuItem saveLeadsheetMI;
     private javax.swing.JButton savePrefsBtn;
@@ -26591,9 +26426,18 @@ private ImageIcon pauseButton =
         return stopBtn.isSelected();
     }
     
+/**
+ * This is used to communicate the status of an attempt to enter a duplicate
+ * lick through the SaveLickDialog.
+ * @param value 
+ */
+public void setIgnoreDuplicateLick(int value)
+  {
+    ignoreDuplicateLick = value;
+  }
+    
 public int getIgnoreDuplicateLick()
   {
-
     return ignoreDuplicateLick;
   }
 

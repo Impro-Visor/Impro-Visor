@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,16 +13,13 @@
  * merchantability or fitness for a particular purpose.  See the
  * GNU General Public License for more details.
  *
-
  * You should have received a copy of the GNU General Public License
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 
-package imp.util;
-
-import imp.gui.Notate;
+package imp.gui;
 
 /**
  * LickLog is intended as a singleton class and is modeled after ErrorLog.  
@@ -34,23 +31,17 @@ public class LickLog {
 
     /** dialog for GUI */
 
-    private static javax.swing.JDialog errorDialog;
+    private static DuplicateLickWarningDialog errorDialog;
 
-    /** text in dialog */
-
-    private static javax.swing.JTextPane errorText;
-
-    
     private static Notate notate;
 
     /**
      * Set error dialog to an actual dialog
      */
     
-    public static void setDialog(javax.swing.JDialog _errorDialog, javax.swing.JTextPane _text, Notate _notate)
+    public static void setDialog(Notate _notate, DuplicateLickWarningDialog _errorDialog)
       {
       errorDialog = _errorDialog;
-      errorText = _text;
       notate = _notate;
       }
 
@@ -63,7 +54,7 @@ public class LickLog {
       {
      if( errorDialog != null )
        {
-       errorText.setText(message);
+       errorDialog.setMessage(message);
        errorDialog.pack();
        errorDialog.setLocation(notate.getWidth() / 3, notate.getHeight() / 3);
        errorDialog.setVisible(true);
