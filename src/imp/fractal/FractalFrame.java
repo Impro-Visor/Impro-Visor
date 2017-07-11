@@ -47,7 +47,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * Accessible through notate
  * @author Carli Lessard
  */
-public class FractalFrame extends javax.swing.JFrame {
+public class FractalFrame extends javax.swing.JDialog {
     private final Notate notate;
     private final CommandManager cm;
     
@@ -116,8 +116,7 @@ public class FractalFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         probabilitiesPanel = new javax.swing.JPanel();
@@ -172,12 +171,11 @@ public class FractalFrame extends javax.swing.JFrame {
         windowMenuSeparator = new javax.swing.JPopupMenu.Separator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Division");
         setMinimumSize(new java.awt.Dimension(600, 350));
         setSize(new java.awt.Dimension(650, 375));
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
         });
@@ -300,10 +298,8 @@ public class FractalFrame extends javax.swing.JFrame {
 
         tripleText.setMinimumSize(new java.awt.Dimension(50, 28));
         tripleText.setPreferredSize(new java.awt.Dimension(50, 28));
-        tripleText.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tripleText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tripleTextActionPerformed(evt);
             }
         });
@@ -449,20 +445,16 @@ public class FractalFrame extends javax.swing.JFrame {
         dividingPanel.add(numDivisionsSpinner, gridBagConstraints);
 
         multDivideButton.setText("Divide Multiple Times");
-        multDivideButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        multDivideButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 multDivideButtonActionPerformed(evt);
             }
         });
         dividingPanel.add(multDivideButton, new java.awt.GridBagConstraints());
 
         singleDivideButton.setText("Divide One Time");
-        singleDivideButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        singleDivideButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 singleDivideButtonActionPerformed(evt);
             }
         });
@@ -478,20 +470,16 @@ public class FractalFrame extends javax.swing.JFrame {
         fileMenu.setText("File");
 
         openFileMI.setText("Open Fractal File");
-        openFileMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        openFileMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openFileMIActionPerformed(evt);
             }
         });
         fileMenu.add(openFileMI);
 
         saveFileMI.setText("Save Fractal File");
-        saveFileMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        saveFileMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveFileMIActionPerformed(evt);
             }
         });
@@ -500,35 +488,27 @@ public class FractalFrame extends javax.swing.JFrame {
         menuBar.add(fileMenu);
 
         windowMenu.setText("Window");
-        windowMenu.addMenuListener(new javax.swing.event.MenuListener()
-        {
-            public void menuSelected(javax.swing.event.MenuEvent evt)
-            {
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
                 windowMenuMenuSelected(evt);
             }
-            public void menuDeselected(javax.swing.event.MenuEvent evt)
-            {
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt)
-            {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
         closeWindowMI.setText("Close Window");
-        closeWindowMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindowMIActionPerformed(evt);
             }
         });
         windowMenu.add(closeWindowMI);
 
         cascadeMI.setText("Cascade Windows");
-        cascadeMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cascadeMIActionPerformed(evt);
             }
         });
