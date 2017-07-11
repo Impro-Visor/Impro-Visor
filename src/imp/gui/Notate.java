@@ -1096,9 +1096,9 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
                 lickgenFrame.setVisible(false);
               }
 
-            if( voicingTestFrame.isVisible() && voicingTestFrame.isActive() )
+            if( voicingTestDialog.isVisible() && voicingTestDialog.isActive() )
               {
-                voicingTestFrame.setVisible(false);
+                voicingTestDialog.setVisible(false);
               }
           }
       }
@@ -1147,11 +1147,11 @@ public static void setDefaultButton(JDialog dialog, JButton button)
  */
 public void postInitComponents()
   {
-    voicingTestFrame.pack();
+    voicingTestDialog.pack();
 
-    voicingTestFrame.setSize(875, 525);
+    voicingTestDialog.setSize(875, 525);
 
-    voicingTestFrame.setLocationRelativeTo(this);
+    voicingTestDialog.setLocationRelativeTo(this);
 
     melodyInst.setDialog(preferencesDialog);
 
@@ -1717,7 +1717,7 @@ public Critic getCritic()
         lineLabel = new javax.swing.JLabel();
         okMeasBtn = new javax.swing.JButton();
         measErrorLabel = new javax.swing.JLabel();
-        voicingTestFrame = new javax.swing.JFrame();
+        voicingTestDialog = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         chordRootLabel = new javax.swing.JLabel();
@@ -5540,11 +5540,11 @@ public Critic getCritic()
         gridBagConstraints.weightx = 1.0;
         overrideFrame.getContentPane().add(measErrorLabel, gridBagConstraints);
 
-        voicingTestFrame.setTitle("Chord Voicing Utility");
-        voicingTestFrame.setAlwaysOnTop(true);
-        voicingTestFrame.getRootPane().setDefaultButton(buildTableButton);
-        voicingTestFrame.setSize(600, 400);
-        voicingTestFrame.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
+        voicingTestDialog.setTitle("Chord Voicing Utility");
+        voicingTestDialog.setAlwaysOnTop(true);
+        voicingTestDialog.getRootPane().setDefaultButton(buildTableButton);
+        voicingTestDialog.setSize(600, 400);
+        voicingTestDialog.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel2.setMinimumSize(new java.awt.Dimension(760, 700));
         jPanel2.setPreferredSize(new java.awt.Dimension(760, 700));
@@ -6164,7 +6164,7 @@ public Critic getCritic()
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel2.add(dummyPanel, gridBagConstraints);
 
-        voicingTestFrame.getContentPane().add(jPanel2);
+        voicingTestDialog.getContentPane().add(jPanel2);
 
         newVoicingDialog.setTitle("Add Chord Voicing");
         newVoicingDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -10062,7 +10062,7 @@ private void turnStepInputOff()
             if( row == -1 )
               {
                 populateChordSelMenu();
-                chordSelectionMenu.show(voicingTestFrame, 525, 75);
+                chordSelectionMenu.show(voicingTestDialog, 525, 75);
                 return;
               }
 
@@ -10775,14 +10775,14 @@ private boolean initLocationVoicingFrame = false;
 
         if( !initLocationVoicingFrame )
           {
-            voicingTestFrame.setLocationRelativeTo(this);
+            voicingTestDialog.setLocationRelativeTo(this);
 
             initLocationVoicingFrame = true;
           }
 
         buildVoicingTable();
 
-        voicingTestFrame.setVisible(true);
+        voicingTestDialog.setVisible(true);
 
         if( playingStopped() )
           {
@@ -10806,7 +10806,7 @@ private boolean initLocationVoicingFrame = false;
             String v = keyboard.voicingFromKeyboard();
             String currentChord = keyboard.getPresentChordDisplayText();
 
-            if( voicingTestFrame != null && voicingTestFrame.isVisible() )
+            if( voicingTestDialog != null && voicingTestDialog.isVisible() )
               {
                 selectVoicing(v, currentChord);
               }
@@ -14405,8 +14405,8 @@ public void closeWindow()
         styleEditor.dispose();
     }
     
-    if(voicingTestFrame != null){
-        voicingTestFrame.dispose();
+    if(voicingTestDialog != null){
+        voicingTestDialog.dispose();
     }
     
     if(themeWeaver != null){
@@ -20168,7 +20168,7 @@ public void pauseToKeyboard()
     String v = keyboard.voicingFromKeyboard();
     String currentChord = keyboard.getPresentChordDisplayText();
 
-    if( voicingTestFrame != null && voicingTestFrame.isVisible() )
+    if( voicingTestDialog != null && voicingTestDialog.isVisible() )
       {
         selectVoicing(v, currentChord);
       }
@@ -26410,7 +26410,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton voicingSequenceRemoveButton;
     private javax.swing.JLabel voicingSequenceUpArrow;
     private javax.swing.JTable voicingTable;
-    private javax.swing.JFrame voicingTestFrame;
+    private javax.swing.JDialog voicingTestDialog;
     private javax.swing.JMenuItem voicingTestMI;
     private javax.swing.ButtonGroup whoPlaysFirstGroup;
     private javax.swing.JMenu windowMenu;
@@ -26430,9 +26430,9 @@ private ImageIcon pauseButton =
     public boolean getStopEnabled(){
         return stopBtn.isEnabled();
     }
-    
-    public javax.swing.JFrame getVoicingTestFrame(){
-        return voicingTestFrame;
+
+    public javax.swing.JDialog getVoicingTestDialog(){
+        return voicingTestDialog;
     }
     
     public JButton getPlay(){
