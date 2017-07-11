@@ -45,8 +45,7 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         keyboardHelpDialog = new javax.swing.JDialog();
@@ -280,19 +279,16 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         setTitle("Advice Keyboard");
         setAlwaysOnTop(true);
-        setMinimumSize(new java.awt.Dimension(1100, 228));
-        setPreferredSize(new java.awt.Dimension(1100, 228));
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+        setBounds(new java.awt.Rectangle(0, 23, 1100, 300));
+        setMinimumSize(new java.awt.Dimension(1100, 300));
+        setPreferredSize(new java.awt.Dimension(1100, 300));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
         });
@@ -309,17 +305,13 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
         keyboardLP.setDoubleBuffered(true);
         keyboardLP.setMinimumSize(new java.awt.Dimension(1055, 150));
         keyboardLP.setPreferredSize(new java.awt.Dimension(1055, 140));
-        keyboardLP.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        keyboardLP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 keyboardLPMouseClicked(evt);
             }
         });
-        keyboardLP.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        keyboardLP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 keyboardLPKeyPressed(evt);
             }
         });
@@ -1344,10 +1336,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         inputRestBtn.setText("Rest");
         inputRestBtn.setToolTipText("Insert a rest");
-        inputRestBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        inputRestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputRestBtnActionPerformed(evt);
             }
         });
@@ -1367,10 +1357,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         adviceNumSpinner.setToolTipText("Adjust the number of suggestions displayed");
         adviceNumSpinner.setValue(ADVICE_NUM_INIT);
-        adviceNumSpinner.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
+        adviceNumSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 adviceNumSpinnerStateChanged(evt);
             }
         });
@@ -1383,10 +1371,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         refreshAdviceBtn.setText("Refresh Advice");
         refreshAdviceBtn.setToolTipText("Refresh the suggested notes");
-        refreshAdviceBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        refreshAdviceBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshAdviceBtnActionPerformed(evt);
             }
         });
@@ -1406,10 +1392,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         SkipBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/play.gif"))); // NOI18N
         SkipBtn.setToolTipText("Forward one slot");
-        SkipBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        SkipBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SkipBtnActionPerformed(evt);
             }
         });
@@ -1421,10 +1405,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         BackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/icons/playReversed.png"))); // NOI18N
         BackBtn.setToolTipText("Back one slot");
-        BackBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackBtnActionPerformed(evt);
             }
         });
@@ -1435,10 +1417,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
         getContentPane().add(BackBtn, gridBagConstraints);
 
         subDivComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "8" }));
-        subDivComboBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        subDivComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subDivComboBoxActionPerformed(evt);
             }
         });
@@ -1468,10 +1448,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         undoBtn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, 0));
         undoBtn.setText("Undo");
-        undoBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        undoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 undoBtnActionPerformed(evt);
             }
         });
@@ -1479,10 +1457,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, 0));
         jMenuItem1.setText("Redo");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
@@ -1494,20 +1470,16 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         clearKeyboardMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
         clearKeyboardMI.setText("Clear Keyboard");
-        clearKeyboardMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        clearKeyboardMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearKeyboardMIActionPerformed(evt);
             }
         });
         optionsMenu.add(clearKeyboardMI);
 
         defaultSettingsBtn.setText("Default Settings");
-        defaultSettingsBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        defaultSettingsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 defaultSettingsBtnActionPerformed(evt);
             }
         });
@@ -1515,10 +1487,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         useAdviceMI.setSelected(useAdvice);
         useAdviceMI.setText("Use Advice");
-        useAdviceMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        useAdviceMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 useAdviceMIActionPerformed(evt);
             }
         });
@@ -1526,10 +1496,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         useExpectanciesMI.setSelected(useExpectancies);
         useExpectanciesMI.setText("Show Expected Notes");
-        useExpectanciesMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        useExpectanciesMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 useExpectanciesMIActionPerformed(evt);
             }
         });
@@ -1537,10 +1505,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         useBlueAdviceMI.setSelected(useBlueAdvice);
         useBlueAdviceMI.setText("Use Blue Note Awareness");
-        useBlueAdviceMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        useBlueAdviceMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 useBlueAdviceMIActionPerformed(evt);
             }
         });
@@ -1548,10 +1514,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         fixNotesMI.setSelected(fixNotes);
         fixNotesMI.setText("Auto-Rectify Notes");
-        fixNotesMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        fixNotesMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fixNotesMIActionPerformed(evt);
             }
         });
@@ -1563,10 +1527,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         startPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
         startPlayMI.setText("Start play");
-        startPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        startPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startPlayMIActionPerformed(evt);
             }
         });
@@ -1574,10 +1536,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         pausePlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
         pausePlayMI.setText("Pause play");
-        pausePlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pausePlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pausePlayMIActionPerformed(evt);
             }
         });
@@ -1585,10 +1545,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         stopPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         stopPlayMI.setText("Stop play");
-        stopPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        stopPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopPlayMIActionPerformed(evt);
             }
         });
@@ -1596,10 +1554,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         startSelPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0));
         startSelPlayMI.setText("Start selection play");
-        startSelPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        startSelPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startSelPlayMIActionPerformed(evt);
             }
         });
@@ -1607,10 +1563,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         stopSelPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK));
         stopSelPlayMI.setText("Play from selection to end");
-        stopSelPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        stopSelPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopSelPlayMIActionPerformed(evt);
             }
         });
@@ -1620,27 +1574,21 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
-        windowMenu.addMenuListener(new javax.swing.event.MenuListener()
-        {
-            public void menuSelected(javax.swing.event.MenuEvent evt)
-            {
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
                 windowMenuMenuSelected(evt);
             }
-            public void menuDeselected(javax.swing.event.MenuEvent evt)
-            {
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt)
-            {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
         closeWindowMI.setMnemonic('C');
         closeWindowMI.setText("Close Window");
         closeWindowMI.setToolTipText("Closes the current window (exits program if there are no other windows)");
-        closeWindowMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindowMIActionPerformed(evt);
             }
         });
@@ -1648,10 +1596,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
 
         cascadeMI.setMnemonic('A');
         cascadeMI.setText("Cascade Windows");
-        cascadeMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cascadeMIActionPerformed(evt);
             }
         });
@@ -1661,10 +1607,8 @@ public class StepEntryKeyboard extends javax.swing.JDialog {
         jMenuBar1.add(windowMenu);
 
         HelpMenu.setText("Help");
-        HelpMenu.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        HelpMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 HelpMenuMouseClicked(evt);
             }
         });
