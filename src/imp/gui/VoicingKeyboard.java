@@ -129,8 +129,7 @@ public void toFront() {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         visichordDialog = new javax.swing.JDialog();
@@ -388,10 +387,8 @@ public void toFront() {
         setTitle("Keyboard");
         setMinimumSize(new java.awt.Dimension(1100, 370));
         setPreferredSize(new java.awt.Dimension(1100, 370));
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
@@ -402,12 +399,11 @@ public void toFront() {
         jPanel1.setPreferredSize(new java.awt.Dimension(1045, 150));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
+        keyboardLP.setDoubleBuffered(true);
         keyboardLP.setMinimumSize(new java.awt.Dimension(1045, 150));
         keyboardLP.setRequestFocusEnabled(false);
-        keyboardLP.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        keyboardLP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 keyboardLPMouseClicked(evt);
             }
         });
@@ -849,17 +845,13 @@ public void toFront() {
         getContentPane().add(ctrlShiftClickExtLabel, gridBagConstraints);
 
         playChordButton.setText("Play Chord");
-        playChordButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        playChordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playChordButtonActionPerformed(evt);
             }
         });
-        playChordButton.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyTyped(java.awt.event.KeyEvent evt)
-            {
+        playChordButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
                 playChordButtonKeyTyped(evt);
             }
         });
@@ -882,10 +874,8 @@ public void toFront() {
         chordStepBackButton.setMinimumSize(new java.awt.Dimension(30, 30));
         chordStepBackButton.setPreferredSize(new java.awt.Dimension(30, 30));
         chordStepBackButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        chordStepBackButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        chordStepBackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chordStepBackButtonActionPerformed(evt);
             }
         });
@@ -899,10 +889,8 @@ public void toFront() {
         chordReplayButton.setMaximumSize(new java.awt.Dimension(30, 30));
         chordReplayButton.setMinimumSize(new java.awt.Dimension(30, 30));
         chordReplayButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        chordReplayButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        chordReplayButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chordReplayButtonActionPerformed(evt);
             }
         });
@@ -917,10 +905,8 @@ public void toFront() {
         chordStepForwardButton.setMinimumSize(new java.awt.Dimension(30, 30));
         chordStepForwardButton.setPreferredSize(new java.awt.Dimension(30, 30));
         chordStepForwardButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        chordStepForwardButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        chordStepForwardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chordStepForwardButtonActionPerformed(evt);
             }
         });
@@ -932,10 +918,8 @@ public void toFront() {
         getContentPane().add(jToolBar1, gridBagConstraints);
 
         jButton2.setText("Save Voicing");
-        jButton2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
@@ -2036,10 +2020,8 @@ public void toFront() {
 
         clearKeyboardMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
         clearKeyboardMI.setText("Clear Keyboard");
-        clearKeyboardMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        clearKeyboardMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearKeyboardMIActionPerformed(evt);
             }
         });
@@ -2047,10 +2029,8 @@ public void toFront() {
 
         resetChordDisplayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
         resetChordDisplayMI.setText("Reset Chord Display");
-        resetChordDisplayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        resetChordDisplayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetChordDisplayMIActionPerformed(evt);
             }
         });
@@ -2058,10 +2038,8 @@ public void toFront() {
 
         playChordMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, 0));
         playChordMI.setText("Play Chord");
-        playChordMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        playChordMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playChordMIActionPerformed(evt);
             }
         });
@@ -2069,10 +2047,8 @@ public void toFront() {
 
         addToSequenceMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, 0));
         addToSequenceMI.setText("Add to Sequence");
-        addToSequenceMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        addToSequenceMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addToSequenceMIActionPerformed(evt);
             }
         });
@@ -2081,10 +2057,8 @@ public void toFront() {
         turnOnOffKeyLabelsMI.setBackground(new java.awt.Color(230, 230, 230));
         turnOnOffKeyLabelsMI.setSelected(true);
         turnOnOffKeyLabelsMI.setText("Turn On/Off Key Labels");
-        turnOnOffKeyLabelsMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        turnOnOffKeyLabelsMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnOnOffKeyLabelsMIActionPerformed(evt);
             }
         });
@@ -2096,10 +2070,8 @@ public void toFront() {
 
         singleNoteModeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, 0));
         singleNoteModeMI.setText("Single Note");
-        singleNoteModeMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        singleNoteModeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 singleNoteModeMIActionPerformed(evt);
             }
         });
@@ -2107,10 +2079,8 @@ public void toFront() {
 
         chordModeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, 0));
         chordModeMI.setText("Chords");
-        chordModeMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        chordModeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chordModeMIActionPerformed(evt);
             }
         });
@@ -2123,10 +2093,8 @@ public void toFront() {
         upHalfStepMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, 0));
         upHalfStepMI.setBackground(new java.awt.Color(236, 233, 216));
         upHalfStepMI.setText("Up half step");
-        upHalfStepMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        upHalfStepMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 upHalfStepMIActionPerformed(evt);
             }
         });
@@ -2135,10 +2103,8 @@ public void toFront() {
         downHalfStepMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, 0));
         downHalfStepMI.setBackground(new java.awt.Color(236, 233, 216));
         downHalfStepMI.setText("Down half step");
-        downHalfStepMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        downHalfStepMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 downHalfStepMIActionPerformed(evt);
             }
         });
@@ -2148,10 +2114,8 @@ public void toFront() {
         upOctaveMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
         upOctaveMI.setBackground(new java.awt.Color(236, 233, 216));
         upOctaveMI.setText("Up octave");
-        upOctaveMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        upOctaveMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 upOctaveMIActionPerformed(evt);
             }
         });
@@ -2160,10 +2124,8 @@ public void toFront() {
         downOctaveMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, 0));
         downOctaveMI.setBackground(new java.awt.Color(236, 233, 216));
         downOctaveMI.setText("Down octave");
-        downOctaveMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        downOctaveMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 downOctaveMIActionPerformed(evt);
             }
         });
@@ -2175,10 +2137,8 @@ public void toFront() {
 
         startPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
         startPlayMI.setText("Start play");
-        startPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        startPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startPlayMIActionPerformed(evt);
             }
         });
@@ -2186,10 +2146,8 @@ public void toFront() {
 
         pausePlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
         pausePlayMI.setText("Pause play");
-        pausePlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        pausePlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pausePlayMIActionPerformed(evt);
             }
         });
@@ -2197,10 +2155,8 @@ public void toFront() {
 
         stopPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         stopPlayMI.setText("Stop play");
-        stopPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        stopPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopPlayMIActionPerformed(evt);
             }
         });
@@ -2208,10 +2164,8 @@ public void toFront() {
 
         startSelPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0));
         startSelPlayMI.setText("Start selection play");
-        startSelPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        startSelPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startSelPlayMIActionPerformed(evt);
             }
         });
@@ -2219,10 +2173,8 @@ public void toFront() {
 
         stopSelPlayMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, java.awt.event.InputEvent.SHIFT_MASK));
         stopSelPlayMI.setText("Play from selection to end");
-        stopSelPlayMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        stopSelPlayMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopSelPlayMIActionPerformed(evt);
             }
         });
@@ -2232,27 +2184,21 @@ public void toFront() {
 
         windowMenu.setMnemonic('W');
         windowMenu.setText("Window");
-        windowMenu.addMenuListener(new javax.swing.event.MenuListener()
-        {
-            public void menuSelected(javax.swing.event.MenuEvent evt)
-            {
+        windowMenu.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
                 windowMenuMenuSelected(evt);
             }
-            public void menuDeselected(javax.swing.event.MenuEvent evt)
-            {
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
             }
-            public void menuCanceled(javax.swing.event.MenuEvent evt)
-            {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
         });
 
         closeWindowMI.setMnemonic('C');
         closeWindowMI.setText("Close Window");
         closeWindowMI.setToolTipText("Closes the current window (exits program if there are no other windows)");
-        closeWindowMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        closeWindowMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeWindowMIActionPerformed(evt);
             }
         });
@@ -2260,10 +2206,8 @@ public void toFront() {
 
         cascadeMI.setMnemonic('A');
         cascadeMI.setText("Cascade Windows");
-        cascadeMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cascadeMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cascadeMIActionPerformed(evt);
             }
         });

@@ -384,6 +384,7 @@
       <SubComponents>
         <Container class="javax.swing.JLayeredPane" name="keyboardLP">
           <Properties>
+            <Property name="doubleBuffered" type="boolean" value="true"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[1045, 150]"/>
             </Property>
