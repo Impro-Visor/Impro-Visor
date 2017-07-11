@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,6 @@
  * merchantability or fitness for a particular purpose.  See the
  * GNU General Public License for more details.
  *
-
  * You should have received a copy of the GNU General Public License
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -32,6 +31,7 @@ import javax.swing.*;
 public class InstrumentChooser extends javax.swing.JPanel {
     JDialog parent = null;
     static private InstrumentChooserDialog dialog = null;
+    private boolean enabled = true;
     
     /** Creates new form InstrumentChooser */
     public InstrumentChooser() {
@@ -93,6 +93,15 @@ public class InstrumentChooser extends javax.swing.JPanel {
         if(instTF != null && instTF.getText().length() > 0) {
             instBtn.setText(dialog.doLookup(getValue()));
         }
+    }
+    
+    @Override
+    public void setEnabled(boolean value)
+    {
+      super.setEnabled(value);
+      enabled = value;
+      instBtn.setEnabled(value);
+      instTF.setEnabled(value);
     }
     
     private static Dimension prefferedTFSize = null;
@@ -177,6 +186,10 @@ public class InstrumentChooser extends javax.swing.JPanel {
     }//GEN-LAST:event_instTFCaretPositionChanged
 
     private void instBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instBtnActionPerformed
+        if( !enabled )
+          {
+            return;
+          }
         dialog.setValue(getValue());
         dialog.setTarget(instTF, instBtn);
         dialog.setVisible(true);

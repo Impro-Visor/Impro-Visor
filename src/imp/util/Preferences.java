@@ -96,6 +96,21 @@ public class Preferences implements imp.Constants
 
   public static final String DEFAULT_BASS_INSTRUMENT =
           "default-bass-instrument";
+  
+  public static final String DEFAULT_BASS_TRANSPOSITION =
+          "default-bass-transposition";  
+
+  public static final String DEFAULT_CHORD_TRANSPOSITION =
+          "default-chord-transposition";  
+
+  public static final String DEFAULT_MELODY_TRANSPOSITION =
+          "default-melody-transposition";  
+
+  public static final String DBI_TRANS = "0";
+
+  public static final String DCI_TRANS = "0";
+
+  public static final String DMI_TRANS = "0";
 
   public static final String DBI_VAL = "34";
 
@@ -304,25 +319,22 @@ public class Preferences implements imp.Constants
       }
     catch( Exception e )
       {
-      /*
       ErrorLog.log(ErrorLog.WARNING, "Cannot open preferences file; " +
               "generating default preference file 'vocab/My.prefs'.");
 
-      */
       makeDefaultPrefsFile();
 
       try
         {
         inputStream = new FileInputStream(prefsFile);
         cm.execute(new Preferences.LoadPrefsCommand(inputStream));
-
         }
       catch( Exception j )
         {
         ErrorLog.log(ErrorLog.WARNING, "Failure generating default " +
                 "preference file 'My.prefs'.");
         }
-      }
+      } // end of outer catch
     }
 
   public static void savePreferences()
@@ -612,6 +624,9 @@ public static boolean getAlwaysUse(int index)
       out.println("(" + DEFAULT_AUX_INSTRUMENT + " " + DMI_VAL + ")");
       out.println("(" + DEFAULT_CHORD_INSTRUMENT + " " + DCI_VAL + ")");
       out.println("(" + DEFAULT_BASS_INSTRUMENT + " " + DBI_VAL + ")");
+      out.println("(" + DEFAULT_BASS_TRANSPOSITION + " " + DBI_TRANS + ")");
+      out.println("(" + DEFAULT_CHORD_TRANSPOSITION + " " + DCI_TRANS + ")");
+      out.println("(" + DEFAULT_MELODY_TRANSPOSITION + " " + DMI_TRANS + ")");
 
       out.println("(" + DEFAULT_MIXER_ALL + " " + DMA_VAL + ")");
       out.println("(" + DEFAULT_MIXER_ENTRY + " " + DME_VAL + ")");
@@ -741,7 +756,7 @@ public static int getDrumChannel()
       {
       // FIX: This is executed multiple time for what should be one save. Why??
 
-      // System.out.println("saving prefs = " + prefs);
+      //System.out.println("saving prefs = " + prefs);
       Polylist out = prefs;
       while( out.nonEmpty() )
         {

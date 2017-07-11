@@ -757,8 +757,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setTitle(score.getTitle());
 
-    setTransposition(score.getTransposition());
-
     // all windows should be registered when created
     // so that the window menu can construct a list of windows
 
@@ -1056,7 +1054,20 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     alwaysUseChord.setSelected(setAlwaysUseString.charAt(ALWAYS_USE_CHORD_INDEX) == TRUE_CHECK_BOX);
     alwaysUseMelody.setSelected(setAlwaysUseString.charAt(ALWAYS_USE_MELODY_INDEX) == TRUE_CHECK_BOX);
     alwaysUseStave.setSelected(Preferences.getAlwaysUseStave());
+    
+    // Disable or enable instrument selectors, depending on alwaysUse settings
+    boolean value = alwaysUseBass.isSelected();
+    leadsheetBassTranspositionSpinner.setEnabled(!value);
+    bassInst.setEnabled(!value);
 
+    value = alwaysUseChord.isSelected();
+    leadsheetChordTranspositionSpinner.setEnabled(!value);
+    chordInst.setEnabled(!value);
+    
+    value = alwaysUseMelody.isSelected();
+    chorusMelodyTranspositionSpinner.setEnabled(!value);
+    melodyInst.setEnabled(!value);
+    
     setTrackerDelay(Preferences.getPreference(Preferences.TRACKER_DELAY));
 
     setChordFontSizeSpinner(score.getChordFontSize());
@@ -1066,6 +1077,8 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     setBars(score.getBarsPerChorus());
 
     updateSelection();
+
+    setTransposition(Transposition.none);
 
     Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener()
     {
@@ -3231,6 +3244,8 @@ public Critic getCritic()
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
         chorusSpecificPanel.add(staveButtonPanel, gridBagConstraints);
 
+        melodyInstPanel.setToolTipText("Instrument selection will be disabled if Always Use this is checked in Global Settings.");
+
         chorusMelodyTranspositionSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Transpose"));
         chorusMelodyTranspositionSpinner.setBounds(new java.awt.Rectangle(0, 0, 90, 45));
         chorusMelodyTranspositionSpinner.setMaximumSize(new java.awt.Dimension(90, 45));
@@ -3248,7 +3263,7 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weighty = 0.1;
         chorusSpecificPanel.add(melodyInstPanel, gridBagConstraints);
 
@@ -3542,13 +3557,14 @@ public Critic getCritic()
         gridBagConstraints.weighty = 0.1;
         leadsheetSpecificPanel.add(bassInstLabel, gridBagConstraints);
 
+        bassInstPanel.setToolTipText("Instrument selection will be disabled if Always Use this is checked in Global Settings.");
         bassInstPanel.setMaximumSize(new java.awt.Dimension(300, 45));
         bassInstPanel.setMinimumSize(new java.awt.Dimension(300, 45));
         bassInstPanel.setPreferredSize(new java.awt.Dimension(300, 45));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weighty = 0.1;
         leadsheetSpecificPanel.add(bassInstPanel, gridBagConstraints);
@@ -3583,13 +3599,14 @@ public Critic getCritic()
         gridBagConstraints.weighty = 0.1;
         leadsheetSpecificPanel.add(chordIInstLabel, gridBagConstraints);
 
+        chordInstPanel.setToolTipText("Instrument selection will be disabled if Always Use this is checked in Global Settings.");
         chordInstPanel.setMaximumSize(new java.awt.Dimension(300, 45));
         chordInstPanel.setMinimumSize(new java.awt.Dimension(300, 45));
         chordInstPanel.setPreferredSize(new java.awt.Dimension(300, 45));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weighty = 0.1;
         leadsheetSpecificPanel.add(chordInstPanel, gridBagConstraints);
@@ -3757,6 +3774,7 @@ public Critic getCritic()
         defBassInstPanel.add(globalBassTranspositionSpinner);
 
         alwaysUseBass.setText("Always use this");
+        alwaysUseBass.setToolTipText("Checking this will force the bass instrument and transposition to be used invariably.");
         alwaysUseBass.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -3789,6 +3807,7 @@ public Critic getCritic()
         defChordPanel.add(globalChordTranspositionSpinner);
 
         alwaysUseChord.setText("Always use this");
+        alwaysUseChord.setToolTipText("Checking this will force the chord instrument and transposition to be used invariably.");
         alwaysUseChord.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -3821,6 +3840,7 @@ public Critic getCritic()
         defMelodyPanel.add(globalMelodyTranspositionSpinner);
 
         alwaysUseMelody.setText("Always use this");
+        alwaysUseMelody.setToolTipText("Checking this will force the melody instrument and transposition to be used invariably.");
         alwaysUseMelody.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4154,6 +4174,14 @@ public Critic getCritic()
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         defaultsTab.add(defTempoLabel, gridBagConstraints);
+
+        numStavesPerPage.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                numStavesPerPageActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -10618,40 +10646,56 @@ Transposition masterTransposition = Transposition.none;
 
 public void setTransposition(Transposition transposition)
   {
-    if( leadsheetChordTranspositionSpinner != null )
-      {
-        leadsheetChordTranspositionSpinner.setValue(transposition.getChordTransposition());
-      }
+    int bassValue = 0;
+    int chordValue = 0;
+    int melodyValue = 0;
     
     if( leadsheetBassTranspositionSpinner != null )
       {
-        leadsheetBassTranspositionSpinner.setValue(transposition.getBassTransposition());
+        bassValue = getCheckBoxPreference(0) ? 
+                        (int)globalBassTranspositionSpinner.getValue() :
+                        transposition.getBassTransposition();
+        leadsheetBassTranspositionSpinner.setValue(bassValue); 
+      }
+
+    if( leadsheetChordTranspositionSpinner != null )
+      {
+        chordValue = getCheckBoxPreference(1) ? 
+                        (int)globalChordTranspositionSpinner.getValue() :
+                        transposition.getChordTransposition();
+        leadsheetChordTranspositionSpinner.setValue(chordValue); 
       }
     
     if( chorusMelodyTranspositionSpinner != null )
       {
-        chorusMelodyTranspositionSpinner.setValue(transposition.getBassTransposition());
+        melodyValue = getCheckBoxPreference(2) ? 
+                        (int)globalMelodyTranspositionSpinner.getValue() :
+                        transposition.getMelodyTransposition();
+        chorusMelodyTranspositionSpinner.setValue(melodyValue); 
       }
     
     if( score != null )
       {
-        score.setTransposition(masterTransposition);
+        score.setTransposition(new Transposition(bassValue, chordValue, melodyValue));
       }
   }
 
 public void changeChordTransposition(int value)
 {
     masterTransposition = masterTransposition.newChordTransposition(value);
+    score.setTransposition(masterTransposition);
 }
 
 public void changeBassTransposition(int value)
 {
     masterTransposition = masterTransposition.newBassTransposition(value);
+    score.setTransposition(masterTransposition);
 }
 
 public void changeMelodyTransposition(int value)
 {
     masterTransposition = masterTransposition.newMelodyTransposition(value);
+    score.setTransposition(masterTransposition);
 }
 
 private void buildVoicingTable()
@@ -14851,29 +14895,23 @@ private boolean saveGlobalPreferences()
 
         int melodyVol = defMelodyVolSlider.getValue();
 
-
         if( cache < 0 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Cache size must be a positive number.");
-
             close = false;
           }
         else
           {
             Advisor.setCacheCapacity(cache);
-
             Preferences.setPreference(Preferences.ADV_CACHE_SIZE, strCache);
           }
 
-
         Preferences.setPreference(Preferences.DEFAULT_STYLE, strStyle);
-
         Preferences.setPreference(Preferences.DEFAULT_TEMPO, "" + tempo);
 
         if( melody < 1 || melody > 128 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "The melody instrument must be between 1 and 128");
-
             close = false;
           }
         else
@@ -14884,7 +14922,6 @@ private boolean saveGlobalPreferences()
         if( aux < 1 || aux > 128 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "The auxiliary instrument must be between 1 and 128");
-
             close = false;
           }
         else
@@ -14892,12 +14929,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.DEFAULT_AUX_INSTRUMENT, defAuxInst.getText());
           }
 
-
-
         if( chord < 1 || chord > 128 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "The chord instrument must be between 1 and 128");
-
             close = false;
           }
         else
@@ -14905,12 +14939,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.DEFAULT_CHORD_INSTRUMENT, defChordInst.getText());
           }
 
-
-
         if( bass < 1 || bass > 128 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "The bass instrument must be between 1 and 128");
-
             close = false;
           }
         else
@@ -14918,12 +14949,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.DEFAULT_BASS_INSTRUMENT, defBassInst.getText());
           }
 
-
-
         if( voice < 0 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Voicing must be a positive number.");
-
             close = false;
           }
         else
@@ -14931,12 +14959,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.MAX_NOTES_IN_VOICING, voicing.getText());
           }
 
-
-
         if( dist < 0 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Chord distance must be a positive number.");
-
             close = false;
           }
         else
@@ -14944,12 +14969,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.CHORD_DIST_ABOVE_ROOT, chordDist.getText());
           }
 
-
-
         if( masterVol < 0 || masterVol > 127 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Master volume must be between 0 and 127");
-
             close = false;
           }
         else
@@ -14957,12 +14979,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.DEFAULT_MIXER_ALL, String.valueOf(masterVol));
           }
 
-
-
         if( entryVol < 0 || entryVol > 127 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Entry volume must be between 0 and 127");
-
             close = false;
           }
         else
@@ -14970,12 +14989,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.DEFAULT_MIXER_ENTRY, String.valueOf(entryVol));
           }
 
-
-
         if( chordVol < 0 || chordVol > 127 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Chord volume must be between 0 and 127");
-
             close = false;
           }
         else
@@ -14983,24 +14999,19 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.DEFAULT_MIXER_CHORDS, String.valueOf(chordVol));
           }
 
-
-
         if( bassVol < 0 || bassVol > 127 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Bass volume must be between 0 and 127");
-
-            close = false;
+           close = false;
           }
         else
           {
             Preferences.setPreference(Preferences.DEFAULT_MIXER_BASS, String.valueOf(bassVol));
           }
 
-
         if( drumVol < 0 || drumVol > 127 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Drum volume must be between 0 and 127");
-
             close = false;
           }
         else
@@ -15008,11 +15019,9 @@ private boolean saveGlobalPreferences()
             Preferences.setPreference(Preferences.DEFAULT_MIXER_DRUMS, String.valueOf(drumVol));
           }
 
-
         if( melodyVol < 0 || melodyVol > 127 )
           {
             ErrorLog.log(ErrorLog.SEVERE, "Melody volume must be between 0 and 127");
-
             close = false;
           }
         else
@@ -15287,11 +15296,13 @@ private void setPrefsDialog()
     defStyleComboBox.repaint();
 
     defBassInst.setText(Preferences.getPreference(Preferences.DEFAULT_BASS_INSTRUMENT));
-
     defChordInst.setText(Preferences.getPreference(Preferences.DEFAULT_CHORD_INSTRUMENT));
-
     defMelodyInst.setText(Preferences.getPreference(Preferences.DEFAULT_MELODY_INSTRUMENT));
 
+    globalBassTranspositionSpinner.setValue(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_BASS_TRANSPOSITION)));
+    globalChordTranspositionSpinner.setValue(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_CHORD_TRANSPOSITION)));
+    globalMelodyTranspositionSpinner.setValue(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_MELODY_TRANSPOSITION)));
+    
     try
       {
         defAuxInst.setText(Preferences.getPreferenceQuietly(Preferences.DEFAULT_AUX_INSTRUMENT));
@@ -15364,22 +15375,18 @@ private void setPrefsDialog()
         default:
 
         case 1:
-
             blackChordBtn.setSelected(true);
             break;
 
         case 2:
-
             redChordBtn.setSelected(true);
             break;
 
         case 3:
-
             greenChordBtn.setSelected(true);
             break;
 
         case 4:
-
             blueChordBtn.setSelected(true);
             break;
       }
@@ -15390,22 +15397,18 @@ private void setPrefsDialog()
         default:
 
         case 1:
-
             blackColorBtn.setSelected(true);
             break;
 
         case 2:
-
             redColorBtn.setSelected(true);
             break;
 
         case 3:
-
             greenColorBtn.setSelected(true);
             break;
 
         case 4:
-
             blueColorBtn.setSelected(true);
             break;
       }
@@ -15416,22 +15419,18 @@ private void setPrefsDialog()
         default:
 
         case 1:
-
             blackApproachBtn.setSelected(true);
             break;
 
         case 2:
-
             redApproachBtn.setSelected(true);
             break;
 
         case 3:
-
             greenApproachBtn.setSelected(true);
             break;
 
         case 4:
-
             blueApproachBtn.setSelected(true);
             break;
       }
@@ -15442,29 +15441,23 @@ private void setPrefsDialog()
         default:
 
         case 1:
-
             blackOtherBtn.setSelected(true);
             break;
 
         case 2:
-
             redOtherBtn.setSelected(true);
             break;
 
         case 3:
-
             greenOtherBtn.setSelected(true);
             break;
 
         case 4:
-
             blueOtherBtn.setSelected(true);
             break;
       }
 
-
     // ===== update drawing panel
-
 
     String drawTones = Preferences.getPreference(Preferences.DRAWING_TONES);
 
@@ -15507,9 +15500,10 @@ private void setPrefsDialog()
         inst = Preferences.getPreference(Preferences.DEFAULT_MELODY_INSTRUMENT);
         int instNumber = midiInstFromText(inst, 1);
         getCurrentMelodyPart().setInstrument(instNumber);
-
         melodyInst.setText(inst);
-        //System.out.println("assigning melody instrument from default: " + inst);
+        
+        int trans = Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_MELODY_TRANSPOSITION));
+    //System.out.println("assigning melody instrument from default: " + inst);
       }
     else
       {
@@ -15552,8 +15546,10 @@ private void setPrefsDialog()
         inst = Preferences.getPreference(Preferences.DEFAULT_CHORD_INSTRUMENT);
         int instNumber = midiInstFromText(inst, 1);
         score.setChordInstrument(instNumber);
-
         chordInst.setText(inst);
+
+        int trans = Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_CHORD_TRANSPOSITION));
+        score.setTransposition(score.getTransposition().newChordTransposition(trans));
         //System.out.println("assigning chord instrument from default: " + inst);
       }
     else
@@ -15567,8 +15563,11 @@ private void setPrefsDialog()
         inst = Preferences.getPreference(Preferences.DEFAULT_BASS_INSTRUMENT);
         int instNumber = midiInstFromText(inst, 34);
         score.setBassInstrument(instNumber);
-
         bassInst.setText(inst);
+
+        int trans = Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_CHORD_TRANSPOSITION));
+        score.setTransposition(score.getTransposition().newBassTransposition(trans));
+
         //System.out.println("assigning bass instrument from default: " + inst);
       }
     else
@@ -15577,11 +15576,9 @@ private void setPrefsDialog()
         //System.out.println("assigning bass instrument from score: " + inst);
       }
 
-
     // display the current breakpoint
 
     breakpointTF.setText("" + score.getBreakpoint());
-
 
     // display the current layout
 
@@ -19518,9 +19515,9 @@ public void newNotate()
     newScore.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
     
     Transposition transposition =
-            new Transposition(getIntFromSpinner(globalChordTranspositionSpinner),
-                              getIntFromSpinner(globalBassTranspositionSpinner),
-                              getIntFromSpinner(globalMelodyTranspositionSpinner));
+            new Transposition(getIntFromSpinner(leadsheetChordTranspositionSpinner),
+                              getIntFromSpinner(leadsheetBassTranspositionSpinner),
+                              getIntFromSpinner(chorusMelodyTranspositionSpinner));
     newScore.setTransposition(transposition);
             
     // open a new window
@@ -19707,31 +19704,40 @@ public boolean countInCheckboxIsSelected()
     private void alwaysUseBassActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseBassActionPerformed
     {//GEN-HEADEREND:event_alwaysUseBassActionPerformed
         setCheckBoxPreferences(0, alwaysUseBass);
-        if( alwaysUseBass.isSelected() )
+        boolean value = alwaysUseBass.isSelected();
+        if( value )
           {
             changeBassTransposition(getIntFromSpinner(globalBassTranspositionSpinner));
             leadsheetBassTranspositionSpinner.setValue(globalBassTranspositionSpinner.getValue());
           }
+        leadsheetBassTranspositionSpinner.setEnabled(!value);
+        bassInst.setEnabled(!value);
 }//GEN-LAST:event_alwaysUseBassActionPerformed
 
     private void alwaysUseChordActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseChordActionPerformed
     {//GEN-HEADEREND:event_alwaysUseChordActionPerformed
         setCheckBoxPreferences(1, alwaysUseChord);
-        if( alwaysUseChord.isSelected() )
+        boolean value = alwaysUseChord.isSelected();
+        if( value )
           {
             changeChordTransposition(getIntFromSpinner(globalChordTranspositionSpinner));
             leadsheetChordTranspositionSpinner.setValue(globalChordTranspositionSpinner.getValue());
-          }        
+          } 
+        leadsheetChordTranspositionSpinner.setEnabled(!value);
+        chordInst.setEnabled(!value);
 }//GEN-LAST:event_alwaysUseChordActionPerformed
 
     private void alwaysUseMelodyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseMelodyActionPerformed
     {//GEN-HEADEREND:event_alwaysUseMelodyActionPerformed
         setCheckBoxPreferences(2, alwaysUseMelody);
-        if( alwaysUseMelody.isSelected() )
+        boolean value = alwaysUseMelody.isSelected();
+        if( value )
           {
             changeMelodyTransposition(getIntFromSpinner(globalMelodyTranspositionSpinner));            
-            //chorusMelodyTranspositionSpinner.setValue(globalMelodyTranspositionSpinner.getValue());
+            chorusMelodyTranspositionSpinner.setValue(globalMelodyTranspositionSpinner.getValue());
           }
+        chorusMelodyTranspositionSpinner.setEnabled(!value);
+        melodyInst.setEnabled(!value);
 }//GEN-LAST:event_alwaysUseMelodyActionPerformed
 
     private void adviceScrollListCellsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_adviceScrollListCellsMouseClicked
@@ -23608,49 +23614,63 @@ private boolean isDotted = false;
     }//GEN-LAST:event_adviceDialogWindowClosing
 
     private void chorusMelodyTranspositionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chorusMelodyTranspositionSpinnerStateChanged
+        int value = getIntFromSpinner(chorusMelodyTranspositionSpinner);
         if( !alwaysUseMelody.isSelected() )
           {        
-          changeMelodyTransposition(getIntFromSpinner(chorusMelodyTranspositionSpinner));
+          changeMelodyTransposition(value);
           }
     }//GEN-LAST:event_chorusMelodyTranspositionSpinnerStateChanged
 
     private void leadsheetChordTranspositionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_leadsheetChordTranspositionSpinnerStateChanged
-        if( !alwaysUseChord.isSelected() )
-          {
-          changeChordTransposition(getIntFromSpinner(leadsheetChordTranspositionSpinner));
-          }
+          int value = getIntFromSpinner(leadsheetChordTranspositionSpinner);
+           if( !alwaysUseChord.isSelected() )
+            {
+            changeChordTransposition(value);
+            }
     }//GEN-LAST:event_leadsheetChordTranspositionSpinnerStateChanged
 
     private void leadsheetBassTranspositionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_leadsheetBassTranspositionSpinnerStateChanged
-        if( !alwaysUseBass.isSelected() )
-          {
-          changeBassTransposition(getIntFromSpinner(leadsheetBassTranspositionSpinner));
-          }
+          int value = getIntFromSpinner(leadsheetBassTranspositionSpinner);
+          if( !alwaysUseBass.isSelected() )
+            {
+            changeBassTransposition(value);
+            }
     }//GEN-LAST:event_leadsheetBassTranspositionSpinnerStateChanged
 
     private void globalBassTranspositionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_globalBassTranspositionSpinnerStateChanged
+        int value = getIntFromSpinner(globalBassTranspositionSpinner);
+        Preferences.setPreference(Preferences.DEFAULT_BASS_TRANSPOSITION, "" + value);
         if( alwaysUseBass.isSelected() )
           {        
-          leadsheetBassTranspositionSpinner.setValue(globalBassTranspositionSpinner.getValue());
-          changeBassTransposition(getIntFromSpinner(leadsheetBassTranspositionSpinner));
+          leadsheetBassTranspositionSpinner.setValue(value);
+          changeBassTransposition(value);
           }
     }//GEN-LAST:event_globalBassTranspositionSpinnerStateChanged
 
     private void globalChordTranspositionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_globalChordTranspositionSpinnerStateChanged
+        int value = getIntFromSpinner(globalChordTranspositionSpinner);
+        Preferences.setPreference(Preferences.DEFAULT_CHORD_TRANSPOSITION, "" + value);
         if( alwaysUseChord.isSelected() )
           {        
-          leadsheetChordTranspositionSpinner.setValue(globalChordTranspositionSpinner.getValue());
-          changeChordTransposition(getIntFromSpinner(leadsheetChordTranspositionSpinner));
+          leadsheetChordTranspositionSpinner.setValue(value);
+          changeChordTransposition(value);
           }
     }//GEN-LAST:event_globalChordTranspositionSpinnerStateChanged
 
     private void globalMelodyTranspositionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_globalMelodyTranspositionSpinnerStateChanged
+        int value = getIntFromSpinner(globalMelodyTranspositionSpinner);
+        Preferences.setPreference(Preferences.DEFAULT_MELODY_TRANSPOSITION, "" + value);
         if( alwaysUseMelody.isSelected() )
           {        
           chorusMelodyTranspositionSpinner.setValue(globalMelodyTranspositionSpinner.getValue());
-          changeMelodyTransposition(getIntFromSpinner(chorusMelodyTranspositionSpinner));
+          changeMelodyTransposition(value);
           }        
     }//GEN-LAST:event_globalMelodyTranspositionSpinnerStateChanged
+
+    private void numStavesPerPageActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_numStavesPerPageActionPerformed
+    {//GEN-HEADEREND:event_numStavesPerPageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numStavesPerPageActionPerformed
 
     public void openGrammarMenuDialog()
     {
@@ -24751,7 +24771,7 @@ public void showNewVoicingDialog()
  * Set the indexed preference with a value from the corresponding CheckBox.
  *
  * @param index
- * @param checkbo
+ * @param checkbox
  */
 void setCheckBoxPreferences(int index, JCheckBox checkbox)
   {
@@ -24760,6 +24780,19 @@ void setCheckBoxPreferences(int index, JCheckBox checkbox)
     boxStates[index] = checkbox.isSelected() ? TRUE_CHECK_BOX : FALSE_CHECK_BOX;
     Preferences.setPreference(Preferences.ALWAYS_USE_BUTTONS,
                               new String(boxStates));
+  }
+
+/**
+ * Set the indexed preference with a value from the corresponding CheckBox.
+ *
+ * @param index
+ * @param checkbo
+ */
+boolean getCheckBoxPreference(int index)
+  {
+    char boxStates[] =
+            Preferences.getPreference(Preferences.ALWAYS_USE_BUTTONS).toCharArray();
+    return boxStates[index] == 'y';
   }
 
 /**

@@ -258,10 +258,11 @@ static final int UNKNOWN = -1;
 
     chords.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
 
-    score.setBassInstrument(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_BASS_INSTRUMENT)) - 1);
     chords.setInstrument(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_CHORD_INSTRUMENT)) - 1);
     melody.setInstrument(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_MELODY_INSTRUMENT)) - 1);
-
+    
+    score.setScoreItemsFromPreferences();
+    
     Object ob;
 
     boolean firstUnitPassed = false;

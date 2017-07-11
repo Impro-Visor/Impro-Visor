@@ -255,7 +255,8 @@ public class Score implements Constants, Serializable {
         
         this.partList = new PartList(1);
         this.chordProg = new ChordPart();
-        setChordFontSize(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE)).intValue());
+        
+        setScoreItemsFromPreferences();
     }
 
     public Score(int length) {
@@ -270,6 +271,19 @@ public class Score implements Constants, Serializable {
         addPart();
         setLength(chordPart.size());
         chordProg = chordPart;
+    }
+    
+    public void setScoreItemsFromPreferences()
+    {
+    setChordFontSize(Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE)).intValue());
+    setBassInstrument(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_BASS_INSTRUMENT)) - 1);
+    setChordInstrument(Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_CHORD_INSTRUMENT)) - 1);
+    
+    int bassTrans = Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_BASS_TRANSPOSITION));
+    int chordTrans = Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_CHORD_TRANSPOSITION));
+    int melodyTrans = Integer.parseInt(Preferences.getPreference(Preferences.DEFAULT_MELODY_TRANSPOSITION));
+
+    setTransposition(new Transposition(bassTrans, chordTrans, melodyTrans));        
     }
 
     public void setConstantBass(boolean value)
