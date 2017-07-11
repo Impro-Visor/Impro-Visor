@@ -5640,14 +5640,16 @@ public void extractAbstractMelody()
 /**
  * add the production to file
  */
-public void writeProduction(String production,
+public String writeProduction(String production,
                             int measureWindow,
                             int location,
                             boolean writeExactMelody,
                             String brickType,
                             int chorus)
   {
+    String finalProduction = null;
 
+    
     if( chorus == -1 )
       { //didn't provide any information about what chorus we're on
         chorus = notate.getSelectedIndex();
@@ -5660,7 +5662,7 @@ public void writeProduction(String production,
 
     if( production == null )
       {
-        return;
+        return finalProduction;
       }
     String chords = "";
 
@@ -5754,7 +5756,7 @@ public void writeProduction(String production,
 
             ChordPart chordProg = notate.getChordProg().extract(location, location + slotsPerSection - 1);
             relativePitchMelody = NoteConverter.melStringToRelativePitch(slotsPerSection, chordProg, exactMelody);
-            out.write("(rule (Seg"
+            finalProduction = "(rule (Seg"
                     + measureWindow
                     + ") "
                     + production
@@ -5768,14 +5770,21 @@ public void writeProduction(String production,
                     + melodyToWrite
                     + " "
                     + chords
-                    + "\n");
+                    + "\n";
+            out.write(finalProduction);
+
+
+
           }
         out.close();
       }
     catch( IOException e )
       {
         System.out.println("IO EXCEPTION! " + e.toString());
-      }
+      }        
+    
+    return finalProduction;
+ 
   }
 
 /**Method to write the user's data (stored in the My.rhythms file) to the outWriter,
