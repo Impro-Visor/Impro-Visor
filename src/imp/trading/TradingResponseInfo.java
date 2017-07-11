@@ -851,6 +851,51 @@ public class TradingResponseInfo {
         //System.out.println("MELODY " + mp);
     }
     
+    /**
+     * Generates solo based on a {@link Polylist} implementation of a Grammar
+     * @param grammar Grammar to generate solo from
+     */
+    public void genSolo(Polylist grammar){
+        response = generateFromGrammar(tradeLength, responseChords, notate, grammar);
+    }
+    
+    /**
+     * Generates Motif solo based on a {@link Polylist} implementation of a Grammar
+     * @param grammar Grammar to generate solo from
+     */
+    public void genMotifSolo(Grammar grammar){
+        response = generateFromMotifGrammar(tradeLength, responseChords, notate, grammar);
+//        System.out.println("Correct genSolo called!");
+
+    }
+    
+    
+    
+    public static MelodyPart generateFromGrammar(int length, ChordPart chords, Notate notate, Polylist grammar){
+        Grammar gram = new Grammar(grammar);
+        MelodyPart generated = notate.getLickgenFrame().fillMelody(BEAT, gram.run(0, length, notate, false, false, -1), chords, 0);
+        RectifyPitchesCommand cmd = new RectifyPitchesCommand(generated, 0, generated.size()-1, chords, false, false, true, true, true, true);
+        cmd.execute();
+        return generated;
+    }
+    
+    /**
+     * Generates Motif solo based on a {@link Polylist} implementation of a Grammar
+     * @param length length of solo to fill
+     * @param chords chords over which to solo
+     * @param notate {@link Notate}
+     * @param grammar Grammar to base solo off of
+     * @return A {@link MelodyPart} containing the solo
+     */
+    public static MelodyPart generateFromMotifGrammar(int length, ChordPart chords, Notate notate, Grammar grammar){
+        MelodyPart generated = notate.getLickgenFrame().fillMelody(BEAT, grammar.run(0, length, notate, false, false, -1), chords, 0);
+        RectifyPitchesCommand cmd = new RectifyPitchesCommand(generated, 0, generated.size()-1, chords, false, false, true, true, true, true);
+        cmd.execute();
+//        System.out.println("Correct generateFromGrammar called!");
+        return generated;
+    }
+    
+    
     private MelodyPart generateFromGrammar(int length, ChordPart chords){
         return generateFromGrammar(length, chords, notate);
     }
@@ -887,6 +932,31 @@ public class TradingResponseInfo {
         );
         response = notate.getLickgenFrame().fillAndReturnMelodyFromText(abstractMelody, responseChords);
     }
+    
+    /**
+     * Returns the abstract melody for the MelodyPart.
+     * @param mp MelodyPart
+     * @return The abstract melody version of the MelodyPart
+     */
+    public String abstractify(MelodyPart mp){
+        String abstractMelody = AbstractMelodyExtractor.getAbstractMelody(
+                start,
+                mp.getBars(),
+                false,
+                true,
+                mp,
+                getResponseChords().extract(mp.getFirstIndex(), mp.getEndTime())
+        );
+        
+        
+        
+       
+        return abstractMelody;
+    
+    
+    }
+ 
+
 
     public void lookupAndPlay() {
         MelodyPart[] parts = chopResponse();
@@ -983,14 +1053,21 @@ public class TradingResponseInfo {
         return chopResponse(response, 0);
     }
     
-    public MelodyPart[] chopResponse(MelodyPart mp, int start){
+    /**
+     * Chops the melody into parts of {@code windowSize} measures starting at {@code start}
+     * @param mp MelodyPart to break up
+     * @param start Where to start the chopping
+     * @par/am windowSize Size of pieces (desired number of measures per chunk)
+     * @return an array of MelodyParts
+     */
+    public MelodyPart[] chopResponse(MelodyPart mp, int start, int windowSize){
         int beat = (Constants.WHOLE / metre[1]);
         int measure = (metre[0] * beat);
         int numMeasures = (response.getSize() / measure);
         MelodyPart[] mpa = new MelodyPart[numMeasures];
-        for(int i = 0; i < numMeasures; i++){
+        for(int i = 0; i < numMeasures; i += windowSize){
             int measureStartSlot = (start + (i * measure));
-            int measureEndSlot = measureStartSlot + measure - 1;
+            int measureEndSlot = measureStartSlot + (measure*windowSize) - 1;
             mpa[i] = mp.extract(measureStartSlot, measureEndSlot, true, true);
         }
 //        System.out.println("chopped:");
@@ -1001,6 +1078,10 @@ public class TradingResponseInfo {
         return mpa;
     }
 
+    public MelodyPart[] chopResponse(MelodyPart mp, int start){
+        return chopResponse(mp, start, 1);
+    }
+    
     public Vector<Integer>[] extractMelodies(MelodyPart[] mpa) {
         int beat = (Constants.WHOLE / metre[1]);
         int measure = (metre[0] * beat);

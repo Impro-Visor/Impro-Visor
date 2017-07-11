@@ -20,11 +20,13 @@
 
 package imp.cluster.motif;
 
+import imp.cluster.IndexedMelodyPart;
 import java.util.Comparator;
 
 /**
- *
+ * {@link Comparator} for {@link Motif Motifs}, ordering based on the temporal order of Motifs in the original {@link IndexedMelodyPart}.
  * @author Joseph Yaconelli
+ * @see Motif#getOrigin() 
  */
 public class MotifTemporalComparer implements Comparator<Motif> {
 

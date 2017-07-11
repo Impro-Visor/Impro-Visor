@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2017 Robert Keller and Harvey Mudd College.
  *
- * Impro-Visor is free software; you can redistribute it and/or modifyc it under
+ * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
@@ -21,7 +21,7 @@
 package imp.cluster.motif;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * @author Joseph Yaconelli
@@ -29,12 +29,16 @@ import java.util.PriorityQueue;
 public final class MotifCluster {
     
     
-    private static final MotifCountComparer mcc = new MotifCountComparer(); // comparator for priority queue
+    private static final boolean TESTING = false;
+    
+    private static final MotifDistanceToCentroidComparer MDTCC = new MotifDistanceToCentroidComparer(); // comparator for _members TreeSet
+    
     //NOTE: this is implemented in a sort of set like sense (aka never adds same element twice (that's the idea at least))
-    private PriorityQueue<Motif> _melodies; // keeps track of most common Motif, used as Representative Motif
+    private PriorityBlockingQueue<Motif> _melodies; // keeps track of most common Motif, used as Representative Motif
     private static final int QUEUE_SIZE = 10;  // initial capacity of queue (will grow)
     private ArrayList<Motif> _members; // al Motifs in MotifCluster instance
     private String _clusterName = null;
+    private int _totalMotifsCount = 0;
     
     /**
      * Creates new MotifCluster with given initial cluster size and cluster name
@@ -42,7 +46,7 @@ public final class MotifCluster {
      * @param clusterName Initial cluster name
      */
     protected MotifCluster(int size, String clusterName){
-        _melodies = new PriorityQueue(size, mcc);
+        _melodies = new PriorityBlockingQueue(size, new MotifCountComparer());
         _members  = new ArrayList<>(size);
         _clusterName = clusterName;
     }
@@ -62,11 +66,16 @@ public final class MotifCluster {
         this(QUEUE_SIZE, clusterName);
     }
     
-    
+    /**
+     * Creates new MotifCluster based on a "seed motif"
+     * 
+     * @param initialMotif "seed motif"
+     */
     protected MotifCluster(Motif initialMotif){
         this();
         this.addMotif(initialMotif);
         this.setClusterName(initialMotif.getCluster());
+        _totalMotifsCount++;
     }
     
     /**
@@ -115,17 +124,44 @@ public final class MotifCluster {
      * @return true if Motif added, false if already existed.
      */
     public final boolean addMotif(Motif m){
-        
-        
-        
+
         if(_melodies.contains(m)){
-            m.incr();
+            
+            Motif temp = _members.get(_members.indexOf(m));
+            temp.incr();
+            _melodies.remove(temp);
+            _melodies.offer(temp);
+            
             return false;
+        }else{
+            _members.add(m);
         }
         
-        _members.add(m);
+        this.incr();
         return _melodies.offer(m);
     }
+    
+    /**
+     * Increments the total motif count.
+     * This will affect {@link MotifCluster#getTotalMotifsCount() getTotalMotifsCount()}
+     */
+    public final void incr(){
+        _totalMotifsCount++;
+    }
+    
+    /**
+     * Decrements the total motif count.
+     * If motif count is 0, then stays at 0.
+     * This will affect {@link MotifCluster#getTotalMotifsCount() getTotalMotifsCount()}
+     */
+    public final void decr(){
+        if(_totalMotifsCount > 0){
+            _totalMotifsCount--;
+        } else {
+            _totalMotifsCount = 0;
+        }
+    }
+    
     
     /**
      * Removes Motif from cluster
@@ -140,6 +176,11 @@ public final class MotifCluster {
         return memRemoved && melRemoved;
     }
     
+    /**
+     * Decrements instance or removes if count == 1.
+     * @param m Motif to remove 1 of
+     * @return true if element decremented or removed. False if didn't exist.
+     */
     public final boolean removeOneOf(Motif m){
         if(this.contains(m) && m.getCount() > 1){
             m.decr();
@@ -147,6 +188,14 @@ public final class MotifCluster {
         }else {
             return this.removeMotif(m);
         }
+    }
+    
+    /**
+     * Gives the cluster count (count of all Motifs in Cluster)
+     * @return cluster count
+     */
+    public int getTotalMotifsCount(){
+        return _totalMotifsCount;
     }
     
     /**
@@ -192,18 +241,20 @@ public final class MotifCluster {
     /**
      * Sets the representative {@link Motif} for MotifCluster.
      * Does this by setting the Motif's count to: the representative Motif's count + 1.
-     * @param m
-     * @return 
+     * @param m Motif to set as representative Motif
+     * @return {@code true} if representative motif is now {@code m}.
      */
     public boolean setMotif(Motif m){
         if(!this.contains(m)){
             this.addMotif(m);
         }
-        
+
         m.setCount(this.getMotif().getCount() + 1);
         
         return m.getAbstractMelody().equalsIgnoreCase(this.getMotif().getAbstractMelody());
     }
+    
+    
     /**
      * Sets MotifCluster name
      * @param name Name to set
@@ -213,14 +264,42 @@ public final class MotifCluster {
     }
     
     
-    
+    /**
+     * String representation contains information on each MotfiCluster and the Motifs contained within it.
+     * @return The String representation
+     */
     @Override
     public String toString(){
         String res = "MOTIF CLUSTER:\t" + this.getClusterName() + "\n";
         res += "REPRESENTATIVE MOTIF:\t" + this.getMotif().toString() + "\n";
         res = _members.stream().map((m)
-                -> m.getCount() + "\t" + m.toString() + "\n").reduce(res, String::concat);
+                -> m.getCount() + "\t"  + m.getDistanceToCentroid() + "\t"+ m.toString() + "\n").reduce(res, String::concat);
+        
         return res;
+    }
+    
+    
+    /**
+     * Sets total motif count to the sum of all motif counts of Motifs in MotifCluster
+     * @see imp.cluster.motif.Motif#getCount()
+     */
+    public void reCalcTotalCount(){
+        int count = 0;
+        
+        count = _members.stream().map((m) -> m.getCount()).reduce(count, Integer::sum);
+        
+        _totalMotifsCount = count;
+    }
+    
+    /**
+     * Clears PriorityQueue and Members array of Motifs, then removes Motifs from Motif static collections.
+     * @see Motif#reset()
+     */
+    void reset() {
+        _melodies.clear();
+        _members.clear();
+    
+        Motif.reset();
     }
     
 

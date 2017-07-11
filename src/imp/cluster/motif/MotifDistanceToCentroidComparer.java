@@ -17,34 +17,22 @@
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
-
 package imp.cluster.motif;
 
 import java.util.Comparator;
 
 /**
+ * Compares distances from two motifs to their centroids
  * @author Joseph Yaconelli
  */
-public class MotifCountComparer implements Comparator<Motif> {
-
-    /**
-     * Compares the counts of two Motifs. Gives reverse ordering so a higher count
-     * is considered an order closer to first in a PriorityQueue
-     * @param m1 First Motif to compare
-     * @param m2 Second Motif to compare
-     * @return An integer compare of the negatives of the two counts
-     * @see Motif
-     */
+public class MotifDistanceToCentroidComparer implements Comparator<Motif>{
+    
     @Override
     public int compare(Motif m1, Motif m2) {
-        int res = 0;
+        if(m1 == null || m2 == null){
+            throw new NullPointerException();
+        }
         
-        if(m1 == null || m2 == null)
-            throw new NullPointerException("One of the motifs was null");
-        
-        // negative numbers reverse ordering, so the min priority queue becomes a max priority queue
-        return Integer.compare(-1*m1.getCount(), -1*m2.getCount());
-               
+        return Double.compare(m1.getDistanceToCentroid(), m2.getDistanceToCentroid());
     }
-    
 }

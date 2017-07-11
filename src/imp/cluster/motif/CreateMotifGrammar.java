@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2017 Robert Keller and Harvey Mudd College.
  *
- * Impro-Visor is free software; you can redistribute it and/or modifyc it under
+ * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
@@ -20,7 +20,7 @@
 
 package imp.cluster.motif;
 
-import imp.generalCluster.Cluster;
+import imp.generalCluster.*;
 import static imp.generalCluster.CreateGrammar.getClusterReps;
 import imp.generalCluster.DataPoint;
 import java.io.BufferedWriter;
@@ -39,7 +39,9 @@ public class CreateMotifGrammar {
  
     
     // turn on for print statements, and wrap all testing in if(TESTING){code}
-    private static final boolean TESTING = false;
+    public static final boolean TESTING = false;
+    
+    
     
     // switch to make start symbol START_M or P (START_M only for testing)
     private static final boolean IS_ISOLATED = false;
@@ -130,17 +132,13 @@ public class CreateMotifGrammar {
         //create MotifClusters for each Cluster
         for(ArrayList<DataPoint> adp : sortedClusters){
             // create Motif and MotifCluster for data point closest to Centroid
-            Motif tempMotif = new Motif(adp.get(0).getMelody(), adp.get(0).getAbstractMelody(), adp.get(0).getClusterName());
+            Motif tempMotif = new Motif(adp.get(0).getMelody(), adp.get(0).getAbstractMelody(), adp.get(0).getClusterName(), adp.get(0).getCurrentEuDt());
             MotifCluster tempCluster = new MotifCluster(tempMotif);
                        
             motifClusters.add(tempCluster);
             motifMelody.add(tempMotif);
         }
         
-        //for testing
-        for(int i = 0; i < motifClusters.size(); i++){
-            motifClusters.get(i).addMotif(motifMelody.get(i));
-        }
         
         // used as temp vars while creating Motifs
         DataPoint d;
@@ -156,7 +154,7 @@ public class CreateMotifGrammar {
             // add the rest of the data points to motifMelody (skipping the one per cluster already added)
             for(int j = 1; j < adp.size(); j++){
                 d = adp.get(j);
-                Motif temp = new Motif(d.getMelody(), d.getAbstractMelody(), d.getClusterName());
+                Motif temp = new Motif(d.getMelody(), d.getAbstractMelody(), d.getClusterName(), d.getCurrentEuDt());
                 
                 //add Motif to cluster if Euclidean distance within Motifness requirement
                 if(d.getCurrentEuDt() <= motifness)
@@ -350,10 +348,10 @@ public class CreateMotifGrammar {
             
             // choose which start symbol and probability to use
             startSymbol = IS_ISOLATED ? START_ISOLATED : START_INTEGRATED;
-            startProbability = IS_HIGHLY_LIKELY ? DEFAULT_PROB*100 : DEFAULT_PROB;
+            startProbability = IS_HIGHLY_LIKELY ? DEFAULT_PROB*10000000 : DEFAULT_PROB;
             
             // add generative start rule
-            p = Polylist.list("rule", Polylist.list(startSymbol), Polylist.list(r.first(), startSymbol.concat(String.valueOf(i))), startProbability*10);
+            p = Polylist.list("rule", Polylist.list(startSymbol, "Y"), Polylist.list(r.first(), Polylist.list(startSymbol, "0")), startProbability*10);
             temp.add(p);
             
             // add base case start rule

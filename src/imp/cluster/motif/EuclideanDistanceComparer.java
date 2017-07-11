@@ -24,11 +24,17 @@ import imp.generalCluster.DataPoint;
 import java.util.Comparator;
 
 /**
- *
+ * Comparator for {@link DataPoint DataPoints}. Compares based on {@link DataPoint#getCurrentEuDt() Euclidean Distance}.
  * @author Joseph Yaconelli
  */
 public class EuclideanDistanceComparer implements Comparator<DataPoint> {
 
+    /**
+     * Compares the Euclidean Distance between two {@link DataPoint DataPoints}
+     * @param d1
+     * @param d2
+     * @return 
+     */
     @Override
     public int compare(DataPoint d1, DataPoint d2) {
         int res = 0;

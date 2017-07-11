@@ -81,12 +81,12 @@ public class DataPoint implements Serializable{
     //using an array list of Metric objects
     public DataPoint(ArrayList<Metric> metricList, String name, String data, int segLength, boolean start, 
             IndexedMelodyPart exactMelody, String relativePitchMelody, String brickType, boolean isHead, int chorusNumber, 
-            Vector<String> chords, boolean startTied, boolean endTied,float restPercent){
+            Vector<String> chords, boolean startTied, boolean endTied,float restPercent, String ruleString){
         
         this.metricList = metricList;
         this.mObjName = name;
         
-        ruleString = data;
+
         this.mObjData = data;
         this.mCluster = null;
         this.rhythmCluster = null;
@@ -101,6 +101,7 @@ public class DataPoint implements Serializable{
         this.tiedAtStart = startTied;
         this.tiedAtEnd = endTied;
         this.restPercent = restPercent;
+        this.ruleString = ruleString;
         //System.out.println("notecount for datapoint "+mObjName+": " + metricList.get(2).toString());
         
     }

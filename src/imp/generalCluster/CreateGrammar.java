@@ -104,11 +104,12 @@ public class CreateGrammar implements imp.Constants {
                 dataPoints.add(temp);
             }
         }
+        
         notate.setLickGenStatus("Wrote " + rules.length + " grammar rules.");
         
         float[] averages = calcAverage(dataPoints);
         //System.out.println("datapoints after calc Average: "+dataPoints.toString());
-        //averageVector(dataPoints, averages);
+        averageVector(dataPoints, averages);
 
         if (repsPerCluster>dataPoints.size()){
             repsPerCluster = 1;
@@ -968,7 +969,7 @@ public class CreateGrammar implements imp.Constants {
         
         DataPoint d = new DataPoint(metricList, 
                                     "DataPoint " + i,
-                                    ruleStringCopy, 
+                                    ruleString, 
                                     segLength,
                                     starter, 
                                     exactMelody, 
@@ -979,7 +980,8 @@ public class CreateGrammar implements imp.Constants {
                                     chords, 
                                     startTied, 
                                     endTied,
-                                    restPercent);
+                                    restPercent,
+                                    ruleStringCopy);
         
         
         

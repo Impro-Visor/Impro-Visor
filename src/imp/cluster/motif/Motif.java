@@ -32,10 +32,6 @@ import polya.Polylist;
  */
 public class Motif {
     
-    /**
-     * TODO: Enforce connection between abstract melody index and cluster index
-     * 
-     */
     private IndexedMelodyPart _melody;
     private static ArrayList<String> melodies = new ArrayList<>();
     private int _melodyIndex = -1;
@@ -46,48 +42,48 @@ public class Motif {
     private int _count = 0;
     private int _originInst = 0;
     
+    private double _logDistanceToCentroid;
+    
+    private static final double EQUIVALENCE_TOLERANCE = 0.35;
+    
     private static ArrayList<Motif> members = new ArrayList<>();
     
     /**
-     * Creates a motif using the given {@link IndexedMelodyPart}
+     * Creates a motif using the given {@link IndexedMelodyPart}.
      * @param melody the explicit melody for the motif
      * @param abstractMelody    abstract melody associated with motif
      * @param cluster the cluster from which the motif came
+     * @param distanceToCentroid distance from Motif to Centroid of cluster
      * @see IndexedMelodyPart
      */
-    protected Motif(IndexedMelodyPart melody, String abstractMelody, String cluster){
+    protected Motif(IndexedMelodyPart melody, String abstractMelody, String cluster, double distanceToCentroid){
         this.setMelody(melody);
         this.setOriginIndex(melody.getIndex());
         this.incr();
         this.setCluster(cluster);
         this.setAbstractMelody(abstractMelody);
-        
+        this.setLogDistanceToCentroid(distanceToCentroid);
         members.add(this);
     }
     
     /**
      * Creates a motif using the given {@link IndexedMelodyPart} and
-     *  initializes count to count
+     *  initializes count to count.
      * @param melody    the explicit melody for the motif
      * @param abstractMelody    abstract melody associated with motif
      * @param cluster   cluster from which motif came
      * @param count     number of times motif is used
+     * @param distanceToCentroid distance from Motif to Centroid of cluster
      * @see IndexedMelodyPart
      */
-    protected Motif(IndexedMelodyPart melody, String abstractMelody, String cluster, int count){
-        this(melody, abstractMelody, cluster);
+    protected Motif(IndexedMelodyPart melody, String abstractMelody, String cluster, int count, double distanceToCentroid){
+        this(melody, abstractMelody, cluster, distanceToCentroid);
         
         this.setCount(count);
-        
-        
-        
-        
     }
     
-    
-    /********** FOR TESTING ******************************/
     /**
-     * Prints all motifs using the {@link toString} method
+     * Prints all motifs using the {@link toString} method.<p>This method is intended <b><u>only for testing</u></b>.</p>
      */
     public static void printMotifs(){
         members.forEach((m) -> {
@@ -95,8 +91,6 @@ public class Motif {
         });
     }
 
-    /******** END FOR TESTING *****************************/
-    
     /**
      * Increments and returns count
      * @return  the incremented count
@@ -105,12 +99,37 @@ public class Motif {
         return ++_count;
     }
     
+    /**
+     * Decrements and returns count
+     * @return the decremented count
+     */
     public final int decr(){
-        return ++_count;
+        return --_count;
     }
     
     /**
-     * Renames the cluster that the motif belongs to
+     * Normalizes the log Euclidean Distances.
+     * 
+     */
+    public static void normalizeLogDistances(){
+        
+        double max = Double.MIN_VALUE, min = Double.MAX_VALUE, temp, normalized;
+        
+        for(Motif m : members){
+            max = max > m.getDistanceToCentroid() ? max : m.getDistanceToCentroid();
+            min = min < m.getDistanceToCentroid() ? min : m.getDistanceToCentroid();
+        }
+        
+        for(Motif m : members){
+            temp = m.getDistanceToCentroid();
+            normalized = (temp - min)/(max - min);
+            m.setLogDistanceToCentroid(normalized);
+        }
+        
+    }
+    
+    /**
+     * Renames the cluster that the motif belongs to.
      * @param name  New name of cluster
      * @return Returns true if name changed, otherwise false
      */
@@ -123,7 +142,7 @@ public class Motif {
     }
     
     /**
-     * Clears all cluster information from all instances and empties cluster array
+     * Clears all cluster information from all instances and empties cluster array.
      */
     public static void resetClusters(){
         
@@ -136,7 +155,7 @@ public class Motif {
     }
     
     /**
-     * Clears all abstract melody information from all instances and empties abstract melody array
+     * Clears all abstract melody information from all instances and empties abstract melody array.
      */
     public static void resetAbstractMelodies(){
         
@@ -149,7 +168,7 @@ public class Motif {
     }
     
     /**
-     * Resets cluster and abstract melody information from all instances and empties cluster, abstract melody, and members arrays
+     * Resets cluster and abstract melody information from all instances and empties cluster, abstract melody, and members arrays.
      * @see resetClusters
      * @see resetAbstractMelodies
      */
@@ -161,17 +180,32 @@ public class Motif {
         Motif.members.clear();
     }
     
-    
+    /**
+     * Removes this Motif from static members list.
+     */
     public void delete(){
         members.remove(this);
     }
     
+    /**
+     * Removes specific Motif from static members list.
+     * @param m Motif to remove
+     */
     public static void remove(Motif m){
         members.remove(m);
     }
     
-        /**
-     * Gets shallow copy of ArrayList&lt;String&gt; of cluster names
+    /**
+     * Gets distance to centroid.
+     * @return distance from Motif to centroid
+     */
+    public final double getDistanceToCentroid(){
+        return _logDistanceToCentroid; 
+   }
+    
+    
+    /**
+     * Gets shallow copy of ArrayList&lt;String&gt; of cluster names.
      * @return shallow copy of shared ArrayList&lt;String&gt; of cluster names
      */
     public static ArrayList<String> getClusters(){
@@ -181,7 +215,7 @@ public class Motif {
     }
     
     /**
-     * Gets shallow copy of ArrayList&lt;String&gt; of abstract melodies
+     * Gets shallow copy of ArrayList&lt;String&gt; of abstract melodies.
      * @return shallow copy of shared ArrayList&lt;String&gt; of abstract melodies
      */
     public static ArrayList<String> getAbstractMelodies(){
@@ -190,7 +224,7 @@ public class Motif {
     
     
     /**
-     * Returns name of abstract melody associated with motif
+     * Returns name of abstract melody associated with motif.
      * @return abstract melody associated with motif
      * @throws NoSuchElementException   if motif is not assigned to a valid abstract melody
      */
@@ -203,7 +237,7 @@ public class Motif {
     }
     
     /**
-     * Returns count
+     * Returns count.
      * @return count (number of times motif referenced)
      */
     public int getCount(){
@@ -211,7 +245,7 @@ public class Motif {
     }
     
     /**
-     * Returns melody
+     * Returns melody.
      * @return Explicit melody for motif
      * @see IndexedMelodyPart
      */
@@ -220,7 +254,7 @@ public class Motif {
     }
     
     /**
-     * Returns index in song of original instance of motif
+     * Returns index in song of original instance of motif.
      * @return index in song of original instance of the motif
      */
     public int getOrigin(){
@@ -228,7 +262,7 @@ public class Motif {
     }
     
     /**
-     * Returns name of cluster motif is from
+     * Returns name of cluster motif is from.
      * @return name of cluster the motif comes from
      * @throws NoSuchElementException if motif is not assigned to valid cluster
      */
@@ -241,7 +275,23 @@ public class Motif {
     }
     
     /**
-     * Sets count
+     * Sets distance to centroid.
+     * @param distance log distance to centroid
+     */
+    public final void setLogDistanceToCentroid(double distance){
+        _logDistanceToCentroid = distance;
+    }
+    
+    /**
+     * Takes log and sets distance to centroid.
+     * @param distance distance to centroid
+     */
+    public final void setDistanceToCentroid(double distance){
+        _logDistanceToCentroid = (distance = Math.log(distance)) > -1 ? distance : -1;
+    }
+    
+    /**
+     * Sets count.
      * @param count 
      * @throws IllegalArgumentException if count is negative
      * 
@@ -326,9 +376,7 @@ public class Motif {
             clusters.add(s);
         }
     }
-    
-    
-    
+
     
     /**
      * Sets all elements in static list of abstract melodies to new list of abstract melodies.
@@ -353,7 +401,7 @@ public class Motif {
     
     
     /**
-     * Converts Motif to string
+     * Converts Motif to string.
      * @return format "[origin] -- [cluster name]"
      */
     @Override
@@ -365,10 +413,11 @@ public class Motif {
         return str;
     }
     
+    
     /**
-     * Equality based on hash (abstract melody and cluster)
-     * @param obj
-     * @return 
+     * Equality based on hash (abstract melody and cluster).
+     * @param obj Motif to compare to
+     * @return {@code true} if the two Motifs are within equivalence tolerance, otherwise {@code false}
      */
     @Override
     public boolean equals(Object obj){
@@ -381,11 +430,14 @@ public class Motif {
         
         final Motif other = (Motif) obj;
         
-        return this.hashCode() == other.hashCode();
+        double diffOfRadii = Math.max(this.getDistanceToCentroid(), other.getDistanceToCentroid())
+                                - Math.min(this.getDistanceToCentroid(), other.getDistanceToCentroid());
+        
+        return this.equivalentMelody(other) && diffOfRadii < EQUIVALENCE_TOLERANCE;
     }
     
     /**
-     * Checks if Motif has the same abstract melody
+     * Checks if Motif has the same abstract melody.
      * @param m Motif to compare to
      * @return true if Motifs have the same abstract melody, otherwise false
      * @see getAbstractMelody
@@ -396,6 +448,21 @@ public class Motif {
         
         return m.getAbstractMelody().equalsIgnoreCase(this.getAbstractMelody());
     }
+    
+    /**
+     * Decides if two Motifs are close enough to be considered equivalent.
+     * @param m Motif to compare to
+     * @return true if close enough to be considered equivalent, otherwise false.
+     */
+    public boolean equivalentMelody(Motif m){
+        if(m == null){
+            return false;
+        }
+        
+        return MotifMelodyComparer.distance(this, m) < EQUIVALENCE_TOLERANCE;
+        
+    }
+    
     
     /**
      * Checks if Motif is in the same cluster. <br/><b>NOTE:</b> "cluster" here refers
@@ -409,9 +476,11 @@ public class Motif {
         
         return m.getCluster().equalsIgnoreCase(this.getCluster());
     }
-
+    
+    
+    
     /**
-     * Hash unique for unique pairs of abstract melody and cluster
+     * Hash unique for unique pairs of abstract melody and cluster.
      * @return hash for Motif
      */
     @Override
@@ -425,7 +494,7 @@ public class Motif {
     
     /**
      * Creates grammar rule from abstract melody of Motif instance.
-     * @return A Polylist describing the rule defined by the Motif instance
+     * @return A {@link Polylist} describing the rule defined by the {@link Motif} instance
      * @see Polylist
      */
     public Polylist grammarRule(){
@@ -433,11 +502,10 @@ public class Motif {
         String rule_name = this.getCluster();
         String rule_data = this.getAbstractMelody();
         
-        Polylist rule = Polylist.list("rule", Polylist.PolylistFromString(rule_name), Polylist.PolylistFromString(rule_data), CreateMotifGrammar.MIN_PROB);
+        Polylist rule = Polylist.list("rule", Polylist.PolylistFromString(rule_name), Polylist.PolylistFromString(rule_data), this.getCount());
                 
         return rule;
         
     }
 
-    
 }

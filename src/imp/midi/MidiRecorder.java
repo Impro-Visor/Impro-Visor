@@ -20,6 +20,10 @@
 package imp.midi;
 
 import imp.Constants;
+import static imp.Constants.BEAT;
+import static imp.Constants.HALF_BEAT;
+import static imp.Constants.SIXTH_BEAT;
+import static imp.Constants.THIRD_BEAT;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.Rest;
@@ -42,6 +46,7 @@ public class MidiRecorder implements Constants, Receiver
     Score score;
     Sequencer sequencer = null;
     MelodyPart tradePart = null;
+    MelodyPart auxMelodyPart = null;
     int countInOffset;
     /*
      * insertion is offset from onset detection due to latency
@@ -69,6 +74,8 @@ public class MidiRecorder implements Constants, Receiver
     int swingConversions;
     
     boolean isSuspended = false;
+    
+    
 
     public MidiRecorder(Notate notate, Score score)
     {
@@ -293,6 +300,47 @@ public class MidiRecorder implements Constants, Receiver
     }
 
     
+        /**
+     * The stopIndex could be anywhere within the tune now, so taking mod
+     * relative to part size is needed.
+     *
+     * @param index
+     * @param noteToAdd
+     */
+    private void setNote(int index, Note noteToAdd){
+        if( tradePart == null )
+              {
+                melodyPart = notateMelodyPart;
+              }
+            else
+              {
+                melodyPart = tradePart;
+        }
+    
+        setNote(melodyPart, index, noteToAdd);
+        
+        if(auxMelodyPart != null){
+            synchronized(auxMelodyPart){
+                
+////                int length = auxMelodyPart.getSize();
+                setNote(auxMelodyPart, index, noteToAdd);
+//                
+                auxMelodyPart.setSize(index + lastNoteAdded.getRhythmValue());
+                        //+ (lastNoteAdded2 != null ? lastNoteAdded2.getRhythmValue() : 0));
+//                
+                System.out.println("note to add: " + noteToAdd + "\t at index: " + index + "\tend time: " + auxMelodyPart.getEndTime());
+                System.out.println("size: " + auxMelodyPart.getSize() + "\tend: " + auxMelodyPart.getEndTime());
+                
+                System.out.println("\n_______________________\nmelody part notified\n_______________________\n");
+                
+                auxMelodyPart.notifyAll();
+        
+            }
+        }
+    }
+    
+    
+    
     /**
      * The stopIndex could be anywhere within the tune now, so taking mod
      * relative to part size is needed.
@@ -300,20 +348,18 @@ public class MidiRecorder implements Constants, Receiver
      * @param index
      * @param noteToAdd
      */
-    private void setNote(int index, Note noteToAdd) //THIS COULD BE It
+    private void setNote(MelodyPart melodyPart, int index, Note noteToAdd) //THIS COULD BE It
     {
+        
+        if( index == lastIndex )
+          {
+            return;
+          }
+        
         try
           {
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
 
-            if( tradePart == null )
-              {
-                melodyPart = notateMelodyPart;
-              }
-            else
-              {
-                melodyPart = tradePart;
-              }
 
             index = (index % melodyPart.size()) - recordLatency;
             if( index < 0 )
@@ -411,6 +457,7 @@ public class MidiRecorder implements Constants, Receiver
           }
     }
 
+
 long getTick()
     {
         if( sequencer != null && sequencer.isRunning() )
@@ -445,6 +492,10 @@ int snapRest(int slots)
         slots = round(slots);
         return slots;
     }
+
+public void setAuxMelodyPart(MelodyPart melodyPart){
+    auxMelodyPart = melodyPart;
+}
 
 int snapStart(int slot)
     {
