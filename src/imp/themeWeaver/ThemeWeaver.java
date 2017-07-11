@@ -312,7 +312,7 @@ public void setTableColumnWidths()
         probShiftForwardorBackSlider = new javax.swing.JSlider();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        customizeSolo = new javax.swing.JFrame();
+        customizeSolo = new javax.swing.JDialog();
         SoloGeneratorTitle3 = new java.awt.Label();
         themeListScrollPane1 = new javax.swing.JScrollPane();
         themeList1 = new javax.swing.JList();
@@ -1063,19 +1063,11 @@ public void setTableColumnWidths()
         gridBagConstraints.gridwidth = 2;
         barLineShiftPreference.getContentPane().add(jLabel16, gridBagConstraints);
 
-        customizeSolo.setLocation(new java.awt.Point(10, 10));
+        customizeSolo.setBounds(new java.awt.Rectangle(10, 10, 1100, 950));
+        customizeSolo.setIconImage(null);
         customizeSolo.setLocationByPlatform(true);
-        customizeSolo.setSize(new java.awt.Dimension(1100, 950));
-        customizeSolo.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                customizeSolowindowClosed(evt);
-            }
-        });
-        customizeSolo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                customizeSoloformKeyPressed(evt);
-            }
-        });
+        customizeSolo.setMinimumSize(new java.awt.Dimension(0, 0));
+        customizeSolo.setPreferredSize(new java.awt.Dimension(1100, 950));
         customizeSolo.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         SoloGeneratorTitle3.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
@@ -3280,6 +3272,7 @@ private void closeWindow()
 
     public void openCustomizeSoloWindow()
     {
+        //july7
         customizeSolo.setVisible(true);
         transposeUpRadioButton.setSelected(true);
         directionOfTransposition = "up";
@@ -3298,14 +3291,6 @@ private void closeWindow()
         customSolo = new MelodyPart();
     }
     
-    private void customizeSolowindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_customizeSolowindowClosed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_customizeSolowindowClosed
-
-    private void customizeSoloformKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customizeSoloformKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_customizeSoloformKeyPressed
-
     private void themeList1Clicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_themeList1Clicked
         chosenThemeName = (String) themeList1.getSelectedValue();
         
@@ -5992,7 +5977,7 @@ private MelodyPart barlineshift2(MelodyPart melody, String direction)
     private javax.swing.JLabel chooseName;
     private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.JButton currentSelectionJButton;
-    private javax.swing.JFrame customizeSolo;
+    private javax.swing.JDialog customizeSolo;
     private javax.swing.JButton deleteRowbutton;
     private javax.swing.JDialog deleteThemeDialog;
     private javax.swing.JButton deleteThemebutton;
