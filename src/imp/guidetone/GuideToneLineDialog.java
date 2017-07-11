@@ -956,7 +956,7 @@ public class GuideToneLineDialog extends javax.swing.JDialog implements Constant
             String v = notate.getKeyboard().voicingFromKeyboard();
             String currentChord = notate.getKeyboard().getPresentChordDisplayText();
 
-            if( notate.getVoicingTestFrame() != null && notate.getVoicingTestFrame().isVisible() )
+            if( notate.getVoicingTestDialog() != null && notate.getVoicingTestDialog().isVisible() )
             {
                 notate.selectVoicing(v, currentChord);
             }

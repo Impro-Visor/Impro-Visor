@@ -880,11 +880,11 @@ public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListene
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Road Map\n"); // NOI18N
-        setBounds(new java.awt.Rectangle(25, 25, 800, 500));
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setName("Form"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1295, 720));
-        setSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(1295, 800));
+        setSize(new java.awt.Dimension(1295, 800));
         addComponentListener(new java.awt.event.ComponentAdapter()
         {
             public void componentResized(java.awt.event.ComponentEvent evt)
