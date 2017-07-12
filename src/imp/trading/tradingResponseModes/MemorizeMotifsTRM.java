@@ -179,7 +179,9 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
                     Polylist tempRule = mc.getMotif().grammarRule();
 
                     // HACK: doesn't add rules that contain empty list (formatting error in abstract melody creation makes bad rules
-                    if(tempRule.flatten().member(Polylist.nil)){
+                    Polylist flattened = tempRule.flatten();
+                    boolean containsJunk = flattened.member("ENDTIED") || flattened.member("STARTTIED") || flattened.member("ENDT") || flattened.member("STARTT");
+                    if(flattened.member(Polylist.nil) || containsJunk){
                         return;
                     }
 
@@ -231,7 +233,12 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
             
             if(TESTING) System.err.println("Solo generated. Returning solo...");
             
-            return responseInfo.getResponse();
+            MelodyPart response = responseInfo.getResponse().quantizeMelody(notate.getQuantizationQuanta(),
+                                                                            notate.getQuantizationSwing(),
+                                                                            notate.getQuantizationRestAbsorption());
+            
+            
+            return response;
 //        }
     }
 
@@ -322,8 +329,15 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
                 containsQ = false;
             }
             
-            if(isParameter || (isRule && containsQ)){
-                rules = rules.addToEnd(p.first());
+            boolean isMotif;
+            try{
+                isMotif = ((String)((Polylist) temp.second()).first()).contains(MotifStartSymbol);
+            } catch (Exception e){
+                isMotif = false;
+            }
+            
+            if(isParameter || (isRule && containsQ) || (isRule && isMotif)){
+                rules = rules.addToEnd(p.first());  
                 
                 try{
                     Qs = Integer.parseInt(((String)((Polylist) temp.second()).first()).substring(1));
