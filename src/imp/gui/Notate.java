@@ -17862,7 +17862,7 @@ public void redoCommand()
 
         getCurrentStave().setPrinting(true);
 
-        setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        //setCursor(new Cursor(Cursor.WAIT_CURSOR));
 
 
         PrintUtilities.printComponent(getCurrentStave(),
@@ -17881,7 +17881,7 @@ public void redoCommand()
 
         getCurrentStave().setPrinting(false);
 
-        getCurrentStave().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        //getCurrentStave().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_printMIActionPerformed
 
 /**
@@ -26938,7 +26938,7 @@ public void openEmptyRoadmap()
   {
     setMode(Mode.ROADMAP);
     roadmapFrame = new RoadMapFrame(this);
-    roadmapFrame.setRoadMapFrameHeight();
+    //roadmapFrame.setRoadMapFrameHeight();
     roadmapFrame.setRoadMapTitle("Untitled");
     roadmapFrame.setStyleNames(getChordProg().getSectionRecordStyleNames());
     roadmapFrame.updatePhiAndDelta(getPhiStatus(), getDeltaStatus());
@@ -26955,7 +26955,7 @@ public void establishRoadMapFrame()
     if( roadmapFrame == null )
       {
         roadmapFrame = new RoadMapFrame(this);
-        roadmapFrame.setRoadMapFrameHeight();
+        //roadmapFrame.setRoadMapFrameHeight();
       }
     else
       {
