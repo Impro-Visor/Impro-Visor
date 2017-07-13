@@ -961,6 +961,8 @@ public class Score implements Constants, Serializable {
     }
     
     /**
+     * Called from above.
+     * 
      * Creates and returns a MIDI sequence from the Score.
      * Level 1
      * Calls Part.render on each Part and (for now) creates a new channel
@@ -983,6 +985,7 @@ public class Score implements Constants, Serializable {
 
 
    /**
+     * Called from above.
      * Creates and returns a MIDI sequence from the Score.
      * Level 2
      * Calls Part.render on each Part and (for now) creates a new channel
@@ -1077,7 +1080,6 @@ public class Score implements Constants, Serializable {
             
             //showVoicingList();
             Sequence sequence = seq.getSequence();
-            
             return sequence;
         }
     }
