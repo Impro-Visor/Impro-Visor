@@ -1753,13 +1753,12 @@ public long render(MidiSequence seq, // called from SectionInfo
 
     long startTime = time;
 
-    if( hasStyle && useDrums )
+    if( hasStyle && useDrums && !drumPatterns.isEmpty() )
       {
         // Introduce drums, if there is a Style
 
         makeDrumline(seq, startTime, endIndex - startIndex, endLimitIndex);
       }
-
     Chord next = null;
     Chord prev = null;
 
