@@ -107,6 +107,9 @@ public class Preferences implements imp.Constants
   public static final String DEFAULT_MELODY_TRANSPOSITION =
           "default-melody-transposition";  
 
+  public static final String TRANSPOSING_INSTRUMENTS =
+          "transposing-instruments";
+  
   public static final String DBI_TRANS = "0";
 
   public static final String DCI_TRANS = "0";
@@ -339,7 +342,8 @@ public class Preferences implements imp.Constants
         "(improv-menu-setting (Use Improvise Button))" +
         "(language en)" +
         "(language_list (en , fr))" +
-        "(lstm-gen-params combination.ctome))";
+        "(lstm-gen-params combination.ctome))" +
+        "(transposing-instruments (BbTrumpet -2 -2 treble)(BbTenorSax -14 -2 treble)(BbSopranoSax -2 -2 treble)(EbAltoSax -9 3 treble)(EbBaritoneSax -21 3 treble)(FHorn 7 -5 treble)(Trombone -12 0 bass)(SopranoRecorder 12 0 treble))";
 
   /**
    * The ALWAYS_USE_BUTTONS are y or n standing for CHORD, BASS, DRUMS, STAVE.
@@ -383,7 +387,7 @@ public class Preferences implements imp.Constants
         ErrorLog.log(ErrorLog.WARNING, "Failure generating default " +
                 "preference file 'My.prefs'.");
         }
-      } // end of outer catch // end of outer catch // end of outer catch // end of outer catch
+      } // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch
     }
 
   public static void savePreferences()
@@ -452,7 +456,7 @@ public class Preferences implements imp.Constants
     // Now we need to save the new Polylist
     savePreferences();
     }
-
+  
   /**
    * Return the value of a given preference.
    * Log an error if the preference is not found, then return the empty String.
@@ -540,8 +544,7 @@ public class Preferences implements imp.Constants
 
     throw new NonExistentParameterException(pref);
     }
-
-
+ 
 public static Constants.StaveType getStavePreference(String staveString, boolean useDefault)
   {
   if( useDefault || getAlwaysUseStave() )

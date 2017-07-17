@@ -1369,5 +1369,14 @@ public void reloadStyles()
     chordProg.reloadStyles();
   }
 
+public void transposeMelodyInPlace(int transposition)
+{
+    
+}
+
+public void transposeChordsAndBassInPlace(int transposition)
+{
+    
+}
 
 }
