@@ -21,7 +21,7 @@
 package imp.cluster.motif;
 
 import imp.generalCluster.DataPoint;
-import imp.generalCluster.Metric;
+import imp.generalCluster.metrics.Metric;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -84,10 +84,10 @@ public class MotifClusterManager {
         
         MotifClusterKey newClusterKey;
         
-        Metric[] metric_objs;
-        metric_objs = dp.getMetrics().toArray(new Metric[dp.getMetrics().size()]);
+        Metric[] metric_objs = dp.getMetrics();
+        //metric_objs = dp.getMetrics().toArray(new Metric[dp.getMetrics().size()]);
         
-        double [] metrics = new double[dp.getMetrics().size()];
+        double [] metrics = new double[dp.getMetrics().length];
         
         for(int i = 0; i < metrics.length; i++){
             metrics[i] = metric_objs[i].getValue();

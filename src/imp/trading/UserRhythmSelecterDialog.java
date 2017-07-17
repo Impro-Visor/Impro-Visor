@@ -91,6 +91,10 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
     String filePath;
     private ArrayList<Polylist> rhythmsToDelete;
     private int windowSize;
+    private Double[] maxMetricValues;
+    private Double[] minMetricValues;
+    private int totalNumDataPointsSaved;
+    private ArrayList<DataPoint> dataPointsAdded;
     
     
 
@@ -107,6 +111,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         this.selectedRhythms = new ArrayList<DataPoint>();
         
         userData = getUsersData(rhythmClusters);
+        dataPointsAdded = new ArrayList<DataPoint>();
         
         filePath = retrieveUserRhythmsFileName();
         userRuleStringsToWrite = readInRuleStringsFromFile(filePath);
@@ -116,6 +121,9 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         
         rhythmsToDelete = new ArrayList<Polylist>();
         
+        maxMetricValues = tradingResponseInfo.getMaxMetricVals();
+        minMetricValues = tradingResponseInfo.getMinMetricVals();
+        totalNumDataPointsSaved = tradingResponseInfo.getTotalNumSavedDataPoints();
         
         System.out.println("in constructor, userRuleStringsToWrite: " + userRuleStringsToWrite.toString());
         
@@ -264,7 +272,8 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      */
     private void deleteSelectedRhythmsFromClusters(ArrayList<Polylist> rhythmsToExclude) throws IOException {
         Cluster[] clusterArray = ClusterArrayListToClusterArray(rhythmClusters);
-        CreateGrammar.selectiveClusterToFile(clusterArray, tradingResponseInfo.getClusterFileName(), rhythmsToExclude, windowSize);
+        CreateGrammar.selectiveClusterToFile(clusterArray, tradingResponseInfo.getClusterFileName(), rhythmsToExclude, windowSize,
+               maxMetricValues, minMetricValues);
 
     }
     
@@ -292,10 +301,9 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         
         AdviceForMelody advice = new AdviceForMelody("RhythmPreview", notePolylistToWrite, "c", Key.getKey("c"),
                         tradingResponseInfo.getMetre(), 0);//make a new advice for melody object 
-//FIX??        advice.setNewPart(melodyPartToWrite);//new part of advice object is the part that gets pasted to the leadsheet
+        
+        advice.setNewPart(melodyPartToWrite);//new part of advice object is the part that gets pasted to the leadsheet
 
-        
-        
         advice.insertInPart(notate.getScore().getPart(0), 0, new CommandManager(), notate);//insert melodyPartToWrite into the notate score
         notate.repaint();//refresh the notate page
         notate.playCurrentSelection(false, 0, false, "Printing Rhythm");//play the leadsheet
@@ -375,6 +383,9 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         for(int i = 0; i < checkBoxArray.size(); i++){
             if(checkBoxArray.get(i).isSelected()){
                 DataPoint selectedDP = userData.get(i);
+                
+                dataPointsAdded.add(selectedDP);
+                
                 RhythmCluster rc = tradingResponseInfo.findNearestCluster(rhythmClusters, selectedDP);
                 
                 rc.addSelectedDatapoint(selectedDP);//add datapoint to rhythm cluster

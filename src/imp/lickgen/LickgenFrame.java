@@ -62,6 +62,10 @@ import imp.generalCluster.IndexedMelodyPart;
 import imp.generalCluster.JCA;
 import imp.generalCluster.ClusterSet;
 import imp.generalCluster.CreateGrammar;
+import imp.generalCluster.metrics.Metric;
+import imp.generalCluster.metrics.MetricListFactories.DefaultMetricListFactory;
+import imp.generalCluster.metrics.MetricListFactories.MetricListFactory;
+import imp.generalCluster.metrics.MetricListFactories.RhythmMetricListFactory;
 import imp.trading.UserRhythmSelecterDialog;
 import imp.util.Preferences;
 import javax.swing.event.DocumentEvent;
@@ -5381,7 +5385,7 @@ public void getAbstractMelody()
 
     if( useBricksCheckbox.isSelected() )
       {
-        imp.cluster.CreateBrickGrammar.processByBrick(notate, notate.getSelectedIndex(), this);
+        imp.generalCluster.CreateBrickGrammar.processByBrick(notate, notate.getSelectedIndex(), this);
       }
     if( useWindowsCheckbox.isSelected() )
       {
@@ -6991,18 +6995,24 @@ public void redoScales()
         String outFile = notate.getGrammarFileName();
 
         File f = new File(outFile);
-
+        MetricListFactory metricListFactory;
         setLickGenStatus("Writing productions to grammar file: " + outFile);
+        if(rhythmClusterCheckbox.isSelected()){
+            metricListFactory = new RhythmMetricListFactory();
+        }else{
+            metricListFactory = new DefaultMetricListFactory();
+        }
         
         if (getUseBricks()) {
-            imp.cluster.CreateBrickGrammar.create(notate.getChordProg(),
+            imp.generalCluster.CreateBrickGrammar.create(notate.getChordProg(),
                     //inFile,
                     brickProductionsWriter,
                     outFile,
                     getNumClusterReps(),
                     getUseRelativeBricks(),
                     getUseAbstractBricks(),
-                    notate);
+                    notate,
+                    metricListFactory);
             brickProductionsWriter.getBuffer().setLength(0); //reset for next usage
         } 
         if (getUseWindows()) {
@@ -7037,7 +7047,8 @@ public void redoScales()
                     getMarkovFieldLength(),
                     getUseRelativeWindows(),
                     getUseAbstractWindows(),
-                    notate);
+                    notate,
+                    metricListFactory);
             } catch (IOException ex) {
                 Logger.getLogger(LickgenFrame.class.getName()).log(Level.SEVERE, null, ex);
             }

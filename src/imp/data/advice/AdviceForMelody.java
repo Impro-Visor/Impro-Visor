@@ -121,6 +121,10 @@ public class AdviceForMelody extends Advice {
         
     }
     
+    public void setNewPart(MelodyPart mp){
+        this.newPart = mp;
+    }
+    
     /**
      * Converts the Advice into a Part and returns that
      * @param targetMIDI  the center for which to transpose the part 

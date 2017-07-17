@@ -20,6 +20,8 @@
 
 package imp.generalCluster;
 
+import imp.generalCluster.metrics.Metric;
+import imp.generalCluster.metrics.MetricListFactories.MetricListFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -42,8 +44,10 @@ public class JCA implements Serializable{
     private int numMetrics;
     private String[] names;
     private boolean[] isLengthIndependentBools;
+    private MetricListFactory metricListFactory;
 
-    public JCA(int k, int iter, Vector dataPoints) {
+
+    public JCA(int k, int iter, Vector dataPoints, MetricListFactory metricListFactory) {
         clusters = new Cluster[k];
         for (int i = 0; i < k; i++) {
             clusters[i] = new Cluster("Cluster" + i);
@@ -52,20 +56,9 @@ public class JCA implements Serializable{
         //this.miter = iter;
         System.out.println("miter is: " + miter);
         this.mDataPoints = dataPoints;
-        if(mDataPoints.isEmpty()){
-            numMetrics = 0;
-        }else{
-            numMetrics = mDataPoints.get(0).getMetrics().size();
-            names = new String[numMetrics];
-            isLengthIndependentBools = new boolean[numMetrics];
             
-            int i =0;
-            for (Metric m: mDataPoints.get(0).getMetrics()){
-                names[i] = m.getName();
-                isLengthIndependentBools[i] = m.isLengthIndependent();
-                i++;
-            }
-        }
+        numMetrics = metricListFactory.getNumMetrics();
+        this.metricListFactory = metricListFactory;
         
         System.out.println("Constructor finished!");
         
@@ -170,7 +163,7 @@ public class JCA implements Serializable{
         
             for (int i = 0; i < numDP; i++) {
                 for (int j=0; j<numMetrics;j++){
-                    avgMetricVals[j] += mDataPoints.get(i).getMetrics().get(j).getValue();
+                    avgMetricVals[j] += mDataPoints.get(i).getMetrics()[j].getValue();
                 }
 
             }
@@ -184,7 +177,7 @@ public class JCA implements Serializable{
         
             for (int i = 0; i < numDP; i++) {
                 for (int j=0; j<numMetrics;j++){
-                    varianceArray[j] += Math.pow(mDataPoints.get(i).getMetrics().get(j).getValue()-avgMetricVals[j],2);
+                    varianceArray[j] += Math.pow(mDataPoints.get(i).getMetrics()[j].getValue()-avgMetricVals[j],2);
                 }
             }
             for(int i = 0;i<numMetrics;i++){
@@ -196,11 +189,11 @@ public class JCA implements Serializable{
                 deviationArray[i] = (float) Math.sqrt(varianceArray[i]);
             }
             
-            ArrayList<Metric> centroid1Params = new ArrayList<Metric>();
-            ArrayList<Metric> centroid2Params = new ArrayList<Metric>();
+            Metric[] centroid1Params = metricListFactory.getNewMetricList();
+            Metric[] centroid2Params = metricListFactory.getNewMetricList();
             for(int i = 0;i<numMetrics;i++){
-                centroid1Params.add(new Metric(avgMetricVals[i]+deviationArray[i],1,names[i],isLengthIndependentBools[i]));
-                centroid2Params.add(new Metric(avgMetricVals[i]-deviationArray[i],1,names[i],isLengthIndependentBools[i]));
+                centroid1Params[i].setValue(avgMetricVals[i]+deviationArray[i]);
+                centroid2Params[i].setValue(avgMetricVals[i]-deviationArray[i]);
             }
 
             Centroid c1 = new Centroid(centroid1Params);
@@ -214,22 +207,21 @@ public class JCA implements Serializable{
         }
         
         else {
-            float[] maxValues = getMaxValues();
-            float[] minValues = getMinValues();
+            double[] maxValues = getMaxValues();
+            double[] minValues = getMinValues();
             
             //System.out.println("Max values: " + maxValues.toString());
             //System.out.println("Min values: " + minValues.toString());
             
 
             for (int n = 1; n <= clusters.length; n++) {
-                ArrayList<Metric> centroidParams = new ArrayList<Metric>();
+                Metric[] centroidParams = metricListFactory.getNewMetricList();
 
 
                 for(int i=0;i<numMetrics;i++){
-                    float param = (((maxValues[i] - minValues[i]) / (clusters.length + 1)) * n) + minValues[i];
-                    Metric metric = new Metric(param, 1, names[i],isLengthIndependentBools[i]);
+                    double param = (((maxValues[i] - minValues[i]) / (clusters.length + 1)) * n) + minValues[i];
                     //System.out.println("Bout to add: " + metric.toString());
-                    centroidParams.add(metric);
+                    centroidParams[i].setValue(param);
                 }
                 
                 //System.out.println("Centroid params: " + centroidParams.toString());
@@ -244,14 +236,14 @@ public class JCA implements Serializable{
     }
 
     
-    private float[] getMaxValues(){
-        float[]  max = new float[numMetrics];
+    private double[] getMaxValues(){
+        double[]  max = new double[numMetrics];
         
         for(int i = 0; i < numMetrics; i++){
-            float maxVal = Integer.MIN_VALUE;
+            double maxVal = Integer.MIN_VALUE;
             for(int j = 0; j < mDataPoints.size(); j++){
-                if(mDataPoints.get(j).getMetrics().get(i).getValue() > maxVal){
-                    maxVal = mDataPoints.get(j).getMetrics().get(i).getValue();
+                if(mDataPoints.get(j).getMetrics()[i].getValue() > maxVal){
+                    maxVal = mDataPoints.get(j).getMetrics()[i].getValue();
                 }
                
             }
@@ -264,14 +256,14 @@ public class JCA implements Serializable{
          
     }
     
-    private float[] getMinValues(){
-        float[]  min = new float[numMetrics];
+    private double[] getMinValues(){
+        double[]  min = new double[numMetrics];
         
         for(int i = 0; i < numMetrics; i++){
-            float minVal = Integer.MAX_VALUE;
+            double minVal = Integer.MAX_VALUE;
             for(int j = 0; j < mDataPoints.size(); j++){
-                if(mDataPoints.get(j).getMetrics().get(i).getValue() < minVal){
-                    minVal = mDataPoints.get(j).getMetrics().get(i).getValue();
+                if(mDataPoints.get(j).getMetrics()[i].getValue() < minVal){
+                    minVal = mDataPoints.get(j).getMetrics()[i].getValue();
                 }
                
             }

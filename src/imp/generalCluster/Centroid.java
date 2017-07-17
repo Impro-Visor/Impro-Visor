@@ -20,6 +20,7 @@
 
 package imp.generalCluster;
 
+import imp.generalCluster.metrics.Metric;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -36,14 +37,14 @@ public class Centroid implements Serializable{
 
     private double mCt, mCu, mCv, mCw,  mCx,  mCy,  mCz;
     private Cluster mCluster;
-    private ArrayList<Metric> metricList;
+    private Metric[] metricList;
     
-    public Centroid(ArrayList<Metric> metricList) {
+    public Centroid(Metric[] metricList) {
         this.metricList = metricList;
     }
 
     public Metric getMetricAtI(int i){
-        return metricList.get(i);
+        return metricList[i];
     }
     
     
@@ -60,13 +61,13 @@ public class Centroid implements Serializable{
     public void calcCentroid() { //only called by CAInstance
         
         
-        float[] avgMetricVals = new float[mCluster.getCentroid().getMetrics().size()];
+        double[] avgMetricVals = new double[mCluster.getCentroid().getMetrics().length];
 
         int numDP = mCluster.getNumDataPoints();
         
         for (int i = 0; i < numDP; i++) {
             for (int j=0; j<avgMetricVals.length;j++){
-                avgMetricVals[j] += mCluster.getDataPoint(i).getMetrics().get(j).getValue();
+                avgMetricVals[j] += mCluster.getDataPoint(i).getMetrics()[j].getValue();
             }
             
         }
@@ -86,7 +87,7 @@ public class Centroid implements Serializable{
         //System.out.println("numDP: "+numDP);
         
         for(int i = 0; i < avgMetricVals.length; i++){
-            metricList.get(i).setValue(avgMetricVals[i]);
+            metricList[i].setValue(avgMetricVals[i]);
         }
         
         //calculating the new Euclidean Distance for each Data Point
@@ -135,26 +136,26 @@ public class Centroid implements Serializable{
         return mCluster;
     }
     
-    public ArrayList<Metric> getMetrics(){
+    public Metric[] getMetrics(){
         return metricList;
     }
     
-    public float[] getnormalizedCentroidMetricValues(){
-        float[] normalizedCentroidMetricValues = new float[metricList.size()];
-        float totalMetricVectorLength = getLengthOfMetricVector();
-        for(int i = 0; i < metricList.size(); i++){
-            normalizedCentroidMetricValues[i] = metricList.get(i).getValue() / totalMetricVectorLength;
+    public double[] getnormalizedCentroidMetricValues(){
+        double[] normalizedCentroidMetricValues = new double[metricList.length];
+        double totalMetricVectorLength = getLengthOfMetricVector();
+        for(int i = 0; i < metricList.length; i++){
+            normalizedCentroidMetricValues[i] = metricList[i].getValue() / totalMetricVectorLength;
         }
         return normalizedCentroidMetricValues;
     }
     
-    private float getLengthOfMetricVector(){
-        float totalMetricListLength = 0;
-        for(int i = 0; i < metricList.size(); i++){//get the sum of squares for all of the metric values in the metric list
-            totalMetricListLength += Math.pow(metricList.get(i).getValue(), 2);
+    private double getLengthOfMetricVector(){
+        double totalMetricListLength = 0;
+        for(int i = 0; i < metricList.length; i++){//get the sum of squares for all of the metric values in the metric list
+            totalMetricListLength += Math.pow(metricList[i].getValue(), 2);
         }
         
-        return (float) Math.sqrt(totalMetricListLength); 
+        return Math.sqrt(totalMetricListLength); 
     }
     
     public String toString(){

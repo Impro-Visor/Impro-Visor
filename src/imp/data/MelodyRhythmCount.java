@@ -13,16 +13,16 @@ import java.io.Serializable;
  */
 public class MelodyRhythmCount implements Serializable {
     private int[] durationFrequencies;
-    private float mostFreqDuration;
-    private float diversityIndex;
-    private float longestNoteLength;
-    private float longestRestLength;
+    private double mostFreqDuration;
+    private double diversityIndex;
+    private double longestNoteLength;
+    private double longestRestLength;
     
    
     
    
     
-    public MelodyRhythmCount(int[] durationFreq, float mostFrequentDuration, float diversityIndex, float longestRhythm, float longestRestLength){
+    public MelodyRhythmCount(int[] durationFreq, double mostFrequentDuration, double diversityIndex, double longestRhythm, double longestRestLength){
         this.durationFrequencies = durationFreq;
         this.mostFreqDuration = mostFrequentDuration;
         this.diversityIndex = diversityIndex;
@@ -34,19 +34,19 @@ public class MelodyRhythmCount implements Serializable {
         return durationFrequencies;
     }
     
-    public float getMostFrequentDuration(){
+    public double getMostFrequentDuration(){
         return mostFreqDuration;
     }
    
-    public float getDiversityIndex(){
+    public double getDiversityIndex(){
         return diversityIndex;
     }
     
-    public float getLongestNoteLength(){
+    public double getLongestNoteLength(){
         return longestNoteLength;
     }
     
-    public float getLongestRestLength(){
+    public double getLongestRestLength(){
         return longestRestLength;
     }
     

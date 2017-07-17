@@ -7,9 +7,9 @@ package imp.cluster;
 import static imp.Constants.BEAT;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.Brick;
-import static imp.cluster.CreateGrammar.getRuleStringsFromWriter;
-import static imp.cluster.CreateGrammar.getRulesFromWriter;
-import static imp.cluster.CreateGrammar.processRule;
+import static imp.generalCluster.CreateGrammar.getRuleStringsFromWriter;
+import static imp.generalCluster.CreateGrammar.getRulesFromWriter;
+import static imp.generalCluster.CreateGrammar.processRule;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.lickgen.LickgenFrame;
@@ -28,11 +28,13 @@ import java.util.List;
 import java.util.Vector;
 import java.util.Arrays;
 import polya.Polylist;
+import imp.generalCluster.CreateGrammar;
 import imp.generalCluster.Cluster;
 import imp.generalCluster.DataPoint;
 import imp.generalCluster.IndexedMelodyPart;
 import imp.generalCluster.JCA;
 import imp.generalCluster.ClusterSet;
+import imp.generalCluster.metrics.MetricListFactories.DefaultMetricListFactory;
 
 /**
  *
@@ -181,7 +183,7 @@ public class CreateBrickGrammar {
         //store the data
         //NOTE: vectors are out of date, but we continue to use them to build off existing cluster methods that use them
         for (int i = 0; i < rules.length; i++) {
-            DataPoint temp = processRule(rules[i], ruleStrings[i], Integer.toString(i));
+            DataPoint temp = processRule(rules[i], ruleStrings[i], Integer.toString(i), new DefaultMetricListFactory());
             String brickName = temp.getBrickType();
             
             //if we care about separating out the head, AND if rule belongs to the head, store its data separately

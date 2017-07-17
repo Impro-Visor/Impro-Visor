@@ -20,6 +20,7 @@
 
 package imp.generalCluster;
 
+import imp.generalCluster.metrics.MetricListFactories.DefaultMetricListFactory;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -58,7 +59,7 @@ public class ClusterHierarchy {
         if(size <= 1) return;        
         
         //if the cluster at this node has more than 1 point, split this node into two clusters
-        JCA jca = new JCA(2, size/2 + 1, r.getDataPoints());
+        JCA jca = new JCA(2, size/2 + 1, r.getDataPoints(), new DefaultMetricListFactory());
         jca.startAnalysis();
         Cluster[] clusters = jca.getClusterOutput();
         
