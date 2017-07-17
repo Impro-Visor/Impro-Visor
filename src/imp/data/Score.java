@@ -1371,12 +1371,18 @@ public void reloadStyles()
 
 public void transposeMelodyInPlace(int transposition)
 {
+    ListIterator<MelodyPart> i = partList.listIterator();
+
+    while(i.hasNext())
+    {
+      i.next().transposeInPlace(transposition);
+    }  
     
 }
 
 public void transposeChordsAndBassInPlace(int transposition)
 {
-    
+  chordProg.transposeInPlace(transposition);
 }
 
 }

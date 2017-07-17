@@ -745,4 +745,18 @@ public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.Chor
         sectionInfo.reloadStyles();
     }
 
+    public void transposeInPlace(int transposition)
+    {
+    //System.out.println("before: " + this);
+    PartIterator i = iterator();
+    while( i.hasNext() )
+      {
+        Chord unit = (Chord)i.next();
+        if( unit != null )
+          {
+            unit.transpose(transposition);
+          }
+       }  
+    //System.out.println("after: " + this);
+    }
 }
