@@ -274,6 +274,7 @@ public final void preExecute(boolean isTradingMelody)
   }
 
 /**
+ * Calls render in MidiSynth.
  * Plays the Score
  */
 public final void preExecute(boolean isTradingMelody, boolean shouldHotSwap)

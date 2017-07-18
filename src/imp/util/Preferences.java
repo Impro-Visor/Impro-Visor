@@ -32,6 +32,7 @@ import java.io.PrintStream;
 import javax.swing.JCheckBox;
 import polya.Polylist;
 import polya.Tokenizer;
+import polya.Polylist;
 
 /**
  * @author David Morrison, Robert Keller
@@ -106,6 +107,9 @@ public class Preferences implements imp.Constants
   public static final String DEFAULT_MELODY_TRANSPOSITION =
           "default-melody-transposition";  
 
+  public static final String TRANSPOSING_INSTRUMENTS =
+          "transposing-instruments";
+  
   public static final String DBI_TRANS = "0";
 
   public static final String DCI_TRANS = "0";
@@ -287,10 +291,59 @@ public class Preferences implements imp.Constants
   
   public static final String DEFAULT_CLUSTER_FILENAME = "default.cluster";
   
-
-
-  
-  
+  public static final String ALL_DEFAULTS = 
+        "(rhythm-cluster-filename default.cluster)" +
+        "(my-rhythms-file My.rhythms)" +
+        "(default-aux-instrument 57)" +
+        "(audio-in-latency 1.0)" +
+        "(advice-cache-size 10)" +
+        "(cache-enabled true)" +
+        "(default-load-stave 1)" +
+        "(default-melody-instrument 12)" +
+        "(default-chord-instrument 1)" +
+        "(default-bass-instrument 34)" +
+        "(default-melody-transposition 0)" +
+        "(default-chord-transposition 0)" +
+        "(default-bass-transposition 0)" +
+        "(default-mixer-all 80)" +
+        "(default-mixer-entry 50)" +
+        "(default-mixer-bass 100)" +
+        "(default-mixer-chords 100)" +
+        "(default-mixer-drums 100)" +
+        "(default-mixer-melody 127)" +
+        "(default-style swing)" +
+        "(default-tempo 160.0)" +
+        "(default-vocab-file My.voc)" +
+        "(default-transform-file My.transform)" +
+        "(default-counts-file ALL_MUSICIANS.counts)" +
+        "(default-fractal-file My.fractal)" +
+        "(default-style-directory styles)" +
+        "(visible-advice-components 1023)" +
+        "(chord-dist-above-root 10)" +
+        "(default-chord-font-size 16)" +
+        "(max-notes-in-voicing 5)" +
+        "(note-coloring 1342)" +
+        "(show-tracking-line y)" +
+        "(tracker-delay 0)" +
+        "(contour-drawing-tones 1xx)" +
+        "(always-use-buttons nnnn)" +
+        "(create-roadmap n)" +
+        "(midi-in RealTimeSequencer)" +
+        "(midi-out Gervill)" +
+        "(midi-echo y)" +
+        "(midi-in-latency 0.0)" +
+        "(midi-record-snap 2)" +
+        "(midi-send-bank-select n)" +
+        "(melody-channel 1)" +
+        "(chord-channel 4)" +
+        "(bass-channel 7)" +
+        "(drum-channel 10)" +
+        "(recent-style-file swing.sty)" +
+        "(improv-menu-setting (Use Improvise Button))" +
+        "(language en)" +
+        "(language_list (en , fr))" +
+        "(lstm-gen-params combination.ctome))" +
+        "(transposing-instruments ((BbTrumpet -2 -2 treble)(BbTenorSax -14 -2 treble)(BbSopranoSax -2 -2 treble)(EbAltoSax -9 3 treble)(EbBaritoneSax -21 3 treble)(FHorn 7 -5 treble)(Trombone -12 0 bass)(SopranoRecorder 12 0 treble)))";
 
   /**
    * The ALWAYS_USE_BUTTONS are y or n standing for CHORD, BASS, DRUMS, STAVE.
@@ -334,7 +387,7 @@ public class Preferences implements imp.Constants
         ErrorLog.log(ErrorLog.WARNING, "Failure generating default " +
                 "preference file 'My.prefs'.");
         }
-      } // end of outer catch
+      } // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch
     }
 
   public static void savePreferences()
@@ -403,7 +456,7 @@ public class Preferences implements imp.Constants
     // Now we need to save the new Polylist
     savePreferences();
     }
-
+  
   /**
    * Return the value of a given preference.
    * Log an error if the preference is not found, then return the empty String.
@@ -419,32 +472,37 @@ public class Preferences implements imp.Constants
 
     // While the search list isn't empty...
     while( search.nonEmpty() )
-      {
+    {
       // Look at the next pref, make sure it's a string.
       Polylist nextPref = (Polylist)search.first();
       //System.out.println("nextPref = " + nextPref);
       if( (nextPref.first() instanceof String) )
-        {
+      {
         if( pref.equals((String)nextPref.first()) )
-          {
+        {
           Object value = nextPref.second();
           
           if( value instanceof Polylist) 
-            {
+          {
               return Leadsheet.concatElements((Polylist)value);
-            }
-          else
-            {
-              return value.toString();
-            }
           }
-         }
+          else
+          {
+              return value.toString();
+          }
+        }
+      }
        search = search.rest();
-       }
-
-    ErrorLog.log(ErrorLog.WARNING, "Preference " + pref + " does not exist");
-    return null;
     }
+    
+        //recovery if user's My.prefs file has missing  preference(s) or is empty
+        Polylist allDefaults = Polylist.PolylistFromString(ALL_DEFAULTS); //My.prefs string into polylist
+        Polylist pair = allDefaults.assoc((String)pref);
+        String value = Leadsheet.concatElements(pair.rest());
+        ErrorLog.log(ErrorLog.WARNING, "Preference " + pref + " did not exist in user preferences, installing  " + value + ".");
+        setPreference(pref, value);
+        return value;
+}
   
  /**
    * Return the value of a given preference.
@@ -486,8 +544,7 @@ public class Preferences implements imp.Constants
 
     throw new NonExistentParameterException(pref);
     }
-
-
+ 
 public static Constants.StaveType getStavePreference(String staveString, boolean useDefault)
   {
   if( useDefault || getAlwaysUseStave() )

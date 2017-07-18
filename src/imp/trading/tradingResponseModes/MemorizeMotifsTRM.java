@@ -27,6 +27,7 @@ import imp.cluster.motif.MotifCluster;
 import imp.cluster.motif.MotifClusterManager;
 import imp.com.CommandManager;
 import imp.data.MelodyPart;
+import imp.generalCluster.metrics.MetricListFactories.DefaultMetricListFactory;
 import imp.gui.Notate;
 import imp.lickgen.Grammar;
 import imp.lickgen.LickGen;
@@ -283,8 +284,8 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
         
         String i = "0";
 
-        
-        return CreateGrammar.processRule(rule, ruleString, i);
+        /**@TODO make this whatever metric factory joseph wants to cluster on*/
+        return CreateGrammar.processRule(rule, ruleString, i, new DefaultMetricListFactory());
     }
     
     

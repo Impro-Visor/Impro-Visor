@@ -603,6 +603,10 @@ public void prePlay(Score score,
   }
 
 /**
+ * Called from PlayScoreCommand.java
+ * 
+ * Calls render in Score.java
+ * 
  * Does most of what's in play(...) except for starting the sequencer.
  * This is so priming can take place, and start will have less latency.
  * @param score   Score data to change to SMF

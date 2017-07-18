@@ -23,6 +23,7 @@ package imp.generalCluster;
 import imp.data.ContourData;
 import imp.data.MelodyRhythmCount;
 import imp.data.RhythmCluster;
+import imp.generalCluster.metrics.Metric;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -61,15 +62,15 @@ public class DataPoint implements Serializable{
     private Vector<String> chordList;
     private boolean tiedAtStart;
     private boolean tiedAtEnd;
-    private float syncopation; 
-    private float numContourChanges; 
-    private float diversityIndex;
+    private double syncopation; 
+    private double numContourChanges; 
+    private double diversityIndex;
     private MelodyRhythmCount melodyRhythmCount;
     private ContourData contourData;
     private RhythmCluster rhythmCluster;
-    private float restPercent;
+    private double restPercent;
     
-    private ArrayList<Metric> metricList;
+    private Metric[] metricList;
     
    
     
@@ -79,14 +80,14 @@ public class DataPoint implements Serializable{
     
     //this is the improved constructor supporting a variable number of metrics to cluster on 
     //using an array list of Metric objects
-    public DataPoint(ArrayList<Metric> metricList, String name, String data, int segLength, boolean start, 
+    public DataPoint(Metric[] metricList, String name, String data, int segLength, boolean start, 
             IndexedMelodyPart exactMelody, String relativePitchMelody, String brickType, boolean isHead, int chorusNumber, 
-            Vector<String> chords, boolean startTied, boolean endTied,float restPercent, String ruleString){
+            Vector<String> chords, boolean startTied, boolean endTied,double restPercent, String ruleString){
         
         this.metricList = metricList;
         this.mObjName = name;
         
-
+        this.ruleString = ruleString;
         this.mObjData = data;
         this.mCluster = null;
         this.rhythmCluster = null;
@@ -101,12 +102,11 @@ public class DataPoint implements Serializable{
         this.tiedAtStart = startTied;
         this.tiedAtEnd = endTied;
         this.restPercent = restPercent;
-        this.ruleString = ruleString;
         //System.out.println("notecount for datapoint "+mObjName+": " + metricList.get(2).toString());
         
     }
     
-    public ArrayList<Metric> getMetrics(){
+    public Metric[] getMetrics(){
         return this.metricList;
     }
     
@@ -125,6 +125,12 @@ public class DataPoint implements Serializable{
         this.mObjData = "";
         this.mCluster = null;
         this.mSegLength = 0;
+    }
+    
+    public DataPoint(Metric[] metricList, String name) {
+        this.metricList=metricList;
+        this.mObjName= name;
+        this.mCluster = null;
     }
     
     public DataPoint(double t, double u, double v, double w, double x, double y,double z, String name) {
@@ -200,7 +206,7 @@ public class DataPoint implements Serializable{
      * @param contourData  = object storing data about contour such as number of slope shifts
      *                          and an ArrayList of slope type
      */
-    public void addRhythmData(MelodyRhythmCount melodyRhythmCount, ContourData contourData, float syncopation){
+    public void addRhythmData(MelodyRhythmCount melodyRhythmCount, ContourData contourData, double syncopation){
         this.syncopation = syncopation;
         this.melodyRhythmCount=melodyRhythmCount;
         this.contourData = contourData;
@@ -229,15 +235,15 @@ public class DataPoint implements Serializable{
     
     public void calcEuclideanDistance() {
     //called when DP is added to a cluster or when a Centroid is recalculated.
-        float sumOfSquares = 0;
+        double sumOfSquares = 0;
          //System.out.println("Metric list for datapoint " + this.mObjName + ": " + metricList);
          //System.out.println("Metric list for centroid : " + mCluster.getCentroid().getMetrics());
         
-        for(int i = 0; i < metricList.size(); i++){
-            Metric m = metricList.get(i);
+        for(int i = 0; i < metricList.length; i++){
+            Metric m = metricList[i];
            
             
-            float centroidVal = mCluster.getCentroid().getMetricAtI(i).getValue();
+            double centroidVal = mCluster.getCentroid().getMetricAtI(i).getValue();
             sumOfSquares += m.getWeight() * Math.pow((m.getValue() - centroidVal), 2);
         }
         
@@ -246,11 +252,11 @@ public class DataPoint implements Serializable{
 
     public double calcEuclideanDistance(DataPoint point2) {
         
-    float sumOfSquares = 0;
+    double sumOfSquares = 0;
         
-        for(int i = 0; i < metricList.size(); i++){
-            Metric m = metricList.get(i);
-            float point2Val = point2.getMetrics().get(i).getValue();
+        for(int i = 0; i < metricList.length; i++){
+            Metric m = metricList[i];
+            double point2Val = point2.getMetrics()[i].getValue();
             
             sumOfSquares += m.getWeight() * Math.pow((m.getValue() - point2Val), 2);
         }
@@ -328,12 +334,12 @@ public class DataPoint implements Serializable{
     
     
     public double testEuclideanDistance(Centroid c) {
-        float sumOfSquares = 0;
+        double sumOfSquares = 0;
         
-        for(int i = 0; i < metricList.size(); i++){
-            Metric m = metricList.get(i);
+        for(int i = 0; i < metricList.length; i++){
+            Metric m = metricList[i];
             
-            float centroidVal = c.getMetricAtI(i).getValue();
+            double centroidVal = c.getMetricAtI(i).getValue();
             sumOfSquares += m.getWeight() * Math.pow((m.getValue() - centroidVal), 2);
         }
         
@@ -344,12 +350,12 @@ public class DataPoint implements Serializable{
         return mCluster == null;
     }
     public double getEuclideanDistanceToCentroid(Centroid c) {
-        float sumOfSquares = 0;
+        double sumOfSquares = 0;
         
-        for(int i = 0; i < metricList.size(); i++){
-            Metric m = metricList.get(i);
+        for(int i = 0; i < metricList.length; i++){
+            Metric m = metricList[i];
             
-            float centroidVal = c.getMetricAtI(i).getValue();
+            double centroidVal = c.getMetricAtI(i).getValue();
             sumOfSquares += m.getWeight() * Math.pow((m.getValue() - centroidVal), 2);
         }
         
@@ -358,8 +364,8 @@ public class DataPoint implements Serializable{
     }
 
     public boolean equals(DataPoint otherPoint) {
-        for(int i = 0; i < metricList.size(); i++){
-            if(metricList.get(i).getValue() != otherPoint.getMetrics().get(i).getValue()){
+        for(int i = 0; i < metricList.length; i++){
+            if(Math.abs(metricList[i].getValue() - otherPoint.getMetrics()[i].getValue())> 0.00001){
                 return false;
             }
         }
@@ -422,7 +428,7 @@ public class DataPoint implements Serializable{
         this.mZ = z;
     }
     
-    public float getRestPercent(){
+    public double getRestPercent(){
         return this.restPercent;
     }
     
@@ -536,8 +542,8 @@ public class DataPoint implements Serializable{
     public String toString() {
         String s = "Datapoint " + getObjName()+ ": ";
         
-        for(int i = 0; i < metricList.size(); i++){
-            s = s.concat(metricList.get(i).getName() + ": " + metricList.get(i).getValue() + ", ");
+        for(int i = 0; i < metricList.length; i++){
+            s = s.concat(metricList[i].getName() + ": " + metricList[i].getValue() + ", ");
         }
         
         s = s.concat("\n");
@@ -545,42 +551,41 @@ public class DataPoint implements Serializable{
         return s;
     }
     
-    public void setMetricAtI(int i, float value){
-        if (i>metricList.size()-1||i<0){
+    public void setMetricAtI(int i, double value){
+        if (i>metricList.length-1||i<0){
             System.out.println("invalid index to set metric list");
         }else{
-            Metric m = new Metric(value, metricList.get(i).getWeight(),metricList.get(i).getName(),metricList.get(i).isLengthIndependent());
-            metricList.set(i, m);
+            metricList[i].setValue(value);
         }
     }
     
-    public float[] getNormalizedMetricVector(){
-        float[] normalizedMetricVector = new float[metricList.size()];
-        float totalMetricVectorLength = getLengthOfMetricVector();
-        for(int i = 0; i < metricList.size(); i++){
-            normalizedMetricVector[i] = metricList.get(i).getValue() / totalMetricVectorLength;
+    public double[] getNormalizedMetricVector(){
+        double[] normalizedMetricVector = new double[metricList.length];
+        double totalMetricVectorLength = getLengthOfMetricVector();
+        for(int i = 0; i < metricList.length; i++){
+            normalizedMetricVector[i] = metricList[i].getValue() / totalMetricVectorLength;
         }
         return normalizedMetricVector;
     }
     
-    private float getLengthOfMetricVector(){
-        float totalMetricListLength = 0;
-        for(int i = 0; i < metricList.size(); i++){//get the sum of squares for all of the metric values in the metric list
-            totalMetricListLength += Math.pow(metricList.get(i).getValue(), 2);
+    private double getLengthOfMetricVector(){
+        double totalMetricListLength = 0;
+        for(int i = 0; i < metricList.length; i++){//get the sum of squares for all of the metric values in the metric list
+            totalMetricListLength += Math.pow(metricList[i].getValue(), 2);
         }
         
-        return (float) Math.sqrt(totalMetricListLength); 
+        return Math.sqrt(totalMetricListLength); 
     }
     
-    public ArrayList<Metric> scaleMetrics(float normalizingRatio){
-//        float normalizingRatio = targetSegLength / mySegLength;
+    public Metric[] scaleMetrics(double normalizingRatio){
+//        double normalizingRatio = targetSegLength / mySegLength;
 //        System.out.println("mySegLength: " + mySegLength + ", targetSegLength: " + targetSegLength + ", normalizingRatio: " + normalizingRatio);
         System.out.println("metricList was: " + metricList.toString());
-        for(int i = 0; i < metricList.size(); i++){
-            if(!metricList.get(i).isLengthIndependent()){
+        for(int i = 0; i < metricList.length; i++){
+            if(!metricList[i].isLengthIndependent()){
                 System.out.println("hit the contains conditional");
-                float newVal = metricList.get(i).getValue() * normalizingRatio;
-                metricList.get(i).setValue(newVal);
+                double newVal = metricList[i].getValue() * normalizingRatio;
+                metricList[i].setValue(newVal);
             }
         }
         

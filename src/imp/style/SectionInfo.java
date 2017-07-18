@@ -648,6 +648,21 @@ public String getStyleNameAtSlot(int slot)
         return getStyle(0);
     }
 
+/**
+ * Called from ChordPart.java
+ * 
+ * Calls render in Style.java
+ * 
+ * @param seq
+ * @param time
+ * @param track
+ * @param transposition
+ * @param useDrums
+ * @param endLimitIndex
+ * @param constantBass
+ * @return
+ * @throws InvalidMidiDataException 
+ */
 public long render(MidiSequence seq, 
                    long time, 
                    Track track,

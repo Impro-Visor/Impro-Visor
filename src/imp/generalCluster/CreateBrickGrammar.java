@@ -7,11 +7,13 @@ package imp.generalCluster;
 import static imp.Constants.BEAT;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.Brick;
-import static imp.cluster.CreateGrammar.getRuleStringsFromWriter;
-import static imp.cluster.CreateGrammar.getRulesFromWriter;
+import static imp.generalCluster.CreateGrammar.getRuleStringsFromWriter;
+import static imp.generalCluster.CreateGrammar.getRulesFromWriter;
 import static imp.generalCluster.CreateGrammar.processRule;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
+import imp.generalCluster.metrics.Metric;
+import imp.generalCluster.metrics.MetricListFactories.MetricListFactory;
 import imp.lickgen.LickgenFrame;
 import imp.gui.Notate;
 import imp.gui.Stave;
@@ -44,6 +46,7 @@ public class CreateBrickGrammar {
     private static ArrayList<Vector<ClusterSet>> allClusterSets = new ArrayList<Vector<ClusterSet>>();
     private static ArrayList<Vector<Vector<ClusterSet>>> allOutlines = new ArrayList<Vector<Vector<ClusterSet>>>();
     private static ArrayList<DataPoint[]> allReps = new ArrayList<DataPoint[]>();
+    private static MetricListFactory metricListFactory;
     
     private static int MEASURE_LENGTH; //so we can determine if bricks start on measures
     
@@ -146,8 +149,12 @@ public class CreateBrickGrammar {
             int repsPerCluster,
             boolean useRelative,
             boolean useAbstract,
-            Notate notate) {
+            Notate notate,
+            MetricListFactory mlf) {
         
+        metricListFactory = mlf;
+        
+
         //do processing by brick
         if (brickKindsArray.length == 0) { //must be a pretty strange tune for this to happen...
             ErrorLog.log(ErrorLog.COMMENT, "No bricks found in the tune. "
@@ -176,7 +183,7 @@ public class CreateBrickGrammar {
         //store the data
         //NOTE: vectors are out of date, but we continue to use them to build off existing cluster methods that use them
         for (int i = 0; i < rules.length; i++) {
-            DataPoint temp = processRule(rules[i], ruleStrings[i], Integer.toString(i));
+            DataPoint temp = processRule(rules[i], ruleStrings[i], Integer.toString(i), metricListFactory);
             String brickName = temp.getBrickType();
             
             //if we care about separating out the head, AND if rule belongs to the head, store its data separately

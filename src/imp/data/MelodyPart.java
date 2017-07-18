@@ -2645,4 +2645,17 @@ public static int gcd(int a, int b)
               }
           }
     }
+    
+public void transposeInPlace(int transposition)
+    {
+    PartIterator it = iterator();
+    while( it.hasNext() )
+      {
+        Note note = (Note)it.next();
+        if( note.nonRest() )
+          {
+             note.setPitch(note.getPitch() + transposition);
+          }
+      } 
+    }
 }

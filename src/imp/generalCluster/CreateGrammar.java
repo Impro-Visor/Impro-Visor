@@ -28,16 +28,28 @@ import imp.data.Duration;
 import imp.data.MelodyRhythmCount;
 import imp.data.Note;
 import imp.data.Unit;
+import imp.generalCluster.metrics.AverageMaxSlope;
+import imp.generalCluster.metrics.Consonance;
+import imp.generalCluster.metrics.ExactStart;
+import imp.generalCluster.metrics.Metric;
+import imp.generalCluster.metrics.MetricListFactories.MetricListFactory;
+import imp.generalCluster.metrics.NoteCount;
+import imp.generalCluster.metrics.NumSegments;
+import imp.generalCluster.metrics.RestDuration;
+import imp.generalCluster.metrics.StartBeat;
 import imp.gui.Notate;
+import imp.trading.TradingResponseInfo;
 import imp.util.ErrorLog;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.ArrayUtils;
 import polya.Polylist;
 
 /**
@@ -56,7 +68,7 @@ public class CreateGrammar implements imp.Constants {
     private static double MOTIFNESS      = 0.7;
     
     
-    private static final int SEG_LENGTH = 3;  //length of the word SEG
+    public static final int SEG_LENGTH = 3;  //length of the word SEG
     private static final int XNOTATIONDELIMITER_LENGTH = 11;
     private static final int BRICKTYPEDELIMITER_LENGTH = 12; //"(Brick-type ".length
     public static double MIN_PROB = 5.0; //include phrase transitions of greater than this probability
@@ -67,6 +79,13 @@ public class CreateGrammar implements imp.Constants {
     private static boolean createClusterFile;
     
     private static int clusterWindowSize;
+    private static Double[] maxMetricValues;
+    private static Double[] minMetricValues;
+
+    
+    public static MetricListFactory metricListFactory;
+
+
 
     /* Takes a grammar file containing productions extracted from leadsheets
      * calls clustering algorithm on the productions and writes the results
@@ -80,8 +99,12 @@ public class CreateGrammar implements imp.Constants {
                               int markovLength, 
                               boolean useRelative, 
                               boolean useAbstract,
-                              Notate notate) throws IOException 
+                              Notate notate,
+                              MetricListFactory mlf) throws IOException 
       {
+          
+      
+        metricListFactory = mlf;
         notate.setLickGenStatus("Writing grammar rules: " + outFile);
         //make initial calls to read from the file
         Polylist[] rules = getRulesFromWriter(inWriter);
@@ -92,14 +115,23 @@ public class CreateGrammar implements imp.Constants {
         //initialize vectors
         Vector<DataPoint> dataPoints = new Vector<DataPoint>();
 
+       
+        numMetrics = metricListFactory.getNumMetrics();
+        
+        maxMetricValues = new Double[numMetrics];
+        minMetricValues = new Double[numMetrics];
+        Arrays.fill(maxMetricValues, Double.MIN_VALUE);
+        Arrays.fill(minMetricValues, Double.MAX_VALUE);
+       
         //put data into vectors
         for (int i = 0; i < rules.length; i++) {
-            DataPoint temp = processRule(rules[i], ruleStrings[i], Integer.toString(i));
+            DataPoint temp = processRule(rules[i], ruleStrings[i], Integer.toString(i), metricListFactory);
             int segLength = temp.getSegLength();
             if(createClusterFile && segLength != clusterWindowSize){
                 System.out.println("mySegLength: " + segLength + ", targetSegLength: " + clusterWindowSize + ", normalizingRatio: " + (float) clusterWindowSize / segLength);
-                temp.scaleMetrics( ((float) clusterWindowSize) / segLength);
+                temp.scaleMetrics( (clusterWindowSize) / segLength);
              }
+             updateGlobalMetricMaxMin(temp);
             if (temp.getRestPercent() < 1.0){
                 dataPoints.add(temp);
             }
@@ -107,9 +139,11 @@ public class CreateGrammar implements imp.Constants {
         
         notate.setLickGenStatus("Wrote " + rules.length + " grammar rules.");
         
-        float[] averages = calcAverage(dataPoints);
+        double[] averages = calcAverage(dataPoints);
         //System.out.println("datapoints after calc Average: "+dataPoints.toString());
-        averageVector(dataPoints, averages);
+        //averageVector(dataPoints, averages);
+
+        normalizeDatapoints(dataPoints, maxMetricValues, minMetricValues);
 
         if (repsPerCluster>dataPoints.size()){
             repsPerCluster = 1;
@@ -121,8 +155,12 @@ public class CreateGrammar implements imp.Constants {
         if(createClusterFile){
             String fileName = getClusterOutputFile(outFile);//also makes file&directory if it does not yet exist
             fileName = ImproVisor.getRhythmClusterDirectory().toString() + "/" + fileName;
-            System.out.println("fileName: " + fileName);
-            clusterToFile(clusters, fileName, clusterWindowSize);
+//            System.out.println("fileName: " + fileName);
+            //clusterToFile(clusters, fileName, clusterWindowSize);
+//            System.out.println("about to call selective cluster to file...");
+                  
+            selectiveClusterToFile(clusters, fileName, (new ArrayList<Polylist>()), clusterWindowSize,
+                    maxMetricValues, minMetricValues);
         }
             
         
@@ -253,7 +291,7 @@ public class CreateGrammar implements imp.Constants {
         
         
         
-        System.out.println("outfile: " + outFile);
+        //System.out.println("outfile: " + outFile);
         
         //System.out.println("fileName: " + outFile);
         Polylist windowSizeMetaDataPL = Polylist.list("windowSize", windowSize);
@@ -294,17 +332,30 @@ public class CreateGrammar implements imp.Constants {
      * written as metadata used for normalization 
      * @throws IOException - if theres a problem writing to outFile
      */
-    public static void selectiveClusterToFile(Cluster[] clusters, String outFile, ArrayList<Polylist> excludeList, int windowSize) throws IOException{
+    public static void selectiveClusterToFile(
+                                            Cluster[] clusters, 
+                                            String outFile, 
+                                            ArrayList<Polylist> excludeList, 
+                                            int windowSize, 
+                                            Double[] maxMetricVals, 
+                                            Double[] minMetricVals) throws IOException{
+//        System.out.println("in clelective cluster to file");
         Writer writer;
         
         Polylist windowSizeMetaDataPL = Polylist.list("windowSize", windowSize);
+        Polylist maxMetricValuesPL = Polylist.list("maxMetricValues", Polylist.PolylistFromArray(maxMetricVals));
+        Polylist minMetricValuesPL = Polylist.list("minMetricValues", Polylist.PolylistFromArray(minMetricVals));
+//        //Polylist averagesMetaDataPL = Polylist.list("averages", Polylist.PolylistFromArray(averages));
+        //Polylist totalNumDataPointsPL = Polylist.list("totalNumDataPoints", totalNumDataPoints);
+//        System.out.println("maxMetricValues: " + maxMetricValuesPL.toString());
+//        System.out.println("minMetricValues: " + minMetricValuesPL.toString());
         
         
-          
-
         try {  
             writer = new BufferedWriter(new FileWriter(outFile));        
             writer.write(windowSizeMetaDataPL.toString()+ "\n");
+            writer.write(maxMetricValuesPL.toString()+ "\n");
+            writer.write(minMetricValuesPL.toString()+ "\n");
 
             for(int i = 0; i < clusters.length; i++){
             //String clusterString = "(cluster "+ clusters[i].getName() + "\n";
@@ -337,11 +388,11 @@ public class CreateGrammar implements imp.Constants {
      * @return Polylist representation of that centroid
      */
     public static Polylist getCentroidPolylist(Centroid c){
-        ArrayList<Metric> metricList = c.getMetrics();
+        Metric[] metricList = c.getMetrics();
         Polylist centroidPL = Polylist.list("centroid");
-        for(int i = 0; i < metricList.size(); i++){
-            Metric m = metricList.get(i);
-            Polylist iMetric = Polylist.list(m.getName(), m.getValue(), m.isLengthIndependent);
+        for(int i = 0; i < metricList.length; i++){
+            Metric m = metricList[i];
+            Polylist iMetric = Polylist.list(m.getName(), m.getValue());
             centroidPL = centroidPL.addToEnd(iMetric);
         }
 
@@ -358,8 +409,39 @@ public class CreateGrammar implements imp.Constants {
         Vector<NGram> ngrams = new Vector<NGram>();
         //last marks whether the ngram we are creating ends a chorus
         boolean last = false;
+        
+        int minimumSetSize = Integer.MAX_VALUE;
         for (int i = 0; i < orders.size(); i++) {
             Vector<DataPoint> currentSet = orders.get(i);
+           if (currentSet.size()<minimumSetSize){
+               minimumSetSize = currentSet.size();
+           }
+        }
+        
+        System.out.println("minimum set size: "+ minimumSetSize);
+        if (minimumSetSize<chainLength){
+            System.out.println("changing chainlength to: "+ minimumSetSize);
+            chainLength = minimumSetSize;
+        }
+        
+        
+        for (int i = 0; i < orders.size(); i++) {
+            Vector<DataPoint> currentSet = orders.get(i);
+//            System.out.println("currentSet: "+ currentSet.toString());
+//            System.out.println("currentSet's size: "+ (currentSet.size()));
+//            System.out.println("chainLength: "+ ((chainLength)));
+//            System.out.println("upperbound for for loop: "+ (currentSet.size() - (chainLength - 1)));
+            /**@TODO: check if this is an adequate and robust fix*/
+//            int upperbound = currentSet.size() - (chainLength - 1);
+//            int thisChainLength;
+//            if (upperbound <= 0){
+//                thisChainLength = currentSet.size();
+//            }else{
+//                thisChainLength = chainLength;
+//            }
+
+            
+            
             for (int j = 0; j < currentSet.size() - (chainLength - 1); j++) {
                 int[] chain = new int[chainLength];
                 for (int k = 0; k < chainLength; k++) {
@@ -465,10 +547,20 @@ public class CreateGrammar implements imp.Constants {
             }
             chains.add(chain);
         }
-
+        /**@TODO figure out why this doesn't work*/
         Collections.sort((List) chains, new ChainComparer());
 
         return chains;
+    }
+    private static void printIntArray(int[] a){
+        for(int i = 0; i < a.length; i++){
+            System.out.println("    `"+i+": " + a[i]);
+        }
+    }
+    private static void printFloatArray(float[] a){
+        for(int i = 0; i < a.length; i++){
+            System.out.println("    `"+i+": " + a[i]);
+        }
     }
 
     public static void writeGrammarWithChains(Vector<NGram> ngrams, 
@@ -741,7 +833,7 @@ public class CreateGrammar implements imp.Constants {
         return values;
     }
 
-    public static DataPoint processRule(Polylist rule, String ruleString, String i) {
+    public static DataPoint processRule(Polylist rule, String ruleString, String i, MetricListFactory mlf) {
         //data variables
         boolean starter = false;
         boolean head = false;
@@ -760,6 +852,7 @@ public class CreateGrammar implements imp.Constants {
         
         
         String ruleStringCopy = ruleString;
+        Polylist ruleCopy = rule;
         
         int chorusNumber = 0;
         Vector<String> chords = new Vector<String>();
@@ -912,62 +1005,56 @@ public class CreateGrammar implements imp.Constants {
         ArrayList<Metric> metricList = new ArrayList<Metric>();
         
         
-        float syncopation = getSyncopation(exactMelody, exactStartBeat);
-        float restPercent = (float) restDuration / (float) (segLength*BEAT);
+        double syncopation = getSyncopation(exactMelody, exactStartBeat);
+        double restPercent = (double) restDuration / (segLength*BEAT);
 
         MelodyRhythmCount melodyRhythmCount = getMelodyRhythmCount(exactMelody, exactStartBeat);
         
         //d.addRhythmData(melodyRhythmCount, contourData, syncopation);
         
         
-        Metric exactStartMetric = new Metric(exactStartBeat, 1, "exactStartBeat", true);
-        Metric consonanceMetric = new Metric((float) consonance, 1, "consonance",true);
-        Metric noteCountMetric = new Metric((float) noteCount, 1, "noteCount", false);
-        Metric restDurationMetric = new Metric((float) restDuration, 1, "restDuration",false);
-        Metric avgMaxSlopeDividedByNumSegmentsMetric = new Metric((float) (averageMaxSlope / (numSegments)), 1, "averageMaxSlope",true);
-        Metric startBeatMetric = new Metric((float) startBeat, 1, "startBeat",true);
-        Metric numSegmentsMetric = new Metric((float) numSegments, 1, "numSegments",true);
-        Metric syncopationMetric = new Metric(syncopation, 2, "syncopation",true);
-        Metric diversityIndexMetric = new Metric(melodyRhythmCount.getDiversityIndex(), 10, "diversityIndex",true);
-        Metric contourDataMetric = new Metric(contourData.getNumContourChanges(), (float) 1.3, "numContourChanges",false);
-        Metric mostFreqDurationMetric = new Metric(melodyRhythmCount.getMostFrequentDuration(), 1, "mostFreqDuration",true);
-        Metric longestNoteLengthMetric = new Metric(melodyRhythmCount.getLongestNoteLength(), 1, "longestNoteLength",true);
-        Metric percentRestsMetric = new Metric(restPercent, 1, "percentRests",true);
-        Metric longestRestLengthMetric = new Metric(melodyRhythmCount.getLongestRestLength(), 1, "longestRestLength",true);
+        Metric[] metrics = mlf.getNewMetricList();
         
-        //Uniform metrics (work regardless of window size)
         
-        Metric noteCountPerWindowMetric = new Metric((float) noteCount / (float) segLength*BEAT, 1, "noteCountPerWindow",true);
-        Metric numContourChangesPerWindowMetric = new Metric((float) contourData.getNumContourChanges() / (float) segLength*BEAT,1,"numContourChanges",true);
+        
+//        System.out.println("\n\n\n\nWHHHHAAT?!?!?!?!?!About to call compute on all metrics");
+        for(int index = 0; index < metrics.length; index++){
+//            System.out.println("metrics["+index+"] before calling compute: " + metrics[index]);
+            metrics[index].compute(ruleStringCopy, exactMelody, ruleCopy);
+        }
         
         
         
         
         
-        //metricList.add(exactStartMetric);
-       // metricList.add(consonanceMetric);
-        metricList.add(noteCountMetric);
-        //metricList.add(restDurationMetric);
+//        metricList.add(exactStartMetric);
+//       metricList.add(consonanceMetric);
+//        metricList.add(noteCountMetric);
+//        metricList.add(restDurationMetric);
 //        metricList.add(avgMaxSlopeDividedByNumSegmentsMetric);
 //        metricList.add(startBeatMetric);
 //        metricList.add(numSegmentsMetric);
-        metricList.add(syncopationMetric);
-        metricList.add(diversityIndexMetric);
-        metricList.add(contourDataMetric);
-        metricList.add(longestNoteLengthMetric);
+        //metricList.add(syncopationMetric);
+        //metricList.add(diversityIndexMetric);
+        //metricList.add(contourDataMetric);
+        //metricList.add(longestNoteLengthMetric);
         //metricList.add(longestRestLengthMetric);
         
         
-        numMetrics = metricList.size();
+        //numMetrics = metricList.size();
         
         
         
         //System.out.println("rest percentage = "+ restPercent);
-        System.out.println("ruleStringCopy is: "+ ruleStringCopy);
+        //System.out.println("ruleStringCopy is: "+ ruleStringCopy);
         
         
         
-        DataPoint d = new DataPoint(metricList, 
+        
+        
+        
+        
+        DataPoint d = new DataPoint(metrics, 
                                     "DataPoint " + i,
                                     ruleString, 
                                     segLength,
@@ -982,7 +1069,6 @@ public class CreateGrammar implements imp.Constants {
                                     endTied,
                                     restPercent,
                                     ruleStringCopy);
-        
         
         
         
@@ -1023,7 +1109,22 @@ public class CreateGrammar implements imp.Constants {
         return d;
     }
     
-    private static float getSyncopation(IndexedMelodyPart indexMel, int exactStartBeat){
+    private static void updateGlobalMetricMaxMin(DataPoint d){
+       Metric[] metricList = d.getMetrics();
+        for(int i = 0; i < metricList.length; i++){
+            if(metricList[i].getValue() > maxMetricValues[i]){          
+                    maxMetricValues[i] = metricList[i].getValue();
+                }
+                
+            if(metricList[i].getValue() < minMetricValues[i]){          
+                minMetricValues[i] = metricList[i].getValue();
+            }
+            
+        }
+        
+    }
+    
+    private static double getSyncopation(IndexedMelodyPart indexMel, int exactStartBeat){
         int numOffBeatNotes = 0;
 
         int numNotes = 0;
@@ -1046,7 +1147,7 @@ public class CreateGrammar implements imp.Constants {
             return 0;
         }
   
-        return (float) numOffBeatNotes / numNotes;
+        return (double) numOffBeatNotes / numNotes;
     }
     /*
     private float getDiversityIndex(IndexedMelodyPart indexMel, int exactStartBeat){
@@ -1073,15 +1174,15 @@ public class CreateGrammar implements imp.Constants {
         //int lastSlot = indexMel.getLastNoteIndex();
         int[] durationFrequencies = new int[819];
         int prime = 821;
-        float mostFreqDuration = 0;
+        double mostFreqDuration = 0;
         int numNotes = 0;
-        float longestRhythm = Integer.MIN_VALUE;
-        float longestRest = Integer.MIN_VALUE;
+        double longestRhythm = Integer.MIN_VALUE;
+        double longestRest = Integer.MIN_VALUE;
         
         
         while(indexMel.getCurrentNote(currentSlot) != null){
             Note note = indexMel.getCurrentNote(currentSlot);
-            float rhythm = note.getRhythmValue();
+            double rhythm = note.getRhythmValue();
             if(note.getPitch() == Note.REST){//skip rests
                 if(rhythm > longestRest){
                     longestRest = rhythm;
@@ -1112,7 +1213,7 @@ public class CreateGrammar implements imp.Constants {
             return new MelodyRhythmCount(durationFrequencies, mostFreqDuration, 0, longestRhythm, longestRest);
         }
         
-        float diversityIndex = ( (float) durationFrequencies[(int) mostFreqDuration % prime] ) / numNotes;
+        double diversityIndex = ( (double) durationFrequencies[(int) mostFreqDuration % prime] ) / numNotes;
         
      
         return new MelodyRhythmCount(durationFrequencies, mostFreqDuration, diversityIndex, longestRhythm, longestRest);
@@ -1333,7 +1434,7 @@ public class CreateGrammar implements imp.Constants {
             }
 
             Polylist newRule = Polylist.PolylistFromString(rules[i]);
-            System.out.println("newRule is: " + newRule.toString());
+            //System.out.println("newRule is: " + newRule.toString());
 
             boolean isUnique = true;
             if (rulesList.size() > 0) {
@@ -1386,12 +1487,13 @@ public class CreateGrammar implements imp.Constants {
     }
 
     //get averages
-    public static float[] calcAverage(Vector<DataPoint> seg) {
-        float[] averages = new float[numMetrics];
+    public static double[] calcAverage(Vector<DataPoint> seg) {
+//        System.out.println("Seg size is: " + seg.size());
+        double[] averages = new double[numMetrics];
         for (int i = 0; i < seg.size(); i++) {
             DataPoint temp = seg.get(i);
             for (int j=0; j<numMetrics; j++){
-                averages[j] += temp.getMetrics().get(j).getValue();
+                averages[j] += temp.getMetrics()[j].getValue();
             }
         }
         for (int i = 0; i<numMetrics;i++){
@@ -1401,25 +1503,51 @@ public class CreateGrammar implements imp.Constants {
     }
     //normalize vector
 
-    public static void averageVector(Vector<DataPoint> seg, float[] averages) {
+    public static void averageVector(Vector<DataPoint> seg, double[] averages) {
+        //System.out.println("*****TESTING AVERAGE VECTOR******");
         for (int i = 0; i < seg.size(); i++) {
             DataPoint temp = seg.get(i);
             for(int j = 0; j<numMetrics;j++){
-                float oldValue = temp.getMetrics().get(j).getValue();
-                temp.setMetricAtI(j, ((float) oldValue/averages[j]));
+                double oldValue = temp.getMetrics()[j].getValue();
+                //System.out.println("oldValue = "+ oldValue);
+                temp.setMetricAtI(j, ((double) oldValue/averages[j]));
+                //System.out.println("newValue = "+ ((double) oldValue/averages[j]));
             }
         }
     }
 
-    public static Cluster[] getClusters(Vector<DataPoint> data, float[] averages, int numClusters) {
+    
+    public static void normalizeDatapoints(Vector<DataPoint> datapoints, Double[] maxMetricVals, Double[] minMetricVals) {
+        for (int i = 0; i < datapoints.size(); i++) {
+            DataPoint d = datapoints.get(i);
+            normalizeDataPoint(d, maxMetricVals, minMetricVals);
+        }
+    }
+    
+    public static DataPoint normalizeDataPoint(DataPoint d, Double[] maxMetricVals, Double[] minMetricVals){
+        int metricListLength = d.getMetrics().length;
+        for(int j = 0; j < metricListLength; j++){
+                double oldValue = d.getMetrics()[j].getValue();
+                d.setMetricAtI( j, normalizeValue(oldValue, maxMetricVals[j], minMetricVals[j]) );
+        }
+        return d;
+    }
+    
+    private static double normalizeValue(double value, double max, double min){
+        return ( (value - min) / (max - min) );
+    }
+    
+    
+
+    public static Cluster[] getClusters(Vector<DataPoint> data, double[] averages, int numClusters) {
         JCA jca;
         
         //numclusters is greater than the number of datapoints, use the same number of clusters
         //as there are datapoints
         if (data.size() < numClusters) {
-            jca = new JCA(data.size(), data.size(), data);
+            jca = new JCA(data.size(), data.size(), data, metricListFactory);
         } else {
-            jca = new JCA(numClusters, data.size(), data);
+            jca = new JCA(numClusters, data.size(), data, metricListFactory);
         }
         jca.startAnalysis();
         Cluster[] clusters = jca.getClusterOutput();
@@ -1649,35 +1777,28 @@ public class CreateGrammar implements imp.Constants {
             totalPoints += clusters[i].getNumDataPoints();
         }
 
-        double[] averages;
+        //System.out.println("totalPoints in getClusterReps: "+totalPoints);
+
+        Metric[] averages;
         Vector<DataPoint> representatives = new Vector<DataPoint>();
 
         for (int i = 0; i < clusters.length; i++) {
-            averages = new double[7];
+            averages = metricListFactory.getNewMetricList();
 
             Cluster tempCluster = clusters[i];
 
             for (int j = 0; j < clusters[i].getNumDataPoints(); j++) {
                 DataPoint tempPoint = tempCluster.getDataPoint(j);
-                averages[0] += tempPoint.getT();
-                averages[1] += tempPoint.getU();
-                averages[2] += tempPoint.getV();
-                averages[3] += tempPoint.getW();
-                averages[4] += tempPoint.getX();
-                averages[5] += tempPoint.getY();
-                averages[6] += tempPoint.getZ();
+                for (int k = 0; k<averages.length;k++){
+                    averages[k].incrementValue(tempPoint.getMetrics()[k].getValue());
             }
-            averages[0] /= clusters.length;
-            averages[1] /= clusters.length;
-            averages[2] /= clusters.length;
-            averages[3] /= clusters.length;
-            averages[4] /= clusters.length;
-            averages[5] /= clusters.length;
-            averages[6] /= clusters.length;
+            }
+            for (int k = 0; k<averages.length;k++){
+                    averages[k].divideValue(clusters.length);
+                }
 
             //set averagePoint class variable
-            averagePoint = new DataPoint(averages[0], averages[1], averages[2],
-                    averages[3], averages[4], averages[5], averages[6], "averages");
+            averagePoint = new DataPoint(averages, "averages");
 
             //sort the points by distance from averagePoint
             Vector<DataPoint> points = tempCluster.getDataPoints();

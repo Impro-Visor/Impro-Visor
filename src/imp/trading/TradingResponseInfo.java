@@ -37,7 +37,10 @@ import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.RhythmCluster;
 import imp.generalCluster.Centroid;
-import imp.generalCluster.Metric;
+import imp.generalCluster.metrics.Metric;
+import imp.generalCluster.metrics.MetricListFactories.DefaultMetricListFactory;
+import imp.generalCluster.metrics.MetricListFactories.RhythmMetricListFactory;
+
 import imp.gui.Notate;
 import imp.lickgen.Grammar;
 import imp.lickgen.LickGen;
@@ -90,12 +93,15 @@ public class TradingResponseInfo {
     private static int tradeCounter; //counter for number of times traded, for checking numClusters matched in user personalization
     private ArrayList<RhythmCluster> clusterArray;
     int numMetrics = -1;
-    private float[] maxCentroidMetricValues;
-    private float[] minCentroidMetricValues;
+    
+    private Double[] maxMetricValues;
+    private Double[] minMetricValues;
     private String clusterFileName;
     private ActiveTradingDialog activeTradingDialog;
     int tradeLengthInSlots;
     private int windowSize;
+    private double[] savedDatapointAverages;
+    private int totalNumSavedDatapoints;
 
   
     
@@ -106,6 +112,8 @@ public class TradingResponseInfo {
         this.flattener = new TransformLearning();
         this.metre = metre;
         this.tradeLength = tradeLength;
+        
+        numMetrics = (new DefaultMetricListFactory()).getNumMetrics();
         
         this.activeTradingDialog = notate.getActiveTradingDialog();
         tradeLengthInSlots = activeTradingDialog.getUpdatedTradeLength() * BEAT * metre[0];
@@ -119,15 +127,15 @@ public class TradingResponseInfo {
         phrases = new PhraseTable(notate);
         tradeCounter = 0;
         
-        System.out.println("notate score length is: "+ notate.getScoreLength());
-        System.out.println("notate score is: "+ notate.getScore());
+//        System.out.println("notate score length is: "+ notate.getScoreLength());
+//        System.out.println("notate score is: "+ notate.getScore());
         clusterArray=new ArrayList<RhythmCluster>();
         clusterFileName = retrieveClusterFileName();
         try{
             
             //clusterArray = loadClustersFromFile(imp.generalCluster.CreateGrammar.getClusterOutputFile(clusterFileName));
             parseClusterFile(clusterFileName);
-            setCentroidMetricMaxMinValues(clusterArray);//set the arrays keeping track of max and min values for all metrics over all centroids
+            //setCentroidMetricMaxMinValues(clusterArray);//set the arrays keeping track of max and min values for all metrics over all centroids
            
 
         }catch(IOException e){
@@ -189,11 +197,12 @@ public class TradingResponseInfo {
      * @return response, the user's melody with a corrected rhythm
      */
     public MelodyPart correctRhythm(){
-        System.out.println("In correct rhythm we are like about to change some notes");
+        numMetrics = (new RhythmMetricListFactory()).getNumMetrics();
+//        System.out.println("In correct rhythm we are like about to change some notes");
         tradeCounter++;
 
         
-        System.out.println("trade length in slots is: " + tradeLengthInSlots);
+//        System.out.println("trade length in slots is: " + tradeLengthInSlots);
         
         
         if(testingArray.size()==0){
@@ -202,8 +211,10 @@ public class TradingResponseInfo {
         }
         }
         DataPoint d = getDataPointForUser();
+        d = CreateGrammar.normalizeDataPoint(d, maxMetricValues, minMetricValues);
+        System.out.println("normalized datapoint: " + d);
         RhythmCluster bestFit = findNearestCluster(clusterArray, d);
-        d.getRhythmCluster().addUserDataPoint(d);
+        bestFit.addUserDataPoint(d);
 
         int index = clusterArray.indexOf(bestFit);
         //System.out.println("relativePitch of dataPoint unchanged: " + getDataPointForUser().getRelativePitchMelody());
@@ -221,7 +232,7 @@ public class TradingResponseInfo {
             rhythmTemplate = truncateRhythmTemplate(rhythmTemplate);
         }
         fitToRhythm(rhythmTemplate);
-        System.out.println("testing array when tradecounter = "+tradeCounter);
+//        System.out.println("testing array when tradecounter = "+tradeCounter);
         //printTestingArray(clusterArray);
         
         
@@ -242,6 +253,18 @@ public class TradingResponseInfo {
         
         return response;
     }
+    
+    
+
+    private DataPoint normalizeDataPoint(DataPoint d){
+        for(int i = 0; i < numMetrics; i++){
+            double oldValue = d.getMetrics()[i].getValue();
+            d.setMetricAtI(i, ((double) oldValue / savedDatapointAverages[i]));
+        }
+        
+        return d;
+    }
+            
     /**Determines how much we should shift the centroids to account for the similarity
      * of the user's solos
      * 
@@ -251,13 +274,13 @@ public class TradingResponseInfo {
      * @param avgUserDataPointMetrics the average of all user data points played in this exchange
      * @return distance metaCentoid should be shifted to account for the problem metric
      */
-    private float getProblemMetricShiftAmount(int problemMetricIndex, Centroid metaCentroid, ArrayList<Metric> avgUserDataPointMetrics){
+    private double getProblemMetricShiftAmount(int problemMetricIndex, Centroid metaCentroid, Metric[] avgUserDataPointMetrics){
         float d = (float) 0.6;//set by us
-        float newValue;
+        double newValue;
         
         Metric metaCentroidProblemMetric = metaCentroid.getMetricAtI(problemMetricIndex);
         System.out.println("metacentroid: " + metaCentroid);
-        Metric avgUserDataPointProblemMetric = avgUserDataPointMetrics.get(problemMetricIndex);
+        Metric avgUserDataPointProblemMetric = avgUserDataPointMetrics[problemMetricIndex];
         
         
         //M’ = M’ + (d * (M - M’) ) where M' is value of problem Metric for metaCentroid, M is value of problem metric for avgUserDataPoint
@@ -277,10 +300,11 @@ public class TradingResponseInfo {
      */
     private void adjustClusterCentroids(RhythmCluster biggestCluster){
         Centroid metaCentroid = getCentroidofAllClusters(clusterArray);
-        ArrayList<Metric> avgUserDataPointMetrics = biggestCluster.getAvgUserDataPointMetrics();
+        Metric[] avgUserDataPointMetrics = biggestCluster.getAvgUserDataPointMetrics();
         System.out.println("avgDataPointMetrics: " + avgUserDataPointMetrics);
         int problemMetricIndex = getProblemMetricIndex(biggestCluster);
-        float shiftAmount = getProblemMetricShiftAmount(problemMetricIndex, metaCentroid, avgUserDataPointMetrics);
+        System.out.println("problem metric index is: " + problemMetricIndex + ", metric is: " + avgUserDataPointMetrics[problemMetricIndex].getName());
+        double shiftAmount = getProblemMetricShiftAmount(problemMetricIndex, metaCentroid, avgUserDataPointMetrics);
         System.out.println("\nshift value is: " + shiftAmount);
         
         
@@ -298,7 +322,7 @@ public class TradingResponseInfo {
      * 
      * @param a - the array to be printed
      */
-    private void printArray(float[] a){
+    private static void printArray(double[] a){
         for(int i = 0; i < a.length; i++){
             System.out.println("    `" + a[i]);
         }
@@ -310,61 +334,66 @@ public class TradingResponseInfo {
      * @param biggestCluster
      * @return 
      */
-    private float[] getNormalizedDifferenceVector(RhythmCluster biggestCluster){
-        float[] avgDatapointCentroidDistance = biggestCluster.getAvgCentroidDatapointDistance();
-        float[] avgDatapointCentroidDistanceNormalized = biggestCluster.getAvgCentroidDatapointDistance();
-        for(int i = 0; i < numMetrics; i++){
-            avgDatapointCentroidDistanceNormalized[i] = avgDatapointCentroidDistance[i]//non-normalized average metric distance value between datapoints that matched to cluster c and the centroid of cluster c 
-                                                        / 
-                                                        (maxCentroidMetricValues[i] - minCentroidMetricValues[i]);//range of metric values over centroids
-        }
+//    private double[] getNormalizedDifferenceVector(RhythmCluster biggestCluster){
+//        double[] avgDatapointCentroidDistance = biggestCluster.getAvgCentroidDatapointDistance();
+//        double[] avgDatapointCentroidDistanceNormalized = biggestCluster.getAvgCentroidDatapointDistance();
+//        for(int i = 0; i < numMetrics; i++){
+//            avgDatapointCentroidDistanceNormalized[i] = avgDatapointCentroidDistance[i]//non-normalized average metric distance value between datapoints that matched to cluster c and the centroid of cluster c 
+//                                                        / 
+//                                                        (maxCentroidMetricValues[i] - minCentroidMetricValues[i]);//range of metric values over centroids
+//        }
+//        
+//        return avgDatapointCentroidDistanceNormalized;
+//     
+//    }
         
-        return avgDatapointCentroidDistanceNormalized;
-     
-    }
-    
      public int getProblemMetricIndex(RhythmCluster biggestCluster){
+         double minDistance = Double.MAX_VALUE;
+         int problemMetricIndex = -1;
+         Metric[] averageMatchedUserMetrics = biggestCluster.getAvgUserDataPointMetrics();
 
-        float[] avgDatapointCentroidDistanceNormalized = getNormalizedDifferenceVector(biggestCluster);
-        System.out.println("\navgDatapointCentroidDistanceNormalized: ");
-        printArray(avgDatapointCentroidDistanceNormalized);
+         System.out.println("averageMatchedUserMetrics: " + averageMatchedUserMetrics.toString());
        
-        float minDistance = Float.MAX_VALUE;
-        int problemMetricIndex = -1;
+         Metric[] centroidMetrics = biggestCluster.getCentroid().getMetrics();
         
         //System.out.println("printing normalized avg datapoint centroid distance values: ");
         //printArray(avgNormalizedDatapointCentroidDistance);
 
-        
         for(int i = 0; i < numMetrics; i++){
-            if(avgDatapointCentroidDistanceNormalized[i] < minDistance){
-                minDistance = avgDatapointCentroidDistanceNormalized[i];
+             double diff = Math.abs( averageMatchedUserMetrics[i].getValue() - centroidMetrics[i].getValue() );
+             if(diff < minDistance){
+                minDistance = diff;
                 problemMetricIndex = i;
             }
         }
         
-        System.out.println("Problem metric index: " + problemMetricIndex + ", metric is: " + biggestCluster.getCentroid().getMetrics().get(problemMetricIndex).getName());
                 
         return problemMetricIndex;
     }
     
     private Centroid getCentroidofAllClusters(ArrayList<RhythmCluster> clusterArray){
-        ArrayList<Metric> avgCentroidMetrics = new ArrayList<Metric>();
-        //loop through all metrics
-        for(int i = 0; i<clusterArray.get(0).getCentroid().getMetrics().size();i++){
-            avgCentroidMetrics.add(new Metric(0,0,clusterArray.get(0).getCentroid().getMetricAtI(i).getName(),clusterArray.get(0).getCentroid().getMetricAtI(i).isLengthIndependent()));
-            //loop through all centroids
-            for(int j = 0; j<clusterArray.size();j++){
-                float currentValue = avgCentroidMetrics.get(i).getValue();
-                avgCentroidMetrics.get(i).setValue(currentValue + clusterArray.get(j).getCentroid().getMetricAtI(i).getValue());
+        
+        Metric[] metrics = (new RhythmMetricListFactory()).getNewMetricList();
+        
+         for(int i = 0; i<metrics.length; i++){
+            for(int j = 0; j < clusterArray.size(); j++){
+                double currentValue;
+                if(metrics[i].getValue() == null){
+                     currentValue = 0;
+                }else{
+                    currentValue = metrics[i].getValue();
             }
-            float sumOfVals = avgCentroidMetrics.get(i).getValue();
-            avgCentroidMetrics.get(i).setValue(sumOfVals / clusterArray.size());
+
+                metrics[i].setValue(currentValue + clusterArray.get(j).getCentroid().getMetricAtI(i).getValue());
         }
         
-        System.out.println("avgCentroidMetrics is: "+avgCentroidMetrics);
+            double sumOfVals = metrics[i].getValue();
+            metrics[i].setValue(sumOfVals / clusterArray.size());
+        }
         
-        return new Centroid(avgCentroidMetrics);
+      
+        
+        return new Centroid(metrics);
     }
     
     private RhythmCluster biggestCluster(ArrayList<RhythmCluster> clusterArray){
@@ -505,7 +534,8 @@ public class TradingResponseInfo {
         String ruleString = Polylist.list("rule", Polylist.list("Seg"+ruleSegLength), Polylist.PolylistFromString(abstractMel)) + "(Xnotation " + relativePitch + ") (Brick-type null) Head "+exactMelody+" CHORDS Fm7 G7b9";
         String i = "0";
         
-        DataPoint d = CreateGrammar.processRule(rule, ruleString, i);
+        DataPoint d = CreateGrammar.processRule(rule, ruleString, i, (new RhythmMetricListFactory()));
+        
         if(d.getSegLength() != windowSize){
             d.scaleMetrics(( (float) windowSize )/ d.getSegLength());
         }
@@ -555,7 +585,7 @@ public class TradingResponseInfo {
      
         //System.out.println("DataPoint " + d.toString());
         
-        ArrayList<Metric> usersMetrics = d.getMetrics();
+        Metric[] usersMetrics = d.getMetrics();
         
         for (RhythmCluster r: clusterArray){
             Centroid c = r.getCentroid();
@@ -585,20 +615,82 @@ public class TradingResponseInfo {
         BufferedReader clusterTextReader = new BufferedReader(clusterFileReader);
         
         windowSize = loadWindowSizeFromFile(clusterTextReader);
+        
+        maxMetricValues = loadMaxMetricValsFromFile(clusterTextReader);
+        
+        minMetricValues = loadMinMetricValsFromFile(clusterTextReader);
+          
         clusterArray = loadClustersFromFile(clusterTextReader);
         
         clusterTextReader.close();
     }
     
+    private Double[] polyListArrayToDoubleArray(Polylist polylistArray){
+        int numElements = polylistArray.length();
+        Double[] rtn = new Double[ numElements ];
+        int iterator = 0;
+        while(!polylistArray.isEmpty() && iterator < numElements){
+            rtn[iterator] = (double) polylistArray.first();
+            polylistArray = polylistArray.rest();
+            iterator++;
+        }
+        return rtn;
+    }
+    
+    private int loadTotalNumSavedDataPoints(BufferedReader clusterTextReader) throws IOException {
+        String totalNumDataPointsPLString = clusterTextReader.readLine();
+        Polylist totalNumDataPointsPL = Polylist.PolylistFromString(totalNumDataPointsPLString);
+ 
+        if(totalNumDataPointsPL.first() instanceof Polylist){totalNumDataPointsPL = (Polylist) totalNumDataPointsPL.first();}//for some reason this first string polylist gets read in as a double polylist
+        
+        if (( (String) totalNumDataPointsPL.first() ).equals("totalNumDataPoints")){
+            return ((Long) totalNumDataPointsPL.second()).intValue();
+      
+        }else{
+            System.out.println("malformed cluster file, could not find tag 'totalNumDataPoints'!!!!");
+            return -1;
+        }
+    }
+    
+     private Double[] loadMaxMetricValsFromFile(BufferedReader clusterTextReader) throws IOException {
+        String metricMaxValsPLString = clusterTextReader.readLine();
+        Polylist metricMaxValsPL = Polylist.PolylistFromString(metricMaxValsPLString);
+        System.out.println("maxMetricValues: " + metricMaxValsPL.toString());
+        if(metricMaxValsPL.first() instanceof Polylist){metricMaxValsPL = (Polylist) metricMaxValsPL.first();}//for some reason this first string polylist gets read in as a double polylist
+        
+        if (( (String) metricMaxValsPL.first() ).equals("maxMetricValues")){
+            Polylist maxVals =  (Polylist) metricMaxValsPL.second();
+            return polyListArrayToDoubleArray(maxVals);
+        }else{
+            System.out.println("malformed cluster file, could not find tag 'maxMetricValues'!!!!");
+            return new Double[0];
+        }
+    }
+    
+    private Double[] loadMinMetricValsFromFile(BufferedReader clusterTextReader) throws IOException {
+        String metricMinValsPLString = clusterTextReader.readLine();
+        Polylist metricMinValsPL = Polylist.PolylistFromString(metricMinValsPLString);
+        System.out.println("minMetricValues: " + metricMinValsPL.toString());
+        if(metricMinValsPL.first() instanceof Polylist){metricMinValsPL = (Polylist) metricMinValsPL.first();}//for some reason this first string polylist gets read in as a double polylist
+        
+        if (( (String) metricMinValsPL.first() ).equals("minMetricValues")){
+            Polylist maxVals =  (Polylist) metricMinValsPL.second();
+            return polyListArrayToDoubleArray(maxVals);
+        }else{
+            System.out.println("malformed cluster file, could not find tag 'minMetricValues'!!!!");
+            return new Double[0];
+        }
+    }
+    
     private int loadWindowSizeFromFile(BufferedReader clusterTextReader)throws IOException{
         String windowSizePLString = clusterTextReader.readLine();
         Polylist windowSizePL = Polylist.PolylistFromString(windowSizePLString);
-        if(windowSizePL instanceof Polylist){windowSizePL = (Polylist) windowSizePL.first();}//for some reason this first string polylist gets read in as a double polylist
+        if(windowSizePL.first() instanceof Polylist){windowSizePL = (Polylist) windowSizePL.first();}//for some reason this first string polylist gets read in as a double polylist
         
         if (( (String) windowSizePL.first() ).equals("windowSize")){
             return ((Long) windowSizePL.second()).intValue();
         }else{
-            System.out.println("malformed cluster file!!!!");
+            System.out.println("malformed cluster file, could not find tag 'windowSize'!!!!");
             return -1;
         }
         
@@ -612,7 +704,7 @@ public class TradingResponseInfo {
         while (!clustersPolylist.isEmpty()){
             Polylist clusterIpolylist = (Polylist) clustersPolylist.first();
             RhythmCluster rc = new RhythmCluster(clusterIpolylist, iterator);
-            if(numMetrics == -1){numMetrics = rc.getCentroid().getMetrics().size();}//set global numMetrics if it hasn't been set yet
+            if(numMetrics == -1){numMetrics = rc.getCentroid().getMetrics().length;}//set global numMetrics if it hasn't been set yet
             //System.out.println("rhythm list size for cluster: " + rc.getRhythmList().size());
             rhythmClusters.add(rc);
             clustersPolylist = clustersPolylist.rest();   
@@ -627,7 +719,7 @@ public class TradingResponseInfo {
         return rhythmClusters;
     }
     
-    private float[] fillInitialArrayValues(float[] a, float value){
+    private double[] fillInitialArrayValues(double[] a, double value){
         for (int i = 0; i < a.length; i++){
             a[i] = value;
         }
@@ -635,87 +727,61 @@ public class TradingResponseInfo {
         return a;
     }
     
-    
-    private void setCentroidMetricMaxMinValues(ArrayList<RhythmCluster> rhythmClusters){     
-        maxCentroidMetricValues = new float[numMetrics];
-        minCentroidMetricValues = new float[numMetrics];
-        maxCentroidMetricValues = fillInitialArrayValues(maxCentroidMetricValues, Float.MIN_VALUE);
-        minCentroidMetricValues = fillInitialArrayValues(minCentroidMetricValues, Float.MAX_VALUE);
-        
-        for(int i = 0; i< rhythmClusters.size(); i++){
-            ArrayList<Metric> centroidMetricList = rhythmClusters.get(i).getCentroid().getMetrics();
-            for(int j = 0; j < numMetrics; j++){
-                if(centroidMetricList.get(j).getValue() > maxCentroidMetricValues[j]){          
-                    maxCentroidMetricValues[j] = centroidMetricList.get(j).getValue();
+    public Double[] getMaxMetricVals(){
+        return maxMetricValues;
                 }
                 
-                if(centroidMetricList.get(j).getValue() < minCentroidMetricValues[j]){          
-                    minCentroidMetricValues[j] = centroidMetricList.get(j).getValue();
+    public Double[] getMinMetricVals(){
+        return minMetricValues;
                 }
-            }   
-        }
-    }
     
-    private float[] getClusterMetricMinValues(ArrayList<RhythmCluster> rhythmClusters){
-        float[] maxClusterMetricValues = new float[numMetrics];
-        
-        for (int i = 0; i < numMetrics; i++){
-            maxClusterMetricValues[i] = Float.MIN_VALUE;
-        }
-        for(int i = 0; i< rhythmClusters.size(); i++){
-            ArrayList<Metric> centroidMetricList = rhythmClusters.get(i).getCentroid().getMetrics();
-            for(int j = 0; j < numMetrics; j++){
-                if(centroidMetricList.get(j).getValue() > maxClusterMetricValues[j]){          
-                    maxClusterMetricValues[j] = centroidMetricList.get(j).getValue();
-                }
-            }   
+    public int getTotalNumSavedDataPoints(){
+        return totalNumSavedDatapoints;
         }
         
-        return maxClusterMetricValues;
-    }
     
-    public void fitToFourOnTheFloor(){
-        String fourOnTheFloor = "c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4";
-        MelodyPart rhythmTemplate = new MelodyPart(fourOnTheFloor);
-        int thePitch;
-        int responseIterator = response.getFirstIndex();
-        int rhythmTemplateIterator = rhythmTemplate.getFirstIndex();
-        int nextNoteIndex;
-        boolean responseHasMoreNotes = true;
+//    public void fitToFourOnTheFloor(){
+//        String fourOnTheFloor = "c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4 c4";
+//        MelodyPart rhythmTemplate = new MelodyPart(fourOnTheFloor);
+//        int thePitch;
+//        int responseIterator = response.getFirstIndex();
+//        int rhythmTemplateIterator = rhythmTemplate.getFirstIndex();
+//        int nextNoteIndex;
+//        boolean responseHasMoreNotes = true;
+//        
+//        while(rhythmTemplate.getNote(rhythmTemplateIterator) != null){//loop through all notes in the rhythm template
+//            if (response.getNote(responseIterator) == null){
+//                responseHasMoreNotes = false;
+//            }
+//            if(responseHasMoreNotes){
+//                Note n = response.getCurrentNote(responseIterator);
+//                if (n.isRest()){
+//                    responseIterator = response.getNextIndex(responseIterator);//increment responseIterator
+//                    if (response.getNote(responseIterator) == null){
+//                        responseHasMoreNotes = false;
+//                    }  
+//                }
+//                
+//            }
+//            
+//            if (responseHasMoreNotes){
+//                Note n = response.getCurrentNote(responseIterator);
+//                if(!rhythmTemplate.getCurrentNote(rhythmTemplateIterator).isRest()){
+//                    rhythmTemplate.getCurrentNote(rhythmTemplateIterator).setPitch(n.getPitch());
+//                    responseIterator = response.getNextIndex(responseIterator);
+//                }
+//                
+//            }else{
+//                rhythmTemplate.getCurrentNote(rhythmTemplateIterator).setPitch(-1);
+//            }
+// 
+//            rhythmTemplateIterator = rhythmTemplate.getNextIndex(rhythmTemplateIterator);//get the next note in the rhythm template
+//        }
+//        
+//        //System.out.println("rhythmTemplate is now "+rhythmTemplate);
+//        response = rhythmTemplate;
+//    }
         
-        while(rhythmTemplate.getNote(rhythmTemplateIterator) != null){//loop through all notes in the rhythm template
-            if (response.getNote(responseIterator) == null){
-                responseHasMoreNotes = false;
-            }
-            if(responseHasMoreNotes){
-                Note n = response.getCurrentNote(responseIterator);
-                if (n.isRest()){
-                    responseIterator = response.getNextIndex(responseIterator);//increment responseIterator
-                    if (response.getNote(responseIterator) == null){
-                        responseHasMoreNotes = false;
-                    }  
-                }
-                
-            }
-            
-            if (responseHasMoreNotes){
-                Note n = response.getCurrentNote(responseIterator);
-                if(!rhythmTemplate.getCurrentNote(rhythmTemplateIterator).isRest()){
-                    rhythmTemplate.getCurrentNote(rhythmTemplateIterator).setPitch(n.getPitch());
-                    responseIterator = response.getNextIndex(responseIterator);
-                }
-                
-            }else{
-                rhythmTemplate.getCurrentNote(rhythmTemplateIterator).setPitch(-1);
-            }
- 
-            rhythmTemplateIterator = rhythmTemplate.getNextIndex(rhythmTemplateIterator);//get the next note in the rhythm template
-        }
-        
-        //System.out.println("rhythmTemplate is now "+rhythmTemplate);
-        response = rhythmTemplate;
-    }
-    
     public String getRhythmStringFromPolylist(Polylist p){
         String rhythmString = "";
         while(!p.isEmpty()){

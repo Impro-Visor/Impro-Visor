@@ -430,6 +430,22 @@ public boolean hasOneSection()
     return sectionInfo.hasOneSection();
   }
 
+/**
+ * Called from Score
+ * 
+ * Calls render in SectionInfo
+ * 
+ * @param seq
+ * @param time
+ * @param track
+ * @param transposition
+ * @param useDrums
+ * @param endLimitIndex
+ * @param constantBass
+ * @return
+ * @throws InvalidMidiDataException 
+ */
+
 public long render(MidiSequence seq,
                    long time,
                    Track track,
@@ -729,4 +745,18 @@ public void addFromRoadMapChordBlocks(ArrayList<imp.roadmap.brickdictionary.Chor
         sectionInfo.reloadStyles();
     }
 
+    public void transposeInPlace(int transposition)
+    {
+    //System.out.println("before: " + this);
+    PartIterator i = iterator();
+    while( i.hasNext() )
+      {
+        Chord unit = (Chord)i.next();
+        if( unit != null )
+          {
+            unit.transpose(transposition);
+          }
+       }  
+    //System.out.println("after: " + this);
+    }
 }

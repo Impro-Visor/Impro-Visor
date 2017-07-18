@@ -7,8 +7,11 @@ package imp.data;
 
 import imp.generalCluster.Centroid;
 import imp.generalCluster.Cluster;
+import imp.generalCluster.CreateGrammar;
 import imp.generalCluster.DataPoint;
-import imp.generalCluster.Metric;
+import imp.generalCluster.metrics.Metric;
+import imp.generalCluster.metrics.MetricListFactories.RhythmMetricListFactory;
+
 import java.util.ArrayList;
 import java.util.Vector;
 import polya.Polylist;
@@ -20,9 +23,9 @@ import polya.Polylist;
 public class RhythmCluster extends Cluster{
     private Centroid centroid;
     private ArrayList<Polylist> polylistRhythmArray;
-    private ArrayList<Metric> avgUserDataPointMetrics;
+    private Metric[] avgUserDataPointMetrics;
     private ArrayList<DataPoint> dataPointsFromUser;
-    private float[] avgCentroidDatapointDifference;
+    private double[] avgCentroidDatapointDifference;
     private int numMetrics;
     private int datapointCount = 0;
     private int clusterNumber;
@@ -52,25 +55,22 @@ public class RhythmCluster extends Cluster{
         this.clusterNumber = clusterNumber;
         this.selectedRhythms = new ArrayList<DataPoint>();
        
-        
        this.centroidPL = (Polylist) p.first();
         
         centroid = centroidFromPolylist(centroidPL);
-        numMetrics = centroid.getMetrics().size();
+        numMetrics = centroid.getMetrics().length;
         
         this.rhythmListPolylist = (Polylist) p.second();
         
         polylistRhythmArray = getRhythmArrayFromPolylist(rhythmListPolylist);
      
-        avgCentroidDatapointDifference = new float[numMetrics];
+        avgCentroidDatapointDifference = new double[numMetrics];
         
-        avgUserDataPointMetrics = new ArrayList<Metric>();
+        avgUserDataPointMetrics = (new RhythmMetricListFactory()).getNewMetricList();
+        
         dataPointsFromUser = new ArrayList<DataPoint>();
         
-        for(int i = 0; i < centroid.getMetrics().size();i++){
-            String name = centroid.getMetricAtI(i).getName();
-            avgUserDataPointMetrics.add(new Metric(0,1,name,true));
-        }
+        resetData();
         
 
         
@@ -83,19 +83,22 @@ public class RhythmCluster extends Cluster{
     }
     
     private Centroid centroidFromPolylist(Polylist centroidPL){
-        ArrayList<Metric> centroidMetricList = new ArrayList<Metric>();
+        Metric[] metrics = (new RhythmMetricListFactory()).getNewMetricList();
+        int index = 0;
+        
         //ignore tag
         centroidPL=centroidPL.rest();
        
-        
         while(!centroidPL.isEmpty()){
             Polylist metricPL = (Polylist) centroidPL.first();           
-            Metric m = new Metric(((Double) metricPL.second()).floatValue(), 1, (String) metricPL.first(), Boolean.parseBoolean((String) metricPL.third()));
-            centroidMetricList.add(m);
+            //System.out.println("what we think is the metric: "+centroidPL.first().toString());
+            //System.out.println("what we think is the value: "+metricPL.second().toString());
+            metrics[index].setValue((Double) metricPL.second());
             centroidPL = centroidPL.rest();
+            index++;
         }  
         
-        return new Centroid(centroidMetricList);
+        return new Centroid(metrics);
         
     }
     
@@ -136,7 +139,12 @@ public class RhythmCluster extends Cluster{
     
     public String toString(){
         
-        return "Centroid: "+centroid.getMetrics().toString() ;//+ "\nArray of rhythms: " + polylistRhythmArray.toString();
+        String rtn = "Centroid: "+centroid.getMetrics().toString()+ "\n   Matched Data:\n";//+ "\nArray of rhythms: " + polylistRhythmArray.toString();
+        for(int i = 0; i < dataPointsFromUser.size(); i++){
+            rtn += "    data[" + i + "]: " + dataPointsFromUser.get(i).toString() + "\n";
+        }
+    
+        return rtn;
     }
     
     public int getNumMatches(){
@@ -152,7 +160,7 @@ public class RhythmCluster extends Cluster{
         avgCentroidDatapointDifference = fillInitialArrayValues(avgCentroidDatapointDifference, 0);
     }
     
-    private float[] fillInitialArrayValues(float[] a, float value){
+    private double[] fillInitialArrayValues(double[] a, double value){
         for (int i = 0; i < a.length; i++){
             a[i] = value;
         }
@@ -165,20 +173,20 @@ public class RhythmCluster extends Cluster{
      * @return 
      */
     
-    private float getDatapointCentroidDistanceForMetric(float dataValue, float centroidValue){
+    private double getDatapointCentroidDistanceForMetric(double dataValue, double centroidValue){
         return Math.abs(dataValue - centroidValue);
     }
     
 
     
-    public ArrayList<Metric> updateMetricVals(ArrayList<Metric> avgUserDataPointMetrics, float val){
-        for(int i = 0; i < avgUserDataPointMetrics.size(); i++){
-            avgUserDataPointMetrics.get(i).setValue(val);
+    public Metric[] updateMetricVals(Metric[] avgUserDataPointMetrics, double val){
+        for(int i = 0; i < avgUserDataPointMetrics.length; i++){
+            avgUserDataPointMetrics[i].setValue(val);
         }
         return avgUserDataPointMetrics;
     }
     
-    private void updateAvgDatapointCentroidDistance(float[] centroidDatapointDiff){
+    private void updateAvgDatapointCentroidDistance(double[] centroidDatapointDiff){
         for(int i = 0; i < numMetrics; i++){
             avgCentroidDatapointDifference[i] = 
                         (
@@ -190,16 +198,16 @@ public class RhythmCluster extends Cluster{
         }
     }
     
-    public float[] getNormalizedDifference(ArrayList<Metric> dataMetricVector, ArrayList<Metric> centroidMetrics){
-        float[] normalDiff = new float[dataMetricVector.size()];
+    public double[] getNormalizedDifference(ArrayList<Metric> dataMetricVector, ArrayList<Metric> centroidMetrics){
+        double[] normalDiff = new double[dataMetricVector.size()];
         
         //get non-normalized difference vector
-        float sumSquares = 0;
+        double sumSquares = 0;
         for (int i = 0; i < normalDiff.length;i++){
             normalDiff[i] = Math.abs(dataMetricVector.get(i).getValue() - centroidMetrics.get(i).getValue());
             sumSquares += Math.pow(normalDiff[i], 2.0);
         }
-        float length  = (float) Math.sqrt(sumSquares);
+        double length  = Math.sqrt(sumSquares);
         
         //normalize it (divide by length)
         for (int i = 0; i < normalDiff.length; i++){
@@ -210,8 +218,8 @@ public class RhythmCluster extends Cluster{
     }
     
     
-    public float[] getCentroidDatapointDifference(ArrayList<Metric> dataMetricVector, ArrayList<Metric> centroidMetrics){
-        float[] diff = new float[numMetrics];
+    public double[] getCentroidDatapointDifference(ArrayList<Metric> dataMetricVector, ArrayList<Metric> centroidMetrics){
+        double[] diff = new double[numMetrics];
         
         //get difference vector
         for (int i = 0; i < diff.length;i++){
@@ -222,7 +230,7 @@ public class RhythmCluster extends Cluster{
         return diff;
     }
     
-    private void printArray(float[] a){
+    private void printArray(double[] a){
         for(int i = 0; i < a.length; i++){
             System.out.println("    `" + a[i]);
         }
@@ -235,23 +243,24 @@ public class RhythmCluster extends Cluster{
         System.out.println("printing non-normalized centroid values: ");
         System.out.println(centroid.toString());
         
-        //float[] normalizedMetricVector = d.getNormalizedMetricVector();
+        //double[] normalizedMetricVector = d.getNormalizedMetricVector();
         
         System.out.println("printing non-normalized data values: ");
         System.out.println(d.toString());
         
-        //float[] centroidDatapointDifference = getCentroidDatapointDifference(d.getMetrics(), centroid.getMetrics());
-        ArrayList<Metric> dataMetricVector = d.getMetrics();
-        ArrayList<Metric> centroidMetrics = centroid.getMetrics();
+        //double[] centroidDatapointDifference = getCentroidDatapointDifference(d.getMetrics(), centroid.getMetrics());
+        Metric[] dataMetricVector = d.getMetrics();
+        Metric[] centroidMetrics = centroid.getMetrics();
         
-        float[] centroidDatapointDifference = new float[numMetrics];
+        double[] centroidDatapointDifference = new double[numMetrics];
         
         //get difference vector
         for (int i = 0; i < numMetrics; i++){
-            centroidDatapointDifference[i] = Math.abs(dataMetricVector.get(i).getValue() - centroidMetrics.get(i).getValue());
-            float temp = avgUserDataPointMetrics.get(i).getValue();
-            float newAvg = ((temp * (datapointCount - 1)) + d.getMetrics().get(i).getValue())/datapointCount;
-            avgUserDataPointMetrics.get(i).setValue(newAvg);
+            centroidDatapointDifference[i] = Math.abs(dataMetricVector[i].getValue() - centroidMetrics[i].getValue());
+           
+            double temp = avgUserDataPointMetrics[i].getValue();
+            double newAvg = ((temp * (datapointCount - 1)) + d.getMetrics()[i].getValue())/datapointCount;
+            avgUserDataPointMetrics[i].setValue(newAvg);
            
         }
         
@@ -262,8 +271,8 @@ public class RhythmCluster extends Cluster{
         
         
 //        for(int i = 0; i < centroid.getMetrics().size();i++){
-//            float temp = avgUserDataPointMetrics.get(i).getValue();
-//            float newAvg = ((temp*sizeForUnaveraging) + d.getMetrics().get(i).getValue())/dataPointsFromUser.size();
+//            double temp = avgUserDataPointMetrics.get(i).getValue();
+//            double newAvg = ((temp*sizeForUnaveraging) + d.getMetrics().get(i).getValue())/dataPointsFromUser.size();
 //            avgUserDataPointMetrics.get(i).setValue(newAvg);
 ////            
 //            if(d.getMetrics().get(i).getValue()>maxUserMetrics[i]){
@@ -277,11 +286,11 @@ public class RhythmCluster extends Cluster{
     }
     
     
-    public float[] getAvgCentroidDatapointDistance(){
+    public double[] getAvgCentroidDatapointDistance(){
         return avgCentroidDatapointDifference;
     }
     
-    public ArrayList<Metric> getAvgUserDataPointMetrics(){
+    public Metric[] getAvgUserDataPointMetrics(){
         return avgUserDataPointMetrics;
     }
     
@@ -313,10 +322,10 @@ public class RhythmCluster extends Cluster{
     public Polylist selectivelyGetClusterMembersPolylist(ArrayList<Polylist> excludeList){
         Polylist newRhythmPL = Polylist.list("rhythmList"); 
         ArrayList<String> stringExcludeList = polylistArrayListToStringArrayList(excludeList);
-        System.out.println("\n\n\nstringExcludeList: " + stringExcludeList.toString());
-        System.out.println("This cluster: : " + toString());
-        System.out.println("rhythmListPolylist: " + rhythmListPolylist.toString());
-        System.out.println("selectedRhythms: " + selectedRhythms.toString());
+        //System.out.println("\n\n\nstringExcludeList: " + stringExcludeList.toString());
+        //System.out.println("This cluster: : " + toString());
+        //System.out.println("rhythmListPolylist: " + rhythmListPolylist.toString());
+        //System.out.println("selectedRhythms: " + selectedRhythms.toString());
         
         
         if(rhythmListPolylist.first() instanceof String){
