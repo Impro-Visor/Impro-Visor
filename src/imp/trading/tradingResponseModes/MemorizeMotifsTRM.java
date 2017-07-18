@@ -254,8 +254,12 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
         LickgenFrame lgf = new LickgenFrame(notate, lg, new CommandManager());
         String abstractMel = lgf.addMeasureToAbstractMelody(nextSection, 4, false, false);
         String exactMelody = lgf.getExactMelody(4, abstractMel, nextSection);
-
-        abstractMel = abstractMel.substring(1, abstractMel.length() - 1);
+        
+        try{
+            abstractMel = abstractMel.substring(1, abstractMel.length() - 1);
+        } catch (NullPointerException e){
+            if (TESTING) System.err.println("Empty melody played");
+        }
         
         String relativePitch = NoteConverter.melPartToRelativePitch(melody, notate.getChordProg());
         

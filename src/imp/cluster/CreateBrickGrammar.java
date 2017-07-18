@@ -7,9 +7,9 @@ package imp.cluster;
 import static imp.Constants.BEAT;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.Brick;
-import static imp.cluster.CreateGrammar.getRuleStringsFromWriter;
-import static imp.cluster.CreateGrammar.getRulesFromWriter;
-import static imp.cluster.CreateGrammar.processRule;
+import static imp.generalCluster.CreateGrammar.getRuleStringsFromWriter;
+import static imp.generalCluster.CreateGrammar.getRulesFromWriter;
+import static imp.generalCluster.CreateGrammar.processRule;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.lickgen.LickgenFrame;
@@ -33,6 +33,10 @@ import imp.generalCluster.DataPoint;
 import imp.generalCluster.IndexedMelodyPart;
 import imp.generalCluster.JCA;
 import imp.generalCluster.ClusterSet;
+import imp.generalCluster.CreateGrammar;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -152,7 +156,7 @@ public class CreateBrickGrammar {
             boolean useRelative,
             boolean useAbstract,
             Notate notate) {
-        
+              
         //do processing by brick
         if (brickKindsArray.length == 0) { //must be a pretty strange tune for this to happen...
             ErrorLog.log(ErrorLog.COMMENT, "No bricks found in the tune. "

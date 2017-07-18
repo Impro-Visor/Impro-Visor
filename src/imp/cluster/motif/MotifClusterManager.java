@@ -120,6 +120,15 @@ public class MotifClusterManager {
     }
     
     /**
+     * Adds a MotifCluster to the manager with a given key
+     * @param key key under which the Motif Cluster will be accessible
+     * @param cluster Motif Cluster to add to the manager
+     */
+    public static void addMotifCluster(MotifClusterKey key, MotifCluster cluster){
+        CLUSTERS.put(key, cluster);
+    }
+    
+    /**
      * Returns all Motif Clusters managed by the MotifClusterManager
      * @return all Motif Clusters
      */

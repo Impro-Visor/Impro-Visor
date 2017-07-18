@@ -48,6 +48,11 @@ public class Motif {
     
     private static ArrayList<Motif> members = new ArrayList<>();
     
+    
+    public Motif(String abstractMelody, String cluster, double distanceToCentroid){
+        
+    }
+    
     /**
      * Creates a motif using the given {@link IndexedMelodyPart}.
      * @param melody the explicit melody for the motif
@@ -59,7 +64,7 @@ public class Motif {
     protected Motif(IndexedMelodyPart melody, String abstractMelody, String cluster, double distanceToCentroid){
         this.setMelody(melody);
         this.setOriginIndex(melody.getIndex());
-        this.incr();
+//        this.incr();
         this.setCluster(cluster);
         this.setAbstractMelody(abstractMelody);
         this.setLogDistanceToCentroid(distanceToCentroid);
