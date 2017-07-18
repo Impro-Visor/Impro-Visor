@@ -23097,8 +23097,8 @@ private boolean isDotted = false;
         
         if (concertPitchRadioButton.isSelected())
         {
-            System.out.println("concert pitch radio button selected called");
-            getScore().transposeMelodyInPlace(-mel.intValue());
+            //System.out.println("concert pitch radio button selected called");
+            getScore().transposeMelodyInPlace((-mel.intValue())%12);
             getScore().transposeChordsAndBassInPlace(-chordbass.intValue());
         }
         transpositionWizardDialog.setVisible(false);

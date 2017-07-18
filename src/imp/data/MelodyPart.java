@@ -2654,7 +2654,7 @@ public void transposeInPlace(int transposition)
         Note note = (Note)it.next();
         if( note.nonRest() )
           {
-             note.setPitch(note.getPitch() + transposition);
+             note.transposeInPlace(transposition);
           }
       } 
     }
