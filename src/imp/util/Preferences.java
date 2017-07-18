@@ -343,7 +343,7 @@ public class Preferences implements imp.Constants
         "(language en)" +
         "(language_list (en , fr))" +
         "(lstm-gen-params combination.ctome))" +
-        "(transposing-instruments (BbTrumpet -2 -2 treble)(BbTenorSax -14 -2 treble)(BbSopranoSax -2 -2 treble)(EbAltoSax -9 3 treble)(EbBaritoneSax -21 3 treble)(FHorn 7 -5 treble)(Trombone -12 0 bass)(SopranoRecorder 12 0 treble))";
+        "(transposing-instruments ((BbTrumpet -2 -2 treble)(BbTenorSax -14 -2 treble)(BbSopranoSax -2 -2 treble)(EbAltoSax -9 3 treble)(EbBaritoneSax -21 3 treble)(FHorn 7 -5 treble)(Trombone -12 0 bass)(SopranoRecorder 12 0 treble)))";
 
   /**
    * The ALWAYS_USE_BUTTONS are y or n standing for CHORD, BASS, DRUMS, STAVE.
