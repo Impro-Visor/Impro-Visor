@@ -81,9 +81,15 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         concertPitchButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
         setAutoRequestFocus(false);
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(630, 450));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         transposeTitle.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
@@ -267,45 +273,50 @@ Notate notate;
     }//GEN-LAST:event_transpositionWizardJListValueChanged
 
     private void transpositionWizardSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transpositionWizardSaveButtonActionPerformed
-        //deals with changing transposition spinners & radio buttons in preferences windows
-        String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-        String allValues = Preferences.getPreference("transposing-instruments");
-        Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
-        Polylist found = ALL_VALUES.assoc(transpositionInstrument);
-        Long mel = (Long) found.second();
-        Long chordbass = (Long) found.third();
-        String clef = (String) found.fourth();
-        if (clef.equals("auto"))
+        if (transpositionWizardJList.getSelectedValue() != null)
         {
-            notate.autoStaveMIActionPerformedPublic(evt);
-            notate.getAutoStaveBtn().setSelected(true);
-        }
-        else if (clef.equals("treble"))
-        {
-            notate.trebleStaveMIActionPerformedPublic(evt);
-            notate.getTrebleStaveBtn().setSelected(true);
-        }
-        else if (clef.equals("bass"))
-        {
-            notate.bassStaveMIActionPerformedPublic(evt);
-            notate.getBassStaveBtn().setSelected(true);
-        }
-        else if (clef.equals("grand"))
-        {
-            notate.grandStaveMIActionPerformedPublic(evt);
-            notate.getGrandStaveBtn().setSelected(true);
-        }
+            //deals with changing transposition spinners & radio buttons in preferences windows
+            String transpositionInstrument = transpositionWizardJList.getSelectedValue();
+            String allValues = Preferences.getPreference("transposing-instruments");
+            Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
+            Polylist found = ALL_VALUES.assoc(transpositionInstrument);
+            Long mel = (Long) found.second();
+            Long chordbass = (Long) found.third();
+            String clef = (String) found.fourth();
+            if (clef.equals("auto"))
+            {
+                notate.autoStaveMIActionPerformedPublic(evt);
+                notate.getAutoStaveBtn().setSelected(true);
+            }
+            else if (clef.equals("treble"))
+            {
+                notate.trebleStaveMIActionPerformedPublic(evt);
+                notate.getTrebleStaveBtn().setSelected(true);
+            }
+            else if (clef.equals("bass"))
+            {
+                notate.bassStaveMIActionPerformedPublic(evt);
+                notate.getBassStaveBtn().setSelected(true);
+            }
+            else if (clef.equals("grand"))
+            {
+                notate.grandStaveMIActionPerformedPublic(evt);
+                notate.getGrandStaveBtn().setSelected(true);
+            }
 
-        notate.getChorusMelodyTranspositionSpinner().setValue(mel);
-        notate.getLeadsheetChordTranspositionSpinner().setValue(chordbass);
-        notate.getLeadsheetBassTranspositionSpinner().setValue(chordbass);
+            notate.getChorusMelodyTranspositionSpinner().setValue(mel);
+            notate.getLeadsheetChordTranspositionSpinner().setValue(chordbass);
+            notate.getLeadsheetBassTranspositionSpinner().setValue(chordbass);
 
-        //deals with transposing the playback
-        notate.changeMelodyTransposition(mel.intValue());
-        notate.changeChordTransposition(chordbass.intValue());
-        notate.changeBassTransposition(chordbass.intValue());
+            //deals with transposing the playback
+            notate.changeMelodyTransposition(mel.intValue());
+            notate.changeChordTransposition(chordbass.intValue());
+            notate.changeBassTransposition(chordbass.intValue());
+   
+        }
 
         setVisible(false);
+        notate.getTranspositionWizardMI().setEnabled(true);
     }//GEN-LAST:event_transpositionWizardSaveButtonActionPerformed
 
     private void concertPitchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concertPitchButtonActionPerformed
@@ -326,7 +337,15 @@ Notate notate;
         //System.out.println("change key signature from " + oldKeySignature + " to " + newKeySignature);
         score.setKeySignature(newKeySignature);
         notate.getCurrentStave().setKeySignature(newKeySignature);
+        if (!notate.hasFocus())
+        {
+            notate.requestFocusInWindow();
+        }
     }//GEN-LAST:event_concertPitchButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        notate.getTranspositionWizardMI().setEnabled(true);
+    }//GEN-LAST:event_formWindowClosing
 
 //    /**
 //     * @param args the command line arguments

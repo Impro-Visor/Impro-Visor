@@ -8016,12 +8016,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transformMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="transpositionWizard">
+            <MenuItem class="javax.swing.JMenuItem" name="transpositionWizardMI">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Transposition Wizard"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transpositionWizardActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transpositionWizardMIActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

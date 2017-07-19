@@ -2068,7 +2068,7 @@ public Critic getCritic()
         soloGeneratorMI = new javax.swing.JMenuItem();
         customSoloGeneratorMI = new javax.swing.JMenuItem();
         transformMI = new javax.swing.JMenuItem();
-        transpositionWizard = new javax.swing.JMenuItem();
+        transpositionWizardMI = new javax.swing.JMenuItem();
         improvMenu = new javax.swing.JMenu();
         saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -8518,13 +8518,13 @@ public Critic getCritic()
         });
         utilitiesMenu.add(transformMI);
 
-        transpositionWizard.setText("Transposition Wizard");
-        transpositionWizard.addActionListener(new java.awt.event.ActionListener() {
+        transpositionWizardMI.setText("Transposition Wizard");
+        transpositionWizardMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transpositionWizardActionPerformed(evt);
+                transpositionWizardMIActionPerformed(evt);
             }
         });
-        utilitiesMenu.add(transpositionWizard);
+        utilitiesMenu.add(transpositionWizardMI);
 
         menuBar.add(utilitiesMenu);
 
@@ -10487,8 +10487,14 @@ private void openTranspositionWizardDialog()
 {
     TranspositionWizardDialog test = new TranspositionWizardDialog(this);
     test.setVisible(true);
+    transpositionWizardMI.setEnabled(false);
 }
  
+public JMenuItem getTranspositionWizardMI()
+{
+    return transpositionWizardMI;
+}
+
 public JRadioButton getAutoStaveBtn()
 {
     return autoStaveBtn;
@@ -22847,7 +22853,8 @@ private boolean isDotted = false;
     }//GEN-LAST:event_adviceDialogComponentHidden
 
     private void adviceDialogWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_adviceDialogWindowClosing
-        // TODO add your handling code here:
+       showAdviceButton.setSelected(false);
+       showAdviceButtonActionPerformed(null); 
     }//GEN-LAST:event_adviceDialogWindowClosing
 
     private void chorusMelodyTranspositionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chorusMelodyTranspositionSpinnerStateChanged
@@ -22909,9 +22916,9 @@ private boolean isDotted = false;
         // TODO add your handling code here:
     }//GEN-LAST:event_numStavesPerPageActionPerformed
 
-    private void transpositionWizardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transpositionWizardActionPerformed
+    private void transpositionWizardMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transpositionWizardMIActionPerformed
         openTranspositionWizardDialog();
-    }//GEN-LAST:event_transpositionWizardActionPerformed
+    }//GEN-LAST:event_transpositionWizardMIActionPerformed
 
     public void openGrammarMenuDialog()
     {
@@ -25622,7 +25629,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem transposeMelodyUpOctave;
     private javax.swing.JMenuItem transposeMelodyUpSemitone;
     private javax.swing.JMenu transposeMenu;
-    private javax.swing.JMenuItem transpositionWizard;
+    private javax.swing.JMenuItem transpositionWizardMI;
     private javax.swing.JRadioButton trebleStave;
     private javax.swing.JRadioButton trebleStaveBtn;
     private javax.swing.JDialog truncatePartDialog;
