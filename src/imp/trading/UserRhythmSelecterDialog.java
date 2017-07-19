@@ -23,8 +23,10 @@ import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.util.NonExistentParameterException;
 import imp.util.Preferences;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -41,6 +43,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -48,6 +51,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 import polya.Polylist;
 
 /**
@@ -144,32 +149,32 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      
         createDialog(userRhythms);
         
-        addButton.addActionListener(new ActionListener(){
-          public void actionPerformed(ActionEvent e){
-              addSelectedRuleStrings();
+//        addButton.addActionListener(new ActionListener(){
+//          public void actionPerformed(ActionEvent e){
+//              addSelectedRuleStrings();
 //              try {
 //                  rewriteRhythmClustersToFile();
 //              } catch (IOException ex) {
 //                  Logger.getLogger(UserRhythmSelecterDialog.class.getName()).log(Level.SEVERE, null, ex);
 //              }
-              refreshDialog();
-          }  
+//              refreshDialog();
+//          }  
+//        
+//        } );
         
-        } );
-        
-        deleteButton.addActionListener(new ActionListener(){
-          public void actionPerformed(ActionEvent e){
-              ArrayList<Polylist> deletedRhythms = removeRhythms();
-              rhythmsToDelete.addAll(deletedRhythms);
-              System.out.println("\n\nrefreshing editor pane...\n\n");
-              refreshEditorPane();
-                
-              
-          }  
-
-
-        
-        } );
+//        deleteButton.addActionListener(new ActionListener(){
+//          public void actionPerformed(ActionEvent e){
+//              ArrayList<Polylist> deletedRhythms = removeRhythms();
+//              rhythmsToDelete.addAll(deletedRhythms);
+//              System.out.println("\n\nrefreshing editor pane...\n\n");
+//              refreshEditorPane();
+//                
+//              
+//          }  
+//
+//
+//        
+//        } );
         
         this.addWindowListener(new java.awt.event.WindowAdapter() {
                @Override
@@ -502,14 +507,38 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
             
             
             scrollConstraints.gridx = 0;
-            JCheckBox temp = new JCheckBox();
-            editorPanel.add(temp, scrollConstraints);
-            editorCheckBoxArray.add(temp);
+//            JCheckBox temp = new JCheckBox();
+//            editorPanel.add(temp, scrollConstraints);
+//            editorCheckBoxArray.add(temp);
+            addXButton(editorPanel, scrollConstraints, i);
+            
             scrollConstraints.gridx = 1;
             editorPanel.add(rhythmTextRepresentation, scrollConstraints);
             scrollConstraints.gridy++;
         }
         return editorPanel;
+    }
+    
+    public void addXButton(JPanel editorPanel, GridBagConstraints scrollConstraints, int i){
+        JButton xButton = new JButton("");
+        ImageIcon redX = new ImageIcon(getClass().getResource("/imp/gui/graphics/redX.png"));
+        xButton.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+              Polylist ruleStringPL = userRuleStringsToWrite.get(i);
+              //ArrayList<Polylist> deletedRhythms = removeRhythms();
+              rhythmsToDelete.add(getRhythmPolylistFromRuleStringPL(ruleStringPL));
+              userRuleStringsToWrite.remove(i);
+              //System.out.println("\n\nrefreshing editor pane...\n\n");
+              refreshEditorPane();
+                
+              
+          }  
+        } );
+        
+        editorPanel.add(xButton, scrollConstraints);
+        int horizontalOffset = xButton.getInsets().right+32;
+        int verticalOffset = 15;
+        xButton.setIcon(resizeIcon(redX, xButton.getPreferredSize().width-horizontalOffset, xButton.getPreferredSize().height-verticalOffset));
     }
     
     /**
@@ -548,9 +577,9 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         framePanel.add(UserRhythmScrollPane);
 
         //Create and add add button to dialog
-        addButton = getAddButton();
-        addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        framePanel.add(addButton);
+        //addButton = getAddButton();
+        //addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //framePanel.add(addButton);
         
         //Create The User Rhythm Editor panel
         JPanel editorPanel = new JPanel();
@@ -566,9 +595,9 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         editorPanel.add(editorScrollPane);
         
         //create the delete rhythm button
-        deleteButton = getDeleteButton();
-        deleteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        editorPanel.add(deleteButton);
+//        deleteButton = getDeleteButton();
+//        deleteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        editorPanel.add(deleteButton);
         
         //make split pane with editor and frame components
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,framePanel, editorPanel);
@@ -647,7 +676,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
     private JPanel getRhythmPanel(){
         JPanel rhythmTextPanel = new JPanel();
         rhythmTextPanel.setLayout(new GridBagLayout());
-        checkBoxArray = new ArrayList<JCheckBox>();
+        //checkBoxArray = new ArrayList<JCheckBox>();
         //Set up constraints for rhythmTextPanel layout
         GridBagConstraints scrollConstraints = new GridBagConstraints();
         scrollConstraints.anchor = GridBagConstraints.NORTH;
@@ -664,17 +693,54 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
             addMouseListenerToRhythmTextField(rhythmTextRepresentation);
             //System.out.println("current visualization: "+ makeRealMelodyFromRhythmPolylist(userRhythms.get(i)));
             scrollConstraints.gridx = 0;
-            JCheckBox temp = new JCheckBox();
-            rhythmTextPanel.add(temp, scrollConstraints);
-            checkBoxArray.add(temp);
-            scrollConstraints.gridx = 1;
             rhythmTextPanel.add(rhythmTextRepresentation, scrollConstraints);
+            scrollConstraints.gridx = 1;
+            addArrowButton(rhythmTextPanel, scrollConstraints, i);
+           
             scrollConstraints.gridy++;
         }
         
         return rhythmTextPanel;
     }
     
+    
+    
+    public void addArrowButton(JPanel rhythmTextPanel, GridBagConstraints scrollConstraints, int i){
+        JButton arrowButton = new JButton("");
+        ImageIcon greenArrow = new ImageIcon(getClass().getResource("/imp/gui/graphics/rightArrow.png"));
+        arrowButton.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+            DataPoint selectedDP = userData.get(i);
+                
+            dataPointsAdded.add(selectedDP);
+
+            RhythmCluster rc = rhythmHelperTRM.findNearestCluster(rhythmClusters, selectedDP);
+            Polylist ruleStringPL = extractRuleStringPolylistFromDatapoint(selectedDP);
+
+
+            rc.addSelectedRuleString(ruleStringPL);//add datapoint to rhythm cluster
+            userRuleStringsToWrite.add(ruleStringPL);
+
+            userData.remove(selectedDP);
+
+            userRhythms.remove(i);
+                
+            refreshDialog();
+          }  
+        
+        } );
+        rhythmTextPanel.add(arrowButton, scrollConstraints);
+        //System.out.println("arrowButton right inset: "+arrowButton.getInsets().right);
+        int horizontalOffset = arrowButton.getInsets().right+4;
+        int verticalOffset = 15;
+        arrowButton.setIcon(resizeIcon(greenArrow, arrowButton.getPreferredSize().width-horizontalOffset, arrowButton.getPreferredSize().height-verticalOffset));
+    }
+    
+    private ImageIcon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
+        Image img = icon.getImage();  
+        Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight,  java.awt.Image.SCALE_SMOOTH);  
+        return new ImageIcon(resizedImage);
+    }
     /**
      * Add mouse listener to a text field in the add rhythms panel. 
      * 
