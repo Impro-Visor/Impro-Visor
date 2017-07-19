@@ -7,38 +7,43 @@ package imp.trading.tradingResponseModes;
 
 import imp.data.MelodyPart;
 import imp.data.RhythmCluster;
-import imp.generalCluster.CreateGrammar;
-import imp.generalCluster.DataPoint;
 import polya.Polylist;
 
 /**
  *
  * @author cssummer17
  */
-public class CorrectRhythmTRM extends RhythmHelperTRM{
+public class SuggestRhythmTRM extends RhythmHelperTRM{
+    private int tradeCounter;
     
-    public CorrectRhythmTRM(String message) {
+    
+    public SuggestRhythmTRM(String message) {
         super(message);
-        System.out.println("creating a correctRhythmTRM......");
+        tradeCounter = 0;
+        System.out.println("creating a suggestRhythmTRM......");
     }
 
     
     @Override
     public MelodyPart generateResponse(){
+        tradeCounter++;
         
-        System.out.println("\n\n\nin generateResponse for correct rhythm");
-        return getTradingResponse();
-//        responseInfo.correctRhythm();
-//        return responseInfo.getResponse();
+        System.out.println("\n\n\nin generateResponse for suggest rhythm");
+        
+        MelodyPart response = getTradingResponse();
+        
+        if(tradeCounter % 5==0){
+            adjustClusters(tradeCounter);
+        }
+        return response;
     }
     
     public String toString(){
         return "Rhythm Helper";
     }
-    
+
     @Override
     protected Polylist getRhythmFromCluster(RhythmCluster closestCluster) {
-        return closestCluster.getClosestRhythm();
+        return closestCluster.getRandomRhythm();
     }
-    
 }

@@ -39,20 +39,29 @@ import imp.trading.tradingResponseModes.MemorizeMotifsTRM;
 import imp.trading.tradingResponseModes.ModifyAndRectifyTRM;
 import imp.trading.tradingResponseModes.RepeatAndRectifyTRM;
 import imp.trading.tradingResponseModes.RepeatTRM;
+import imp.trading.tradingResponseModes.RhythmHelperTRM;
 import imp.trading.tradingResponseModes.StreamRepeatTRM;
+import imp.trading.tradingResponseModes.SuggestRhythmTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.trading.tradingResponseModes.TransformTRM;
 import imp.util.NonExistentParameterException;
 import imp.util.Preferences;
 import imp.util.TransformFilter;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SpinnerNumberModel;
 
@@ -67,6 +76,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     UserRhythmSelecterDialog userRhythmSelecterDialog;
 
     private final Notate notate;
+    private JPanel rhythmHelperModeRadioPanel;
+    JRadioButton suggestRhythmRadioButton;
+    JRadioButton correctRhythmRadioButton;
     
     /**
      * Creates new form ActiveTradingDialog
@@ -78,6 +90,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         this.notate = notate;
         initComponents();
         activeTrading = new ActiveTrading(notate, swingCheckBox);
+        rhythmHelperModeRadioPanel = createRhythmHelperModeRadioPanel();
+        this.addRhythmHelperModeRadioPanel();
+        
         notate.populateGenericGrammarMenu(tradeGrammarMenu);
         populateMusicianList();
         Component[] modes = modeMenu.getMenuComponents();
@@ -645,7 +660,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private void startOrStopTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startOrStopTradingButtonActionPerformed
         if( tradingNow )
           {
-            if(getFromDropDown(modeMenu).equals("Rhythm Helper")){
+            if(activeTrading.getTradeMode() instanceof RhythmHelperTRM){
             showUserRhythmSelecterDialog();
             }
             stopTrading();
@@ -674,7 +689,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     private void tradeStopMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeStopMenuItemActionPerformed
         stopTrading();
-        if(getFromDropDown(modeMenu).equals("Rhythm Helper")){
+        if(activeTrading.getTradeMode() instanceof RhythmHelperTRM){
             showUserRhythmSelecterDialog();
         }
     }//GEN-LAST:event_tradeStopMenuItemActionPerformed
@@ -788,8 +803,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
          notate.setToTrade();
     }
     private void showUserRhythmSelecterDialog(){
-        TradingResponseController tradeResponseController = activeTrading.getTradeResponseController();
-        userRhythmSelecterDialog = new UserRhythmSelecterDialog(tradeResponseController.getTradingResponseInfo());
+        userRhythmSelecterDialog = new UserRhythmSelecterDialog(activeTrading.getTradeMode());
         userRhythmSelecterDialog.setLocation(userRhythmSelecterDialog.INITIAL_OPEN_POINT);
         userRhythmSelecterDialog.setSize(800, 200);
         userRhythmSelecterDialog.setVisible(true);
@@ -832,6 +846,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeLengthSpinner.setVisible(true);
         grammarStatus.setVisible(true);
         transformStatus.setVisible(true);
+        rhythmHelperModeRadioPanel.setVisible(false);
         
         switch (newMode) {
             case "Repeat":
@@ -868,7 +883,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 //                transformStatus.setVisible(false);
 //                break;
             case "Rhythm Helper":
-                tradeMode = new CorrectRhythmTRM("Correct Rhythm");
+                transformStatus.setVisible(false);
+                rhythmHelperModeRadioPanel.setVisible(true);
+                tradeMode = getRhythmHelperSelectedTRM();
+                
                 break;
             case "Memorize Motifs":
                 tradeMode = new MemorizeMotifsTRM(newMode, notate);
@@ -1049,6 +1067,72 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     public int getUpdatedTradeLength() {
         return activeTrading.getMeasures();
+    }
+     private void addRhythmHelperModeRadioPanel(){
+        GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        
+        modePanel.add(rhythmHelperModeRadioPanel, gridBagConstraints);
+        rhythmHelperModeRadioPanel.setVisible(false);
+    }
+    
+    private JPanel createRhythmHelperModeRadioPanel(){
+        JPanel radioButtonMenuPanel = new JPanel();
+        radioButtonMenuPanel.setLayout(new BoxLayout(radioButtonMenuPanel, BoxLayout.LINE_AXIS));
+        
+        ButtonGroup group = new ButtonGroup();
+        
+        suggestRhythmRadioButton = new JRadioButton("suggestive", true);
+        correctRhythmRadioButton = new JRadioButton("corrective", false);
+        group.add(suggestRhythmRadioButton);
+        group.add(correctRhythmRadioButton);
+        
+        radioButtonMenuPanel.add(suggestRhythmRadioButton);
+        radioButtonMenuPanel.add(correctRhythmRadioButton);
+        
+        
+        
+        addRhythmRadioButtonActionListeners();
+        
+        return radioButtonMenuPanel;
+    }
+    
+    private void addRhythmRadioButtonActionListeners(){
+        
+        suggestRhythmRadioButton.addActionListener(new ActionListener(){
+          @Override
+          public void actionPerformed(ActionEvent e){
+              System.out.println("\n\ncalling action listener for suggestRhythmRadioButton");
+              System.out.println("correctRhythmRadioButton selected? " + correctRhythmRadioButton.isSelected());
+              System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
+            if(suggestRhythmRadioButton.isSelected()){
+                activeTrading.setTradeMode(new SuggestRhythmTRM("Suggest Rhythm"));
+            }
+          }   
+        } );
+        
+        correctRhythmRadioButton.addActionListener(new ActionListener(){
+          @Override
+          public void actionPerformed(ActionEvent e){
+              System.out.println("\n\ncalling action listener for correctRhythmRadioButton");
+              System.out.println("correctRhythmRadioButton selected? " + correctRhythmRadioButton.isSelected());
+              System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
+            if(correctRhythmRadioButton.isSelected()){
+                activeTrading.setTradeMode(new CorrectRhythmTRM("Correct Rhythm"));
+            }
+          }   
+        } );
+    }
+    
+    
+    private TradingResponseMode getRhythmHelperSelectedTRM(){
+        if(suggestRhythmRadioButton.isSelected()){
+            return (new SuggestRhythmTRM("Suggest Rhythm"));
+        }else{
+            return (new CorrectRhythmTRM("Correct Rhythm"));
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButtonMenuItem MemorizeMotifsMenuItem;

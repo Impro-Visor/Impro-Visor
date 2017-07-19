@@ -303,6 +303,25 @@ public class Cluster implements Serializable{
         return rhythmPL;
     }
 
+    public Polylist selectivelyGetClusterMembersRuleStringsPolylist(ArrayList<Polylist> excludeList){
+        Polylist ruleStrings = Polylist.list("ruleStringList");
+
+  
+        DataPoint[] clusterMembers = (DataPoint[]) getDataPoints().toArray(new DataPoint[getDataPoints().size()]);
+        
+        
+        for(int i = 0; i < clusterMembers.length; i++){
+            String ruleString = clusterMembers[i].getRuleString();
+                             
+            if(!excludeList.contains(ruleString)){
+                ruleStrings = ruleStrings.addToEnd(Polylist.list("ruleString", ruleString));
+            }
+        }
+        
+       
+        return ruleStrings;
+    }
+
     public String toString()
     {
         StringBuffer buffer = new StringBuffer();

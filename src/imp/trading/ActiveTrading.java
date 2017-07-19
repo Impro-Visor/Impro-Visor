@@ -191,6 +191,10 @@ public class ActiveTrading {
         this.tradeMode = tradeMode;
     }
     
+    public TradingResponseMode getTradeMode(){
+        return this.tradeMode;
+    }
+    
     public void setLoop(boolean isLoop){
         this.isLoop = isLoop;
         notate.setLoop(true);

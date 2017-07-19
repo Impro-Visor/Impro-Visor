@@ -238,14 +238,14 @@ public class RhythmCluster extends Cluster{
     
     
     public void addUserDataPoint(DataPoint d){
-        System.out.println("\nAdding dataPoint......");
+//        System.out.println("\nAdding dataPoint......");
         datapointCount++;
-        System.out.println("printing non-normalized centroid values: ");
+//        System.out.println("printing non-normalized centroid values: ");
         System.out.println(centroid.toString());
         
         //double[] normalizedMetricVector = d.getNormalizedMetricVector();
         
-        System.out.println("printing non-normalized data values: ");
+//        System.out.println("printing non-normalized data values: ");
         System.out.println(d.toString());
         
         //double[] centroidDatapointDifference = getCentroidDatapointDifference(d.getMetrics(), centroid.getMetrics());
@@ -319,13 +319,14 @@ public class RhythmCluster extends Cluster{
     }
     
     
+    @Override
     public Polylist selectivelyGetClusterMembersPolylist(ArrayList<Polylist> excludeList){
         Polylist newRhythmPL = Polylist.list("rhythmList"); 
         ArrayList<String> stringExcludeList = polylistArrayListToStringArrayList(excludeList);
-        //System.out.println("\n\n\nstringExcludeList: " + stringExcludeList.toString());
-        //System.out.println("This cluster: : " + toString());
-        //System.out.println("rhythmListPolylist: " + rhythmListPolylist.toString());
-        //System.out.println("selectedRhythms: " + selectedRhythms.toString());
+//        System.out.println("\n\n\nstringExcludeList: " + stringExcludeList.toString());
+//        System.out.println("This cluster: : " + toString());
+//        System.out.println("rhythmListPolylist: " + rhythmListPolylist.toString());
+//        System.out.println("selectedRhythms: " + selectedRhythms.toString());
         
         
         if(rhythmListPolylist.first() instanceof String){
@@ -360,9 +361,78 @@ public class RhythmCluster extends Cluster{
         return newRhythmPL;
     }
 
+    @Override
+    public Polylist selectivelyGetClusterMembersRuleStringsPolylist(ArrayList<Polylist> excludeList){
+        Polylist ruleStrings = Polylist.list("ruleStringList");
+        ArrayList<String> stringExcludeList = polylistArrayListToStringArrayList(excludeList);
+
+//        System.out.println("\n********************\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n\n\n"
+//                + "polylistRhythmArray in selectivelyGetClusterMembersRuleStringsPolylist: " + polylistRhythmArray.toString());
+//        
+//        System.out.println("excludeList: " + excludeList);
+        
+        //skip "ruleStringList" tag
+        rhythmListPolylist = rhythmListPolylist.rest();
+        
+        
+        while(!rhythmListPolylist.isEmpty()){
+           Polylist ruleString = (Polylist) rhythmListPolylist.first();
+            
+//           //skip "ruleString" tag
+//           Polylist ruleStringNoTag = ruleString.rest(); 
+            
+            
+            //System.out.println("rhythmListPolylist.first(): " + ruleString.first().toString());
+               
+            if(!stringExcludeList.contains(ruleString.toString())){
+                //System.out.println("adding " + ruleString.toString());
+                ruleStrings = ruleStrings.addToEnd(ruleString);
+            }else{
+                //System.out.println("\n+++++++++++++++\n***********************\nremoving " + ruleString.toString());
+            }
+         
+            rhythmListPolylist = rhythmListPolylist.rest();          
+        }
+        
+  
+        rhythmListPolylist = ruleStrings;
+        
+        return ruleStrings;
+    }
+    
+//    public Polylist selectivelyGetClusterMembersRuleStringsPolylist(ArrayList<Polylist> excludeList){
+//        Polylist ruleStrings = Polylist.list("ruleStringList");
+//
+//  
+//        DataPoint[] clusterMembers = (DataPoint[]) getDataPoints().toArray(new DataPoint[getDataPoints().size()]);
+//        
+//        
+//        for(int i = 0; i < clusterMembers.length; i++){
+//            String ruleString = clusterMembers[i].getRuleString();
+//                             
+//            if(!excludeList.contains(ruleString)){
+//                ruleStrings = ruleStrings.addToEnd(Polylist.list("ruleString", ruleString));
+//            }
+//        }
+//        
+//       
+//        return ruleStrings;
+//    }
+
 
     public void addSelectedDatapoint(DataPoint d) {
         selectedRhythms.add(d);
+    }
+    
+    public void addSelectedRuleString(Polylist p){        
+        rhythmListPolylist = rhythmListPolylist.addToEnd(p);
+}
+
+    public Polylist getClosestRhythm() {
+        int randomIndex = (int) (Math.random()*(polylistRhythmArray.size()));
+        //System.out.println("random index is: "+randomIndex);
+        //System.out.println("rhythm at random index is: "+polylistRhythmArray.get(randomIndex));
+        return polylistRhythmArray.get(randomIndex);
     }
     
 }

@@ -34,13 +34,21 @@ public class ChainComparer implements Comparator {
         float[] d = (float[]) b;
 
         boolean first = false;
+        boolean equals = true;
         
         for(int i = c.length-1; i >= 0 ; i--) {
-            if(c[i] < d[i]) first = true;
-            if(c[i] > d[i]) first = false;
+            if(c[i] < d[i]){ 
+                first = true;
+                equals = false;
+        }
+            if(c[i] > d[i]){ 
+                first = false;
+                equals = false;
+            }
         }
         
-        if(first) return -1;
+        if(equals) return 0;    
+        else if(first) return -1;
         else return 1;
         
         

@@ -50,6 +50,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.ArrayUtils;
+import polya.Formatting;
 import polya.Polylist;
 
 /**
@@ -128,7 +129,7 @@ public class CreateGrammar implements imp.Constants {
             DataPoint temp = processRule(rules[i], ruleStrings[i], Integer.toString(i), metricListFactory);
             int segLength = temp.getSegLength();
             if(createClusterFile && segLength != clusterWindowSize){
-                System.out.println("mySegLength: " + segLength + ", targetSegLength: " + clusterWindowSize + ", normalizingRatio: " + (float) clusterWindowSize / segLength);
+//                System.out.println("mySegLength: " + segLength + ", targetSegLength: " + clusterWindowSize + ", normalizingRatio: " +  clusterWindowSize / segLength);
                 temp.scaleMetrics( (clusterWindowSize) / segLength);
              }
              updateGlobalMetricMaxMin(temp);
@@ -364,9 +365,9 @@ public class CreateGrammar implements imp.Constants {
                 Centroid centroid = cluster.getCentroid();
  
                 Polylist clusterPL = Polylist.list("cluster", Polylist.list("name", "cluster"+i), getCentroidPolylist(centroid), 
-                        cluster.selectivelyGetClusterMembersPolylist(excludeList));
+                        cluster.selectivelyGetClusterMembersRuleStringsPolylist(excludeList));
              
-                writer.write(clusterPL.toString());
+                writer.write(Formatting.prettyFormat(clusterPL));
             }
             
             writer.close();
@@ -1698,11 +1699,11 @@ public class CreateGrammar implements imp.Constants {
             NGramWithTransitions t = transitions.get(j);
             Vector<Integer> states = t.getStates();
             Vector<Float> probs = t.getProbabilities();
-            System.out.println("State " + t.getState());
+            //System.out.println("State " + t.getState());
             for (int i = 0; i < states.size(); i++) {
                 System.out.print(states.get(i) + ": " + probs.get(i) + ", ");
             }
-            System.out.println("\nSum of probs: " + t.getSumOfProbs());
+            //System.out.println("\nSum of probs: " + t.getSumOfProbs());
         }
     }
 

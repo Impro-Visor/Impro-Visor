@@ -129,20 +129,21 @@ public class TradingResponseInfo {
         
 //        System.out.println("notate score length is: "+ notate.getScoreLength());
 //        System.out.println("notate score is: "+ notate.getScore());
-        clusterArray=new ArrayList<RhythmCluster>();
-        clusterFileName = retrieveClusterFileName();
-        try{
+//        clusterArray=new ArrayList<RhythmCluster>();
+//        clusterFileName = retrieveClusterFileName();
+//        try{      
+//            //clusterArray = loadClustersFromFile(imp.generalCluster.CreateGrammar.getClusterOutputFile(clusterFileName));
+//            parseClusterFile(clusterFileName);
+//        }catch(IOException e){
+//            System.out.println("File load failed!!");
+//        }
+    }
             
-            //clusterArray = loadClustersFromFile(imp.generalCluster.CreateGrammar.getClusterOutputFile(clusterFileName));
-            parseClusterFile(clusterFileName);
-            //setCentroidMetricMaxMinValues(clusterArray);//set the arrays keeping track of max and min values for all metrics over all centroids
+    public int getNextSection(){
+        return nextSection;
+    }
            
 
-        }catch(IOException e){
-            System.out.println("File load failed!!");
-        }
-    }
-    
     public String retrieveClusterFileName(){
         String fileName = getClusterFileNameFromPreferences();
         fileName = ImproVisor.getRhythmClusterDirectory() + "/" + fileName;
@@ -186,6 +187,12 @@ public class TradingResponseInfo {
         this.responseChords = responseChords;
         this.nextSection = nextSection;
     }
+    
+    public MelodyPart getResponseNoMerge(){
+        return response;
+    }
+    
+    
     
     /**Trading response method for correcting a user's rhythm
      * takes the solo played by the user, finds the cluster it would fit best with
@@ -697,7 +704,13 @@ public class TradingResponseInfo {
     }
     private ArrayList<RhythmCluster> loadClustersFromFile(BufferedReader clusterTextReader) throws IOException{
         
-        String clusterString = clusterTextReader.readLine();
+        String clusterString = "";
+        String line;
+        while((line = clusterTextReader.readLine()) != null){
+            line = line.trim();
+            clusterString+=line;
+        }
+        System.out.println("cluster string is: "+clusterString);
         Polylist clustersPolylist = Polylist.PolylistFromString(clusterString);
         ArrayList<RhythmCluster> rhythmClusters = new ArrayList<RhythmCluster>(); 
         int iterator = 0;

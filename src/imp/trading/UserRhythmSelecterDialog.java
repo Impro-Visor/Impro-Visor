@@ -18,6 +18,8 @@ import imp.generalCluster.Cluster;
 import imp.generalCluster.CreateGrammar;
 import imp.generalCluster.DataPoint;
 import imp.gui.Notate;
+import imp.trading.tradingResponseModes.RhythmHelperTRM;
+import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.util.NonExistentParameterException;
 import imp.util.Preferences;
 import java.awt.Component;
@@ -95,18 +97,27 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
     private Double[] minMetricValues;
     private int totalNumDataPointsSaved;
     private ArrayList<DataPoint> dataPointsAdded;
+    private RhythmHelperTRM rhythmHelperTRM;
     
     
 
     /**
      * Creates new customizer UserRhythmSelecterDialog
      */
-    public UserRhythmSelecterDialog(TradingResponseInfo tradingResponseInfo) {
+    public UserRhythmSelecterDialog(TradingResponseMode trm) {
+        if( !(trm instanceof RhythmHelperTRM) ){
+            System.out.println("As of now, UserRhythmSelecter Dialog only works with TRM's of type RhythmHelper! "
+                    + "Not going to show UserRhythmSelectorDialog.");
+            dispose();
+        }
             
-        this.tradingResponseInfo = tradingResponseInfo;
-        this.windowSize = tradingResponseInfo.getWindowSizeOfCluster();
-        this.rhythmClusters = tradingResponseInfo.getRhythmClusters();
-        this.notate  = tradingResponseInfo.getNotate();
+        rhythmHelperTRM = (RhythmHelperTRM) trm;
+        
+        //this.tradingResponseInfo = tradingResponseInfo;
+        
+        this.windowSize = rhythmHelperTRM.getWindowSizeOfCluster();
+        this.rhythmClusters = rhythmHelperTRM.getRhythmClusters();
+        this.notate  = rhythmHelperTRM.getNotate();
         
         this.selectedRhythms = new ArrayList<DataPoint>();
         
@@ -121,9 +132,9 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         
         rhythmsToDelete = new ArrayList<Polylist>();
         
-        maxMetricValues = tradingResponseInfo.getMaxMetricVals();
-        minMetricValues = tradingResponseInfo.getMinMetricVals();
-        totalNumDataPointsSaved = tradingResponseInfo.getTotalNumSavedDataPoints();
+        maxMetricValues = rhythmHelperTRM.getMaxMetricVals();
+        minMetricValues = rhythmHelperTRM.getMinMetricVals();
+        totalNumDataPointsSaved = rhythmHelperTRM.getTotalNumSavedDataPoints();
         
         System.out.println("in constructor, userRuleStringsToWrite: " + userRuleStringsToWrite.toString());
         
@@ -136,11 +147,11 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         addButton.addActionListener(new ActionListener(){
           public void actionPerformed(ActionEvent e){
               addSelectedRuleStrings();
-              try {
-                  rewriteRhythmClustersToFile();
-              } catch (IOException ex) {
-                  Logger.getLogger(UserRhythmSelecterDialog.class.getName()).log(Level.SEVERE, null, ex);
-              }
+//              try {
+//                  rewriteRhythmClustersToFile();
+//              } catch (IOException ex) {
+//                  Logger.getLogger(UserRhythmSelecterDialog.class.getName()).log(Level.SEVERE, null, ex);
+//              }
               refreshDialog();
           }  
         
@@ -272,7 +283,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      */
     private void deleteSelectedRhythmsFromClusters(ArrayList<Polylist> rhythmsToExclude) throws IOException {
         Cluster[] clusterArray = ClusterArrayListToClusterArray(rhythmClusters);
-        CreateGrammar.selectiveClusterToFile(clusterArray, tradingResponseInfo.getClusterFileName(), rhythmsToExclude, windowSize,
+        CreateGrammar.selectiveClusterToFile(clusterArray, rhythmHelperTRM.getClusterFileName(), rhythmsToExclude, windowSize,
                maxMetricValues, minMetricValues);
 
     }
@@ -386,11 +397,11 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
                 
                 dataPointsAdded.add(selectedDP);
                 
-                RhythmCluster rc = tradingResponseInfo.findNearestCluster(rhythmClusters, selectedDP);
-                
-                rc.addSelectedDatapoint(selectedDP);//add datapoint to rhythm cluster
-                
+                RhythmCluster rc = rhythmHelperTRM.findNearestCluster(rhythmClusters, selectedDP);
                 Polylist ruleStringPL = extractRuleStringPolylistFromDatapoint(selectedDP);
+                
+                
+                rc.addSelectedRuleString(ruleStringPL);//add datapoint to rhythm cluster
                 userRuleStringsToWrite.add(ruleStringPL);
                 
             }else{//everything that is not selected should be displayed after selected rhythms have been added

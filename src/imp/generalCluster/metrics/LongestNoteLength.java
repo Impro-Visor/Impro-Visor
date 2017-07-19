@@ -44,8 +44,8 @@ public class LongestNoteLength extends Metric{
         int prime = 821;
         float mostFreqDuration = 0;
         int numNotes = 0;
-        float longestRhythm = Integer.MIN_VALUE;
-        float longestRest = Integer.MIN_VALUE;
+        float longestRhythm = 0;
+        float longestRest = 0;
         
         
         while(indexMel.getCurrentNote(currentSlot) != null){
