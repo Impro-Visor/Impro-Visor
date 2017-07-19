@@ -38,7 +38,7 @@ import polya.Polylist;
 public class CreateMotifGrammar {
  
     
-    // turn on for print statements, and wrap all testing in if(TESTING){code}
+    // turn on for print statements, and wrap all testing in if(TESTING){test code}
     public static final boolean TESTING = false;
     
     
@@ -47,11 +47,15 @@ public class CreateMotifGrammar {
     private static final boolean IS_ISOLATED = false;
     
     // isolated mode currently buggy and requires manual changes in grammar file after creation
-    private static final String START_ISOLATED = "START_M";
+    private static final String START_ISOLATED = "START_Motif";
     
-    private static final String START_INTEGRATED = "P";
-    private static final String NON_MOTIF_CLUSTER = "M_X";
+    private static final String START_MOTIF = "UseMotif";
+    private static final String START       = "P";
+    private static final String NON_MOTIF_CLUSTER = "Motif_X";
     private static final String STD_GRAMMAR_START = "Q";
+    
+    // the unnormalized start probability of the standard grammar
+    private static final long P_TILD_GRAMMAR = 1111111;
     
     // switch to make use of motif much more likely than normal grammar
     //(only changes anything if IS_ISOLATED = false)
@@ -62,12 +66,14 @@ public class CreateMotifGrammar {
     public static int REPS_PER_CLUSTER = 5;
     private static DecimalFormat df = new DecimalFormat("0.00"); // will use when calculating probabilities
     private static final double DEFAULT_PROB = 1.00;
+    private static double MOTIF_PROBABILITY = 1.00;
     
     
     /**
      * Creates grammar to represent structure of motifs and motivic development.
      * <br><b>NOTE:</b>A larger motifness value increases the number of melodies condensed into the same {@link MotifCluster}.
-     * Recommended values (0.1, 0.5), but any value [0, infinity) works.
+     * Recommended values (0.1, 0.5), but any value [0, infinity) works.<br>
+     * Motifness also affects how likely a motif is selected to be played over a melody from the standard grammar.
      * @param repsPerCluster number of representatives to use from each cluster
      * @param clusters learned clusters of melodies
      * @param dataPoints melody pieces
@@ -85,6 +91,14 @@ public class CreateMotifGrammar {
                               int windowSlide,
                               double motifness)
     {
+        
+        //set probability of selecting a motif. Defaults to 0.1 if given motifness is positive
+        double normMotifProb = motifness > 0 ? motifness : 0.1;
+        double Z = P_TILD_GRAMMAR / (1 - normMotifProb);
+        double Y = Z*normMotifProb;
+        if(TESTING) System.err.printf("NOrmalized: %02.2f\tUnnormalized: %02.2f\n", Y, normMotifProb);
+        MOTIF_PROBABILITY = Y;
+        
         
         // convert Vector to ArrayList (Vectors are depreciated)
         ArrayList<DataPoint> dataList = new ArrayList<>(dataPoints);
@@ -193,6 +207,11 @@ public class CreateMotifGrammar {
             mc.updateName();
         });
         
+        // ensure all probabilities are non-zero
+        motifClusters.forEach((mc) -> {
+            mc.incr();
+        });
+        
         // compares Motifs based on time each instance appears in song
         MotifTemporalComparer mtc = new MotifTemporalComparer(); 
         
@@ -282,12 +301,13 @@ public class CreateMotifGrammar {
     private static void renameMotifs(ArrayList<Motif> motifs){
         int clusts = Motif.getClusters().size();
         int nonMotifs = Motif.getClusters().indexOf(NON_MOTIF_CLUSTER);
-        char name = 'A';
+        
+        int name = 0;
         
         String[] newClusters = new String[clusts];
         
         for(int i = 0; i < clusts; i++){
-            newClusters[i] = "M_" + String.valueOf(name++);
+            newClusters[i] = String.format("Motif_%03d", name++);
         }
 
         // keep the non motifs labeled with the NON_MOTIF_CLUSTER label
@@ -318,7 +338,7 @@ public class CreateMotifGrammar {
             }
             
             
-            temp_rule = Polylist.list("rule", Polylist.list("PATTERN_" + window), temp_rhs, DEFAULT_PROB);
+            temp_rule = Polylist.list("rule", Polylist.list("PATTERN_" + String.format("%03d", window)), temp_rhs, DEFAULT_PROB);
                         
             rules.add(temp_rule);
         }
@@ -338,17 +358,17 @@ public class CreateMotifGrammar {
         
         Polylist p, r;
         
+        String startSymbol;
+        double startProbability;
+        
+        // choose which start symbol and probability to use
+        startSymbol = IS_ISOLATED ? START_ISOLATED : START_MOTIF;
+        startProbability = IS_HIGHLY_LIKELY ? DEFAULT_PROB : DEFAULT_PROB;
+            
         // add all start rules
         for(int i : start){
             
             r = (Polylist) motifRules[i].second();
-            
-            String startSymbol;
-            double startProbability;
-            
-            // choose which start symbol and probability to use
-            startSymbol = IS_ISOLATED ? START_ISOLATED : START_INTEGRATED;
-            startProbability = IS_HIGHLY_LIKELY ? DEFAULT_PROB*10000000 : DEFAULT_PROB;
             
             // add generative start rule
             p = Polylist.list("rule", Polylist.list(startSymbol, "Y"), Polylist.list(r.first(), Polylist.list(startSymbol, "0")), startProbability*10);
@@ -357,8 +377,14 @@ public class CreateMotifGrammar {
             // add base case start rule
             p = Polylist.list("rule", Polylist.list(startSymbol), Polylist.list(r.first()), startProbability);
             temp.add(p);
+            
         }
+        
+        
+        // create and add rule from start state into motifs (this lets us control amount of motifs to use at solo generation time)
+        Polylist entrance = Polylist.list("rule", Polylist.list(START, "Y"), Polylist.list(startSymbol), df.format(MOTIF_PROBABILITY));
 
+        temp.add(entrance);
         
         return temp.toArray(new Polylist[temp.size()]);
 

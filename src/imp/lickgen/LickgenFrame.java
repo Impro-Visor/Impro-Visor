@@ -279,6 +279,8 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         chordBox = new javax.swing.JCheckBox();
         colorBox = new javax.swing.JCheckBox();
         approachBox = new javax.swing.JCheckBox();
+        motifnessGenerationPanel = new javax.swing.JPanel();
+        motifnessGenerationSlider = new javax.swing.JSlider();
         scaleChoicePanel = new javax.swing.JPanel();
         scaleLabel = new javax.swing.JLabel();
         typeLabel = new javax.swing.JLabel();
@@ -1219,6 +1221,32 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         lickgenParametersPanel.add(rectifyPanel, gridBagConstraints);
+
+        motifnessGenerationPanel.setBackground(new java.awt.Color(218, 215, 215));
+        motifnessGenerationPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Motifness", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        motifnessGenerationPanel.setToolTipText("");
+        motifnessGenerationPanel.setMinimumSize(new java.awt.Dimension(300, 67));
+        motifnessGenerationPanel.setPreferredSize(new java.awt.Dimension(300, 67));
+        motifnessGenerationPanel.setLayout(new java.awt.GridBagLayout());
+
+        motifnessGenerationSlider.setToolTipText("Amount of motifs to incorporate into solo");
+        motifnessGenerationSlider.setValue(50);
+        motifnessGenerationSlider.setMinimumSize(new java.awt.Dimension(150, 48));
+        motifnessGenerationSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                motifnessGenerationSliderStateChanged(evt);
+            }
+        });
+        motifnessGenerationPanel.add(motifnessGenerationSlider, new java.awt.GridBagConstraints());
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.weighty = 0.1;
+        lickgenParametersPanel.add(motifnessGenerationPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -6219,8 +6247,52 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
             //userRhythmCheckBox.setVisible(false);
         }
     }//GEN-LAST:event_rhythmClusterCheckboxActionPerformed
-                                              
 
+    private void motifnessGenerationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_motifnessGenerationSliderStateChanged
+        
+        double motifProbability = motifnessGenerationSlider.getValue() / 100.0;
+        long pTildGrammar = 1111111;
+        //set probability of selecting a motif. Defaults to 0.1 if given motifness is positive
+        double normMotifProb = motifProbability;
+        double Z = pTildGrammar / (1 - normMotifProb);
+        double Y = Z*normMotifProb;
+        motifProbability = Y;
+        
+        System.err.println("Motif Probability: " + Y);
+        
+        
+        String useMotifs = "UseMotif";
+        
+        System.out.println("Grammar File Name: " + notate.getGrammarFileName());
+        
+        Grammar g = new Grammar(notate.getGrammarFileName());
+        
+        System.out.println("About to load grammar");
+        g.loadGrammar(notate.getGrammarFileName());
+        
+        System.out.println(g.getRules());
+        System.out.println("loaded grammar");
+        Polylist rules = g.getRules();
+        Polylist finalRules = Polylist.nil;
+        
+        for(Polylist R = rules; R.nonEmpty(); R = R.rest()){
+            
+            if(((Polylist) R.first()).member(Polylist.list("P", "Y")) && ((Polylist) R.first()).member(Polylist.list(useMotifs))){
+                System.out.println("Made it into the if...");
+                R.setFirst(((Polylist) R.first()).replaceLast(Y));
+            }
+            
+            finalRules.addToEnd(R.first());
+            
+        }
+        
+        g.saveGrammar(notate.getGrammarFileName());
+        System.out.println("saved grammar");
+        notate.setGrammar(notate.getGrammarName());
+        System.out.println("reloaded grammar");
+
+    }//GEN-LAST:event_motifnessGenerationSliderStateChanged
+                                             
     private void setRhythmClusterFilenameInPreferences(String rhythmClusterFilename){
         Preferences.setPreference(Preferences.CLUSTER_FILENAME, rhythmClusterFilename);
     }
@@ -6436,6 +6508,8 @@ private void updateUseSoloist()
     private javax.swing.JComboBox modeComboBox;
     private javax.swing.JLabel modeLabel;
     private javax.swing.JPanel motifParametersPanel;
+    private javax.swing.JPanel motifnessGenerationPanel;
+    private javax.swing.JSlider motifnessGenerationSlider;
     private javax.swing.JSlider motifnessSlider;
     private javax.swing.JButton moveLayerDownTableButton;
     private javax.swing.JButton moveLayerUpTableButton;

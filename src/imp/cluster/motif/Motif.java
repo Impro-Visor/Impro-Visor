@@ -39,7 +39,7 @@ public class Motif {
     private int _clusterIndex = -1;
     private static ArrayList<String> clusters = new ArrayList<>();
     
-    private int _count = 0;
+    private int _count = 1;
     private int _originInst = 0;
     
     private double _logDistanceToCentroid;
