@@ -320,27 +320,25 @@ Notate notate;
     }//GEN-LAST:event_transpositionWizardSaveButtonActionPerformed
 
     private void concertPitchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concertPitchButtonActionPerformed
-        String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-        String allValues = Preferences.getPreference("transposing-instruments");
-        Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
-        Polylist found = ALL_VALUES.assoc(transpositionInstrument);
-        Long mel = (Long) found.second();
-        Long chordbass = (Long) found.third();
-
-        //****still needs some fixing
-        //transposes score/leadsheet visually (notes + key signature)
-        Score score = notate.getScore();
-        score.transposeMelodyInPlace((132 - mel.intValue())%12);
-        score.transposeChordsAndBassInPlace(-chordbass.intValue());
-        int oldKeySignature = score.getKeySignature();
-        int newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][(132 - chordbass.intValue())%12];
-        //System.out.println("change key signature from " + oldKeySignature + " to " + newKeySignature);
-        score.setKeySignature(newKeySignature);
-        notate.getCurrentStave().setKeySignature(newKeySignature);
-        if (!notate.hasFocus())
+        if (transpositionWizardJList.getSelectedValue() != null)
         {
-            notate.requestFocusInWindow();
-        }
+             String transpositionInstrument = transpositionWizardJList.getSelectedValue();
+             String allValues = Preferences.getPreference("transposing-instruments");
+             Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
+             Polylist found = ALL_VALUES.assoc(transpositionInstrument);
+             Long mel = (Long) found.second();
+             Long chordbass = (Long) found.third();
+
+             //transposes score/leadsheet visually (notes + key signature)
+             Score score = notate.getScore();
+             score.transposeMelodyInPlace((132 - mel.intValue())%12);
+             score.transposeChordsAndBassInPlace(-chordbass.intValue());
+             int oldKeySignature = score.getKeySignature();
+             int newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][(132 - chordbass.intValue())%12];
+             //System.out.println("change key signature from " + oldKeySignature + " to " + newKeySignature);
+             score.setKeySignature(newKeySignature);
+             notate.getCurrentStave().setKeySignature(newKeySignature);
+        } 
     }//GEN-LAST:event_concertPitchButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
