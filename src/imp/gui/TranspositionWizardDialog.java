@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -13,7 +13,6 @@
  * for a particular purpose. See the GNU General Public License for more
  * details.
  *
- *
  * You should have received a copy of the GNU General Public License along with
  * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA 02110-1301 USA
@@ -22,13 +21,12 @@ package imp.gui;
 
 import polya.Polylist;
 import imp.util.Preferences;
+import imp.com.TransposeAllInPlaceCommand;
 import imp.data.Key;
 import imp.data.Score;
-//import java.awt.Cursor;
-//import imp.Constants.StaveType;
 
 /**
- * @author Samantha Long
+ * @author Samantha Long and RObert Keller
  */
 public class TranspositionWizardDialog extends javax.swing.JDialog {
 
@@ -39,14 +37,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         WindowRegistry.registerWindow(this);
         setVisible(true);
     }
-    /**
-     * Creates new form TranspositionWizardDialog
-     */
-//    public TranspositionWizardDialog(Notate notate, java.awt.Frame parent, boolean modal) {
-//        this.notate = notate;
-//        //super(notate, parent, modal);
-//        initComponents();
-//    }
+
 
      Notate getNotate()
     {
@@ -328,16 +319,19 @@ Notate notate;
              Polylist found = ALL_VALUES.assoc(transpositionInstrument);
              Long mel = (Long) found.second();
              Long chordbass = (Long) found.third();
+             int scoreTransposition = ((Long)found.fifth()).intValue();
 
              //transposes score/leadsheet visually (notes + key signature)
              Score score = notate.getScore();
-             score.transposeMelodyInPlace((132 - mel.intValue())%12);
-             score.transposeChordsAndBassInPlace(-chordbass.intValue());
              int oldKeySignature = score.getKeySignature();
              int newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][(132 - chordbass.intValue())%12];
-             //System.out.println("change key signature from " + oldKeySignature + " to " + newKeySignature);
-             score.setKeySignature(newKeySignature);
-             notate.getCurrentStave().setKeySignature(newKeySignature);
+             // 132 = 12*11 to ensure the result is positive, yet be equivalent to chordbass value mod 12
+             
+             // Using a command allows this action to be undoable.
+             notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
+                                                                  scoreTransposition, 
+                                                                  scoreTransposition, 
+                                                                  newKeySignature));
         } 
     }//GEN-LAST:event_concertPitchButtonActionPerformed
 
@@ -345,47 +339,6 @@ Notate notate;
         notate.getTranspositionWizardMI().setEnabled(true);
     }//GEN-LAST:event_formWindowClosing
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(TranspositionWizardDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(TranspositionWizardDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(TranspositionWizardDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(TranspositionWizardDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                TranspositionWizardDialog dialog = new TranspositionWizardDialog(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bassWizardLabel;

@@ -17007,6 +17007,17 @@ void timeWarpMelody(int num, int denom)
         undoCommand();
     }//GEN-LAST:event_undoMIActionPerformed
 
+/**
+ * Invoke a command, possibly from outside Notate.
+ */
+public void executeCommand(Command command)
+{
+    cm.execute(command);
+}
+    
+/**
+ * Undo the command most recently executed but not undone.
+ */
 public void undoCommand()
   {
     Trace.log(2, "undo command in Notate");
@@ -17020,6 +17031,9 @@ public void undoCommand()
     setItemStates();
   }
 
+/**
+ * Re the command most recently undone.
+ */
 public void redoCommand()
   {
     Trace.log(2, "redo command");
@@ -22920,6 +22934,25 @@ private boolean isDotted = false;
         openTranspositionWizardDialog();
     }//GEN-LAST:event_transpositionWizardMIActionPerformed
 
+    /**
+     * This command is used by the Transposition Wizard to transpose the melody,
+     * chords, and key signature in place in the leadsheet and score.
+     * @param melodyTransposition
+     * @param chordTransposition
+     * @param newKeySig 
+     */
+    public void transposeAllInPlace(int melodyTransposition, 
+                                    int chordTransposition, 
+                                    int newKeySig)
+    {
+    Score score = getScore();
+    score.transposeMelodyInPlace(melodyTransposition);
+    score.transposeChordsAndBassInPlace(chordTransposition);
+    score.setKeySignature(newKeySig);
+    getCurrentStave().setKeySignature(newKeySig);
+    requestFocusInWindow();
+    }
+    
     public void openGrammarMenuDialog()
     {
         grammarMenuDialog.setVisible(true);
@@ -26692,10 +26725,6 @@ public String extractClusterName(String fullPath){
     }
     
     return afterSlash.substring(0, dotIndex);
-    
-    
-    
-    
 }
 
 } //Notate
