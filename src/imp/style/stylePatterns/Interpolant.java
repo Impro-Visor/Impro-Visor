@@ -33,9 +33,9 @@ import polya.Polylist;
 public class Interpolant
         extends Pattern implements Serializable
 {
-Polylist TARGETS;
+Polylist BOUNDARIES;
 
-String INSERT;
+Polylist INSERT;
 
 float WEIGHT;
 
@@ -45,9 +45,9 @@ public Interpolant() {
     
 }
 
-public Interpolant(Polylist targets, String insert, float weight, int minslots)
+public Interpolant(Polylist boundaries, Polylist insert, float weight, int minslots)
   {
-       TARGETS = targets;
+       BOUNDARIES = boundaries;
        INSERT = insert;
        WEIGHT = weight;
        MINSLOTS = minslots;
@@ -55,11 +55,11 @@ public Interpolant(Polylist targets, String insert, float weight, int minslots)
 
 private static final String keyword[] =
   {
-  "target", "interpolant", "weight", "min-duration"
+  "boundaries", "interpolant", "weight", "min-duration"
   };
 
 // indices into the keyword array
-private static final int TARGET = 0;
+private static final int BOUNDS = 0;
 
 private static final int INTERPOLANT = 1;
 
@@ -70,7 +70,7 @@ private static final int MIN_DURATION = 3;
 public static Interpolant makeInterpolant(Polylist L) {
    //  System.out.println("hello Intrp" + L);
    float problemchild = ((Number)L.third()).floatValue();
-    Interpolant interp =  new Interpolant((Polylist)L.first(), (String)L.second(),problemchild, (int)L.last());
+    Interpolant interp =  new Interpolant((Polylist)L.first(), (Polylist)L.second(),problemchild, (int)L.last());
   //  System.out.println("hello interp" + interp);
     return interp;
 }
@@ -89,15 +89,15 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
     item = item.rest();
     switch( Leadsheet.lookup(dispatcher, keyword) )
       {
-      case TARGET:
+      case BOUNDS:
         {
            if( item == null || item.isEmpty() || item.first().equals("") )
            {
-               interp.setError("No target in interpolate expression");
+               interp.setError("No boundaries in interpolate expression");
                break;
            }
            else if (item.first() instanceof Polylist) {
-               interp.setTARGETS((Polylist)item.first());
+               interp.setBOUNDARIES((Polylist)item.first());
            }
            break;
         }
@@ -108,8 +108,8 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
                interp.setError("No insert in interpolate expression");
                break;
            }
-           else if (item.first() instanceof String) {
-               interp.setINSERT((String)item.first());
+           else if (item.first() instanceof Polylist) {
+               interp.setINSERT((Polylist)item.first());
            }
            else {
                interp.setError("Unrecognized insert in interpolate expression");
@@ -149,7 +149,7 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
         }
           
       default:
-          interp.setError("Error in chord pattern " + original);
+          interp.setError("Error in interpolation " + original);
           return interp;
       }
     }
@@ -160,23 +160,23 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
 
 
 public Polylist makeInterpolantList() {
-    Polylist interpList = Polylist.list(TARGETS, INSERT, WEIGHT, MINSLOTS);
+    Polylist interpList = Polylist.list(BOUNDARIES, INSERT, WEIGHT, MINSLOTS);
     return interpList;
 }
 
-public Polylist getTARGETS() {
-    return TARGETS;
+public Polylist getBOUNDARIES() {
+    return BOUNDARIES;
 }
 
-public void setTARGETS(Polylist TARGETS) {
-    this.TARGETS = TARGETS;
+public void setBOUNDARIES(Polylist BOUNDARIES) {
+    this.BOUNDARIES = BOUNDARIES;
 }
 
-public String getINSERT() {
+public Polylist getINSERT() {
     return INSERT;
 }
 
-public void setINSERT(String INSERT) {
+public void setINSERT(Polylist INSERT) {
     this.INSERT = INSERT;
 }
 
@@ -185,7 +185,7 @@ public float getWEIGHT() {
 }
 
 public void setWEIGHT(float WEIGHT) {
-    System.out.println("in setweight");
+ 
     this.WEIGHT = WEIGHT;
 }
 

@@ -28,6 +28,7 @@ import imp.style.stylePatterns.DrumPattern;
 import imp.style.stylePatterns.Interpolant;
 import imp.style.stylePatterns.ChordPatternVoiced;
 import imp.style.stylePatterns.ChordPattern;
+import imp.style.stylePatterns.Interpolable;
 import imp.data.advice.Advisor;
 import imp.Constants;
 import static imp.Constants.BEAT;
@@ -51,6 +52,7 @@ import imp.data.PitchClass;
 import imp.data.Rest;
 import imp.data.Transposition;
 import imp.data.VolumeSymbol;
+import imp.roadmap.brickdictionary.ChordBlock;
 import imp.util.Preferences;
 import imp.voicing.AVPFileCreator;
 import imp.voicing.AutomaticVoicingSettings;
@@ -206,6 +208,8 @@ public class Style
   
   private Polylist interpolations = Polylist.nil;
   
+  private Polylist interpolables = Polylist.nil;
+  
   /**
    * HashMaps for each of the different instruments to save the rules defined
    * outside the patterns
@@ -229,7 +233,8 @@ public class Style
                                        "use-extensions", "no-style",
                                        "voicing-type", "comments",
                                        "comp-swing", "define-rule", "bass",
-                                       "chord", "drum", "voicing-name", "interpolate"
+                                       "chord", "drum", "voicing-name", "interpolate",
+                                       "interpolable"
   };
 
   // indices into the keyword array
@@ -276,6 +281,8 @@ public class Style
   private static final int VOICING_FILE = 20;
 
   private static final int INTERPOLATE = 21;
+  
+  private static final int INTERPOLABLE = 22;
 
   public boolean usePreviousStyle()
     {
@@ -579,6 +586,7 @@ public class Style
     style.drumPatterns = drumPatterns;
     style.chordPatterns = chordPatterns;
     style.interpolations = interpolations;
+    style.interpolables = interpolables;
     return style;
     }
 
@@ -666,6 +674,14 @@ public class Style
                 //System.out.println("interpolant = " + interpolant);
                
                 style.interpolations = style.interpolations.cons(interpolant);
+                break;
+            }
+            case INTERPOLABLE:
+            {
+                Interpolable interpolable = Interpolable.makeInterpolableFromExp(item);
+                //System.out.println("interpolable = " + interpolable.getPROBABILITY());
+               
+                style.interpolables = style.interpolables.cons(interpolable);
                 break;
             }
             default:
@@ -1129,6 +1145,7 @@ public class Style
     return null;
     }
 
+
   /**
    * Called from render in this file.
    * 
@@ -1530,46 +1547,13 @@ System.out.println("mystery code on bassline " + bassline);
     }
 
 
-private Polylist findCorrectDuration(Polylist list, int start) {
-    //System.out.println("list: " + list + " start" + start);
-    if (list.isEmpty()) return Polylist.list((start+1),Polylist.nil);
 
-    if (list.nonEmpty() && (boolean)list.first()) return Polylist.list((start+1),list.rest());
-    else return findCorrectDuration(list.rest(),start+1);
+
+private Polylist prepProgList(Polylist results, Polylist acc) {
+    //extract the chords and interpolations from results in order
+    if (results.isEmpty()) return acc;
    
-}
-
-private Polylist adjustTCDurations(Polylist results) {
-   //based on the boolean lists, adjust the durations of the original
-  
-    if (results.isEmpty()) {
-        return Polylist.nil;
-    }
-    
-    int minVal = ((Interpolant) interpolations.first()).getMINSLOTS();
-   
-    Polylist first = (Polylist) results.first();
-
-    Chord chord = (Chord) first.first();
-    Polylist list = (Polylist) first.last();
-   if(list.isEmpty())
-       return Polylist.list(first).append(adjustTCDurations(results.rest()));
-    
-    Polylist use = findCorrectDuration(list, 0);
-   //System.out.println("reached check 3 " + use);
-    chord.setRhythmValue((int) use.first() * minVal);
-    
-    Polylist newFirst = Polylist.list(chord, use.last());
-   // System.out.println("newFirst: " + newFirst);
-    return Polylist.list(newFirst).append(adjustTCDurations(results.rest()));
-}
-
-
-private Polylist prepProgList(Polylist results) {
-    
-    if (results.isEmpty()) return results;
-    
-    return ((Polylist)results.first()).allButLast().append(prepProgList(results.rest()));
+    return prepProgList(results.rest(), acc.append((Polylist)results.first()));
 }
 
 //depending on the boolean lists from willInterplate, map adds a PC
@@ -1578,128 +1562,359 @@ private Polylist mapPC(Polylist results) {
     if (results.isEmpty()) {
         return Polylist.nil;
     }
-    //lst is the boolean polylist that decides if an interpolation will be added
-    Polylist first = (Polylist) results.first();
-    Polylist lst = (Polylist) first.last();
-
-    //if list is empty or we are at the last element in results
-    //we do not interpolate and move on
-    if (lst.isEmpty() || results.length() == 1) {
-        return mapPC(results.rest()).cons(first);
-    }
-    int minVal = ((Interpolant) interpolations.first()).getMINSLOTS();
-    Polylist second = (Polylist) results.second();
-
-    Chord nextChord = (Chord) second.first();
-    Chord pc = getPC(nextChord);
-    Polylist use = findCorrectDuration(lst, 0);
-
-    pc.setRhythmValue((int) use.first() * minVal);
-    //the found interpolated chords goes in front of the polylist of the second element
-    second = second.cons(pc);
-    //and the new boolean list is added to the end of first
-    first = first.reverse().rest();
-    first = first.cons(use.last());
-    first = first.reverse();
-    results = results.rest();
-    
-    //if use isn't empty, there is a chance for another interpolation,
-    //so everything is put back in place to make sure the next interpolation
-    //is on the last interpolation if there needed to be three interpolations
-    //INTERP1 INTERP2 INTERP3 before TARGET1
-    //it would be generated as INTERP3 = getPC(INTERP2), INTERP2 = getPC(INTERP1),
-    // and so on
-    
-    if (((Polylist)use.last()).nonEmpty())
-        return mapPC(results.rest().cons(second).cons(first));
-    return Polylist.list(first).append(mapPC(results.rest().cons(second)));
+   if(results.rest().isEmpty()) {
+       return mapPC(results.rest()).cons(((Polylist)results.first()).allButLast());
+   }
+   
+   Chord leftbound = (Chord)((Polylist)results.first()).first();
+   
+   Chord rightbound = (Chord)((Polylist)results.second()).first();
+   //System.out.println("inside of mapPC, passed the base cases" + leftbound);
+   boolean action = (boolean)((Polylist)((Polylist)results.first()).last()).first();
+   //System.out.println("leftbound: " + leftbound + " rightbound: " + rightbound + " action: " + action);
+   
+   if (action){
+       Polylist newFirst = getPC(rightbound, leftbound);
+       Polylist newRight = Polylist.list(newFirst.last(), ((Polylist)results.second()).last());
+       newFirst = newFirst.allButLast();
+       return mapPC(results.rest().rest().cons(newRight)).cons(newFirst);
+   }
+   
+   return mapPC(results.rest()).cons(((Polylist)results.first()).allButLast());
+       
 }
-
-//makes sure every boolean list in the chord list is empty ie no more interpolations are to be added
-private boolean PCcheck(Polylist results) {
-    if (results.isEmpty()) {
-        return true;
-    }
-    if (((Polylist) ((Polylist) results.first()).last()).nonEmpty()) {
-        return false;
-    }
-    return PCcheck(results.rest());
-}
-
 
  /* find the appropriate passing chord given a target chord */
-  private Chord getPC(Chord c) {
-   //System.out.println("chord going in: " + c);
-     double sum = 0; 
-     Polylist defaultchords = Polylist.list(interpolations.first(),interpolations.second());
+  private Polylist getPC(Chord c, Chord prev) {
      Polylist pchords = Polylist.nil;
+     double sum = 0;
+     String root = "";
      
-     //put default passing chords into the list
-     for (Polylist B = defaultchords; B.nonEmpty(); B = B.rest()) {
-        Chord pc = new Chord (((Interpolant)B.first()).getINSERT());
+     
+     for (Polylist P = interpolations; P.nonEmpty(); P = P.rest()) 
+     {
+        Interpolant pc = null; 
+        Polylist target = ((Interpolant)P.first()).getBOUNDARIES();
+        String targetright = "";
+        String targetleft = "";
+        String rootleft;
+        int targetsdistance = 0;
         
-        sum += ((Interpolant)B.first()).getWEIGHT();
-        
-        pc.transpose(-1 * PitchClass.findRiseToC(c.getRoot()));
+         if (target.member("_")) {
+             rootleft = null;
+             targetleft = null;
+             if (((String) target.first()).equals("_")) {
+                 Polylist right = getTargetAndRoot((String)target.last());
+                 targetright = (String)right.first();
+                 root = (String)right.last();
+           //       System.out.println("pre-interpolation root: " + root);
+             }
+
+             if (((String) target.last()).equals("_")) {
+                 Polylist right = getTargetAndRoot((String)target.first());
+                 targetright = (String)right.first();
+                 root = (String)right.last();
+          //       System.out.println("post-interpolation root: " + root);
+             }
+         }
+         else {
+           
+            Polylist left = getTargetAndRoot((String)target.first());
+            Polylist right = getTargetAndRoot((String)target.last());
+             targetright = (String)right.first();
+             targetleft = (String)left.first();
+             
+             rootleft =  ((String)left.last());
+             root  = ((String)right.last());
+             targetsdistance = PitchClass.findRise(rootleft, root);
+            // System.out.println("root left: " + rootleft + " root: "+ root + "targets distance: "+targetsdistance);
+         }
+        Chord leftchord;
+       
+        switch (c.getFamily()) {
+            case "augmented":
+            case "major":
                 
-        pchords = pchords.cons(pc);
+                if (rootleft != null) {
+  
+                    if (targetleft != null && !targetleft.contains("+")) {
+        
+                        leftchord = new Chord(rootleft.toUpperCase() + targetleft);
+                    } else {
+                        leftchord = new Chord(rootleft + "7");
+                    }
+                    
+                    if ((targetright.equals("") && targetleft != null)
+                            || targetright.equals("") && prev.getFamily().equals(leftchord.getFamily())
+                            && (targetsdistance == PitchClass.findRise(prev.getRoot(),c.getRoot()))) {
+                        
+                        pc = (Interpolant) P.first();
+                    }
+                } else if (targetright.equals("")) {
+     
+                    pc = (Interpolant) P.first();
+                }
+                break;
+            case "half diminished":
+            case "minor7":
+            case "minor": 
+                
+                if (rootleft != null) {
+ 
+                    if (targetleft != null && !targetleft.contains("+")) {
+                        leftchord = new Chord(rootleft.toUpperCase() + targetleft);
+                    } else {
+                        leftchord = new Chord(rootleft + "7");
+                    }
+ 
+                    if (targetright.equals("m") && targetleft != null) {
+
+                            if (prev.getFamily().equals(leftchord.getFamily())
+                            && (targetsdistance == PitchClass.findRise(prev.getRoot(),c.getRoot()))) {
+ 
+                        pc = (Interpolant) P.first();
+                    }
+                    }
+                } else if (targetright.equals("m")) {
+
+                    pc = (Interpolant) P.first();
+                }
+                break;
+            case "sus4":
+            case "dominant":
+                if (rootleft != null) {
+                    if (targetleft != null && !targetleft.contains("+")) {
+                        leftchord = new Chord(rootleft.toUpperCase() + targetleft);
+                    } else {
+                        leftchord = new Chord(rootleft + "7");
+                    }
+
+                    if (targetright.equals("7") || targetright.equals("7+") && targetleft != null) {
+
+                        if (prev.getFamily().equals(leftchord.getFamily())
+                                && (targetsdistance == PitchClass.findRise(prev.getRoot(), c.getRoot()))) {
+
+                            if (targetright.equals("7")) {
+
+                                pc = (Interpolant) P.first();
+                            } else if (targetright.equals("7+") && !c.getQuality().equals("7")) {
+
+                                pc = (Interpolant) P.first();
+                            }
+                        }
+                    }
+                } else if (targetright.equals("7")) {
+
+                    pc = (Interpolant) P.first();
+                } else if (targetright.equals("7+") && !c.getQuality().equals("7")) {
+
+                    pc = (Interpolant) P.first();
+                }
+                break;
+            default: break;
         }
-          
-     Polylist polations = interpolations.rest();
-     polations = polations.rest();
-     // insert passng chords that pertain to the given target chord into the list
-     for (Polylist P = polations; P.nonEmpty(); P = P.rest()) {
-        if(((Interpolant)P.first()).getTARGETS().member("C"+c.getQuality())) {
-        Chord pc = new Chord (((Interpolant)P.first()).getINSERT());
-        
-        sum += ((Interpolant)P.first()).getWEIGHT();
-        pc.transpose(-1 * PitchClass.findRiseToC(c.getRoot()));
-        
-        pchords = pchords.cons(pc);
-        }       
-    }
+
+          if (pc != null) {
+              pchords = pchords.cons(pc);
+              sum+= pc.getWEIGHT();
             
-    int random = gen.nextInt((int)sum);
-    //choose one chord based on weights
-    
-    //System.out.println("interpolated chord: " + pchords.nth(random) + " target chord: " + c);
-    return (Chord)pchords.nth(random);    
+          }
+
+      }
+
+   int transposition = PitchClass.findRise(root, c.getRoot());
+   // System.out.println(" left: " + prev + " right: " + c +" \n pchords "+ pchords + "\n");
+   pchords = choosePC(pchords, prev, c, sum, transposition);
+   
+    return pchords;
   }
   
-  private ChordPart createInterpolatedChordPart(ChordPart partA) {
-    if( interpolations.isEmpty() )
-      {
-          return partA;
+  private Polylist getTargetAndRoot(String target) {
+      String t = "";
+      String r;
+      Chord c;
+      int length = target.length();
+      if(target.contains("+")) {
+          t = target.substring(length - 2);
+          c = new Chord(target.substring(0, length-2));
+          r = c.getRoot();
+          return Polylist.list(t,r);
       }
-    ChordPart part = partA.copy();
-    part.setRoadmap(partA.getRoadMap());
-    part.setSectionInfo(partA.getSectionInfo()); // Seems like this shouldn't be necessary, but apparently is.
-    Polylist results = Interpolate.willInterpolate(part, 0);
-    results = adjustTCDurations(results);
-    
-    Polylist sectionInfo = Interpolate.ArraytoPoly(part.getSectionInfo().getSectionRecords());
-    
-    while(!PCcheck(results)) {
-        results = mapPC(results);
-    }
-    
-    results = prepProgList(results);
-    //System.out.println(results);
-    ChordPart newChordPart = new ChordPart();
-     
-    for (Polylist P = results; P.nonEmpty(); P = P.rest()) {
-        Chord chord = (Chord)P.first();
-        newChordPart.addChord(chord.getName(), chord.getRhythmValue());
-    }
-    
-    newChordPart.setSectionInfo(partA.getSectionInfo());
-    for(Polylist L = sectionInfo; L.nonEmpty(); L = L.rest()) {
-        SectionRecord first = (SectionRecord)L.first(); // L was sectionInfo
-        newChordPart.addSection(first.styleName, first.index, first.isPhrase);
-    }
-    
-    return newChordPart;
+      if(target.contains("7") || target.contains("m")) {
+          t = ""+target.charAt(length-1);
+          c = new Chord(target.substring(0, length-1));
+          r = c.getRoot();
+          return Polylist.list(t,r);
+      }
+      c = new Chord(target);
+      r = c.getRoot();
+      return Polylist.list(t,r);
   }
+  
+  private Polylist choosePC(Polylist plist, Chord leftbound, 
+          Chord rightbound, double sum, int transposition) {
+       // randomly choose one of the "good patterns"
+    
+    Chord pc;
+    Interpolant chosen;
+      do {
+          double random = gen.nextDouble();
+
+          double weights = 0;
+          chosen = (Interpolant) plist.first();
+          for (Polylist P = plist; P.nonEmpty(); P = P.rest()) {
+              if ((int)sum == 1) { 
+              weights += ((Interpolant) P.first()).getWEIGHT();
+              }
+              else weights += ((Interpolant) P.first()).getWEIGHT()/2;
+              
+              if (random < weights) {
+                  chosen = (Interpolant) P.first();
+                  break;
+              }
+
+          }
+            
+      } while (((String)chosen.getINSERT().first()).equals(rightbound.getName())
+              || ((String)chosen.getINSERT().first()).equals(leftbound.getName()));
+            
+    int rhythmValue;
+      
+    Polylist targets = chosen.getBOUNDARIES();
+    if(targets.member("_") && chosen.getINSERT().length() == 1)
+    {
+        pc = new Chord((String)chosen.getINSERT().first());
+        pc.transpose(transposition);
+        if (((String) targets.first()).equals("_")) {
+
+            if (leftbound.getRhythmValue() / 2 >= chosen.getMINSLOTS()) {
+                rhythmValue = leftbound.getRhythmValue() / 2;
+                leftbound.setRhythmValue(rhythmValue);
+                pc.setRhythmValue(rhythmValue);
+            } else {
+                return Polylist.list(leftbound, rightbound);
+            }
+
+        } else if (((String) targets.last()).equals("_")) {
+            if (rightbound.getRhythmValue() / 2 >= chosen.getMINSLOTS()) {
+                rhythmValue = rightbound.getRhythmValue() / 2;
+                rightbound.setRhythmValue(rhythmValue);
+                pc.setRhythmValue(rhythmValue);
+            } else {
+                return Polylist.list(leftbound, rightbound);
+            }
+        }
+    }
+    else return chooseMultiPC(leftbound,chosen,rightbound, transposition); 
+       //System.out.println("left: " + leftbound + " pc: " + pc + " rightbound: " + rightbound);
+       return Polylist.list(leftbound,pc,rightbound);
+  }
+  
+    private Polylist chooseMultiPC(Chord leftbound, Interpolant interp, Chord rightbound,
+        int transposition) {
+        
+        Polylist targets = interp.getBOUNDARIES();
+        Polylist inserts = interp.getINSERT();
+        Polylist result = Polylist.nil;
+        
+        if(targets.member("_")) {
+            if (((String)targets.first()).equals("_"))
+            {
+                if (leftbound.getRhythmValue() % (1+inserts.length()) != 0
+                        || leftbound.getRhythmValue()/(1 + inserts.length()) < interp.getMINSLOTS())
+                {
+                    return Polylist.list(leftbound,rightbound);
+                }
+                
+                int rhythmValue = leftbound.getRhythmValue() / (1+inserts.length());
+                leftbound.setRhythmValue(rhythmValue);
+                result = result.cons(leftbound);
+                for(Polylist P = inserts; P.nonEmpty(); P = P.rest()) {
+                    Chord pc = new Chord((String)P.first());
+                    pc.setRhythmValue(rhythmValue);
+                    pc.transpose(transposition);
+                    result = result.append(Polylist.list(pc));
+                }
+               return result.append(Polylist.list(rightbound));
+              
+            }
+            else if (((String)targets.last()).equals("_"))
+            {
+                if (rightbound.getRhythmValue() % (1+inserts.length()) != 0
+                        || rightbound.getRhythmValue()/(1+inserts.length()) < interp.getMINSLOTS())
+                {
+                    return Polylist.list(leftbound,rightbound);
+                }
+                
+                int rhythmValue = rightbound.getRhythmValue() / (1+inserts.length());
+                rightbound.setRhythmValue(rhythmValue);
+                result = result.cons(leftbound);
+                for(Polylist P = inserts; P.nonEmpty(); P = P.rest()) {
+                    Chord pc = new Chord((String)P.first());
+                    pc.setRhythmValue(rhythmValue);
+                    pc.transpose(transposition);
+                    result = result.append(Polylist.list(pc));
+                }
+               return result.append(Polylist.list(rightbound));
+            }
+        }
+        int totalSpace = rightbound.getRhythmValue() + leftbound.getRhythmValue();
+        int totalchordslength = inserts.length() + 2;
+        if(totalSpace % totalchordslength != 0 ||
+                totalSpace / totalchordslength < interp.getMINSLOTS())
+        {
+            return Polylist.list(leftbound,rightbound);
+        }
+        int rhythmValue = totalSpace/ totalchordslength;
+        leftbound.setRhythmValue(rhythmValue);
+        result = result.cons(leftbound);
+        
+        for(Polylist P = inserts; P.nonEmpty(); P = P.rest()) {
+            Chord pc = new Chord((String)P.first());
+            pc.setRhythmValue(rhythmValue);
+            pc.transpose(transposition);
+            result = result.append(Polylist.list(pc));
+        }
+        
+        rightbound.setRhythmValue(rhythmValue);
+        //System.out.println("used multi pc " + result);
+        return result.append(Polylist.list(rightbound));
+    }
+  
+    private ChordPart createInterpolatedChordPart(ChordPart partA) {
+        if (interpolations.isEmpty()) {
+            return partA;
+        }
+        ChordPart part = partA.copy();
+        part.setRoadmap(partA.getRoadMap());
+        part.setSectionInfo(partA.getSectionInfo()); // Seems like this shouldn't be necessary, but apparently is.
+
+        //returns a polylist of paired chords and boolean polylists that tells where each interpolant will fall
+        Polylist results = Interpolate.willInterpolate(
+                part, 0, ((Interpolant) interpolations.first()).getMINSLOTS(),
+                ((Interpolable) interpolables.first()).getPROBABILITY());        
+
+        Polylist sectionInfo = Interpolate.ArraytoPoly(part.getSectionInfo().getSectionRecords());
+       
+        results = mapPC(results);
+        results = prepProgList(results, Polylist.nil);
+        
+        ChordPart newChordPart = new ChordPart();
+        //place these chords into a ChordPart
+        for (Polylist P = results; P.nonEmpty(); P = P.rest()) {
+            Chord chord = (Chord) P.first();
+            newChordPart.addChord(chord.getName(), chord.getRhythmValue());
+        }
+
+        //insert the section info from the original chordPart into the new chordPart
+        newChordPart.setSectionInfo(partA.getSectionInfo());
+        for (Polylist L = sectionInfo; L.nonEmpty(); L = L.rest()) {
+            SectionRecord first = (SectionRecord) L.first(); // L was sectionInfo
+            newChordPart.addSection(first.styleName, first.index, first.isPhrase);
+        }
+
+        return newChordPart;
+    }
   
   
 /**
@@ -1733,15 +1948,22 @@ public long render(MidiSequence seq, // called from SectionInfo
     // to trace sequencing info:
     //System.out.println("Sequencing Style: " + this + " startIndex = " + startIndex
     // + " endIndex = " + endIndex + " endLimitIndex = " + endLimitIndex + " useDrums = " + useDrums + " hasStyle = " + hasStyle);
-//System.out.println(chordPart.getRoadMap().getBlocks());
     // i iterates over the Chords in the ChordPart.
     ChordPart chordPart2;
     //if(startIndex == 0)
     chordPart2 = createInterpolatedChordPart(chordPart);
+    //chordPart2.fixDuplicateChords(chordPart2, seq.getResolution());
+    //System.out.println("\n chord part is: \n" + chordPart);
     //System.out.println("\nintrpolated chord part is: \n" + chordPart2);
     
-    chordPart = chordPart2;
-    ;
+   // imp.data.Score newScore = new imp.data.Score(chordPart2.size());
+
+   // newScore.setChordProg(chordPart2);
+   // newScore.setSectionInfo(chordPart2.getSectionInfo());
+   // imp.gui.Notate newNotate = new imp.gui.Notate(newScore);
+   // newNotate.setVisible(true);
+   chordPart = chordPart2;
+    
     Part.PartIterator i =
             chordPart.iterator(chordPart.getCurrentChordIndex(startIndex));
 
@@ -1753,6 +1975,7 @@ public long render(MidiSequence seq, // called from SectionInfo
 
         makeDrumline(seq, startTime, endIndex - startIndex, endLimitIndex);
       }
+
     Chord next = null;
     Chord prev = null;
 
