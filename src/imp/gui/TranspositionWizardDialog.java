@@ -1,5 +1,5 @@
 /**
- * This Java Class is part of the Impro-Visor Application
+ * This Java Class is part of the Impro-Visor Application.
  *
  * Copyright (C) 2017 Robert Keller and Harvey Mudd College
  *
@@ -22,11 +22,13 @@ package imp.gui;
 import polya.Polylist;
 import imp.util.Preferences;
 import imp.com.TransposeAllInPlaceCommand;
+import imp.com.TransposeInstrumentsCommand;
 import imp.data.Key;
 import imp.data.Score;
+import imp.data.Transposition;
 
 /**
- * @author Samantha Long and RObert Keller
+ * @author Samantha Long and Robert Keller
  */
 public class TranspositionWizardDialog extends javax.swing.JDialog {
 
@@ -271,41 +273,14 @@ Notate notate;
             String allValues = Preferences.getPreference("transposing-instruments");
             Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
             Polylist found = ALL_VALUES.assoc(transpositionInstrument);
-            Long mel = (Long) found.second();
-            Long chordbass = (Long) found.third();
+            int mel = ((Long)found.second()).intValue();
+            int chordbass = ((Long) found.third()).intValue();
             String clef = (String) found.fourth();
-            if (clef.equals("auto"))
-            {
-                notate.autoStaveMIActionPerformedPublic(evt);
-                notate.getAutoStaveBtn().setSelected(true);
-            }
-            else if (clef.equals("treble"))
-            {
-                notate.trebleStaveMIActionPerformedPublic(evt);
-                notate.getTrebleStaveBtn().setSelected(true);
-            }
-            else if (clef.equals("bass"))
-            {
-                notate.bassStaveMIActionPerformedPublic(evt);
-                notate.getBassStaveBtn().setSelected(true);
-            }
-            else if (clef.equals("grand"))
-            {
-                notate.grandStaveMIActionPerformedPublic(evt);
-                notate.getGrandStaveBtn().setSelected(true);
-            }
-
-            notate.getChorusMelodyTranspositionSpinner().setValue(mel);
-            notate.getLeadsheetChordTranspositionSpinner().setValue(chordbass);
-            notate.getLeadsheetBassTranspositionSpinner().setValue(chordbass);
-
-            //deals with transposing the playback
-            notate.changeMelodyTransposition(mel.intValue());
-            notate.changeChordTransposition(chordbass.intValue());
-            notate.changeBassTransposition(chordbass.intValue());
-   
+            Transposition newTransposition = new Transposition(chordbass, chordbass, mel);
+            notate.executeCommand(new TransposeInstrumentsCommand(notate,
+                                                                  newTransposition, 
+                                                                  clef));
         }
-
         setVisible(false);
         notate.getTranspositionWizardMI().setEnabled(true);
     }//GEN-LAST:event_transpositionWizardSaveButtonActionPerformed
@@ -315,16 +290,16 @@ Notate notate;
         {
              String transpositionInstrument = transpositionWizardJList.getSelectedValue();
              String allValues = Preferences.getPreference("transposing-instruments");
-             Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
-             Polylist found = ALL_VALUES.assoc(transpositionInstrument);
-             Long mel = (Long) found.second();
-             Long chordbass = (Long) found.third();
+             Polylist all_values = Polylist.PolylistFromString(allValues);
+             Polylist found = all_values.assoc(transpositionInstrument);
+             int chordbass = ((Long)found.third()).intValue();
              int scoreTransposition = ((Long)found.fifth()).intValue();
 
              //transposes score/leadsheet visually (notes + key signature)
              Score score = notate.getScore();
              int oldKeySignature = score.getKeySignature();
-             int newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][(132 - chordbass.intValue())%12];
+             int transpositionIndex = (132 - chordbass)%12;
+             int newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][transpositionIndex];
              // 132 = 12*11 to ensure the result is positive, yet be equivalent to chordbass value mod 12
              
              // Using a command allows this action to be undoable.

@@ -22953,6 +22953,48 @@ private boolean isDotted = false;
     requestFocusInWindow();
     }
     
+    /**
+     * This command is used by the Transposition Wizard to transpose the melody,
+     * chord, bass instruments, and the clef of the leadsheet.
+     * @param transposition
+     * @param clef 
+     */
+    public void transposeInstruments(Transposition transposition, 
+                                     String clef)
+    {
+    Score score = getScore();
+    switch( clef )
+      {
+        case "auto":
+            autoStaveMIActionPerformedPublic(null);
+            getAutoStaveBtn().setSelected(true);
+            break;
+        case "treble":
+            trebleStaveMIActionPerformedPublic(null);
+            getTrebleStaveBtn().setSelected(true);
+            break;
+        case "bass":
+            bassStaveMIActionPerformedPublic(null);
+            getBassStaveBtn().setSelected(true);
+            break;
+        case "grand":
+            grandStaveMIActionPerformedPublic(null);
+            getGrandStaveBtn().setSelected(true);
+            break;
+        default:
+            break;
+      }
+
+    getChorusMelodyTranspositionSpinner().setValue(transposition.getMelodyTransposition());
+    getLeadsheetChordTranspositionSpinner().setValue(transposition.getChordTransposition());
+    getLeadsheetBassTranspositionSpinner().setValue(transposition.getBassTransposition());
+
+    //deals with transposing the playback
+    changeMelodyTransposition(transposition.getMelodyTransposition());
+    changeChordTransposition(transposition.getChordTransposition());
+    changeBassTransposition(transposition.getBassTransposition());
+    }
+    
     public void openGrammarMenuDialog()
     {
         grammarMenuDialog.setVisible(true);
