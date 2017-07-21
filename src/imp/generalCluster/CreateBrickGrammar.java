@@ -99,7 +99,7 @@ public class CreateBrickGrammar {
                     int location = totalDuration % melPart.size(); //tell production writing method how far we are
                                                                    //in a given chorus and which chorus
                     if (blockAbstract != null) {
-                        frame.writeProduction(blockAbstract,
+                        frame.writeProductionForBricks(blockAbstract,
                                 currentBlock.getDuration()/BEAT,
                                 location,
                                 true,

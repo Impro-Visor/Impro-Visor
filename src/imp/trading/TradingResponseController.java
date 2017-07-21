@@ -104,6 +104,10 @@ public class TradingResponseController {
     }
     
     public boolean hasNext(){
+        //System.out.println("sectionIndex: " + sectionIndex + ", responseSections.length: " + responseSections.length);
+        if(responseSections == null){//if Improvisor goes first, responseSections is null so tracking breaks, this seems to fix that
+            return sectionIndex < 0;
+        }
         return sectionIndex < responseSections.length;
     }
     

@@ -18,6 +18,7 @@ import imp.generalCluster.Cluster;
 import imp.generalCluster.CreateGrammar;
 import imp.generalCluster.DataPoint;
 import imp.gui.Notate;
+import imp.trading.tradingResponseModes.CorrectRhythmTRM;
 import imp.trading.tradingResponseModes.RhythmHelperTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.util.NonExistentParameterException;
@@ -103,6 +104,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
     private int totalNumDataPointsSaved;
     private ArrayList<DataPoint> dataPointsAdded;
     private RhythmHelperTRM rhythmHelperTRM;
+    private JLabel gradeLabel;
     
     
 
@@ -276,8 +278,33 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
          return ruleStringsFromFile;
      }
     
+    public void showGrade(int numTrades){
+        String introString = "Your Grade: ";
+        String grade;
     
+        if (rhythmHelperTRM instanceof CorrectRhythmTRM){
+            CorrectRhythmTRM correctRhythmTRM = (CorrectRhythmTRM) rhythmHelperTRM;
+            double score = correctRhythmTRM.getScore();
+            System.out.println("score to grade from: "+score);
+            System.out.println("numTrades: "+ numTrades);
+            if (score > CorrectRhythmTRM.A * numTrades){
+                grade = "A";
+            }else if(score > CorrectRhythmTRM.B *numTrades){
+                grade = "B";
+            }else if(score > CorrectRhythmTRM.C *numTrades){
+                grade = "C";
+            }else if(score > CorrectRhythmTRM.D *numTrades){
+                grade = "D";
+            }else{
+                grade = "F";
+            }
+            gradeLabel.setText(introString+grade);
     
+        }else{
+            gradeLabel.setText("sorry, no grade available");
+        }
+        gradeLabel.setVisible(true);
+    }
         
     
     /**Removes the rhythms in the array from the rhythm clusters they were placed into,
@@ -316,7 +343,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         
         
         AdviceForMelody advice = new AdviceForMelody("RhythmPreview", notePolylistToWrite, "c", Key.getKey("c"),
-                        tradingResponseInfo.getMetre(), 0);//make a new advice for melody object 
+                        rhythmHelperTRM.getMetre(), 0);//make a new advice for melody object 
         
         advice.setNewPart(melodyPartToWrite);//new part of advice object is the part that gets pasted to the leadsheet
 
@@ -448,7 +475,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      */
     private void rewriteRhythmClustersToFile() throws IOException{
         Cluster[] clusterArray = ClusterArrayListToClusterArray(rhythmClusters);
-        CreateGrammar.clusterToFile(clusterArray, tradingResponseInfo.getClusterFileName(),windowSize);
+        CreateGrammar.clusterToFile(clusterArray, rhythmHelperTRM.getClusterFileName(),windowSize);
     }
     
     
@@ -617,6 +644,12 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
             dispose();
           }   
         } );
+
+        
+        gradeLabel = new JLabel();
+        gradeLabel.setVisible(false);
+        outerPanel.add(gradeLabel);
+        
         outerPanel.add(closeButton);
         
         this.add(outerPanel);
@@ -679,7 +712,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         //checkBoxArray = new ArrayList<JCheckBox>();
         //Set up constraints for rhythmTextPanel layout
         GridBagConstraints scrollConstraints = new GridBagConstraints();
-        scrollConstraints.anchor = GridBagConstraints.NORTH;
+        scrollConstraints.anchor = GridBagConstraints.NORTHWEST;
         scrollConstraints.weighty = 1;
         scrollConstraints.gridx = 0;
         scrollConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -687,8 +720,10 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         
         //Fill rhythmTextPanel with rhythms
         for(int i = 0; i < userRhythms.size(); i++){
-            JTextField rhythmTextRepresentation = new JTextField();
+            JTextField rhythmTextRepresentation = new JTextField(25);
+
             rhythmTextRepresentation.setText(makeRealMelodyFromRhythmPolylist(userRhythms.get(i)));
+            rhythmTextRepresentation.setCaretPosition(0);
             rhythmTextRepresentation.setEditable(false);
             addMouseListenerToRhythmTextField(rhythmTextRepresentation);
             //System.out.println("current visualization: "+ makeRealMelodyFromRhythmPolylist(userRhythms.get(i)));
@@ -748,6 +783,35 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      * @param rhythmTextRepresentation 
      */
     private void addMouseListenerToRhythmTextField(JTextField rhythmTextRepresentation){
+        rhythmTextRepresentation.addMouseListener(new MouseListener(){
+              public void mouseClicked(MouseEvent e){
+                  displayRhythmOnLeadsheet(rhythmTextRepresentation.getText());
+              }  
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+            }
+            );
+    }
+    
+    private void addMouseListenerToRhythmLabel(JLabel rhythmTextRepresentation){
         rhythmTextRepresentation.addMouseListener(new MouseListener(){
               public void mouseClicked(MouseEvent e){
                   displayRhythmOnLeadsheet(rhythmTextRepresentation.getText());
@@ -855,14 +919,11 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
     }
     
     private String getVisualizationFromRuleStringPolylist(Polylist rulePL){
-        
-        
         Polylist rhythmPL = getRhythmPolylistFromRuleStringPL(rulePL);
 
         String visualization = makeRealMelodyFromRhythmPolylist(rhythmPL);
         
         return visualization;
-        
     }
     
     private Polylist getRhythmPolylistFromRuleStringPL(Polylist rulePL){

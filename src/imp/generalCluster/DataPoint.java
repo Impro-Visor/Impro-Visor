@@ -595,4 +595,22 @@ public class DataPoint implements Serializable{
         
     }
     
+    public void normalize(Double[] maxVals, Double[] minVals){
+        System.out.println("metrics before normalization");
+        for (int i = 0; i < metricList.length; i++){
+            System.out.println(metricList[i].getName()+": "+metricList[i].getValue());
+}
+        if(maxVals.length != metricList.length || minVals.length != metricList.length){
+            System.out.println("INVALID MIN/MAX ARRAYS TO NORMALIZE OVER!");
+        }else{
+            for (int i = 0; i < metricList.length; i++){
+                metricList[i].setValue((metricList[i].getValue() - minVals[i]) / (maxVals[i]-minVals[i]));
+            }
+        }
+        System.out.println("metrics after normalization");
+        for (int i = 0; i < metricList.length; i++){
+            System.out.println(metricList[i].getName()+": "+metricList[i].getValue());
+        }
+    }
+    
 }

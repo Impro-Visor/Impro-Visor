@@ -1275,7 +1275,6 @@
                     <Component class="javax.swing.JSlider" name="motifnessGenerationSlider">
                       <Properties>
                         <Property name="toolTipText" type="java.lang.String" value="Amount of motifs to incorporate into solo"/>
-                        <Property name="value" type="int" value="50"/>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[150, 48]"/>
                         </Property>

@@ -22,7 +22,7 @@ import polya.Polylist;
  */
 public class RhythmCluster extends Cluster{
     private Centroid centroid;
-    private ArrayList<Polylist> polylistRhythmArray;
+    private ArrayList<Polylist> ruleStringArray;
     private Metric[] avgUserDataPointMetrics;
     private ArrayList<DataPoint> dataPointsFromUser;
     private double[] avgCentroidDatapointDifference;
@@ -32,6 +32,7 @@ public class RhythmCluster extends Cluster{
     private Polylist centroidPL;
     private Polylist rhythmListPolylist;
     private ArrayList<DataPoint> selectedRhythms;
+    private ArrayList<DataPoint> clusterDataPoints;
     
    
     public RhythmCluster(String name) {
@@ -62,7 +63,7 @@ public class RhythmCluster extends Cluster{
         
         this.rhythmListPolylist = (Polylist) p.second();
         
-        polylistRhythmArray = getRhythmArrayFromPolylist(rhythmListPolylist);
+        ruleStringArray = getRhythmArrayFromPolylist(rhythmListPolylist);
      
         avgCentroidDatapointDifference = new double[numMetrics];
         
@@ -79,7 +80,7 @@ public class RhythmCluster extends Cluster{
     
     
     public ArrayList<Polylist> getRhythmList(){
-        return polylistRhythmArray;
+        return ruleStringArray;
     }
     
     private Centroid centroidFromPolylist(Polylist centroidPL){
@@ -125,14 +126,14 @@ public class RhythmCluster extends Cluster{
     }
     
     public Polylist getFirstRhythm(){
-        return polylistRhythmArray.get(0);
+        return ruleStringArray.get(0);
     }
     
     public Polylist getRandomRhythm(){
-        int randomIndex = (int) (Math.random()*(polylistRhythmArray.size()));
+        int randomIndex = (int) (Math.random()*(ruleStringArray.size()));
         //System.out.println("random index is: "+randomIndex);
-        //System.out.println("rhythm at random index is: "+polylistRhythmArray.get(randomIndex));
-        return polylistRhythmArray.get(randomIndex);
+        //System.out.println("rhythm at random index is: "+ruleStringArray.get(randomIndex));
+        return ruleStringArray.get(randomIndex);
     }
         
         
@@ -400,6 +401,10 @@ public class RhythmCluster extends Cluster{
         return ruleStrings;
     }
     
+    public ArrayList<DataPoint> getClusterDataPoints(){
+        return clusterDataPoints;
+    }
+    
 //    public Polylist selectivelyGetClusterMembersRuleStringsPolylist(ArrayList<Polylist> excludeList){
 //        Polylist ruleStrings = Polylist.list("ruleStringList");
 //
@@ -428,11 +433,47 @@ public class RhythmCluster extends Cluster{
         rhythmListPolylist = rhythmListPolylist.addToEnd(p);
 }
 
-    public Polylist getClosestRhythm() {
-        int randomIndex = (int) (Math.random()*(polylistRhythmArray.size()));
-        //System.out.println("random index is: "+randomIndex);
-        //System.out.println("rhythm at random index is: "+polylistRhythmArray.get(randomIndex));
-        return polylistRhythmArray.get(randomIndex);
+    public Polylist getClosestRhythm(DataPoint d) {
+        int closestIndex = -1;
+        double dist;
+        double minEuclideanDist = Float.MAX_VALUE;
+        for(int i = 0; i < clusterDataPoints.size(); i++){
+            dist = d.calcEuclideanDistance(clusterDataPoints.get(i));
+            if(dist < minEuclideanDist){
+                closestIndex = i;
+                minEuclideanDist = dist;
+    }
+        }
+    
+        Polylist ruleString = Polylist.PolylistFromString(clusterDataPoints.get(closestIndex).getRuleString());
+        return ruleString;
+}
+    
+    
+    public void createDataPointsFromRuleStrings(Double[] maxVals, Double[] minVals){
+        ArrayList<DataPoint> clusterDataPoints = new ArrayList<DataPoint>();
+        for(int i = 0; i < ruleStringArray.size(); i++){
+            Polylist ruleStringPL = ruleStringArray.get(i);
+            String ruleString = ruleStringPL.toStringSansParens();
+            //System.out.println("\nruleString: " + ruleString);
+            Polylist rulePL = (Polylist) ruleStringPL.first();
+            Polylist abstractMel = (Polylist) rulePL.third();
+            //System.out.println("abstractMel: " + abstractMel.toString());
+            Polylist SegLen = (Polylist) rulePL.second();
+            Polylist rule = Polylist.list(SegLen.toStringSansParens()).append(abstractMel);
+            //System.out.println("rule: " + rule.toString());
+            DataPoint d = CreateGrammar.processRule(rule, ruleString, "0", (new RhythmMetricListFactory()) );
+            //System.out.println("maxVals[0]: " + maxVals[0]);
+            
+            
+            
+            d.normalize(maxVals,minVals);
+            
+            clusterDataPoints.add(d);
+        }
+        this.clusterDataPoints = clusterDataPoints;
+//        
+//        System.out.println("\n****************\n************\n    ruleStringArray: " + ruleStringArray);
     }
     
 }

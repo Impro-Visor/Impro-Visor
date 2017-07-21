@@ -8,6 +8,7 @@ package imp.trading.tradingResponseModes;
 import static imp.Constants.BEAT;
 import imp.ImproVisor;
 import imp.com.CommandManager;
+import imp.com.RectifyPitchesCommand;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.data.Note;
@@ -50,11 +51,13 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     protected double[] savedDatapointAverages;
     protected int totalNumSavedDatapoints;
     protected ArrayList<RhythmCluster> clusterArray;
+    protected int tradeCounter;
 
     
     
     public RhythmHelperTRM(String message) {
         super(message);        
+        tradeCounter = 0;
     }
     
     @Override
@@ -103,6 +106,10 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         return rtn;
     }
     
+    protected abstract Polylist getRhythmPolylist(RhythmCluster closestCluster, DataPoint d);
+    protected abstract MelodyPart getRhythmTemplate(String rhythmString, RhythmCluster closestCluster);
+    protected abstract MelodyPart createResponseFromRhythmTemplate(MelodyPart RhythmTemplate);
+    
     /**Trading response method for correcting a user's rhythm
      * takes the solo played by the user, finds the cluster it would fit best with
      * and picks a random melody from that cluster, it then takes the note pitches
@@ -127,37 +134,52 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         RhythmCluster bestFit = findNearestCluster(clusterArray, d);
         bestFit.addUserDataPoint(d);
 
-        int index = clusterArray.indexOf(bestFit);
+        Polylist rhythmPolylist = getRhythmPolylist(bestFit, d);
+        String rhythmString = getRhythmStringFromRuleStringPolylist(rhythmPolylist);
+        MelodyPart rhythmTemplate = getRhythmTemplate(rhythmString, bestFit);
+        response = createResponseFromRhythmTemplate(rhythmTemplate);
+        System.out.println("response before rectify"+response);
+        RectifyPitchesCommand cmd = new RectifyPitchesCommand(response, 0, response.size()-1, responseInfo.getResponseChords(), false, false, true, true, true, false);
+        cmd.execute();
+        System.out.println("response after rectify"+response);
+        return response;
+
+        //getRhythmPolylist
+        //createResponse
+        
         //System.out.println("relativePitch of dataPoint unchanged: " + getDataPointForUser().getRelativePitchMelody());
         //testingArray.get(index).add(getDataPointForUser().getRelativePitchPolylist().toString());
         //testingArray.get(index).add(getDataPointForUser().toString());
        // System.out.println("The best fit cluster: " + bestFit.toString());
         //Polylist rhythmPolylist = bestFit.getRandomRhythm();
-        Polylist rhythmPolylist = getRhythmFromCluster(bestFit);
-        String rhythm = getRhythmStringFromRuleStringPolylist(rhythmPolylist);
-        MelodyPart rhythmTemplate = new MelodyPart(rhythm);
-        if(rhythmTemplate.getEndTime() < tradeLengthInSlots){
-           rhythmTemplate = extendRhythmTemplate(rhythmTemplate, bestFit);
-        }
-
-        if(rhythmTemplate.getEndTime() > tradeLengthInSlots){
-            rhythmTemplate = truncateRhythmTemplate(rhythmTemplate);
-        }
-        fitToRhythm(rhythmTemplate);
-//        System.out.println("testing array when tradecounter = "+tradeCounter);
-        //printTestingArray(clusterArray);
-        
-        
-//        if(tradeCounter % 5==0){
-//            adjustClusters();
+//        Polylist rhythmPolylist = getRhythmFromCluster(bestFit, d);
+//        String rhythm = getRhythmStringFromRuleStringPolylist(rhythmPolylist);
+//        MelodyPart rhythmTemplate = new MelodyPart(rhythm);
+//        if(rhythmTemplate.getEndTime() < tradeLengthInSlots){
+//           rhythmTemplate = extendRhythmTemplate(rhythmTemplate, bestFit);
 //        }
-        
-        
-        return response;
+//
+//        if(rhythmTemplate.getEndTime() > tradeLengthInSlots){
+//            rhythmTemplate = truncateRhythmTemplate(rhythmTemplate);
+//        }
+//        fitToRhythm(rhythmTemplate);
+////        System.out.println("testing array when tradecounter = "+tradeCounter);
+//        //printTestingArray(clusterArray);
+//        
+//        
+////        if(tradeCounter % 5==0){
+////            adjustClusters();
+////        }
+//        System.out.println("response chords"+responseInfo.getResponseChords());
+//        System.out.println("response before rectify"+response);
+//        RectifyPitchesCommand cmd = new RectifyPitchesCommand(response, 0, response.size()-1, responseInfo.getResponseChords(), false, false, true, true, true, true);
+//        cmd.execute();
+//        System.out.println("response after rectify"+response);
+//        return response;
     }
     
     
-    abstract protected Polylist getRhythmFromCluster(RhythmCluster closestCluster);
+    //abstract protected Polylist getRhythmFromCluster(RhythmCluster closestCluster, DataPoint d);
     
     
     protected void adjustClusters(int tradeCount){
@@ -741,7 +763,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         return rhythmString;
     }
     
-    protected void fitToRhythm(MelodyPart rhythmTemplate){
+    protected MelodyPart fitToRhythm(MelodyPart rhythmTemplate){
         int thePitch;
         int responseIterator = response.getFirstIndex();
         int rhythmTemplateIterator = rhythmTemplate.getFirstIndex();
@@ -790,6 +812,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         }
         //System.out.println("rhythmTemplate is now "+rhythmTemplate);
         response = rhythmTemplate;
+        return response;
     }
     
     public ArrayList<RhythmCluster> getRhythmClusters() {
@@ -810,6 +833,27 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
 
     public String getClusterFileName() {
         return this.clusterFileName;
+    }
+    
+    public int getNumTrades(){
+        return tradeCounter;
+}
+    
+     public DataPoint ruleStringToNormalizedDataPoint(Polylist ruleStringPL){
+        String ruleString = ruleStringPL.toStringSansParens();
+        //System.out.println("\nruleString: " + ruleString);
+        Polylist rulePL = (Polylist) ruleStringPL.first();
+        Polylist abstractMel = (Polylist) rulePL.third();
+        //System.out.println("abstractMel: " + abstractMel.toString());
+        Polylist SegLen = (Polylist) rulePL.second();
+        Polylist rule = Polylist.list(SegLen.toStringSansParens()).append(abstractMel);
+        //System.out.println("rule: " + rule.toString());
+        DataPoint d = CreateGrammar.processRule(rule, ruleString, "0", (new RhythmMetricListFactory()) );
+        //System.out.println("maxVals[0]: " + maxVals[0]);
+
+        d.normalize(maxMetricValues, minMetricValues);
+        
+        return d;
     }
     
 }

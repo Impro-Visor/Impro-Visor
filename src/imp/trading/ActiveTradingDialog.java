@@ -74,6 +74,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private final Integer initialTradeLength = 4;
     public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 0);
     UserRhythmSelecterDialog userRhythmSelecterDialog;
+    TradingGoalsDialog userGoalsDialog;
 
     private final Notate notate;
     private JPanel rhythmHelperModeRadioPanel;
@@ -796,7 +797,12 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             updateMusician();
             updateTradeMode();
             
+            if(activeTrading.getTradeMode() instanceof CorrectRhythmTRM){
+                activeTrading.showGoalsDialog();
+                 
+            }else{  
             activeTrading.startTrading();
+            }
             //nnActiveTrading.startTrading();
          }
          tradingNow = true;
@@ -806,6 +812,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         userRhythmSelecterDialog = new UserRhythmSelecterDialog(activeTrading.getTradeMode());
         userRhythmSelecterDialog.setLocation(userRhythmSelecterDialog.INITIAL_OPEN_POINT);
         userRhythmSelecterDialog.setSize(800, 200);
+        if(activeTrading.getTradeMode() instanceof CorrectRhythmTRM){
+                userRhythmSelecterDialog.showGrade(((RhythmHelperTRM) activeTrading.getTradeMode()).getNumTrades());
+        }
         userRhythmSelecterDialog.setVisible(true);
     }
     
@@ -846,6 +855,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeLengthSpinner.setVisible(true);
         grammarStatus.setVisible(true);
         transformStatus.setVisible(true);
+        userFirstButton.setVisible(true);
+        improvisorFirstButton.setVisible(true);
         rhythmHelperModeRadioPanel.setVisible(false);
         
         switch (newMode) {
@@ -886,6 +897,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
                 transformStatus.setVisible(false);
                 rhythmHelperModeRadioPanel.setVisible(true);
                 tradeMode = getRhythmHelperSelectedTRM();
+                toggleTradeFirstButtons(tradeMode);
                 
                 break;
             case "Memorize Motifs":
@@ -1109,6 +1121,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
               System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
             if(suggestRhythmRadioButton.isSelected()){
                 activeTrading.setTradeMode(new SuggestRhythmTRM("Suggest Rhythm"));
+                toggleTradeFirstButtons(activeTrading.getTradeMode());
             }
           }   
         } );
@@ -1121,6 +1134,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
               System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
             if(correctRhythmRadioButton.isSelected()){
                 activeTrading.setTradeMode(new CorrectRhythmTRM("Correct Rhythm"));
+                toggleTradeFirstButtons(activeTrading.getTradeMode());
             }
           }   
         } );
@@ -1180,4 +1194,23 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JPanel volumePanel;
     private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables
+
+    private void toggleTradeFirstButtons(TradingResponseMode tradeMode) {
+        if(tradeMode instanceof SuggestRhythmTRM){
+            userFirstButton.setSelected(true);
+            updateIsUserLeading();
+            System.out.println("selected suggest rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
+                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
+            userFirstButton.setVisible(true);
+            improvisorFirstButton.setVisible(false);  
+        }else{
+            improvisorFirstButton.setSelected(true);
+            updateIsUserLeading();
+
+            System.out.println("selected correct rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
+                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
+            improvisorFirstButton.setVisible(true);
+            userFirstButton.setVisible(false);
+        }
+    }
 }

@@ -5529,6 +5529,156 @@ public String writeProduction(String production,
  
   }
 
+public String writeProductionForBricks(String production,
+                            int measureWindow,
+                            int location,
+                            boolean writeExactMelody,
+                            String brickType,
+                            int chorus)
+  {
+    String finalProduction = null;
+ 
+   
+    if( chorus == -1 )
+      { //didn't provide any information about what chorus we're on
+        chorus = notate.getSelectedIndex();
+      }
+    ArrayList<String> oneMeasureMelodyData = melodyData;
+    if( !allMeasures )
+      {
+        oneMeasureMelodyData = notate.getOneMeasureMelodyData(chorus);
+      }
+ 
+    if( production == null )
+      {
+        return finalProduction;
+      }
+    String chords = "";
+ 
+    if( production.contains("CHORDS") )
+      {
+        chords = production.substring(production.indexOf("CHORDS"));
+        production = production.substring(0, production.indexOf("CHORDS"));
+      }
+ 
+    try
+      {
+        BufferedWriter out;
+        if( brickType != null )
+          {
+            out = new BufferedWriter(brickProductionsWriter);
+          }
+        else
+          {
+            out = new BufferedWriter(windowProductionsWriter);
+          }
+ 
+        if( !writeExactMelody )
+          {
+            out.write("(rule (Seg"
+                    + measureWindow
+                    + ") "
+                    + production
+                    + " ) "
+                    + chords
+                    + "\n");
+          }
+        else
+          {
+            //check that index of exact melody matches index of abstract melody
+            //then concatenate the two and write them to the file
+            int slotsPerSection = measureWindow * BEAT;
+            String melodyToWrite;
+            String relativePitchMelody;
+            String exactMelody = production;
+            String[] splitMel;
+            boolean foundMatch = false;
+ 
+            for( int i = 0; i < oneMeasureMelodyData.size(); i++ )
+              {
+                splitMel = oneMeasureMelodyData.get(i).split(" ");
+                if( splitMel[0].equals(Integer.toString(location)) )
+                  { //we've located our production's data in our melody data
+                    exactMelody = oneMeasureMelodyData.get(i); //the melody data is in small (1 measure) fixed-length strips
+                    int j = i; //starting at this strip, we'll see if we need to add more strips
+                    //(to match the length of our production)
+                    int exactMelodyLength = 0;
+                    if( j < oneMeasureMelodyData.size() - 1 )
+                      {
+                        String[] splitNextMel = oneMeasureMelodyData.get(j + 1).split(" ");
+                        int nextSlot = Integer.parseInt(splitNextMel[0]);
+                        //System.out.println("nextSlot (is it 960?): "+nextSlot);
+                        //System.out.println("location (is it 0?): "+nextSlot);
+                        exactMelodyLength = nextSlot - location;
+                        //System.out.println("exactMelodyLength: "+exactMelodyLength);
+                      }
+                    int thisSlot = location; //starting slot of the most recently examined strip of data
+                    //while the total amount of melody data we've gone through is less than the amount of data in our production
+                    while( j < oneMeasureMelodyData.size() - 1 && exactMelodyLength < slotsPerSection )
+                      {
+                        String[] splitNextMel = oneMeasureMelodyData.get(j + 1).split(" ");
+                        int nextSlot = Integer.parseInt(splitNextMel[0]);
+                        exactMelodyLength += nextSlot - thisSlot; //we're adding another measure's worth of data onto our exact melody
+                        for( int k = 1; k < splitNextMel.length; k++ )
+                          { //tack on the melody data for the next measure-length strip to exact melody
+                            exactMelody = exactMelody.concat(splitNextMel[k] + " ");
+                          }
+                        thisSlot = nextSlot;
+                        j++;
+                      }
+                    foundMatch = true;
+                    break;
+                  }
+              }
+            if( foundMatch == false )
+              {
+                System.out.println("Weird. This shouldn't happen: " + location);
+                System.out.println("Melody data: " + oneMeasureMelodyData);
+              }
+ 
+            if( notate.getSelectedIndex() == 0 ) /*head*/
+ 
+              {
+                melodyToWrite = "Head " + exactMelody;
+              }
+            else
+              {
+                melodyToWrite = "Chorus" + (notate.getSelectedIndex() + 1) + " " + exactMelody;
+              }
+ 
+            ChordPart chordProg = notate.getChordProg().extract(location, location + slotsPerSection - 1);
+            relativePitchMelody = NoteConverter.melStringToRelativePitch(slotsPerSection, chordProg, exactMelody);
+            finalProduction = "(rule (Seg"
+                    + measureWindow
+                    + ") "
+                    + production
+                    + " ) "
+                    + "(Xnotation "
+                    + relativePitchMelody
+                    + ") "
+                    + "(Brick-type "
+                    + brickType
+                    + ") "
+                    + melodyToWrite
+                    + " "
+                    + chords
+                    + "\n";
+            out.write(finalProduction);
+ 
+ 
+ 
+          }
+        out.close();
+      }
+    catch( IOException e )
+      {
+        System.out.println("IO EXCEPTION! " + e.toString());
+      }        
+   
+    return finalProduction;
+ 
+  }
+
 /**Method to write the user's data (stored in the My.rhythms file) to the outWriter,
  * which is used to create the grammar and clusters. Basically what makes us learn
  * a grammar with user data.

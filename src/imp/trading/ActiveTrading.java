@@ -470,6 +470,96 @@ public class ActiveTrading {
         return this.tradeResponseController;
     }
 
+    
+    public void showGoalsDialog(){
+        scoreLength = notate.getScoreLength();
+        slotsPerMeasure = notate.getScore().getSlotsPerMeasure();
+        metre = notate.getScore().getMetre();
+        slotsPerTurn = measures * slotsPerMeasure;
+        try {
+            tradeResponseController = new TradingResponseController(notate, metre, slotsPerTurn, tradeMode);
+        } catch (ExceptionTradeModeNotFound ex) {
+            Logger.getLogger(ActiveTrading.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        showTradingGoalsDialog();
+    }
+    
+    public void startTradingFromTradingGoalsDialog(){
+        notifyListeners(true);
+        //make this more general
+        File directory = ImproVisor.getTransformDirectory();
+        File file = new File(directory, musician + TransformFilter.EXTENSION);
+        //String dir = System.getProperty("user.dir");
+        //File file = new File(dir + "/transforms/"+musician+".transform");
+        transform = new Transform(file);
+
+        response = new MelodyPart();
+        firstPlay = true;
+        notate.setFirstTab();
+        lastPosition = 0;
+        loopLock = false;
+        isTrading = true;
+        midiSynth = new MidiSynth(midiManager);
+
+        tradeResponseController.onStartTrading();
+        
+        adjustedLength = scoreLength - (scoreLength % slotsPerTurn);
+        numberOfTurns = adjustedLength / slotsPerTurn;
+        notate.getCurrentStave().setSelection(0, scoreLength);
+        notate.pasteMelody(new MelodyPart(scoreLength));
+        notate.getCurrentStave().unselectAll();
+        triggerIndex = 0;
+        populateTriggers();
+        //initDelay();
+
+        //if computer is leading, generate a solo via selected grammar
+        if (!isUserLeading) {
+            tradeScore = new Score("trading", notate.getTempo(), ZERO);
+            tradeScore.setBassMuted(true);
+            tradeScore.delPart(0);
+            //response = tradeResponseController.extractFromGrammarSolo(0, slotsPerTurn);
+            response = ((CorrectRhythmTRM) tradeMode).getFirstRhythm();
+            Long delayCopy = slotDelay;
+            MelodyPart adjustedResponse = response.extract(delayCopy.intValue(), slotsPerTurn - ONE, true, true);
+            //notate.establishCountIn(tradeScore);  // Doesn't work for Impro-Visor first
+            tradeScore.addPart(adjustedResponse);
+            playCommand = new PlayScoreCommand(
+                    tradeScore,
+                    ZERO,
+                    swingCheckBox.isSelected(),
+                    midiSynth,
+                    notate,
+                    ZERO,
+                    notate.getTransposition(),
+                    false,
+                    slotsPerTurn - END_LIMIT_INDEX,
+                    true
+            );
+        }
+
+        midiSynth.setMasterVolume(volume);
+        notate.playFirstChorus();
+
+        if (isUserLeading) {
+            phase = TradePhase.COMPUTER_TURN;
+        } else {
+            //TODO make a nice comment
+            phase = TradePhase.PROCESS_INPUT;
+            MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
+            currentMelodyPart.altPasteOver(response, 0);
+            currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);
+        }
+    }
+    
+    
+    private void showTradingGoalsDialog(){
+        TradingGoalsDialog userGoalsDialog = new TradingGoalsDialog(tradeMode, this);
+        userGoalsDialog.setLocation(TradingGoalsDialog.INITIAL_OPEN_POINT);
+        userGoalsDialog.setSize(800, 400);
+        userGoalsDialog.setVisible(true);              
+    }
+
     /**
      * Starts interactive trading
      */
