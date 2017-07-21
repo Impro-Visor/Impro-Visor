@@ -9092,8 +9092,7 @@ private void setStepInputBtn(boolean selected)
   }
 
     private void stepInputBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepInputBtnActionPerformed
-
-        setStepInputBtn(stepInputBtn.isSelected());
+      setStepInputBtn(stepInputBtn.isSelected());
     }//GEN-LAST:event_stepInputBtnActionPerformed
 
 /**
@@ -10209,7 +10208,15 @@ public void startRecording(){
         startRecordingHelper();//below
       }
   }
-
+int leadsheetTransValue;
+public int getLeadsheetTransValue()
+{
+    return leadsheetTransValue;
+}
+public void setLeadsheetTransValue(int x)
+{
+    leadsheetTransValue = x;
+}
 
 
 

@@ -75,7 +75,6 @@ public class MidiRecorder implements Constants, Receiver
     
     boolean isSuspended = false;
     
-    
 
     public MidiRecorder(Notate notate, Score score)
     {
@@ -110,13 +109,12 @@ public class MidiRecorder implements Constants, Receiver
 
     public void start(int countInOffset, int recordLatency)
     {
-        
         notateMelodyPart = notate.getCurrentMelodyPart();
         quantum = notate.getQuantizationQuanta();
         gcd = MelodyPart.gcd(quantum[0], quantum[1]);
         swingEighths = notate.getQuantizationSwing();
         restAbsorption = notate.getQuantizationRestAbsorption();
-        
+     
         //System.out.println("realtime quanta = " + quantum[0] + "," + quantum[1] + ", gcd = " + gcd + ", restAbsorption = " + restAbsorption + ", swing = " + swingEighths);
         
         notesLost = 0;
@@ -308,6 +306,7 @@ public class MidiRecorder implements Constants, Receiver
      * @param noteToAdd
      */
     private void setNote(int index, Note noteToAdd){
+        noteToAdd.transposeInPlace(notate.getLeadsheetTransValue());
         if( tradePart == null )
               {
                 melodyPart = notateMelodyPart;

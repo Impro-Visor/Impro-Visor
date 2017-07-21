@@ -343,7 +343,7 @@ public class Preferences implements imp.Constants
         "(language en)" +
         "(language_list (en , fr))" +
         "(lstm-gen-params combination.ctome))" +
-        "(transposing-instruments ((Bb-Trumpet -2 -2 treble 2) (Bb-TenorSax -14 -2 treble 2) (Bb-SopranoSax -2 -2 treble 2) (Eb-AltoSax -9 3 treble 9) (Eb-BaritoneSax -21 3 treble 9) (F-Horn -5 -5 treble -5) (Trombone -12 0 bass -12) (SopranoRecorder 12 0 treble)))";
+        "(transposing-instruments ((No-Transposition 0 0 treble 0)(Bb-Trumpet -2 -2 treble 2) (Bb-TenorSax -14 -2 treble 2) (Bb-SopranoSax -2 -2 treble 2) (Eb-AltoSax -9 3 treble 9) (Eb-BaritoneSax -21 3 treble 9) (F-Horn -5 -5 treble -5) (Trombone -12 0 bass -12) (SopranoRecorder 12 0 treble 0)))";
 
   /**
    * The ALWAYS_USE_BUTTONS are y or n standing for CHORD, BASS, DRUMS, STAVE.
@@ -387,7 +387,7 @@ public class Preferences implements imp.Constants
         ErrorLog.log(ErrorLog.WARNING, "Failure generating default " +
                 "preference file 'My.prefs'.");
         }
-      } // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch
+      } // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch
     }
 
   public static void savePreferences()
