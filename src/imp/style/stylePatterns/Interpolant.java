@@ -33,51 +33,47 @@ import polya.Polylist;
 public class Interpolant
         extends Pattern implements Serializable
 {
-Polylist BOUNDARIES;
+Polylist chords;
 
-Polylist INSERT;
+float weight;
 
-float WEIGHT;
-
-int MINSLOTS;
+int minslots;
 
 public Interpolant() {
     
 }
 
-public Interpolant(Polylist boundaries, Polylist insert, float weight, int minslots)
+public Interpolant(Polylist chords, float weight, int minslots)
   {
-       BOUNDARIES = boundaries;
-       INSERT = insert;
-       WEIGHT = weight;
-       MINSLOTS = minslots;
+       
+       this.chords = chords;
+       this.weight = weight;
+       this.minslots = minslots;
   }
 
 private static final String keyword[] =
   {
-  "boundaries", "interpolant", "weight", "min-duration"
+  "chords", "weight", "min-duration"
   };
 
 // indices into the keyword array
-private static final int BOUNDS = 0;
+private static final int CHORD = 0;
 
-private static final int INTERPOLANT = 1;
+private static final int WEIGHTS = 1;
 
-private static final int WEIGHTS = 2;
-
-private static final int MIN_DURATION = 3;
+private static final int MIN_DURATION = 2;
 
 public static Interpolant makeInterpolant(Polylist L) {
-   //  System.out.println("hello Intrp" + L);
-   float problemchild = ((Number)L.third()).floatValue();
-    Interpolant interp =  new Interpolant((Polylist)L.first(), (Polylist)L.second(),problemchild, (int)L.last());
-  //  System.out.println("hello interp" + interp);
+  //   System.out.println("hello Intrp" + L);
+   float problemchild = ((Number)L.second()).floatValue();
+    Interpolant interp =  new Interpolant((Polylist)L.first(),problemchild, (int)L.last());
+   // System.out.println("hello interp" + interp);
     return interp;
 }
 
 public static Interpolant makeInterpolantFromExp(Polylist L) {
     Polylist original = L;
-    
+    //System.out.println("hello3 " + original);
     Interpolant interp = new Interpolant();
 
     while( L.nonEmpty() )
@@ -89,34 +85,18 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
     item = item.rest();
     switch( Leadsheet.lookup(dispatcher, keyword) )
       {
-      case BOUNDS:
+      case CHORD:
         {
            if( item == null || item.isEmpty() || item.first().equals("") )
            {
-               interp.setError("No boundaries in interpolate expression");
+               interp.setError("No chords in interpolate expression");
                break;
            }
            else if (item.first() instanceof Polylist) {
-               interp.setBOUNDARIES((Polylist)item.first());
+        //       System.out.println(item.first());
+               interp.setCHORDS((Polylist)item.first());
            }
            break;
-        }
-      case INTERPOLANT:
-        {
-          if( item == null || item.isEmpty() || item.first().equals("") )
-           {
-               interp.setError("No insert in interpolate expression");
-               break;
-           }
-           else if (item.first() instanceof Polylist) {
-               interp.setINSERT((Polylist)item.first());
-           }
-           else {
-               interp.setError("Unrecognized insert in interpolate expression");
-               break;
-           } 
-         
-        break;
         }
           
       case WEIGHTS:
@@ -124,7 +104,7 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
         try
           {
           Number w = (Number)item.first();
-          interp.WEIGHT = w.floatValue();
+          interp.weight = w.floatValue();
      
           break;
           }
@@ -160,41 +140,33 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
 
 
 public Polylist makeInterpolantList() {
-    Polylist interpList = Polylist.list(BOUNDARIES, INSERT, WEIGHT, MINSLOTS);
+    Polylist interpList = Polylist.list(chords, weight, minslots);
     return interpList;
 }
 
-public Polylist getBOUNDARIES() {
-    return BOUNDARIES;
+public Polylist getCHORDS() {
+    return chords;
 }
 
-public void setBOUNDARIES(Polylist BOUNDARIES) {
-    this.BOUNDARIES = BOUNDARIES;
-}
-
-public Polylist getINSERT() {
-    return INSERT;
-}
-
-public void setINSERT(Polylist INSERT) {
-    this.INSERT = INSERT;
+public void setCHORDS(Polylist CHORDS) {
+    this.chords = CHORDS;
 }
 
 public float getWEIGHT() {
-    return WEIGHT;
+    return weight;
 }
 
 public void setWEIGHT(float WEIGHT) {
  
-    this.WEIGHT = WEIGHT;
+    this.weight = WEIGHT;
 }
 
 public int getMINSLOTS() {
-    return MINSLOTS;
+    return minslots;
 }
 
 public void setMINSLOTS(int MINSLOTS) {
-    this.MINSLOTS = MINSLOTS;
+    this.minslots = MINSLOTS;
 }
 
 
