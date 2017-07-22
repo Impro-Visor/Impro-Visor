@@ -84,6 +84,7 @@ public class MidiStepEntryActionHandler implements Constants, Receiver {
             int index = notate.getCurrentSelectionStart();
             Stave stave = notate.getCurrentStave();
             Note newNote = new Note(note);
+            newNote.transposeInPlace(notate.getLeadsheetTransValue());
             newNote.setEnharmonic(notate.getScore().getCurrentEnharmonics(index));
 
             notate.cm.execute(new SetNoteCommand(index, newNote, notate.getCurrentMelodyPart()));
