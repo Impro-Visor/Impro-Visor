@@ -925,6 +925,32 @@ public void changeType(StaveType type)
     repaint();
   }
 
+public static String staveTypeToString(StaveType type)
+{
+    switch( type )
+      {
+        case GRAND: return "Grand";
+        case TREBLE: return "Treble";
+        case BASS: return "Bass";
+        case AUTO: return "Auto";
+        case NONE:
+        default: return "None";
+      }
+}
+
+public static StaveType staveTypeFromString(String type)
+{
+    switch( type )
+      {
+        case "Grand":  return StaveType.GRAND;
+        case "Treble": return StaveType.TREBLE;
+        case "Bass":   return StaveType.BASS;
+        case "Auto":   return StaveType.AUTO;
+        case "None": 
+              default: return StaveType.NONE;
+      }
+}
+
 public void setPrinting(boolean printing)
   {
     this.printing = printing;

@@ -21,7 +21,6 @@
 package imp.com;
 
 import imp.Constants;
-import imp.data.Score;
 import imp.gui.Notate;
 import imp.util.Trace;
 
@@ -49,6 +48,8 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     
     Notate notate;
     
+    StaveType clef;
+    
     /**
      * true since this Command can be undone
      */
@@ -63,11 +64,12 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
      * @param newKeySig
      */
     public TransposeAllInPlaceCommand(Notate notate, 
-                                      int transposition) 
+                                      int transposition,
+                                      StaveType clef) 
     {
         this.notate = notate;
         this.transposition = transposition;
-        Score score = notate.getScore();
+        this.clef = clef;
     }
     
     /**
@@ -76,7 +78,7 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     @Override
     public void execute() {
         Trace.log(2, "executing TransposeAllInPlaceCommand");
-        notate.transposeAllInPlace(transposition);
+        clef = notate.transposeAllInPlace(transposition, clef);
     }
     
     /**
@@ -85,7 +87,7 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     @Override
     public void undo() {
         Trace.log(2, "undoing TransposeAllInPlaceCommand");
-        notate.transposeAllInPlace(-transposition);
+        notate.transposeAllInPlace(-transposition, clef);
     }
     
     /**
