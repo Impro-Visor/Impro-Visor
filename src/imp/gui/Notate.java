@@ -18435,6 +18435,10 @@ public ArrayList<String> getMelodyData(int chorusNumber)
     return getMelodyData(score, chorusNumber);
   }
 
+public ArrayList<String> getOneMeasureMelodyData(int chorusNumber)
+  {
+    return getOneMeasureMelodyData(score, chorusNumber);
+  }
 /**
  * Returns an ArrayList of Strings representing a section of the melody of a
  * chorus and containing the notes in the section
@@ -18446,6 +18450,70 @@ public ArrayList<String> getMelodyData(Score s, int chorusNumber)
     int numSlots = melPart.getSize();
     int slotsPerSection = lickgenFrame.getWindowSize() * BEAT;
     int windowSlide = lickgenFrame.getWindowSlide() * BEAT;
+    //loop through sections
+    for( int window = 0; window < slotsPerSection; window += windowSlide )
+      {
+        //for (int i = 0; (i * slotsPerSection) + (window * BEAT) + slotsPerSection <= melPart.getSize(); i++) {
+        for( int i = 0 + (window); i <= numSlots - slotsPerSection; i += slotsPerSection )
+          {
+            String measure = Integer.toString(i) + " ";
+            int tracker = 0;
+            MelodyPart p = melPart.extract(i, i + slotsPerSection - 1, true, true);
+            //if note is held from previous section, add that first
+            if( melPart.getPrevNote(i) != null && melPart.getPrevNote(i).getRhythmValue() > i - melPart.getPrevIndex(i) )
+              {
+                Note currentNote = melPart.getPrevNote(i);
+                measure = measure.concat(Integer.toString(currentNote.getPitch()));
+                measure = measure.concat(" ");
+                int len = currentNote.getRhythmValue();
+                len -= (i - melPart.getPrevIndex(i));
+                //measure = measure.concat (Integer.toString(i - melPart.getPrevIndex(i)));
+                if( len > melPart.getMeasureLength() )
+                  { //note is also tied to next measure (so it must be a whole note tied on either end)
+                    len = melPart.getMeasureLength(); //we'll add the note to which it is tied later
+                  }
+                measure = measure.concat(Integer.toString(len));
+                measure = measure.concat(" ");
+                tracker = p.getNextIndex(0);
+              }
+            //System.out.println("p.size: " + p.getSize());
+            //set tracker to index of first note
+            if( p.getNote(0) == null )
+              {
+                tracker = p.getNextIndex(0);
+                //truncate notes tied to next measure
+              }
+            int sumOfRhythmValues = 0;
+            //add representations of all notes in measure to a string
+            while( tracker < p.getSize() )
+              {
+                //System.out.println("Tracker = " + tracker);
+                Note currentNote = p.getNote(tracker);
+                measure = measure.concat(Integer.toString(currentNote.getPitch()));
+                measure = measure.concat(" ");
+                int length = currentNote.getRhythmValue();
+                if( sumOfRhythmValues + length > slotsPerSection )
+                  {
+                    length = slotsPerSection - sumOfRhythmValues;
+                  }
+                sumOfRhythmValues += length;
+                measure = measure.concat(Integer.toString(length));
+                measure = measure.concat(" ");
+                tracker = p.getNextIndex(tracker);
+              }
+            sections.add(measure);
+          }
+      }
+    return sections;
+  }
+
+public ArrayList<String> getOneMeasureMelodyData(Score s, int chorusNumber)
+  {
+    MelodyPart melPart = s.getPart(chorusNumber).copy();
+    ArrayList<String> sections = new ArrayList<String>();
+    int numSlots = melPart.getSize();
+    int slotsPerSection = 4 * BEAT;
+    int windowSlide = 4 * BEAT;
     //loop through sections
     for( int window = 0; window < slotsPerSection; window += windowSlide )
       {
