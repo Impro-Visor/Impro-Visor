@@ -32,6 +32,10 @@ import imp.data.Transposition;
  */
 public class TranspositionWizardDialog extends javax.swing.JDialog {
 
+    int scoreTransposition = 0;
+
+    Notate notate;
+
     public TranspositionWizardDialog(Notate notate)
     {
         initComponents();
@@ -40,12 +44,6 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         setVisible(true);
     }
 
-
-     Notate getNotate()
-    {
-        return notate;
-    }
-     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,7 +51,8 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         transposeTitle = new javax.swing.JLabel();
@@ -90,8 +89,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         setBounds(new java.awt.Rectangle(400, 300, 570, 450));
         setMinimumSize(new java.awt.Dimension(570, 450));
         setSize(new java.awt.Dimension(570, 450));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -116,7 +117,8 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(160, 175));
 
-        transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>() {
+        transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>()
+        {
             String[] strings = { "No-Transposition", "Bb-Trumpet", "Bb-TenorSax", "Bb-SopranoSax", "Eb-AltoSax", "Eb-BaritoneSax", "F-Horn", "Trombone", "SopranoRecorder" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
@@ -128,8 +130,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionWizardJList.setMinimumSize(new java.awt.Dimension(100, 100));
         transpositionWizardJList.setPreferredSize(new java.awt.Dimension(100, 80));
         transpositionWizardJList.setVisibleRowCount(10);
-        transpositionWizardJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+        transpositionWizardJList.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
                 transpositionWizardJListValueChanged(evt);
             }
         });
@@ -227,8 +231,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionWizardSaveButton.setText("Transpose Playback ");
         transpositionWizardSaveButton.setToolTipText("Clicking this button will set the transposed playback.");
         transpositionWizardSaveButton.setPreferredSize(new java.awt.Dimension(141, 40));
-        transpositionWizardSaveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        transpositionWizardSaveButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 transpositionWizardSaveButtonActionPerformed(evt);
             }
         });
@@ -285,8 +291,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         concertPitchButton.setText("Transpose Leadsheet");
         concertPitchButton.setToolTipText("Clicking this button will visually transpose the leadsheet");
-        concertPitchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        concertPitchButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 concertPitchButtonActionPerformed(evt);
             }
         });
@@ -297,8 +305,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         customLeadsheetTransposeSpinner.setToolTipText("This is the amount of semitones the leadsheet will be transposed.");
         customLeadsheetTransposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Transpose"));
-        customLeadsheetTransposeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        customLeadsheetTransposeSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 customLeadsheetTransposeSpinnerStateChanged(evt);
             }
         });
@@ -364,11 +374,11 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jPanel1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-Notate notate;
 
     private void transpositionWizardJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_transpositionWizardJListValueChanged
         //gives preview of what will be transposed in transposition wizard window
@@ -408,32 +418,10 @@ Notate notate;
         notate.getTranspositionWizardMI().setEnabled(true);
     }//GEN-LAST:event_transpositionWizardSaveButtonActionPerformed
 
-    int scoreTransposition = 0;
-    int newKeySignature = 0;
 
     private void concertPitchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concertPitchButtonActionPerformed
-        if (transpositionWizardJList.getSelectedValue() != null)
-        {
-             String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-             String allValues = Preferences.getPreference("transposing-instruments");
-             Polylist all_values = Polylist.PolylistFromString(allValues);
-             Polylist found = all_values.assoc(transpositionInstrument);
-             int chordbass = ((Long)found.third()).intValue();
-             scoreTransposition = ((Long)found.fifth()).intValue();
-
-             //transposes score/leadsheet visually (notes + key signature)
-             Score score = notate.getScore();
-             int oldKeySignature = score.getKeySignature();
-             int transpositionIndex = (132 - chordbass)%12;
-             newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][transpositionIndex];
-             // 132 = 12*11 to ensure the result is positive, yet be equivalent to chordbass value mod 12
-             
-             // Using a command allows this action to be undoable.
              notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
-                                                                  scoreTransposition, 
-                                                                  scoreTransposition, 
-                                                                  newKeySignature));
-        } 
+                                                             scoreTransposition));
     }//GEN-LAST:event_concertPitchButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -444,27 +432,6 @@ Notate notate;
         Object change = customLeadsheetTransposeSpinner.getValue();
         String temp = change.toString();
         scoreTransposition = Integer.valueOf(temp);
-        
-        if (transpositionWizardJList.getSelectedValue() != null)
-        {
-             String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-             String allValues = Preferences.getPreference("transposing-instruments");
-             Polylist all_values = Polylist.PolylistFromString(allValues);
-             Polylist found = all_values.assoc(transpositionInstrument);
-             int chordbass = ((Long)found.third()).intValue();
-             //transposes score/leadsheet visually (notes + key signature)
-             Score score = notate.getScore();
-             int oldKeySignature = score.getKeySignature();
-             int transpositionIndex = (132 - chordbass)%12;
-             newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][transpositionIndex];
-             // 132 = 12*11 to ensure the result is positive, yet be equivalent to chordbass value mod 12
-             
-             // Using a command allows this action to be undoable.
-//             notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
-//                                                                  scoreTransposition, 
-//                                                                  scoreTransposition, 
-//                                                                  newKeySignature));
-        }
     }//GEN-LAST:event_customLeadsheetTransposeSpinnerStateChanged
 
 

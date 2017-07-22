@@ -23012,19 +23012,17 @@ private boolean isDotted = false;
     /**
      * This command is used by the Transposition Wizard to transpose the melody,
      * chords, and key signature in place in the leadsheet and score.
-     * @param melodyTransposition
-     * @param chordTransposition
-     * @param newKeySig 
+     * @param transposition
      */
-    public void transposeAllInPlace(int melodyTransposition, 
-                                    int chordTransposition, 
-                                    int newKeySig)
+    public void transposeAllInPlace(int transposition)
     {
     Score score = getScore();
-    score.transposeMelodyInPlace(melodyTransposition);
-    score.transposeChordsAndBassInPlace(chordTransposition);
-    score.setKeySignature(newKeySig);
-    getCurrentStave().setKeySignature(newKeySig);
+    score.transposeMelodyInPlace(transposition);
+    score.transposeChordsAndBassInPlace(transposition);
+    int oldKeySignature = score.getKeySignature();
+    int newKeySignature = Key.getKeyDelta(oldKeySignature, transposition);
+    score.setKeySignature(newKeySignature);
+    getCurrentStave().setKeySignature(newKeySignature);
     requestFocusInWindow();
     repaint();
     }

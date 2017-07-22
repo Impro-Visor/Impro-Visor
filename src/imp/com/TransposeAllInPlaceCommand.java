@@ -26,8 +26,8 @@ import imp.gui.Notate;
 import imp.util.Trace;
 
 /**
- * An undoable Command that transposes the Chords and the Melody of a
- * Score a specified number of semi-tones. It calls transposeAllInPlace in
+ * An undoable Command that transposes the Melody, Chords, and Key Signature of
+ * a Score a specified number of semi-tones. It calls transposeAllInPlace in
  * Notate.
  * @see         Command
  * @see         CommandManager
@@ -38,26 +38,10 @@ import imp.util.Trace;
 public class TransposeAllInPlaceCommand implements Command, Constants {
     
     /**
-     * transposition amount for melody
+     * transposition amount
      */
 
-    int melodyTransposition;
-    
-    /**
-     * transposition amount for chords
-     */
-
-    int chordTransposition;
-    
-    /**
-     * the new key signature
-     */
-    int newKeySig;
-    
-    /**
-     * the old key signature, in case of an undo
-     */
-    int oldKeySig;
+    int transposition;
     
     /**
      * the Notation window
@@ -79,25 +63,20 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
      * @param newKeySig
      */
     public TransposeAllInPlaceCommand(Notate notate, 
-                                      int melodyTransposition, 
-                                      int chordTransposition,
-                                      int newKeySig) 
+                                      int transposition) 
     {
         this.notate = notate;
-        this.melodyTransposition = melodyTransposition;
-        this.chordTransposition = chordTransposition;
-        this.newKeySig = newKeySig;
+        this.transposition = transposition;
         Score score = notate.getScore();
-        oldKeySig = score.getKeySignature();
     }
     
     /**
-     * Execute the melodyTransposition.
+     * Execute the transposition.
      */
     @Override
     public void execute() {
         Trace.log(2, "executing TransposeAllInPlaceCommand");
-        notate.transposeAllInPlace(melodyTransposition, chordTransposition, newKeySig);
+        notate.transposeAllInPlace(transposition);
     }
     
     /**
@@ -106,7 +85,7 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     @Override
     public void undo() {
         Trace.log(2, "undoing TransposeAllInPlaceCommand");
-        notate.transposeAllInPlace(-melodyTransposition, -chordTransposition, oldKeySig);
+        notate.transposeAllInPlace(-transposition);
     }
     
     /**
