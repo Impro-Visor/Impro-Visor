@@ -886,13 +886,14 @@ public boolean requestFocusInWindow()
 
 /**
  * Changes the Stave type and sets the spacing variables associated with
- * the type of Stave.
+ * the type of Stave. Returns the previous Stave type.
  *
  * @param type              type of Stave to be displayed
  * @see #setSpacingVars()
  */
-public void changeType(StaveType type)
+public StaveType changeType(StaveType type)
   {
+    StaveType oldType = this.type;
     if( type == StaveType.GRAND
             || type == StaveType.TREBLE
             || type == StaveType.BASS )
@@ -923,6 +924,7 @@ public void changeType(StaveType type)
 
     setSpacingVars();
     repaint();
+    return oldType;
   }
 
 public static String staveTypeToString(StaveType type)

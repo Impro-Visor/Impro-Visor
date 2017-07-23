@@ -23862,10 +23862,11 @@ private boolean isDotted = false;
      * @param clef
      * @return 
      */
-    public StaveType transposeAllInPlace(int transposition, StaveType clef)
+    public ArrayList<StaveType> transposeAllInPlace(int transposition, 
+                                                    ArrayList<StaveType> clefs)
     {
     Stave stave = getCurrentStave();
-    Score score = getScore();
+    //Score score = getScore();
     StaveType saveClef = stave.getStaveType();
     score.transposeMelodyInPlace(transposition);
     score.transposeChordsAndBassInPlace(transposition);
@@ -23873,29 +23874,52 @@ private boolean isDotted = false;
     int newKeySignature = Key.getKeyDelta(oldKeySignature, transposition);
     score.setKeySignature(newKeySignature);
     stave.setKeySignature(newKeySignature);
-    stave.changeType(clef);
-    requestFocusInWindow();
-    return saveClef;
+    return setStaveTypes(clefs);
     }
+    
+/**
+ * Change the clef type in each Stave.
+ * Returns an ArrayList of the types of each stave for possible redo.
+ * @param type
+ */
+public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
+  {
+    ArrayList<StaveType> oldTypes = new ArrayList<>();
+    int i = 0;
+    StaveType useType = newTypes.get(0);
+    for( StaveScrollPane staveScrollPane1 : staveScrollPane )
+      {
+        Stave stave = staveScrollPane1.getStave();
+        if( i < newTypes.size() )
+          {
+            useType = newTypes.get(i);
+          }
+        oldTypes.add(stave.changeType(useType)); // accumulate former types
+        MelodyPart melodyPart = score.getPart(i);
+        melodyPart.setStaveType(useType);
+        i++;
+      }
+    return oldTypes;
+  }
     
     /**
      * This command is used by the Transposition Wizard to transpose the melody,
-     * chord, bass instruments, and the clef of the leadsheet.
+     * chord, bass playback.
      * @param transposition
-     * @param clef 
      */
     public void transposeInstruments(Transposition transposition)
     {
-    Score score = getScore();
+    int bassTransposition = transposition.getBassTransposition();
+    int chordTransposition = transposition.getChordTransposition();
+    int melodyTransposition = transposition.getMelodyTransposition();
+    
+    getLeadsheetBassTranspositionSpinner().setValue(bassTransposition);
+    getLeadsheetChordTranspositionSpinner().setValue(chordTransposition);
+    getChorusMelodyTranspositionSpinner().setValue(melodyTransposition);
 
-    getChorusMelodyTranspositionSpinner().setValue(transposition.getMelodyTransposition());
-    getLeadsheetChordTranspositionSpinner().setValue(transposition.getChordTransposition());
-    getLeadsheetBassTranspositionSpinner().setValue(transposition.getBassTransposition());
-
-    //deals with transposing the playback
-    changeMelodyTransposition(transposition.getMelodyTransposition());
-    changeChordTransposition(transposition.getChordTransposition());
-    changeBassTransposition(transposition.getBassTransposition());
+    changeBassTransposition(bassTransposition);
+    changeChordTransposition(chordTransposition);
+    changeMelodyTransposition(melodyTransposition);
     }
     
     public void openGrammarMenuDialog()
@@ -25183,10 +25207,19 @@ public void updateAllStaves()
  */
 public void setStavesChordFontSize()
   {
-    for( int i = 0; i < staveScrollPane.length; i++ )
+    for( StaveScrollPane staveScrollPane1 : staveScrollPane )
       {
-        staveScrollPane[i].getStave().setChordFontSize();
+        staveScrollPane1.getStave().setChordFontSize();
       }
+  }
+
+/**
+ * Change the clef type in each Stave.
+ * @param instrument
+ */
+public void setMelodyInstruments(int instrument)
+  {
+  score.setMelodyInstruments(instrument);
   }
 
 

@@ -66,12 +66,12 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionWizardJList = new javax.swing.JList<>();
         instrumentLabel = new javax.swing.JLabel();
         transpositionPreviewPanel = new javax.swing.JPanel();
-        melodyWizardLabel = new javax.swing.JLabel();
-        chordWizardLabel = new javax.swing.JLabel();
         bassWizardLabel = new javax.swing.JLabel();
-        melodyWizardSpinner = new javax.swing.JSpinner();
+        chordWizardLabel = new javax.swing.JLabel();
+        melodyWizardLabel = new javax.swing.JLabel();
         bassWizardSpinner = new javax.swing.JSpinner();
         chordWizardSpinner = new javax.swing.JSpinner();
+        melodyWizardSpinner = new javax.swing.JSpinner();
         playbackLabel = new javax.swing.JLabel();
         transpositionWizardSaveButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -84,6 +84,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         clefComboBox = new javax.swing.JComboBox<>();
 
@@ -168,16 +169,16 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionPreviewPanel.setPreferredSize(new java.awt.Dimension(250, 210));
         transpositionPreviewPanel.setLayout(new java.awt.GridBagLayout());
 
-        melodyWizardLabel.setText("Melody Transposition:");
+        bassWizardLabel.setText("Bass Transposition:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(8, 51, 0, 0);
-        transpositionPreviewPanel.add(melodyWizardLabel, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        transpositionPreviewPanel.add(bassWizardLabel, gridBagConstraints);
 
         chordWizardLabel.setText("Chord Transposition:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -187,40 +188,40 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 51, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
         transpositionPreviewPanel.add(chordWizardLabel, gridBagConstraints);
 
-        bassWizardLabel.setText("Bass Transposition:");
+        melodyWizardLabel.setText("Melody Transposition:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 51, 0, 0);
-        transpositionPreviewPanel.add(bassWizardLabel, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        transpositionPreviewPanel.add(melodyWizardLabel, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 51);
-        transpositionPreviewPanel.add(melodyWizardSpinner, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 51);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 51);
         transpositionPreviewPanel.add(bassWizardSpinner, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 51);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 51);
         transpositionPreviewPanel.add(chordWizardSpinner, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 51);
+        transpositionPreviewPanel.add(melodyWizardSpinner, gridBagConstraints);
 
         playbackLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         playbackLabel.setText("Playback");
@@ -357,6 +358,15 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel2.add(jLabel2, gridBagConstraints);
 
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel5.setText("(Press z to Undo, y to Redo.)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel2.add(jLabel5, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -434,7 +444,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
 
     private void concertPitchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concertPitchButtonActionPerformed
-             notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
+        notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
                                                              scoreTransposition,
                                                              clef));
     }//GEN-LAST:event_concertPitchButtonActionPerformed
@@ -470,6 +480,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

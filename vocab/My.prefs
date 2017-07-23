@@ -1,4 +1,4 @@
-(transposing-instruments ((No-Transposition 0 0 treble 0)(Bb-Trumpet -2 -2 treble 2) (Bb-TenorSax -14 -2 treble 2) (Bb-SopranoSax -2 -2 treble 2) (Eb-AltoSax -9 3 treble 9) (Eb-BaritoneSax -21 3 treble 9) (F-Horn -5 -5 treble -5) (Trombone -12 0 bass -12) (SopranoRecorder 12 0 treble 0)))
+(transposing-instruments ((No-Transposition 0 0 Treble 0) (Bb-Trumpet -2 -2 Treble 2) (Bb-TenorSax -14 -2 Treble 2) (Bb-SopranoSax -2 -2 Treble 2) (Eb-AltoSax -9 3 Treble 9) (Eb-BaritoneSax -21 3 Treble 9) (F-Horn -5 -5 Treble -5) (Trombone -12 0 Bass -12) (SopranoRecorder 12 0 Treble 0) (BassRecorder -12 0 Bass -12)))
 (rhythm-cluster-filename default.cluster)
 (my-rhythms-file My.rhythms)
 (default-aux-instrument 57)

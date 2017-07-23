@@ -23,6 +23,7 @@ package imp.com;
 import imp.Constants;
 import imp.gui.Notate;
 import imp.util.Trace;
+import java.util.ArrayList;
 
 /**
  * An undoable Command that transposes the Melody, Chords, and Key Signature of
@@ -48,7 +49,12 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     
     Notate notate;
     
-    StaveType clef;
+    /*
+     * newClef is an ArrayList of size 1 for compatibility purposes.
+     */
+    ArrayList<StaveType> newClef;
+    
+    ArrayList<StaveType> savedClefs;
     
     /**
      * true since this Command can be undone
@@ -69,7 +75,8 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     {
         this.notate = notate;
         this.transposition = transposition;
-        this.clef = clef;
+        newClef = new ArrayList<StaveType>();
+        newClef.add(clef);
     }
     
     /**
@@ -78,7 +85,7 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     @Override
     public void execute() {
         Trace.log(2, "executing TransposeAllInPlaceCommand");
-        clef = notate.transposeAllInPlace(transposition, clef);
+        savedClefs = notate.transposeAllInPlace(transposition, newClef);
     }
     
     /**
@@ -87,7 +94,7 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     @Override
     public void undo() {
         Trace.log(2, "undoing TransposeAllInPlaceCommand");
-        notate.transposeAllInPlace(-transposition, clef);
+        notate.transposeAllInPlace(-transposition, savedClefs);
     }
     
     /**
