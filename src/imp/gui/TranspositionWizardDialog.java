@@ -36,6 +36,9 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
     StaveType clef = StaveType.TREBLE;
 
     Notate notate;
+    
+    Polylist instrumentMapping;
+    String [] instrumentString;
 
     public TranspositionWizardDialog(Notate notate)
     {
@@ -47,6 +50,24 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         bassWizardSpinner.setValue(transposition.getBassTransposition());
         chordWizardSpinner.setValue(transposition.getChordTransposition());
         melodyWizardSpinner.setValue(transposition.getMelodyTransposition());
+        String instrumentMappingAsString = Preferences.getPreference("transposing-instruments");
+        instrumentMapping = Polylist.PolylistFromString(instrumentMappingAsString);
+        instrumentString = new String[instrumentMapping.length()];
+        
+        // Make an array of strings corresponding to instruments, to be used
+        // as a model for the instrument JList.
+        Polylist L = instrumentMapping;
+        for( int i = 0; i < instrumentString.length; i++ )
+          {
+            instrumentString[i] = (String)((Polylist)L.first()).first();
+            L = L.rest();
+          }
+        
+        transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            public int getSize() { return instrumentString.length; }
+            public String getElementAt(int i) { return instrumentString[i]; }
+        });
     }
 
     /**
@@ -124,7 +145,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>()
         {
-            String[] strings = { "No-Transposition", "Bb-Trumpet", "Bb-TenorSax", "Bb-SopranoSax", "Eb-AltoSax", "Eb-BaritoneSax", "F-Horn", "Trombone", "SopranoRecorder", "BassRecorder" };
+            String[] strings = { "No-Transposition", "Bb-Trumpet", "Values set from Preferences" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -407,9 +428,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
     private void transpositionWizardJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_transpositionWizardJListValueChanged
         //gives preview of what will be transposed in transposition wizard window
         String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-        String allValues = Preferences.getPreference("transposing-instruments");
-        Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
-        Polylist found = ALL_VALUES.assoc(transpositionInstrument);
+        Polylist found = instrumentMapping.assoc(transpositionInstrument);
         Long mel = (Long) found.second();
         Long chordbass = (Long) found.third();
         String clefString = (String) found.fourth();
@@ -419,9 +438,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         melodyWizardSpinner.setValue(mel);
         chordWizardSpinner.setValue(chordbass);
         bassWizardSpinner.setValue(chordbass);
-        //clefWizardTextField.setText(clef);
         customLeadsheetTransposeSpinner.setValue(scoreTransposition);
-        notate.setLeadsheetTransValue(-mel.intValue());
     }//GEN-LAST:event_transpositionWizardJListValueChanged
 
     private void transpositionWizardSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transpositionWizardSaveButtonActionPerformed

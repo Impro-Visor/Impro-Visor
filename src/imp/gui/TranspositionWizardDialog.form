@@ -93,17 +93,10 @@
             <Component class="javax.swing.JList" name="transpositionWizardJList">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                  <StringArray count="10">
+                  <StringArray count="3">
                     <StringItem index="0" value="No-Transposition"/>
                     <StringItem index="1" value="Bb-Trumpet"/>
-                    <StringItem index="2" value="Bb-TenorSax"/>
-                    <StringItem index="3" value="Bb-SopranoSax"/>
-                    <StringItem index="4" value="Eb-AltoSax"/>
-                    <StringItem index="5" value="Eb-BaritoneSax"/>
-                    <StringItem index="6" value="F-Horn"/>
-                    <StringItem index="7" value="Trombone"/>
-                    <StringItem index="8" value="SopranoRecorder"/>
-                    <StringItem index="9" value="BassRecorder"/>
+                    <StringItem index="2" value="Values set from Preferences"/>
                   </StringArray>
                 </Property>
                 <Property name="selectionMode" type="int" value="0"/>
