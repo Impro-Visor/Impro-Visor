@@ -1408,7 +1408,6 @@ public Critic getCritic()
         chorusBtn = new javax.swing.JToggleButton();
         styleBtn = new javax.swing.JToggleButton();
         midiBtn = new javax.swing.JToggleButton();
-        contourBtn = new javax.swing.JToggleButton();
         okcancelPanel = new javax.swing.JPanel();
         cancelBtn = new javax.swing.JButton();
         resetBtn = new javax.swing.JButton();
@@ -1501,7 +1500,6 @@ public Critic getCritic()
         alwaysUseMelody = new javax.swing.JCheckBox();
         voicingLabel = new javax.swing.JLabel();
         voicing = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
         stavesPerPageLabel = new javax.swing.JLabel();
         defVolumes = new javax.swing.JPanel();
         defAllPanel = new javax.swing.JPanel();
@@ -1530,8 +1528,6 @@ public Critic getCritic()
         defaultTempoTF = new javax.swing.JTextField();
         defTempoLabel = new javax.swing.JLabel();
         numStavesPerPage = new javax.swing.JTextField();
-        replaceWithDeltaCheckBox = new javax.swing.JCheckBox();
-        replaceWithPhiCheckBox = new javax.swing.JCheckBox();
         appearanceTab = new javax.swing.JPanel();
         visAdvicePanel = new javax.swing.JPanel();
         cells = new javax.swing.JCheckBox();
@@ -1573,12 +1569,21 @@ public Critic getCritic()
         trackCheckBox = new javax.swing.JCheckBox();
         trackCheckBox.setSelected(Boolean.parseBoolean(Preferences.getPreference(Preferences.SHOW_TRACKING_LINE)));
         defaultChordFontSizeSpinner = new javax.swing.JSpinner();
+        jPanel4 = new javax.swing.JPanel();
+        replaceWithDeltaCheckBox = new javax.swing.JCheckBox();
+        replaceWithPhiCheckBox = new javax.swing.JCheckBox();
         cacheTab = new javax.swing.JPanel();
         cachePanel = new javax.swing.JPanel();
         enableCache = new javax.swing.JCheckBox();
         defCacheSizeLabel = new javax.swing.JLabel();
         cacheSize = new javax.swing.JTextField();
         purgeCache = new javax.swing.JButton();
+        contourTab = new javax.swing.JPanel();
+        contourSettingsLabel = new javax.swing.JLabel();
+        contToneChoices = new javax.swing.JPanel();
+        drawScaleTonesCheckBox = new javax.swing.JCheckBox();
+        drawChordTonesCheckBox = new javax.swing.JCheckBox();
+        drawColorTonesCheckBox = new javax.swing.JCheckBox();
         midiPreferences = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         devicesTab = new javax.swing.JPanel();
@@ -1616,14 +1621,6 @@ public Critic getCritic()
         OpenHelpText = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(26, 26), new java.awt.Dimension(26, 26), new java.awt.Dimension(26, 26));
         jLabel4 = new javax.swing.JLabel();
-        contourPreferences = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        generalContourTab = new javax.swing.JPanel();
-        contToneChoices = new javax.swing.JPanel();
-        drawScaleTonesCheckBox = new javax.swing.JCheckBox();
-        drawChordTonesCheckBox = new javax.swing.JCheckBox();
-        drawColorTonesCheckBox = new javax.swing.JCheckBox();
         staveButtonGroup = new javax.swing.ButtonGroup();
         popupMenu = new javax.swing.JPopupMenu();
         undoPMI = new javax.swing.JMenuItem();
@@ -1911,7 +1908,6 @@ public Critic getCritic()
         chorusPreferencesBtn = new javax.swing.JButton();
         sectionPreferencesBtn = new javax.swing.JButton();
         midiPreferencesBtn = new javax.swing.JButton();
-        contourPreferencesBtn = new javax.swing.JButton();
         playToolBar = new javax.swing.JToolBar();
         loopPanel = new javax.swing.JPanel();
         loopButton = new javax.swing.JToggleButton();
@@ -2133,7 +2129,6 @@ public Critic getCritic()
         chorusPrefsMI = new javax.swing.JMenuItem();
         stylePrefsMI = new javax.swing.JMenuItem();
         midiPrefsMI = new javax.swing.JMenuItem();
-        contourPrefsMI = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         helpMI = new javax.swing.JMenuItem();
         firstTimePrefsMI = new javax.swing.JMenuItem();
@@ -2783,7 +2778,6 @@ public Critic getCritic()
         midiBtn.setToolTipText("MIDI preferences");
         midiBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         midiBtn.setIconTextGap(0);
-        midiBtn.setNextFocusableComponent(contourBtn);
         midiBtn.setPreferredSize(new java.awt.Dimension(100, 85));
         midiBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         midiBtn.addActionListener(new java.awt.event.ActionListener()
@@ -2794,24 +2788,6 @@ public Critic getCritic()
             }
         });
         buttonPanel.add(midiBtn);
-
-        prefsTabBtnGrp.add(contourBtn);
-        contourBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/preferences/largePencil.png"))); // NOI18N
-        contourBtn.setText("Contour");
-        contourBtn.setToolTipText("Drawing (\"contour\") tool preferences");
-        contourBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        contourBtn.setIconTextGap(0);
-        contourBtn.setNextFocusableComponent(styleBtn);
-        contourBtn.setPreferredSize(new java.awt.Dimension(100, 85));
-        contourBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        contourBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                contourBtnActionPerformed(evt);
-            }
-        });
-        buttonPanel.add(contourBtn);
 
         preferencesDialog.getContentPane().add(buttonPanel, java.awt.BorderLayout.WEST);
 
@@ -3881,21 +3857,6 @@ public Critic getCritic()
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 10);
         defaultsTab.add(voicing, gridBagConstraints);
 
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel11.setText("Default Volumes:");
-        jLabel11.setFocusable(false);
-        jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jLabel11.setMaximumSize(new java.awt.Dimension(30, 14));
-        jLabel11.setMinimumSize(new java.awt.Dimension(30, 14));
-        jLabel11.setPreferredSize(new java.awt.Dimension(30, 14));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        defaultsTab.add(jLabel11, gridBagConstraints);
-
         stavesPerPageLabel.setText("Print Staves Per Page:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -3904,6 +3865,8 @@ public Critic getCritic()
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
         defaultsTab.add(stavesPerPageLabel, gridBagConstraints);
+
+        defVolumes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Default Volumes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         defAllPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "All", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 10))); // NOI18N
         defAllPanel.setOpaque(false);
@@ -4036,8 +3999,10 @@ public Critic getCritic()
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -4190,34 +4155,6 @@ public Critic getCritic()
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 10);
         defaultsTab.add(numStavesPerPage, gridBagConstraints);
-
-        replaceWithDeltaCheckBox.setText("Use \u0394 for M7");
-        replaceWithDeltaCheckBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                replaceWithDeltaCheckBoxActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        defaultsTab.add(replaceWithDeltaCheckBox, gridBagConstraints);
-
-        replaceWithPhiCheckBox.setText("Use \u03D5 for m7b5");
-        replaceWithPhiCheckBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                replaceWithPhiCheckBoxActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        defaultsTab.add(replaceWithPhiCheckBox, gridBagConstraints);
 
         globalTabs.addTab("Defaults", defaultsTab);
 
@@ -4561,6 +4498,44 @@ public Critic getCritic()
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         appearanceTab.add(defaultChordFontSizeSpinner, gridBagConstraints);
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chord Appearance", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        replaceWithDeltaCheckBox.setText("Use \u0394 for M7");
+        replaceWithDeltaCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                replaceWithDeltaCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        jPanel4.add(replaceWithDeltaCheckBox, gridBagConstraints);
+
+        replaceWithPhiCheckBox.setText("Use \u03D5 for m7b5");
+        replaceWithPhiCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                replaceWithPhiCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        jPanel4.add(replaceWithPhiCheckBox, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        appearanceTab.add(jPanel4, gridBagConstraints);
+
         globalTabs.addTab("Appearance", appearanceTab);
 
         cachePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cache Settings", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
@@ -4611,6 +4586,63 @@ public Critic getCritic()
         cacheTab.add(cachePanel);
 
         globalTabs.addTab("Cache", cacheTab);
+
+        contourTab.setLayout(new java.awt.GridBagLayout());
+
+        contourSettingsLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        contourSettingsLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/preferences/largePencil.png"))); // NOI18N
+        contourSettingsLabel.setText("  Contour Settings");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
+        contourTab.add(contourSettingsLabel, gridBagConstraints);
+
+        contToneChoices.setBorder(javax.swing.BorderFactory.createTitledBorder("Fit notes to contour using:"));
+        contToneChoices.setPreferredSize(new java.awt.Dimension(190, 100));
+        contToneChoices.setLayout(new java.awt.GridBagLayout());
+
+        drawScaleTonesCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        drawScaleTonesCheckBox.setSelected(true);
+        drawScaleTonesCheckBox.setText("Scale tones");
+        drawScaleTonesCheckBox.setContentAreaFilled(false);
+        drawScaleTonesCheckBox.setIconTextGap(10);
+
+        if (Preferences.getPreference(Preferences.DRAWING_TONES).charAt(0) == 'x')       drawScaleTonesCheckBox.setSelected(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        contToneChoices.add(drawScaleTonesCheckBox, gridBagConstraints);
+
+        drawChordTonesCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        drawChordTonesCheckBox.setSelected(true);
+        drawChordTonesCheckBox.setIconTextGap(10);
+        drawChordTonesCheckBox.setLabel("Chord tones");
+
+        if (Preferences.getPreference(Preferences.DRAWING_TONES).charAt(1) == 'x')       drawChordTonesCheckBox.setSelected(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        contToneChoices.add(drawChordTonesCheckBox, gridBagConstraints);
+
+        drawColorTonesCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        drawColorTonesCheckBox.setText("Color tones");
+        drawColorTonesCheckBox.setIconTextGap(10);
+        if (Preferences.getPreference(Preferences.DRAWING_TONES).charAt(2) == '1')       drawColorTonesCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        contToneChoices.add(drawColorTonesCheckBox, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        contourTab.add(contToneChoices, gridBagConstraints);
+
+        globalTabs.addTab("Contour Drawing", contourTab);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -4922,72 +4954,6 @@ public Critic getCritic()
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
         midiPreferences.add(jLabel4, gridBagConstraints);
-
-        contourPreferences.setBackground(new java.awt.Color(255, 255, 255));
-        contourPreferences.setToolTipText("Settings for the drawing (\"contour\") tool\n");
-        contourPreferences.setLayout(new java.awt.GridBagLayout());
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/preferences/largePencil.png"))); // NOI18N
-        jLabel10.setText("  Contour Settings");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
-        contourPreferences.add(jLabel10, gridBagConstraints);
-
-        generalContourTab.setLayout(new java.awt.GridBagLayout());
-
-        contToneChoices.setBorder(javax.swing.BorderFactory.createTitledBorder("Fit notes to contour using:"));
-        contToneChoices.setPreferredSize(new java.awt.Dimension(190, 100));
-        contToneChoices.setLayout(new java.awt.GridBagLayout());
-
-        drawScaleTonesCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        drawScaleTonesCheckBox.setSelected(true);
-        drawScaleTonesCheckBox.setText("Scale tones");
-        drawScaleTonesCheckBox.setContentAreaFilled(false);
-        drawScaleTonesCheckBox.setIconTextGap(10);
-
-        if (Preferences.getPreference(Preferences.DRAWING_TONES).charAt(0) == 'x')       drawScaleTonesCheckBox.setSelected(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        contToneChoices.add(drawScaleTonesCheckBox, gridBagConstraints);
-
-        drawChordTonesCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        drawChordTonesCheckBox.setSelected(true);
-        drawChordTonesCheckBox.setIconTextGap(10);
-        drawChordTonesCheckBox.setLabel("Chord tones");
-
-        if (Preferences.getPreference(Preferences.DRAWING_TONES).charAt(1) == 'x')       drawChordTonesCheckBox.setSelected(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        contToneChoices.add(drawChordTonesCheckBox, gridBagConstraints);
-
-        drawColorTonesCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        drawColorTonesCheckBox.setText("Color tones");
-        drawColorTonesCheckBox.setIconTextGap(10);
-        if (Preferences.getPreference(Preferences.DRAWING_TONES).charAt(2) == '1')       drawColorTonesCheckBox.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        contToneChoices.add(drawColorTonesCheckBox, gridBagConstraints);
-
-        generalContourTab.add(contToneChoices, new java.awt.GridBagConstraints());
-
-        jTabbedPane3.addTab("General", generalContourTab);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        contourPreferences.add(jTabbedPane3, gridBagConstraints);
 
         undoPMI.setText("Undo");
         undoPMI.setEnabled(false);
@@ -7290,24 +7256,6 @@ public Critic getCritic()
         });
         standardToolbar.add(midiPreferencesBtn);
 
-        contourPreferencesBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/preferences/pencilCursor.png"))); // NOI18N
-        contourPreferencesBtn.setToolTipText("Open Contour Preferences dialog.");
-        contourPreferencesBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        contourPreferencesBtn.setFocusable(false);
-        contourPreferencesBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        contourPreferencesBtn.setMaximumSize(new java.awt.Dimension(30, 30));
-        contourPreferencesBtn.setMinimumSize(new java.awt.Dimension(30, 30));
-        contourPreferencesBtn.setPreferredSize(new java.awt.Dimension(30, 30));
-        contourPreferencesBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        contourPreferencesBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                contourPreferencesBtnActionPerformed(evt);
-            }
-        });
-        standardToolbar.add(contourPreferencesBtn);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -9558,17 +9506,6 @@ public Critic getCritic()
         });
         preferencesMenu.add(midiPrefsMI);
 
-        contourPrefsMI.setMnemonic('T');
-        contourPrefsMI.setText("Contour");
-        contourPrefsMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                contourPrefsMIActionPerformed(evt);
-            }
-        });
-        preferencesMenu.add(contourPrefsMI);
-
         menuBar.add(preferencesMenu);
 
         helpMenu.setMnemonic('H');
@@ -9785,13 +9722,6 @@ public void reCaptureCurrentStyle()
         openHelpDialog();
 
     }//GEN-LAST:event_helpMIActionPerformed
-
-    private void contourPrefsMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contourPrefsMIActionPerformed
-
-        changePrefTab(contourBtn, contourPreferences);
-        showPreferencesDialog();
-
-    }//GEN-LAST:event_contourPrefsMIActionPerformed
 
     private void midiPrefsMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midiPrefsMIActionPerformed
 
@@ -11387,11 +11317,6 @@ public JSpinner getLeadsheetBassTranspositionSpinner()
 {
     return leadsheetBassTranspositionSpinner;
 }
-    private void contourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contourBtnActionPerformed
-
-        changePrefTab(contourBtn, contourPreferences);
-    }//GEN-LAST:event_contourBtnActionPerformed
-
     private void overrideFrameadviceWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_overrideFrameadviceWindowClosing
 
     {//GEN-HEADEREND:event_overrideFrameadviceWindowClosing
@@ -22942,12 +22867,6 @@ private void midiPreferencesBtnActionPerformed(java.awt.event.ActionEvent evt)//
       showPreferencesDialog();
   }//GEN-LAST:event_midiPreferencesBtnActionPerformed
 
-private void contourPreferencesBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_contourPreferencesBtnActionPerformed
-  {//GEN-HEADEREND:event_contourPreferencesBtnActionPerformed
-      changePrefTab(contourBtn, contourPreferences);
-      showPreferencesDialog();
-  }//GEN-LAST:event_contourPreferencesBtnActionPerformed
-
 private void showConstructionLinesMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_showConstructionLinesMIActionPerformed
   {//GEN-HEADEREND:event_showConstructionLinesMIActionPerformed
       setShowConstructionLinesAndBoxes(showConstructionLinesMI.isSelected());
@@ -26158,10 +26077,8 @@ private ImageIcon pauseButton =
     private javax.swing.JLabel composerLabel;
     private javax.swing.JSlider confidenceThresholdSlider1;
     private javax.swing.JPanel contToneChoices;
-    private javax.swing.JToggleButton contourBtn;
-    private javax.swing.JPanel contourPreferences;
-    private javax.swing.JButton contourPreferencesBtn;
-    private javax.swing.JMenuItem contourPrefsMI;
+    private javax.swing.JLabel contourSettingsLabel;
+    private javax.swing.JPanel contourTab;
     private javax.swing.JMenuItem contractMelodyBy2;
     private javax.swing.JMenuItem contractMelodyBy3;
     private javax.swing.JCheckBoxMenuItem controlsCheckBox;
@@ -26265,7 +26182,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem fractalMI;
     private javax.swing.JComboBox frameSizeComboBox1;
     private javax.swing.JCheckBoxMenuItem freezeLayoutMI;
-    private javax.swing.JPanel generalContourTab;
     private javax.swing.JMenuItem generateLickInSelection;
     private javax.swing.ButtonGroup generatorButtonGroup;
     private javax.swing.JSpinner globalBassTranspositionSpinner;
@@ -26316,8 +26232,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem invertMelody;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -26327,6 +26241,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -26353,7 +26268,6 @@ private ImageIcon pauseButton =
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JTabbedPane jTabbedPane7;
