@@ -21,10 +21,9 @@ package imp.gui;
 
 import polya.Polylist;
 import imp.util.Preferences;
+import imp.Constants.StaveType;
 import imp.com.TransposeAllInPlaceCommand;
 import imp.com.TransposeInstrumentsCommand;
-import imp.data.Key;
-import imp.data.Score;
 import imp.data.Transposition;
 
 /**
@@ -32,20 +31,45 @@ import imp.data.Transposition;
  */
 public class TranspositionWizardDialog extends javax.swing.JDialog {
 
+    int scoreTransposition = 0;
+    
+    StaveType clef = StaveType.TREBLE;
+
+    Notate notate;
+    
+    Polylist instrumentMapping;
+    String [] instrumentString;
+
     public TranspositionWizardDialog(Notate notate)
     {
         initComponents();
         this.notate = notate;
         WindowRegistry.registerWindow(this);
         setVisible(true);
+        Transposition transposition = notate.getTransposition();
+        bassWizardSpinner.setValue(transposition.getBassTransposition());
+        chordWizardSpinner.setValue(transposition.getChordTransposition());
+        melodyWizardSpinner.setValue(transposition.getMelodyTransposition());
+        String instrumentMappingAsString = Preferences.getPreference("transposing-instruments");
+        instrumentMapping = Polylist.PolylistFromString(instrumentMappingAsString);
+        instrumentString = new String[instrumentMapping.length()];
+        
+        // Make an array of strings corresponding to instruments, to be used
+        // as a model for the instrument JList.
+        Polylist L = instrumentMapping;
+        for( int i = 0; i < instrumentString.length; i++ )
+          {
+            instrumentString[i] = (String)((Polylist)L.first()).first();
+            L = L.rest();
+          }
+        
+        transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            public int getSize() { return instrumentString.length; }
+            public String getElementAt(int i) { return instrumentString[i]; }
+        });
     }
 
-
-     Notate getNotate()
-    {
-        return notate;
-    }
-     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,7 +77,8 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         transposeTitle = new javax.swing.JLabel();
@@ -62,27 +87,28 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionWizardJList = new javax.swing.JList<>();
         instrumentLabel = new javax.swing.JLabel();
         transpositionPreviewPanel = new javax.swing.JPanel();
-        melodyWizardLabel = new javax.swing.JLabel();
-        chordWizardLabel = new javax.swing.JLabel();
         bassWizardLabel = new javax.swing.JLabel();
-        melodyWizardSpinner = new javax.swing.JSpinner();
+        chordWizardLabel = new javax.swing.JLabel();
+        melodyWizardLabel = new javax.swing.JLabel();
         bassWizardSpinner = new javax.swing.JSpinner();
         chordWizardSpinner = new javax.swing.JSpinner();
+        melodyWizardSpinner = new javax.swing.JSpinner();
         playbackLabel = new javax.swing.JLabel();
         transpositionWizardSaveButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        playToggleBtn = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         concertPitchButton = new javax.swing.JButton();
         customLeadsheetTransposeSpinner = new javax.swing.JSpinner();
         clefWizardPanel = new javax.swing.JPanel();
-        clefWizardTextField = new javax.swing.JTextField();
-        clefLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        clefComboBox = new javax.swing.JComboBox<>();
 
         setTitle("Transposition Wizard");
         setAlwaysOnTop(true);
@@ -90,8 +116,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         setBounds(new java.awt.Rectangle(400, 300, 570, 450));
         setMinimumSize(new java.awt.Dimension(570, 450));
         setSize(new java.awt.Dimension(570, 450));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -116,8 +144,9 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(160, 175));
 
-        transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "No-Transposition", "Bb-Trumpet", "Bb-TenorSax", "Bb-SopranoSax", "Eb-AltoSax", "Eb-BaritoneSax", "F-Horn", "Trombone", "SopranoRecorder" };
+        transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            String[] strings = { "No-Transposition", "Bb-Trumpet", "Values set from Preferences" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -128,8 +157,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionWizardJList.setMinimumSize(new java.awt.Dimension(100, 100));
         transpositionWizardJList.setPreferredSize(new java.awt.Dimension(100, 80));
         transpositionWizardJList.setVisibleRowCount(10);
-        transpositionWizardJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+        transpositionWizardJList.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
                 transpositionWizardJListValueChanged(evt);
             }
         });
@@ -142,7 +173,6 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         instrumentLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         instrumentLabel.setText("  Instrument  ");
-        instrumentLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -160,29 +190,29 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionPreviewPanel.setPreferredSize(new java.awt.Dimension(250, 210));
         transpositionPreviewPanel.setLayout(new java.awt.GridBagLayout());
 
-        melodyWizardLabel.setText("Melody Transposition:");
+        bassWizardLabel.setText("Bass Transposition:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(8, 51, 0, 0);
-        transpositionPreviewPanel.add(melodyWizardLabel, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        transpositionPreviewPanel.add(bassWizardLabel, gridBagConstraints);
 
         chordWizardLabel.setText("Chord Transposition:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 51, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
         transpositionPreviewPanel.add(chordWizardLabel, gridBagConstraints);
 
-        bassWizardLabel.setText("Bass Transposition:");
+        melodyWizardLabel.setText("Melody Transposition:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -190,33 +220,32 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 51, 0, 0);
-        transpositionPreviewPanel.add(bassWizardLabel, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        transpositionPreviewPanel.add(melodyWizardLabel, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(8, 0, 0, 51);
-        transpositionPreviewPanel.add(melodyWizardSpinner, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 51);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 51);
         transpositionPreviewPanel.add(bassWizardSpinner, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 51);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 51);
         transpositionPreviewPanel.add(chordWizardSpinner, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 51);
+        transpositionPreviewPanel.add(melodyWizardSpinner, gridBagConstraints);
 
         playbackLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         playbackLabel.setText("Playback");
-        playbackLabel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -226,17 +255,25 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         transpositionWizardSaveButton.setText("Transpose Playback ");
         transpositionWizardSaveButton.setToolTipText("Clicking this button will set the transposed playback.");
-        transpositionWizardSaveButton.setPreferredSize(new java.awt.Dimension(141, 40));
-        transpositionWizardSaveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        transpositionWizardSaveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        transpositionWizardSaveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        transpositionWizardSaveButton.setMaximumSize(new java.awt.Dimension(150, 40));
+        transpositionWizardSaveButton.setMinimumSize(new java.awt.Dimension(150, 40));
+        transpositionWizardSaveButton.setPreferredSize(new java.awt.Dimension(150, 40));
+        transpositionWizardSaveButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 transpositionWizardSaveButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         transpositionPreviewPanel.add(transpositionWizardSaveButton, gridBagConstraints);
 
         jPanel3.setMaximumSize(new java.awt.Dimension(200, 32));
@@ -257,7 +294,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         jPanel3.add(jLabel3, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jLabel4.setText("      playback transpositions");
+        jLabel4.setText("      playback transpositions.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -269,6 +306,30 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipady = 20;
         transpositionPreviewPanel.add(jPanel3, gridBagConstraints);
+
+        playToggleBtn.setFont(new java.awt.Font("Lucida Grande", 0, 13)); // NOI18N
+        playToggleBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
+        playToggleBtn.setText("Test");
+        playToggleBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        playToggleBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        playToggleBtn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        playToggleBtn.setMaximumSize(new java.awt.Dimension(65, 40));
+        playToggleBtn.setMinimumSize(new java.awt.Dimension(65, 40));
+        playToggleBtn.setPreferredSize(new java.awt.Dimension(65, 40));
+        playToggleBtn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif"))); // NOI18N
+        playToggleBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                playToggleBtnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        transpositionPreviewPanel.add(playToggleBtn, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -283,22 +344,30 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         jPanel1.setPreferredSize(new java.awt.Dimension(425, 120));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        concertPitchButton.setText("Transpose Leadsheet");
         concertPitchButton.setToolTipText("Clicking this button will visually transpose the leadsheet");
-        concertPitchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        concertPitchButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        concertPitchButton.setLabel("Transpose Notation");
+        concertPitchButton.setMaximumSize(new java.awt.Dimension(176, 40));
+        concertPitchButton.setMinimumSize(new java.awt.Dimension(176, 40));
+        concertPitchButton.setPreferredSize(new java.awt.Dimension(176, 40));
+        concertPitchButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 concertPitchButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
         jPanel1.add(concertPitchButton, gridBagConstraints);
 
         customLeadsheetTransposeSpinner.setToolTipText("This is the amount of semitones the leadsheet will be transposed.");
         customLeadsheetTransposeSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Transpose"));
-        customLeadsheetTransposeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        customLeadsheetTransposeSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 customLeadsheetTransposeSpinnerStateChanged(evt);
             }
         });
@@ -310,82 +379,92 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         jPanel1.add(customLeadsheetTransposeSpinner, gridBagConstraints);
 
         clefWizardPanel.setLayout(new java.awt.GridBagLayout());
-
-        clefWizardTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        clefWizardTextField.setToolTipText("This is the clef that will appear on the transposed leadsheet.");
-        clefWizardTextField.setMaximumSize(new java.awt.Dimension(90, 20));
-        clefWizardTextField.setMinimumSize(new java.awt.Dimension(90, 20));
-        clefWizardTextField.setPreferredSize(new java.awt.Dimension(100, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        clefWizardPanel.add(clefWizardTextField, gridBagConstraints);
-
-        clefLabel.setText("Clef:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        clefWizardPanel.add(clefLabel, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         jPanel1.add(clefWizardPanel, gridBagConstraints);
 
+        jPanel2.setMinimumSize(new java.awt.Dimension(274, 40));
+        jPanel2.setPreferredSize(new java.awt.Dimension(300, 40));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jLabel1.setText("Use this once to transpose the leadsheet");
+        jLabel1.setText("Use this at most once to transpose the");
         jLabel1.setPreferredSize(new java.awt.Dimension(300, 16));
-        jPanel2.add(jLabel1, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 3;
+        jPanel2.add(jLabel1, gridBagConstraints);
+        jLabel1.getAccessibleContext().setAccessibleName("Use this at most once to transpose the leadsheet");
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jLabel2.setText("notation from its current pitch");
+        jLabel2.setText("leadsheet notation from its current pitch.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel2.add(jLabel2, gridBagConstraints);
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel5.setText("(Press z to Undo, y to Redo.)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel2.add(jLabel5, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         jPanel1.add(jPanel2, gridBagConstraints);
         jPanel1.add(jSeparator1, new java.awt.GridBagConstraints());
 
+        clefComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Treble", "Bass", "Grand", " ", " " }));
+        clefComboBox.setSelectedItem("Treble");
+        clefComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clef", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        clefComboBox.setMinimumSize(new java.awt.Dimension(150, 50));
+        clefComboBox.setPreferredSize(new java.awt.Dimension(150, 50));
+        clefComboBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                clefComboBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(clefComboBox, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jPanel1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-Notate notate;
 
     private void transpositionWizardJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_transpositionWizardJListValueChanged
         //gives preview of what will be transposed in transposition wizard window
         String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-        String allValues = Preferences.getPreference("transposing-instruments");
-        Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
-        Polylist found = ALL_VALUES.assoc(transpositionInstrument);
+        Polylist found = instrumentMapping.assoc(transpositionInstrument);
         Long mel = (Long) found.second();
         Long chordbass = (Long) found.third();
-        String clef = (String) found.fourth();
+        String clefString = (String) found.fourth();
+        clef = Stave.staveTypeFromString(clefString);
+        clefComboBox.setSelectedItem(clefString);
         scoreTransposition = ((Long) found.fifth()).intValue();
         melodyWizardSpinner.setValue(mel);
         chordWizardSpinner.setValue(chordbass);
         bassWizardSpinner.setValue(chordbass);
-        clefWizardTextField.setText(clef);
         customLeadsheetTransposeSpinner.setValue(scoreTransposition);
-        notate.setLeadsheetTransValue(-mel.intValue());
     }//GEN-LAST:event_transpositionWizardJListValueChanged
 
     private void transpositionWizardSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transpositionWizardSaveButtonActionPerformed
@@ -398,42 +477,19 @@ Notate notate;
             Polylist found = ALL_VALUES.assoc(transpositionInstrument);
             int mel = ((Long)found.second()).intValue();
             int chordbass = ((Long) found.third()).intValue();
-            String clef = (String) found.fourth();
             Transposition newTransposition = new Transposition(chordbass, chordbass, mel);
             notate.executeCommand(new TransposeInstrumentsCommand(notate,
-                                                                  newTransposition, 
-                                                                  clef));
+                                                                  newTransposition));
         }
-        setVisible(false);
-        notate.getTranspositionWizardMI().setEnabled(true);
+        //setVisible(false);
+        //notate.getTranspositionWizardMI().setEnabled(true);
     }//GEN-LAST:event_transpositionWizardSaveButtonActionPerformed
 
-    int scoreTransposition = 0;
-    int newKeySignature = 0;
 
     private void concertPitchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concertPitchButtonActionPerformed
-        if (transpositionWizardJList.getSelectedValue() != null)
-        {
-             String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-             String allValues = Preferences.getPreference("transposing-instruments");
-             Polylist all_values = Polylist.PolylistFromString(allValues);
-             Polylist found = all_values.assoc(transpositionInstrument);
-             int chordbass = ((Long)found.third()).intValue();
-             scoreTransposition = ((Long)found.fifth()).intValue();
-
-             //transposes score/leadsheet visually (notes + key signature)
-             Score score = notate.getScore();
-             int oldKeySignature = score.getKeySignature();
-             int transpositionIndex = (132 - chordbass)%12;
-             newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][transpositionIndex];
-             // 132 = 12*11 to ensure the result is positive, yet be equivalent to chordbass value mod 12
-             
-             // Using a command allows this action to be undoable.
-             notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
-                                                                  scoreTransposition, 
-                                                                  scoreTransposition, 
-                                                                  newKeySignature));
-        } 
+        notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
+                                                             scoreTransposition,
+                                                             clef));
     }//GEN-LAST:event_concertPitchButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -444,28 +500,24 @@ Notate notate;
         Object change = customLeadsheetTransposeSpinner.getValue();
         String temp = change.toString();
         scoreTransposition = Integer.valueOf(temp);
-        
-        if (transpositionWizardJList.getSelectedValue() != null)
-        {
-             String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-             String allValues = Preferences.getPreference("transposing-instruments");
-             Polylist all_values = Polylist.PolylistFromString(allValues);
-             Polylist found = all_values.assoc(transpositionInstrument);
-             int chordbass = ((Long)found.third()).intValue();
-             //transposes score/leadsheet visually (notes + key signature)
-             Score score = notate.getScore();
-             int oldKeySignature = score.getKeySignature();
-             int transpositionIndex = (132 - chordbass)%12;
-             newKeySignature = Key.transpositions[(12 + oldKeySignature)%12][transpositionIndex];
-             // 132 = 12*11 to ensure the result is positive, yet be equivalent to chordbass value mod 12
-             
-             // Using a command allows this action to be undoable.
-//             notate.executeCommand(new TransposeAllInPlaceCommand(notate, 
-//                                                                  scoreTransposition, 
-//                                                                  scoreTransposition, 
-//                                                                  newKeySignature));
-        }
     }//GEN-LAST:event_customLeadsheetTransposeSpinnerStateChanged
+
+    private void clefComboBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_clefComboBoxActionPerformed
+    {//GEN-HEADEREND:event_clefComboBoxActionPerformed
+        clef = Stave.staveTypeFromString((String)clefComboBox.getSelectedItem());
+    }//GEN-LAST:event_clefComboBoxActionPerformed
+
+    private void playToggleBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_playToggleBtnActionPerformed
+    {//GEN-HEADEREND:event_playToggleBtnActionPerformed
+        if( playToggleBtn.isSelected() )
+          {
+           notate.playBtnPressed();
+          }
+        else
+          {
+           notate.stopButtonPressed();
+          }
+    }//GEN-LAST:event_playToggleBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -473,9 +525,8 @@ Notate notate;
     private javax.swing.JSpinner bassWizardSpinner;
     private javax.swing.JLabel chordWizardLabel;
     private javax.swing.JSpinner chordWizardSpinner;
-    private javax.swing.JLabel clefLabel;
+    private javax.swing.JComboBox<String> clefComboBox;
     private javax.swing.JPanel clefWizardPanel;
-    private javax.swing.JTextField clefWizardTextField;
     private javax.swing.JButton concertPitchButton;
     private javax.swing.JSpinner customLeadsheetTransposeSpinner;
     private javax.swing.JLabel instrumentLabel;
@@ -484,6 +535,7 @@ Notate notate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -491,6 +543,7 @@ Notate notate;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel melodyWizardLabel;
     private javax.swing.JSpinner melodyWizardSpinner;
+    private javax.swing.JToggleButton playToggleBtn;
     private javax.swing.JLabel playbackLabel;
     private javax.swing.JLabel transposeTitle;
     private javax.swing.JPanel transpositionPreviewPanel;

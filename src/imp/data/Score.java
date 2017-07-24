@@ -1385,4 +1385,13 @@ public void transposeChordsAndBassInPlace(int transposition)
   chordProg.transposeInPlace(transposition);
 }
 
+public void setMelodyInstruments(int instrument)
+{
+    ListIterator<MelodyPart> i = partList.listIterator();
+    while( i.hasNext() )
+      {
+        i.next().setInstrument(instrument);
+      }
+}
+
 }

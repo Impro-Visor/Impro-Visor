@@ -55,15 +55,6 @@ public class TransposeInstrumentsCommand implements Command, Constants {
     
     Transposition oldTransposition;
     
-     /**
-     * the new clef
-     */
-    String newClef;
-    
-    /**
-     * the old clef
-     */
-    String oldClef;
     
     /**
      * true since this Command can be undone
@@ -76,13 +67,11 @@ public class TransposeInstrumentsCommand implements Command, Constants {
      * @param newClef
      */
     public TransposeInstrumentsCommand(Notate notate,
-                                       Transposition newTransposition,
-                                      String newClef) 
+                                       Transposition newTransposition) 
     {
         this.notate = notate;
         this.newTransposition = newTransposition;
         oldTransposition = notate.getTransposition();
-        this.newClef = newClef;
     }
     
     /**
@@ -91,8 +80,7 @@ public class TransposeInstrumentsCommand implements Command, Constants {
     @Override
     public void execute() {
         Trace.log(2, "executing TransposeInstrumentsCommand");
-        notate.transposeInstruments(newTransposition,
-                                    newClef);
+        notate.transposeInstruments(newTransposition);
      }
     
     /**
@@ -101,8 +89,7 @@ public class TransposeInstrumentsCommand implements Command, Constants {
     @Override
     public void undo() {
         Trace.log(2, "undoing TransposeInstrumentsCommand");
-        notate.transposeInstruments(oldTransposition,
-                                    newClef);
+        notate.transposeInstruments(oldTransposition);
     }
     
     /**

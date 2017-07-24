@@ -21,13 +21,13 @@
 package imp.com;
 
 import imp.Constants;
-import imp.data.Score;
 import imp.gui.Notate;
 import imp.util.Trace;
+import java.util.ArrayList;
 
 /**
- * An undoable Command that transposes the Chords and the Melody of a
- * Score a specified number of semi-tones. It calls transposeAllInPlace in
+ * An undoable Command that transposes the Melody, Chords, and Key Signature of
+ * a Score a specified number of semi-tones. It calls transposeAllInPlace in
  * Notate.
  * @see         Command
  * @see         CommandManager
@@ -38,32 +38,23 @@ import imp.util.Trace;
 public class TransposeAllInPlaceCommand implements Command, Constants {
     
     /**
-     * transposition amount for melody
+     * transposition amount
      */
 
-    int melodyTransposition;
-    
-    /**
-     * transposition amount for chords
-     */
-
-    int chordTransposition;
-    
-    /**
-     * the new key signature
-     */
-    int newKeySig;
-    
-    /**
-     * the old key signature, in case of an undo
-     */
-    int oldKeySig;
+    int transposition;
     
     /**
      * the Notation window
      */
     
     Notate notate;
+    
+    /*
+     * newClef is an ArrayList of size 1 for compatibility purposes.
+     */
+    ArrayList<StaveType> newClef;
+    
+    ArrayList<StaveType> savedClefs;
     
     /**
      * true since this Command can be undone
@@ -79,25 +70,22 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
      * @param newKeySig
      */
     public TransposeAllInPlaceCommand(Notate notate, 
-                                      int melodyTransposition, 
-                                      int chordTransposition,
-                                      int newKeySig) 
+                                      int transposition,
+                                      StaveType clef) 
     {
         this.notate = notate;
-        this.melodyTransposition = melodyTransposition;
-        this.chordTransposition = chordTransposition;
-        this.newKeySig = newKeySig;
-        Score score = notate.getScore();
-        oldKeySig = score.getKeySignature();
+        this.transposition = transposition;
+        newClef = new ArrayList<StaveType>();
+        newClef.add(clef);
     }
     
     /**
-     * Execute the melodyTransposition.
+     * Execute the transposition.
      */
     @Override
     public void execute() {
         Trace.log(2, "executing TransposeAllInPlaceCommand");
-        notate.transposeAllInPlace(melodyTransposition, chordTransposition, newKeySig);
+        savedClefs = notate.transposeAllInPlace(transposition, newClef);
     }
     
     /**
@@ -106,7 +94,7 @@ public class TransposeAllInPlaceCommand implements Command, Constants {
     @Override
     public void undo() {
         Trace.log(2, "undoing TransposeAllInPlaceCommand");
-        notate.transposeAllInPlace(-melodyTransposition, -chordTransposition, oldKeySig);
+        notate.transposeAllInPlace(-transposition, savedClefs);
     }
     
     /**

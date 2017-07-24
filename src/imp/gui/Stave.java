@@ -886,13 +886,14 @@ public boolean requestFocusInWindow()
 
 /**
  * Changes the Stave type and sets the spacing variables associated with
- * the type of Stave.
+ * the type of Stave. Returns the previous Stave type.
  *
  * @param type              type of Stave to be displayed
  * @see #setSpacingVars()
  */
-public void changeType(StaveType type)
+public StaveType changeType(StaveType type)
   {
+    StaveType oldType = this.type;
     if( type == StaveType.GRAND
             || type == StaveType.TREBLE
             || type == StaveType.BASS )
@@ -923,7 +924,34 @@ public void changeType(StaveType type)
 
     setSpacingVars();
     repaint();
+    return oldType;
   }
+
+public static String staveTypeToString(StaveType type)
+{
+    switch( type )
+      {
+        case GRAND: return "Grand";
+        case TREBLE: return "Treble";
+        case BASS: return "Bass";
+        case AUTO: return "Auto";
+        case NONE:
+        default: return "None";
+      }
+}
+
+public static StaveType staveTypeFromString(String type)
+{
+    switch( type )
+      {
+        case "Grand":  return StaveType.GRAND;
+        case "Treble": return StaveType.TREBLE;
+        case "Bass":   return StaveType.BASS;
+        case "Auto":   return StaveType.AUTO;
+        case "None": 
+              default: return StaveType.NONE;
+      }
+}
 
 public void setPrinting(boolean printing)
   {
