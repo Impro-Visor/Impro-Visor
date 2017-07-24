@@ -123,6 +123,7 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
     }
 
     public void setRuleStringsToEmulate(ArrayList<Polylist> selectedRuleStrings) {
+        System.out.println("selectedRuleStrings: "+selectedRuleStrings.toString());
         ruleStringsToEmulate = selectedRuleStrings;
         dataPointsToEmulate = getDataPointsToEmulate(ruleStringsToEmulate);
     }
