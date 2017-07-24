@@ -11258,9 +11258,14 @@ private void recordFromMidi()
   }
 
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
-        improvisationOn = false;
-        playAll();
+        playBtnPressed();
     }//GEN-LAST:event_playBtnActionPerformed
+
+public void playBtnPressed()
+    {
+        improvisationOn = false;
+        playAll();   
+    }
 
     private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_windowMenuMenuSelected
 

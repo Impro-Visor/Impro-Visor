@@ -98,6 +98,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        playToggleBtn = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         concertPitchButton = new javax.swing.JButton();
         customLeadsheetTransposeSpinner = new javax.swing.JSpinner();
@@ -172,7 +173,6 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         instrumentLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         instrumentLabel.setText("  Instrument  ");
-        instrumentLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -205,7 +205,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -216,7 +216,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -246,7 +246,6 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         playbackLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         playbackLabel.setText("Playback");
-        playbackLabel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -257,9 +256,10 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionWizardSaveButton.setText("Transpose Playback ");
         transpositionWizardSaveButton.setToolTipText("Clicking this button will set the transposed playback.");
         transpositionWizardSaveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        transpositionWizardSaveButton.setMaximumSize(new java.awt.Dimension(176, 20));
-        transpositionWizardSaveButton.setMinimumSize(new java.awt.Dimension(176, 40));
-        transpositionWizardSaveButton.setPreferredSize(new java.awt.Dimension(176, 40));
+        transpositionWizardSaveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        transpositionWizardSaveButton.setMaximumSize(new java.awt.Dimension(150, 40));
+        transpositionWizardSaveButton.setMinimumSize(new java.awt.Dimension(150, 40));
+        transpositionWizardSaveButton.setPreferredSize(new java.awt.Dimension(150, 40));
         transpositionWizardSaveButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -268,10 +268,12 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         transpositionPreviewPanel.add(transpositionWizardSaveButton, gridBagConstraints);
 
         jPanel3.setMaximumSize(new java.awt.Dimension(200, 32));
@@ -304,6 +306,30 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipady = 20;
         transpositionPreviewPanel.add(jPanel3, gridBagConstraints);
+
+        playToggleBtn.setFont(new java.awt.Font("Lucida Grande", 0, 13)); // NOI18N
+        playToggleBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
+        playToggleBtn.setText("Test");
+        playToggleBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        playToggleBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        playToggleBtn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        playToggleBtn.setMaximumSize(new java.awt.Dimension(65, 40));
+        playToggleBtn.setMinimumSize(new java.awt.Dimension(65, 40));
+        playToggleBtn.setPreferredSize(new java.awt.Dimension(65, 40));
+        playToggleBtn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif"))); // NOI18N
+        playToggleBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                playToggleBtnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        transpositionPreviewPanel.add(playToggleBtn, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -398,7 +424,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         jPanel1.add(jPanel2, gridBagConstraints);
         jPanel1.add(jSeparator1, new java.awt.GridBagConstraints());
 
-        clefComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Treble", "Bass", "Grand", "None", " " }));
+        clefComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Treble", "Bass", "Grand", " ", " " }));
         clefComboBox.setSelectedItem("Treble");
         clefComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clef", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         clefComboBox.setMinimumSize(new java.awt.Dimension(150, 50));
@@ -481,6 +507,18 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         clef = Stave.staveTypeFromString((String)clefComboBox.getSelectedItem());
     }//GEN-LAST:event_clefComboBoxActionPerformed
 
+    private void playToggleBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_playToggleBtnActionPerformed
+    {//GEN-HEADEREND:event_playToggleBtnActionPerformed
+        if( playToggleBtn.isSelected() )
+          {
+           notate.playBtnPressed();
+          }
+        else
+          {
+           notate.stopButtonPressed();
+          }
+    }//GEN-LAST:event_playToggleBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bassWizardLabel;
@@ -505,6 +543,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel melodyWizardLabel;
     private javax.swing.JSpinner melodyWizardSpinner;
+    private javax.swing.JToggleButton playToggleBtn;
     private javax.swing.JLabel playbackLabel;
     private javax.swing.JLabel transposeTitle;
     private javax.swing.JPanel transpositionPreviewPanel;
