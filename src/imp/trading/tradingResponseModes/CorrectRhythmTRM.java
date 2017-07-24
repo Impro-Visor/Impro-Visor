@@ -77,7 +77,16 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
     }
     
     private DataPoint getDataPointToPaste(){
-        int pasteIndex = tradeCounter % numTargetDataPoints;
+        int pasteIndex  = 0;
+        if (numTargetDataPoints == 0){
+            System.out.println("0 target datapoints found!!");
+        }else{
+            System.out.println(numTargetDataPoints+" target datapoints found!!");
+            pasteIndex = tradeCounter % numTargetDataPoints;
+        }
+        for(int i = 0; i < dataPointsToEmulate.length; i++){
+            System.out.println("dataPointsToEmulate["+i+"]: "+dataPointsToEmulate[i]);
+        }
         DataPoint pasteDataPoint = dataPointsToEmulate[pasteIndex];
         tradeCounter++;
         return pasteDataPoint;

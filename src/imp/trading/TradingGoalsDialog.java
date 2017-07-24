@@ -98,6 +98,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
               if(selectedRuleStrings.size() == 0){
                   JOptionPane.showMessageDialog(framePanel, "Please select at least one rhythm to emulate!", "Warning", JOptionPane.WARNING_MESSAGE); 
               }else{
+                System.out.println("selectedRuleStrings: "+selectedRuleStrings);
                 rhythmHelperTRM.setRuleStringsToEmulate(selectedRuleStrings);
                 activeTrading.startTradingFromTradingGoalsDialog();
                 dispose();
