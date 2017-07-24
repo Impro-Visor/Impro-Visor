@@ -158,8 +158,13 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
         
         DataPoint d;
         for(int i = 0; i < parts.length; i++){
-            d = getDataPointForUser(parts[i], parts[0].getEndTime() + windowSize*measure*i);
-            MotifClusterManager.addMotif(d);
+            try {
+                d = getDataPointForUser(parts[i], parts[0].getEndTime() + windowSize*measure*i);
+                MotifClusterManager.addMotif(d);
+            } catch (EmptySoloException ex) {
+                System.out.println("Empty solo played");
+            }
+            
             if (TESTING) System.err.println("Got out");
 
         }
@@ -249,7 +254,7 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
      * @param nextSection the index of this melody
      * @return the {@link DataPoint} version of the {@link MelodyPart}
      */
-    public synchronized static DataPoint getDataPointForUser(MelodyPart melody, int nextSection){
+    public synchronized static DataPoint getDataPointForUser(MelodyPart melody, int nextSection) throws EmptySoloException{
       
         LickGen lg = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), notate, null);
         LickgenFrame lgf = new LickgenFrame(notate, lg, new CommandManager());
@@ -264,8 +269,16 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
         
         String relativePitch = NoteConverter.melPartToRelativePitch(melody, notate.getChordProg());
         
-        Polylist temp = Polylist.PolylistFromString(abstractMel);
-
+        Polylist temp;
+        
+        try{
+            temp = Polylist.PolylistFromString(abstractMel);
+        } catch (NullPointerException nullExp){
+            throw new EmptySoloException(nullExp.getMessage(), nullExp.getCause());
+        }
+        
+        
+        
         Polylist rule;
         
 
@@ -369,6 +382,25 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
         Grammar grammar = new Grammar(rules);
         
         return grammar;
+        
+    }
+    
+    private static class EmptySoloException extends Exception {
+        public EmptySoloException(){
+            
+        }
+        
+        public EmptySoloException(String message){
+            super(message);
+        }
+        
+        public EmptySoloException(Throwable cause){
+            super(cause);
+        }
+        
+        public EmptySoloException(String message, Throwable cause){
+            super(message, cause);
+        }
         
     }
     
