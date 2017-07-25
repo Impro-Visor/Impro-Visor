@@ -19808,9 +19808,8 @@ public boolean countInCheckboxIsSelected()
     {//GEN-HEADEREND:event_transposeMelodyDownHarmonicallyActionPerformed
         getCurrentStave().transposeMelodyDownHarmonically();
 }//GEN-LAST:event_transposeMelodyDownHarmonicallyActionPerformed
-
-    private void alwaysUseBassActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseBassActionPerformed
-    {//GEN-HEADEREND:event_alwaysUseBassActionPerformed
+    private void alwaysUseBassAction()
+    {
         setCheckBoxPreferences(0, alwaysUseBass);
         boolean value = alwaysUseBass.isSelected();
         if( value )
@@ -19820,10 +19819,15 @@ public boolean countInCheckboxIsSelected()
           }
         leadsheetBassTranspositionSpinner.setEnabled(!value);
         bassInst.setEnabled(!value);
+    }
+        
+    private void alwaysUseBassActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseBassActionPerformed
+    {//GEN-HEADEREND:event_alwaysUseBassActionPerformed
+     alwaysUseBassAction();
 }//GEN-LAST:event_alwaysUseBassActionPerformed
 
-    private void alwaysUseChordActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseChordActionPerformed
-    {//GEN-HEADEREND:event_alwaysUseChordActionPerformed
+    private void alwaysUseChordAction()
+    {
         setCheckBoxPreferences(1, alwaysUseChord);
         boolean value = alwaysUseChord.isSelected();
         if( value )
@@ -19833,10 +19837,15 @@ public boolean countInCheckboxIsSelected()
           } 
         leadsheetChordTranspositionSpinner.setEnabled(!value);
         chordInst.setEnabled(!value);
+    }
+        
+    private void alwaysUseChordActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseChordActionPerformed
+    {//GEN-HEADEREND:event_alwaysUseChordActionPerformed
+        alwaysUseChordAction();
 }//GEN-LAST:event_alwaysUseChordActionPerformed
 
-    private void alwaysUseMelodyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseMelodyActionPerformed
-    {//GEN-HEADEREND:event_alwaysUseMelodyActionPerformed
+    private void alwaysUseMelodyAction()
+    {
         setCheckBoxPreferences(2, alwaysUseMelody);
         boolean value = alwaysUseMelody.isSelected();
         if( value )
@@ -19846,6 +19855,11 @@ public boolean countInCheckboxIsSelected()
           }
         chorusMelodyTranspositionSpinner.setEnabled(!value);
         melodyInst.setEnabled(!value);
+    }
+        
+    private void alwaysUseMelodyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_alwaysUseMelodyActionPerformed
+    {//GEN-HEADEREND:event_alwaysUseMelodyActionPerformed
+        alwaysUseMelodyAction();
 }//GEN-LAST:event_alwaysUseMelodyActionPerformed
 
     private void adviceScrollListCellsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_adviceScrollListCellsMouseClicked
@@ -23831,7 +23845,7 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
      * chord, bass playback.
      * @param transposition
      */
-    public void transposeInstruments(Transposition transposition)
+    public void transposeInstruments(Transposition transposition, boolean alwaysUse)
     {
     int bassTransposition = transposition.getBassTransposition();
     int chordTransposition = transposition.getChordTransposition();
@@ -23844,6 +23858,21 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     changeBassTransposition(bassTransposition);
     changeChordTransposition(chordTransposition);
     changeMelodyTransposition(melodyTransposition);
+    
+    if( alwaysUse )
+      {
+        globalBassTranspositionSpinner.setValue(bassTransposition);
+        globalChordTranspositionSpinner.setValue(chordTransposition);
+        globalMelodyTranspositionSpinner.setValue(melodyTransposition);
+      }
+    
+    alwaysUseBass.setSelected(alwaysUse);
+    alwaysUseChord.setSelected(alwaysUse);
+    alwaysUseMelody.setSelected(alwaysUse);
+
+    alwaysUseBassAction();
+    alwaysUseChordAction();
+    alwaysUseMelodyAction();
     }
     
     public void openGrammarMenuDialog()

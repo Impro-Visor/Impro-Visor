@@ -55,6 +55,12 @@ public class TransposeInstrumentsCommand implements Command, Constants {
     
     Transposition oldTransposition;
     
+    /**
+     * Whether to always use settings
+     */
+    
+    boolean alwaysUse;
+    
     
     /**
      * true since this Command can be undone
@@ -67,11 +73,13 @@ public class TransposeInstrumentsCommand implements Command, Constants {
      * @param newClef
      */
     public TransposeInstrumentsCommand(Notate notate,
-                                       Transposition newTransposition) 
+                                       Transposition newTransposition,
+                                       boolean alwaysUse) 
     {
         this.notate = notate;
         this.newTransposition = newTransposition;
         oldTransposition = notate.getTransposition();
+        this.alwaysUse = alwaysUse;
     }
     
     /**
@@ -80,7 +88,7 @@ public class TransposeInstrumentsCommand implements Command, Constants {
     @Override
     public void execute() {
         Trace.log(2, "executing TransposeInstrumentsCommand");
-        notate.transposeInstruments(newTransposition);
+        notate.transposeInstruments(newTransposition, alwaysUse);
      }
     
     /**
@@ -89,7 +97,7 @@ public class TransposeInstrumentsCommand implements Command, Constants {
     @Override
     public void undo() {
         Trace.log(2, "undoing TransposeInstrumentsCommand");
-        notate.transposeInstruments(oldTransposition);
+        notate.transposeInstruments(oldTransposition, false);
     }
     
     /**

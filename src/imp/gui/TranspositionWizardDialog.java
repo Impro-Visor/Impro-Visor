@@ -99,6 +99,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         playToggleBtn = new javax.swing.JToggleButton();
+        allTransposingPreferencesCheckBox = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         concertPitchButton = new javax.swing.JButton();
         customLeadsheetTransposeSpinner = new javax.swing.JSpinner();
@@ -246,9 +247,13 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         playbackLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         playbackLabel.setText("Playback");
+        playbackLabel.setMaximumSize(new java.awt.Dimension(100, 16));
+        playbackLabel.setMinimumSize(new java.awt.Dimension(100, 16));
+        playbackLabel.setPreferredSize(new java.awt.Dimension(100, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         transpositionPreviewPanel.add(playbackLabel, gridBagConstraints);
         playbackLabel.getAccessibleContext().setAccessibleName(" Playback ");
@@ -256,10 +261,11 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionWizardSaveButton.setText("Transpose Playback ");
         transpositionWizardSaveButton.setToolTipText("Clicking this button will set the transposed playback.");
         transpositionWizardSaveButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        transpositionWizardSaveButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         transpositionWizardSaveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        transpositionWizardSaveButton.setMaximumSize(new java.awt.Dimension(150, 40));
-        transpositionWizardSaveButton.setMinimumSize(new java.awt.Dimension(150, 40));
-        transpositionWizardSaveButton.setPreferredSize(new java.awt.Dimension(150, 40));
+        transpositionWizardSaveButton.setMaximumSize(new java.awt.Dimension(140, 40));
+        transpositionWizardSaveButton.setMinimumSize(new java.awt.Dimension(140, 40));
+        transpositionWizardSaveButton.setPreferredSize(new java.awt.Dimension(140, 40));
         transpositionWizardSaveButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -271,9 +277,8 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 2);
         transpositionPreviewPanel.add(transpositionWizardSaveButton, gridBagConstraints);
 
         jPanel3.setMaximumSize(new java.awt.Dimension(200, 32));
@@ -283,31 +288,37 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel3.setText("     Select instrument to set");
-        jLabel3.setMaximumSize(new java.awt.Dimension(300, 16));
-        jLabel3.setMinimumSize(new java.awt.Dimension(300, 16));
-        jLabel3.setPreferredSize(new java.awt.Dimension(200, 16));
+        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jLabel3.setMaximumSize(new java.awt.Dimension(275, 16));
+        jLabel3.setMinimumSize(new java.awt.Dimension(275, 16));
+        jLabel3.setPreferredSize(new java.awt.Dimension(275, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel3.add(jLabel3, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel4.setText("      playback transpositions.");
+        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jLabel4.setMaximumSize(new java.awt.Dimension(275, 16));
+        jLabel4.setMinimumSize(new java.awt.Dimension(275, 16));
+        jLabel4.setPreferredSize(new java.awt.Dimension(275, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel3.add(jLabel4, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipady = 20;
         transpositionPreviewPanel.add(jPanel3, gridBagConstraints);
 
-        playToggleBtn.setFont(new java.awt.Font("Lucida Grande", 0, 13)); // NOI18N
         playToggleBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
         playToggleBtn.setText("Test");
         playToggleBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -330,6 +341,17 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         transpositionPreviewPanel.add(playToggleBtn, gridBagConstraints);
+
+        allTransposingPreferencesCheckBox.setText("Always Use These");
+        allTransposingPreferencesCheckBox.setActionCommand("Always Use These");
+        allTransposingPreferencesCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        allTransposingPreferencesCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        transpositionPreviewPanel.add(allTransposingPreferencesCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -479,7 +501,8 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
             int chordbass = ((Long) found.third()).intValue();
             Transposition newTransposition = new Transposition(chordbass, chordbass, mel);
             notate.executeCommand(new TransposeInstrumentsCommand(notate,
-                                                                  newTransposition));
+                                                               newTransposition,
+                               allTransposingPreferencesCheckBox.isSelected()));
         }
         //setVisible(false);
         //notate.getTranspositionWizardMI().setEnabled(true);
@@ -521,6 +544,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox allTransposingPreferencesCheckBox;
     private javax.swing.JLabel bassWizardLabel;
     private javax.swing.JSpinner bassWizardSpinner;
     private javax.swing.JLabel chordWizardLabel;
