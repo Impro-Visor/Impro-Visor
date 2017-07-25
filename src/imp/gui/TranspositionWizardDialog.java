@@ -223,6 +223,14 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
         transpositionPreviewPanel.add(melodyWizardLabel, gridBagConstraints);
+
+        bassWizardSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                bassWizardSpinnerStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -477,35 +485,32 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         //gives preview of what will be transposed in transposition wizard window
         String transpositionInstrument = transpositionWizardJList.getSelectedValue();
         Polylist found = instrumentMapping.assoc(transpositionInstrument);
-        Long mel = (Long) found.second();
-        Long chordbass = (Long) found.third();
-        String clefString = (String) found.fourth();
-        clef = Stave.staveTypeFromString(clefString);
-        clefComboBox.setSelectedItem(clefString);
-        scoreTransposition = ((Long) found.fifth()).intValue();
-        melodyWizardSpinner.setValue(mel);
-        chordWizardSpinner.setValue(chordbass);
-        bassWizardSpinner.setValue(chordbass);
-        customLeadsheetTransposeSpinner.setValue(scoreTransposition);
+        if( found != null )
+          {
+          Long mel = (Long) found.second();
+          Long chordbass = (Long) found.third();
+          String clefString = (String) found.fourth();
+          scoreTransposition = ((Long) found.fifth()).intValue();
+          clef = Stave.staveTypeFromString(clefString);
+          
+          clefComboBox.setSelectedItem(clefString);
+          melodyWizardSpinner.setValue(mel);
+          chordWizardSpinner.setValue(chordbass);
+          bassWizardSpinner.setValue(chordbass);
+          customLeadsheetTransposeSpinner.setValue(scoreTransposition);
+          }
+
     }//GEN-LAST:event_transpositionWizardJListValueChanged
 
     private void transpositionWizardSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transpositionWizardSaveButtonActionPerformed
-        if (transpositionWizardJList.getSelectedValue() != null)
-        {
             //deals with changing transposition spinners & radio buttons in preferences windows
-            String transpositionInstrument = transpositionWizardJList.getSelectedValue();
-            String allValues = Preferences.getPreference("transposing-instruments");
-            Polylist ALL_VALUES = Polylist.PolylistFromString(allValues);
-            Polylist found = ALL_VALUES.assoc(transpositionInstrument);
-            int mel = ((Long)found.second()).intValue();
-            int chordbass = ((Long) found.third()).intValue();
-            Transposition newTransposition = new Transposition(chordbass, chordbass, mel);
+            int bass = Notate.getIntFromSpinner(bassWizardSpinner);
+            int chord = Notate.getIntFromSpinner(chordWizardSpinner);
+            int mel = Notate.getIntFromSpinner(melodyWizardSpinner);
+            Transposition newTransposition = new Transposition(bass, chord, mel);
             notate.executeCommand(new TransposeInstrumentsCommand(notate,
                                                                newTransposition,
                                allTransposingPreferencesCheckBox.isSelected()));
-        }
-        //setVisible(false);
-        //notate.getTranspositionWizardMI().setEnabled(true);
     }//GEN-LAST:event_transpositionWizardSaveButtonActionPerformed
 
 
@@ -541,6 +546,11 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
            notate.stopButtonPressed();
           }
     }//GEN-LAST:event_playToggleBtnActionPerformed
+
+    private void bassWizardSpinnerStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_bassWizardSpinnerStateChanged
+    {//GEN-HEADEREND:event_bassWizardSpinnerStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bassWizardSpinnerStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

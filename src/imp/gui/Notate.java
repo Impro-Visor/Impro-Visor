@@ -13541,7 +13541,7 @@ public Transposition getTransposition()
     return masterTransposition;
   }
 
-public int getIntFromSpinner(JSpinner spinner)
+public static int getIntFromSpinner(JSpinner spinner)
 {
     int value = Integer.parseInt(spinner.getValue().toString());
     return value;
