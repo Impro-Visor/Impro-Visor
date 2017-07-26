@@ -113,9 +113,9 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
 //    {
 //        System.out.println("calling setResponse from correctRhythmTRM........");
 //        super.setResponseInfo(responseInfo);
-////        for(int i = 0; i < clusterArray.size(); i++){
-////            clusterArray.get(i).createDataPointsFromRuleStrings(maxMetricValues, minMetricValues);
-////        }
+//        for(int i = 0; i < clusterArray.size(); i++){
+//            clusterArray.get(i).createDataPointsFromRuleStrings(maxMetricValues, minMetricValues);
+//        }
 //    }
     
     public double getScore(){

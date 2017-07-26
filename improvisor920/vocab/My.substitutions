@@ -1,0 +1,78 @@
+/** Equivalences and substitutions
+ *
+ * Eventually this information should be in the .voc file, but this will require
+ * some recoding.
+ *
+ * Chord equivalences and substitutions are read in here for the purposes of
+ * parsing chord bricks with substituted chords. These are divided into 
+ * equivalence rules and substitution rules.
+ *
+ * Equivalence rules describe a set of chords which are all interchangeable for
+ * each other in a given piece. They have the form
+ *
+ *     (equiv [list of equivalent chords])
+ *
+ * and are expected to contain two or more chords in order to constitute a 
+ * valid rule.
+ * 
+ * Substitution rules are the unidirectional version of equivalence rules, 
+ * describing when a set of chords could all replace a given chord in a piece
+ * but could not be always replaced by that chord. They have the form
+ *
+ *     (sub [original chord] [list of possible substitutions])
+ *
+ * and must also contain at least one chord besides the original chord in order
+ * to be valid.
+ *
+ */
+
+
+// Equivalences
+
+(equiv C CM CMajor CBass C2 C5 C6 CM6 CM7 CMaj7 CMaj9 CMaj13 Cmaj7 Cmaj9 Cmaj13 
+     CM9 CM69 CM13 Csus2 Csus24
+     CM7#11 CM9#11 CM13#11 Cadd2 Cadd9
+     CM6b5 CM6#11 C6b5 C6#11 C69#11 CM69#11
+     Cmaj7#11 Cmaj9#11 Cmaj13#11 CMaj7#11 CMaj9#11 CMaj13#11 
+     Cadd9 Cadd2 Csus2 C7_ C9_ C13_ C7#11_ C9#11_ C13#11_ C7#4_ C9#4_ C13#4_
+     C7#9_ C7#5#9_ C13#9_ C7#9b13_
+     )
+
+(equiv Cm Cminor Cm6 Cm69 Cm7 CmM7 CmM9 Cm9 Cm11 Cm13 C-)
+
+(equiv C7 CDominant
+     C7b9 C7#9 C7+ C7#11 C7b9#11 C7b9b13 C9 C9#11 C9b5 C9b13 
+     C13 C13b9 C13#9 C7#5#9 C7#9b13 C13#11 C13b5 C13b9#11 C13#9#11 C9+ C7b5b9
+     C+7 C7+4 C7#4 C9+4 C9#4 C13+4 C13#4
+     )
+
+(equiv Cdim Co Cdim7 Co7)
+
+(equiv C+ Caug)
+
+
+// Substitutions
+
+(sub C Csus Csus4)
+
+(sub C7 C7alt C7+ C+7 C7aug Caug7 C7#5 C7#5#9 C7#9b13 C7b9 C7b9b13 C7#9 C9 C5
+     C13 C13b9 C13#9 C7#11 C9#11 C13#11 C7b5 C9b5 C7b5#9 C7b9#11 C13b9#11 C7add13 C7add6
+     C7sus4 C9sus4 C7b9sus4 CBlues 
+     )
+
+
+(sub C9 C9#11 C13 C13#11)
+
+(sub C13 C13#11 C13b9 C13#9 C13b9#11)
+
+(sub C7b9 C13b9 C13b9#11)
+
+(sub Cm7 Cm9 Cm11 Cm13 CmM7 CmM9)
+
+(sub Cm7b5 Cm9b5)
+
+(sub Cm9 Cm9b5 Cm11 Cm13)
+
+(sub Cm11 Cm13)
+
+(sub Co Co7 CoM7)

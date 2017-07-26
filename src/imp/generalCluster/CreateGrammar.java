@@ -149,17 +149,13 @@ public class CreateGrammar implements imp.Constants {
         if (repsPerCluster>dataPoints.size()){
             repsPerCluster = 1;
         }
-        Cluster[] clusters = getClusters(dataPoints, averages, dataPoints.size() / repsPerCluster);
+        Cluster[] clusters = getClusters(dataPoints, dataPoints.size() / repsPerCluster, mlf);
         /**@Todo
          * check if you want to create cluster file and pass in desired name
          */
         if(createClusterFile){
             String fileName = getClusterOutputFile(outFile);//also makes file&directory if it does not yet exist
             fileName = ImproVisor.getRhythmClusterDirectory().toString() + "/" + fileName;
-//            System.out.println("fileName: " + fileName);
-            //clusterToFile(clusters, fileName, clusterWindowSize);
-//            System.out.println("about to call selective cluster to file...");
-                  
             selectiveClusterToFile(clusters, fileName, (new ArrayList<Polylist>()), clusterWindowSize,
                     maxMetricValues, minMetricValues);
         }
@@ -1540,15 +1536,15 @@ public class CreateGrammar implements imp.Constants {
     
     
 
-    public static Cluster[] getClusters(Vector<DataPoint> data, double[] averages, int numClusters) {
+    public static Cluster[] getClusters(Vector<DataPoint> data, int numClusters, MetricListFactory mlf) {
         JCA jca;
         
         //numclusters is greater than the number of datapoints, use the same number of clusters
         //as there are datapoints
         if (data.size() < numClusters) {
-            jca = new JCA(data.size(), data.size(), data, metricListFactory);
+            jca = new JCA(data.size(), data.size(), data, mlf);
         } else {
-            jca = new JCA(numClusters, data.size(), data, metricListFactory);
+            jca = new JCA(numClusters, data.size(), data, mlf);
         }
         jca.startAnalysis();
         Cluster[] clusters = jca.getClusterOutput();

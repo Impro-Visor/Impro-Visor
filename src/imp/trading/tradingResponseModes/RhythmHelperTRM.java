@@ -14,7 +14,14 @@ import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.RhythmCluster;
 import imp.generalCluster.Centroid;
+import imp.generalCluster.Cluster;
 import imp.generalCluster.CreateGrammar;
+import static imp.generalCluster.CreateGrammar.calcAverage;
+import static imp.generalCluster.CreateGrammar.getClusters;
+import static imp.generalCluster.CreateGrammar.metricListFactory;
+import static imp.generalCluster.CreateGrammar.normalizeDatapoints;
+import static imp.generalCluster.CreateGrammar.processRule;
+import static imp.generalCluster.CreateGrammar.selectiveClusterToFile;
 import imp.generalCluster.DataPoint;
 import imp.generalCluster.metrics.Metric;
 import imp.generalCluster.metrics.MetricListFactories.RhythmMetricListFactory;
@@ -24,12 +31,15 @@ import imp.lickgen.LickgenFrame;
 import imp.lickgen.NoteConverter;
 import imp.trading.ActiveTradingDialog;
 import imp.trading.TradingResponseInfo;
+import imp.trading.UserRhythmSelecterDialog;
 import imp.util.NonExistentParameterException;
 import imp.util.Preferences;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
 import polya.Polylist;
 
 /**
@@ -90,6 +100,12 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     
     public String retrieveClusterFileName(){
         String fileName = getClusterFileNameFromPreferences();
+        if(fileName.substring(fileName.indexOf(".")+1, fileName.length()).equals("rhythms")){
+            makeClusterFromRhythms(fileName);
+            fileName = getClusterFileNameFromPreferences();
+            //System.out.println("fileName after creating user rhythm Cluster: "+fileName);
+            
+        }
         fileName = ImproVisor.getRhythmClusterDirectory() + "/" + fileName;
         return fileName;
     }
@@ -105,6 +121,67 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         
         return rtn;
     }
+    
+    public void makeClusterFromRhythms(String rhythmFileName){
+        //extract ruleStrings from my rhythm (pretty easy)
+        ArrayList<Polylist> userRuleStrings= UserRhythmSelecterDialog.readInRuleStringsFromFile(ImproVisor.getRhythmClusterDirectory()+"/"+rhythmFileName);
+        Vector<DataPoint> datapointVec = new Vector<DataPoint>();
+        //make datapoints from the ruleStrings (process rule)
+        
+        numMetrics = (new RhythmMetricListFactory()).getNumMetrics();
+        
+        maxMetricValues = new Double[numMetrics];
+        minMetricValues = new Double[numMetrics];
+        Arrays.fill(maxMetricValues, Double.MIN_VALUE);
+        Arrays.fill(minMetricValues, Double.MAX_VALUE);
+       
+        //put data into vectors
+        for (int i = 0; i < userRuleStrings.size(); i++) {
+            Polylist ruleStringPL = userRuleStrings.get(i);
+            //skip tag
+            ruleStringPL = ruleStringPL.rest();
+            String ruleString = ruleStringPL.toStringSansParens();
+            //System.out.println("\nruleString: " + ruleString);
+            Polylist rulePL = (Polylist) ruleStringPL.first();
+            Polylist abstractMel = (Polylist) rulePL.third();
+            //System.out.println("abstractMel: " + abstractMel.toString());
+            Polylist SegLen = (Polylist) rulePL.second();
+            Polylist rule = Polylist.list(SegLen.toStringSansParens()).append(abstractMel);
+            //System.out.println("rule: " + rule.toString());
+            DataPoint temp = CreateGrammar.processRule(rule, ruleString, Integer.toString(i), (new RhythmMetricListFactory()) );
+            int segLength = temp.getSegLength();
+            if(segLength != windowSize){
+                temp.scaleMetrics( (windowSize) / segLength);
+             }
+            updateGlobalMetricMaxMin(temp);
+            if (temp.getRestPercent() < 1.0){
+                datapointVec.add(temp);
+            }
+        }
+        
+        double[] averages = calcAverage(datapointVec);
+
+        CreateGrammar.normalizeDatapoints(datapointVec, maxMetricValues, minMetricValues);
+        //make cluster file from datapoints make clusters (CreateGrammar.getClusters(datapoints,numclusters))
+        /**@TODO: don't hard-code the number of clusters to 1*/
+        int clusterSize = (int) datapointVec.size() / 4;
+        if (clusterSize < 1){clusterSize = 1;}
+        Cluster[] clusters = CreateGrammar.getClusters(datapointVec, clusterSize, new RhythmMetricListFactory());
+        String fileNameEnd = "lastUsedMyRhythm.cluster";
+        String fileName = ImproVisor.getRhythmClusterDirectory().toString() + "/" + fileNameEnd;
+        try{
+        CreateGrammar.selectiveClusterToFile(clusters, fileName, (new ArrayList<Polylist>()), windowSize,
+                    maxMetricValues, minMetricValues);
+        }catch(IOException e){
+            System.out.println("could not write to file");
+        }
+        Preferences.setPreference(Preferences.CLUSTER_FILENAME, fileNameEnd);
+        
+        //write clusters to file
+        
+        
+    }
+   
     
     protected abstract Polylist getRhythmPolylist(RhythmCluster closestCluster, DataPoint d);
     protected abstract MelodyPart getRhythmTemplate(String rhythmString, RhythmCluster closestCluster);
@@ -180,7 +257,20 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     
     
     //abstract protected Polylist getRhythmFromCluster(RhythmCluster closestCluster, DataPoint d);
+     private void updateGlobalMetricMaxMin(DataPoint d){
+       Metric[] metricList = d.getMetrics();
+        for(int i = 0; i < metricList.length; i++){
+            if(metricList[i].getValue() > maxMetricValues[i]){          
+                    maxMetricValues[i] = metricList[i].getValue();
+                }
     
+            if(metricList[i].getValue() < minMetricValues[i]){          
+                minMetricValues[i] = metricList[i].getValue();
+            }
+    
+        }
+        
+    }
     
     protected void adjustClusters(int tradeCount){
         System.out.println("\n**************************\nentered adjust cluster loop");

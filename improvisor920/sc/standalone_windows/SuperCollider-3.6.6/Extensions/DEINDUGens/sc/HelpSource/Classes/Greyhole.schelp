@@ -1,0 +1,134 @@
+TITLE:: Greyhole
+summary:: A complex echo-like effect
+categories:: UGens>Delays
+RELATED:: Overviews/DEIND, Classes/JPverb, Classes/GreyholeRaw
+
+DESCRIPTION::
+image::Greyhole-logo-small.png::
+
+A complex echo-like effect, inspired by the classic Eventide effect of a similar name. The effect consists of a diffuser (like a mini-reverb) connected in a feedback system with a long modulated delay-line. Excels at producing spacey washes of sound.
+
+Developed as part of the LINK::Overviews/DEIND:: project.
+
+
+NOTE::Please increase server realtime memory for this to work properly::
+code::
+s.options.memSize_(65536 * 4);
+s.reboot;
+::
+
+CLASSMETHODS::
+private:: categories
+
+METHOD:: ar
+
+argument::in
+either an array of two audio signals, or one audiosignal.
+
+argument::delayTime
+approximate delay time in seconds. (0.1..60)
+
+argument::damp
+damping of high-frequencies as the delay decays. 0 is no damping, 1 is very strong damping (0..1)
+
+argument::size
+scales size of delay-lines within the diffusion unit, producing the impression of a larger or smaller space. Values below 1 can sound metallic. (0.5..5)
+
+argument::diff
+controls pattern of echoes produced by the diffuser. At very low values, the diffuser acts like a delay-line whose length is controlled by the 'size' parameter. Medium values produce a slow build-up of echoes, giving the sound a reversed-like quality. Values of 0.707 or greater than  produce smooth exponentially decaying echoes. (0..1)
+
+argument::feedback
+amount of feedback through the system. Sets the number of repeating echoes. A setting of 1.0 produces infinite sustain. (0..1)
+
+argument::modDepth
+depth of delay-line modulation. Use in combination with mFreq to produce chorus and pitch-variations in the echoes. (0..1)
+
+argument::modFreq
+frequency of delay-line modulation. Use in combination with mFreq to produce chorus and pitch-variations in the echoes. (0..10)
+
+returns::
+a UGen
+
+EXAMPLES::
+
+code::
+(
+s.options.memSize_(65536 * 4);
+s.reboot;
+
+Spec.add(\damp, [0, 1]);
+Spec.add(\diff, [0, 1]);
+Spec.add(\highband, [1000, 10000, \exp]);
+Spec.add(\highx, [0, 1]);
+Spec.add(\lowband, [100, 6000, \exp]);
+Spec.add(\lowx, [0, 1]);
+Spec.add(\modDepth, [0, 50]);
+Spec.add(\modFreq, [0, 10]);
+Spec.add(\midx, [0, 1]);
+Spec.add(\size, [0.5, 3]);
+Spec.add(\t60, [0.1, 60, \exp]);
+Spec.add(\wet, [0, 1]);
+Spec.add(\shelfslope, [1, 10]);
+Spec.add(\shelfFreq, \freq);
+Spec.add(\fb, [0, 1]);
+Spec.add(\dtime, [0, 2]);
+)
+
+(
+Ndef(\src, {
+	//SoundIn.ar([0, 1])
+	Splay.ar(Impulse.ar([1, 3, 5, 7, 9]).scramble);
+
+});
+Ndef(\hole, {
+	var src, delay, amp;
+
+	src = LeakDC.ar(Ndef(\src).ar);
+	src = src * \amp.kr(1);
+	// var src = Impulse.ar(0.5);
+
+	delay = Greyhole.ar(
+		src,
+		\dtime.kr(0.1),
+		\damp.kr(0.1),
+		\size.kr(1),
+		\diff.kr(0.707),
+		\fb.kr(0.1),
+		\modDepth.kr(0.01),
+		\modFreq.kr(2)
+	);
+	delay
+});
+)
+
+
+Ndef(\src).play;
+Ndef(\hole).play;
+
+Ndef(\hole).edit;
+Ndef(\src).edit;
+::
+
+For the Greyball piece ( see http://tai-studio.org/index.php/jpverb-greyhole/ ), the following source was used:
+
+code::
+Ndef(\src).fadeTime = 4;
+Ndef(\src).quant = 2;
+Ndef(\src, {
+	var src = 10.collect{
+		Pan2.ar([HPF, LPF, ComplexRes].choose.performKeyValuePairs(\ar,[
+			\in, [Impulse, LFPulse].choose.ar(
+				[4, 2, 1, 1/2, 1/3, 1/4, 1/6].choose,
+				iphase: [0, 1/4, 1/8, 1/2, 1/3].choose,
+				phase: [0, 1/4, 1/8, 1/2, 1/3].choose,
+				width:  [0.001, 0.0001, 0.01, 0.1, 0.2].choose,
+				mul:    [1, 2, 3, 4].choose.reciprocal * [1, -1].choose
+			),
+			\freq, [10000, 2000, 1000, 500, 250, 125, 125/2].choose,
+			\decay, [0.1, 0.2, 0.4, 1].choose,
+		]
+		), Rand(-1, 1));
+	}.sum;
+	HighShelf.ar(src, \shelfFreq.kr(1000), \shelfslope.kr(1));
+})
+::

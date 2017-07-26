@@ -60,6 +60,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
@@ -1212,5 +1213,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             improvisorFirstButton.setVisible(true);
             userFirstButton.setVisible(false);
         }
+    }
+    
+    
+    public JRadioButton getCorrectRhythmRadioButton(){
+        return correctRhythmRadioButton;
     }
 }

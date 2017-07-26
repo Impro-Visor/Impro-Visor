@@ -24582,11 +24582,19 @@ private void notateRhythmClusterMenuAction(java.awt.event.ActionEvent evt)
     ifCycle = false;
     ifShuffle = false;
     shufCount = 0;
+    String clusterFileName;
+    String stem;
+    if(userRhythmOption.isSelected()){
+        clusterFileName = Preferences.getPreference(Preferences.MY_RHYTHMS_FILE);
+        stem = "My rhythms";
+        System.out.println("cluster file name (should be my rhtyhms here): "+clusterFileName);
+    }else{
     JMenuItem item = (JMenuItem) evt.getSource();
-    String stem = item.getText();
+        stem = item.getText();
     setRhythmClusterName(stem);
    // String clusterFileName = directory + "/" + stem + ".cluster";
-   String clusterFileName = stem + ".cluster";
+        clusterFileName = stem + ".cluster";
+    }
     Preferences.setPreference(Preferences.CLUSTER_FILENAME, clusterFileName);
     if(traderDialog != null){
         traderDialog.refreshSelectedRhythmCluster(stem);
@@ -24835,6 +24843,9 @@ public void populateGenericGrammarMenu(JMenu menu){
 
 ArrayList<String> rhythmClusterList = new ArrayList<String>();
 ArrayList<String> shufRhythmClusterList = new ArrayList<String>();
+JMenuItem userRhythmOption = new JRadioButtonMenuItem("Use My Rhythms");
+javax.swing.JPopupMenu.Separator userRhythmDivider = new javax.swing.JPopupMenu.Separator();
+ButtonGroup rhythmClusterGroup = new ButtonGroup();
 
 public void populateRhythmClusterMenu(JMenu menu){
     String rhythmClusterExtension = ".cluster";
@@ -24860,7 +24871,8 @@ public void populateRhythmClusterMenu(JMenu menu){
         menu.setText("RhythmCluster");
         menu.add(new JLabel("Rhythm Cluster"));
         
-       
+        String selectedCluster = Preferences.getPreference(Preferences.CLUSTER_FILENAME);
+        String selectedClusterStem = selectedCluster.substring(0, selectedCluster.indexOf("."));
         // Add names of rhythm cluster files
 
         for( int i = 0; i < fileName.length; i++ )
@@ -24876,8 +24888,12 @@ public void populateRhythmClusterMenu(JMenu menu){
                   
                 int len = name.length();
                 String stem = name.substring(0, len - rhythmClusterExtension.length());
-                JMenuItem item = new JMenuItem(stem);
+                JMenuItem item = new JRadioButtonMenuItem(stem);
                 menu.add(item);
+                rhythmClusterGroup.add(item);
+                if (stem.equals(selectedClusterStem)){
+                    item.setSelected(true);
+                }
                 item.addActionListener(new java.awt.event.ActionListener()
                 {
                 public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -24890,10 +24906,25 @@ public void populateRhythmClusterMenu(JMenu menu){
                 
               }
           }
+          toggleUserRhythmOption(menu);
+           userRhythmOption.addActionListener(new java.awt.event.ActionListener()
+                {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                  {
+                      //need to make RhythmClusterMenuAction
+                    notateRhythmClusterMenuAction(evt);
       }
+
+                });
+        
+}
 }
 
-
+public void toggleUserRhythmOption(JMenu menu){
+            menu.add(userRhythmDivider);
+            menu.add(userRhythmOption);
+            rhythmClusterGroup.add(userRhythmOption);
+}
 
 
 public boolean rootEqualBassCheckboxChecked()

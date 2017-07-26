@@ -1,0 +1,47 @@
+class:: GlitchBRF
+summary:: backward compatibility
+related:: Classes/BRF
+categories:: UGens>Filters>Linear, UGens>Filters>GlitchUGens
+
+
+Description::
+
+October 2012 BRF was changed to use double-precision floats (git commit: 72412f63affa94f69e2ea7539e21831a1d0d3e01). GlitchBRF can be used as drop-in replacements to get the old behavior back. Good for very noise and glitchy sounds where the filter [nearly] blows up.
+
+
+classmethods::
+
+method::ar, kr
+
+argument::in
+The input signal.
+
+argument::freq
+Cutoff frequency in Hertz.
+
+argument::rq
+The reciprocal of Q (bandwidth / cutoffFreq).
+
+argument::mul
+Output will be multiplied by this value.
+
+argument::add
+This value will be added to the output.
+
+
+Examples::
+
+code::
+//code that utilizes the glitch.
+(
+s.waitForBoot{
+	SynthDef(\birdy, {|out= 0, amp= 0.1, freq= 1000, atk= 0.01, rel= 0.05, cur= -4, gate= 1|
+		var env= EnvGen.kr(Env.asr(atk, 1, rel, cur), gate, doneAction:2);
+		var src= SinOsc.ar(0.11, GlitchBRF.ar(SinOsc.ar(SinOsc.ar(0.12).exprange(1, freq), 2pi), 1/SinOsc.ar(0.13).range(1, #[99, 100])));
+		Out.ar(out, Limiter.ar(LeakDC.ar(src*amp)));
+	}).add;
+	s.sync;
+	Synth(\birdy, [\amp, 0.15]);
+};
+)
+::
