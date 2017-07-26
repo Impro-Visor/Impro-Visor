@@ -48,12 +48,14 @@ import imp.com.OpenLeadsheetCommand;
 import imp.data.*;
 import imp.gui.ExtractionEditor;
 import imp.gui.Notate;
+import static imp.gui.Notate.leadsheetEditorDimension;
 import imp.style.pianoroll.PianoRoll;
 import imp.style.pianoroll.PianoRollBar;
 import imp.style.pianoroll.PianoRollBassBar;
 import imp.style.pianoroll.PianoRollChordBar;
 import imp.style.pianoroll.PianoRollEndBlock;
 import imp.gui.RangeChooser;
+import imp.gui.StyleTextualEditor;
 import imp.gui.UnsavedChanges;
 import imp.gui.WindowMenuItem;
 import imp.gui.WindowRegistry;
@@ -91,6 +93,8 @@ public class StyleEditor
         extends javax.swing.JFrame
         implements ActionListener
   {
+  private StyleTextualEditor textualEditor;
+  
   static public String EMPTY = "";
   
   /** On-color for play/mute buttons */
@@ -1362,6 +1366,7 @@ public void updateAllDrumPatterns(String name, String rules)
       buffer.append(")");
       
       String styleResult = buffer.toString();
+      System.out.println("inside saveStyle " + buffer.toString());
       
       Polylist p = Notate.parseListFromString(styleResult);
       Polylist t = (Polylist)p.first();
@@ -1764,6 +1769,8 @@ public void updateAllDrumPatterns(String name, String rules)
     loadAttributes(style);
     
     styleName = file.getName();
+    
+    System.out.println("inside load from file");
     
     changedSinceLastSave = false;
     }
@@ -3613,6 +3620,7 @@ public void updateAllDrumPatterns(String name, String rules)
         custVoic = new javax.swing.JMenuItem();
         generateMI = new javax.swing.JMenuItem();
         pianoRollCheckBox = new javax.swing.JCheckBoxMenuItem();
+        textualEditorMI = new javax.swing.JMenuItem();
         trackWithPianoRoll = new javax.swing.JCheckBoxMenuItem();
         styHelp = new javax.swing.JMenu();
         styHelpMI = new javax.swing.JMenuItem();
@@ -6005,6 +6013,19 @@ public void updateAllDrumPatterns(String name, String rules)
         });
         styGenerate.add(pianoRollCheckBox);
 
+        textualEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        textualEditorMI.setText("Open Textual Editor");
+        textualEditorMI.setToolTipText("");
+        textualEditorMI.setActionCommand("Generate Style from MIDI");
+        textualEditorMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                textualEditorMIActionPerformed(evt);
+            }
+        });
+        styGenerate.add(textualEditorMI);
+
         trackWithPianoRoll.setText("Track Columns with Piano Roll when Piano Roll is open.\n");
         trackWithPianoRoll.setToolTipText("If the piano roll editor is open, change its column as spreadsheet columns are clicked.");
         trackWithPianoRoll.addActionListener(new java.awt.event.ActionListener()
@@ -7933,6 +7954,19 @@ private void openStyleMixer()
         voicingFilenameTFActionPerformed(null);
     }//GEN-LAST:event_voicingSettingsClicked
 
+    private void textualEditorMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textualEditorMIActionPerformed
+    {//GEN-HEADEREND:event_textualEditorMIActionPerformed
+        textualEditor = new StyleTextualEditor(this, false);
+    System.out.println("textualEditor = " + textualEditor);
+//
+        textualEditor.setLocationRelativeTo(this);
+//
+//           
+        textualEditor.setSize(leadsheetEditorDimension);
+        textualEditor.fillEditor();
+        textualEditor.setVisible(true);
+    }//GEN-LAST:event_textualEditorMIActionPerformed
+
     public int[] getChordRange(){
         return range;
     }
@@ -8135,6 +8169,7 @@ public void unusePianoRoll()
     private javax.swing.JTextField styleTextField2;
     private javax.swing.JTextField swingTextField;
     private javax.swing.JComboBox tempoComboBox;
+    private javax.swing.JMenuItem textualEditorMI;
     private javax.swing.JPanel timeSigPanel;
     private javax.swing.JPanel toolbarPanel;
     private javax.swing.JCheckBoxMenuItem trackWithPianoRoll;
