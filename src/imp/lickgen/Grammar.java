@@ -341,45 +341,83 @@ private void addToList(Polylist lhs,
       }
   }
 
-/**
- * Pop tokens off the stack stack. Any terminal tokens are pushed onto
- * accumulator. Rules are applied to non-terminals.
-     * @param stack
-     * @return 
-     * @throws imp.lickgen.RuleApplicationException
- */
-public Polylist applyRules(Polylist stack) throws RuleApplicationException
-  {
-    Object token = stack.first();
-    stack = stack.rest();
-
-    // Accumulate any terminal values at the beginning of stack.
-
-    while( numSlotsToFill > 0 && isTerminal(token) )
+private boolean isShare(Object token) 
+{
+    if( token instanceof Polylist )
       {
-        if( isWrappedTerminal(token) )
+        Polylist polylistToken = (Polylist)token;
+        if( polylistToken.length() == 2 && polylistToken.first().equals("share"))
           {
-            accumulateTerminal(((Polylist) token).first());
+            return true;
           }
-        else
-          {
-            accumulateTerminal(token);
-          }
-
-        if( stack.isEmpty() || numSlotsToFill <= 0 )
-          {
-            return stack;
-          }
-
-        token = stack.first();
-        stack = stack.rest();
       }
-    
-    // token is a non-terminal
-     
+    return false;
+}
+
+private boolean isUnShare(Object token) 
+{
+    if( token instanceof Polylist )
+      {
+        Polylist polylistToken = (Polylist)token;
+        if( polylistToken.length() == 2 && polylistToken.first().equals("unshare"))
+          {
+            return true;
+          }
+      }
+    return false;
+}
+
+Polylist cache = Polylist.nil;
+
+Polylist drop(Polylist aList, Object find)
+{
+    if( aList.isEmpty() )
+      {
+        return aList;
+      }
+    Polylist firstList = (Polylist)aList.first();
+    if( firstList.first().equals(find) )
+      {
+        return aList.rest();
+      }
+    return drop(aList.rest(), find).cons(firstList);
+}
+
+public Polylist expandNonTerminal(Polylist token) throws RuleApplicationException
+{
+    boolean shareable = false;
+    if( isShare(token) || isUnShare(token) )
+      {
+        if( isShare(token) )
+          {
+          shareable = true;          
+          }
+        boolean unshare = isUnShare(token);
+        token = ((Polylist)token).rest(); // leave as a list
+        Object find = token.first();
+        Polylist found = cache.assoc(find);
+
+        if( found != null )
+          {
+            if( unshare )
+              {
+                cache = drop(cache, find);
+                //System.out.println("unsharing " + find + " leaving shareable " + cache);
+                if( cache.isEmpty() )
+                  {
+                    //System.out.println();
+                  }
+              }
+            else
+              {
+              //System.out.println("shared " + found);               
+              }
+            return found.rest();
+          }
+      }
     //System.out.println("token = " + token);
-    ArrayList<WeightedRule> ruleList = new ArrayList<WeightedRule>();
-    ArrayList<WeightedRule> baseList = new ArrayList<WeightedRule>();
+    ArrayList<WeightedRule> ruleList = new ArrayList<>();
+    ArrayList<WeightedRule> baseList = new ArrayList<>();
 
     // Now search through and find all rules that apply to the given start lhs.
     // Note that a start lhs can be a polylist.
@@ -556,21 +594,74 @@ public Polylist applyRules(Polylist stack) throws RuleApplicationException
     
     if( ruleToUse != null )
       {
-        if( traceLevel > 1 )
-          {
-          showFrontier(stack.cons(token));
-          } 
         if( traceLevel > 0 )
           {
           System.out.println(ruleToUse);
           System.out.println();
           }
-
-      stack = ruleToUse.addToGen(stack);
+      Polylist expansion = ruleToUse.rhs;
+      if( shareable )
+        {
+        Polylist newCacheItem = ((Polylist)token).append(expansion);
+        cache = cache.cons(newCacheItem);
+        //System.out.println("sharing " + newCacheItem + " giving shareable " + cache);
+        }
+      return expansion;
       }
     }
+return null;    
+}
+        
+/**
+ * Pop tokens off the stack stack. Any terminal tokens are pushed onto
+ * accumulator. Rules are applied to non-terminals.
+     * @param stack
+     * @return 
+     * @throws imp.lickgen.RuleApplicationException
+ */
+public Polylist applyRules(Polylist stack) throws RuleApplicationException
+  {
+    Object token = stack.first();
+    stack = stack.rest();
 
-    return stack; // throw new RuleApplicationException("applyRules, no such rule for " + stack);
+    // Accumulate any terminal values at the beginning of stack.
+
+    while( numSlotsToFill > 0 && isTerminal(token) )
+      {
+        if( isWrappedTerminal(token) )
+          {
+            accumulateTerminal(((Polylist) token).first());
+          }
+        else
+          {
+            accumulateTerminal(token);
+          }
+
+        if( stack.isEmpty() || numSlotsToFill <= 0 )
+          {
+            return stack;
+          }
+
+        token = stack.first();
+        stack = stack.rest();
+      }
+    
+    // token is a non-terminal
+    if( !(token instanceof Polylist ) )
+      {
+        token = Polylist.list(token);
+      }
+    Polylist expansion = expandNonTerminal((Polylist)token);
+    //System.out.println("expansion of " + token + " =  " + expansion);
+    //cache = Polylist.nil; // empty cache for this rhs
+
+    if( expansion == null )
+      {
+        return stack;
+      }
+    stack = expansion.append(stack);
+    //System.out.println("stack = " + stack);
+    return stack;
   }
 
 private void showFrontier(Polylist gen)
