@@ -7964,6 +7964,8 @@ private void openStyleMixer()
         textualEditor = new StyleTextualEditor(this, false);
         textualEditor.setLocationRelativeTo(this);
         textualEditor.setSize(leadsheetEditorDimension);
+        textualEditor.setTitle("Style Editor for " + styleName);
+        WindowRegistry.registerWindow(textualEditor);
         textualEditor.fillEditor();
         textualEditor.setVisible(true);
     }//GEN-LAST:event_textualEditorMIActionPerformed
