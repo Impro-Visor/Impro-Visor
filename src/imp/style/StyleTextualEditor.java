@@ -97,43 +97,13 @@ public class StyleTextualEditor extends javax.swing.JDialog implements BasicEdit
 
     private void editorToSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editorToSourceButtonActionPerformed
 
-           // Get the contents of the edit window.
-        String contents = sourceEditor.getText();
+        String contents = sourceEditor.getText(); // Get the contents of the edit window.
         
+        parent.reset(); // Clear the GUI StyleEditor
         
-        // Parse into individual items ("rules").
-        Polylist rules = Notate.parseListFromString(contents);
-        System.out.println(rules);
-        if(rules.isEmpty())
-            return;
-        
-        // Add the rules back as style specifications.
-        while( rules.nonEmpty() ) {
-            if(rules.first() instanceof Polylist)
-                Advisor.addUserRule((Polylist)rules.first());
-            rules = rules.rest();
-        }
-        
-       setContents(rules.toString());
-       stringToFile(contents); 
-  
-   
-   // saves the contentsStyle to savedstyle variable in the style editor
-   //to possibly be used somewhere in savedstyle?
-        //FIX parent.setSavedStyle(contentsFile);
-
+        parent.loadFromString(contents);  // Have the StyleEditor read the contents
     }//GEN-LAST:event_editorToSourceButtonActionPerformed
  
-    private void setContents(String str)
-    {
-        contents = str;
-    }
-    
-     private String getContents()
-    {
-        return contents;
-    }
-    
     public void fillEditor()
     {
         
@@ -144,15 +114,7 @@ public class StyleTextualEditor extends javax.swing.JDialog implements BasicEdit
             out.close();
         } catch( Exception e ) {}
         setSize(600, 2000);
-        setText(writer.toString());
- //cm.execute(new StylesToEditorCommand(this));
-          
-//        }
-//    if( firstTime )
-//      {
-//      sourceEditor.moveCaretPosition(0);
-//      firstTime = false;
-      
+        setText(writer.toString());   
     }
     
     private void stringToFile(String str) {

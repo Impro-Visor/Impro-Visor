@@ -1609,6 +1609,7 @@ public void updateAllDrumPatterns(String name, String rules)
   /**
    *
    * Reads file, parses style, and changes the three patterns of a style into objects expected in the styleTable.
+   * @param file
    */
   public void loadFromFile(File file)
     {
@@ -1620,23 +1621,35 @@ public void updateAllDrumPatterns(String name, String rules)
 
     // Parse style.
     String s = OpenLeadsheetCommand.fileToString(file);
-    // The parens that open and close a style need to be removed so that the 
-    // polylist parses correctly.  The parens are included in the file 
-    // to maintain backwards compatability with the Style Textual Editor.
     
     if( s == null )
       {
         ErrorLog.log(ErrorLog.WARNING, "Unable to open style file: " + file.getName());
         return;
       }
+        
+    savedStyle = file;
+    ImproVisor.setRecentStyleFile(file);
+    loadFromString(s);
     
+    styleName = file.getName();
+    }
+  
+    /**
+   *
+   * Reads file, parses style, and changes the three patterns of a style into objects expected in the styleTable.
+     * @param s
+   */
+  public void loadFromString(String s)
+    {
+    // The parens that open and close a style need to be removed so that the 
+    // polylist parses correctly.  The parens are included in the file 
+    // to maintain backwards compatability with the Style Textual Editor.
+      
     if( s.length() < 1 )
       {
         return; // To escape possible exception with s.substring below
       }
-    
-    savedStyle = file;
-    ImproVisor.setRecentStyleFile(file);
     
     s = s.substring(1, s.length() - 1);
     Style style = Style.makeStyle(Notate.parseListFromString(s));
@@ -1659,15 +1672,11 @@ public void updateAllDrumPatterns(String name, String rules)
     loadAttributes(style);
 
     // ... into this kind of patterns.
-    ArrayList<RepresentativeDrumRules.DrumPattern> drumP =
-            new ArrayList<RepresentativeDrumRules.DrumPattern>();
+    ArrayList<RepresentativeDrumRules.DrumPattern> drumP = new ArrayList<>();
     
-    ArrayList<RepresentativeBassRules.BassPattern> bassP =
-            new ArrayList<RepresentativeBassRules.BassPattern>();
+    ArrayList<RepresentativeBassRules.BassPattern> bassP = new ArrayList<>();
     
-    ArrayList<RepresentativeChordRules.ChordPattern> chordP =
-            new ArrayList<RepresentativeChordRules.ChordPattern>();
-
+    ArrayList<RepresentativeChordRules.ChordPattern> chordP = new ArrayList<>();
 
     // Change drums, which use a Polylist notation that must be disected for the table.
     
@@ -1767,10 +1776,6 @@ public void updateAllDrumPatterns(String name, String rules)
     loadChordPatterns(chordP);
 
     loadAttributes(style);
-    
-    styleName = file.getName();
-    
-    System.out.println("inside load from file");
     
     changedSinceLastSave = false;
     }
@@ -7957,11 +7962,7 @@ private void openStyleMixer()
     private void textualEditorMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textualEditorMIActionPerformed
     {//GEN-HEADEREND:event_textualEditorMIActionPerformed
         textualEditor = new StyleTextualEditor(this, false);
-    System.out.println("textualEditor = " + textualEditor);
-//
         textualEditor.setLocationRelativeTo(this);
-//
-//           
         textualEditor.setSize(leadsheetEditorDimension);
         textualEditor.fillEditor();
         textualEditor.setVisible(true);
