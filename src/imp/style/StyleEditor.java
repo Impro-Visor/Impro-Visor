@@ -48,12 +48,14 @@ import imp.com.OpenLeadsheetCommand;
 import imp.data.*;
 import imp.gui.ExtractionEditor;
 import imp.gui.Notate;
+import static imp.gui.Notate.leadsheetEditorDimension;
 import imp.style.pianoroll.PianoRoll;
 import imp.style.pianoroll.PianoRollBar;
 import imp.style.pianoroll.PianoRollBassBar;
 import imp.style.pianoroll.PianoRollChordBar;
 import imp.style.pianoroll.PianoRollEndBlock;
 import imp.gui.RangeChooser;
+import imp.gui.StyleTextualEditor;
 import imp.gui.UnsavedChanges;
 import imp.gui.WindowMenuItem;
 import imp.gui.WindowRegistry;
@@ -91,6 +93,8 @@ public class StyleEditor
         extends javax.swing.JFrame
         implements ActionListener
   {
+  private StyleTextualEditor textualEditor;
+  
   static public String EMPTY = "";
   
   /** On-color for play/mute buttons */
@@ -1362,6 +1366,7 @@ public void updateAllDrumPatterns(String name, String rules)
       buffer.append(")");
       
       String styleResult = buffer.toString();
+      System.out.println("inside saveStyle " + buffer.toString());
       
       Polylist p = Notate.parseListFromString(styleResult);
       Polylist t = (Polylist)p.first();
@@ -1604,6 +1609,7 @@ public void updateAllDrumPatterns(String name, String rules)
   /**
    *
    * Reads file, parses style, and changes the three patterns of a style into objects expected in the styleTable.
+   * @param file
    */
   public void loadFromFile(File file)
     {
@@ -1615,23 +1621,35 @@ public void updateAllDrumPatterns(String name, String rules)
 
     // Parse style.
     String s = OpenLeadsheetCommand.fileToString(file);
-    // The parens that open and close a style need to be removed so that the 
-    // polylist parses correctly.  The parens are included in the file 
-    // to maintain backwards compatability with the Style Textual Editor.
     
     if( s == null )
       {
         ErrorLog.log(ErrorLog.WARNING, "Unable to open style file: " + file.getName());
         return;
       }
+        
+    savedStyle = file;
+    ImproVisor.setRecentStyleFile(file);
+    loadFromString(s);
     
+    styleName = file.getName();
+    }
+  
+    /**
+   *
+   * Reads file, parses style, and changes the three patterns of a style into objects expected in the styleTable.
+     * @param s
+   */
+  public void loadFromString(String s)
+    {
+    // The parens that open and close a style need to be removed so that the 
+    // polylist parses correctly.  The parens are included in the file 
+    // to maintain backwards compatability with the Style Textual Editor.
+      
     if( s.length() < 1 )
       {
         return; // To escape possible exception with s.substring below
       }
-    
-    savedStyle = file;
-    ImproVisor.setRecentStyleFile(file);
     
     s = s.substring(1, s.length() - 1);
     Style style = Style.makeStyle(Notate.parseListFromString(s));
@@ -1654,15 +1672,11 @@ public void updateAllDrumPatterns(String name, String rules)
     loadAttributes(style);
 
     // ... into this kind of patterns.
-    ArrayList<RepresentativeDrumRules.DrumPattern> drumP =
-            new ArrayList<RepresentativeDrumRules.DrumPattern>();
+    ArrayList<RepresentativeDrumRules.DrumPattern> drumP = new ArrayList<>();
     
-    ArrayList<RepresentativeBassRules.BassPattern> bassP =
-            new ArrayList<RepresentativeBassRules.BassPattern>();
+    ArrayList<RepresentativeBassRules.BassPattern> bassP = new ArrayList<>();
     
-    ArrayList<RepresentativeChordRules.ChordPattern> chordP =
-            new ArrayList<RepresentativeChordRules.ChordPattern>();
-
+    ArrayList<RepresentativeChordRules.ChordPattern> chordP = new ArrayList<>();
 
     // Change drums, which use a Polylist notation that must be disected for the table.
     
@@ -1762,8 +1776,6 @@ public void updateAllDrumPatterns(String name, String rules)
     loadChordPatterns(chordP);
 
     loadAttributes(style);
-    
-    styleName = file.getName();
     
     changedSinceLastSave = false;
     }
@@ -3613,6 +3625,7 @@ public void updateAllDrumPatterns(String name, String rules)
         custVoic = new javax.swing.JMenuItem();
         generateMI = new javax.swing.JMenuItem();
         pianoRollCheckBox = new javax.swing.JCheckBoxMenuItem();
+        textualEditorMI = new javax.swing.JMenuItem();
         trackWithPianoRoll = new javax.swing.JCheckBoxMenuItem();
         styHelp = new javax.swing.JMenu();
         styHelpMI = new javax.swing.JMenuItem();
@@ -6005,6 +6018,19 @@ public void updateAllDrumPatterns(String name, String rules)
         });
         styGenerate.add(pianoRollCheckBox);
 
+        textualEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        textualEditorMI.setText("Open Textual Editor");
+        textualEditorMI.setToolTipText("");
+        textualEditorMI.setActionCommand("Generate Style from MIDI");
+        textualEditorMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                textualEditorMIActionPerformed(evt);
+            }
+        });
+        styGenerate.add(textualEditorMI);
+
         trackWithPianoRoll.setText("Track Columns with Piano Roll when Piano Roll is open.\n");
         trackWithPianoRoll.setToolTipText("If the piano roll editor is open, change its column as spreadsheet columns are clicked.");
         trackWithPianoRoll.addActionListener(new java.awt.event.ActionListener()
@@ -7933,6 +7959,15 @@ private void openStyleMixer()
         voicingFilenameTFActionPerformed(null);
     }//GEN-LAST:event_voicingSettingsClicked
 
+    private void textualEditorMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textualEditorMIActionPerformed
+    {//GEN-HEADEREND:event_textualEditorMIActionPerformed
+        textualEditor = new StyleTextualEditor(this, false);
+        textualEditor.setLocationRelativeTo(this);
+        textualEditor.setSize(leadsheetEditorDimension);
+        textualEditor.fillEditor();
+        textualEditor.setVisible(true);
+    }//GEN-LAST:event_textualEditorMIActionPerformed
+
     public int[] getChordRange(){
         return range;
     }
@@ -8135,6 +8170,7 @@ public void unusePianoRoll()
     private javax.swing.JTextField styleTextField2;
     private javax.swing.JTextField swingTextField;
     private javax.swing.JComboBox tempoComboBox;
+    private javax.swing.JMenuItem textualEditorMI;
     private javax.swing.JPanel timeSigPanel;
     private javax.swing.JPanel toolbarPanel;
     private javax.swing.JCheckBoxMenuItem trackWithPianoRoll;
