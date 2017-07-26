@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Vector;
 import polya.Polylist;
 /**
@@ -219,7 +220,7 @@ public class CreateMotifGrammar {
         motifMelody.sort(mtc);
 
         // TODO: change window size and slide to come from user input
-        Polylist[] grammar = defineGrammarRules(motifMelody.toArray(new Motif[motifMelody.size()]),
+        Polylist[] grammar = definePatternGrammarRules(motifMelody.toArray(new Motif[motifMelody.size()]),
                                                                         windowSize,
                                                                         windowSlide);
         
@@ -323,18 +324,58 @@ public class CreateMotifGrammar {
      * Creates grammar rules for motivic order
      * @return An array of grammar rules in the form of Polylists
      */
-    private static Polylist[] defineGrammarRules(Motif[] motifMelody, int windowSize, int windowSlide){
+    private static Polylist[] definePatternGrammarRules(Motif[] motifMelody, int windowSize, int windowSlide){
         
         ArrayList<Polylist> rules = new ArrayList<>();
         
         Polylist temp_rule, temp_rhs;
         
+        int maxMotifID = -1;
+        
+        String baseString = "MotifClass_";
+        Polylist shared = Polylist.list("share");
+        Polylist unshared = Polylist.list("unshare");
+        
         for(int window = 0; window < (motifMelody.length - windowSize); window += windowSlide){
             
             temp_rhs = Polylist.list();
             
+            HashMap<String, Integer> motifs = new HashMap<>();
+            
+            
+            
             for(int i = 0; i < windowSize; i++){
-                temp_rhs = temp_rhs.addToEnd(motifMelody[window+i].getCluster());
+                String currentMotif = motifMelody[window+i].getCluster();
+                if(motifs.containsKey(currentMotif)){
+                    motifs.put(currentMotif, motifs.get(currentMotif)+1);
+                } else {
+                    motifs.put(currentMotif, 1);
+                }
+            }
+            
+            
+            
+            for(int i = 0; i < windowSize; i++){
+                String motifID = motifMelody[window+i].getCluster().split("_")[1];
+                
+                if(!motifID.equalsIgnoreCase("X")) {
+                    maxMotifID = maxMotifID < Integer.valueOf(motifID) ? Integer.valueOf(motifID) : maxMotifID;
+                }
+                
+                String key = motifMelody[window+i].getCluster();
+//                System.out.println("Motif: " + key + "\tMotif Int: " + motifID);
+                if(motifs.get(key) == 1){
+                    temp_rhs = temp_rhs.addToEnd(baseString.concat(motifID));
+                } else if(motifs.get(key) > 1) {
+                    motifs.put(key, -1*(motifs.get(key) - 1));
+                    temp_rhs = temp_rhs.addToEnd(shared.addToEnd(baseString.concat(motifID)));
+
+                } else if(motifs.get(key) < -1) {
+                    motifs.put(key, motifs.get(key) + 1);
+                    temp_rhs = temp_rhs.addToEnd(shared.addToEnd(baseString.concat(motifID)));
+                } else if(motifs.get(key) == -1) {
+                    temp_rhs = temp_rhs.addToEnd(unshared.addToEnd(baseString.concat(motifID)));
+                }
             }
             
             
@@ -343,6 +384,20 @@ public class CreateMotifGrammar {
             rules.add(temp_rule);
         }
 
+        
+        for(int i = 0; i <= maxMotifID; i++){
+            
+            Polylist lhs = Polylist.list("rule", Polylist.list(baseString.concat(String.format("%03d", i))));
+            Polylist rhs, fullRule;
+            for(int j = 0; j <= maxMotifID; j++){
+                rhs = Polylist.list("Motif_".concat(String.format("%03d", j)));
+                fullRule = lhs.addToEnd(rhs).addToEnd(DEFAULT_PROB);
+                rules.add(fullRule);
+            }
+            
+//            Polylist rule = Polylist.list("rule", Polylist.list(baseString.concat(String.format("%03d", i))), Polylist.list(), DEFAULT_PROB);
+        }
+        
         return rules.toArray(new Polylist[rules.size()]);
     }
     

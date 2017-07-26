@@ -6408,27 +6408,27 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
         double Y = Z*normMotifProb;
         motifProbability = Y;
         
-        System.err.println("Motif Probability: " + Y);
+//        System.err.println("Motif Probability: " + Y);
         
         
         String useMotifs = "UseMotif";
         
-        System.out.println("Grammar File Name: " + notate.getGrammarFileName());
+//        System.out.println("Grammar File Name: " + notate.getGrammarFileName());
         
         Grammar g = new Grammar(notate.getGrammarFileName());
         
-        System.out.println("About to load grammar");
+//        System.out.println("About to load grammar");
         g.loadGrammar(notate.getGrammarFileName());
         
-        System.out.println(g.getRules());
-        System.out.println("loaded grammar");
+//        System.out.println(g.getRules());
+//        System.out.println("loaded grammar");
         Polylist rules = g.getRules();
         Polylist finalRules = Polylist.nil;
         
         for(Polylist R = rules; R.nonEmpty(); R = R.rest()){
             
             if(((Polylist) R.first()).member(Polylist.list("P", "Y")) && ((Polylist) R.first()).member(Polylist.list(useMotifs))){
-                System.out.println("Made it into the if...");
+//                System.out.println("Made it into the if...");
                 R.setFirst(((Polylist) R.first()).replaceLast(Y));
             }
             
@@ -6437,9 +6437,9 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
         }
         
         g.saveGrammar(notate.getGrammarFileName());
-        System.out.println("saved grammar");
+//        System.out.println("saved grammar");
         notate.setGrammar(notate.getGrammarName());
-        System.out.println("reloaded grammar");
+//        System.out.println("reloaded grammar");
 
     }//GEN-LAST:event_motifnessGenerationSliderStateChanged
                                              
