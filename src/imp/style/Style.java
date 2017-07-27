@@ -367,6 +367,21 @@ public class Style
     return chordPatterns;
     }
 
+  public Polylist getInterpolations()
+  {
+      return interpolations;
+  }
+  
+  public Polylist getInterpolables()
+  {
+      return interpolables;
+  }
+  
+  public Polylist getSubs()
+  {
+      return substitutions;
+  }
+
   public int getDrumPatternDuration()
     {
     if( drumPatterns.size() > 0 )
@@ -1800,10 +1815,11 @@ private Polylist mapPC(Polylist results) {
         pc = new Chord((String)chords.first());
         pc.transpose(transposition);
         if (((String) targets.first()).equals("_")) {
-
-            if (leftbound.getRhythmValue() / 2 >= chosen.getMINSLOTS()) {
-                rhythmValue = leftbound.getRhythmValue() / 2;
-                leftbound.setRhythmValue(rhythmValue);
+            int leftRhythmVal = leftbound.getRhythmValue();
+            int dividor = chosen.getDivide().length() - 2;
+            if (leftRhythmVal / dividor >= chosen.getMINSLOTS()) {
+                rhythmValue = leftbound.getRhythmValue() / dividor;
+                leftbound.setRhythmValue(leftRhythmVal - rhythmValue);
                 pc.setRhythmValue(rhythmValue);
             } else {
                 return Polylist.list(leftbound, rightbound);
@@ -2027,9 +2043,9 @@ private Polylist mapPC(Polylist results) {
        
         results = mapPC(results);
         results = prepProgList(results, Polylist.nil);
-        System.out.println("results with just interpolations: " + results);
+        //System.out.println("results with just interpolations: " + results);
         results = extractSub(substituteChords(results), Polylist.nil).reverse();
-        System.out.println("subsresults: \n" + results);
+       // System.out.println("subsresults: \n" + results);
         
         ChordPart newChordPart = new ChordPart();
         //place these chords into a ChordPart

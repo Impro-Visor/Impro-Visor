@@ -35,6 +35,8 @@ public class Interpolant
 {
 Polylist chords;
 
+Polylist divide;
+
 float weight;
 
 int minslots;
@@ -43,39 +45,39 @@ public Interpolant() {
     
 }
 
-public Interpolant(Polylist chords, float weight, int minslots)
+public Interpolant(Polylist chords, Polylist divide, float weight, int minslots)
   {
        
        this.chords = chords;
+       this.divide = divide;
        this.weight = weight;
        this.minslots = minslots;
   }
 
 private static final String keyword[] =
   {
-  "chords", "weight", "min-duration"
+  "chords", "division", "weight", "min-duration"
   };
 
 // indices into the keyword array
 private static final int CHORD = 0;
 
-private static final int WEIGHTS = 1;
+private static final int DIVISION = 1;
 
-private static final int MIN_DURATION = 2;
+private static final int WEIGHTS = 2;
+
+private static final int MIN_DURATION = 3;
 
 public static Interpolant makeInterpolant(Polylist L) {
-  //   System.out.println("hello Intrp" + L);
    float problemchild = ((Number)L.second()).floatValue();
-    Interpolant interp =  new Interpolant((Polylist)L.first(),problemchild, (int)L.last());
-   // System.out.println("hello interp" + interp);
+    Interpolant interp =  new Interpolant((Polylist)L.first(), (Polylist)L.second(), problemchild, (int)L.last());
     return interp;
 }
 
 public static Interpolant makeInterpolantFromExp(Polylist L) {
     Polylist original = L;
-    //System.out.println("hello3 " + original);
     Interpolant interp = new Interpolant();
-
+    //System.out.println("got here and broke1 " + L);
     while( L.nonEmpty() )
     {
         Polylist item = (Polylist)L.first();
@@ -85,19 +87,35 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
     item = item.rest();
     switch( Leadsheet.lookup(dispatcher, keyword) )
       {
+        
       case CHORD:
         {
+            //System.out.println("got here and broke2 " + item);
            if( item == null || item.isEmpty() || item.first().equals("") )
            {
                interp.setError("No chords in interpolate expression");
                break;
            }
            else if (item.first() instanceof Polylist) {
-        //       System.out.println(item.first());
+        
                interp.setCHORDS((Polylist)item.first());
            }
            break;
         }
+        
+      case DIVISION:
+        {
+           if( item == null || item.isEmpty() || item.first().equals("") )
+           {
+               interp.setError("No specified division in interpolate expression");
+               break;
+           }
+           else if (item.first() instanceof Polylist) {
+        
+               interp.setDivide((Polylist)item.first());
+           }
+           break;
+        }  
           
       case WEIGHTS:
         {
@@ -123,7 +141,6 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
               
           interp.setMINSLOTS(Duration.getDuration("" + item.first()));
           
-        //System.out.println("pushAmount " + pushString + " = " + cp.pushAmount + " slots");
           }
         break;
         }
@@ -140,7 +157,7 @@ public static Interpolant makeInterpolantFromExp(Polylist L) {
 
 
 public Polylist makeInterpolantList() {
-    Polylist interpList = Polylist.list(chords, weight, minslots);
+    Polylist interpList = Polylist.list(chords, divide, weight, minslots);
     return interpList;
 }
 
@@ -151,6 +168,16 @@ public Polylist getCHORDS() {
 public void setCHORDS(Polylist CHORDS) {
     this.chords = CHORDS;
 }
+
+public Polylist getDivide() {
+    return divide;
+}
+
+public void setDivide(Polylist divide) {
+    this.divide = divide;
+}
+
+
 
 public float getWEIGHT() {
     return weight;
