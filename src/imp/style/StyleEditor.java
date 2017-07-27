@@ -55,7 +55,6 @@ import imp.style.pianoroll.PianoRollBassBar;
 import imp.style.pianoroll.PianoRollChordBar;
 import imp.style.pianoroll.PianoRollEndBlock;
 import imp.gui.RangeChooser;
-import imp.gui.StyleTextualEditor;
 import imp.gui.UnsavedChanges;
 import imp.gui.WindowMenuItem;
 import imp.gui.WindowRegistry;
@@ -1387,6 +1386,53 @@ public void updateAllDrumPatterns(String name, String rules)
       }
 
     styleName = name;
+    }
+
+  public String saveToString()
+    {
+        return saveToString(getStyleName());
+    }
+  
+  /**
+   * Saves the current style to file and updates the list of available styles 
+   * so that the new style is available in the Style Preferences dialog
+   * @param styleName
+   * @return 
+   */
+  
+  public String saveToString(String styleName)
+    {
+    MIDIBeast.newSave();
+      StringBuilder buffer = new StringBuilder();
+
+      buffer.append("(style\n");
+      buffer.append("\t(name ");
+      buffer.append(styleName);
+      buffer.append(")\n");
+
+      String attributes = getAttributes();
+      buffer.append(attributes);
+      //System.out.println("attributes: " + buffer);
+      
+      getDefinedRules(buffer);
+      //System.out.println(buffer);
+
+      if( isInstrumentIncluded(StyleTableModel.BASS_PATTERN_ROW) )
+        {
+        getBassPatterns(buffer);
+        }
+
+      getDrumPatterns(buffer);
+      //System.out.println(buffer);
+
+      if( isInstrumentIncluded(StyleTableModel.CHORD_PATTERN_ROW) )
+        {
+        getChordPatterns(buffer);
+        }
+
+      buffer.append(")");
+
+      return buffer.toString();
     }
 
   
@@ -6018,7 +6064,6 @@ public void updateAllDrumPatterns(String name, String rules)
         });
         styGenerate.add(pianoRollCheckBox);
 
-        textualEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         textualEditorMI.setText("Open Textual Editor");
         textualEditorMI.setToolTipText("");
         textualEditorMI.setActionCommand("Generate Style from MIDI");
