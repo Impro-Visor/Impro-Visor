@@ -213,6 +213,12 @@ public class Style
   
   private Polylist substitutions = Polylist.nil;
   
+  private Polylist definedInterpolations = Polylist.nil;
+  
+  private Polylist definedInterpolables = Polylist.nil;
+  
+  private Polylist definedSubstitutions = Polylist.nil;
+  
   /**
    * HashMaps for each of the different instruments to save the rules defined
    * outside the patterns
@@ -379,7 +385,22 @@ public class Style
   
   public Polylist getSubs()
   {
-      return substitutions;
+      return definedSubstitutions;
+  }
+  
+  public Polylist getDefinedInterpolations()
+  {
+      return definedInterpolations;
+  }
+  
+  public Polylist getDefinedInterpolables()
+  {
+      return definedInterpolables;
+  }
+  
+  public Polylist getDefinedSubs()
+  {
+      return definedSubstitutions;
   }
 
   public int getDrumPatternDuration()
@@ -692,21 +713,21 @@ public class Style
             case INTERPOLATE:
             {
                 Interpolant interpolant = Interpolant.makeInterpolantFromExp(item);
-               
+                style.definedInterpolations = style.definedInterpolations.cons(item.cons("interpolate "));
                 style.interpolations = style.interpolations.cons(interpolant);
                 break;
             }
             case INTERPOLABLE:
             {
                 Interpolable interpolable = Interpolable.makeInterpolableFromExp(item);
-               
+                style.definedInterpolables = style.definedInterpolables.cons(item.cons("interpolable "));
                 style.interpolables = style.interpolables.cons(interpolable);
                 break;
             }
             case SUBSTITUTE:
             {
                 Substitution sub = Substitution.makeSubstitutionFromExp(item);
-               
+                style.definedSubstitutions = style.definedSubstitutions.cons(item.cons("substitute "));
                 style.substitutions = style.substitutions.cons(sub);
                 break;
             }
