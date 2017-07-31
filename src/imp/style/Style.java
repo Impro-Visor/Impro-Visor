@@ -2083,8 +2083,8 @@ public long render(MidiSequence seq, // called from SectionInfo
     // i iterates over the Chords in the ChordPart.
     ChordPart chordPart2 = createInterpolatedChordPart(chordPart);
     //chordPart2.fixDuplicateChords(chordPart2, seq.getResolution());
-    System.out.println("\n chord part is: \n" + chordPart);
-    System.out.println("\nintrpolated chord part is: \n" + chordPart2);
+    //System.out.println("\n chord part is: \n" + chordPart);
+    //System.out.println("\nintrpolated chord part is: \n" + chordPart2);
     
    // imp.data.Score newScore = new imp.data.Score(chordPart2.size());
 

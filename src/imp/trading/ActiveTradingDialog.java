@@ -824,18 +824,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         activeTrading.stopTrading(); 
         tradingNow = false;
         notate.setNotToTrade();
-        
-        
 
         
-        System.out.println("\nstopping trading, about to show rhythmSelectorDialog.........");
-        
-        
+        //this.setVisible(false);
 
-        
-        this.setVisible(false);
-        
-        System.out.println("\nsetVisible to true for rhythmSelectorDialog.........");
     }
     
     private void updateProcessTimeText() {

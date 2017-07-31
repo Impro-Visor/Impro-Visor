@@ -2372,7 +2372,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         windowParametersPanel.add(useAbstractWindowsCheckbox, gridBagConstraints);
 
         userRhythmCheckBox.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        userRhythmCheckBox.setText("Use My Rhythms");
+        userRhythmCheckBox.setText("Use Saved Melodies");
         userRhythmCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         userRhythmCheckBox.setPreferredSize(new java.awt.Dimension(400, 30));
         userRhythmCheckBox.addActionListener(new java.awt.event.ActionListener() {

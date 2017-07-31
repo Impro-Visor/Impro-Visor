@@ -2307,7 +2307,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
 {
     int gcd = gcd(quanta[0], quanta[1]);
     
-    //System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
+    System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
     
     MelodyPart result = this; // will be replaced if part is non-empty
     
@@ -2324,7 +2324,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
          while( it.hasNext() )
            {
              Note thisNote = (Note)it.next();
-             //System.out.println("inputSlot = " + inputSlot + ", outputSlot = " + outputSlot + ", thisNote = " + thisNote);
+             System.out.println("inputSlot = " + inputSlot + ", outputSlot = " + outputSlot + ", thisNote = " + thisNote);
              if( !thisNote.isRest() )
                {
                  // thisNote is an actual Note, not a Rest.
@@ -2340,7 +2340,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
                  if( inputSlot < outputSlot )
                    {
                      // Lose thisNote
-                     //System.out.println("note lost at beat " + (inputSlot/BEAT) + ": " + thisNote.toLeadsheet());
+                     System.out.println("note lost at beat " + (inputSlot/BEAT) + ": " + thisNote.toLeadsheet());
                      notesLost++;
                    }
                  else
@@ -2363,7 +2363,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
                      int noteDuration = quantizeUp(thisNote.getRhythmValue(), gcd);
                      newNote.setRhythmValue(noteDuration);
                      result.addNote(newNote);
-                     //System.out.println("placing at " + outputSlot + " " + newNote);
+                     System.out.println("placing at " + outputSlot + " " + newNote);
                      outputSlot += noteDuration;
                      endOfLastPlacement = outputSlot;
                    }
@@ -2371,8 +2371,8 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
             inputSlot += thisNote.getRhythmValue();
            } // while
       }
-   //System.out.println("quantized melody: " + result);
-   //System.out.println(notesLost + " notes lost in quantization");
+   System.out.println("quantized melody: " + result);
+   System.out.println(notesLost + " notes lost in quantization");
 
     // Handle converting swing-eighth situations to appear as normal eights
     // including when second third of triplet is sixteenths etc.

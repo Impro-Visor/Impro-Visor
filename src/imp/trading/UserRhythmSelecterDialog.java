@@ -151,32 +151,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      
         createDialog(userRhythms);
         
-//        addButton.addActionListener(new ActionListener(){
-//          public void actionPerformed(ActionEvent e){
-//              addSelectedRuleStrings();
-//              try {
-//                  rewriteRhythmClustersToFile();
-//              } catch (IOException ex) {
-//                  Logger.getLogger(UserRhythmSelecterDialog.class.getName()).log(Level.SEVERE, null, ex);
-//              }
-//              refreshDialog();
-//          }  
-//        
-//        } );
-        
-//        deleteButton.addActionListener(new ActionListener(){
-//          public void actionPerformed(ActionEvent e){
-//              ArrayList<Polylist> deletedRhythms = removeRhythms();
-//              rhythmsToDelete.addAll(deletedRhythms);
-//              System.out.println("\n\nrefreshing editor pane...\n\n");
-//              refreshEditorPane();
-//                
-//              
-//          }  
-//
-//
-//        
-//        } );
+
         
         this.addWindowListener(new java.awt.event.WindowAdapter() {
                @Override
@@ -288,15 +263,11 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
             System.out.println("score to grade from: "+score);
             System.out.println("numTrades: "+ numTrades);
             if (score > CorrectRhythmTRM.A * numTrades){
-                grade = "A";
+                grade = "Amazing!!!!";
             }else if(score > CorrectRhythmTRM.B *numTrades){
-                grade = "B";
-            }else if(score > CorrectRhythmTRM.C *numTrades){
-                grade = "C";
-            }else if(score > CorrectRhythmTRM.D *numTrades){
-                grade = "D";
+                grade = "Great";
             }else{
-                grade = "F";
+                grade = "Needs Work";
             }
             gradeLabel.setText(introString+grade);
     
