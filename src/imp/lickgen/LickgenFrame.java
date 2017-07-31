@@ -368,6 +368,8 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         useRelativeBricksCheckbox = new javax.swing.JCheckBox();
         useAbstractBricksCheckbox = new javax.swing.JCheckBox();
         useAbstractWindowsCheckbox = new javax.swing.JCheckBox();
+        userRhythmCheckBox = new javax.swing.JCheckBox();
+        rhythmClusterCheckbox = new javax.swing.JCheckBox();
         motifParametersPanel = new javax.swing.JPanel();
         useMotifsCheckbox = new javax.swing.JCheckBox();
         motifnessSlider = new javax.swing.JSlider();
@@ -376,8 +378,6 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         toGrammarBtn = new javax.swing.JButton();
         testGeneration = new javax.swing.JButton();
         rhythmClusterPanel = new javax.swing.JPanel();
-        userRhythmCheckBox = new javax.swing.JCheckBox();
-        rhythmClusterCheckbox = new javax.swing.JCheckBox();
         neuralNetworkPanel = new javax.swing.JPanel();
         nnetOutputPanel = new javax.swing.JPanel();
         nnetScrollPane = new javax.swing.JScrollPane();
@@ -1230,7 +1230,6 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         motifnessGenerationPanel.setLayout(new java.awt.GridBagLayout());
 
         motifnessGenerationSlider.setToolTipText("Amount of motifs to incorporate into solo");
-        motifnessGenerationSlider.setValue(50);
         motifnessGenerationSlider.setMinimumSize(new java.awt.Dimension(150, 48));
         motifnessGenerationSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -2372,6 +2371,37 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         windowParametersPanel.add(useAbstractWindowsCheckbox, gridBagConstraints);
 
+        userRhythmCheckBox.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        userRhythmCheckBox.setText("Use My Rhythms");
+        userRhythmCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        userRhythmCheckBox.setPreferredSize(new java.awt.Dimension(400, 30));
+        userRhythmCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userRhythmCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        windowParametersPanel.add(userRhythmCheckBox, gridBagConstraints);
+
+        rhythmClusterCheckbox.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        rhythmClusterCheckbox.setText("Generate Rhythm Cluster");
+        rhythmClusterCheckbox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        rhythmClusterCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rhythmClusterCheckboxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        windowParametersPanel.add(rhythmClusterCheckbox, gridBagConstraints);
+
         motifParametersPanel.setBackground(new java.awt.Color(255, 204, 102));
         motifParametersPanel.setOpaque(false);
         motifParametersPanel.setLayout(new java.awt.GridBagLayout());
@@ -2525,23 +2555,6 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         grammarLearningPanel.add(testGeneration, gridBagConstraints);
 
         rhythmClusterPanel.setBackground(new java.awt.Color(255, 255, 0));
-
-        userRhythmCheckBox.setText("Use My Rhythms");
-        userRhythmCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userRhythmCheckBoxActionPerformed(evt);
-            }
-        });
-        rhythmClusterPanel.add(userRhythmCheckBox);
-
-        rhythmClusterCheckbox.setText("Generate Rhythm Cluster");
-        rhythmClusterCheckbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rhythmClusterCheckboxActionPerformed(evt);
-            }
-        });
-        rhythmClusterPanel.add(rhythmClusterCheckbox);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
