@@ -132,8 +132,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         swingCheckBox = new javax.swing.JCheckBox();
         modePanel = new javax.swing.JPanel();
         modeStatus = new javax.swing.JLabel();
-        grammarStatus = new javax.swing.JLabel();
         transformStatus = new javax.swing.JLabel();
+        grammarStatusButton = new javax.swing.JButton();
         controlsPanel = new javax.swing.JPanel();
         processTimeSelector = new javax.swing.JTextField();
         tempoPanel = new javax.swing.JPanel();
@@ -168,10 +168,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         setTitle("Impro-Visor Active Trading");
         setBackground(new java.awt.Color(204, 204, 255));
-        setBounds(new java.awt.Rectangle(25, 0, 800, 200));
+        setBounds(new java.awt.Rectangle(25, 0, 850, 220));
         setLocation(new java.awt.Point(25, 0));
-        setMinimumSize(new java.awt.Dimension(800, 200));
-        setSize(new java.awt.Dimension(800, 200));
+        setMinimumSize(new java.awt.Dimension(850, 220));
+        setPreferredSize(new java.awt.Dimension(850, 220));
+        setSize(new java.awt.Dimension(850, 220));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 activeTradingShown(evt);
@@ -191,9 +192,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         leadSelectors.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        leadSelectors.setMaximumSize(new java.awt.Dimension(200, 100));
-        leadSelectors.setMinimumSize(new java.awt.Dimension(200, 100));
-        leadSelectors.setPreferredSize(new java.awt.Dimension(200, 100));
+        leadSelectors.setMaximumSize(new java.awt.Dimension(200, 140));
+        leadSelectors.setMinimumSize(new java.awt.Dimension(200, 140));
+        leadSelectors.setPreferredSize(new java.awt.Dimension(200, 140));
         leadSelectors.setLayout(new java.awt.GridBagLayout());
 
         leadingSelector.add(userFirstButton);
@@ -264,9 +265,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         getContentPane().add(leadSelectors, gridBagConstraints);
 
         modePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        modePanel.setMaximumSize(new java.awt.Dimension(200, 100));
-        modePanel.setMinimumSize(new java.awt.Dimension(200, 100));
-        modePanel.setPreferredSize(new java.awt.Dimension(200, 100));
+        modePanel.setMaximumSize(new java.awt.Dimension(200, 140));
+        modePanel.setMinimumSize(new java.awt.Dimension(200, 140));
+        modePanel.setPreferredSize(new java.awt.Dimension(200, 140));
         modePanel.setLayout(new java.awt.GridBagLayout());
 
         modeStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -281,18 +282,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         modePanel.add(modeStatus, gridBagConstraints);
 
-        grammarStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        grammarStatus.setText("Grammar: ___    ");
-        grammarStatus.setMaximumSize(new java.awt.Dimension(200, 30));
-        grammarStatus.setMinimumSize(new java.awt.Dimension(200, 30));
-        grammarStatus.setPreferredSize(new java.awt.Dimension(200, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
-        modePanel.add(grammarStatus, gridBagConstraints);
-
         transformStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         transformStatus.setText("Transform: ___ ");
         transformStatus.setMaximumSize(new java.awt.Dimension(200, 30));
@@ -300,10 +289,28 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         transformStatus.setPreferredSize(new java.awt.Dimension(200, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         modePanel.add(transformStatus, gridBagConstraints);
+
+        grammarStatusButton.setBackground(new java.awt.Color(255, 255, 255));
+        grammarStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        grammarStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        grammarStatusButton.setBounds(new java.awt.Rectangle(0, 0, 170, 45));
+        grammarStatusButton.setMaximumSize(new java.awt.Dimension(170, 45));
+        grammarStatusButton.setMinimumSize(new java.awt.Dimension(170, 45));
+        grammarStatusButton.setPreferredSize(new java.awt.Dimension(210, 45));
+        grammarStatusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                grammarStatusButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        modePanel.add(grammarStatusButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -744,6 +751,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private void MemorizeMotifsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MemorizeMotifsMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MemorizeMotifsMenuItemActionPerformed
+
+    private void grammarStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grammarStatusButtonActionPerformed
+        notate.openGrammarMenuDialog();
+    }//GEN-LAST:event_grammarStatusButtonActionPerformed
                                          
 
     private void tradeGrammarMenuActionPerformed(java.awt.event.ActionEvent evt) {                                                 
@@ -781,8 +792,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         modeStatus.setText("Mode: " + activeTrading.getTradeModeName());
         transformStatus.setText("Transform: " + activeTrading.getMusician());
         String gramm = activeTrading.getGrammar();
-        tradeGrammarMenu.setText(gramm);
-        grammarStatus.setText("Grammar: " + gramm);
+        tradeGrammarMenu.setText("Grammar:" + gramm);
+        grammarStatusButton.setText("" + gramm);
     }
 
     public void tradingDialogOpened() {
@@ -846,7 +857,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         TradingResponseMode tradeMode;
         //make these visible in case one of the trade mode options disabled them
         tradeLengthSpinner.setVisible(true);
-        grammarStatus.setVisible(true);
+        grammarStatusButton.setVisible(true);
         transformStatus.setVisible(true);
         userFirstButton.setVisible(true);
         improvisorFirstButton.setVisible(true);
@@ -878,7 +889,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
                 tradeMode = new AutoencoderTRM(newMode); 
                 //these parameters aren't used for Autoenoder trade, so make them invisible
                 tradeLengthSpinner.setVisible(false);
-                grammarStatus.setVisible(false);
+                grammarStatusButton.setVisible(false);
                 transformStatus.setVisible(false);
                 break;
 //            case "Stream Repeat":
@@ -933,7 +944,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
    
         System.out.println("rhythm cluster name: " + notate.getRhythmClusterName());
         
-        grammarStatus.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
+        grammarStatusButton.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
         
         System.out.println("setting text for trade grammar menu to rhythmCluster....");
         tradeGrammarMenu.setText("RhythmCluster");
@@ -1010,12 +1021,12 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     public void refreshSelectedRhythmCluster(String gram) {
         //tradeGrammarMenu.setText(gram);
-        grammarStatus.setText("RhythmCluster: " + notate.getRhythmClusterName());
+        grammarStatusButton.setText("RhythmCluster: " + notate.getRhythmClusterName());
     }
 
     public void refreshSelectedGrammar(String gram) {
         tradeGrammarMenu.setText(gram);
-        grammarStatus.setText("Grammar: " + activeTrading.getGrammar());
+        grammarStatusButton.setText("" + activeTrading.getGrammar());
     }
 
     private void populateMusicianList() {
@@ -1147,7 +1158,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JPanel controlsPanel;
     private javax.swing.JCheckBox countToggle;
     private javax.swing.ButtonGroup grammarGroup;
-    private javax.swing.JLabel grammarStatus;
+    private javax.swing.JButton grammarStatusButton;
     private javax.swing.JRadioButton improvisorFirstButton;
     private javax.swing.JPanel leadSelectors;
     private javax.swing.ButtonGroup leadingSelector;
