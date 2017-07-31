@@ -15166,7 +15166,7 @@ public void setBars(int bars)
     sectionInfo.setSize(bars * measureLength);
   }
 
-private void adjustLayout(Polylist layout)
+public void adjustLayout(Polylist layout)
   {
     // System.out.println("adjustLayout to " + layout);
 

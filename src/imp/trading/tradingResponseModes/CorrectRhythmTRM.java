@@ -24,11 +24,11 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
     private int score;
     private static final int FURTHEST_RADIUS = 6;
     
-    public static final double A = 4.0;
-    public static final double B = 3.0;
-    public static final double C = 2.0;
-//    public static final double D = 2.0;
-//    public static final double F = 1.0;
+    public static final double A = 5;
+    public static final double B = 4;
+    public static final double C = 3;
+    public static final double D = 2;
+    public static final double F = 1;
     
     //private DataPoint goalDataPoint;
     private int numTargetDataPoints;

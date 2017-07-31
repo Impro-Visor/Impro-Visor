@@ -303,7 +303,7 @@ public class Cluster implements Serializable{
         return rhythmPL;
     }
 
-    public Polylist selectivelyGetClusterMembersRuleStringsPolylist(ArrayList<Polylist> excludeList){
+    public Polylist selectivelyGetClusterMembersRuleStringsPolylist(ArrayList<String> excludeList){
         Polylist ruleStrings = Polylist.list("ruleStringList");
 
   

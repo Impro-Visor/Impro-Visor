@@ -167,7 +167,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         String fileNameEnd = "lastUsedMyRhythm.cluster";
         String fileName = ImproVisor.getRhythmClusterDirectory().toString() + "/" + fileNameEnd;
         try{
-        CreateGrammar.selectiveClusterToFile(clusters, fileName, (new ArrayList<Polylist>()), windowSize,
+        CreateGrammar.selectiveClusterToFile(clusters, fileName, (new ArrayList<String>()), windowSize,
                     maxMetricValues, minMetricValues);
         }catch(IOException e){
             System.out.println("could not write to file");

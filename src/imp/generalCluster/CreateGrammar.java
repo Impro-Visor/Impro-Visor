@@ -156,7 +156,7 @@ public class CreateGrammar implements imp.Constants {
         if(createClusterFile){
             String fileName = getClusterOutputFile(outFile);//also makes file&directory if it does not yet exist
             fileName = ImproVisor.getRhythmClusterDirectory().toString() + "/" + fileName;
-            selectiveClusterToFile(clusters, fileName, (new ArrayList<Polylist>()), clusterWindowSize,
+            selectiveClusterToFile(clusters, fileName, (new ArrayList<String>()), clusterWindowSize,
                     maxMetricValues, minMetricValues);
         }
             
@@ -332,7 +332,7 @@ public class CreateGrammar implements imp.Constants {
     public static void selectiveClusterToFile(
                                             Cluster[] clusters, 
                                             String outFile, 
-                                            ArrayList<Polylist> excludeList, 
+                                            ArrayList<String> excludeList, 
                                             int windowSize, 
                                             Double[] maxMetricVals, 
                                             Double[] minMetricVals) throws IOException{

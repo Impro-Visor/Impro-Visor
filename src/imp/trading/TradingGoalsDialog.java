@@ -1,30 +1,49 @@
 package imp.trading;
  
+import static imp.Constants.DEFAULT_BEATS_PER_BAR;
 import imp.com.CommandManager;
+import imp.data.Chord;
+import imp.data.ChordPart;
 import imp.data.Key;
+import imp.data.LeadsheetImageListModel;
 import imp.data.MelodyPart;
 import imp.data.NoteSymbol;
 import imp.data.RhythmCluster;
+import imp.data.RhythmListCellRenderer;
+import imp.data.RhythmSelecterEntry;
+import imp.data.Score;
+import imp.data.Transposition;
 import imp.data.advice.AdviceForMelody;
+import static imp.generalCluster.CreateGrammar.SEG_LENGTH;
 import imp.generalCluster.DataPoint;
 import imp.gui.Notate;
+import static imp.gui.Notate.DEFAULT_BARS_PER_PART;
 import static imp.trading.UserRhythmSelecterDialog.readInRuleStringsFromFile;
 import imp.trading.tradingResponseModes.CorrectRhythmTRM;
 import imp.trading.tradingResponseModes.RhythmHelperTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
+import imp.util.Preferences;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -65,7 +84,9 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
     
     JPanel framePanel;
     
+    private Notate rhythmNotate;
    
+    private JList goalsList;
    
    
     /**
@@ -79,11 +100,13 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
         }
            
         rhythmHelperTRM = (CorrectRhythmTRM) trm;
+        this.notate  = rhythmHelperTRM.getNotate();
+        rhythmNotate = getRhythmNotate();
        
        
         //this.windowSize = rhythmHelperTRM.getWindowSizeOfCluster();
         this.rhythmClusters = rhythmHelperTRM.getRhythmClusters();
-        this.notate  = rhythmHelperTRM.getNotate();
+        
         
         clusterRuleStrings = getClusterRuleStrings(rhythmClusters);
         UserGoalsScrollPane = new JScrollPane();
@@ -101,6 +124,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
                 System.out.println("selectedRuleStrings: "+selectedRuleStrings);
                 rhythmHelperTRM.setRuleStringsToEmulate(selectedRuleStrings);
                 activeTrading.startTradingFromTradingGoalsDialog();
+                rhythmNotate.dispose();
                 dispose();
               }
           }  
@@ -113,11 +137,9 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
     
     private ArrayList<Polylist> getSelectedRuleStrings(){
         ArrayList<Polylist> selectedRuleStrings = new ArrayList<Polylist>();
-        for(int i = 0; i < checkBoxArray.size(); i++){
-            if(checkBoxArray.get(i).isSelected()){
-                selectedRuleStrings.add(clusterRuleStrings.get(i));
-                System.out.println("clusterRuleStrings["+i+"]"+ clusterRuleStrings.get(i));
-            }
+        List<RhythmSelecterEntry> selectedValues = goalsList.getSelectedValuesList();
+        for(int i = 0; i < selectedValues.size(); i++){
+            selectedRuleStrings.add(selectedValues.get(i).getRuleStringPL());
         }
         return selectedRuleStrings;
     }
@@ -136,8 +158,8 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
         framePanel.add(addLabel);
         
         //Create and add scroll pane with user rhythms to dialog
-        JPanel goalsPanel = getGoalsPanel();
-        UserGoalsScrollPane.setViewportView(goalsPanel);
+        goalsList = getGoalsList();
+        UserGoalsScrollPane.setViewportView(goalsList);
         framePanel.add(UserGoalsScrollPane);
         this.add(framePanel);
 
@@ -147,47 +169,6 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
          
         ButtonPanel.add(tradeButton);
         framePanel.add(ButtonPanel);
-//        
-//        //Create The User Rhythm Editor panel
-//        JPanel editorPanel = new JPanel();
-//        editorPanel.setLayout(new BoxLayout(editorPanel, BoxLayout.Y_AXIS));
-//        
-//        //create the editor label
-//        JLabel editorLabel = new JLabel("Remove Selected Rhythms from Preferences");
-//        editorPanel.add(editorLabel);
-//        
-//        //Create the editor scrollView
-//        editorScrollPane = createEditorScrollPane();
-//        editorScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        editorPanel.add(editorScrollPane);
-//        
-//        //create the delete rhythm button
-////        deleteButton = getDeleteButton();
-////        deleteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-////        editorPanel.add(deleteButton);
-//        
-//        //make split pane with editor and frame components
-//        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,framePanel, editorPanel);
-//        splitPane.setDividerLocation(400);
-//        //add the framePanel to the window
-//        
-//        JPanel outerPanel = new JPanel();
-//        outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.Y_AXIS));
-//        splitPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        outerPanel.add(splitPane);
-//        
-//        JButton closeButton = new JButton("Save");
-//        closeButton.setAlignmentX(Component.RIGHT_ALIGNMENT);
-//        closeButton.addActionListener(new ActionListener(){
-//          public void actionPerformed(ActionEvent e){
-//            saveChanges();
-//            dispose();
-//          }   
-//        } );
-//        outerPanel.add(closeButton);
-//        
-//        this.add(outerPanel);
-        
     }
     
     private JButton getTradeButton(){
@@ -200,45 +181,108 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
         this.bean = bean;
     }
    
-    private void refreshDialog(){
-        JPanel updatedUserContents = getGoalsPanel();
-        UserGoalsScrollPane.setViewportView(updatedUserContents);
-        UserGoalsScrollPane.revalidate();
+//    private void refreshDialog(){
+//        JPanel updatedUserContents = getGoalsPanel();
+//        UserGoalsScrollPane.setViewportView(updatedUserContents);
+//        UserGoalsScrollPane.revalidate();
+//       
+//        this.repaint();
+//    }
        
-        this.repaint();
+    private ArrayList<RhythmSelecterEntry> getGoalsEntries(){
+        ArrayList<RhythmSelecterEntry> goalsEntries = new ArrayList<RhythmSelecterEntry>();
+        for(int i = 0; i < clusterRuleStrings.size(); i++){
+            //System.out.println("ruleString: " + clusterRuleStrings.get(i));
+            Polylist ruleString = clusterRuleStrings.get(i);
+            Polylist rule = (Polylist) ruleString.first();
+            Polylist XNotation = (Polylist) ruleString.second();
+            //skip XNotationTag
+            XNotation = XNotation.rest();
+            //System.out.println("XNotation: " + XNotation);
+   
+            //System.out.println("rule: " + rule);
+            Polylist segLenPL = (Polylist) ((Polylist) rule.second());
+   
+            int numBars = Integer.parseInt(segLenPL.toStringSansParens().substring(SEG_LENGTH));
+            /**@TODO don't use DEFAULT_BEATS_PER_BAR, maybe use something from metre instead
+             * 
+             */
+            //System.out.println("adjusting rhythmNotate line length to: " + (numBars / DEFAULT_BEATS_PER_BAR));
+            rhythmNotate.adjustLayout(Polylist.list((long) (numBars / DEFAULT_BEATS_PER_BAR)));
+       
+            Polylist relativePitchPolylist = getRelativePitchPolylist(XNotation.toStringSansParens());
+            
+            String realMelody = makeRealMelodyFromRhythmPolylist(relativePitchPolylist);
+            BufferedImage rhythmPic = createRhythmImage(realMelody, i);
+            Image resizedRhythmPic = rhythmPic.getScaledInstance((int) (rhythmPic.getWidth() / 2.25), (int) (rhythmPic.getHeight() / 2.25), Image.SCALE_SMOOTH);
+            ImageIcon rhythmIcon = new ImageIcon(resizedRhythmPic);
+
+            RhythmSelecterEntry rse = new RhythmSelecterEntry(rhythmIcon, false, realMelody, ruleString);
+            goalsEntries.add(rse);
+        }
+       
+        return goalsEntries;
     }
    
    
-    private JPanel getGoalsPanel(){
-        JPanel goalPanel = new JPanel();
-        goalPanel.setBackground(Color.WHITE);
-        goalPanel.setLayout(new GridBagLayout());
-        checkBoxArray = new ArrayList<JCheckBox>();
-        //Set up constraints for rhythmTextPanel layout
-        GridBagConstraints scrollConstraints = new GridBagConstraints();
-        scrollConstraints.anchor = GridBagConstraints.NORTH;
-        scrollConstraints.weighty = 1;
-        scrollConstraints.gridx = 0;
-        scrollConstraints.fill = GridBagConstraints.HORIZONTAL;
-        scrollConstraints.gridy = 0;
-       
-        //Fill goals panel
-        for(int i = 0; i < clusterRuleStrings.size(); i++){
-            JTextField rhythmTextRepresentation = new JTextField();
-            rhythmTextRepresentation.setText(getVisualizationFromRuleStringPolylist(clusterRuleStrings.get(i)));
-            rhythmTextRepresentation.setEditable(false);
-            addMouseListenerToRhythmTextField(rhythmTextRepresentation);
-            //System.out.println("current visualization: "+ makeRealMelodyFromRhythmPolylist(userRhythms.get(i)));
-            scrollConstraints.gridx = 0;
-            JCheckBox temp = new JCheckBox();
-            goalPanel.add(temp, scrollConstraints);
-            checkBoxArray.add(temp);
-            scrollConstraints.gridx = 1;
-            goalPanel.add(rhythmTextRepresentation, scrollConstraints);
-            scrollConstraints.gridy++;
-        }
-       
-        return goalPanel;
+    private JList getGoalsList(){
+        //JPanel goalPanel = new JPanel();
+        JList goalList = new JList();
+        LeadsheetImageListModel goalsModel = new LeadsheetImageListModel(getGoalsEntries());
+        goalList.setModel(goalsModel);
+        goalList.setCellRenderer(new RhythmListCellRenderer());
+        return goalList;
+//        goalPanel.setBackground(Color.WHITE);
+//        goalPanel.setLayout(new GridBagLayout());
+//        checkBoxArray = new ArrayList<JCheckBox>();
+//        //Set up constraints for rhythmTextPanel layout
+//        GridBagConstraints scrollConstraints = new GridBagConstraints();
+//        scrollConstraints.anchor = GridBagConstraints.NORTH;
+//        scrollConstraints.weighty = 1;
+//        scrollConstraints.gridx = 0;
+//        scrollConstraints.fill = GridBagConstraints.HORIZONTAL;
+//        scrollConstraints.gridy = 0;
+//       
+//        //Fill goals panel
+//        for(int i = 0; i < clusterRuleStrings.size(); i++){
+//            System.out.println("ruleString: " + clusterRuleStrings.get(i));
+//            Polylist ruleString = clusterRuleStrings.get(i);
+//            Polylist XNotation = (Polylist) ruleString.third();
+//            //skip XNotationTag
+//            XNotation = XNotation.rest();
+//            
+//            Polylist segLenPL = (Polylist) ((Polylist) ruleString.second()).second();
+//            int numBars = Integer.parseInt(segLenPL.toStringSansParens().substring(SEG_LENGTH));
+//            /**@TODO don't use DEFAULT_BEATS_PER_BAR, maybe use something from metre instead
+//             * 
+//             */
+//            System.out.println("adjusting rhythmNotate line length to: " + (numBars / DEFAULT_BEATS_PER_BAR));
+//            rhythmNotate.adjustLayout(Polylist.list((long) (numBars / DEFAULT_BEATS_PER_BAR)));
+//            
+//            Polylist relativePitchPolylist = getRelativePitchPolylist(XNotation.toStringSansParens());
+//            
+//            String realMelody = makeRealMelodyFromRhythmPolylist(relativePitchPolylist);
+//            BufferedImage rhythmPic = createRhythmImage(realMelody, i);
+//            Image resizedRhythmPic = rhythmPic.getScaledInstance((int) (rhythmPic.getWidth() / 2.5), (int) (rhythmPic.getHeight() / 2.5), Image.SCALE_SMOOTH);
+//            ImageIcon rhythmIcon = new ImageIcon(resizedRhythmPic);
+//
+//            RhythmSelecterEntry rse = new RhythmSelecterEntry(rhythmIcon, false, realMelody, ruleString);
+//            //myRhythms.add(rse);
+////            JTextField rhythmTextRepresentation = new JTextField();
+////            rhythmTextRepresentation.setText(getVisualizationFromRuleStringPolylist(clusterRuleStrings.get(i)));
+////            rhythmTextRepresentation.setEditable(false);
+////            addMouseListenerToRhythmTextField(rhythmTextRepresentation);
+////            //System.out.println("current visualization: "+ makeRealMelodyFromRhythmPolylist(userRhythms.get(i)));
+//            scrollConstraints.gridx = 0;
+////            JCheckBox temp = new JCheckBox();
+//            goalPanel.add(temp, scrollConstraints);
+////            checkBoxArray.add(temp);
+////            scrollConstraints.gridx = 1;
+////            goalPanel.add(rhythmTextRepresentation, scrollConstraints);
+////            scrollConstraints.gridy++;
+//        }
+//       
+//        return goalPanel;
     }
    
     private String getVisualizationFromRuleStringPolylist(Polylist rulePL){   
@@ -367,6 +411,111 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
         notate.repaint();//refresh the notate page
         notate.playCurrentSelection(false, 0, false, "Printing Rhythm");//play the leadsheet
         
+    }
+    
+ 
+    public BufferedImage createRhythmImage(String userRhythm, int idNum){
+//        System.out.println("\n\nuserRhythm is: " + userRhythm);
+        String[] userRhythmNoteStrings = userRhythm.split(" ");
+        Polylist noteSymbolPolylist = new Polylist();
+        Polylist pitchNoteSymbolPolylist = new Polylist();
+        for (int i = 0; i < userRhythmNoteStrings.length; i++){
+            NoteSymbol noteSymbol = NoteSymbol.makeNoteSymbol(userRhythmNoteStrings[i]);
+            noteSymbolPolylist = noteSymbolPolylist.addToEnd(noteSymbol);
+            pitchNoteSymbolPolylist = pitchNoteSymbolPolylist.addToEnd(NoteSymbol.makeNoteSymbol("c4"));
+        }
+        
+        Polylist notePolylistToWrite = NoteSymbol.newPitchesForNotes(noteSymbolPolylist, pitchNoteSymbolPolylist);
+        System.out.println(notePolylistToWrite);
+        
+        MelodyPart melodyPartToWrite = new MelodyPart(notePolylistToWrite.toStringSansParens());
+        //System.out.println("melody part from user is: "+ melodyPartToWrite.toString());
+        
+        
+        AdviceForMelody advice = new AdviceForMelody("RhythmPreview", notePolylistToWrite, "c", Key.getKey("c"),
+                        rhythmHelperTRM.getMetre(), 0);//make a new advice for melody object 
+        
+        advice.setNewPart(melodyPartToWrite);//new part of advice object is the part that gets pasted to the leadsheet
+        
+        advice.insertInPart(rhythmNotate.getScore().getPart(0), 0, new CommandManager(), rhythmNotate);//insert melodyPartToWrite into the notate score
+        rhythmNotate.getCurrentStave().setSelection(rhythmNotate.getCurrentStave().getMelodyPart().size() - 1);
+        rhythmNotate.repaint();//refresh the notate page
+      
+
+        BufferedImage notateScreenshot = new BufferedImage(rhythmNotate.getSize().width, rhythmNotate.getSize().height-100, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = notateScreenshot.createGraphics();
+
+        rhythmNotate.paint(g);
+        rhythmNotate.paint(g);
+        g.dispose();
+
+        
+        g.dispose();
+//        System.out.println("width: " + notateScreenshot.getWidth());
+//        System.out.println("height: " + notateScreenshot.getHeight());
+        int notateScreenshotWidth = notateScreenshot.getWidth();
+        int notateScreenshotHeight = notateScreenshot.getHeight();
+        int croppedXStart = (int) (0.069 * notateScreenshotWidth);//(75 / notateScreenshotWidth);
+        int croppedYStart = (int) (0.32 * notateScreenshotHeight);// * (290 / notateScreenshotWidth);
+        int croppedWidth = (int) (0.855 * notateScreenshotWidth);
+        int croppedHeight = (int) (0.08 * notateScreenshotHeight);
+        //BufferedImage dest = bi;
+        //BufferedImage dest = notateScreenshot.getSubimage(78, 295, 963, 70);
+        BufferedImage dest = notateScreenshot.getSubimage(croppedXStart, croppedYStart, croppedWidth, croppedHeight);
+        
+        return dest;
+    }
+    
+    
+    public Notate getRhythmNotate(){
+        Score newScore = new Score("");
+        //newScore.setLayoutList(Polylist.list("2"));
+        
+        int chordFontSize = Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE));
+
+        newScore.setChordFontSize(chordFontSize);
+
+        newScore.setTempo(1);
+
+        ChordPart chords = new ChordPart();
+
+        chords.addChord(new Chord("NC")); // Some chord is necessary to preven screw-ups
+
+        newScore.setChordProg(chords);
+
+
+        /**@TODO don't hardcode measure length to 480*/
+        newScore.addPart(new MelodyPart(DEFAULT_BARS_PER_PART * 480));
+
+        newScore.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
+
+        Transposition transposition =
+                new Transposition(notate.getIntFromSpinner(notate.getLeadsheetChordTranspositionSpinner()),
+                                  notate.getIntFromSpinner(notate.getLeadsheetBassTranspositionSpinner()),
+                                  notate.getIntFromSpinner(notate.getChorusMelodyTranspositionSpinner()));
+        newScore.setTransposition(transposition);
+
+        // open a new window
+
+        rhythmNotate = //new Notate(newScore, -1, -1);
+               new Notate(newScore, Integer.MAX_VALUE, Integer.MAX_VALUE);
+        
+        System.out.println("layout: " + rhythmNotate.getScore().getLayoutList());
+        //rhythmNotate.setLayoutPreference(Polylist.list("2"));
+//
+//
+//            Notate invisibleNotate =
+//                new Notate(newScore);
+
+        /**@TODO decide if this makes it invisible*/
+        //newNotate.makeVisible(this);
+
+        rhythmNotate.setTransposition(transposition);
+
+
+        rhythmNotate.makeVisible();
+        
+        return rhythmNotate;
     }
     
  
