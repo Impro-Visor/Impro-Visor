@@ -38,6 +38,9 @@ import imp.style.stylePatterns.BassPatternElement;
 import imp.style.stylePatterns.BassPattern;
 import imp.style.stylePatterns.ChordPatternElement;
 import imp.style.stylePatterns.ChordPattern;
+import imp.style.stylePatterns.Interpolant;
+import imp.style.stylePatterns.Interpolable;
+import imp.style.stylePatterns.Substitution;
 import imp.data.advice.Advisor;
 import imp.voicing.AutomaticVoicingSettings;
 import imp.Constants;
@@ -55,7 +58,6 @@ import imp.style.pianoroll.PianoRollBassBar;
 import imp.style.pianoroll.PianoRollChordBar;
 import imp.style.pianoroll.PianoRollEndBlock;
 import imp.gui.RangeChooser;
-import imp.gui.StyleTextualEditor;
 import imp.gui.UnsavedChanges;
 import imp.gui.WindowMenuItem;
 import imp.gui.WindowRegistry;
@@ -76,6 +78,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableColumnModel;
 import polya.Polylist;
 import polya.Tokenizer;
+import polya.PolylistEnum;
 
 /**
  * A spreadsheet GUI for editing Impro-Visor styles.
@@ -267,6 +270,9 @@ public class StyleEditor
 
   private PatternSet allDrumPatterns;
   
+  Polylist interpolations;
+  Polylist substitutions;
+  Polylist interpolables;
   /* The patterns that are saved with the file */
   public LinkedHashMap definedBassRules = 
           new LinkedHashMap<String, Polylist>();
@@ -1076,6 +1082,64 @@ public void updateAllDrumPatterns(String name, String rules)
       }
     }
   
+  public void getInterpolations(StringBuilder buffer)
+    {
+    PolylistEnum pats = interpolations.elements();
+   System.out.println("hello");
+        while (pats.hasMoreElements()) {
+            try {
+                Object ob = pats.nextElement();
+                if (ob instanceof Polylist) {
+                    Polylist b = (Polylist) ob;
+                    
+                    buffer.append("\t");
+                    buffer.append(b);
+                    buffer.append("\n");
+                }
+            } catch (ClassCastException e) {
+            }
+      }
+       System.out.println("inside interpolations: " + buffer.toString());
+    }
+  
+  public void getInterpolables(StringBuilder buffer)
+    {
+    PolylistEnum pats = interpolables.elements();
+   // pats.
+        while (pats.hasMoreElements()) {
+            try {
+                Object ob = pats.nextElement();
+                if (ob instanceof Polylist) {
+                    Polylist b = (Polylist) ob;
+                   
+                    buffer.append("\t");
+                    buffer.append(b);
+                    buffer.append("\n");
+                }
+            } catch (ClassCastException e) {
+            }
+      }
+    }
+  
+  public void getSubstitutions(StringBuilder buffer)
+    {
+    PolylistEnum pats = substitutions.elements();
+   // pats.
+        while (pats.hasMoreElements()) {
+            try {
+                Object ob = pats.nextElement();
+                if (ob instanceof Polylist) {
+                    Polylist b = (Polylist) ob;
+                   
+                    buffer.append("\t");
+                    buffer.append(b);
+                    buffer.append("\n");
+                }
+            } catch (ClassCastException e) {
+            }
+      }
+    }
+  
   public void getDefinedRules(StringBuilder buffer)
   {
       //System.out.println("definedrules: " + definedBassRules);
@@ -1361,12 +1425,18 @@ public void updateAllDrumPatterns(String name, String rules)
       if( isInstrumentIncluded(StyleTableModel.CHORD_PATTERN_ROW) )
         {
         getChordPatterns(buffer);
+         buffer.append("\n");
+        getInterpolables(buffer);
+         buffer.append("\n");
+        getInterpolations(buffer);
+         buffer.append("\n");
+        getSubstitutions(buffer);
         }
 
       buffer.append(")");
       
       String styleResult = buffer.toString();
-      System.out.println("inside saveStyle " + buffer.toString());
+      //System.out.println("inside saveStyle " + buffer.toString());
       
       Polylist p = Notate.parseListFromString(styleResult);
       Polylist t = (Polylist)p.first();
@@ -1387,6 +1457,59 @@ public void updateAllDrumPatterns(String name, String rules)
       }
 
     styleName = name;
+    }
+
+  public String saveToString()
+    {
+        return saveToString(getStyleName());
+    }
+  
+  /**
+   * Saves the current style to file and updates the list of available styles 
+   * so that the new style is available in the Style Preferences dialog
+   * @param styleName
+   * @return 
+   */
+  
+  public String saveToString(String styleName)
+    {
+    MIDIBeast.newSave();
+      StringBuilder buffer = new StringBuilder();
+      styleName = styleName.substring(0, styleName.length() - 4);
+      buffer.append("(style\n");
+      buffer.append("\t(name ");
+      buffer.append(styleName);
+      buffer.append(")\n");
+
+      String attributes = getAttributes();
+      buffer.append(attributes);
+      //System.out.println("attributes: " + buffer);
+      
+      getDefinedRules(buffer);
+      //System.out.println(buffer);
+
+      if( isInstrumentIncluded(StyleTableModel.BASS_PATTERN_ROW) )
+        {
+        getBassPatterns(buffer);
+        }
+
+      getDrumPatterns(buffer);
+      //System.out.println(buffer);
+
+      if( isInstrumentIncluded(StyleTableModel.CHORD_PATTERN_ROW) )
+        {
+        getChordPatterns(buffer);
+        buffer.append("\n");
+        getInterpolables(buffer);
+        buffer.append("\n");
+        getInterpolations(buffer);
+        buffer.append("\n");
+        getSubstitutions(buffer);
+        }
+
+      buffer.append(")");
+
+      return buffer.toString();
     }
 
   
@@ -1631,7 +1754,7 @@ public void updateAllDrumPatterns(String name, String rules)
     savedStyle = file;
     ImproVisor.setRecentStyleFile(file);
     loadFromString(s);
-    
+    System.out.println("loadFromFile was called");
     styleName = file.getName();
     }
   
@@ -1657,6 +1780,10 @@ public void updateAllDrumPatterns(String name, String rules)
     definedBassRules = style.getBassDefinedRules();
     definedChordRules = style.getChordDefinedRules();
     definedDrumRules = style.getDrumDefinedRules();
+    interpolations = style.getDefinedInterpolations();
+    interpolables = style.getDefinedInterpolables();
+    substitutions = style.getDefinedSubs();
+            
     
     updateBassList();
     updateChordList();
@@ -6018,7 +6145,6 @@ public void updateAllDrumPatterns(String name, String rules)
         });
         styGenerate.add(pianoRollCheckBox);
 
-        textualEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         textualEditorMI.setText("Open Textual Editor");
         textualEditorMI.setToolTipText("");
         textualEditorMI.setActionCommand("Generate Style from MIDI");

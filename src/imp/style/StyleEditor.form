@@ -477,9 +477,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="textualEditorMI">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+F"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Open Textual Editor"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
                 <Property name="actionCommand" type="java.lang.String" value="Generate Style from MIDI"/>

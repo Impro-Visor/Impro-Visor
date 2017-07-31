@@ -1,27 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This Java Class is part of the Impro-Visor Application
+ *
+ * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ *
+ * Impro-Visor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Impro-Visor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * merchantability or fitness for a particular purpose.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Impro-Visor; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package imp.gui;
+package imp.style;
 
-import imp.com.StylesToEditorCommand;
-import imp.data.advice.Advisor;
-import static imp.gui.SourceEditorDialog.STYLE;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
-import imp.com.*;
-import imp.data.Score;
-import imp.roadmap.RoadMapFrame;
 import imp.util.BasicEditor;
-import polya.Polylist;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
-import java.io.IOException;
-import java.awt.Frame;
 import imp.style.StyleEditor;
 
 /**
@@ -106,15 +105,8 @@ public class StyleTextualEditor extends javax.swing.JDialog implements BasicEdit
  
     public void fillEditor()
     {
-        
-        StringWriter writer = new StringWriter();
-        PrintWriter out = new PrintWriter(writer);
-        try {
-            Advisor.saveStyles(out);
-            out.close();
-        } catch( Exception e ) {}
-        setSize(600, 2000);
-        setText(writer.toString());   
+        setSize(900, 1000);
+        setText(parent.saveToString());
     }
     
     private void stringToFile(String str) {
