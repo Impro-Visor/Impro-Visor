@@ -90,8 +90,7 @@ public class GrammarMenuDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         grammarButtonGroup = new javax.swing.ButtonGroup();
@@ -106,15 +105,14 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         setName("grammarChoiceDialog"); // NOI18N
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        grammarButtonPanel.setName("Grammar Menu"); // NOI18N
         grammarButtonPanel.setLayout(new java.awt.GridBagLayout());
 
         grammarButtonGroup.add(chosenGrammarButton);
         chosenGrammarButton.setSelected(true);
         chosenGrammarButton.setText("Chosen");
-        chosenGrammarButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        chosenGrammarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chosenGrammarButtonActionPerformed(evt);
             }
         });
@@ -122,10 +120,8 @@ public class GrammarMenuDialog extends javax.swing.JDialog
 
         grammarButtonGroup.add(cycleGrammarButton);
         cycleGrammarButton.setLabel("Cycle");
-        cycleGrammarButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cycleGrammarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cycleGrammarButtonActionPerformed(evt);
             }
         });
@@ -133,10 +129,8 @@ public class GrammarMenuDialog extends javax.swing.JDialog
 
         grammarButtonGroup.add(shuffleGrammarButton);
         shuffleGrammarButton.setLabel("Shuffle");
-        shuffleGrammarButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        shuffleGrammarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 shuffleGrammarButtonActionPerformed(evt);
             }
         });
@@ -149,6 +143,7 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         grammarListScrollPane.setDoubleBuffered(true);
         grammarListScrollPane.setHorizontalScrollBar(null);
         grammarListScrollPane.setMinimumSize(new java.awt.Dimension(300, 100));
+        grammarListScrollPane.setName("Grammar Menu"); // NOI18N
         grammarListScrollPane.setPreferredSize(new java.awt.Dimension(300, 600));
         grammarListScrollPane.setViewportView(grammarJlist);
 
@@ -157,10 +152,8 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         grammarJlist.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         grammarJlist.setBounds(new java.awt.Rectangle(0, 0, 300, 600));
         grammarJlist.setVisibleRowCount(200);
-        grammarJlist.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        grammarJlist.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 grammarJlistMouseClicked(evt);
             }
         });

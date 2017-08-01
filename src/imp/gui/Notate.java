@@ -663,6 +663,10 @@ private boolean passiveTradingImprovisorFirst;
 private javax.swing.JList grammarList;
 GrammarMenuDialog grammarMenuDialog;
 DefaultListModel grammarListModel;
+JList transformList;
+TransformMenuDialog transformMenuDialog;
+ActiveTradingDialog activeTradingDialog;
+DefaultListModel transformListModel;
 
 /**
  * Constructs a new Notate JFrame.
@@ -983,6 +987,10 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     passiveTradingDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
     passiveTradingDialog.setSize(800, 200);
     passiveTradingDialog.setVisible(false);
+    
+    transformMenuDialog = new TransformMenuDialog(activeTradingDialog, false);
+    transformList = transformMenuDialog.getTransformList();
+    transformListModel = transformMenuDialog.getTransformListModel();
     
     grammarMenuDialog = new GrammarMenuDialog(this, false);
     grammarList = grammarMenuDialog.getGrammarList();
@@ -23061,6 +23069,61 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
         grammarMenuDialog.setVisible(true);
     }
     
+    public void openTransformMenuDialog()
+    {
+        transformMenuDialog.setVisible(true);
+        populateMusicianList();
+    }
+    
+    String x = "";
+    public void populateMusicianList() 
+    {
+        File directory = ImproVisor.getTransformDirectory();
+        //System.out.println("populating from " + directory);
+        if (directory.isDirectory()) 
+        {
+            String fileName[] = directory.list();
+
+            // 6-25-13 Hayden Blauzvern
+            // Fix for Linux, where the file list is not in alphabetic order
+            Arrays.sort(fileName, new Comparator<String>() 
+            {
+                public int compare(String s1, String s2) 
+                {
+                    return s1.toUpperCase().compareTo(s2.toUpperCase());
+                }
+            });
+
+            // Add names of grammar files
+            for (String name : fileName) 
+            {
+                if (name.endsWith(TransformFilter.EXTENSION)) 
+                {
+                    int len = name.length();
+                    String x = name.substring(0, len - TransformFilter.EXTENSION.length());
+                    //JRadioButtonMenuItem newMusician = new JRadioButtonMenuItem();
+                    //newMusician.setText(stem);
+                    //newMusician.addActionListener(this);
+                    //newMusician.setSelected(true);
+                    //transformFileSelector.add(newMusician);
+                    //tradeMusicianMenu.add(newMusician);
+                    transformMenuDialog.getTransformListModel().addElement(x);
+                    //activeTradingDialog.getTransformStatusButton().setText("" + stem);
+                }
+            }
+        }
+       // updateMusician();
+       //activeTradingDialog.getTransformStatusButton().setText("" + x);
+       
+    }
+    
+//    public void updateMusician(String newMusician)
+//    {
+//        String temp = newMusician;
+//        activeTrading.setMusician(temp);
+//        transformStatusButton.setText("" + temp);
+//        
+//    }
     public String getGrammarName()
     {
         return grammarMenuDialog.getGrammarName();
