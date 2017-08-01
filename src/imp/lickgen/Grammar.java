@@ -194,10 +194,10 @@ public class Grammar
             // entire abstract melody if not trading.
             Polylist stack = addStart(numSlotsToFill);
 
-            System.out.println("\nTop Level");
+            //System.out.println("\nTop Level");
             ExpansionResult result = outerFill(stack, numSlotsToFill);
             totalSlotsToFill = result.numSlotsToFill;
-
+            stack = result.stack;
             if( improVisorFirst && padding > 0 ) // Pad the user's part after
               {
                 String fillRests = Note.getDurationString(padding);
@@ -221,21 +221,25 @@ public class Grammar
 ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
     {
         Polylist originalStack = stack;
-        ExpansionResult result = new ExpansionResult(stack, numSlotsToFill);
         while( numSlotsToFill > 0 )
           {
-            System.out.println("outerFill: applyRules " + numSlotsToFill + " " + stack);
-            result = applyRules(stack, numSlotsToFill);
-            System.out.println("outerFill: applyRules result " + terminalBuffer.toPolylist() + " | " + result);
-            
-            numSlotsToFill = result.numSlotsToFill;
-            stack = result.stack;
             if( stack.isEmpty() )
               {
                 stack = originalStack;
               }
+            
+            ExpansionResult result = accumulateTerminals(stack, numSlotsToFill);
+            stack = result.stack;
+            numSlotsToFill = result.numSlotsToFill;
+            
+            //System.out.println("\nouterFill: applyRules " + numSlotsToFill + " " + stack);
+            result = applyRules(stack, numSlotsToFill);
+            
+            numSlotsToFill = result.numSlotsToFill;
+            stack = result.stack;
+            //System.out.println("    applyRules result "  + numSlotsToFill + " " + stack + " | " + terminalBuffer.toPolylist());
            }
-        return result;
+        return new ExpansionResult(stack, numSlotsToFill);
     }
         
 
@@ -409,7 +413,7 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
                         doubleValue();
                 // Convert to slots
                 int slots = (int) (beats * imp.Constants.BEAT);
-                Polylist innerToken = Polylist.list(token.second());
+                Polylist innerToken = token.rest();
                 ExpansionResult result = outerFill(innerToken, slots);
                 return new ExpansionResult(result.stack, slotsToFill - slots);
 
@@ -626,24 +630,19 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
           }
         return null;
     }
-
-    /**
-     * Pop tokens off the stack stack. Any terminal tokens are pushed onto
-     * accumulator. Rules are applied to non-terminals.
-     *
-     * @param stack
-     * @return
-     * @throws imp.lickgen.RuleApplicationException
-     */
-    public ExpansionResult applyRules(Polylist stack, int numSlotsToFill)
-    {
-        //System.out.println("applyRules " + numSlotsToFill + " " + stack);
-        Object token = stack.first();
-        stack = stack.rest();
+private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
+{
+        Object token;
 
         // Accumulate any terminal values at the beginning of stack.
-        while( numSlotsToFill > 0 && isTerminal(token) )
+        while( numSlotsToFill > 0 && stack.nonEmpty() )
           {
+            token = stack.first();
+            if( !isTerminal(token) )
+              {
+                return new ExpansionResult(stack, numSlotsToFill);
+              }
+            
             if( isWrappedTerminal(token) )
               {
                 numSlotsToFill = accumulateTerminal(((Polylist) token).first(),
@@ -654,14 +653,49 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
                 numSlotsToFill = accumulateTerminal(token, numSlotsToFill);
               }
 
-            if( stack.isEmpty() || numSlotsToFill <= 0 )
-              {
-                return new ExpansionResult(stack, numSlotsToFill);
-              }
-
-            token = stack.first();
             stack = stack.rest();
           }
+    return new ExpansionResult(stack, numSlotsToFill);
+}
+    /**
+     * Pop tokens off the stack stack. Any terminal tokens are pushed onto
+     * accumulator. Rules are applied to non-terminals.
+     *
+     * @param stack
+     * @return
+     * @throws imp.lickgen.RuleApplicationException
+     */
+    public ExpansionResult applyRules(Polylist stack, int numSlotsToFill)
+    {
+        if( stack.isEmpty() )
+          {
+            return new ExpansionResult(stack, numSlotsToFill);
+          }
+        //System.out.println("applyRules " + numSlotsToFill + " " + stack);
+        Object token = stack.first();
+        stack = stack.rest();
+
+//        // Accumulate any terminal values at the beginning of stack.
+//        while( numSlotsToFill > 0 && isTerminal(token) )
+//          {
+//            if( isWrappedTerminal(token) )
+//              {
+//                numSlotsToFill = accumulateTerminal(((Polylist) token).first(),
+//                                                    numSlotsToFill);
+//              }
+//            else
+//              {
+//                numSlotsToFill = accumulateTerminal(token, numSlotsToFill);
+//              }
+//
+//            if( stack.isEmpty() || numSlotsToFill <= 0 )
+//              {
+//                return new ExpansionResult(stack, numSlotsToFill);
+//              }
+//
+//            token = stack.first();
+//            stack = stack.rest();
+//          }
 
         // token is a non-terminal
         if( !(token instanceof Polylist) )
