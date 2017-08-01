@@ -48,6 +48,16 @@ public class Interpolate
 
     //returns a paired list of a chord and a boolean polylist that will tell where
     //the interpolants will lie depending on the block that the chord falls in
+
+    /**
+     * Packages each chord in the chord part with an action boolean based on a given
+     * probability and a minimum value for an action to happen
+     * @param chordPart
+     * @param index
+     * @param minVal
+     * @param prob
+     * @return 
+     */
     public static Polylist willInterpolate(ChordPart chordPart, int index, int minVal, float prob)
     {
         
