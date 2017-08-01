@@ -19,6 +19,7 @@
  */
 
 package imp.trading;
+import imp.gui.TransformMenuDialog;
 
 /**
  * @author Zachary Kondak, formerly ActiveTradingWindow
@@ -62,6 +63,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SpinnerNumberModel;
@@ -132,8 +134,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         swingCheckBox = new javax.swing.JCheckBox();
         modePanel = new javax.swing.JPanel();
         modeStatus = new javax.swing.JLabel();
-        transformStatus = new javax.swing.JLabel();
         grammarStatusButton = new javax.swing.JButton();
+        transformStatusButton = new javax.swing.JButton();
         controlsPanel = new javax.swing.JPanel();
         processTimeSelector = new javax.swing.JTextField();
         tempoPanel = new javax.swing.JPanel();
@@ -282,18 +284,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         modePanel.add(modeStatus, gridBagConstraints);
 
-        transformStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        transformStatus.setText("Transform: ___ ");
-        transformStatus.setMaximumSize(new java.awt.Dimension(200, 30));
-        transformStatus.setMinimumSize(new java.awt.Dimension(200, 30));
-        transformStatus.setPreferredSize(new java.awt.Dimension(200, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
-        modePanel.add(transformStatus, gridBagConstraints);
-
         grammarStatusButton.setBackground(new java.awt.Color(255, 255, 255));
         grammarStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         grammarStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
@@ -311,6 +301,19 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         modePanel.add(grammarStatusButton, gridBagConstraints);
+
+        transformStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        transformStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transform", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        transformStatusButton.setPreferredSize(new java.awt.Dimension(210, 45));
+        transformStatusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transformStatusButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        modePanel.add(transformStatusButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -738,6 +741,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     private void RhythmHelperMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RhythmHelperMenuItemActionPerformed
         updateTradeMode();
+        grammarStatusButton.setVisible(false);
         QuantizationDialog qd = notate.getQuantizationDialog();
         qd.unsetQuantization(1);
         qd.setQuantization(1, 30);
@@ -755,7 +759,20 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private void grammarStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grammarStatusButtonActionPerformed
         notate.openGrammarMenuDialog();
     }//GEN-LAST:event_grammarStatusButtonActionPerformed
-                                         
+
+    private void transformStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformStatusButtonActionPerformed
+        notate.openTransformMenuDialog();     
+    }//GEN-LAST:event_transformStatusButtonActionPerformed
+    
+    public ActiveTrading getActiveTrading()
+     {
+         return activeTrading;
+     }
+     
+     public JButton getTransformStatusButton()
+     {
+         return transformStatusButton;
+     }
 
     private void tradeGrammarMenuActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
@@ -790,7 +807,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tempoSlider.setValue(newTempo.intValue());
         tempoLabel.setText(newTempo.toString());
         modeStatus.setText("Mode: " + activeTrading.getTradeModeName());
-        transformStatus.setText("Transform: " + activeTrading.getMusician());
+        transformStatusButton.setText("" + activeTrading.getMusician());
         String gramm = activeTrading.getGrammar();
         tradeGrammarMenu.setText("Grammar:" + gramm);
         grammarStatusButton.setText("" + gramm);
@@ -858,7 +875,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         //make these visible in case one of the trade mode options disabled them
         tradeLengthSpinner.setVisible(true);
         grammarStatusButton.setVisible(true);
-        transformStatus.setVisible(true);
+        transformStatusButton.setVisible(true);
         userFirstButton.setVisible(true);
         improvisorFirstButton.setVisible(true);
         rhythmHelperModeRadioPanel.setVisible(false);
@@ -890,7 +907,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
                 //these parameters aren't used for Autoenoder trade, so make them invisible
                 tradeLengthSpinner.setVisible(false);
                 grammarStatusButton.setVisible(false);
-                transformStatus.setVisible(false);
+                transformStatusButton.setVisible(false);
                 break;
 //            case "Stream Repeat":
 //                tradeMode = new StreamRepeatTRM(newMode);
@@ -898,7 +915,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 //                transformStatus.setVisible(false);
 //                break;
             case "Rhythm Helper":
-                transformStatus.setVisible(false);
+                transformStatusButton.setVisible(false);
                 rhythmHelperModeRadioPanel.setVisible(true);
                 tradeMode = getRhythmHelperSelectedTRM();
                 toggleTradeFirstButtons(tradeMode);
@@ -977,10 +994,19 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         activeTrading.setTempo(tempo);
     }
 
-    private void updateMusician() {
+    private void updateMusician() 
+    {
         String newMusician = getFromDropDown(tradeMusicianMenu);
         activeTrading.setMusician(newMusician);
-        transformStatus.setText("Transform File: " + newMusician);
+        transformStatusButton.setText("" + newMusician);
+    }
+    
+    public void updateMusician(String newMusician)
+    {
+        String temp = newMusician;
+        activeTrading.setMusician(temp);
+        transformStatusButton.setText("" + temp);
+        System.out.println("update musician (string) ended");
     }
 
     private void updateVolume() {
@@ -1029,24 +1055,31 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         grammarStatusButton.setText("" + activeTrading.getGrammar());
     }
 
-    private void populateMusicianList() {
+    
+    public void populateMusicianList() 
+    {
         File directory = ImproVisor.getTransformDirectory();
         //System.out.println("populating from " + directory);
-        if (directory.isDirectory()) {
+        if (directory.isDirectory()) 
+        {
             String fileName[] = directory.list();
 
             // 6-25-13 Hayden Blauzvern
             // Fix for Linux, where the file list is not in alphabetic order
-            Arrays.sort(fileName, new Comparator<String>() {
-                public int compare(String s1, String s2) {
+            Arrays.sort(fileName, new Comparator<String>() 
+            {
+                public int compare(String s1, String s2) 
+                {
                     return s1.toUpperCase().compareTo(s2.toUpperCase());
                 }
 
             });
 
             // Add names of grammar files
-            for (String name : fileName) {
-                if (name.endsWith(TransformFilter.EXTENSION)) {
+            for (String name : fileName) 
+            {
+                if (name.endsWith(TransformFilter.EXTENSION)) 
+                {
                     int len = name.length();
                     String stem = name.substring(0, len - TransformFilter.EXTENSION.length());
                     JRadioButtonMenuItem newMusician = new JRadioButtonMenuItem();
@@ -1055,6 +1088,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
                     newMusician.setSelected(true);
                     transformFileSelector.add(newMusician);
                     tradeMusicianMenu.add(newMusician);
+                    //transformMenuDialog.getTransformListModel().addElement(stem);
+                    //System.out.println("transform list just added: " + stem);
 
                 }
             }
@@ -1192,7 +1227,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JRadioButtonMenuItem tradeStore;
     private javax.swing.JRadioButtonMenuItem tradeWithAMusician;
     private javax.swing.ButtonGroup transformFileSelector;
-    private javax.swing.JLabel transformStatus;
+    private javax.swing.JButton transformStatusButton;
     private javax.swing.JRadioButton userFirstButton;
     private javax.swing.JLabel volumeLabel;
     private javax.swing.JPanel volumePanel;
