@@ -6447,10 +6447,10 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
         for(Polylist R = rules; R.nonEmpty(); R = R.rest()){
 //            System.out.println(R.flatten());
             if(((Polylist) R.first()).member(Polylist.list("P_motif")) && ((Polylist) R.first()).flatten().member(useMotifs)){
-                System.out.println("Changed motif probability...");
+//                System.out.println("Changed motif probability...");
                 R.setFirst(((Polylist) R.first()).replaceLast(motifProbability));
             } else if (((Polylist) R.first()).member(Polylist.list("P_motif")) && ((Polylist) R.first()).flatten().member("P")) {
-                System.out.println("Changed normal grammar probability...");
+//                System.out.println("Changed normal grammar probability...");
                 R.setFirst(((Polylist) R.first()).replaceLast(notMotifProbability));
             }
             
