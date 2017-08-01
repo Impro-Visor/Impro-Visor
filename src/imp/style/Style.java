@@ -712,10 +712,10 @@ public class Style
               }
             case INTERPOLATE:
             {
-             //   System.out.println(item);
+              //  System.out.println(item);
                 Interpolant interpolant = Interpolant.makeInterpolantFromExp(item);
                 style.definedInterpolations = style.definedInterpolations.cons(item.cons("interpolate "));
-             //   System.out.println(interpolant);
+              //  System.out.println(interpolant);
                 style.interpolations = style.interpolations.cons(interpolant);
                 break;
             }
@@ -728,10 +728,10 @@ public class Style
             }
             case SUBSTITUTE:
             {
-               // System.out.println(item);
+              //  System.out.println(item);
                 Substitution sub = Substitution.makeSubstitutionFromExp(item);
                 style.definedSubstitutions = style.definedSubstitutions.cons(item.cons("substitute "));
-               // System.out.println(sub);
+              //  System.out.println(sub);
                 style.substitutions = style.substitutions.cons(sub);
                 break;
             }
@@ -1940,6 +1940,7 @@ private Polylist mapPC(Polylist results) {
         }
         Chord first = (Chord)original.first();
         Polylist sublist;
+                
         for(Polylist P = substitutions; P.nonEmpty(); P = P.rest())
         {
             //match and check qualifications of a given sub
@@ -1949,20 +1950,22 @@ private Polylist mapPC(Polylist results) {
                     continue;
          
             int random = (int)(Math.random()*100+1);
-            if (random > sub.getWeight()*100)
+            if (random > (int)(sub.getWeight()*100))
                 continue;
         
            int length = sub.getOriginals().length();
            //get a sublist of thats the same length of the original chords
            //specified in the Substitution
+           
            Polylist cutList = original.prefix(length);
+           
            //makes sure the list of that length is actually in the original
            //chordlist
            if(cutList.isEmpty())
                continue;
            
            //checks the sub chords
-           sublist = checkSubChords(cutList, sub);          
+           sublist = checkSubChords(cutList, sub);       
            if(sublist.length() != length) 
                continue;
            
@@ -1971,7 +1974,7 @@ private Polylist mapPC(Polylist results) {
            int transposition = PitchClass.findRise(
                    subchord.getRoot(), first.getRoot());
            sublist = setSubChords(cutList, sub, transposition);
-         
+          
            return substituteChords(original.coprefix(length)).cons(sublist);
         }
         
@@ -1980,9 +1983,9 @@ private Polylist mapPC(Polylist results) {
     
     private Polylist checkSubChords(Polylist sublist, Substitution sub) {
             Polylist subchords = sub.getOriginals();
-            String first = (String)subchords.first();
+            Chord firstchord = new Chord((String)subchords.first());
             
-            Polylist checker = Polylist.list(first);
+            Polylist checker = Polylist.list(firstchord);
             subchords = subchords.rest();
             //makes sure every chord in the sublist matches with
             //every chord specified in the Subsitution
@@ -2013,8 +2016,9 @@ private Polylist mapPC(Polylist results) {
         //make sure that the given rhythm values aren't triplet
         //values
         if (rhythmValue < sub.getMinSlots() || (rhythmValue % 120 != 0)
-                || (rhythmValue % 480 != 0))
+                || (rhythmValue*2 % 480 != 0))
         {
+            
             return sublist;
         }
         Polylist chordList = Polylist.nil;
@@ -2129,8 +2133,8 @@ public long render(MidiSequence seq, // called from SectionInfo
     // + " endIndex = " + endIndex + " endLimitIndex = " + endLimitIndex + " useDrums = " + useDrums + " hasStyle = " + hasStyle);
     // i iterates over the Chords in the ChordPart.
     ChordPart chordPart2 = createInterpolatedChordPart(chordPart);
-    //System.out.println("\n chord part is: \n" + chordPart);
-    //System.out.println("\nintrpolated chord part is: \n" + chordPart2);
+   // System.out.println("\n chord part is: \n" + chordPart);
+   // System.out.println("\nintrpolated chord part is: \n" + chordPart2);
     
    // imp.data.Score newScore = new imp.data.Score(chordPart2.size());
 

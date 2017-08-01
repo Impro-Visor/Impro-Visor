@@ -173,6 +173,16 @@ public void setMinSlots(int minslots) {
     this.minslots = minslots;
 }
 
+public float getWeight() {
+    return weight;
+}
+
+public void setWeight(float weight) {
+    this.weight = weight;
+}
+
+
+
 public String toString() {
     return ""+makeSubstitutionList();
 }
