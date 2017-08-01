@@ -40,10 +40,10 @@ import polya.Tokenizer;
 /*
  * @author David Morrison, modifications by Robert Keller, 21 June 2012,
  * revised method by Robert Keller, 1 August 2014
+ * further revised by Robert Keller, 31 July 2017 to include wrappers share, unshare, fill
  */
 public class Grammar
   {
-
     /**
      * Set traceLevel to 1 to see which rules are being applied and also
      * any bricks identified.
@@ -111,6 +111,17 @@ public class Grammar
         }
         Polylist stack;
         int numSlotsToFill;
+        
+        public boolean moreToDo()
+        {
+            return numSlotsToFill > 0 && stack.nonEmpty();
+        }
+        
+        @Override
+        public String toString()
+          {
+          return "slotsToFill = " + numSlotsToFill + " stack = " + stack;
+          }
       }
 
     /**
@@ -183,7 +194,9 @@ public class Grammar
             // entire abstract melody if not trading.
             Polylist stack = addStart(numSlotsToFill);
 
-            ExpansionResult result = innerFill(stack, numSlotsToFill);
+            System.out.println("\nTop Level");
+            ExpansionResult result = outerFill(stack, numSlotsToFill);
+            totalSlotsToFill = result.numSlotsToFill;
 
             if( improVisorFirst && padding > 0 ) // Pad the user's part after
               {
@@ -199,40 +212,32 @@ public class Grammar
                                                 initialNumSlots);
 
     }
-
-    ExpansionResult innerFill(Polylist stack, int numSlotsToFill)
+/**
+ * outerFill refills the stack if numSlotsToFill > 0
+ * @param stack
+ * @param numSlotsToFill
+ * @return 
+ */
+ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
     {
-        Polylist initialStack = stack;
+        Polylist originalStack = stack;
+        ExpansionResult result = new ExpansionResult(stack, numSlotsToFill);
         while( numSlotsToFill > 0 )
           {
-            // stack is a list representing the undeveloped frontier of the rhs tree
-            // symbols in stack are expanded one at a time, left-to-right
-            // As non-terminal are expanded, the RHS replaces the non-terminal
-            // on the left of stack.
-            // If the top of stack is a terminal, it is flipped over onto 
-            // accumulator, and then appended to terminalBuffer.
-
-            // So the combination of terminalBuffer and stack represent the total
-            // frontier of the rhs tree.
-            // The variable terminalBuffer is modified implicitly within applyRules.
-            while( numSlotsToFill > 0 && stack.nonEmpty() )
+            System.out.println("outerFill: applyRules " + numSlotsToFill + " " + stack);
+            result = applyRules(stack, numSlotsToFill);
+            System.out.println("outerFill: applyRules result " + terminalBuffer.toPolylist() + " | " + result);
+            
+            numSlotsToFill = result.numSlotsToFill;
+            stack = result.stack;
+            if( stack.isEmpty() )
               {
-                // This gives the best trace of how a grammar expands.
-                //System.out.println("terminalBuffer = " + terminalBuffer.toPolylist() + ", stack = " + stack);
-                ExpansionResult result = applyRules(stack, numSlotsToFill);
-                // need to return numSlotsToFill
-
-                numSlotsToFill = result.numSlotsToFill;
-                stack = result.stack;
+                stack = originalStack;
               }
-
-            if( numSlotsToFill > 0 )
-              {
-                stack = initialStack;
-              }
-          }
-        return new ExpansionResult(stack, numSlotsToFill);
+           }
+        return result;
     }
+        
 
     /**
      * Add terminal to the list of terminals generated, as long as the quota has
@@ -243,14 +248,14 @@ public class Grammar
      */
     private int accumulateTerminal(Object terminal, int numSlotsToFill)
     {
-        //System.out.println("accumulateTerminal " + terminal);
+        //System.out.println("accumulateTerminal " + numSlotsToFill + " " + terminal);
         int duration = getDuration(terminal);
-        if( numSlotsToFill < duration )
-          {
-            //System.out.println("short slots = " + numSlotsToFill + " vs duration " + duration);
-            terminal = new Rest(numSlotsToFill);
-            duration = numSlotsToFill;
-          }
+//        if( numSlotsToFill < duration )
+//          {
+//            //System.out.println("short slots = " + numSlotsToFill + " vs duration " + duration);
+//            terminal = new Rest(numSlotsToFill);
+//            duration = numSlotsToFill;
+//          }
         terminalBuffer.append(terminal);
         chordSlot += duration;
         numSlotsToFill -= duration;
@@ -379,7 +384,7 @@ public class Grammar
           {
             return aList;
           }
-        Polylist firstList = (Polylist) aList.first();
+        Polylist firstList = (Polylist)aList.first();
         if( firstList.first().equals(find) )
           {
             return aList.rest();
@@ -389,6 +394,7 @@ public class Grammar
 
     public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
     {
+        //System.out.println("expandNonTerminal " + slotsToFill + " " + token);
         boolean shareable = false;
         boolean unshare = false;
         switch( wrapperType(token) )
@@ -404,7 +410,8 @@ public class Grammar
                 // Convert to slots
                 int slots = (int) (beats * imp.Constants.BEAT);
                 Polylist innerToken = Polylist.list(token.second());
-                return innerFill(innerToken, slots);
+                ExpansionResult result = outerFill(innerToken, slots);
+                return new ExpansionResult(result.stack, slotsToFill - slots);
 
             case UNSHARE:
                 unshare = true;
@@ -423,7 +430,8 @@ public class Grammar
                     return new ExpansionResult(found.rest(), 0); // 0 is probably wrong
                   }
           }
-        //System.out.println("token = " + token);
+        
+        //System.out.println("no wrapper, token = " + token);
         ArrayList<WeightedRule> ruleList = new ArrayList<>();
         ArrayList<WeightedRule> baseList = new ArrayList<>();
 
@@ -613,7 +621,7 @@ public class Grammar
                     cache = cache.cons(newCacheItem);
                     //System.out.println("sharing " + newCacheItem + " giving shareable " + cache);
                   }
-                return new ExpansionResult(expansion, 0);
+                return new ExpansionResult(expansion, slotsToFill);
               }
           }
         return null;
@@ -629,6 +637,7 @@ public class Grammar
      */
     public ExpansionResult applyRules(Polylist stack, int numSlotsToFill)
     {
+        //System.out.println("applyRules " + numSlotsToFill + " " + stack);
         Object token = stack.first();
         stack = stack.rest();
 
@@ -659,21 +668,17 @@ public class Grammar
           {
             token = Polylist.list(token);
           }
+        
         ExpansionResult result = expandNonTerminal((Polylist) token,
                                                    numSlotsToFill);
-        if( result == null )
+        if( result == null ) // How can this happen?
           {
             return new ExpansionResult(stack, numSlotsToFill);
           }
-
+        //System.out.println("after expandNonTerminal " + result);
+        numSlotsToFill = result.numSlotsToFill;
         Polylist expansion = result.stack;
-        //System.out.println("expansion of " + token + " =  " + expansion);
-        //cache = Polylist.nil; // empty cache for this rhs
 
-        if( expansion == null )
-          {
-            return new ExpansionResult(stack, numSlotsToFill);
-          }
         stack = expansion.append(stack);
         //System.out.println("stack = " + stack);
         // May need to return numSlotsToFill as well
@@ -1065,7 +1070,6 @@ public int saveGrammar(String filename)
      */
     class WeightedRule
       {
-
         Polylist lhs;
         Polylist rhs;
         double weight;
