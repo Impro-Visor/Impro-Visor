@@ -51,7 +51,7 @@ public class CreateMotifGrammar {
     private static final String START_ISOLATED = "START_Motif";
     
     private static final String START_MOTIF = "UseMotif";
-    private static final String START       = "P";
+    private static final String START       = "P_motif";
     private static final String NON_MOTIF_CLUSTER = "Motif_X";
     private static final String STD_GRAMMAR_START = "Q";
     
@@ -97,7 +97,7 @@ public class CreateMotifGrammar {
         double normMotifProb = motifness > 0 ? motifness : 0.1;
         double Z = P_TILD_GRAMMAR / (1 - normMotifProb);
         double Y = Z*normMotifProb;
-        if(TESTING) System.err.printf("NOrmalized: %02.2f\tUnnormalized: %02.2f\n", Y, normMotifProb);
+        if(TESTING) System.err.printf("Normalized: %02.2f\tUnnormalized: %02.2f\n", Y, normMotifProb);
         MOTIF_PROBABILITY = Y;
         
         
@@ -437,9 +437,9 @@ public class CreateMotifGrammar {
         
         
         // create and add rule from start state into motifs (this lets us control amount of motifs to use at solo generation time)
-        Polylist entrance = Polylist.list("rule", Polylist.list(START, "Y"), Polylist.list(startSymbol), df.format(MOTIF_PROBABILITY));
+//        Polylist entrance = Polylist.list("rule", Polylist.list(START, "Y"), Polylist.list(startSymbol), df.format(MOTIF_PROBABILITY));
 
-        temp.add(entrance);
+//        temp.add(entrance);
         
         return temp.toArray(new Polylist[temp.size()]);
 

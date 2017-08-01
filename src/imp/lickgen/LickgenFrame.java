@@ -352,6 +352,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         learningStep0Label = new javax.swing.JLabel();
         emptyBaseLearningButton = new javax.swing.JRadioButton();
         selectBaseLearningButton = new javax.swing.JRadioButton();
+        emptyMotifBaseLearningButton = new javax.swing.JRadioButton();
         windowParametersPanel = new javax.swing.JPanel();
         windowSizeLabel = new javax.swing.JLabel();
         windowSlideLabel = new javax.swing.JLabel();
@@ -2093,12 +2094,22 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         learningBaseButtonGroup.add(selectBaseLearningButton);
         selectBaseLearningButton.setLabel("Select grammar to be used as base.");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.weightx = 0.5;
         topGrammarLearningPanel.add(selectBaseLearningButton, gridBagConstraints);
+
+        learningBaseButtonGroup.add(emptyMotifBaseLearningButton);
+        emptyMotifBaseLearningButton.setText("Use _emptyMotif.grammar as a base.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.weightx = 0.5;
+        topGrammarLearningPanel.add(emptyMotifBaseLearningButton, gridBagConstraints);
 
         grammarLearningPanel.add(topGrammarLearningPanel, new java.awt.GridBagConstraints());
 
@@ -6413,13 +6424,8 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
 
     private void motifnessGenerationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_motifnessGenerationSliderStateChanged
         
-        double motifProbability = motifnessGenerationSlider.getValue() / 100.0;
-        long pTildGrammar = 1111111;
-        //set probability of selecting a motif. Defaults to 0.1 if given motifness is positive
-        double normMotifProb = motifProbability;
-        double Z = pTildGrammar / (1 - normMotifProb);
-        double Y = Z*normMotifProb;
-        motifProbability = Y;
+        double motifProbability     = motifnessGenerationSlider.getValue() / 100.0;
+        double notMotifProbability  = 1.0 - motifProbability;
         
 //        System.err.println("Motif Probability: " + Y);
         
@@ -6439,10 +6445,13 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
         Polylist finalRules = Polylist.nil;
         
         for(Polylist R = rules; R.nonEmpty(); R = R.rest()){
-            
-            if(((Polylist) R.first()).member(Polylist.list("P", "Y")) && ((Polylist) R.first()).member(Polylist.list(useMotifs))){
-//                System.out.println("Made it into the if...");
-                R.setFirst(((Polylist) R.first()).replaceLast(Y));
+//            System.out.println(R.flatten());
+            if(((Polylist) R.first()).member(Polylist.list("P_motif")) && ((Polylist) R.first()).flatten().member(useMotifs)){
+                System.out.println("Changed motif probability...");
+                R.setFirst(((Polylist) R.first()).replaceLast(motifProbability));
+            } else if (((Polylist) R.first()).member(Polylist.list("P_motif")) && ((Polylist) R.first()).flatten().member("P")) {
+                System.out.println("Changed normal grammar probability...");
+                R.setFirst(((Polylist) R.first()).replaceLast(notMotifProbability));
             }
             
             finalRules.addToEnd(R.first());
@@ -6607,6 +6616,7 @@ private void updateUseSoloist()
     private javax.swing.JLabel durationLabel;
     private javax.swing.JMenuItem editGrammarMI1;
     private javax.swing.JRadioButton emptyBaseLearningButton;
+    private javax.swing.JRadioButton emptyMotifBaseLearningButton;
     private javax.swing.JLabel epochLimitLabel;
     private javax.swing.JTextField epochLimitTextField;
     private javax.swing.JButton fillMelodyButton;
@@ -7026,6 +7036,10 @@ private void initializeGrammarLearning()
     if( emptyBaseLearningButton.isSelected() )
     {
         openGrammar("_empty.grammar");
+    }
+    else if ( emptyMotifBaseLearningButton.isSelected() )
+    {
+        openGrammar("_emptyMotif.grammar");
     }
     else
     {
