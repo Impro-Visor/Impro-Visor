@@ -396,7 +396,7 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
         return drop(aList.rest(), find).cons(firstList);
     }
 
-    public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
+public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
     {
         //System.out.println("expandNonTerminal " + slotsToFill + " " + token);
         boolean shareable = false;
@@ -419,6 +419,7 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
 
             case UNSHARE:
                 unshare = true;
+                // Intentional fall-through
             case SHARE:
                 shareable = true;
 
@@ -431,11 +432,36 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
                       {
                         cache = drop(cache, find);
                       }
-                    return new ExpansionResult(found.rest(), 0); // 0 is probably wrong
+                    return new ExpansionResult(found.rest(), slotsToFill);
                   }
+          } // switch
+        
+        WeightedRule ruleToUse = findRule(token);
+        //System.out.println("ruleToUse = " + ruleToUse);
+        if( ruleToUse == null )
+          {
+            return null;
+          }
+ 
+        if( traceLevel > 0 )
+          {
+            System.out.println(ruleToUse);
+            System.out.println();
           }
         
-        //System.out.println("no wrapper, token = " + token);
+        Polylist expansion = ruleToUse.rhs;
+        if( shareable && !unshare )
+          {
+            // If to be shared, put expansion in cache
+            Polylist newCacheItem = ((Polylist) token).append(expansion);
+            cache = cache.cons(newCacheItem);
+            //System.out.println("sharing " + newCacheItem + " giving shareable " + cache);
+          }
+        return new ExpansionResult(expansion, slotsToFill);
+    }
+        
+    public WeightedRule findRule(Polylist token)
+    {
         ArrayList<WeightedRule> ruleList = new ArrayList<>();
         ArrayList<WeightedRule> baseList = new ArrayList<>();
 
@@ -465,6 +491,7 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
             // If a lhs matches both a RULE and a BASE, it will always choose the BASE.
             // This basically short-circuits any computation and provides an easy way
             // to find base cases.
+            
             if( type.equals(BASE) && next.length() == 4 )
               {
                 //System.out.println("\nbase = " + next);
@@ -608,30 +635,15 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
                 // Use the last rule in the list.
                 ruleToUse = listToUse.get(listSize - 1);
               }
-
-            //System.out.println("ruleToUse = " + ruleToUse);
-            if( ruleToUse != null )
-              {
-                if( traceLevel > 0 )
-                  {
-                    System.out.println(ruleToUse);
-                    System.out.println();
-                  }
-                Polylist expansion = ruleToUse.rhs;
-                if( shareable && !unshare )
-                  {
-                    // If to be shared, put expansion in cache
-                    Polylist newCacheItem = ((Polylist) token).append(expansion);
-                    cache = cache.cons(newCacheItem);
-                    //System.out.println("sharing " + newCacheItem + " giving shareable " + cache);
-                  }
-                return new ExpansionResult(expansion, slotsToFill);
-              }
+            return ruleToUse;
           }
         return null;
     }
+
+
+    
 private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
-{
+    {
         Object token;
 
         // Accumulate any terminal values at the beginning of stack.
@@ -656,7 +668,8 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
             stack = stack.rest();
           }
     return new ExpansionResult(stack, numSlotsToFill);
-}
+    }
+
     /**
      * Pop tokens off the stack stack. Any terminal tokens are pushed onto
      * accumulator. Rules are applied to non-terminals.
@@ -674,28 +687,6 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
         //System.out.println("applyRules " + numSlotsToFill + " " + stack);
         Object token = stack.first();
         stack = stack.rest();
-
-//        // Accumulate any terminal values at the beginning of stack.
-//        while( numSlotsToFill > 0 && isTerminal(token) )
-//          {
-//            if( isWrappedTerminal(token) )
-//              {
-//                numSlotsToFill = accumulateTerminal(((Polylist) token).first(),
-//                                                    numSlotsToFill);
-//              }
-//            else
-//              {
-//                numSlotsToFill = accumulateTerminal(token, numSlotsToFill);
-//              }
-//
-//            if( stack.isEmpty() || numSlotsToFill <= 0 )
-//              {
-//                return new ExpansionResult(stack, numSlotsToFill);
-//              }
-//
-//            token = stack.first();
-//            stack = stack.rest();
-//          }
 
         // token is a non-terminal
         if( !(token instanceof Polylist) )
