@@ -1,0 +1,81 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf390
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green90\blue124;}
+\margl1440\margr1440\vieww10780\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf2 OS X Instructions for SuperCollider Download and Use\cf0 \
+\
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \
+1. Download SuperCollider. Place it into your Applications folder as normal. Here is the link:\
+http://supercollider.sourceforge.net/downloads/\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 1.5. Run SuperCollider to make sure you have permissions to open it. If you have trouble, \
+hold down the control key and click the icon. Click 'Open' from the resulting menu.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 2. Download the plugins for SuperCollider. Here is the link:\
+http://sourceforge.net/projects/sc3-plugins/files/\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 The downloaded folder will be called 'SC3plugins.'\
+- First, navigate to /Library/Application Support/SuperCollider/ and create a folder called Extensions if it doesn't already exist. If you are having trouble finding the folder, do the following:\
+\
+	From the Finder bar, click Go->Go to Folder\
+	Type ~/Library/\
+	Click Application Support, and then click SuperCollider\
+\
+- Check to see if there is a folder called 'Extensions' inside SuperCollider. If not, create a new folder called 'Extensions.' Open the folder.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 -Drag the downloaded SC3plugins folder to this window. Double-click on SC3plugins. If you would like to save some space, for Impro-Visor purposes you only need the folder called 'PitchDetection,' so you can delete the other folders, if you wish. You may exit the Finder window. Your plugins are now ready.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 3. In the same folder containing these instructions, there is a file called 'SCPitchDetection.sc.' Open SuperCollider if you have not already. Inside SuperCollider, open SCPitchDetection.sc. When ready to run it, highlight everything and press enter.\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 ------------------------------------------------------------------------------------------------------------------------\
+------------------------------------------------------------------------------------------------------------------------\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf2 The following instructions are a copy of the ones found in Impro-Visor's Help->Audio Input \
+menu. They deal with using SuperCollider in conjunction with Impro-Visor\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 ------------------------------------------------------------------------------------------------------------------------\
+------------------------------------------------------------------------------------------------------------------------\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 4.Navigate through Go->Utilities->Audio MIDI Setup ->Window->Show MIDI Window->\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 IAC Driver and make sure the box next to 'Device Is Online' is checked. \
+Make sure that 'IAC Bus 1' is selected under 'Ports'. If it only says 'Bus 1,' \
+click the minus sign once and the plus sign once. It should now say 'IAC Bus 1.'\
+\
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \
+5. Plug in your microphone and make sure it is set as your sound-in source.\
+Make sure the sound sensitivity is at a satisfactory level.\
+\
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \
+6. Restart Impro-Visor if it is already running. If not, run Impro-Visor.\
+In Impro-Visor, go to MIDI setup and select 'IAC Bus 1', and then go to the \
+Audio Input tab in MIDI setup and make sure 'Use SuperCollider' is checked.\
+\
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * \
+7. Open the 'SCPitchDetection.sc' file in SuperCollider if it is not already open. Highlight everything (as described above) and press command+enter. Another window will appear to let you select note ranges (in MIDI notes) and attack delay. SuperCollider is now ready (may take a few seconds), so you may start audio capture. You are now ready to start recording (press red circle button in Impro-Visor).\
+\
+\
+\
+PROBLEMS?\
+A troubleshooting page is located in the folder 'sc' under your Impro-Visor folder.}

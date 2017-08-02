@@ -39,6 +39,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -531,10 +532,16 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
                                   notate.getIntFromSpinner(notate.getLeadsheetBassTranspositionSpinner()),
                                   notate.getIntFromSpinner(notate.getChorusMelodyTranspositionSpinner()));
         newScore.setTransposition(transposition);
+        
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        
+        int x = screenSize.width;
+        int y = screenSize.height;
 
         // open a new notate window
         rhythmNotate = //new Notate(newScore, -1, -1);
-               new Notate(newScore, Integer.MAX_VALUE, Integer.MAX_VALUE);
+               new Notate(newScore, x, y);
         rhythmNotate.setTransposition(transposition);
 
         rhythmNotate.makeVisible();

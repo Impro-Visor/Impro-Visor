@@ -257,6 +257,7 @@ public class ActiveTrading {
             stopTrading();
         } else {
             long nextTrig = (long) triggers.get(triggerIndex);
+            //if you passed the point to trigger the next phase
             if (nextTrig <= currentPosition && !loopLock) {
                 if (nextTrig == 0 && !firstPlay && !isLoop) {
                     stopTrading();
@@ -395,6 +396,11 @@ public class ActiveTrading {
         }
         int userStartSlot = triggers.get(userStartIndex);
         MelodyPart melodyPart = notate.getCurrentMelodyPart();
+
+        response = response.quantizeUserMelody(notate.getQuantizationQuanta(),
+                                            notate.getQuantizationSwing(),
+                                            notate.getQuantizationRestAbsorption());
+
         melodyPart.altPasteOver(response, userStartSlot);
         melodyPart.altPasteOver(new MelodyPart(slotsPerTurn), (userStartSlot + slotsPerTurn) % this.adjustedLength);
 

@@ -62,6 +62,8 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     protected int totalNumSavedDatapoints;
     protected ArrayList<RhythmCluster> clusterArray;
     protected int tradeCounter;
+    protected LickGen lg;
+    protected LickgenFrame lgf;
 
     
     
@@ -86,6 +88,8 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         this.clusterArray = new ArrayList<RhythmCluster>();
         this.clusterFileName = retrieveClusterFileName();
         this.numMetrics = (new RhythmMetricListFactory()).getNumMetrics();   
+        this.lg = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(),notate, null);
+        this.lgf = new LickgenFrame(notate, lg, new CommandManager());
     }
     
     
@@ -405,8 +409,8 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     
     
     protected String getAbstractMelody(){
-        LickGen lg = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(),notate, null);
-        LickgenFrame lgf = new LickgenFrame(notate, lg, new CommandManager());
+//        LickGen lg = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(),notate, null);
+//        LickgenFrame lgf = new LickgenFrame(notate, lg, new CommandManager());
 
         String abstractMel = lgf.addMeasureToAbstractMelody(nextSection - 480*4, 16, false, false);
         
@@ -437,8 +441,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         int responseLength = response.getEndTime();
         int ruleSegLength = responseLength / BEAT;
         
-        LickGen lg = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(),notate, null);
-        LickgenFrame lgf = new LickgenFrame(notate, lg, new CommandManager());
+        
         
         
         int startOfUserMelody = nextSection - responseLength;
