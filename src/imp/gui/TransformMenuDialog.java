@@ -15,15 +15,16 @@ public class TransformMenuDialog extends javax.swing.JDialog {
      Notate notate;
      ActiveTradingDialog activeTradingDialog;
      javax.swing.DefaultListModel transformListModel = new javax.swing.DefaultListModel();
+     String musician = "";
     
     /**
      * Creates new form TransformMenuDialog
      */
-    public TransformMenuDialog(ActiveTradingDialog activeTradingDialog, boolean modal) {
-        super(activeTradingDialog, modal);
+    public TransformMenuDialog(Notate notate, boolean modal) {
+        super(notate, modal);
         initComponents();
         this.setTitle("Transform Menu");
-        this.activeTradingDialog = activeTradingDialog;
+        this.notate = notate;
     }
 
     public javax.swing.JList getTransformList()
@@ -48,13 +49,13 @@ public class TransformMenuDialog extends javax.swing.JDialog {
 
         transformListScrollPane = new javax.swing.JScrollPane();
         transformJlist = new javax.swing.JList<>();
-        transformButtonPanel = new javax.swing.JPanel();
-        chosenTransformButton = new javax.swing.JRadioButton();
-        cycleTransformButton = new javax.swing.JRadioButton();
-        shuffleTransformButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(300, 623));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         transformListScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -68,6 +69,7 @@ public class TransformMenuDialog extends javax.swing.JDialog {
         transformJlist.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         transformJlist.setModel(transformListModel);
         transformJlist.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        transformJlist.setToolTipText("");
         transformJlist.setBounds(new java.awt.Rectangle(0, 0, 300, 600));
         transformJlist.setName(""); // NOI18N
         transformJlist.setVisibleRowCount(200);
@@ -87,64 +89,30 @@ public class TransformMenuDialog extends javax.swing.JDialog {
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(transformListScrollPane, gridBagConstraints);
 
-        transformButtonPanel.setName("Transform Menu"); // NOI18N
-        transformButtonPanel.setLayout(new java.awt.GridBagLayout());
-
-        chosenTransformButton.setSelected(true);
-        chosenTransformButton.setText("Chosen");
-        chosenTransformButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chosenTransformButtonActionPerformed(evt);
-            }
-        });
-        transformButtonPanel.add(chosenTransformButton, new java.awt.GridBagConstraints());
-
-        cycleTransformButton.setLabel("Cycle");
-        cycleTransformButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cycleTransformButtonActionPerformed(evt);
-            }
-        });
-        transformButtonPanel.add(cycleTransformButton, new java.awt.GridBagConstraints());
-
-        shuffleTransformButton.setLabel("Shuffle");
-        shuffleTransformButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                shuffleTransformButtonActionPerformed(evt);
-            }
-        });
-        transformButtonPanel.add(shuffleTransformButton, new java.awt.GridBagConstraints());
-
-        getContentPane().add(transformButtonPanel, new java.awt.GridBagConstraints());
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void transformJlistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transformJlistMouseClicked
         //transformAction();
        int index = transformJlist.getSelectedIndex();
-       String musician = (String) transformListModel.getElementAt(index);
-       System.out.println("selected musician: " + musician);
+       musician = (String) transformListModel.getElementAt(index);
+       //System.out.println("selected musician: " + musician);
+       notate.updateMusicianNotate(musician);
+       //activeTradingDialog.setTransformStatusButtonText(musician);
        //activeTradingDialog.updateMusician(musician);
        //activeTradingDialog.getActiveTrading().setMusician(musician);
       // activeTradingDialog.getTransformStatusButton().setText("" + musician);
     }//GEN-LAST:event_transformJlistMouseClicked
+   
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        transformListModel.clear();
+    }//GEN-LAST:event_formWindowClosed
 
-    private void chosenTransformButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chosenTransformButtonActionPerformed
-        //mode = CHOSEN;
-        //grammarAction();
-    }//GEN-LAST:event_chosenTransformButtonActionPerformed
-
-    private void cycleTransformButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cycleTransformButtonActionPerformed
-        //mode = CYCLE;
-        //grammarAction();
-    }//GEN-LAST:event_cycleTransformButtonActionPerformed
-
-    private void shuffleTransformButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shuffleTransformButtonActionPerformed
-        //mode = SHUFFLE;
-        //grammarAction();
-    }//GEN-LAST:event_shuffleTransformButtonActionPerformed
-
+    public String getMusicianName()
+    {
+        return musician;
+    }
+    
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -188,10 +156,6 @@ public class TransformMenuDialog extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton chosenTransformButton;
-    private javax.swing.JRadioButton cycleTransformButton;
-    private javax.swing.JRadioButton shuffleTransformButton;
-    private javax.swing.JPanel transformButtonPanel;
     private javax.swing.JList<String> transformJlist;
     private javax.swing.JScrollPane transformListScrollPane;
     // End of variables declaration//GEN-END:variables

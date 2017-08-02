@@ -150,6 +150,7 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         grammarJlist.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         grammarJlist.setModel(grammarListModel);
         grammarJlist.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        grammarJlist.setToolTipText("");
         grammarJlist.setBounds(new java.awt.Rectangle(0, 0, 300, 600));
         grammarJlist.setVisibleRowCount(200);
         grammarJlist.addMouseListener(new java.awt.event.MouseAdapter() {

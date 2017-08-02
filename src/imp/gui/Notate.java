@@ -665,7 +665,6 @@ GrammarMenuDialog grammarMenuDialog;
 DefaultListModel grammarListModel;
 JList transformList;
 TransformMenuDialog transformMenuDialog;
-ActiveTradingDialog activeTradingDialog;
 DefaultListModel transformListModel;
 
 /**
@@ -988,7 +987,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     passiveTradingDialog.setSize(800, 200);
     passiveTradingDialog.setVisible(false);
     
-    transformMenuDialog = new TransformMenuDialog(activeTradingDialog, false);
+    transformMenuDialog = new TransformMenuDialog(this, false);
     transformList = transformMenuDialog.getTransformList();
     transformListModel = transformMenuDialog.getTransformListModel();
     
@@ -2115,7 +2114,6 @@ public Critic getCritic()
         adviceDialog.setAlwaysOnTop(true);
         adviceDialog.setMinimumSize(new java.awt.Dimension(730, 400));
         adviceDialog.setName("adviceDialog"); // NOI18N
-        adviceDialog.setPreferredSize(new java.awt.Dimension(730, 500));
         adviceDialog.setSize(new java.awt.Dimension(730, 400));
         adviceDialog.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -23072,10 +23070,8 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     public void openTransformMenuDialog()
     {
         transformMenuDialog.setVisible(true);
-        populateMusicianList();
     }
     
-    String x = "";
     public void populateMusicianList() 
     {
         File directory = ImproVisor.getTransformDirectory();
@@ -23100,30 +23096,19 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
                 if (name.endsWith(TransformFilter.EXTENSION)) 
                 {
                     int len = name.length();
-                    String x = name.substring(0, len - TransformFilter.EXTENSION.length());
-                    //JRadioButtonMenuItem newMusician = new JRadioButtonMenuItem();
-                    //newMusician.setText(stem);
-                    //newMusician.addActionListener(this);
-                    //newMusician.setSelected(true);
-                    //transformFileSelector.add(newMusician);
-                    //tradeMusicianMenu.add(newMusician);
-                    transformMenuDialog.getTransformListModel().addElement(x);
-                    //activeTradingDialog.getTransformStatusButton().setText("" + stem);
+                    String musician = name.substring(0, len - TransformFilter.EXTENSION.length());
+                    transformMenuDialog.getTransformListModel().addElement(musician);
                 }
             }
         }
-       // updateMusician();
-       //activeTradingDialog.getTransformStatusButton().setText("" + x);
-       
     }
     
-//    public void updateMusician(String newMusician)
-//    {
-//        String temp = newMusician;
-//        activeTrading.setMusician(temp);
-//        transformStatusButton.setText("" + temp);
-//        
-//    }
+    public void updateMusicianNotate(String newMusician)
+    {
+        traderDialog.getActiveTrading().setMusician(newMusician);
+        traderDialog.setTransformStatusButtonText(newMusician);
+    }
+    
     public String getGrammarName()
     {
         return grammarMenuDialog.getGrammarName();

@@ -130,6 +130,7 @@
               <Connection code="grammarListModel" type="code"/>
             </Property>
             <Property name="selectionMode" type="int" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
               <Rectangle value="[0, 0, 300, 600]"/>
             </Property>
