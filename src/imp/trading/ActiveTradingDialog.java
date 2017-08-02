@@ -50,6 +50,7 @@ import imp.util.Preferences;
 import imp.util.TransformFilter;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -58,6 +59,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -84,6 +86,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private JPanel rhythmHelperModeRadioPanel;
     JRadioButton suggestRhythmRadioButton;
     JRadioButton correctRhythmRadioButton;
+    private JButton cancelButton;
     
     /**
      * Creates new form ActiveTradingDialog
@@ -96,6 +99,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         initComponents();
         activeTrading = new ActiveTrading(notate, swingCheckBox);
         rhythmHelperModeRadioPanel = createRhythmHelperModeRadioPanel();
+        cancelButton = createCancelButton();
+        playbackControls.add(cancelButton);
         this.addRhythmHelperModeRadioPanel();
         transformMenuDialog = new TransformMenuDialog (notate, false);
         
@@ -677,6 +682,13 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
           }
         else
           {
+            if(activeTrading.getTradeMode() instanceof RhythmHelperTRM){
+                loopToggle.setVisible(false);
+                countToggle.setVisible(false);
+                System.out.println("about to make cancel button visible");
+                cancelButton.setVisible(true);
+                System.out.println("cancel button is visible: "+ cancelButton.isVisible());
+            }
             startTrading();
           }
     }//GEN-LAST:event_startOrStopTradingButtonActionPerformed
@@ -853,6 +865,16 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     
     public void stopTrading()
     {
+        if(cancelButton.isVisible()){
+                loopToggle.setVisible(true);
+                countToggle.setVisible(true);
+                System.out.println("about to make cancel button invisible");
+                cancelButton.setVisible(false);
+                System.out.println("cancel button is visible: "+ cancelButton.isVisible());
+                
+        }
+        
+        
         activeTrading.stopTrading(); 
         tradingNow = false;
         notate.setNotToTrade();
@@ -906,13 +928,13 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             case "Chop and Memorize":
                 tradeMode = new ChopAndMemorizeTRM(newMode);
                 break;
-            case "Autoencoder (Experimental)":
-                tradeMode = new AutoencoderTRM(newMode); 
-                //these parameters aren't used for Autoenoder trade, so make them invisible
-                tradeLengthSpinner.setVisible(false);
-                grammarStatusButton.setVisible(false);
-                transformStatusButton.setVisible(false);
-                break;
+//            case "Autoencoder (Experimental)":
+//                tradeMode = new AutoencoderTRM(newMode); 
+//                //these parameters aren't used for Autoenoder trade, so make them invisible
+//                tradeLengthSpinner.setVisible(false);
+//                grammarStatusButton.setVisible(false);
+//                transformStatusButton.setVisible(false);
+//                break;
 //            case "Stream Repeat":
 //                tradeMode = new StreamRepeatTRM(newMode);
 //                grammarStatus.setVisible(false);
@@ -967,7 +989,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
    
         System.out.println("rhythm cluster name: " + notate.getRhythmClusterName());
         
-        grammarStatusButton.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
+        ((javax.swing.border.TitledBorder)grammarStatusButton.getBorder()).setTitle("Rhythm Cluster");
+        grammarStatusButton.setText(notate.getRhythmClusterName());
+        //grammarStatusButton.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
         
         System.out.println("setting text for trade grammar menu to rhythmCluster....");
         tradeGrammarMenu.setText("RhythmCluster");
@@ -1120,7 +1144,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
      private void addRhythmHelperModeRadioPanel(){
         GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         
         modePanel.add(rhythmHelperModeRadioPanel, gridBagConstraints);
@@ -1153,9 +1177,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         suggestRhythmRadioButton.addActionListener(new ActionListener(){
           @Override
           public void actionPerformed(ActionEvent e){
-              System.out.println("\n\ncalling action listener for suggestRhythmRadioButton");
-              System.out.println("correctRhythmRadioButton selected? " + correctRhythmRadioButton.isSelected());
-              System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
+//              System.out.println("\n\ncalling action listener for suggestRhythmRadioButton");
+//              System.out.println("correctRhythmRadioButton selected? " + correctRhythmRadioButton.isSelected());
+//              System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
             if(suggestRhythmRadioButton.isSelected()){
                 activeTrading.setTradeMode(new SuggestRhythmTRM("Suggest Rhythm"));
                 toggleTradeFirstButtons(activeTrading.getTradeMode());
@@ -1166,9 +1190,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         correctRhythmRadioButton.addActionListener(new ActionListener(){
           @Override
           public void actionPerformed(ActionEvent e){
-              System.out.println("\n\ncalling action listener for correctRhythmRadioButton");
-              System.out.println("correctRhythmRadioButton selected? " + correctRhythmRadioButton.isSelected());
-              System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
+//              System.out.println("\n\ncalling action listener for correctRhythmRadioButton");
+//              System.out.println("correctRhythmRadioButton selected? " + correctRhythmRadioButton.isSelected());
+//              System.out.println("suggestRhythmRadioButton selected? " + suggestRhythmRadioButton.isSelected());
             if(correctRhythmRadioButton.isSelected()){
                 activeTrading.setTradeMode(new CorrectRhythmTRM("Correct Rhythm"));
                 toggleTradeFirstButtons(activeTrading.getTradeMode());
@@ -1177,6 +1201,31 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         } );
     }
     
+    private JButton createCancelButton(){
+        JButton cButton = new JButton("Cancel");
+        cButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        cButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cButton.setMaximumSize(new java.awt.Dimension(140, 28));
+        cButton.setMinimumSize(new java.awt.Dimension(140, 28));
+        cButton.setPreferredSize(new java.awt.Dimension(140, 28));
+        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/redX.png"));
+        Image img = icon.getImage() ;  
+        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;  
+        icon = new ImageIcon( newimg );
+        cButton.setIcon(icon); // NOI18N
+        cButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                if(tradingNow){
+                    stopTrading();
+                }
+            }
+        });
+    
+        cButton.setVisible(false);
+        
+        return cButton;
+    }
     
     private TradingResponseMode getRhythmHelperSelectedTRM(){
         if(suggestRhythmRadioButton.isSelected()){
