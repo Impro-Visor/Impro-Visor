@@ -288,7 +288,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         grammarStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         grammarStatusButton.setToolTipText("Click to select grammar.");
         grammarStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        grammarStatusButton.setBounds(new java.awt.Rectangle(0, 0, 170, 45));
         grammarStatusButton.setMaximumSize(new java.awt.Dimension(170, 45));
         grammarStatusButton.setMinimumSize(new java.awt.Dimension(170, 45));
         grammarStatusButton.setPreferredSize(new java.awt.Dimension(210, 45));
@@ -927,6 +926,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
                 
                 break;
             case "Memorize Motifs":
+                transformStatusButton.setVisible(false);
                 tradeMode = new MemorizeMotifsTRM(newMode, notate);
                 break;
             default:
@@ -946,8 +946,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         if(tradeMode.equals("Rhythm Helper")){
             createRhythmClusterMenuAndStatus();
         }else{
-            notate.populateNotateGrammarMenu();
-            notate.populateGenericGrammarMenu(tradeGrammarMenu);
+//            notate.populateNotateGrammarMenu();
+//            notate.populateGenericGrammarMenu(tradeGrammarMenu);
             refreshSelectedGrammar("Grammar");
            
         }
