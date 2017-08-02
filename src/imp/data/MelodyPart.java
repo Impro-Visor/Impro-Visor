@@ -22,7 +22,6 @@ package imp.data;
 
 import imp.style.Style;
 import imp.midi.MidiSynth;
-import imp.midi.MidiImport;
 import imp.midi.MidiSequence;
 import static imp.Constants.knownNoteValue;
 import imp.ImproVisor;
@@ -31,6 +30,7 @@ import imp.gui.Notate;
 import imp.util.ErrorLog;
 import imp.util.Preferences;
 import imp.util.Trace;
+import polya.Polylist;
 import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -1773,6 +1773,23 @@ public int getInitialBeatsRest()
     }
   return buffer.toString();
   }
+ 
+ public String toDurations()
+  {
+  StringBuilder buffer = new StringBuilder();
+
+  int n = slots.size();
+  for( int i = 0; i < n; i++ )
+    {
+    Note note = (Note)slots.get(i);
+    if( note != null )
+      {
+      buffer.append(note.getDurationString());
+      buffer.append(" ");
+      }
+    }
+  return buffer.toString();
+  }
 
  public void printNotesAtSlots(){
      int n = slots.size();
@@ -1859,7 +1876,7 @@ public void setAutoFill(boolean fill)
     autoFill = fill;
 }
 
-        /**
+    /**
      * prints the pitch, slot, duration, and cost of each Note in a MelodyPart
      * and creates a LinkedList of these Notes
      * @return LinkedList <Note> result
@@ -2646,6 +2663,10 @@ public static int gcd(int a, int b)
           }
     }
     
+/**
+ * Transpose this MelodyPart in-place by the indicated number of semitones.
+ * @param transposition
+ */
 public void transposeInPlace(int transposition)
     {
     PartIterator it = iterator();
@@ -2657,5 +2678,39 @@ public void transposeInPlace(int transposition)
              note.transposeInPlace(transposition);
           }
       } 
+    }
+
+/**
+ * From this MelodyPart, create a new MelodyPart with the same pitches,
+ * but a new rhythm.
+ * @param rhythm
+ * @return 
+ */
+public MelodyPart newRhythm(Polylist rhythm)
+    {
+    if( rhythm.isEmpty() )
+      {
+        return copy();
+      }
+    PartIterator iter = this.iterator();
+    Polylist remaining = rhythm;
+    MelodyPart newPart = new MelodyPart();
+    while( iter.hasNext() )
+      {
+        if( remaining.isEmpty() )
+          {
+            remaining = rhythm; // restart
+          }
+        Note n = ((Note) iter.next());
+        Object ob = remaining.first();
+        String string = ob instanceof String ? (String)ob : ob.toString();
+ 
+        int duration = Duration.getDuration(string);
+        n = n.copy();
+        n.setRhythmValue(duration);
+        newPart.addNote(n);
+        remaining = remaining.rest();
+      }
+    return newPart;
     }
 }

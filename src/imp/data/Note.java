@@ -1095,6 +1095,11 @@ public static String getDurationString(int value)
   return buffer.toString().substring(1);
 }
 
+public String getDurationString()
+{
+    return getDurationString(rhythmValue);
+}
+
 public static int getDurationString(StringBuilder bufferOut, int value)
   {
   // Note: The first '+' in buffer will eventually be discarded.

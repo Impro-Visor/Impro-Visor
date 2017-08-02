@@ -23,7 +23,7 @@ package imp.data.advice;
 
 import imp.data.Note;
 import imp.data.NoteSymbol;
-import imp.data.Part;
+import imp.data.MelodyPart;
 import polya.*;
 
 /**
@@ -69,8 +69,8 @@ public class ApproachAdvice extends Advice {
      * Converts the Advice into a Part and returns that
      * @return Part     the Advice in Part form, ready to be inserted
      */
-    public Part getPart() {
-        Part newPart = new Part();
+    public MelodyPart getPart() {
+        MelodyPart newPart = new MelodyPart();
         Note appNote = approach.toNote(); //Key.makeNote(approach, C4, APPROACH_DURATION);
         Note tarNote = target.toNote(); // Key.makeNote(target, C4, TARGET_DURATION);
         int diff = appNote.getPitch() - tarNote.getPitch();
