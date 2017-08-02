@@ -24,6 +24,7 @@ import imp.data.Key;
 import imp.data.Leadsheet;
 import imp.data.MelodyPart;
 import imp.data.Note;
+import imp.data.NoteSymbol;
 import imp.data.Part;
 import imp.data.PitchClass;
 import imp.data.Unit;
@@ -125,6 +126,22 @@ public class AdviceForMelody extends Advice {
         this.newPart = mp;
     }
     
+    /**
+     * Converts the Advice into a Part and returns that
+     * @param targetMIDI  the center for which to transpose the part 
+     * @param rhythm if non-empty, is used to change the rhythm of this
+     * AdviceForMelody
+     * @return Part       the Advice in Part form, ready to be inserted
+     */
+    @Override
+    public MelodyPart getPart(int targetMIDI, Polylist rhythm) {
+        if( rhythm.nonEmpty() )
+          {
+            return transpose(targetMIDI).newRhythm(rhythm);
+          }
+        return transpose(targetMIDI);
+    }
+
     /**
      * Converts the Advice into a Part and returns that
      * @param targetMIDI  the center for which to transpose the part 

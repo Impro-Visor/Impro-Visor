@@ -78,7 +78,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 0);
     UserRhythmSelecterDialog userRhythmSelecterDialog;
     TradingGoalsDialog userGoalsDialog;
-
+    TransformMenuDialog transformMenuDialog;
+    
     private final Notate notate;
     private JPanel rhythmHelperModeRadioPanel;
     JRadioButton suggestRhythmRadioButton;
@@ -96,9 +97,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         activeTrading = new ActiveTrading(notate, swingCheckBox);
         rhythmHelperModeRadioPanel = createRhythmHelperModeRadioPanel();
         this.addRhythmHelperModeRadioPanel();
+        transformMenuDialog = new TransformMenuDialog (notate, false);
         
         notate.populateGenericGrammarMenu(tradeGrammarMenu);
-        populateMusicianList();
+        notate.populateMusicianList();
         Component[] modes = modeMenu.getMenuComponents();
         for (Component c : modes) {
             JRadioButtonMenuItem mode = (JRadioButtonMenuItem) c;
@@ -162,7 +164,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeAutoencoder = new javax.swing.JRadioButtonMenuItem();
         RhythmHelperMenuItem = new javax.swing.JRadioButtonMenuItem();
         MemorizeMotifsMenuItem = new javax.swing.JRadioButtonMenuItem();
-        tradeMusicianMenu = new javax.swing.JMenu();
         tradeGrammarMenu = new javax.swing.JMenu();
         tradePlayMenu = new javax.swing.JMenu();
         tradePlayMenuItem = new javax.swing.JMenuItem();
@@ -173,7 +174,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         setBounds(new java.awt.Rectangle(25, 0, 850, 220));
         setLocation(new java.awt.Point(25, 0));
         setMinimumSize(new java.awt.Dimension(850, 220));
-        setPreferredSize(new java.awt.Dimension(850, 220));
         setSize(new java.awt.Dimension(850, 220));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -286,6 +286,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         grammarStatusButton.setBackground(new java.awt.Color(255, 255, 255));
         grammarStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        grammarStatusButton.setToolTipText("Click to select grammar.");
         grammarStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         grammarStatusButton.setMaximumSize(new java.awt.Dimension(170, 45));
         grammarStatusButton.setMinimumSize(new java.awt.Dimension(170, 45));
@@ -302,6 +303,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         modePanel.add(grammarStatusButton, gridBagConstraints);
 
         transformStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        transformStatusButton.setToolTipText("Click to select trade musician.");
         transformStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transform", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         transformStatusButton.setPreferredSize(new java.awt.Dimension(210, 45));
         transformStatusButton.addActionListener(new java.awt.event.ActionListener() {
@@ -607,9 +609,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         mainTradeMenuBar.add(modeMenu);
 
-        tradeMusicianMenu.setText("Transform ");
-        mainTradeMenuBar.add(tradeMusicianMenu);
-
         tradeGrammarMenu.setText("Grammar");
         mainTradeMenuBar.add(tradeGrammarMenu);
 
@@ -767,6 +766,12 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
      {
          return activeTrading;
      }
+    
+    public void setTransformStatusButtonText(String musicianName)
+    {
+        //System.out.println("setTransformStatusButtonText to " + musicianName);
+        transformStatusButton.setText(musicianName + "");
+    }
      
      public JButton getTransformStatusButton()
      {
@@ -996,17 +1001,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     private void updateMusician() 
     {
-        String newMusician = getFromDropDown(tradeMusicianMenu);
+        String newMusician = transformMenuDialog.getMusicianName();
         activeTrading.setMusician(newMusician);
         transformStatusButton.setText("" + newMusician);
-    }
-    
-    public void updateMusician(String newMusician)
-    {
-        String temp = newMusician;
-        activeTrading.setMusician(temp);
-        transformStatusButton.setText("" + temp);
-        System.out.println("update musician (string) ended");
     }
 
     private void updateVolume() {
@@ -1056,46 +1053,46 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     }
 
     
-    public void populateMusicianList() 
-    {
-        File directory = ImproVisor.getTransformDirectory();
-        //System.out.println("populating from " + directory);
-        if (directory.isDirectory()) 
-        {
-            String fileName[] = directory.list();
-
-            // 6-25-13 Hayden Blauzvern
-            // Fix for Linux, where the file list is not in alphabetic order
-            Arrays.sort(fileName, new Comparator<String>() 
-            {
-                public int compare(String s1, String s2) 
-                {
-                    return s1.toUpperCase().compareTo(s2.toUpperCase());
-                }
-
-            });
-
-            // Add names of grammar files
-            for (String name : fileName) 
-            {
-                if (name.endsWith(TransformFilter.EXTENSION)) 
-                {
-                    int len = name.length();
-                    String stem = name.substring(0, len - TransformFilter.EXTENSION.length());
-                    JRadioButtonMenuItem newMusician = new JRadioButtonMenuItem();
-                    newMusician.setText(stem);
-                    newMusician.addActionListener(this);
-                    newMusician.setSelected(true);
-                    transformFileSelector.add(newMusician);
-                    tradeMusicianMenu.add(newMusician);
-                    //transformMenuDialog.getTransformListModel().addElement(stem);
-                    //System.out.println("transform list just added: " + stem);
-
-                }
-            }
-        }
-        updateMusician();
-    }
+//    public void populateMusicianList() 
+//    {
+//        File directory = ImproVisor.getTransformDirectory();
+//        //System.out.println("populating from " + directory);
+//        if (directory.isDirectory()) 
+//        {
+//            String fileName[] = directory.list();
+//
+//            // 6-25-13 Hayden Blauzvern
+//            // Fix for Linux, where the file list is not in alphabetic order
+//            Arrays.sort(fileName, new Comparator<String>() 
+//            {
+//                public int compare(String s1, String s2) 
+//                {
+//                    return s1.toUpperCase().compareTo(s2.toUpperCase());
+//                }
+//
+//            });
+//
+//            // Add names of grammar files
+//            for (String name : fileName) 
+//            {
+//                if (name.endsWith(TransformFilter.EXTENSION)) 
+//                {
+//                    int len = name.length();
+//                    String stem = name.substring(0, len - TransformFilter.EXTENSION.length());
+//                    JRadioButtonMenuItem newMusician = new JRadioButtonMenuItem();
+//                    newMusician.setText(stem);
+//                    newMusician.addActionListener(this);
+//                    newMusician.setSelected(true);
+//                    transformFileSelector.add(newMusician);
+//                    tradeMusicianMenu.add(newMusician);
+//                    //transformMenuDialog.getTransformListModel().addElement(stem);
+//                    //System.out.println("transform list just added: " + stem);
+//
+//                }
+//            }
+//        }
+//        updateMusician();
+//    }
 
     public void tradingStarted() {
         startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
@@ -1217,7 +1214,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JRadioButtonMenuItem tradeGrammarSolo;
     private javax.swing.JPanel tradeLengthPanel;
     private javax.swing.JSpinner tradeLengthSpinner;
-    private javax.swing.JMenu tradeMusicianMenu;
     private javax.swing.JMenu tradePlayMenu;
     private javax.swing.JMenuItem tradePlayMenuItem;
     private javax.swing.JRadioButtonMenuItem tradeRandomModify;

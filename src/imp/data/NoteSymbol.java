@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,8 @@ public class NoteSymbol extends MelodySymbol
     
 
     private String stringRep;
+    
+    public static String DEFAULT_PITCH_SYMBOL = "c+";
 
     /**
      * used in lick generation
@@ -634,6 +636,11 @@ public class NoteSymbol extends MelodySymbol
      {
      return duration;
      }
+   
+   public String getDurationString()
+     {
+       return Note.getDurationString(duration);
+     }
 
     /**
      * Return the PitchClass for this NoteSymbol
@@ -761,7 +768,16 @@ public static Polylist makeNoteSymbolList(Polylist stringList, int rise)
           }
         else
           {
-            String string = (String) stringList.first();
+            String string;
+            if( ob instanceof Long )
+              {
+                // Make an integer into a note for subsequent use
+                string = DEFAULT_PITCH_SYMBOL + ob.toString();
+              } 
+            else
+              {
+              string = (String) ob;
+              }
             NoteSymbol ns = makeNoteSymbol(string);
             if( ns != null ) // Ignore invalid NoteSymbol
               {
