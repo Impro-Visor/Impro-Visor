@@ -61,5 +61,9 @@ public class LeadsheetImageListModel extends AbstractListModel {
             numRemovedSoFar++;
         }
     }
+    
+    public ArrayList<RhythmSelecterEntry> getEntries(){
+        return this.entries;
+    }
 }
 

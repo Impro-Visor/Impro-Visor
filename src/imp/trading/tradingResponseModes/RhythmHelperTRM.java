@@ -9,10 +9,13 @@ import static imp.Constants.BEAT;
 import imp.ImproVisor;
 import imp.com.CommandManager;
 import imp.com.RectifyPitchesCommand;
+import imp.data.Chord;
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.RhythmCluster;
+import imp.data.Score;
+import imp.data.Transposition;
 import imp.generalCluster.Centroid;
 import imp.generalCluster.Cluster;
 import imp.generalCluster.CreateGrammar;
@@ -40,6 +43,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import javax.swing.SwingUtilities;
 import polya.Polylist;
 
 /**
@@ -64,7 +72,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     protected int tradeCounter;
     protected LickGen lg;
     protected LickgenFrame lgf;
-
+    protected Future<Notate> futureInvisibleNotate;
     
     
     public RhythmHelperTRM(String message) {
@@ -90,6 +98,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         this.numMetrics = (new RhythmMetricListFactory()).getNumMetrics();   
         this.lg = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(),notate, null);
         this.lgf = new LickgenFrame(notate, lg, new CommandManager());
+        this.futureInvisibleNotate = notate.getFutureInvisibleNotate();
     }
     
     
@@ -784,5 +793,9 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
         
         return d;
     }
+    
+     public Future<Notate> getFutureInvisibleNotate(){
+         return futureInvisibleNotate;
+        }
     
 }

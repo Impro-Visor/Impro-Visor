@@ -831,7 +831,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             updateTradeMode();
             
             if(activeTrading.getTradeMode() instanceof CorrectRhythmTRM){
-                activeTrading.showGoalsDialog();
+                activeTrading.showGoalsDialog(this);
                  
             }else{  
             activeTrading.startTrading();
@@ -851,7 +851,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         userRhythmSelecterDialog.setVisible(true);
     }
     
-    private void stopTrading()
+    public void stopTrading()
     {
         activeTrading.stopTrading(); 
         tradingNow = false;
@@ -919,6 +919,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 //                transformStatus.setVisible(false);
 //                break;
             case "Rhythm Helper":
+                grammarStatusButton.setVisible(false);
                 transformStatusButton.setVisible(false);
                 rhythmHelperModeRadioPanel.setVisible(true);
                 tradeMode = getRhythmHelperSelectedTRM();
@@ -1253,4 +1254,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     public JRadioButton getCorrectRhythmRadioButton(){
         return correctRhythmRadioButton;
     }
+    
+    
 }

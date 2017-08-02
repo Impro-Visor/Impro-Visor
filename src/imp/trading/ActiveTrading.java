@@ -103,7 +103,8 @@ public class ActiveTrading {
     public enum TradePhase {
         USER_TURN,
         PROCESS_INPUT,
-        COMPUTER_TURN
+        COMPUTER_TURN,
+        NONE
     }
 
     /**
@@ -477,18 +478,27 @@ public class ActiveTrading {
     }
 
     
-    public void showGoalsDialog(){
+    public void showGoalsDialog(ActiveTradingDialog activeTradingDialog){
+        notifyListeners(true);
+        //make this more general      
+        phase = TradePhase.NONE;
+        
         scoreLength = notate.getScoreLength();
         slotsPerMeasure = notate.getScore().getSlotsPerMeasure();
         metre = notate.getScore().getMetre();
         slotsPerTurn = measures * slotsPerMeasure;
+        adjustedLength = scoreLength - (scoreLength % slotsPerTurn);
+        numberOfTurns = adjustedLength / slotsPerTurn;
+        
+        triggerIndex = 0;
+        populateTriggers();
         try {
             tradeResponseController = new TradingResponseController(notate, metre, slotsPerTurn, tradeMode);
         } catch (ExceptionTradeModeNotFound ex) {
             Logger.getLogger(ActiveTrading.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        showTradingGoalsDialog();
+        showTradingGoalsDialog(activeTradingDialog);
     }
     
     public void startTradingFromTradingGoalsDialog(){
@@ -559,8 +569,8 @@ public class ActiveTrading {
     }
     
     
-    private void showTradingGoalsDialog(){
-        TradingGoalsDialog userGoalsDialog = new TradingGoalsDialog(tradeMode, this);
+    private void showTradingGoalsDialog(ActiveTradingDialog activeTradingDialog){
+        TradingGoalsDialog userGoalsDialog = new TradingGoalsDialog(tradeMode, activeTradingDialog);
         userGoalsDialog.setLocation(TradingGoalsDialog.INITIAL_OPEN_POINT);
         userGoalsDialog.setSize(800, 400);
         userGoalsDialog.setVisible(true);              

@@ -5,6 +5,10 @@
  */
 package imp.data;
 
+import imp.gui.Notate;
+import static imp.gui.Notate.DEFAULT_BARS_PER_PART;
+import imp.trading.UserRhythmSelecterDialog;
+import imp.util.Preferences;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.BorderFactory;
@@ -21,7 +25,9 @@ import javax.swing.border.Border;
 public class RhythmListCellRenderer extends JLabel implements ListCellRenderer<RhythmSelecterEntry> {
 
     private Border border;
-    public RhythmListCellRenderer(){
+
+    
+    public RhythmListCellRenderer(Notate notate){
         setOpaque(true);
         border = BorderFactory.createLineBorder(Color.BLUE, 1);
         setHorizontalAlignment(SwingConstants.CENTER);
@@ -30,13 +36,22 @@ public class RhythmListCellRenderer extends JLabel implements ListCellRenderer<R
     public Component getListCellRendererComponent(JList<? extends RhythmSelecterEntry> list, 
             RhythmSelecterEntry value, int index, boolean isSelected, boolean cellHasFocus) 
     {
-        
-        setIcon(value.getRhythmRepresentation());
+        if(value.getRhythmRepresentation() == null){
+            //System.out.println("    found a null image....setting the text");
+            setText(value.getRealMelody());
+            setIcon(null);
+        }else{
+            setIcon(value.getRhythmRepresentation());
+            //repaint();               
+            //System.out.println("    image is no longer null.....setting an ICON :{D");
+            setText("");
+        }
+//        
    
         if(isSelected){
             setBackground(Color.WHITE);
             //setBackground(list.getSelectionBackground());
-            setForeground(list.getSelectionForeground());
+            //setForeground(list.getSelectionForeground());
             //System.out.println("\nselected item!!!!!!!");
         }else{
             setBackground(list.getBackground());

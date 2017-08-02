@@ -57,6 +57,11 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -217,6 +222,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
     private Double[] maxMetricValues;
     private Double[] minMetricValues;
     public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 0);
+    private RhythmListCellRenderer rhythmListCellRenderer;
     
     
     public UserRhythmSelecterDialog(TradingResponseMode trm) {
@@ -228,10 +234,15 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         minMetricValues = rhythmHelperTRM.getMinMetricVals();       
         this.notate  = rhythmHelperTRM.getNotate();
         
-        //Create "invisible" notate onto which rhythms will be pasted
-        rhythmNotate = getRhythmNotate();
+        //create initial models (necessary because RhythmSelecterEntry keeps track of scrollPane and need to instantiate these to create scrollPane)
+        sessionRhythmsModel = new LeadsheetImageListModel(new ArrayList<RhythmSelecterEntry>());
+        myRhythmsModel = new LeadsheetImageListModel(new ArrayList<RhythmSelecterEntry>());
         
-        //Get the rhythms from the previous system
+        //Create the GUI components (including JList, ScrollPane, Buttons)
+        initComponents();
+        
+        
+        //Get the rhythms from the previous session
         sessionDataPoints = getSessionDataPoints(this.rhythmClusters);
         userRuleStrings = getUserRuleStrings(sessionDataPoints);
         sessionRhythmEntries = getSessionRhythms(userRuleStrings, sessionDataPoints);
@@ -245,10 +256,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         sessionRhythmsModel = new LeadsheetImageListModel(sessionRhythmEntries);
         myRhythmsModel = new LeadsheetImageListModel(myRhythmEntries);
         
-        //Create the GUI components (including JList)
-        initComponents();
-        
-        //Add capability for rhythms to be played on notate upon selection
+        //add selectionListener that plays selected rhythm on leadsheet
         addSessionListSelectionListener();
         addMyRhythmsListSelectionListener();
         
@@ -257,10 +265,17 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         sessionRhythmsList.setModel(sessionRhythmsModel);
         myRhythmsList.setModel(myRhythmsModel);
         
-        //Set the Renderer for the two lists
-        sessionRhythmsList.setCellRenderer(new RhythmListCellRenderer());
-        myRhythmsList.setCellRenderer(new RhythmListCellRenderer());
         
+        //Set the Renderer for the two lists
+        rhythmListCellRenderer = new RhythmListCellRenderer(this.notate);
+        sessionRhythmsList.setCellRenderer(rhythmListCellRenderer);
+        myRhythmsList.setCellRenderer(rhythmListCellRenderer);
+        
+        //Need to set fixed cell dimensions to have enough space for when image loads
+        sessionRhythmsList.setFixedCellHeight(40);
+        sessionRhythmsList.setFixedCellWidth(200);
+        myRhythmsList.setFixedCellHeight(40);
+        myRhythmsList.setFixedCellWidth(200);
         
         addButton.addActionListener(new ActionListener(){     
           public void actionPerformed(ActionEvent e){
@@ -278,44 +293,58 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveChanges();
-                rhythmNotate.dispose();
                 dispose();
             }
         });
         
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-               @Override
-               public void windowClosing(java.awt.event.WindowEvent windowEvent){
-                   rhythmNotate.dispose();
-               }
-        });
+//        this.addWindowListener(new java.awt.event.WindowAdapter() {
+//               @Override
+//               public void windowClosing(java.awt.event.WindowEvent windowEvent){
+//                   //killInvisibleNotate();
+//               }
+//        });
         
+        //only want to show gradeLabel if just came from corrective trading mode
         gradeLabel.setVisible(false);
     }
     
-    
+    /**
+     * adds ListSelectionListener to sessionRhythmsList. Whenever an item is selected
+     * in the list the valueChanged function gets called. Code in valueChanged function 
+     * displays and plays selected rhythm in the main notate
+     */
     private void addSessionListSelectionListener(){
         sessionRhythmsList.addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                JList source = (JList) e.getSource();        
-                int[] selectedIndices = source.getSelectedIndices();
-                LeadsheetImageListModel rlm = (LeadsheetImageListModel) source.getModel();
-                RhythmSelecterEntry rse = rlm.getElementAt(selectedIndices[selectedIndices.length - 1]);
-                displayRhythmOnLeadsheet(rse.getRealMelody());              
+                if(!e.getValueIsAdjusting()){
+                    JList source = (JList) e.getSource();        
+                    int[] selectedIndices = source.getSelectedIndices();
+                    LeadsheetImageListModel rlm = (LeadsheetImageListModel) source.getModel();
+                    RhythmSelecterEntry rse = rlm.getElementAt(selectedIndices[selectedIndices.length - 1]);
+                    
+                    displayRhythmOnLeadsheet(rse.getRealMelody());              
+                } 
             } 
         });
     }
     
+    /**
+     * adds ListSelectionListener to myRhythmsList. Whenever an item is selected
+     * in the list the valueChanged function gets called. Code in valueChanged function 
+     * displays and plays selected rhythm in the main notate
+     */
     private void addMyRhythmsListSelectionListener(){
         myRhythmsList.addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 JList source = (JList) e.getSource();        
                 int[] selectedIndices = source.getSelectedIndices();
-                LeadsheetImageListModel rlm = (LeadsheetImageListModel) source.getModel();
-                RhythmSelecterEntry rse = rlm.getElementAt(selectedIndices[selectedIndices.length - 1]);
-                displayRhythmOnLeadsheet(rse.getRealMelody());              
+                if(selectedIndices.length > 0){
+                    LeadsheetImageListModel rlm = (LeadsheetImageListModel) source.getModel();
+                    RhythmSelecterEntry rse = rlm.getElementAt(selectedIndices[selectedIndices.length - 1]);
+                    displayRhythmOnLeadsheet(rse.getRealMelody());              
+                } 
             } 
         });
     }
@@ -348,9 +377,11 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      */
     private void createNewMyRhythmsList(ArrayList<RhythmSelecterEntry> rhythmsList){
         myRhythmsModel = new LeadsheetImageListModel(rhythmsList);
+        //myRhythmsList = new RhythmList(myRhythmsModel, rhythmListCellRenderer, 200, 40, rhythmHelperTRM.getMetre(), notate);
         myRhythmsList = new JList();
         myRhythmsList.setModel(myRhythmsModel);
-        myRhythmsList.setCellRenderer(new RhythmListCellRenderer());         
+        myRhythmsList.setCellRenderer(rhythmListCellRenderer);  
+        addMyRhythmsListSelectionListener();
     }
     
     /**
@@ -361,9 +392,11 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
      */
     private void createNewSessionRhythmsList(ArrayList<RhythmSelecterEntry> rhythmsList){
         sessionRhythmsModel = new LeadsheetImageListModel(rhythmsList);
+        //sessionRhythmsList = new RhythmList(sessionRhythmsModel, rhythmListCellRenderer, 200, 40, rhythmHelperTRM.getMetre(), notate);
         sessionRhythmsList = new JList();
         sessionRhythmsList.setModel(sessionRhythmsModel);
-        sessionRhythmsList.setCellRenderer(new RhythmListCellRenderer());   
+        sessionRhythmsList.setCellRenderer(rhythmListCellRenderer);   
+        addSessionListSelectionListener();
     }
     
     /**
@@ -417,20 +450,17 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
              * 
              */
             //make the length of the line you want to screenshot in the RhythmNotate the number of measures in the rule string 
-            rhythmNotate.adjustLayout(Polylist.list((long) (numBars / DEFAULT_BEATS_PER_BAR)));
+            //rhythmNotate.adjustLayout(Polylist.list((long) (numBars / DEFAULT_BEATS_PER_BAR)));
             
             //make the "real melody" representation so that the rhythm can be displayed on the rhythmNotate
             Polylist relativePitchPolylist = getRelativePitchPolylist(XNotation.toStringSansParens());
             String realMelody = makeRealMelodyFromRhythmPolylist(relativePitchPolylist);
             
-            //Create an image of the rhythm as a screenshot from the rhythmNotate
-            BufferedImage rhythmPic = createRhythmImage(realMelody);
-            //scale this image so it fits nicely on the dialog
-            Image resizedRhythmPic = rhythmPic.getScaledInstance((int) (rhythmPic.getWidth() / 2.25), (int) (rhythmPic.getHeight() / 2.25), Image.SCALE_SMOOTH);
-            ImageIcon rhythmIcon = new ImageIcon(resizedRhythmPic);
-            
-            RhythmSelecterEntry rse = new RhythmSelecterEntry(rhythmIcon, true, realMelody, ruleString);
+            RhythmSelecterEntry rse = new RhythmSelecterEntry(null, true, realMelody, ruleString, this.rhythmHelperTRM.getFutureInvisibleNotate(), 
+                    rhythmHelperTRM.getMetre(), numBars, sessionRhythmsScrollPane);
             rse.addDataPoint(sessionDataPoints.get(i));            
+            Thread t = new Thread(rse);
+            t.start();
             sessionRhythms.add(rse);
         }
       
@@ -450,7 +480,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         ArrayList<RhythmSelecterEntry> myRhythms = new ArrayList<RhythmSelecterEntry>();
           
         for(int i = 0; i < ruleStringsFromFile.size(); i++){
-            System.out.println("ruleString: " + ruleStringsFromFile.get(i));
+//            System.out.println("ruleString: " + ruleStringsFromFile.get(i));
             Polylist ruleString = ruleStringsFromFile.get(i);
             Polylist XNotation = (Polylist) ruleString.third();
             //skip XNotationTag
@@ -461,17 +491,17 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
             /**@TODO don't use DEFAULT_BEATS_PER_BAR, maybe use something from metre instead
              * 
              */
-            System.out.println("adjusting rhythmNotate line length to: " + (numBars / DEFAULT_BEATS_PER_BAR));
-            rhythmNotate.adjustLayout(Polylist.list((long) (numBars / DEFAULT_BEATS_PER_BAR)));
+            
+            //rhythmNotate.adjustLayout(Polylist.list((long) (numBars / DEFAULT_BEATS_PER_BAR)));
             
             Polylist relativePitchPolylist = getRelativePitchPolylist(XNotation.toStringSansParens());
             
             String realMelody = makeRealMelodyFromRhythmPolylist(relativePitchPolylist);
-            BufferedImage rhythmPic = createRhythmImage(realMelody);
-            Image resizedRhythmPic = rhythmPic.getScaledInstance((int) (rhythmPic.getWidth() / 2.25), (int) (rhythmPic.getHeight() / 2.25), Image.SCALE_SMOOTH);
-            ImageIcon rhythmIcon = new ImageIcon(resizedRhythmPic);
 
-            RhythmSelecterEntry rse = new RhythmSelecterEntry(rhythmIcon, false, realMelody, ruleString);
+            RhythmSelecterEntry rse = new RhythmSelecterEntry(null, false, realMelody, ruleString, this.rhythmHelperTRM.getFutureInvisibleNotate(), 
+                    rhythmHelperTRM.getMetre(), numBars, myRhythmsScrollPane);
+            Thread t = new Thread(rse);
+            t.start();
             myRhythms.add(rse);
         } 
         return myRhythms;
@@ -589,67 +619,6 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         return rtn;
     }
     
-    /**
-     * Creates an image of param userRhythm pasted onto the invisible notate.
-     * 
-     * @param userRhythm - the rhythm you want an image of (in "real melody" format)
-     * @return the image of the rhythm
-     */
-    public BufferedImage createRhythmImage(String userRhythm){
-        //prepare the rhythm so that it can be pasted into the invisible notate
-        String[] userRhythmNoteStrings = userRhythm.split(" ");
-        Polylist noteSymbolPolylist = new Polylist();
-        Polylist pitchNoteSymbolPolylist = new Polylist();
-        for (int i = 0; i < userRhythmNoteStrings.length; i++){
-            NoteSymbol noteSymbol = NoteSymbol.makeNoteSymbol(userRhythmNoteStrings[i]);
-            noteSymbolPolylist = noteSymbolPolylist.addToEnd(noteSymbol);
-            pitchNoteSymbolPolylist = pitchNoteSymbolPolylist.addToEnd(NoteSymbol.makeNoteSymbol("c4"));
-        }
-        
-        Polylist notePolylistToWrite = NoteSymbol.newPitchesForNotes(noteSymbolPolylist, pitchNoteSymbolPolylist);
-        System.out.println("Creating image for: " + notePolylistToWrite);
-        
-        MelodyPart melodyPartToWrite = new MelodyPart(notePolylistToWrite.toStringSansParens());
-
-        
-        //Create the advice object that will do the pasting
-        AdviceForMelody advice = new AdviceForMelody("RhythmPreview", notePolylistToWrite, "c", Key.getKey("c"),
-                        rhythmHelperTRM.getMetre(), 0);//make a new advice for melody object 
-        
-        advice.setNewPart(melodyPartToWrite);//new part of advice object is the part that gets pasted to the leadsheet
-        
-        //Insert the rhythm into the invisible notate
-        advice.insertInPart(rhythmNotate.getScore().getPart(0), 0, new CommandManager(), rhythmNotate);//insert melodyPartToWrite into the notate score
-        rhythmNotate.getCurrentStave().setSelection(rhythmNotate.getCurrentStave().getMelodyPart().size() - 1);
-        rhythmNotate.repaint();//refresh the notate page
-      
-
-        //Take a screenshot of the invisible notate and create a graphics object
-        BufferedImage notateScreenshot = new BufferedImage(rhythmNotate.getSize().width, rhythmNotate.getSize().height-100, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = notateScreenshot.createGraphics();
-        rhythmNotate.paint(g);
-        rhythmNotate.paint(g);
-        g.dispose(); 
-        g.dispose();
-        
-        
-        System.out.println("width: " + notateScreenshot.getWidth());
-        System.out.println("height: " + notateScreenshot.getHeight());
-        
-        //Get the cropping dimensions
-        int notateScreenshotWidth = notateScreenshot.getWidth();
-        int notateScreenshotHeight = notateScreenshot.getHeight();
-        int croppedXStart = (int) (0.069 * notateScreenshotWidth);//(75 / notateScreenshotWidth);
-        int croppedYStart = (int) (0.32 * notateScreenshotHeight);// * (290 / notateScreenshotWidth);
-        int croppedWidth = (int) (0.855 * notateScreenshotWidth);
-        int croppedHeight = (int) (0.08 * notateScreenshotHeight);
-
-        //Create the image as a cropped version of the screenshot
-        BufferedImage dest = notateScreenshot.getSubimage(croppedXStart, croppedYStart, croppedWidth, croppedHeight);
-        
-        return dest;
-    }
-    
     /*
      Get the file name from preferences and prepend the file path to it.
     */
@@ -733,8 +702,10 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         
         Polylist notePolylistToWrite = NoteSymbol.newPitchesForNotes(noteSymbolPolylist, pitchNoteSymbolPolylist);
     
+    
         MelodyPart melodyPartToWrite = new MelodyPart(notePolylistToWrite.toStringSansParens());
      
+
         AdviceForMelody advice = new AdviceForMelody("RhythmPreview", notePolylistToWrite, "c", Key.getKey("c"),
                         rhythmHelperTRM.getMetre(), 0);//make a new advice for melody object 
         
@@ -760,16 +731,24 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
             }
     }
     
+    /**
+     * Adds all of the sessionRhythms that the user chose to add to the clusters 
+     * in the rhythmCluster file that was just used.
+     */
     private void addSessionRhythmsToClusters(){
         for(int i = 0; i < myRhythmEntries.size(); i++){
             if(myRhythmEntries.get(i).isSession()){
-                System.out.println("myRhythmEntry that isSession matched: " + myRhythmEntries.get(i).getRealMelody());
                 RhythmCluster rc = rhythmHelperTRM.findNearestCluster(rhythmClusters, myRhythmEntries.get(i).getDataPoint());
                 rc.addSelectedRuleString(myRhythmEntries.get(i).getRuleStringPL());//add datapoint to rhythm cluster
             }
         }
     }
     
+    /**
+     * Makes a list of all the rhythms that should be deleted from the myRhythms
+     * file and the clusterFile.
+     * @return 
+     */
     private ArrayList<String> getRhythmsToDelete(){
         ArrayList<String> rhythmsToDelete = new ArrayList<String>();
         for(int i = 0; i < sessionRhythmEntries.size(); i++){
@@ -777,7 +756,7 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
                 rhythmsToDelete.add(sessionRhythmEntries.get(i).getRuleStringPL().toString());
             }
         }
-        System.out.println("rhythmsToDelete: " + rhythmsToDelete);
+        //System.out.println("rhythmsToDelete: " + rhythmsToDelete);
         return rhythmsToDelete;
     }
     
@@ -847,8 +826,8 @@ public class UserRhythmSelecterDialog extends javax.swing.JDialog implements jav
         if (rhythmHelperTRM instanceof CorrectRhythmTRM){
             CorrectRhythmTRM correctRhythmTRM = (CorrectRhythmTRM) rhythmHelperTRM;
             double score = correctRhythmTRM.getScore();
-            System.out.println("score to grade from: "+score);
-            System.out.println("numTrades: "+ numTrades);
+           // System.out.println("score to grade from: "+score);
+            //System.out.println("numTrades: "+ numTrades);
             if (score > CorrectRhythmTRM.A * numTrades){
                 grade = "Amazing!!!!!!";
             }else if(score > CorrectRhythmTRM.B *numTrades){

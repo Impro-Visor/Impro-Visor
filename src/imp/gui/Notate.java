@@ -531,6 +531,8 @@ private VoicingTableModel voicingTableModel = new VoicingTableModel();
 private DefaultListModel voicingSequenceListModel = new DefaultListModel();
 private imp.gui.VoicingKeyboard keyboard = null;
 
+private Future<Notate> futureInvisibleNotate;
+
 public JTable getSectionTable(){
     return sectionTable;
 }
@@ -27792,6 +27794,14 @@ public String extractClusterName(String fullPath){
     }
     
     return afterSlash.substring(0, dotIndex);
+}
+
+public void setFutureInvisibleNotate(Future<Notate> futureInvisibleNotate){
+    this.futureInvisibleNotate = futureInvisibleNotate;
+}
+
+public Future<Notate> getFutureInvisibleNotate(){
+    return this.futureInvisibleNotate;
 }
 
 } //Notate
