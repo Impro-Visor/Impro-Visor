@@ -1774,6 +1774,23 @@ public int getInitialBeatsRest()
   return buffer.toString();
   }
  
+ public String toLeadsheet()
+  {
+  StringBuilder buffer = new StringBuilder();
+
+  int n = slots.size();
+  for( int i = 0; i < n; i++ )
+    {
+    Note note = (Note)slots.get(i);
+    if( note != null )
+      {
+      buffer.append(note.toLeadsheet());
+      buffer.append(" ");
+      }
+    }
+  return buffer.toString();
+  }
+
  public String toDurations()
   {
   StringBuilder buffer = new StringBuilder();

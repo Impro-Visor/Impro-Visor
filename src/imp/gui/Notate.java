@@ -17091,9 +17091,10 @@ void adviceSelected(Object object)
           }
 
         setAdviceUsed();
-
-        ((Advice) object).insertInPart(score.getPart(currTabIndex),
-                                       getCurrentSelectionStart(), cm, this);
+        Advice adviceObject = (Advice) object;
+        adviceObject.insertInPart(score.getPart(currTabIndex),
+                                  getCurrentSelectionStart(), cm, this);
+        advicePitchesTextField.setText(adviceObject.toLeadsheet());
 
         if( ImproVisor.getPlay() )
           {

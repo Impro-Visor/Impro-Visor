@@ -146,4 +146,9 @@ public class Advice implements Constants
     {
         return getPart().toDurations();
     }
+    
+    public String toLeadsheet()
+    {
+        return getPart().toLeadsheet();
+    }
   }
