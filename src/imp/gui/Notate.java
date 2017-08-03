@@ -2191,8 +2191,11 @@ public Critic getCritic()
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = -7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.1;
         adviceDialog.getContentPane().add(adviceFilterTextField, gridBagConstraints);
 
         adviceTargetSpinner.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
@@ -2208,7 +2211,9 @@ public Critic getCritic()
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = -2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.1;
         adviceDialog.getContentPane().add(adviceTargetSpinner, gridBagConstraints);
 
         advicePitchesTextField.setToolTipText("Use these pitches with Rhythms");
@@ -2227,13 +2232,23 @@ public Critic getCritic()
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = -7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.1;
         adviceDialog.getContentPane().add(advicePitchesTextField, gridBagConstraints);
 
         adviceRhythmTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rhythms", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         adviceRhythmTextField.setMinimumSize(new java.awt.Dimension(170, 50));
         adviceRhythmTextField.setPreferredSize(new java.awt.Dimension(170, 50));
+        adviceRhythmTextField.addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusLost(java.awt.event.FocusEvent evt)
+            {
+                adviceRhythmTextFieldFocusLost(evt);
+            }
+        });
         adviceRhythmTextField.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -2251,6 +2266,10 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.1;
         adviceDialog.getContentPane().add(adviceRhythmTextField, gridBagConstraints);
 
         adviceTabbedPane.setMinimumSize(new java.awt.Dimension(600, 400));
@@ -2667,6 +2686,8 @@ public Critic getCritic()
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
         adviceDialog.getContentPane().add(adviceTabbedPane, gridBagConstraints);
 
         jPanel6.setMaximumSize(new java.awt.Dimension(150, 50));
@@ -23847,6 +23868,11 @@ private boolean isDotted = false;
     {//GEN-HEADEREND:event_adviceRhythmTextFieldKeyTyped
         adviceRhythm = adviceRhythmTextField.getText();
     }//GEN-LAST:event_adviceRhythmTextFieldKeyTyped
+
+    private void adviceRhythmTextFieldFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_adviceRhythmTextFieldFocusLost
+    {//GEN-HEADEREND:event_adviceRhythmTextFieldFocusLost
+        adviceRhythm = adviceRhythmTextField.getText();
+    }//GEN-LAST:event_adviceRhythmTextFieldFocusLost
 
     private String adviceRhythm = "";
     
