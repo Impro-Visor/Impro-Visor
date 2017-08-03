@@ -100,33 +100,11 @@
 
         (interpolable (weight .5))
 
-        (interpolate (chords (_ Gm7 C7)) (division (_ \ \ X | Y)) (weight .2) (min-duration 4))
-        (interpolate (chords (_ G7 C7)) (division (_ \ \ X | Y)) (weight 0.5) (min-duration 4))
-        (interpolate (chords (C7 Db7 _)) (division (_ | X Y)) (weight 0.3) (min-duration 4)) 
-        (interpolate (chords (C G7 _)) (division (_ | X Y)) (weight 0.25) (min-duration 4)) 
-        (interpolate (chords (_ Db7 C)) (division (_ X | Y)) (weight 0.25) (min-duration 4)) 
-        (interpolate (chords (_ G7b9 C)) (division (_ X | Y)) (weight 0.25) (min-duration 4)) 
-        (interpolate (chords (_ G7alt C)) (division (_ X | Y)) (weight 0.25) (min-duration 4))
-        (interpolate (chords (Cm G7 _)) (division (_ X | Y)) (weight 0.25) (min-duration 4)) 
-        (interpolate (chords (_ Db7 Cm)) (division (_ X | Y)) (weight 0.25) (min-duration 4)) 
-        (interpolate (chords (_ G7b9 Cm)) (division (_ X | Y)) (weight 0.25) (min-duration 4)) 
-        (interpolate (chords (_ G7alt Cm)) (division (_ X | Y)) (weight 0.25) (min-duration 4))
-        (interpolate (chords (C7+ Gm7b5 _)) (division (_ X | Y)) (weight 0.5) (min-duration 4)) 
-        (interpolate (chords (_ Db7 C7+)) (division (_ X | Y)) (weight 0.5) (min-duration 4))
-        (interpolate (chords (C Dm7 Ebo7 Em)) (division (_ X | Y)) (weight 1.0) (min-duration 4))
-        (interpolate (chords (C Bb7 Ab7 G7)) (division (_ X | Y)) (weight .5) (min-duration 4))
-        (interpolate (chords (C Ebm7 Dm7 G7)) (division (_ X | Y)) (weight .5) (min-duration 4))
-        (interpolate (chords (C B7 Bb7 A7 Dm)) (division (_ X | Y)) (weight .33) (min-duration 4))
-        (interpolate (chords (C Dm7 Em7 Ebm7 Dm)) (division (_ X | Y)) (weight .33) (min-duration 4))
-        (interpolate (chords (C F7#11 Em7 A7 Dm)) (division (_ X | Y)) (weight .33) (min-duration 4))
-        (interpolate (chords (C F Bm7 E7 Am)) (division (_ X | Y)) (weight 1) (min-duration 4))
-        (interpolate (chords (Am AmM7 Am7 Am)) (division (_ X | Y)) (weight .5) (min-duration 4))
-        (interpolate (chords (Am Am#5 Am6 Am#5 Am)) (division (_ X | Y)) (weight .5) (min-duration 4))
-        (interpolate (chords (Dm Dm7/C Bm7b5 Bb7b9 Am)) (division (_ X | Y)) (weight 1) (min-duration 4))
-
+        
         (substitute (from (Abm7 Db7)) (to (Dm7 G7)) (weight .2) (min-duration 4))
-        (substitute (from (C Eb7 Ab7 Db7)) (to (C A7 Dm7 G7)) (weight .3) (min-duration 4))
+        (substitute (from  (C A7 Dm7 G7)) (to (C Eb7 Ab7 Db7)) (weight .3) (min-duration 4))
         (substitute (from (Ao7)) (to (Co7 F7b9)) (weight .4) (min-duration 4))
+        (substitute  (from (_)) (to (substitutions from vocabulary)) (weight 0.1) (min-duration 4))
       
         
 )

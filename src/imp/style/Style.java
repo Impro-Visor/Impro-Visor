@@ -1940,26 +1940,29 @@ private Polylist mapPC(Polylist results) {
         }
         Chord first = (Chord)original.first();
         Polylist sublist;
-                
+      //   first.getChordForm().getSubstitutions();
         for(Polylist P = substitutions; P.nonEmpty(); P = P.rest())
         {
             //match and check qualifications of a given sub
+            Chord subchord = first;
             Substitution sub = (Substitution)P.first();
-            Chord subchord = new Chord((String)sub.getOriginals().first());
+            String str =(String)sub.getOriginals().first();
+            if(!str.contains("_")) {
+                
+             subchord = new Chord(str);
             if (!subchord.getQuality().equals(first.getQuality()))
                     continue;
-         
+            
             int random = (int)(Math.random()*100+1);
             if (random > (int)(sub.getWeight()*100))
                 continue;
-        
-           int length = sub.getOriginals().length();
-           //get a sublist of thats the same length of the original chords
+            
+            //get a sublist of thats the same length of the original chords
            //specified in the Substitution
-           
-           Polylist cutList = original.prefix(length);
-           
-           //makes sure the list of that length is actually in the original
+            int length = sub.getOriginals().length();
+            Polylist cutList = original.prefix(length);
+            
+            //makes sure the list of that length is actually in the original
            //chordlist
            if(cutList.isEmpty())
                continue;
@@ -1976,6 +1979,26 @@ private Polylist mapPC(Polylist results) {
            sublist = setSubChords(cutList, sub, transposition);
           
            return substituteChords(original.coprefix(length)).cons(sublist);
+           
+           
+            } else {
+            
+            int random = (int)(Math.random()*100+1);
+            if (random > (int)(sub.getWeight()*100))
+                continue;
+            
+            Polylist possubs = first.getChordForm().getSubstitutions();
+            System.out.println("possubs " + possubs);
+                if (possubs.nonEmpty()) {
+                    int randindex = gen.nextInt(possubs.length());
+                    String sym = (String) possubs.nth(randindex);
+                    Chord nchord = new Chord(sym);
+                   // System.out.println("nchord " + nchord);
+                    nchord.setRhythmValue(first.getRhythmValue());
+                   // System.out.println("used system vocal single chord sub");
+                    return substituteChords(original.rest()).cons(nchord);
+                }
+            }
         }
         
         return substituteChords(original.rest()).cons(first);
@@ -2133,8 +2156,8 @@ public long render(MidiSequence seq, // called from SectionInfo
     // + " endIndex = " + endIndex + " endLimitIndex = " + endLimitIndex + " useDrums = " + useDrums + " hasStyle = " + hasStyle);
     // i iterates over the Chords in the ChordPart.
     ChordPart chordPart2 = createInterpolatedChordPart(chordPart);
-   // System.out.println("\n chord part is: \n" + chordPart);
-   // System.out.println("\nintrpolated chord part is: \n" + chordPart2);
+    System.out.println("\n chord part is: \n" + chordPart);
+    System.out.println("\nintrpolated chord part is: \n" + chordPart2);
     
    // imp.data.Score newScore = new imp.data.Score(chordPart2.size());
 
