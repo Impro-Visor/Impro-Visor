@@ -1085,7 +1085,7 @@ public void updateAllDrumPatterns(String name, String rules)
   public void getInterpolations(StringBuilder buffer)
     {
     PolylistEnum pats = interpolations.elements();
-   System.out.println("hello");
+   //System.out.println("hello");
         while (pats.hasMoreElements()) {
             try {
                 Object ob = pats.nextElement();
@@ -1754,7 +1754,7 @@ public void updateAllDrumPatterns(String name, String rules)
     savedStyle = file;
     ImproVisor.setRecentStyleFile(file);
     loadFromString(s);
-    System.out.println("loadFromFile was called");
+    //m.out.println("loadFromFile was called");
     styleName = file.getName();
     }
   
