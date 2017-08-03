@@ -2532,7 +2532,7 @@ public MelodyPart quantizeUserMelody(int quanta[], boolean toSwing, int restAbso
          while( it.hasNext() )
            {
              Note thisNote = (Note)it.next();
-             System.out.println("inputSlot = " + inputSlot + ", outputSlot = " + outputSlot + ", thisNote = " + thisNote);
+             //System.out.println("inputSlot = " + inputSlot + ", outputSlot = " + outputSlot + ", thisNote = " + thisNote);
              if( !thisNote.isRest() )
                {
                  // thisNote is an actual Note, not a Rest.
@@ -2574,7 +2574,7 @@ public MelodyPart quantizeUserMelody(int quanta[], boolean toSwing, int restAbso
                      }
                      newNote.setRhythmValue(noteDuration);
                      result.addNote(newNote);
-                     System.out.println("placing at " + outputSlot + " " + newNote);
+                     //System.out.println("placing at " + outputSlot + " " + newNote);
                      outputSlot += noteDuration;
                      endOfLastPlacement = outputSlot;
                    }

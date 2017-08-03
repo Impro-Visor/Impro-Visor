@@ -200,18 +200,23 @@ public class RhythmSelecterEntry implements Runnable{
         rhythmNotate.getCurrentStave().setSelection(rhythmNotate.getCurrentStave().getMelodyPart().size() - 1);
         rhythmNotate.repaint();//refresh the notate page
       
+        //Take a screenshot of the invisible notate and create a graphics object       
+//        BufferedImage notateScreenshot = new BufferedImage(rhythmNotate.getSize().width, rhythmNotate.getSize().height-100, 
+//                BufferedImage.TYPE_INT_ARGB);
 
-        //Take a screenshot of the invisible notate and create a graphics object
-        BufferedImage notateScreenshot = new BufferedImage(rhythmNotate.getSize().width, rhythmNotate.getSize().height-100, BufferedImage.TYPE_INT_ARGB);
+          BufferedImage notateScreenshot = new BufferedImage(rhythmNotate.getScoreTab().getSize().width, rhythmNotate.getScoreTab().getSize().height-100, 
+                BufferedImage.TYPE_INT_ARGB);  
+        
         Graphics g = notateScreenshot.createGraphics();
-        rhythmNotate.paint(g);
-        rhythmNotate.paint(g);
+        rhythmNotate.getScoreTab().paint(g);
+        rhythmNotate.getScoreTab().paint(g);
+
         g.dispose(); 
         g.dispose();
         
 
         int croppedXStart = 77;//(75 / notateScreenshotWidth);
-        int croppedYStart = 300;// * (290 / notateScreenshotWidth);
+        int croppedYStart = 125;// * (290 / notateScreenshotWidth);
         int croppedWidth = 966;
         int croppedHeight = 74;     
         

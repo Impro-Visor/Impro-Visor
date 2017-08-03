@@ -531,7 +531,7 @@ private VoicingTableModel voicingTableModel = new VoicingTableModel();
 private DefaultListModel voicingSequenceListModel = new DefaultListModel();
 private imp.gui.VoicingKeyboard keyboard = null;
 
-private Future<Notate> futureInvisibleNotate;
+private Future<Notate> futureInvisibleNotate = null;
 
 public JTable getSectionTable(){
     return sectionTable;
@@ -27930,6 +27930,10 @@ public void setFutureInvisibleNotate(Future<Notate> futureInvisibleNotate){
 
 public Future<Notate> getFutureInvisibleNotate(){
     return this.futureInvisibleNotate;
+}
+
+public JTabbedPane getScoreTab(){
+    return this.scoreTab;
 }
 
 } //Notate

@@ -397,11 +397,6 @@ private ImproVisor(String leadsheet)
     
     //System.out.println("roadmap blocks = " + notate.getRoadMapBlocks());
     //System.out.println(getChordNames());
-    
-    //create invisible notate
-    Future<Notate> futureInvisibleNotate = startCreatingInvisibleNotate(notate);
-    notate.setFutureInvisibleNotate(futureInvisibleNotate);
-
   }
        
     
@@ -839,50 +834,6 @@ public static Color getWindowFrameColor()
     return windowFrameColor;
   }
     
-    private Future<Notate> startCreatingInvisibleNotate(Notate notate){
-        System.out.println("\nstarting to create invisible notate.......");
-        ExecutorService executor = Executors.newCachedThreadPool();
-        Future<Notate> futureInvisibleNotate = executor.submit(new Callable<Notate>(){
-            @Override
-            public Notate call() throws Exception {
-                Notate rtn = null;
-                try{
-                    rtn = createInvisibleNotate(notate);
-                }catch(InterruptedException e){
-                    System.out.println("production of notate interrupted...");
-                }
-                return rtn;
-            }          
-        });
-        return futureInvisibleNotate;
-    }
     
-    public Notate createInvisibleNotate(Notate notate) throws InterruptedException{
-        //Create the score for the notate
-        Score newScore = new Score("");        
-        int chordFontSize = Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE));
-        newScore.setChordFontSize(chordFontSize);
-        newScore.setTempo(1);
-        ChordPart chords = new ChordPart();
-        chords.addChord(new Chord("NC")); // Some chord is necessary to preven screw-ups
-        newScore.setChordProg(chords);
-        /**@TODO don't hardcode measure length to 480*/
-        newScore.addPart(new MelodyPart(DEFAULT_BARS_PER_PART * 480));
-        newScore.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
-        Transposition transposition =
-                new Transposition(notate.getIntFromSpinner(notate.getLeadsheetChordTranspositionSpinner()),
-                                  notate.getIntFromSpinner(notate.getLeadsheetBassTranspositionSpinner()),
-                                  notate.getIntFromSpinner(notate.getChorusMelodyTranspositionSpinner()));
-        newScore.setTransposition(transposition);
-
-        // open a new notate window
-        Notate rhythmNotate = //new Notate(newScore, -1, -1);
-               new Notate(newScore, Integer.MAX_VALUE, Integer.MAX_VALUE);
-        rhythmNotate.setTransposition(transposition);
-
-        rhythmNotate.makeVisible();
-        
-        return rhythmNotate;
-    }
 
 }
