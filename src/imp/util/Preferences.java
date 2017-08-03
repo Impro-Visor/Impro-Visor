@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2013 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,7 +176,7 @@ public class Preferences implements imp.Constants
 
   public static final String VIS_ADV_COMPONENTS = "visible-advice-components";
 
-  public static final String VAC_VAL = "1023";
+  public static final String VAC_VAL = "4095";
 
   public static final String CHORD_DIST_ABOVE_ROOT = "chord-dist-above-root";
 
@@ -318,7 +318,7 @@ public class Preferences implements imp.Constants
         "(default-counts-file ALL_MUSICIANS.counts)" +
         "(default-fractal-file My.fractal)" +
         "(default-style-directory styles)" +
-        "(visible-advice-components 1023)" +
+        "(visible-advice-components 4095)" +
         "(chord-dist-above-root 10)" +
         "(default-chord-font-size 16)" +
         "(max-notes-in-voicing 5)" +

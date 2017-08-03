@@ -1541,16 +1541,18 @@ public Critic getCritic()
         numStavesPerPage = new javax.swing.JTextField();
         appearanceTab = new javax.swing.JPanel();
         visAdvicePanel = new javax.swing.JPanel();
-        cells = new javax.swing.JCheckBox();
-        chordTones = new javax.swing.JCheckBox();
-        quotes = new javax.swing.JCheckBox();
-        colorTones = new javax.swing.JCheckBox();
-        licks = new javax.swing.JCheckBox();
-        idioms = new javax.swing.JCheckBox();
-        chordExtns = new javax.swing.JCheckBox();
-        approachTones = new javax.swing.JCheckBox();
-        chordSubs = new javax.swing.JCheckBox();
-        scaleTones = new javax.swing.JCheckBox();
+        chordTonesCheckBox = new javax.swing.JCheckBox();
+        colorTonesCheckBox = new javax.swing.JCheckBox();
+        scaleTonesCheckBox = new javax.swing.JCheckBox();
+        approachTonesCheckBox = new javax.swing.JCheckBox();
+        chordSubsCheckBox = new javax.swing.JCheckBox();
+        chordExtnsCheckBox = new javax.swing.JCheckBox();
+        rhythmsCheckBox = new javax.swing.JCheckBox();
+        cellsCheckBox = new javax.swing.JCheckBox();
+        idiomsCheckBox = new javax.swing.JCheckBox();
+        licksCheckBox = new javax.swing.JCheckBox();
+        quotesCheckBox = new javax.swing.JCheckBox();
+        bricksCheckBox = new javax.swing.JCheckBox();
         noteColoringLabel = new javax.swing.JLabel();
         chordToneLabel = new javax.swing.JLabel();
         colorToneLabel = new javax.swing.JLabel();
@@ -4224,42 +4226,32 @@ public Critic getCritic()
 
         visAdvicePanel.setLayout(new java.awt.GridBagLayout());
 
-        cells.setText("Cells");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 64) != 0)     cells.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        visAdvicePanel.add(cells, gridBagConstraints);
-
-        chordTones.setText("Chord Tones");
+        chordTonesCheckBox.setSelected(true);
+        chordTonesCheckBox.setText("Chord Tones");
         if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 1) != 0)
-        chordTones.setSelected(true);
+        chordTonesCheckBox.setSelected(true);
+        chordTonesCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                chordTonesCheckBoxActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 30, 0, 0);
-        visAdvicePanel.add(chordTones, gridBagConstraints);
+        visAdvicePanel.add(chordTonesCheckBox, gridBagConstraints);
 
-        quotes.setText("Quotes");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 512) != 0)     quotes.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        visAdvicePanel.add(quotes, gridBagConstraints);
-
-        colorTones.setText("Color Tones");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 2) != 0)     colorTones.setSelected(true);
-        colorTones.addActionListener(new java.awt.event.ActionListener()
+        colorTonesCheckBox.setSelected(true);
+        colorTonesCheckBox.setText("Color Tones");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 2) != 0)     colorTonesCheckBox.setSelected(true);
+        colorTonesCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                colorTonesActionPerformed(evt);
+                colorTonesCheckBoxActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4268,61 +4260,123 @@ public Critic getCritic()
         gridBagConstraints.ipadx = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 30, 0, 0);
-        visAdvicePanel.add(colorTones, gridBagConstraints);
+        visAdvicePanel.add(colorTonesCheckBox, gridBagConstraints);
 
-        licks.setText("Licks");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 256) != 0)     licks.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        visAdvicePanel.add(licks, gridBagConstraints);
-
-        idioms.setText("Idioms");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 128) != 0)     idioms.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        visAdvicePanel.add(idioms, gridBagConstraints);
-
-        chordExtns.setText("Chord Extensions");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 32) != 0)     chordExtns.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        visAdvicePanel.add(chordExtns, gridBagConstraints);
-
-        approachTones.setText("Approach Tones");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 8) != 0)     approachTones.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        visAdvicePanel.add(approachTones, gridBagConstraints);
-
-        chordSubs.setText("Chord Substitutions");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 16) != 0)     chordSubs.setSelected(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        visAdvicePanel.add(chordSubs, gridBagConstraints);
-
-        scaleTones.setText("Scale Tones");
-        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 4) != 0)     scaleTones.setSelected(true);
+        scaleTonesCheckBox.setSelected(true);
+        scaleTonesCheckBox.setText("Scale Tones");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 4) != 0)     scaleTonesCheckBox.setSelected(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 30, 0, 0);
-        visAdvicePanel.add(scaleTones, gridBagConstraints);
+        visAdvicePanel.add(scaleTonesCheckBox, gridBagConstraints);
+
+        approachTonesCheckBox.setSelected(true);
+        approachTonesCheckBox.setText("Approach Tones");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 8) != 0)     approachTonesCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(approachTonesCheckBox, gridBagConstraints);
+
+        chordSubsCheckBox.setSelected(true);
+        chordSubsCheckBox.setText("Chord Substitutions");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 16) != 0)     chordSubsCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(chordSubsCheckBox, gridBagConstraints);
+
+        chordExtnsCheckBox.setSelected(true);
+        chordExtnsCheckBox.setText("Chord Extensions");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 32) != 0)     chordExtnsCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(chordExtnsCheckBox, gridBagConstraints);
+
+        rhythmsCheckBox.setSelected(true);
+        rhythmsCheckBox.setText("Rhythms");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 64) != 0)     cellsCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(rhythmsCheckBox, gridBagConstraints);
+
+        cellsCheckBox.setSelected(true);
+        cellsCheckBox.setText("Cells");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 64) != 0)     cellsCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(cellsCheckBox, gridBagConstraints);
+
+        idiomsCheckBox.setSelected(true);
+        idiomsCheckBox.setText("Idioms");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 128) != 0)     idiomsCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(idiomsCheckBox, gridBagConstraints);
+
+        licksCheckBox.setSelected(true);
+        licksCheckBox.setText("Licks");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 256) != 0)     licksCheckBox.setSelected(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(licksCheckBox, gridBagConstraints);
+
+        quotesCheckBox.setSelected(true);
+        quotesCheckBox.setText("Quotes");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 512) != 0)     quotesCheckBox.setSelected(true);
+        quotesCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                quotesCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(quotesCheckBox, gridBagConstraints);
+
+        bricksCheckBox.setSelected(true);
+        bricksCheckBox.setLabel("Bricks");
+        if ((Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS)) & 512) != 0)     quotesCheckBox.setSelected(true);
+        bricksCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                bricksCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        visAdvicePanel.add(bricksCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -4375,6 +4429,7 @@ public Critic getCritic()
         appearanceTab.add(otherLabel, gridBagConstraints);
 
         chordColorBtnGrp.add(blackChordBtn);
+        blackChordBtn.setSelected(true);
         if (Preferences.getPreference(Preferences.NOTE_COLORING).charAt(0) == '1')
         blackChordBtn.setSelected(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -4456,6 +4511,7 @@ public Critic getCritic()
         appearanceTab.add(redApproachBtn, gridBagConstraints);
 
         otherColorBtnGrp.add(redOtherBtn);
+        redOtherBtn.setSelected(true);
         if (Preferences.getPreference(Preferences.NOTE_COLORING).charAt(3) == '2')              redOtherBtn.setSelected(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -4470,6 +4526,7 @@ public Critic getCritic()
         appearanceTab.add(greenChordBtn, gridBagConstraints);
 
         colorColorBtnGrp.add(greenColorBtn);
+        greenColorBtn.setSelected(true);
         if (Preferences.getPreference(Preferences.NOTE_COLORING).charAt(1) == '3')              greenColorBtn.setSelected(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -4505,6 +4562,7 @@ public Critic getCritic()
         appearanceTab.add(blueColorBtn, gridBagConstraints);
 
         approachColorBtnGrp.add(blueApproachBtn);
+        blueApproachBtn.setSelected(true);
         if (Preferences.getPreference(Preferences.NOTE_COLORING).charAt(2) == '4')              blueApproachBtn.setSelected(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -4518,7 +4576,7 @@ public Critic getCritic()
         gridBagConstraints.gridy = 9;
         appearanceTab.add(blueOtherBtn, gridBagConstraints);
 
-        visAdviceLabel.setText("Visible Advice Components:");
+        visAdviceLabel.setText("Visible Advice Components:(take effect on restart)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 10, 0);
         appearanceTab.add(visAdviceLabel, gridBagConstraints);
@@ -12803,10 +12861,10 @@ private final Color adviceBtnColorClosed = new Color(238, 212, 212);
         
     }//GEN-LAST:event_enterLickTitleAction
 
-    private void colorTonesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_colorTonesActionPerformed
+    private void colorTonesCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_colorTonesCheckBoxActionPerformed
 
-    {//GEN-HEADEREND:event_colorTonesActionPerformed
-    }//GEN-LAST:event_colorTonesActionPerformed
+    {//GEN-HEADEREND:event_colorTonesCheckBoxActionPerformed
+    }//GEN-LAST:event_colorTonesCheckBoxActionPerformed
 
     private void purgeCacheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_purgeCacheActionPerformed
 
@@ -15101,55 +15159,66 @@ private boolean saveGlobalPreferences()
 
     int visAdvice = 0;
 
-    if( chordTones.isSelected() )
+    if( chordTonesCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 1;
       }
 
-    if( colorTones.isSelected() )
+    if( colorTonesCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 2;
       }
 
-    if( scaleTones.isSelected() )
+    if( scaleTonesCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 4;
       }
 
-    if( approachTones.isSelected() )
+    if( approachTonesCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 8;
       }
 
-    if( chordSubs.isSelected() )
+    if( chordSubsCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 16;
       }
 
-    if( chordExtns.isSelected() )
+    if( chordExtnsCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 32;
       }
 
-    if( cells.isSelected() )
+    if( rhythmsCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 64;
       }
 
-    if( idioms.isSelected() )
+    if( cellsCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 128;
       }
 
-    if( licks.isSelected() )
+    if( idiomsCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 256;
       }
 
-    if( quotes.isSelected() )
+    if( licksCheckBox.isSelected() )
       {
         visAdvice = visAdvice | 512;
       }
+
+    if( quotesCheckBox.isSelected() )
+      {
+        visAdvice = visAdvice | 1024;
+      }
+
+    if( bricksCheckBox.isSelected() )
+      {
+        visAdvice = visAdvice | 2048;
+      }
+
 
     Preferences.setPreference(Preferences.VIS_ADV_COMPONENTS, String.valueOf(visAdvice));
 
@@ -15406,25 +15475,29 @@ private void setPrefsDialog()
     int visAdvice =
             Integer.parseInt(Preferences.getPreference(Preferences.VIS_ADV_COMPONENTS));
 
-    chordTones.setSelected((visAdvice & 1) != 0);
+    chordTonesCheckBox.setSelected((visAdvice & 1) != 0);
 
-    colorTones.setSelected((visAdvice & 2) != 0);
+    colorTonesCheckBox.setSelected((visAdvice & 2) != 0);
 
-    scaleTones.setSelected((visAdvice & 4) != 0);
+    scaleTonesCheckBox.setSelected((visAdvice & 4) != 0);
 
-    approachTones.setSelected((visAdvice & 8) != 0);
+    approachTonesCheckBox.setSelected((visAdvice & 8) != 0);
 
-    chordSubs.setSelected((visAdvice & 16) != 0);
+    chordSubsCheckBox.setSelected((visAdvice & 16) != 0);
 
-    chordExtns.setSelected((visAdvice & 32) != 0);
+    chordExtnsCheckBox.setSelected((visAdvice & 32) != 0);
 
-    cells.setSelected((visAdvice & 64) != 0);
+    rhythmsCheckBox.setSelected((visAdvice & 64) != 0);
 
-    idioms.setSelected((visAdvice & 128) != 0);
+    cellsCheckBox.setSelected((visAdvice & 128) != 0);
 
-    licks.setSelected((visAdvice & 256) != 0);
+    idiomsCheckBox.setSelected((visAdvice & 256) != 0);
 
-    quotes.setSelected((visAdvice & 512) != 0);
+    licksCheckBox.setSelected((visAdvice & 512) != 0);
+
+    quotesCheckBox.setSelected((visAdvice & 1024) != 0);
+
+    licksCheckBox.setSelected((visAdvice & 2048) != 0);
 
 
     String coloring = Preferences.getPreference(Preferences.NOTE_COLORING);
@@ -23742,40 +23815,52 @@ private boolean isDotted = false;
     }//GEN-LAST:event_adviceRecentScrollListCellsMouseClicked
 
     private void clearRecentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearRecentButtonActionPerformed
-      if (adviceTabbedPane.getSelectedIndex() == 1)
+    switch( adviceTabbedPane.getSelectedIndex() )
       {
-             RecentScalesListModel model = (RecentScalesListModel) adviceRecentScrollListScales.getModel();
-             model.clear();
-      }
-      else if (adviceTabbedPane.getSelectedIndex() == 2)
-      {
-             RecentCellsListModel model = (RecentCellsListModel) adviceRecentScrollListCells.getModel();
-             model.clear();
-      }
-      else if (adviceTabbedPane.getSelectedIndex() == 3)
-      {
-             RecentRhythmsListModel model = (RecentRhythmsListModel) adviceRecentScrollListRhythms.getModel();
-             model.clear();
-      }
-      else if (adviceTabbedPane.getSelectedIndex() == 4)
-      {
-             RecentIdiomsListModel model = (RecentIdiomsListModel) adviceRecentScrollListIdioms.getModel();
-             model.clear();
-      }
-      else if (adviceTabbedPane.getSelectedIndex() == 5)
-      {
-             RecentLicksListModel model = (RecentLicksListModel) adviceRecentScrollListLicks.getModel();
-             model.clear();
-      }
-      else if (adviceTabbedPane.getSelectedIndex() == 6)
-      {
-             RecentQuotesListModel model = (RecentQuotesListModel) adviceRecentScrollListQuotes.getModel();
-             model.clear();
-      }
-      else if (adviceTabbedPane.getSelectedIndex() == 7)
-      {
-             RecentBricksListModel model = (RecentBricksListModel) adviceRecentScrollListBricks.getModel();
-             model.clear();
+        case 1:
+              {
+                RecentScalesListModel model = (RecentScalesListModel) adviceRecentScrollListScales.getModel();
+                model.clear();
+                break;
+              }
+        case 2:
+              {
+                RecentRhythmsListModel model = (RecentRhythmsListModel) adviceRecentScrollListRhythms.getModel();
+                model.clear();
+                break;
+              }
+        case 3:
+              {
+                RecentCellsListModel model = (RecentCellsListModel) adviceRecentScrollListCells.getModel();
+                model.clear();
+                break;
+              }
+        case 4:
+              {
+                RecentIdiomsListModel model = (RecentIdiomsListModel) adviceRecentScrollListIdioms.getModel();
+                model.clear();
+                break;
+              }
+        case 5:
+              {
+                RecentLicksListModel model = (RecentLicksListModel) adviceRecentScrollListLicks.getModel();
+                model.clear();
+                break;
+              }
+        case 6:
+              {
+                RecentQuotesListModel model = (RecentQuotesListModel) adviceRecentScrollListQuotes.getModel();
+                model.clear();
+                break;
+              }
+        case 7:
+              {
+                RecentBricksListModel model = (RecentBricksListModel) adviceRecentScrollListBricks.getModel();
+                model.clear();
+                break;
+              }
+        default:
+            break;
       }
     }//GEN-LAST:event_clearRecentButtonActionPerformed
 
@@ -23873,6 +23958,21 @@ private boolean isDotted = false;
     {//GEN-HEADEREND:event_adviceRhythmTextFieldFocusLost
         adviceRhythm = adviceRhythmTextField.getText();
     }//GEN-LAST:event_adviceRhythmTextFieldFocusLost
+
+    private void quotesCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_quotesCheckBoxActionPerformed
+    {//GEN-HEADEREND:event_quotesCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quotesCheckBoxActionPerformed
+
+    private void bricksCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_bricksCheckBoxActionPerformed
+    {//GEN-HEADEREND:event_bricksCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bricksCheckBoxActionPerformed
+
+    private void chordTonesCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_chordTonesCheckBoxActionPerformed
+    {//GEN-HEADEREND:event_chordTonesCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chordTonesCheckBoxActionPerformed
 
     private String adviceRhythm = "";
     
@@ -26185,7 +26285,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel appearanceTab;
     private javax.swing.ButtonGroup approachColorBtnGrp;
     private javax.swing.JLabel approachToneLabel;
-    private javax.swing.JCheckBox approachTones;
+    private javax.swing.JCheckBox approachTonesCheckBox;
     private javax.swing.JLabel audioInputLabel;
     private javax.swing.JLabel audioInputLabel1;
     private javax.swing.JLabel audioInputLabel2;
@@ -26220,6 +26320,7 @@ private ImageIcon pauseButton =
     private javax.swing.JRadioButton blueOtherBtn;
     private javax.swing.JLabel breakpointLabel;
     private javax.swing.JTextField breakpointTF;
+    private javax.swing.JCheckBox bricksCheckBox;
     private javax.swing.JSplitPane bricksSplitPane;
     private javax.swing.JButton buildTableButton;
     private javax.swing.JPanel buttonPanel;
@@ -26229,14 +26330,14 @@ private ImageIcon pauseButton =
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton cancelTruncate;
     private javax.swing.JMenuItem cascadeMI;
-    private javax.swing.JCheckBox cells;
+    private javax.swing.JCheckBox cellsCheckBox;
     private javax.swing.JSplitPane cellsSplitPane;
     private javax.swing.JLabel channelSelectLabel;
     private javax.swing.JSpinner chordChannelSpinner;
     private javax.swing.ButtonGroup chordColorBtnGrp;
     private javax.swing.JTextField chordDist;
     private javax.swing.JLabel chordDistLabel;
-    private javax.swing.JCheckBox chordExtns;
+    private javax.swing.JCheckBox chordExtnsCheckBox;
     private javax.swing.JSpinner chordFontSizeSpinner;
     private javax.swing.JLabel chordIInstLabel;
     private javax.swing.JPanel chordInstPanel;
@@ -26249,9 +26350,9 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField chordSearchTF;
     private javax.swing.JButton chordStepBackButton;
     private javax.swing.JButton chordStepForwardButton;
-    private javax.swing.JCheckBox chordSubs;
+    private javax.swing.JCheckBox chordSubsCheckBox;
     private javax.swing.JLabel chordToneLabel;
-    private javax.swing.JCheckBox chordTones;
+    private javax.swing.JCheckBox chordTonesCheckBox;
     private javax.swing.JSlider chordVolume;
     private javax.swing.JToggleButton chorusBtn;
     private javax.swing.JSpinner chorusMelodyTranspositionSpinner;
@@ -26266,7 +26367,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.ButtonGroup colorColorBtnGrp;
     private javax.swing.JLabel colorToneLabel;
-    private javax.swing.JCheckBox colorTones;
+    private javax.swing.JCheckBox colorTonesCheckBox;
     private javax.swing.JToggleButton colorationButton;
     private javax.swing.JLabel commentsLabel;
     private javax.swing.JTextField commentsTF;
@@ -26409,7 +26510,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenu helpMenu;
     private javax.swing.JTextField highRangeTF;
     private javax.swing.JTextField highRangeTF2;
-    private javax.swing.JCheckBox idioms;
+    private javax.swing.JCheckBox idiomsCheckBox;
     private javax.swing.JSplitPane idiomsSplitPane;
     private javax.swing.JMenuItem importMidiMI;
     private javax.swing.ButtonGroup improvButtonGroup;
@@ -26485,7 +26586,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel leadsheetSpecificPanel;
     private javax.swing.JLabel leadsheetTitleLabel;
     private javax.swing.JMenuItem lickGeneratorMI;
-    private javax.swing.JCheckBox licks;
+    private javax.swing.JCheckBox licksCheckBox;
     private javax.swing.JSplitPane licksSplitPane;
     private javax.swing.JLabel lineLabel;
     private javax.swing.JMenuItem loadAdvMI;
@@ -26624,7 +26725,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton purgeCache;
     private javax.swing.JMenuItem quantizeMI;
     private javax.swing.JMenuItem quitMI;
-    private javax.swing.JCheckBox quotes;
+    private javax.swing.JCheckBox quotesCheckBox;
     private javax.swing.JSplitPane quotesSplitPane;
     private javax.swing.JButton rangeFilterBtn;
     private javax.swing.JLabel rangeToLabel;
@@ -26654,6 +26755,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem resolvePitches;
     private javax.swing.JMenuItem reverseMelody;
     private javax.swing.JMenuItem revertToSavedMI;
+    private javax.swing.JCheckBox rhythmsCheckBox;
     private javax.swing.JSplitPane rhythmsSplitPane;
     private javax.swing.JSlider rmsThresholdSlider1;
     private javax.swing.JMenuItem roadMapThisAnalyze;
@@ -26670,7 +26772,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton savePrefsBtn;
     private javax.swing.JMenuItem saveSelectionAsLick;
     private javax.swing.ButtonGroup saveTypeButtonGroup;
-    private javax.swing.JCheckBox scaleTones;
+    private javax.swing.JCheckBox scaleTonesCheckBox;
     private javax.swing.JSplitPane scalesSplitPane;
     private javax.swing.JTabbedPane scoreTab;
     private javax.swing.JTextField scoreTitleTF;

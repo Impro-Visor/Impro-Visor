@@ -26,7 +26,7 @@
 (default-counts-file ALL_MUSICIANS.counts)
 (default-fractal-file My.fractal)
 (default-style-directory styles)
-(visible-advice-components 1023)
+(visible-advice-components 4095)
 (chord-dist-above-root 10)
 (default-chord-font-size 16)
 (max-notes-in-voicing 5)
