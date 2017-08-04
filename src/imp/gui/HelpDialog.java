@@ -78,6 +78,8 @@ public class HelpDialog extends javax.swing.JDialog {
         criticHelpTextArea = new javax.swing.JTextArea();
         deepLearningHelpPane = new javax.swing.JScrollPane();
         deepLearningHelpTextArea = new javax.swing.JTextArea();
+        rhythmHelperHelpPane = new javax.swing.JScrollPane();
+        rhythmHelperHelpTextPane = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(680, 800));
@@ -290,6 +292,13 @@ public class HelpDialog extends javax.swing.JDialog {
 
         helpTabbedPane.addTab("Deep Learning", null, deepLearningHelpPane, "");
 
+        rhythmHelperHelpTextPane.setColumns(20);
+        rhythmHelperHelpTextPane.setRows(5);
+        rhythmHelperHelpTextPane.setText("Help for Rhythm Helper Active Trading Mode\n\nTo access this trading mode: Improv > Active Trading > Choose RhythmHelper from the TradingMode dropdown menu\n\nFunctions:\n- It can suggest Rhythms for you based on what you play for it\n- It can grade you on how well you emulate rhythms that you like\n- It can keep track of rhythms that you have played that you like\n\nFirst Step: First Step: Learn your rhythms!\n- The Rhythm Helper can learn from any set of solos in our corpus!\n- To learn the rhythms, go to Utilities > Grammar Control, click the Grammar Learning tab\n- Note: You can also just use the default rhythms, or trade with things you’ve already put in your My.rhythms file\n\nOnce you’ve learned your rhythms, you can trade!\n- Go to Improv > Active Trading and choose RhythmHelper from the TradingMode dropdown\n- Choose The RhythmCluster you’d like to trade with from the RhythmCluster Dropdown, or choose “Use My Rhythms” to trade with rhythms you saved in My.rhythms\n- Choose Either Corrective or Suggestive trading (we recommend starting with suggestive)\n\nTwo Modes: Suggestive and Corrective\n\nSuggestive Trading:\nIn Suggestive Trading, once you click Start Trading, you will play a phrase for the software.\t\nThen the software will find a similar musical phrase, and will play your notes with the similar phrase’s rhythm.\nRepeat this for as long as you want, then click stop trading (or ctrl+k) and you will see the add user rhythms dialog, shown on slide 6.\n\nCorrective Trading:\n- When you Start Trading in corrective trading mode. You will be prompted to choose which rhythms to correct. \n- Choose as many as you want, and then click the start trading button.\n- The Rhythm Helper will then play one of the rhythms for you, and get listen to you try to repeat it exactly. \n- It will do this for every rhythm you picked on a loop. \n- Then when you stop trading you will see your grade in the add user rhythms dialog.\n\nAdd Your Rhythms After Trading:\n- If you played some rhythms you liked, you can add them to your My.rhythms through the Add User Rhythms dialog\n- The left pane shows things you played in the most recent trading session\n- The right pane shows things already in your My.rhythms\n- You can add things you played to your my.rhythms by selecting and clicking add and delete things from your My.rhythms by selecting and clicking delete.\n\nFor more information and helpful diagrams: https://docs.google.com/presentation/d/1Y4eJ1UcnqXtJSTyXAysrUzG7elybPCbzG3TaGy8gYPw/edit?usp=sharing\t\n\n\n\n\n\n");
+        rhythmHelperHelpPane.setViewportView(rhythmHelperHelpTextPane);
+
+        helpTabbedPane.addTab("Rhythm Helper", rhythmHelperHelpPane);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -346,6 +355,8 @@ public class HelpDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane lickGenSettingsPane;
     private javax.swing.JScrollPane melodyNotation;
     private javax.swing.JTextArea melodyNotationHelp;
+    private javax.swing.JScrollPane rhythmHelperHelpPane;
+    private javax.swing.JTextArea rhythmHelperHelpTextPane;
     private javax.swing.JTextArea roadmapHelp;
     private javax.swing.JScrollPane roadmapHelpPane;
     private javax.swing.JTextArea soloGenInstructions;
