@@ -1,30 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * This Java Class is part of the Impro-Visor Application.
+ *
+ * Copyright (C) 2017 Robert Keller and Harvey Mudd College.
+ *
+ * Impro-Visor is free software; you can redistribute it and/or modifyc it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * Impro-Visor is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of merchantability or fitness
+ * for a particular purpose. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
+ * St, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 package imp.gui;
 import imp.trading.ActiveTradingDialog;
 
 /**
  *
- * @author cssummer17
+ * @author Samantha Long
  */
+
 public class TransformMenuDialog extends javax.swing.JDialog {
 
      Notate notate;
      ActiveTradingDialog activeTradingDialog;
      javax.swing.DefaultListModel transformListModel = new javax.swing.DefaultListModel();
-     String musician = "";
-    
+     String DEFAULT_TRANSFORM = "BillEvans";
+     String transform;
     /**
      * Creates new form TransformMenuDialog
      */
-    public TransformMenuDialog(Notate notate, boolean modal) {
+    public TransformMenuDialog(Notate notate, ActiveTradingDialog activeTradingDialog, boolean modal) {
         super(notate, modal);
         initComponents();
         this.setTitle("Transform Menu");
         this.notate = notate;
+        this.activeTradingDialog = activeTradingDialog;
+        transform = DEFAULT_TRANSFORM;
     }
 
     public javax.swing.JList getTransformList()
@@ -93,15 +111,9 @@ public class TransformMenuDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void transformJlistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transformJlistMouseClicked
-        //transformAction();
        int index = transformJlist.getSelectedIndex();
-       musician = (String) transformListModel.getElementAt(index);
-       //System.out.println("selected musician: " + musician);
-       notate.updateMusicianNotate(musician);
-       //activeTradingDialog.setTransformStatusButtonText(musician);
-       //activeTradingDialog.updateMusician(musician);
-       //activeTradingDialog.getActiveTrading().setMusician(musician);
-      // activeTradingDialog.getTransformStatusButton().setText("" + musician);
+       transform = (String) transformListModel.getElementAt(index);
+       notate.updateMusicianNotate(transform);
     }//GEN-LAST:event_transformJlistMouseClicked
    
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -110,51 +122,9 @@ public class TransformMenuDialog extends javax.swing.JDialog {
 
     public String getMusicianName()
     {
-        return musician;
+        return transform;
     }
     
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(TransformMenuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(TransformMenuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(TransformMenuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(TransformMenuDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                TransformMenuDialog dialog = new TransformMenuDialog(this.notate, true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-//    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> transformJlist;
     private javax.swing.JScrollPane transformListScrollPane;

@@ -531,7 +531,7 @@ private VoicingTableModel voicingTableModel = new VoicingTableModel();
 private DefaultListModel voicingSequenceListModel = new DefaultListModel();
 private imp.gui.VoicingKeyboard keyboard = null;
 
-private Future<Notate> futureInvisibleNotate = null;
+private Future<Notate> futureInvisibleNotate;
 
 public JTable getSectionTable(){
     return sectionTable;
@@ -989,7 +989,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     passiveTradingDialog.setSize(800, 200);
     passiveTradingDialog.setVisible(false);
     
-    transformMenuDialog = new TransformMenuDialog(this, false);
+    transformMenuDialog = new TransformMenuDialog(this, traderDialog, false);
     transformList = transformMenuDialog.getTransformList();
     transformListModel = transformMenuDialog.getTransformListModel();
     
