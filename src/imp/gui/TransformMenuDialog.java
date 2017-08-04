@@ -117,7 +117,7 @@ public class TransformMenuDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_transformJlistMouseClicked
    
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        transformListModel.clear();
+        //transformListModel.clear();
     }//GEN-LAST:event_formWindowClosed
 
     public String getMusicianName()
