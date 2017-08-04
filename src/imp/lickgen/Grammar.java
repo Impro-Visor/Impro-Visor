@@ -23,7 +23,6 @@ import imp.roadmap.brickdictionary.Block;
 import imp.data.Chord;
 import imp.data.ChordPart;
 import imp.data.Note;
-import imp.data.Rest;
 import imp.gui.Notate;
 import static imp.lickgen.Terminals.getDuration;
 import static imp.lickgen.Terminals.isTerminal;
@@ -39,14 +38,17 @@ import polya.Tokenizer;
 
 /*
  * @author David Morrison, modifications by Robert Keller, 21 June 2012,
- * revised method by Robert Keller, 1 August 2014
- * further revised by Robert Keller, 31 July 2017 to include wrappers share, unshare, fill
+ * Revised method by Robert Keller, 1 August 2014
+ * Further revised by Robert Keller, 31 July 2017 to include wrappers share, unshare, fill
+ * Further revised by Robert Keller, 3 August 2017 to include unshareall, which
+ * will be inserted automatically after any fill.
  */
 public class Grammar
   {
     /**
      * Set traceLevel to 1 to see which rules are being applied and also
      * any bricks identified.
+     * 
      * Set traceLevel to 2 to see frontier of derivation in addition to rules.
      */
     int traceLevel = 0;
@@ -63,6 +65,7 @@ public class Grammar
     public static final String NONE = "none";
     public static final String SHARE = "share";
     public static final String UNSHARE = "unshare";
+    public static final String UNSHAREALL = "unshareall";
 // Special forms:
     public static final String BUILTIN = "builtin";
     public static final String SPLICE = "splice";
@@ -210,8 +213,16 @@ public class Grammar
         // it seems that we go over sometime. Not sure why.
         return Terminals.truncateAbstractMelody(terminalBuffer.toPolylist(),
                                                 initialNumSlots);
-
     }
+    
+private void trace(Polylist stack)
+{
+  if( traceLevel > 1 )
+    {
+    System.out.println("STACK: " + stack + " OUT: " + terminalBuffer.toPolylist());
+    }
+}
+
 /**
  * outerFill refills the stack if numSlotsToFill > 0
  * @param stack
@@ -220,6 +231,8 @@ public class Grammar
  */
 ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
     {
+        trace(stack);
+
         Polylist originalStack = stack;
         while( numSlotsToFill > 0 )
           {
@@ -232,13 +245,12 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
             stack = result.stack;
             numSlotsToFill = result.numSlotsToFill;
             
-            //System.out.println("\nouterFill: applyRules " + numSlotsToFill + " " + stack);
             result = applyRules(stack, numSlotsToFill);
             
             numSlotsToFill = result.numSlotsToFill;
             stack = result.stack;
-            //System.out.println("    applyRules result "  + numSlotsToFill + " " + stack + " | " + terminalBuffer.toPolylist());
            }
+        
         return new ExpansionResult(stack, numSlotsToFill);
     }
         
@@ -358,6 +370,13 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
             Polylist polylistToken = (Polylist) token;
             switch( polylistToken.length() )
               {
+                case 1:
+                    if( polylistToken.first().equals(UNSHAREALL) )
+                      {
+                        return UNSHAREALL;
+                      }
+                    break;
+
                 case 2:
                     if( polylistToken.first().equals(SHARE) )
                       {
@@ -415,7 +434,8 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
                 int slots = (int) (beats * imp.Constants.BEAT);
                 Polylist innerToken = token.rest();
                 ExpansionResult result = outerFill(innerToken, slots);
-                return new ExpansionResult(result.stack, slotsToFill - slots);
+                Polylist stack = result.stack.cons(Polylist.list(UNSHAREALL));
+                return new ExpansionResult(stack, slotsToFill - slots);
 
             case UNSHARE:
                 unshare = true;
@@ -434,21 +454,18 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
                       }
                     return new ExpansionResult(found.rest(), slotsToFill);
                   }
+                break;
+            case UNSHAREALL:
+                cache = Polylist.nil;
+                return new ExpansionResult(Polylist.nil, slotsToFill);
           } // switch
         
         WeightedRule ruleToUse = findRule(token);
-        //System.out.println("ruleToUse = " + ruleToUse);
         if( ruleToUse == null )
           {
             return null;
           }
  
-        if( traceLevel > 0 )
-          {
-            System.out.println(ruleToUse);
-            System.out.println();
-          }
-        
         Polylist expansion = ruleToUse.rhs;
         if( shareable && !unshare )
           {
@@ -457,6 +474,12 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
             cache = cache.cons(newCacheItem);
             //System.out.println("sharing " + newCacheItem + " giving shareable " + cache);
           }
+        
+        if( traceLevel > 0 )
+          {
+          System.out.println("\nRULE: " + ruleToUse);
+          }
+        
         return new ExpansionResult(expansion, slotsToFill);
     }
         
@@ -595,7 +618,7 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
           {
             if( traceLevel > 0 )
               {
-                System.out.println("goal: " + token + "no rule found");
+                System.out.println("*** No rule found for token: " + token);
               }
           }
         else
@@ -705,15 +728,10 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
         Polylist expansion = result.stack;
 
         stack = expansion.append(stack);
-        //System.out.println("stack = " + stack);
-        // May need to return numSlotsToFill as well
+        
+        trace(stack);
+   
         return new ExpansionResult(stack, numSlotsToFill);
-    }
-
-    private void showFrontier(Polylist gen)
-    {
-        System.out.println(
-                "| " + terminalBuffer.toPolylist() + " | " + gen + " | ");
     }
 
     public Polylist addRule(Polylist toAdd)
