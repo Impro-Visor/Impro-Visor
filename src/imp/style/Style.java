@@ -2038,8 +2038,10 @@ private Polylist mapPC(Polylist results) {
         //divide the total space evenly amound the substitutions and check to 
         //make sure that the given rhythm values aren't triplet
         //values
+        //Duration.
+        
         if (rhythmValue < sub.getMinSlots() || (rhythmValue % 120 != 0)
-                || (rhythmValue*2 % 480 != 0))
+                || (rhythmValue*(480 / sub.getMinSlots()) % 480 != 0))
         {
             
             return sublist;
