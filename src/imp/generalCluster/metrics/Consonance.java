@@ -137,7 +137,7 @@ public class Consonance extends Metric{
         if (ruleString.startsWith("((")) {
             ruleString = ruleString.substring(1, ruleString.length());
         }
-        System.out.println("ruleString before getConsonance: "+ruleString);
+        //System.out.println("ruleString before getConsonance: "+ruleString);
         return getConsonance(ruleString, exactMelody);
 
         
@@ -145,7 +145,7 @@ public class Consonance extends Metric{
     
     @Override
     public double compute(String ruleString, IndexedMelodyPart exactMelody, Polylist rule){
-        System.out.println("ruleString in consonance: "+ruleString);
+        //System.out.println("ruleString in consonance: "+ruleString);
         this.value = getTheConsonance(ruleString, exactMelody, rule);
         return this.value;
     }

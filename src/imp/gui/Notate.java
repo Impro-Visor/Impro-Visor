@@ -989,7 +989,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     passiveTradingDialog.setSize(800, 200);
     passiveTradingDialog.setVisible(false);
     
-    transformMenuDialog = new TransformMenuDialog(this, false);
+    transformMenuDialog = new TransformMenuDialog(this, traderDialog, false);
     transformList = transformMenuDialog.getTransformList();
     transformListModel = transformMenuDialog.getTransformListModel();
     
@@ -27930,6 +27930,10 @@ public void setFutureInvisibleNotate(Future<Notate> futureInvisibleNotate){
 
 public Future<Notate> getFutureInvisibleNotate(){
     return this.futureInvisibleNotate;
+}
+
+public JTabbedPane getScoreTab(){
+    return this.scoreTab;
 }
 
 } //Notate

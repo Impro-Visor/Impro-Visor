@@ -24,7 +24,6 @@ import imp.data.Key;
 import imp.data.Leadsheet;
 import imp.data.MelodyPart;
 import imp.data.Note;
-import imp.data.NoteSymbol;
 import imp.data.Part;
 import imp.data.PitchClass;
 import imp.data.Unit;

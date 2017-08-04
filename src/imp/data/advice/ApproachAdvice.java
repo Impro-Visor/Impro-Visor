@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@
 
 package imp.data.advice;
 
+import static imp.Constants.BEAT;
+import static imp.Constants.C4;
+import imp.data.Key;
 import imp.data.Note;
 import imp.data.NoteSymbol;
 import imp.data.MelodyPart;
@@ -84,4 +87,14 @@ public class ApproachAdvice extends Advice {
         newPart.addUnit(tarNote);
         return newPart;
     }
+    
+        /**
+     * Converts the Advice into a Part and returns that.
+     * Note that rhythm is not used in this over-riding method.
+     * @param target
+     * @return Part     the Advice in Part form, ready to be inserted
+     */
+    public MelodyPart getPart(int target, Polylist rhythm) {
+       return getPart();
+}
 }

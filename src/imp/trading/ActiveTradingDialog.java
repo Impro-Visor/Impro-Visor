@@ -102,7 +102,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         cancelButton = createCancelButton();
         playbackControls.add(cancelButton);
         this.addRhythmHelperModeRadioPanel();
-        transformMenuDialog = new TransformMenuDialog (notate, false);
+        transformMenuDialog = new TransformMenuDialog(notate, this, false);
         
         notate.populateGenericGrammarMenu(tradeGrammarMenu);
         notate.populateMusicianList();
@@ -127,7 +127,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         leadingSelector = new javax.swing.ButtonGroup();
@@ -166,9 +167,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeWithAMusician = new javax.swing.JRadioButtonMenuItem();
         tradeGrammarSolo = new javax.swing.JRadioButtonMenuItem();
         tradeStore = new javax.swing.JRadioButtonMenuItem();
-        tradeAutoencoder = new javax.swing.JRadioButtonMenuItem();
-        RhythmHelperMenuItem = new javax.swing.JRadioButtonMenuItem();
         MemorizeMotifsMenuItem = new javax.swing.JRadioButtonMenuItem();
+        RhythmHelperMenuItem = new javax.swing.JRadioButtonMenuItem();
         tradeGrammarMenu = new javax.swing.JMenu();
         tradePlayMenu = new javax.swing.JMenu();
         tradePlayMenuItem = new javax.swing.JMenuItem();
@@ -180,19 +180,25 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         setLocation(new java.awt.Point(25, 0));
         setMinimumSize(new java.awt.Dimension(850, 220));
         setSize(new java.awt.Dimension(850, 220));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
+        addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentShown(java.awt.event.ComponentEvent evt)
+            {
                 activeTradingShown(evt);
             }
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
+            public void componentHidden(java.awt.event.ComponentEvent evt)
+            {
                 activingTradingHidden(evt);
             }
         });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 activeTradingWindowClosing(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
                 activeTradingWindowClosed(evt);
             }
         });
@@ -208,8 +214,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         userFirstButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         userFirstButton.setSelected(true);
         userFirstButton.setText("User First");
-        userFirstButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        userFirstButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 userFirstButtonActionPerformed(evt);
             }
         });
@@ -223,8 +231,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         leadingSelector.add(improvisorFirstButton);
         improvisorFirstButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         improvisorFirstButton.setText("Impro-Visor First");
-        improvisorFirstButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        improvisorFirstButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 improvisorFirstButtonActionPerformed(evt);
             }
         });
@@ -241,8 +251,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         switchToPassiveTradingButton.setMaximumSize(new java.awt.Dimension(270, 21));
         switchToPassiveTradingButton.setMinimumSize(new java.awt.Dimension(270, 21));
         switchToPassiveTradingButton.setPreferredSize(new java.awt.Dimension(270, 21));
-        switchToPassiveTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        switchToPassiveTradingButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 switchToPassiveTradingButtonActionPerformed(evt);
             }
         });
@@ -293,11 +305,14 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         grammarStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         grammarStatusButton.setToolTipText("Click to select grammar.");
         grammarStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        grammarStatusButton.setBounds(new java.awt.Rectangle(0, 0, 170, 45));
         grammarStatusButton.setMaximumSize(new java.awt.Dimension(170, 45));
         grammarStatusButton.setMinimumSize(new java.awt.Dimension(170, 45));
         grammarStatusButton.setPreferredSize(new java.awt.Dimension(210, 45));
-        grammarStatusButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        grammarStatusButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 grammarStatusButtonActionPerformed(evt);
             }
         });
@@ -311,8 +326,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         transformStatusButton.setToolTipText("Click to select trade musician.");
         transformStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transform", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         transformStatusButton.setPreferredSize(new java.awt.Dimension(210, 45));
-        transformStatusButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        transformStatusButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 transformStatusButtonActionPerformed(evt);
             }
         });
@@ -344,18 +361,24 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         processTimeSelector.setMaximumSize(new java.awt.Dimension(200, 50));
         processTimeSelector.setMinimumSize(new java.awt.Dimension(200, 50));
         processTimeSelector.setPreferredSize(new java.awt.Dimension(200, 50));
-        processTimeSelector.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+        processTimeSelector.addCaretListener(new javax.swing.event.CaretListener()
+        {
+            public void caretUpdate(javax.swing.event.CaretEvent evt)
+            {
                 processTimeSelectorCaretUpdate(evt);
             }
         });
-        processTimeSelector.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
+        processTimeSelector.addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusLost(java.awt.event.FocusEvent evt)
+            {
                 processTimeSelectorFocusLost(evt);
             }
         });
-        processTimeSelector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        processTimeSelector.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 processTimeSelectorActionPerformed(evt);
             }
         });
@@ -386,8 +409,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tempoSlider.setValue(120);
         tempoSlider.setMaximumSize(new java.awt.Dimension(150, 29));
         tempoSlider.setMinimumSize(new java.awt.Dimension(150, 29));
-        tempoSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        tempoSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 tempoSliderStateChanged(evt);
             }
         });
@@ -422,8 +447,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         volumeSlider.setMaximumSize(new java.awt.Dimension(150, 29));
         volumeSlider.setMinimumSize(new java.awt.Dimension(150, 29));
-        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 volumeSliderStateChanged(evt);
             }
         });
@@ -460,8 +487,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         countToggle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         countToggle.setSelected(true);
         countToggle.setText("Count In");
-        countToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        countToggle.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 countToggleActionPerformed(evt);
             }
         });
@@ -475,8 +504,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         loopToggle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         loopToggle.setSelected(true);
         loopToggle.setText("Loop");
-        loopToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        loopToggle.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 loopToggleActionPerformed(evt);
             }
         });
@@ -494,8 +525,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         startOrStopTradingButton.setMaximumSize(new java.awt.Dimension(140, 28));
         startOrStopTradingButton.setMinimumSize(new java.awt.Dimension(140, 28));
         startOrStopTradingButton.setPreferredSize(new java.awt.Dimension(140, 28));
-        startOrStopTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        startOrStopTradingButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 startOrStopTradingButtonActionPerformed(evt);
             }
         });
@@ -523,8 +556,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(200, 50));
         tradeLengthSpinner.setPreferredSize(new java.awt.Dimension(200, 50));
         tradeLengthSpinner.setValue(new Integer(4));
-        tradeLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        tradeLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 tradeLengthSpinnerlengthOfTradeSet(evt);
             }
         });
@@ -558,8 +593,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         modeSelector.add(tradeRandomModify);
         tradeRandomModify.setText("Modify and Rectify");
-        tradeRandomModify.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradeRandomModify.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradeRandomModifyActionPerformed(evt);
             }
         });
@@ -583,34 +620,28 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeStore.setText("Chop and Memorize");
         modeMenu.add(tradeStore);
 
-        modeSelector.add(tradeAutoencoder);
-        tradeAutoencoder.setText("Autoencoder (Experimental)");
-        tradeAutoencoder.setToolTipText("Simply repeat user input.");
-        tradeAutoencoder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tradeAutoencoderActionPerformed(evt);
-            }
-        });
-        modeMenu.add(tradeAutoencoder);
-
-        modeSelector.add(RhythmHelperMenuItem);
-        RhythmHelperMenuItem.setText("Rhythm Helper");
-        RhythmHelperMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RhythmHelperMenuItemActionPerformed(evt);
-            }
-        });
-        modeMenu.add(RhythmHelperMenuItem);
-
         modeSelector.add(MemorizeMotifsMenuItem);
         MemorizeMotifsMenuItem.setText("Memorize Motifs");
         MemorizeMotifsMenuItem.setToolTipText("learns a motif grammar from user");
-        MemorizeMotifsMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MemorizeMotifsMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 MemorizeMotifsMenuItemActionPerformed(evt);
             }
         });
         modeMenu.add(MemorizeMotifsMenuItem);
+
+        modeSelector.add(RhythmHelperMenuItem);
+        RhythmHelperMenuItem.setText("Rhythm Helper");
+        RhythmHelperMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                RhythmHelperMenuItemActionPerformed(evt);
+            }
+        });
+        modeMenu.add(RhythmHelperMenuItem);
 
         mainTradeMenuBar.add(modeMenu);
 
@@ -621,8 +652,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         tradePlayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
         tradePlayMenuItem.setText("Trade");
-        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradePlayMenuItemActionPerformed(evt);
             }
         });
@@ -630,8 +663,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         tradeStopMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         tradeStopMenuItem.setText("Stop");
-        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradeStopMenuItemActionPerformed(evt);
             }
         });
@@ -685,9 +720,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             if(activeTrading.getTradeMode() instanceof RhythmHelperTRM){
                 loopToggle.setVisible(false);
                 countToggle.setVisible(false);
-                System.out.println("about to make cancel button visible");
+                //System.out.println("about to make cancel button visible");
                 cancelButton.setVisible(true);
-                System.out.println("cancel button is visible: "+ cancelButton.isVisible());
+                //System.out.println("cancel button is visible: "+ cancelButton.isVisible());
             }
             startTrading();
           }
@@ -744,10 +779,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     {//GEN-HEADEREND:event_activingTradingHidden
         notate.setCountIn(countToggle.isSelected());
     }//GEN-LAST:event_activingTradingHidden
-
-    private void tradeAutoencoderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeAutoencoderActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tradeAutoencoderActionPerformed
 
     private void RhythmHelperMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RhythmHelperMenuItemActionPerformed
         updateTradeMode();
@@ -868,9 +899,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         if(cancelButton.isVisible()){
                 loopToggle.setVisible(true);
                 countToggle.setVisible(true);
-                System.out.println("about to make cancel button invisible");
+                //System.out.println("about to make cancel button invisible");
                 cancelButton.setVisible(false);
-                System.out.println("cancel button is visible: "+ cancelButton.isVisible());
+                //System.out.println("cancel button is visible: "+ cancelButton.isVisible());
                 
         }
         
@@ -987,15 +1018,15 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
       
     public void setGrammarStatusToRhythmCluster(){
    
-        System.out.println("rhythm cluster name: " + notate.getRhythmClusterName());
+        //System.out.println("rhythm cluster name: " + notate.getRhythmClusterName());
         
         ((javax.swing.border.TitledBorder)grammarStatusButton.getBorder()).setTitle("Rhythm Cluster");
         grammarStatusButton.setText(notate.getRhythmClusterName());
         //grammarStatusButton.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
         
-        System.out.println("setting text for trade grammar menu to rhythmCluster....");
+        //System.out.println("setting text for trade grammar menu to rhythmCluster....");
         tradeGrammarMenu.setText("RhythmCluster");
-        System.out.println("trade grammar menu text is: " + tradeGrammarMenu.getText());
+        //System.out.println("trade grammar menu text is: " + tradeGrammarMenu.getText());
         
     }
     
@@ -1259,7 +1290,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JPanel tempoPanel;
     private javax.swing.JSlider tempoSlider;
     private javax.swing.JRadioButtonMenuItem tradeAbstract;
-    private javax.swing.JRadioButtonMenuItem tradeAutoencoder;
     private javax.swing.JMenu tradeGrammarMenu;
     private javax.swing.JRadioButtonMenuItem tradeGrammarSolo;
     private javax.swing.JPanel tradeLengthPanel;
@@ -1284,16 +1314,16 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         if(tradeMode instanceof SuggestRhythmTRM){
             userFirstButton.setSelected(true);
             updateIsUserLeading();
-            System.out.println("selected suggest rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
-                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
+//            System.out.println("selected suggest rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
+//                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
             userFirstButton.setVisible(true);
             improvisorFirstButton.setVisible(false);  
         }else{
             improvisorFirstButton.setSelected(true);
             updateIsUserLeading();
 
-            System.out.println("selected correct rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
-                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
+//            System.out.println("selected correct rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
+//                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
             improvisorFirstButton.setVisible(true);
             userFirstButton.setVisible(false);
         }

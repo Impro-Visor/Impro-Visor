@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@ package imp.data.advice;
 import imp.data.Key;
 import imp.data.Note;
 import imp.data.NoteSymbol;
-import imp.data.Part;
+import imp.data.MelodyPart;
+import polya.Polylist;
 
 /**
  * Describes and contains a piece of Advice that is only one Note
@@ -55,11 +56,13 @@ public class AdviceForNote extends Advice {
 
     /**
      * Converts the Advice into a Part and returns that.
+     * Note that rhythm is not used in this over-riding method.
+     * @param target
      * @return Part     the Advice in Part form, ready to be inserted
      */
-    public Part getPart(int target) {
+    public MelodyPart getPart(int target, Polylist rhythm) {
         int beatValue = ((BEAT*4)/metre[1]);
-        Part newPart = new Part();
+        MelodyPart newPart = new MelodyPart();
         newPart.setMetre(metre[0], metre[1]);
         Note note = Key.makeNote(advice, C4, beatValue/2);
 
@@ -69,4 +72,9 @@ public class AdviceForNote extends Advice {
         
         return newPart;
     }
+    
+    public MelodyPart getPart() {
+        return getPart(C4, Polylist.nil);
+}
+
 }

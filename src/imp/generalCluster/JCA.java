@@ -54,13 +54,13 @@ public class JCA implements Serializable{
         }
         this.miter = iter/5;
         //this.miter = iter;
-        System.out.println("miter is: " + miter);
+        //System.out.println("miter is: " + miter);
         this.mDataPoints = dataPoints;
             
         numMetrics = metricListFactory.getNumMetrics();
         this.metricListFactory = metricListFactory;
         
-        System.out.println("Constructor finished!");
+        //System.out.println("Constructor finished!");
         
     }
 

@@ -415,9 +415,9 @@ public class CreateGrammar implements imp.Constants {
            }
         }
         
-        System.out.println("minimum set size: "+ minimumSetSize);
+        //System.out.println("minimum set size: "+ minimumSetSize);
         if (minimumSetSize<chainLength){
-            System.out.println("changing chainlength to: "+ minimumSetSize);
+            //System.out.println("changing chainlength to: "+ minimumSetSize);
             chainLength = minimumSetSize;
         }
         

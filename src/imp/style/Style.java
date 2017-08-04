@@ -2158,8 +2158,8 @@ public long render(MidiSequence seq, // called from SectionInfo
     // + " endIndex = " + endIndex + " endLimitIndex = " + endLimitIndex + " useDrums = " + useDrums + " hasStyle = " + hasStyle);
     // i iterates over the Chords in the ChordPart.
     ChordPart chordPart2 = createInterpolatedChordPart(chordPart);
-    System.out.println("\n chord part is: \n" + chordPart);
-    System.out.println("\nintrpolated chord part is: \n" + chordPart2);
+    //System.out.println("\n chord part is: \n" + chordPart);
+    //System.out.println("\nintrpolated chord part is: \n" + chordPart2);
     
    // imp.data.Score newScore = new imp.data.Score(chordPart2.size());
 
