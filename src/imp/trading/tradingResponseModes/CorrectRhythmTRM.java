@@ -9,6 +9,7 @@ import imp.data.MelodyPart;
 import imp.data.RhythmCluster;
 import imp.generalCluster.CreateGrammar;
 import imp.generalCluster.DataPoint;
+import imp.generalCluster.metrics.NoteCount;
 import imp.trading.TradingResponseInfo;
 import java.util.ArrayList;
 import polya.Polylist;
@@ -32,19 +33,19 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
     
     //private DataPoint goalDataPoint;
     private int numTargetDataPoints;
-    
+    protected int numSkipped;
     
     public CorrectRhythmTRM(String message) {
         super(message);
         score = 0;
-        System.out.println("creating a correctRhythmTRM......");
+        //System.out.println("creating a correctRhythmTRM......");
     }
 
     
     @Override
     public MelodyPart generateResponse(){
         
-        System.out.println("\n\n\nin generateResponse for correct rhythm");
+        //System.out.println("\n\n\nin generateResponse for correct rhythm");
         return getTradingResponse();
 //        responseInfo.correctRhythm();
 //        return responseInfo.getResponse();
@@ -59,14 +60,28 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
     private void gradeUser(DataPoint userDataPoint){
         DataPoint goalDataPoint = getGoalDataPoint();
         double error = userDataPoint.calcEuclideanDistance(goalDataPoint);
-        System.out.println("distance from user to goal: "+error);
+        //System.out.println("distance from user to goal: "+error);
         
         double scoreForTrade = error - FURTHEST_RADIUS;
         if(scoreForTrade<0){
             score += Math.abs(scoreForTrade);
         }
-        System.out.println("score for trade: "+ scoreForTrade);
-        System.out.println("score is now: "+score);
+        //System.out.println("score for trade: "+ scoreForTrade);
+        //System.out.println("score is now: "+score);
+        
+        //if user has not played any notes, pretend like that trade didn't happen
+        
+        for(int i = 0; i < userDataPoint.getMetrics().length; i++){
+            if (userDataPoint.getMetrics()[i] instanceof NoteCount){
+                if(userDataPoint.getMetrics()[i].getValue() <= 0.0){
+                    //System.out.println("score before realizing user didn't play anything: "+score);
+                    numSkipped++;
+                    score -= Math.abs(scoreForTrade);
+                    //System.out.println("score after realizing user didn't play anything: "+score);
+                }
+            }
+        }
+        
         //tradeCounter++;
     }
     
@@ -79,13 +94,13 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
     private DataPoint getDataPointToPaste(){
         int pasteIndex  = 0;
         if (numTargetDataPoints == 0){
-            System.out.println("0 target datapoints found!!");
+            //System.out.println("0 target datapoints found!!");
         }else{
-            System.out.println(numTargetDataPoints+" target datapoints found!!");
+            //System.out.println(numTargetDataPoints+" target datapoints found!!");
             pasteIndex = tradeCounter % numTargetDataPoints;
         }
         for(int i = 0; i < dataPointsToEmulate.length; i++){
-            System.out.println("dataPointsToEmulate["+i+"]: "+dataPointsToEmulate[i]);
+            //System.out.println("dataPointsToEmulate["+i+"]: "+dataPointsToEmulate[i]);
         }
         DataPoint pasteDataPoint = dataPointsToEmulate[pasteIndex];
         tradeCounter++;
@@ -146,6 +161,12 @@ public class CorrectRhythmTRM extends RhythmHelperTRM{
         Polylist rhythmPolylist = getTargetRhythm(pasteDataPoint);
         
         return rhythmPolylist;
+    }
+    
+    @Override
+    public int getNumTrades(){
+        //System.out.println("calling correct getNum trades: "+ tradeCounter + "-" + numSkipped);
+        return tradeCounter - numSkipped;
     }
     
     @Override

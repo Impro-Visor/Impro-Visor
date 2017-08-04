@@ -720,9 +720,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             if(activeTrading.getTradeMode() instanceof RhythmHelperTRM){
                 loopToggle.setVisible(false);
                 countToggle.setVisible(false);
-                System.out.println("about to make cancel button visible");
+                //System.out.println("about to make cancel button visible");
                 cancelButton.setVisible(true);
-                System.out.println("cancel button is visible: "+ cancelButton.isVisible());
+                //System.out.println("cancel button is visible: "+ cancelButton.isVisible());
             }
             startTrading();
           }
@@ -899,9 +899,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         if(cancelButton.isVisible()){
                 loopToggle.setVisible(true);
                 countToggle.setVisible(true);
-                System.out.println("about to make cancel button invisible");
+                //System.out.println("about to make cancel button invisible");
                 cancelButton.setVisible(false);
-                System.out.println("cancel button is visible: "+ cancelButton.isVisible());
+                //System.out.println("cancel button is visible: "+ cancelButton.isVisible());
                 
         }
         
@@ -1018,15 +1018,15 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
       
     public void setGrammarStatusToRhythmCluster(){
    
-        System.out.println("rhythm cluster name: " + notate.getRhythmClusterName());
+        //System.out.println("rhythm cluster name: " + notate.getRhythmClusterName());
         
         ((javax.swing.border.TitledBorder)grammarStatusButton.getBorder()).setTitle("Rhythm Cluster");
         grammarStatusButton.setText(notate.getRhythmClusterName());
         //grammarStatusButton.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
         
-        System.out.println("setting text for trade grammar menu to rhythmCluster....");
+        //System.out.println("setting text for trade grammar menu to rhythmCluster....");
         tradeGrammarMenu.setText("RhythmCluster");
-        System.out.println("trade grammar menu text is: " + tradeGrammarMenu.getText());
+        //System.out.println("trade grammar menu text is: " + tradeGrammarMenu.getText());
         
     }
     
@@ -1314,16 +1314,16 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         if(tradeMode instanceof SuggestRhythmTRM){
             userFirstButton.setSelected(true);
             updateIsUserLeading();
-            System.out.println("selected suggest rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
-                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
+//            System.out.println("selected suggest rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
+//                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
             userFirstButton.setVisible(true);
             improvisorFirstButton.setVisible(false);  
         }else{
             improvisorFirstButton.setSelected(true);
             updateIsUserLeading();
 
-            System.out.println("selected correct rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
-                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
+//            System.out.println("selected correct rhythm, userFirstButton selected: " + userFirstButton.isSelected() + 
+//                    ", improfirstBtn selected: " + improvisorFirstButton.isSelected());
             improvisorFirstButton.setVisible(true);
             userFirstButton.setVisible(false);
         }

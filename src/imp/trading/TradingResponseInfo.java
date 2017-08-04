@@ -120,7 +120,7 @@ public class TradingResponseInfo {
         //grammarSolo = notate.genSolo(0, notate.getScoreLength());
         
         //if(!activeTradingDialog.getTradeModeName().equals("Rhythm Helper")){
-            System.out.println("entering the if statement and doing unnecessary grammar stuff");
+           // System.out.println("entering the if statement and doing unnecessary grammar stuff");
             grammarSolo = generateFromGrammar(notate.getScoreLength(), notate.getChordProg());
         //}
         
@@ -219,7 +219,7 @@ public class TradingResponseInfo {
         }
         DataPoint d = getDataPointForUser();
         d = CreateGrammar.normalizeDataPoint(d, maxMetricValues, minMetricValues);
-        System.out.println("normalized datapoint: " + d);
+        //System.out.println("normalized datapoint: " + d);
         RhythmCluster bestFit = findNearestCluster(clusterArray, d);
         bestFit.addUserDataPoint(d);
 
@@ -244,16 +244,16 @@ public class TradingResponseInfo {
         
         
         if(tradeCounter % 5==0){
-            System.out.println("entered adjust cluster loop");
+            //System.out.println("entered adjust cluster loop");
             RhythmCluster biggestCluster = biggestCluster(clusterArray);
-            System.out.println("biggest Cluster is: "+biggestCluster);
+            //System.out.println("biggest Cluster is: "+biggestCluster);
             //if the biggest cluster is more than twice as big as it would be if all data was evenly distributed
-            System.out.println("size of biggest cluster "+biggestCluster.getNumMatches());
-            System.out.println("double the size of hypothetical evenly distributed cluster: "+2*((float) tradeCounter/(float) clusterArray.size()));
+            //System.out.println("size of biggest cluster "+biggestCluster.getNumMatches());
+            //System.out.println("double the size of hypothetical evenly distributed cluster: "+2*((float) tradeCounter/(float) clusterArray.size()));
             if(biggestCluster.getNumMatches() > 2*((float) tradeCounter/(float) clusterArray.size())){
-                System.out.println("entered unbalanced cluster if statement");
+                //System.out.println("entered unbalanced cluster if statement");
                 adjustClusterCentroids(biggestCluster);
-                System.out.println("clusters after adjustments: "+clusterArray);
+                //System.out.println("clusters after adjustments: "+clusterArray);
             }
         }
         
@@ -286,7 +286,7 @@ public class TradingResponseInfo {
         double newValue;
         
         Metric metaCentroidProblemMetric = metaCentroid.getMetricAtI(problemMetricIndex);
-        System.out.println("metacentroid: " + metaCentroid);
+        //System.out.println("metacentroid: " + metaCentroid);
         Metric avgUserDataPointProblemMetric = avgUserDataPointMetrics[problemMetricIndex];
         
         
@@ -308,19 +308,19 @@ public class TradingResponseInfo {
     private void adjustClusterCentroids(RhythmCluster biggestCluster){
         Centroid metaCentroid = getCentroidofAllClusters(clusterArray);
         Metric[] avgUserDataPointMetrics = biggestCluster.getAvgUserDataPointMetrics();
-        System.out.println("avgDataPointMetrics: " + avgUserDataPointMetrics);
+        //System.out.println("avgDataPointMetrics: " + avgUserDataPointMetrics);
         int problemMetricIndex = getProblemMetricIndex(biggestCluster);
-        System.out.println("problem metric index is: " + problemMetricIndex + ", metric is: " + avgUserDataPointMetrics[problemMetricIndex].getName());
+        //System.out.println("problem metric index is: " + problemMetricIndex + ", metric is: " + avgUserDataPointMetrics[problemMetricIndex].getName());
         double shiftAmount = getProblemMetricShiftAmount(problemMetricIndex, metaCentroid, avgUserDataPointMetrics);
-        System.out.println("\nshift value is: " + shiftAmount);
+        //System.out.println("\nshift value is: " + shiftAmount);
         
         
         for(int i = 0; i < clusterArray.size(); i++){
-            System.out.println("\ncentroid " + i + " was: " + clusterArray.get(i).getCentroid());
+            //System.out.println("\ncentroid " + i + " was: " + clusterArray.get(i).getCentroid());
             clusterArray.get(i).getCentroid().getMetricAtI(problemMetricIndex).adjustValue(shiftAmount);
             clusterArray.get(i).resetData();
             //testingArray.get(i).clear();
-            System.out.println("centroid " + i + " after shift: " + clusterArray.get(i).getCentroid());
+            //System.out.println("centroid " + i + " after shift: " + clusterArray.get(i).getCentroid());
         }
     }
     
@@ -359,7 +359,7 @@ public class TradingResponseInfo {
          int problemMetricIndex = -1;
          Metric[] averageMatchedUserMetrics = biggestCluster.getAvgUserDataPointMetrics();
 
-         System.out.println("averageMatchedUserMetrics: " + averageMatchedUserMetrics.toString());
+         //System.out.println("averageMatchedUserMetrics: " + averageMatchedUserMetrics.toString());
        
          Metric[] centroidMetrics = biggestCluster.getCentroid().getMetrics();
         
@@ -418,12 +418,12 @@ public class TradingResponseInfo {
     
     private MelodyPart truncateRhythmTemplate(MelodyPart rhythmTempSoFar){
         MelodyPart finalRhythmTemp = new MelodyPart();
-        System.out.println("\noverly long rhythmTemp matched: " + rhythmTempSoFar.toString());
-        System.out.println("length of this template: " + rhythmTempSoFar.getEndTime());
+        //System.out.println("\noverly long rhythmTemp matched: " + rhythmTempSoFar.toString());
+        //System.out.println("length of this template: " + rhythmTempSoFar.getEndTime());
 
         int tempSoFarIterator = rhythmTempSoFar.getFirstIndex();
         while(tempSoFarIterator < tradeLengthInSlots && rhythmTempSoFar.getNote(tempSoFarIterator) != null){
-            System.out.println("tempSoFarIterator: " + tempSoFarIterator);
+           // System.out.println("tempSoFarIterator: " + tempSoFarIterator);
             finalRhythmTemp.addNote(rhythmTempSoFar.getNote(tempSoFarIterator));
             tempSoFarIterator = rhythmTempSoFar.getNextIndex(tempSoFarIterator);
                     
@@ -458,7 +458,7 @@ public class TradingResponseInfo {
         
         for (int i = 0; i<testingArray.size(); i++){
             System.out.println("cluster"+i+" centroid: "+clusterArray.get(i).getCentroid().toString());
-            //System.out.println("cluster"+i+" rhythmList: ");
+            System.out.println("cluster"+i+" rhythmList: ");
 //            for (Polylist p:clusterArray.get(i).getRhythmList() ){
 //                System.out.println("    "+p.toString());
 //            }
@@ -520,7 +520,7 @@ public class TradingResponseInfo {
             startOfUserMelody = notate.getScoreLength() - responseLength;
         }
         
-        System.out.println("first index of response: "+response.getFirstIndex()+", start of user melody: "+startOfUserMelody);
+        //System.out.println("first index of response: "+response.getFirstIndex()+", start of user melody: "+startOfUserMelody);
         String abstractMel = lgf.addMeasureToAbstractMelody(startOfUserMelody, ruleSegLength, false, false);
         String exactMelody = lgf.getExactMelody(ruleSegLength, abstractMel, startOfUserMelody);
         exactMelody = mergeRests(exactMelody);
@@ -555,7 +555,7 @@ public class TradingResponseInfo {
     }
     
     private String mergeRests(String exactMelody){
-        System.out.println("exactMelody before merging rests: " + exactMelody);
+        //System.out.println("exactMelody before merging rests: " + exactMelody);
         
         String rtn = "";
         String[] melParts = exactMelody.split("\\s+");
@@ -662,7 +662,7 @@ public class TradingResponseInfo {
      private Double[] loadMaxMetricValsFromFile(BufferedReader clusterTextReader) throws IOException {
         String metricMaxValsPLString = clusterTextReader.readLine();
         Polylist metricMaxValsPL = Polylist.PolylistFromString(metricMaxValsPLString);
-        System.out.println("maxMetricValues: " + metricMaxValsPL.toString());
+        //System.out.println("maxMetricValues: " + metricMaxValsPL.toString());
         if(metricMaxValsPL.first() instanceof Polylist){metricMaxValsPL = (Polylist) metricMaxValsPL.first();}//for some reason this first string polylist gets read in as a double polylist
         
         if (( (String) metricMaxValsPL.first() ).equals("maxMetricValues")){
@@ -677,7 +677,7 @@ public class TradingResponseInfo {
     private Double[] loadMinMetricValsFromFile(BufferedReader clusterTextReader) throws IOException {
         String metricMinValsPLString = clusterTextReader.readLine();
         Polylist metricMinValsPL = Polylist.PolylistFromString(metricMinValsPLString);
-        System.out.println("minMetricValues: " + metricMinValsPL.toString());
+        //System.out.println("minMetricValues: " + metricMinValsPL.toString());
         if(metricMinValsPL.first() instanceof Polylist){metricMinValsPL = (Polylist) metricMinValsPL.first();}//for some reason this first string polylist gets read in as a double polylist
         
         if (( (String) metricMinValsPL.first() ).equals("minMetricValues")){
@@ -710,7 +710,7 @@ public class TradingResponseInfo {
             line = line.trim();
             clusterString+=line;
         }
-        System.out.println("cluster string is: "+clusterString);
+        //System.out.println("cluster string is: "+clusterString);
         Polylist clustersPolylist = Polylist.PolylistFromString(clusterString);
         ArrayList<RhythmCluster> rhythmClusters = new ArrayList<RhythmCluster>(); 
         int iterator = 0;
@@ -980,14 +980,14 @@ public class TradingResponseInfo {
     }
     
     public  static MelodyPart generateFromGrammar(int length, ChordPart chords, Notate notate){
-        System.out.println("Grammar File Name: "+notate.getGrammarFileName());
+        //System.out.println("Grammar File Name: "+notate.getGrammarFileName());
         Grammar gram = new Grammar(notate.getGrammarFileName());
         
         //TODO: TEST STUFF REMOVE!!! 
         //String testGramFileName = "/Users/cssummer17/impro-visor-version-9.1-files/grammars/LukasSucks.grammar";         
         //gram = new Grammar(testGramFileName);        
    
-        System.out.println("Grammar itself is: "+ gram.toString());
+        //System.out.println("Grammar itself is: "+ gram.toString());
         MelodyPart generated = notate.getLickgenFrame().fillMelody(BEAT, gram.run(0, length, notate, false, false, -1), chords, 0);
         RectifyPitchesCommand cmd = new RectifyPitchesCommand(generated, 0, generated.size()-1, chords, false, false, true, true, true, true);
         cmd.execute();

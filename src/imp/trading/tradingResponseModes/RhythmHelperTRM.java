@@ -95,7 +95,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     }
     
     private Future<Notate> startCreatingInvisibleNotate(Notate notate){
-        System.out.println("\nstarting to create invisible notate.......");
+        //System.out.println("\nstarting to create invisible notate.......");
         ExecutorService executor = Executors.newCachedThreadPool();
         Future<Notate> futureInvisibleNotate = executor.submit(new Callable<Notate>(){
             @Override

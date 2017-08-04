@@ -580,25 +580,25 @@ public class DataPoint implements Serializable{
     public Metric[] scaleMetrics(double normalizingRatio){
 //        double normalizingRatio = targetSegLength / mySegLength;
 //        System.out.println("mySegLength: " + mySegLength + ", targetSegLength: " + targetSegLength + ", normalizingRatio: " + normalizingRatio);
-        System.out.println("metricList was: " + metricList.toString());
+        //System.out.println("metricList was: " + metricList.toString());
         for(int i = 0; i < metricList.length; i++){
             if(!metricList[i].isLengthIndependent()){
-                System.out.println("hit the contains conditional");
+                //System.out.println("hit the contains conditional");
                 double newVal = metricList[i].getValue() * normalizingRatio;
                 metricList[i].setValue(newVal);
             }
         }
         
-        System.out.println("metricList is now: " + metricList.toString());
+        //System.out.println("metricList is now: " + metricList.toString());
         
         return metricList;
         
     }
     
     public void normalize(Double[] maxVals, Double[] minVals){
-        System.out.println("metrics before normalization");
+        //System.out.println("metrics before normalization");
         for (int i = 0; i < metricList.length; i++){
-            System.out.println(metricList[i].getName()+": "+metricList[i].getValue());
+            //System.out.println(metricList[i].getName()+": "+metricList[i].getValue());
 }
         if(maxVals.length != metricList.length || minVals.length != metricList.length){
             System.out.println("INVALID MIN/MAX ARRAYS TO NORMALIZE OVER!");
@@ -607,9 +607,9 @@ public class DataPoint implements Serializable{
                 metricList[i].setValue((metricList[i].getValue() - minVals[i]) / (maxVals[i]-minVals[i]));
             }
         }
-        System.out.println("metrics after normalization");
+        //System.out.println("metrics after normalization");
         for (int i = 0; i < metricList.length; i++){
-            System.out.println(metricList[i].getName()+": "+metricList[i].getValue());
+            //System.out.println(metricList[i].getName()+": "+metricList[i].getValue());
         }
     }
     

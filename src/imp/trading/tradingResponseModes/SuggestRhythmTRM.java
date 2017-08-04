@@ -20,14 +20,14 @@ public class SuggestRhythmTRM extends RhythmHelperTRM{
     
     public SuggestRhythmTRM(String message) {
         super(message);
-        System.out.println("creating a suggestRhythmTRM......");
+        //System.out.println("creating a suggestRhythmTRM......");
     }
 
     
     @Override
     public MelodyPart generateResponse(){
         tradeCounter++;
-        System.out.println("\n\n\nin generateResponse for suggest rhythm");
+        //System.out.println("\n\n\nin generateResponse for suggest rhythm");
         
         MelodyPart response = getTradingResponse();
         

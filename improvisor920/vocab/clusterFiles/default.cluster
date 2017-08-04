@@ -1,0 +1,6055 @@
+(windowSize 16)
+(maxMetricValues (29.0 1.0 0.9629629850387573 15.0 1020.0))
+(minMetricValues (4.0 0.0 0.03846153989434242 0.0 120.0))
+ (cluster
+  (name cluster0)
+   (centroid
+    (noteCount 0.05600000000000001)
+    (syncopation 0.20345238095238094)
+    (diversityIndex 0.19108408264438642)
+    (numContourChanges 0.11333333333333333)
+    (longestNoteLength 0.8266666666666665)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C1)
+          (slope 2 2 C4+8)
+          (slope -4 -2 C8 C8 R8 C8)
+          (slope 2 2 C1+2+4+8)
+          (slope -4 -4 C8)
+          (slope 2 2 C8)         )
+       )
+
+       (Xnotation
+        (X 5 1)
+        (X 3 4+8)
+        (X 1 8)
+        (X 6 8)
+       R8
+        (X 5 8)
+        (X 6 1+2+4+8)
+        (X 1 8)
+        (X 2 8)       )
+
+      (Brick-type null)
+     Head 24960 72 480 74 180 70 60 67 60 -1 60 65 60 67 900 63 60 65 60 CHORDS Fm9 Bb13 EbM9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 3 5 C1+2+4)
+          (slope -7 -7 C4)
+          (slope 7 7 C1+2+8)
+          (slope -2 -2 R8 C4)         )
+       )
+
+       (Xnotation
+        (X 5 1+2+4)
+        (X 1 4)
+        (X 6 1+2+8)
+       R8
+        (X 5 4)       )
+
+      (Brick-type null)
+     Head 5760 68 840 61 120 68 780 -1 60 66 120 CHORDS DbM9 B13sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C1+2+4)
+          (slope -8 -8 C8)
+          (slope 1 7 C8 C1+2+8 R4+8)         )
+       )
+
+       (Xnotation
+        (X 5 1+2+4)
+        (X 7 8)
+        (X 1 8)
+        (X 6 1+2+8)
+       R4+8       )
+
+      (Brick-type null)
+     Head 7680 68 840 60 60 61 60 68 780 -1 180 CHORDS DbM9 B13sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 3 5 C1+2+4)
+          (slope -7 -7 C4)
+          (slope 7 7 C1+2+8)
+          (slope -2 -2 R8 C4)         )
+       )
+
+       (Xnotation
+        (X 5 1+2+4)
+        (X 1 4)
+        (X 6 1+2+8)
+       R8
+        (X 5 4)       )
+
+      (Brick-type null)
+     Head 15360 68 840 61 120 68 780 -1 60 66 120 CHORDS DbM9 B13sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C1+2+4)
+          (slope -8 -8 C8)
+          (slope 1 7 C8 C1+2+8)
+          (slope 0 0 R8 C8)
+          (slope 1 1 C8)         )
+       )
+
+       (Xnotation
+        (X 5 1+2+4)
+        (X 7 8)
+        (X 1 8)
+        (X 6 1+2+8)
+       R8
+        (X 6 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Head 17280 68 840 60 60 61 60 68 780 -1 60 68 60 69 60 CHORDS DbM9 B13sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C1)
+          (slope 1 1 C4+8)
+          (slope -4 -1 C8 C8 R8 C8)
+          (slope 5 5 C1+1+8)         )
+       )
+
+       (Xnotation
+        (X 5 1)
+        (X 5 4+8)
+        (X 3 8)
+        (X 6 8)
+       R8
+        (X 5 8)
+        (X 1 1+1+8)       )
+
+      (Brick-type null)
+     Head 21120 69 480 70 180 66 60 65 60 -1 60 63 60 68 1020 CHORDS DM7 Ebm9 Ab13 DbM9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C1+2+4)
+          (slope -2 -2 C4)
+          (slope 2 2 C1+2+4)
+          (slope -4 -4 C8)
+          (slope 2 2 C8)         )
+       )
+
+       (Xnotation
+        (X #4 1+2+4)
+        (X 3 4)
+        (X 3 1+2+4)
+        (X 1 8)
+        (X 2 8)       )
+
+      (Brick-type null)
+     Head 26880 67 840 65 120 67 840 63 60 65 60 CHORDS Db9#11 EbM9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C1+2+4)
+          (slope 5 5 R4 R4 C8)
+          (slope -2 -2 R8 C4+8)
+          (slope 2 2 C2+4)
+          (slope -2 -2 R8 C8 R8)         )
+       )
+
+       (Xnotation
+        (X #4 1+2+4)
+       R4 R4
+        (X 2 8)
+       R8
+        (X 3 4+8)
+        (X 2 2+4)
+       R8
+        (X 3 8)
+       R8       )
+
+      (Brick-type null)
+     Head 28800 67 840 -1 120 -1 120 72 60 -1 60 70 180 72 360 -1 60 70 60 -1 60 CHORDS Db9#11 NC Bbm9 Gm7 Bbm9 Gm7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 6 8 C2+4)
+          (slope -3 -3 C8)
+          (slope 3 3 C8)
+          (slope -5 -2 C2 C2)
+          (slope 4 4 C1+2+4)
+          (slope -7 -7 C4)         )
+       )
+
+       (Xnotation
+        (X b3 2+4)
+        (X 1 8)
+        (X b3 8)
+        (X 7 2)
+        (X #5 2)
+        (X 5 1+2+4)
+        (X 1 4)       )
+
+      (Brick-type null)
+     Head 34560 71 360 68 60 71 60 66 240 64 240 68 840 61 120 CHORDS Ab7#5#9 DbM9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 6 8 C1+2+8)
+          (slope -2 -2 R8 C4)
+          (slope 2 2 C1+2+4)
+          (slope -8 -8 C8)
+          (slope 1 1 C8)         )
+       )
+
+       (Xnotation
+        (X 6 1+2+8)
+       R8
+        (X 5 4)
+        (X 5 1+2+4)
+        (X 7 8)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 36480 68 780 -1 60 66 120 68 840 60 60 61 60 CHORDS B13sus4 DbM9     )
+   )
+ )
+ (cluster
+  (name cluster1)
+   (centroid
+    (noteCount 0.26823529411764707)
+    (syncopation 0.379063909946263)
+    (diversityIndex 0.6045349044979741)
+    (numContourChanges 0.2156862745098039)
+    (longestNoteLength 0.3568627450980393)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 5 7 R4 C8)
+          (slope -2 -2 R8 C4+8)
+          (slope 2 2 C2+4)
+          (slope -2 -2 R8 C8 R8 C2+4 C8 C8)
+          (slope 4 4 L8)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C4+8)
+          (slope 1 2 L8 C8)         )
+       )
+
+       (Xnotation R4
+        (X 2 8)
+       R8
+        (X 3 4+8)
+        (X 2 2+4)
+       R8
+        (X 3 8)
+       R8
+        (X 2 2+4)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 4+8)
+        (X 6 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Head 1920 -1 120 72 60 -1 60 70 180 72 360 -1 60 70 60 -1 60 68 360 66 60 64 60 68 60 66 60 68 60 66 180 68 60 69 60 CHORDS NC Bbm9 Gm7 Bbm9 Gm7 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2+4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+
+       STARTER       )
+
+       (Xnotation R2+4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Chorus2 0 -1 360 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -10 -8 R2+4 C8)
+          (slope 4 6 C8 C4+8)
+          (slope -4 -1 A8 L8 R8 X4)
+          (slope 5 5 L4+8)
+          (slope -2 -2 C2+4+8 R2+4)         )
+       )
+
+       (Xnotation R2+4
+        (X 7 8)
+        (X #2 8)
+        (X b3 4+8)
+        (X 2 8)
+        (X b2 8)
+       R8
+        (X 6 4)
+        (X 6 4+8)
+        (X 5 2+4+8)
+       R2+4       )
+
+      (Brick-type null)
+     Head 9600 -1 360 61 60 65 60 71 180 70 60 69 60 -1 60 65 120 70 180 68 420 -1 360 CHORDS Ebm9b5 Ab7#5#9 DbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R4 C8)
+          (slope -2 -2 R8 C4+8)
+          (slope 2 2 C2+4)
+          (slope -2 -2 R8 C8 R8 C2+4 C8 C8)
+          (slope 4 4 L8)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C2+8)         )
+
+       STARTER       )
+
+       (Xnotation R4
+        (X 2 8)
+       R8
+        (X 3 4+8)
+        (X 2 2+4)
+       R8
+        (X 3 8)
+       R8
+        (X 2 2+4)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 2+8)       )
+
+      (Brick-type null)
+     Head 0 -1 120 72 60 -1 60 70 180 72 360 -1 60 70 60 -1 60 68 360 66 60 64 60 68 60 66 60 68 60 66 300 CHORDS NC Bbm9 Gm7 Bbm9 Gm7 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 3 5 R4 C8)
+          (slope -2 -2 R8 C4+8)
+          (slope 2 2 C2+4)
+          (slope -2 -2 R8 C8 R8 C2+4 C8 C8)
+          (slope 4 4 L8)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C2+8)         )
+       )
+
+       (Xnotation R4
+        (X 2 8)
+       R8
+        (X 3 4+8)
+        (X 2 2+4)
+       R8
+        (X 3 8)
+       R8
+        (X 2 2+4)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 2+8)       )
+
+      (Brick-type null)
+     Head 9600 -1 120 72 60 -1 60 70 180 72 360 -1 60 70 60 -1 60 68 360 66 60 64 60 68 60 66 60 68 60 66 300 CHORDS NC Bbm9 Gm7 Bbm9 Gm7 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2+4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+
+       STARTER       )
+
+       (Xnotation R2+4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Chorus3 0 -1 360 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 5 7 R4 C8)
+          (slope -2 -2 R8 C4+8)
+          (slope 2 2 C2+4)
+          (slope -2 -2 R8 C8 R8 C2+4 C8 C8)
+          (slope 4 4 L8)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C4+8)
+          (slope 1 2 L8 C8)         )
+       )
+
+       (Xnotation R4
+        (X 2 8)
+       R8
+        (X 3 4+8)
+        (X 2 2+4)
+       R8
+        (X 3 8)
+       R8
+        (X 2 2+4)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 4+8)
+        (X 6 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Head 11520 -1 120 72 60 -1 60 70 180 72 360 -1 60 70 60 -1 60 68 360 66 60 64 60 68 60 66 60 68 60 66 180 68 60 69 60 CHORDS NC Bbm9 Gm7 Bbm9 Gm7 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C8)
+          (slope 2 4 L8 C8 C2+8)
+          (slope -11 -11 R8 C8)
+          (slope 2 4 C8 C8 C4 L4)
+          (slope 0 0 C8)
+          (slope -4 -4 C1+8 R2+4)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 6 8)
+        (X 1 8)
+        (X 3 2+8)
+       R8
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 5 4)
+        (X 6 4)
+        (X 3 8)
+        (X 1 1+8)
+       R2+4       )
+
+      (Brick-type null)
+     Head 7680 67 60 69 60 72 60 76 300 -1 60 65 60 67 60 71 60 74 120 76 120 76 60 72 540 -1 360 CHORDS C G7 C C7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2+4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+
+       STARTER       )
+
+       (Xnotation R2+4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Head 0 -1 360 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -4 -2 R2+4 C8)
+          (slope 2 8 C8 C4+8)
+          (slope -5 -1 L8 C8 R8 C4)
+          (slope 3 3 L16)
+          (slope -2 -2 C16)
+          (slope 2 2 L1+8 R2+4)         )
+       )
+
+       (Xnotation R2+4
+        (X 7 8)
+        (X 1 8)
+        (X b3 4+8)
+        (X b2 8)
+        (X 1 8)
+       R8
+        (X 5 4)
+        (X 4 16)
+        (X 3 16)
+        (X 4 1+8)
+       R2+4       )
+
+      (Brick-type null)
+     Head 7680 -1 360 65 60 67 60 75 180 73 60 72 60 -1 60 67 120 70 30 68 30 70 540 -1 360 CHORDS Gm7b5 C7#9 Fm7b5 Bb7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2+4 C8)
+          (slope 3 7 C8 C4+8)
+          (slope -8 -8 C8)
+          (slope 4 4 C8)
+          (slope -6 -6 R8 L4)
+          (slope 2 2 C1 R1)         )
+       )
+
+       (Xnotation R2+4
+        (X 5 8)
+        (X 7 8)
+        (X 1 4+8)
+        (X 3 8)
+        (X #5 8)
+       R8
+        (X 2 4)
+        (X 7 1)
+       R1       )
+
+      (Brick-type null)
+     Head 11520 -1 360 68 60 71 60 78 180 70 60 74 60 -1 60 68 120 70 480 -1 480 CHORDS Dbm7 Gb7+ BM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2 C8)
+          (slope 3 3 R8 C8)
+          (slope -7 -7 C1)
+          (slope 9 9 C8)
+          (slope -2 -1 C8 X8 R4 C8)
+          (slope 3 3 R8 C8)
+          (slope -8 -1 L2+4+8 C4)         )
+
+       STARTER       )
+
+       (Xnotation R2
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 1 1)
+        (X 3 8)
+        (X 5 8)
+        (X 4 8)
+       R4
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 7 2+4+8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Head 0 -1 240 69 60 -1 60 72 60 65 480 74 60 72 60 70 60 -1 120 69 60 -1 60 72 60 64 420 63 120 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2+4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+
+       STARTER       )
+
+       (Xnotation R2+4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Chorus4 0 -1 360 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2 C8)
+          (slope 3 3 R8 C8)
+          (slope -7 -7 C1)
+          (slope 9 9 C8)
+          (slope -2 -1 C8 X8 R4 C8)
+          (slope 3 3 R8 C8)
+          (slope -8 -1 L2+4+8 C4)         )
+
+       STARTER       )
+
+       (Xnotation R2
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 1 1)
+        (X 3 8)
+        (X 5 8)
+        (X 4 8)
+       R4
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 7 2+4+8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus2 0 -1 240 69 60 -1 60 72 60 65 480 74 60 72 60 70 60 -1 120 69 60 -1 60 72 60 64 420 63 120 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 R8 C4)
+          (slope 0 0 R8 C4)
+          (slope 2 2 C4 L4+8)
+          (slope 0 0 L8)
+          (slope -4 -4 R2+8 C4)
+          (slope 0 0 R8 C4)
+          (slope 2 2 C4 L4+8)
+          (slope -2 -2 C2 C8)         )
+       )
+
+       (Xnotation R8
+        (X 4 4)
+       R8
+        (X 4 4)
+        (X 5 4)
+        (X 6 4+8)
+        (X 6 8)
+       R2+8
+        (X 4 4)
+       R8
+        (X 4 4)
+        (X 5 4)
+        (X 6 4+8)
+        (X 5 2)
+        (X #5 8)       )
+
+      (Brick-type null)
+     Head 19200 -1 60 65 120 -1 60 65 120 67 120 69 180 69 60 -1 300 65 120 -1 60 65 120 67 120 69 180 67 240 65 60 CHORDS C7sus4 C7sus4 C7sus4 C7sus4 A7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2 C8)
+          (slope 3 3 R8 C8)
+          (slope -7 -7 C1)
+          (slope 9 9 C8)
+          (slope -2 -1 C8 X8 R4 C8)
+          (slope 3 3 R8 C8)
+          (slope -8 -1 L2+4+8 C4)         )
+
+       STARTER       )
+
+       (Xnotation R2
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 1 1)
+        (X 3 8)
+        (X 5 8)
+        (X 4 8)
+       R4
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 7 2+4+8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus9 0 -1 240 69 60 -1 60 72 60 65 480 74 60 72 60 70 60 -1 120 69 60 -1 60 72 60 64 420 63 120 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2 C8)
+          (slope 3 3 R8 C8)
+          (slope -7 -7 C1)
+          (slope 9 9 C8)
+          (slope -2 -1 C8 X8 R4 C8)
+          (slope 3 3 R8 C8)
+          (slope -8 -1 L2+4+8 C4)         )
+
+       STARTER       )
+
+       (Xnotation R2
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 1 1)
+        (X 3 8)
+        (X 5 8)
+        (X 4 8)
+       R4
+        (X 3 8)
+       R8
+        (X 5 8)
+        (X 7 2+4+8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus10 0 -1 240 69 60 -1 60 72 60 65 480 74 60 72 60 70 60 -1 120 69 60 -1 60 72 60 64 420 63 120 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+   )
+ )
+ (cluster
+  (name cluster2)
+   (centroid
+    (noteCount 0.08)
+    (syncopation 1.0)
+    (diversityIndex 0.13867488516402618)
+    (numContourChanges 0.0)
+    (longestNoteLength 0.20000000000000004)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R4+8 L2+8)
+          (slope 0 0 R4+8 L8 R8 L8 R2+8 L2 R2 L8 R8 L8 R4)         )
+
+       STARTER       )
+
+       (Xnotation R4+8
+        (X 2 2+8)
+       R4+8
+        (X 2 8)
+       R8
+        (X 2 8)
+       R2+8
+        (X 2 2)
+       R2
+        (X 2 8)
+       R8
+        (X 2 8)
+       R4       )
+
+      (Brick-type null)
+     Head 0 -1 180 64 300 -1 180 64 60 -1 60 64 60 -1 300 64 240 -1 240 64 60 -1 60 64 60 -1 120 CHORDS Dm Dm6 Dm Dm6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 R4+8 L2+8)
+          (slope 0 0 R4+8 L8 R8 L8 R2+8 L2 R2 L8 R8 L8 R4)         )
+       )
+
+       (Xnotation R4+8
+        (X 2 2+8)
+       R4+8
+        (X 2 8)
+       R8
+        (X 2 8)
+       R2+8
+        (X 2 2)
+       R2
+        (X 2 8)
+       R8
+        (X 2 8)
+       R4       )
+
+      (Brick-type null)
+     Head 5760 -1 180 64 300 -1 180 64 60 -1 60 64 60 -1 300 64 240 -1 240 64 60 -1 60 64 60 -1 120 CHORDS Dm Dm6 Dm Dm6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 R4+8 L2+8)
+          (slope 0 0 R4+8 L8 R8 L8 R2+8 L2 R2 L8 R8 L8 R4)         )
+       )
+
+       (Xnotation R4+8
+        (X 2 2+8)
+       R4+8
+        (X 2 8)
+       R8
+        (X 2 8)
+       R2+8
+        (X 2 2)
+       R2
+        (X 2 8)
+       R8
+        (X 2 8)
+       R4       )
+
+      (Brick-type null)
+     Head 11520 -1 180 64 300 -1 180 64 60 -1 60 64 60 -1 300 64 240 -1 240 64 60 -1 60 64 60 -1 120 CHORDS Dm Dm6 Dm Dm6     )
+   )
+ )
+ (cluster
+  (name cluster3)
+   (centroid
+    (noteCount 0.788)
+    (syncopation 0.47252468156253763)
+    (diversityIndex 0.09476610284637242)
+    (numContourChanges 0.6499999999999998)
+    (longestNoteLength 0.09666666666666665)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 4 6 C4)
+          (slope -2 -2 L4 C8)
+          (slope 6 6 C8)
+          (slope -2 -1 C4 C8)
+          (slope 3 3 C8)
+          (slope -7 -3 C8 C8 C8 R8 C4)
+          (slope 3 4 L8 C8)
+          (slope -2 -2 C8/3)
+          (slope 5 5 C8/3)
+          (slope -1 -1 C8/3)
+          (slope 0 0 C8)
+          (slope 3 5 C8 C4 C4+8)
+          (slope -5 -1 C8 C8)
+          (slope 2 2 L8)
+          (slope -6 -6 C4)         )
+       )
+
+       (Xnotation
+        (X 7 4)
+        (X 6 4)
+        (X 5 8)
+        (X 1 8)
+        (X 7 4)
+        (X 3 8)
+        (X 5 8)
+        (X 1 8)
+        (X 5 8)
+        (X 3 8)
+       R8
+        (X 7 4)
+        (X 6 8)
+        (X 1 8)
+        (X 7 8/3)
+        (X 3 8/3)
+        (X 2 8/3)
+        (X 2 8)
+        (X 5 8)
+        (X 1 4)
+        (X 7 4+8)
+        (X 6 8)
+        (X 3 8)
+        (X #4 8)
+        (X 1 4)       )
+
+      (Brick-type null)
+     Chorus2 3840 79 120 77 120 75 60 81 60 79 120 78 60 81 60 74 60 69 60 66 60 -1 60 60 120 64 60 67 60 65 40 70 40 69 40 69 60 74 60 79 120 82 180 81 60 76 60 78 60 72 120 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 4 6 C8/3)
+          (slope -5 -2 C8/3 C8/3 C8 C8 C8 C8)
+          (slope 2 7 C8 L8 C8)
+          (slope -6 -3 C8 C8)
+          (slope 3 3 C8)
+          (slope -1 -1 C8/3)
+          (slope 1 1 C8/3)
+          (slope -4 -2 C8/3 R4+8 L8)
+          (slope 4 6 L8 C8)
+          (slope -4 -1 C8 R8 C4+8)
+          (slope 2 5 C8 C4 L8 R8 L4)         )
+       )
+
+       (Xnotation
+        (X 7 8/3)
+        (X 5 8/3)
+        (X 2 8/3)
+        (X 1 8)
+        (X 5 8)
+        (X 3 8)
+        (X 1 8)
+        (X 2 8)
+        (X 4 8)
+        (X 5 8)
+        (X 3 8)
+        (X 7 8)
+        (X b2 8)
+        (X 1 8/3)
+        (X b2 8/3)
+        (X 6 8/3)
+       R4+8
+        (X 2 8)
+        (X #4 8)
+        (X 1 8)
+        (X 7 8)
+       R8
+        (X 5 4+8)
+        (X 7 8)
+        (X 3 4)
+        (X #4 8)
+       R8
+        (X 6 4)       )
+
+      (Brick-type null)
+     Chorus2 7680 82 40 79 40 74 40 72 60 67 60 63 60 60 60 62 60 65 60 72 60 69 60 63 60 66 60 65 40 66 40 62 40 -1 180 60 60 64 60 70 60 69 60 -1 60 65 180 69 60 74 120 76 60 -1 60 79 120 CHORDS Cm9 F13b9 BbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -4 -2 C8/3)
+          (slope 1 2 X8/3 C8/3)
+          (slope -3 -3 C8/3)
+          (slope 1 2 X8/3 C8/3)
+          (slope -4 -3 C8 C8)
+          (slope 1 5 R4+8 L8 C8 C8 L8)
+          (slope -2 -1 L8 C8 C8)
+          (slope 1 1 C4)
+          (slope -1 -1 C8)
+          (slope 1 4 C8 C8)
+          (slope -4 -2 L8 C8 C8)
+          (slope 4 4 C2+4)
+          (slope -2 -2 R8 C8)         )
+       )
+
+       (Xnotation
+        (X 3 8/3)
+        (X 4 8/3)
+        (X 5 8/3)
+        (X 3 8/3)
+        (X 4 8/3)
+        (X 5 8/3)
+        (X 3 8)
+        (X 1 8)
+       R4+8
+        (X #4 8)
+        (X 5 8)
+        (X 7 8)
+        (X b3 8)
+        (X b2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 1 4)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 2 8)
+        (X 7 8)
+        (X 5 8)
+        (X 1 2+4)
+       R8
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus2 3840 65 40 66 40 68 40 65 40 66 40 68 40 65 60 61 60 -1 180 66 60 67 60 70 60 75 60 73 60 72 60 70 60 71 120 70 60 71 60 75 60 73 60 70 60 66 60 70 360 -1 60 68 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C4+8)
+          (slope -2 -1 L8 C8/3)
+          (slope 1 2 L8/3 C8/3)
+          (slope -2 -1 L8 C8)
+          (slope 3 6 C4+8 C8 C8)
+          (slope -5 -1 C8 C8 C8 C4 C8)
+          (slope 3 3 L8)
+          (slope -3 -2 C8 C8 C8 C8)
+          (slope 2 8 C2+8 C8 C8)
+          (slope -2 -2 C8)         )
+       )
+
+       (Xnotation
+        (X 5 4+8)
+        (X 4 8)
+        (X 3 8/3)
+        (X 4 8/3)
+        (X 5 8/3)
+        (X 4 8)
+        (X 3 8)
+        (X 3 4+8)
+        (X 5 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X b2 8)
+        (X 5 4)
+        (X 2 8)
+        (X 4 8)
+        (X 3 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 2+8)
+        (X 1 8)
+        (X 3 8)
+        (X 2 8)       )
+
+      (Brick-type null)
+     Chorus3 11520 75 180 74 60 72 40 74 40 75 40 74 60 72 60 78 180 81 60 84 60 81 60 78 60 75 60 74 120 69 60 72 60 70 60 67 60 65 60 62 60 64 300 72 60 76 60 74 60 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 4 6 R4 C8/3)
+          (slope -5 -3 C8/3 C8/3 C8)
+          (slope 4 6 L8 R8 C8)
+          (slope -4 -4 C4)
+          (slope 6 6 R8 L8)
+          (slope -5 -3 C8 C8 C8)
+          (slope 2 2 L8)
+          (slope -5 -5 C8 C8)
+          (slope 3 6 C8 L8 C4+8)
+          (slope -2 -2 C8)
+          (slope 3 5 C8 C8)
+          (slope -2 -2 C4)
+          (slope 4 4 C4)
+          (slope -4 -4 C8 C8)         )
+       )
+
+       (Xnotation R4
+        (X 1 8/3)
+        (X 6 8/3)
+        (X 3 8/3)
+        (X 1 8)
+        (X #4 8)
+       R8
+        (X 7 8)
+        (X 3 4)
+       R8
+        (X 6 8)
+        (X 1 8)
+        (X 5 8)
+        (X 3 8)
+        (X #4 8)
+        (X 2 8)
+        (X 6 8)
+        (X 1 8)
+        (X #4 8)
+        (X 6 4+8)
+        (X 5 8)
+        (X 1 8)
+        (X 1 8)
+        (X 3 4)
+        (X #5 4)
+        (X 3 8)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Chorus5 1920 -1 120 82 40 79 40 74 40 70 60 76 60 -1 60 80 60 76 120 -1 60 82 60 78 60 73 60 70 60 72 60 67 60 62 60 65 60 71 60 74 180 72 60 77 60 80 60 78 120 82 120 78 60 74 60 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4+8)
+          (slope 2 12 R8 C8 L8)
+          (slope -3 -3 C4)
+          (slope 4 4 L8)
+          (slope -4 -1 C8 C8 X8 L8 C4 C8 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope 1 1 X8/3)
+          (slope 0 0 R8/3 X8/3)
+          (slope 2 2 C4)
+          (slope 0 0 R4 C8/3 R8/3 C8/3)
+          (slope 2 2 L8/3)
+          (slope 0 0 R8/3 L8/3)
+          (slope 2 2 C4)
+          (slope 0 0 R8 C8)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+       R8
+        (X 3 8)
+        (X 4 8)
+        (X #2 4)
+        (X b2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 4)
+        (X 1 8)
+        (X 3 8/3)
+       R8/3
+        (X 3 8/3)
+        (X 4 8/3)
+       R8/3
+        (X 4 8/3)
+        (X 5 4)
+       R4
+        (X 5 8/3)
+       R8/3
+        (X 5 8/3)
+        (X 6 8/3)
+       R8/3
+        (X 6 8/3)
+        (X 7 4)
+       R8
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus2 5760 66 180 -1 60 78 60 80 60 77 120 81 60 80 60 78 60 77 60 75 60 72 120 68 60 65 40 -1 40 65 40 66 40 -1 40 66 40 68 120 -1 120 68 40 -1 40 68 40 70 40 -1 40 70 40 72 120 -1 60 72 60 CHORDS Ebm9b5 Ab7#5#9 DbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C4+8)
+          (slope -6 -6 C8)
+          (slope 3 5 C8 C8 C8)
+          (slope -2 -2 C8)
+          (slope 1 1 C4)
+          (slope -2 -2 C8/3)
+          (slope 5 6 C8/3 L8/3)
+          (slope -3 -1 L8 R8 C8)
+          (slope 3 3 L8)
+          (slope -4 -1 C8 L8)
+          (slope 2 3 R4 C8 C8)
+          (slope -4 -3 C4 C8/3 C8/3 C8/3 R8 L8 C8)
+          (slope 2 6 C8 C8 C8)         )
+       )
+
+       (Xnotation
+        (X 7 4+8)
+        (X 3 8)
+        (X 5 8)
+        (X 1 8)
+        (X 3 8)
+        (X 2 8)
+        (X 1 4)
+        (X 7 8/3)
+        (X 3 8/3)
+        (X 6 8/3)
+        (X b2 8)
+       R8
+        (X 1 8)
+        (X b3 8)
+        (X 1 8)
+        (X 7 8)
+       R4
+        (X 2 8)
+        (X 3 8)
+        (X 1 4)
+        (X 1 8/3)
+        (X 1 8/3)
+        (X 1 8/3)
+       R8
+        (X b2 8)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus3 1920 68 180 62 60 65 60 70 60 74 60 72 60 73 120 71 40 76 40 82 40 79 60 -1 60 78 60 81 60 77 60 76 60 -1 120 79 60 81 60 77 120 74 40 71 40 67 40 -1 60 63 60 60 60 62 60 66 60 72 60 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4+8)
+          (slope -5 -5 C8 C8)
+          (slope 1 7 C8 C8 C8 C4+8 L16)
+          (slope -4 -1 C16 C4+8 C8 C4+8 L8 C8 C8)
+          (slope 5 7 L8 C8)
+          (slope -5 -3 L8 C8)
+          (slope 5 5 C4)
+          (slope -5 -3 C4 C8/3 C8/3)
+          (slope 5 5 L8/3)         )
+       )
+
+       (Xnotation
+        (X 1 4+8)
+        (X 5 8)
+        (X 2 8)
+        (X 3 8)
+        (X 5 8)
+        (X 2 8)
+        (X b2 4+8)
+        (X b3 16)
+        (X b2 16)
+        (X 1 4+8)
+        (X 7 8)
+        (X 3 4+8)
+        (X 2 8)
+        (X 7 8)
+        (X 5 8)
+        (X 2 8)
+        (X 5 8)
+        (X 2 8)
+        (X 7 8)
+        (X 3 4)
+        (X 1 4)
+        (X 5 8/3)
+        (X 3 8/3)
+        (X 6 8/3)       )
+
+      (Brick-type null)
+     Chorus3 7680 72 180 67 60 62 60 63 60 67 60 74 60 78 180 80 30 78 30 77 180 75 60 74 180 72 60 69 60 65 60 72 60 77 60 72 60 69 60 74 120 70 120 65 40 62 40 67 40 CHORDS Cm9 F13b9 BbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C4)
+          (slope 3 5 C8 R8 C8 C8)
+          (slope -5 -2 R8 C8 C8 R8 C8 C8 C8 C8)
+          (slope 4 4 L8)
+          (slope -5 -5 L8)
+          (slope 5 6 R4 C8 R8 C8)
+          (slope -6 -1 C8 L8/3 C8/3)
+          (slope 2 2 C8/3)
+          (slope -6 -1 C8 C8)
+          (slope 2 6 C4+8 L8 C8 C8)         )
+       )
+
+       (Xnotation
+        (X 1 4)
+        (X 3 8)
+       R8
+        (X 6 8)
+        (X 1 8)
+       R8
+        (X 7 8)
+        (X 3 8)
+       R8
+        (X 1 8)
+        (X 7 8)
+        (X 1 8)
+        (X 7 8)
+        (X 2 8)
+        (X 6 8)
+       R4
+        (X 3 8)
+       R8
+        (X 6 8)
+        (X 5 8)
+        (X #4 8/3)
+        (X 1 8/3)
+        (X 2 8/3)
+        (X 1 8)
+        (X 1 8)
+        (X 3 4+8)
+        (X #4 8)
+        (X #5 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus4 1920 70 120 74 60 -1 60 79 60 82 60 -1 60 80 60 76 60 -1 60 73 60 71 60 66 60 64 60 68 60 63 60 -1 120 69 60 -1 60 74 60 72 60 71 40 65 40 67 40 61 60 60 60 66 180 68 60 70 60 72 60 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C4+8)
+          (slope 4 4 C8 C8)
+          (slope -2 -2 C8)
+          (slope 5 5 L8)
+          (slope -4 -1 C8 X4 L8/3 C8/3 C8/3)
+          (slope 3 3 C4+8)
+          (slope -5 -3 C8 C4+8 R8 C8)
+          (slope 1 5 C8 C8 C8 C4)
+          (slope -3 -3 L8)
+          (slope 1 3 C8 A8 L4)
+          (slope -9 -9 C8)         )
+       )
+
+       (Xnotation
+        (X 5 4+8)
+        (X 7 8)
+        (X #2 8)
+        (X 1 8)
+        (X 4 8)
+        (X 3 8)
+        (X 6 4)
+        (X 5 8/3)
+        (X 3 8/3)
+        (X 1 8/3)
+        (X b3 4+8)
+        (X 1 8)
+        (X 3 4+8)
+       R8
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 5 8)
+        (X 4 4)
+        (X 2 8)
+        (X 4 8)
+        (X #5 8)
+        (X 6 4)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Chorus2 1920 69 180 73 60 77 60 75 60 80 60 78 60 77 120 75 40 72 40 68 40 71 180 68 60 65 180 -1 60 60 60 61 60 65 60 68 60 73 120 70 60 73 60 76 60 77 120 68 60 CHORDS Ebm9b5 Ab7#5#9 DbM7 Ab7sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C4)
+          (slope -1 -1 L8)
+          (slope 1 2 C8 L8)
+          (slope -3 -2 C8 C8 C8 C8)
+          (slope 0 0 R8 C8/3)
+          (slope 3 5 C8/3 C8/3 C4+8)
+          (slope -2 -1 L8 C4 L8)
+          (slope 1 2 C8 L8)
+          (slope -3 -1 C8 C8 C8 L8)
+          (slope 4 4 R2+8 C8)
+          (slope -4 -4 L8)         )
+       )
+
+       (Xnotation
+        (X 5 4)
+        (X 4 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X 1 8)
+        (X 3 8)
+       R8
+        (X 3 8/3)
+        (X 5 8/3)
+        (X 7 8/3)
+        (X b3 4+8)
+        (X b2 8)
+        (X 5 4)
+        (X 4 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X 1 8)
+        (X #4 8)
+       R2+8
+        (X 7 8)
+        (X #4 8)       )
+
+      (Brick-type null)
+     Chorus2 7680 73 120 72 60 73 60 75 60 73 60 70 60 67 60 64 60 -1 60 64 40 67 40 70 40 75 180 73 60 71 120 70 60 71 60 73 60 71 60 68 60 65 60 64 60 -1 300 68 60 64 60 CHORDS Gm7b5 C7#9 Fm7b5 Bb7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C4)
+          (slope 4 6 C4 C8)
+          (slope -5 -1 L8 L4 L8)
+          (slope 5 5 C8)
+          (slope -3 -3 R4 C8/3)
+          (slope 6 6 C8/3)
+          (slope -5 -3 C8/3 C8 C8 C8)
+          (slope 2 3 L8 C8 C8)
+          (slope 0 0 C4)
+          (slope -1 -1 C8)
+          (slope 1 5 C8 C8 C8 C8)
+          (slope -6 -6 C8)
+          (slope 3 3 R4 C4)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 1 4)
+        (X 5 4)
+        (X 7 8)
+        (X 4 8)
+        (X #2 4)
+        (X #5 8)
+        (X b2 8)
+       R4
+        (X 7 8/3)
+        (X 3 8/3)
+        (X 1 8/3)
+        (X 5 8)
+        (X 3 8)
+        (X 5 8)
+        (X 6 8)
+        (X 1 8)
+        (X 3 8)
+        (X 3 4)
+        (X 2 8)
+        (X 5 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 8)
+        (X 3 8)
+       R4
+        (X 5 4)       )
+
+      (Brick-type null)
+     Chorus2 0 69 120 75 120 79 60 74 60 71 120 70 60 75 60 -1 120 72 40 78 40 74 40 69 60 66 60 62 60 64 60 67 60 70 60 70 120 69 60 74 60 79 60 81 60 82 60 76 60 -1 120 79 120 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope 1 1 X8/3)
+          (slope 0 0 R8/3 X8/3)
+          (slope 2 3 C8/3 L8/3 C8/3 L8)
+          (slope -3 -3 C8)
+          (slope 3 3 L4+8)
+          (slope -3 -3 C16)
+          (slope 3 3 L16)
+          (slope -3 -1 C4+8 A8 C4)
+          (slope 0 0 C8)
+          (slope -2 -2 L8)
+          (slope 5 5 L8)
+          (slope -2 -1 C8 C8 L8)
+          (slope 2 2 C2+4)
+          (slope -2 -2 R8 C8)         )
+       )
+
+       (Xnotation
+        (X 3 8/3)
+       R8/3
+        (X 3 8/3)
+        (X 4 8/3)
+       R8/3
+        (X 4 8/3)
+        (X 5 8/3)
+        (X 6 8/3)
+        (X 7 8/3)
+        (X 2 8)
+        (X 7 8)
+        (X b3 4+8)
+        (X 1 16)
+        (X b3 16)
+        (X 1 4+8)
+        (X #7 8)
+        (X 7 4)
+        (X 7 8)
+        (X 6 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 1 2+4)
+       R8
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus3 3840 65 40 -1 40 65 40 66 40 -1 40 66 40 68 40 70 40 72 40 75 60 72 60 75 180 72 30 75 30 72 180 71 60 70 120 70 60 68 60 73 60 71 60 70 60 68 60 70 360 -1 60 68 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C2)
+          (slope 0 0 R8 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C8)
+          (slope 2 3 L8 C8)
+          (slope -3 -1 C4 C2 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope 1 1 X8/3)
+          (slope 0 0 R8/3 X8/3)
+          (slope 2 2 C8/3)
+          (slope 0 0 R4+32+120+480 C8)
+          (slope 4 4 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope -2 -2 L8/3)
+          (slope 0 0 R8/3 L8/3)
+          (slope -2 -2 C8/3)
+          (slope 4 4 R4+32+120+480 C8)         )
+       )
+
+       (Xnotation
+        (X 3 2)
+       R8
+        (X 3 8)
+        (X 4 8)
+        (X 3 8)
+        (X b2 8)
+        (X b3 8)
+        (X 1 4)
+        (X 7 2)
+        (X 3 8/3)
+       R8/3
+        (X 3 8/3)
+        (X 4 8/3)
+       R8/3
+        (X 4 8/3)
+        (X 5 8/3)
+       R4+32+120+480
+        (X 5 8)
+        (X 7 8/3)
+       R8/3
+        (X 7 8/3)
+        (X 6 8/3)
+       R8/3
+        (X 6 8/3)
+        (X 5 8/3)
+       R4+32+120+480
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus3 5760 66 240 -1 60 66 60 68 60 66 60 69 60 71 60 68 120 66 240 65 40 -1 40 65 40 66 40 -1 40 66 40 68 40 -1 140 68 60 72 40 -1 40 72 40 70 40 -1 40 70 40 68 40 -1 140 72 60 CHORDS Ebm9b5 Ab7#5#9 DbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 C4)
+          (slope -5 -2 C8 C8 L8 C8 C4+8)
+          (slope 3 6 C8 R4 C8)
+          (slope -6 -1 C8 C8)
+          (slope 3 5 C8 C8)
+          (slope -5 -1 C8 L8)
+          (slope 3 3 L8)
+          (slope -5 -2 C8 L8)
+          (slope 4 5 C8 C8 C8 C8)
+          (slope -2 -2 C4)
+          (slope 5 5 C8/3)
+          (slope -6 -1 L8/3 C8/3 L4/3 C8/3)         )
+       )
+
+       (Xnotation
+        (X 3 4)
+        (X 1 8)
+        (X 5 8)
+        (X 4 8)
+        (X 3 8)
+        (X 1 4+8)
+        (X b2 8)
+       R4
+        (X 3 8)
+        (X 7 8)
+        (X 6 8)
+        (X 1 8)
+        (X 1 8)
+        (X 7 8)
+        (X #4 8)
+        (X 6 8)
+        (X 3 8)
+        (X 2 8)
+        (X 5 8)
+        (X 1 8)
+        (X 3 8)
+        (X 6 8)
+        (X 5 4)
+        (X 1 8/3)
+        (X 7 8/3)
+        (X 6 8/3)
+        (X #4 4/3)
+        (X 1 8/3)       )
+
+      (Brick-type null)
+     Chorus2 9600 75 120 72 60 67 60 65 60 63 60 60 180 66 60 -1 120 69 60 63 60 62 60 65 60 70 60 69 60 64 60 67 60 62 60 60 60 65 60 70 60 74 60 79 60 77 120 82 40 81 40 79 40 76 80 70 40 CHORDS Cm9 F13b9 BbM7 Bb6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C2)
+          (slope -3 -3 R8 C8)
+          (slope 2 3 C8 C8 C8)
+          (slope -3 -2 L8 C8 C8)
+          (slope 3 3 C4)
+          (slope 0 0 R8 X8 R4 L4+8)
+          (slope -3 -3 C8)
+          (slope 2 3 C8 C8 L8)
+          (slope -3 -2 C8 C8 C8)
+          (slope 3 3 C8)
+          (slope 0 0 C4 C8)         )
+       )
+
+       (Xnotation
+        (X 1 2)
+       R8
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X 5 4)
+       R8
+        (X b6 8)
+       R4
+        (X 6 4+8)
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+        (X 4 8)
+        (X 4 4)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 1920 63 240 -1 60 60 60 63 60 65 60 67 60 65 60 63 60 60 60 63 120 -1 60 63 60 -1 120 63 180 60 60 63 60 65 60 67 60 65 60 63 60 60 60 63 60 63 120 63 60 CHORDS Eb6 NC Am7b5 Abm7 Gm7 F#m7 NC Fm7 Bb7sus4 Eb6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 L4)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -4 -4 C8)
+          (slope 2 6 C8 C8 C8 C4+8)
+          (slope -6 -1 X8 C4 R8 C8 L4 C8)
+          (slope 2 2 L8)
+          (slope -5 -5 C8)
+          (slope 4 5 C8 C8)
+          (slope -5 -2 R8 L4 C8)
+          (slope 2 2 L8)
+          (slope -5 -5 C8)
+          (slope 1 7 L8 C8 A8)         )
+       )
+
+       (Xnotation
+        (X 2 4)
+        (X 1 8)
+        (X 2 8)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 5 8)
+        (X #5 4+8)
+        (X 5 8)
+        (X b2 4)
+       R8
+        (X 1 8)
+        (X 4 4)
+        (X 3 8)
+        (X 4 8)
+        (X 5 8)
+        (X 1 8)
+        (X 3 8)
+       R8
+        (X 4 4)
+        (X 3 8)
+        (X 4 8)
+        (X 5 8)
+        (X 6 8)
+        (X 3 8)
+        (X 4 8)       )
+
+      (Brick-type null)
+     Head 13440 68 120 66 60 68 60 64 60 66 60 69 60 73 60 79 180 78 60 72 120 -1 60 71 60 69 120 67 60 69 60 64 60 69 60 73 60 -1 60 68 120 66 60 68 60 63 60 65 60 72 60 73 60 CHORDS F#m7 B7#5 B7b9 Em7 A7 Ebm7 Ab7#11     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L8/3)
+          (slope -1 -1 C4/3)
+          (slope 3 5 C8 L8 C4+8)
+          (slope -6 -6 C8)
+          (slope 6 6 R4 C8)
+          (slope -4 -3 C8 C4)
+          (slope 5 5 A8)
+          (slope -2 -1 C8 R4 L8)
+          (slope 6 6 C8)
+          (slope -5 -5 C8 L8)
+          (slope 2 2 C4)
+          (slope -4 -1 C8 C8 L8 C8 C8 C8)
+          (slope 6 6 L4)         )
+       )
+
+       (Xnotation
+        (X 2 8/3)
+        (X 1 4/3)
+        (X 3 8)
+        (X 6 8)
+        (X 1 4+8)
+        (X 5 8)
+       R4
+        (X 5 8)
+        (X 3 8)
+        (X 1 4)
+        (X 4 8)
+        (X 3 8)
+       R4
+        (X 6 8)
+        (X 3 8)
+        (X 7 8)
+        (X 4 8)
+        (X 5 4)
+        (X 7 8)
+        (X 5 8)
+        (X #4 8)
+        (X 3 8)
+        (X 2 8)
+        (X 1 8)
+        (X #4 4)       )
+
+      (Brick-type null)
+     Chorus2 11520 70 40 69 80 72 60 77 60 81 180 75 60 -1 120 81 60 78 60 74 120 79 60 78 60 -1 120 76 60 82 60 77 60 72 60 74 120 70 60 67 60 66 60 64 60 62 60 60 60 66 120 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C2)
+          (slope -3 -3 R8 C8)
+          (slope 2 3 C8 C8 C8)
+          (slope -3 -2 L8 C8 C8)
+          (slope 3 3 C4)
+          (slope 0 0 R8 X8 R4 L4+8)
+          (slope -3 -3 C8)
+          (slope 2 3 C8 C8 L8)
+          (slope -3 -2 C8 C8 C8)
+          (slope 3 3 C8)
+          (slope 0 0 C4+8)         )
+       )
+
+       (Xnotation
+        (X 1 2)
+       R8
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X 5 4)
+       R8
+        (X b6 8)
+       R4
+        (X 6 4+8)
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+        (X 4 8)
+        (X 4 4+8)       )
+
+      (Brick-type null)
+     Head 9600 63 240 -1 60 60 60 63 60 65 60 67 60 65 60 63 60 60 60 63 120 -1 60 63 60 -1 120 63 180 60 60 63 60 65 60 67 60 65 60 63 60 60 60 63 60 63 180 CHORDS Eb6 NC Am7b5 Abm7 Gm7 F#m7 NC Fm7 Bb7sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C4)
+          (slope 2 5 C4 C8 C8 C8)
+          (slope -5 -3 C8 R8 C8 C8 L8 C8)
+          (slope 5 5 C8)
+          (slope 0 0 C8)
+          (slope -3 -3 C8)
+          (slope 3 5 C8 C8 C8 C8)
+          (slope -5 -5 C8 C8 C8)
+          (slope 2 4 L8 C8)
+          (slope -5 -2 L8 C8)
+          (slope 3 3 C8)
+          (slope -4 -4 L8)
+          (slope 3 6 R8 C8/3 C8/3 C8/3)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 3 4)
+        (X 5 4)
+        (X 6 8)
+        (X 2 8)
+        (X 3 8)
+        (X 1 8)
+       R8
+        (X 2 8)
+        (X 6 8)
+        (X #4 8)
+        (X 2 8)
+        (X 5 8)
+        (X 5 8)
+        (X 3 8)
+        (X 1 8)
+        (X 3 8)
+        (X 6 8)
+        (X 1 8)
+        (X 5 8)
+        (X 2 8)
+        (X 6 8)
+        (X 7 8)
+        (X 2 8)
+        (X 6 8)
+        (X 5 8)
+        (X 7 8)
+        (X b2 8)
+       R8
+        (X 3 8/3)
+        (X 7 8/3)
+        (X 3 8/3)       )
+
+      (Brick-type null)
+     Chorus6 0 69 120 72 120 74 60 79 60 81 60 77 60 -1 60 72 60 67 60 64 60 60 60 65 60 65 60 62 60 65 60 69 60 74 60 77 60 72 60 67 60 62 60 64 60 68 60 63 60 61 60 64 60 60 60 -1 60 63 40 69 40 75 40 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+   )
+ )
+ (cluster
+  (name cluster4)
+   (centroid
+    (noteCount 0.5249999999999999)
+    (syncopation 0.6157302664655606)
+    (diversityIndex 0.49447777650619795)
+    (numContourChanges 0.4916666666666667)
+    (longestNoteLength 0.058333333333333334)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -2 -2 L8)
+          (slope 2 2 C8 L4)
+          (slope -3 -2 L8 C8 L8)
+          (slope 2 3 C8/3 L8/3)
+          (slope -4 -2 C8/3 X8)
+          (slope 4 7 C8 R4+8 L4)
+          (slope -11 -11 C4)
+          (slope 9 9 L4)
+          (slope -10 -10 C4)
+          (slope 1 8 L8 R8 C4)
+          (slope -9 -9 R2 C8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 4 8)
+        (X 5 8)
+        (X 6 4)
+        (X 2 8)
+        (X 1 8)
+        (X 6 8)
+        (X 5 8/3)
+        (X 6 8/3)
+        (X 5 8/3)
+        (X b3 8)
+        (X 5 8)
+       R4+8
+        (X 2 4)
+        (X 1 4)
+        (X 6 4)
+        (X 1 4)
+        (X #5 8)
+       R8
+        (X 3 4)
+       R2
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 5760 74 60 72 60 74 60 76 120 74 60 72 60 69 60 72 40 74 40 72 40 68 60 72 60 -1 180 79 120 68 120 77 120 67 120 75 60 -1 60 76 120 -1 240 67 60 CHORDS Gm7 C7 FM7 Fm7 AbM7 G7#9 C7 G7#9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 L8)
+          (slope -4 -3 C8 R8 C8 C8)
+          (slope 3 4 C8 C8 L8 C8)
+          (slope -3 -3 R8 C8/3)
+          (slope 1 2 L8/3 C8/3)
+          (slope -3 -1 C4 R8 C8 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope 1 1 X8/3)
+          (slope 0 0 R8/3 X8/3)
+          (slope 2 3 C4 R1+8 A8)         )
+       )
+
+       (Xnotation
+        (X 4 8)
+        (X #2 8)
+       R8
+        (X 7 8)
+        (X 5 8)
+        (X 7 8)
+        (X #2 8)
+        (X 4 8)
+        (X b3 8)
+       R8
+        (X 1 8/3)
+        (X b2 8/3)
+        (X b3 8/3)
+        (X 1 4)
+       R8
+        (X 7 8)
+        (X 3 8/3)
+       R8/3
+        (X 3 8/3)
+        (X 4 8/3)
+       R8/3
+        (X 4 8/3)
+        (X 5 4)
+       R1+8
+        (X b3 8)       )
+
+      (Brick-type null)
+     Head 1920 68 60 65 60 -1 60 61 60 57 60 61 60 65 60 68 60 71 60 -1 60 68 40 69 40 71 40 68 120 -1 60 66 60 65 40 -1 40 65 40 66 40 -1 40 66 40 68 120 -1 540 71 60 CHORDS Ebm9b5 Ab7#5#9 DbM7 Ab7sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 L8)
+          (slope -4 -3 L8 R8 C8 C8)
+          (slope 3 4 C8 L8 L8 C8)
+          (slope -3 -3 R8 C8/3)
+          (slope 1 2 L8/3 C8/3)
+          (slope -3 -1 C4 R8 C8 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope 1 1 X8/3)
+          (slope 0 0 R8/3 X8/3)
+          (slope 2 2 C4 R1+4)         )
+       )
+
+       (Xnotation
+        (X 4 8)
+        (X #2 8)
+       R8
+        (X 7 8)
+        (X 5 8)
+        (X 7 8)
+        (X #2 8)
+        (X 4 8)
+        (X b3 8)
+       R8
+        (X 1 8/3)
+        (X b2 8/3)
+        (X b3 8/3)
+        (X 1 4)
+       R8
+        (X 7 8)
+        (X 3 8/3)
+       R8/3
+        (X 3 8/3)
+        (X 4 8/3)
+       R8/3
+        (X 4 8/3)
+        (X 5 4)
+       R1+4       )
+
+      (Brick-type null)
+     Head 17280 68 60 65 60 -1 60 61 60 57 60 61 60 65 60 68 60 71 60 -1 60 68 40 69 40 71 40 68 120 -1 60 66 60 65 40 -1 40 65 40 66 40 -1 40 66 40 68 120 -1 600 CHORDS Ebm7b5 Ab7#5#9 DbM7 Ab7sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -2 -2 L8)
+          (slope 2 2 C8 L4)
+          (slope -3 -2 L8 C8 L8)
+          (slope 2 3 C8/3 L8/3)
+          (slope -4 -2 C8/3 X8)
+          (slope 4 7 C8 R4+8 L4)
+          (slope -11 -11 C4)
+          (slope 9 9 L4)
+          (slope -10 -10 C4)
+          (slope 1 8 L8 R8 C4 R2 C8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 4 8)
+        (X 5 8)
+        (X 6 4)
+        (X 2 8)
+        (X 1 8)
+        (X 6 8)
+        (X 5 8/3)
+        (X 6 8/3)
+        (X 5 8/3)
+        (X b3 8)
+        (X 5 8)
+       R4+8
+        (X 2 4)
+        (X 1 4)
+        (X 6 4)
+        (X 1 4)
+        (X #5 8)
+       R8
+        (X 3 4)
+       R2
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 1920 74 60 72 60 74 60 76 120 74 60 72 60 69 60 72 40 74 40 72 40 68 60 72 60 -1 180 79 120 68 120 77 120 67 120 75 60 -1 60 76 120 -1 240 79 60 CHORDS Gm7 C7 FM7 Fm7 AbM7 G7#9 C7 G7#9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -2 -2 L8 C8)
+          (slope 6 6 L8)
+          (slope -2 -2 C8 L8)
+          (slope 5 5 C8)
+          (slope 0 0 R8 C4+8)
+          (slope -4 -4 C4+8)
+          (slope 5 6 R4 C4+8 L4+8)
+          (slope -2 -2 R4 L4+8)
+          (slope 2 5 C4+8 R8 L8)         )
+       )
+
+       (Xnotation
+        (X 3 8)
+        (X 2 8)
+        (X 1 8)
+        (X #4 8)
+        (X 3 8)
+        (X 2 8)
+        (X 5 8)
+       R8
+        (X 3 4+8)
+        (X 1 4+8)
+       R4
+        (X 3 4+8)
+        (X 6 4+8)
+       R4
+        (X 2 4+8)
+        (X 5 4+8)
+       R8
+        (X 6 8)       )
+
+      (Brick-type null)
+     Head 9600 64 60 62 60 60 60 66 60 64 60 62 60 67 60 -1 60 67 180 63 180 -1 120 69 180 74 180 -1 120 72 180 77 180 -1 60 79 60 CHORDS CM7 EbM7 FM7 Bb7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -2 -2 L8)
+          (slope 2 2 C8 L4)
+          (slope -3 -2 L8 C8 L8)
+          (slope 2 3 C8/3 L8/3)
+          (slope -4 -2 C8/3 X8)
+          (slope 4 7 C8 R4+8 L4)
+          (slope -11 -11 C4)
+          (slope 9 9 L4)
+          (slope -10 -10 C4)
+          (slope 1 8 L8 R8 C4 R2+8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 4 8)
+        (X 5 8)
+        (X 6 4)
+        (X 2 8)
+        (X 1 8)
+        (X 6 8)
+        (X 5 8/3)
+        (X 6 8/3)
+        (X 5 8/3)
+        (X b3 8)
+        (X 5 8)
+       R4+8
+        (X 2 4)
+        (X 1 4)
+        (X 6 4)
+        (X 1 4)
+        (X #5 8)
+       R8
+        (X 3 4)
+       R2+8       )
+
+      (Brick-type null)
+     Head 13440 74 60 72 60 74 60 76 120 74 60 72 60 69 60 72 40 74 40 72 40 68 60 72 60 -1 180 79 120 68 120 77 120 67 120 75 60 -1 60 76 120 -1 300 CHORDS Gm7 C7 FM7 Fm7 AbM7 G7#9 C7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -4 -1 L8 C8 C4)
+          (slope 2 2 L8 C8)
+          (slope -2 -2 L2)
+          (slope 2 8 C4+8 R4 C4+8 C4+8)
+          (slope -8 -6 R4 C4+8 C4+8)
+          (slope 2 2 R8 L8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X #4 8)
+        (X 3 8)
+        (X 1 4)
+        (X 2 8)
+        (X 3 8)
+        (X 2 2)
+        (X 5 4+8)
+       R4
+        (X 5 4+8)
+        (X 7 4+8)
+       R4
+        (X 1 4+8)
+        (X 3 4+8)
+       R8
+        (X #4 8)       )
+
+      (Brick-type null)
+     Head 7680 67 60 66 60 64 60 60 120 62 60 64 60 62 240 70 180 -1 120 72 180 76 180 -1 120 70 180 62 180 -1 60 64 60 CHORDS CM7 EbM7 FM7 BbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 R4+8 C8)
+          (slope 1 4 L8 C8 C8 L8 C4+8 C16)
+          (slope -5 -1 C16 X4+8 C8)
+          (slope 3 3 L4+8)
+          (slope -3 -3 C16)
+          (slope 3 3 L16)
+          (slope -4 -3 C4+8 C16)
+          (slope 4 4 C16)
+          (slope -4 -4 C2+4 R4)         )
+       )
+
+       (Xnotation R4+8
+        (X 3 8)
+        (X 4 8)
+        (X 5 8)
+        (X 7 8)
+        (X 2 8)
+        (X 7 4+8)
+        (X 1 16)
+        (X 7 16)
+        (X 6 4+8)
+        (X 3 8)
+        (X 2 4+8)
+        (X 7 16)
+        (X 2 16)
+        (X 7 4+8)
+        (X 5 16)
+        (X 7 16)
+        (X 5 2+4)
+       R4       )
+
+      (Brick-type null)
+     Chorus2 11520 -1 180 64 60 66 60 68 60 71 60 75 60 76 180 78 30 76 30 75 180 70 60 73 180 70 30 73 30 70 180 66 30 70 30 66 360 -1 120 CHORDS Dbm7 Gb7+ BM7     )
+   )
+ )
+ (cluster
+  (name cluster5)
+   (centroid
+    (noteCount 0.883076923076923)
+    (syncopation 0.5163278903424215)
+    (diversityIndex 0.8621215371690382)
+    (numContourChanges 0.6564102564102564)
+    (longestNoteLength 0.05128205128205128)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 4 6 L8)
+          (slope -2 -2 R8 C8)
+          (slope 2 2 L8)
+          (slope -5 -2 L8 C8 C8 L8)
+          (slope 7 7 C8)
+          (slope -3 -2 L8 C8 C8)
+          (slope 3 3 C4)
+          (slope 0 0 R8 X8 R4 L4+8)
+          (slope -3 -3 C8)
+          (slope 2 3 C8 C8 L8)
+          (slope -3 -2 C8 C8 C8)
+          (slope 3 3 C8)
+          (slope 0 0 C4 C8)         )
+       )
+
+       (Xnotation
+        (X 2 8)
+       R8
+        (X 1 8)
+        (X 2 8)
+        (X 6 8)
+        (X 5 8)
+        (X 4 8)
+        (X 2 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X 5 4)
+       R8
+        (X b6 8)
+       R4
+        (X 6 4+8)
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+        (X 4 8)
+        (X 4 4)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 7680 72 60 -1 60 70 60 72 60 67 60 65 60 63 60 60 60 67 60 65 60 63 60 60 60 63 120 -1 60 63 60 -1 120 63 180 60 60 63 60 65 60 67 60 65 60 63 60 60 60 63 60 63 120 63 60 CHORDS Bb7sus4 Am7b5 Abm7 Gm7 F#m7 NC Fm7 Bb7sus4 Eb6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 C8)
+          (slope -5 -3 R8 C8 C8 C8)
+          (slope 5 6 C8 L8)
+          (slope -2 -2 C8)
+          (slope 6 6 C4)
+          (slope -2 -1 A8 C8)
+          (slope 0 0 C8)
+          (slope -2 -1 C8 C8)
+          (slope 1 6 C8 C8 C8 C8)
+          (slope -5 -3 C8 C8 C8 C4)
+          (slope 2 2 C4/3)
+          (slope -5 -2 C4/3 C4/3 C8)
+          (slope 3 6 L8 C8 C8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+       R8
+        (X 3 8)
+        (X 7 8)
+        (X 5 8)
+        (X 1 8)
+        (X 4 8)
+        (X 3 8)
+        (X 3 4)
+        (X 2 8)
+        (X b2 8)
+        (X b2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 3 8)
+        (X 1 8)
+        (X 2 8)
+        (X 3 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X 1 4)
+        (X 6 4/3)
+        (X 3 4/3)
+        (X 2 4/3)
+        (X 1 8)
+        (X #4 8)
+        (X 6 8)
+        (X 2 8)       )
+
+      (Brick-type null)
+     Chorus2 1920 75 60 -1 60 72 60 67 60 63 60 69 60 74 60 72 60 78 120 76 60 75 60 75 60 74 60 72 60 78 60 79 60 81 60 82 60 77 60 74 60 70 60 67 120 69 80 64 80 62 80 60 60 66 60 69 60 74 60 CHORDS Am7b5 D7b9 Gm9 C13 C13#11     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C8)
+          (slope -5 -2 C8 C8 C8)
+          (slope 3 3 L8)
+          (slope -5 -3 C8 L8)
+          (slope 6 6 C8)
+          (slope -1 -1 L4)
+          (slope 3 5 C4 L8 L8)
+          (slope -2 -2 L8)
+          (slope 3 3 L8)
+          (slope -5 -5 L8)
+          (slope 1 1 C8)
+          (slope -4 -2 C8 C8 C8 C8 L8)
+          (slope 2 2 C8)
+          (slope -1 -1 L8)
+          (slope 2 5 C8 C8 C8 L8 L8 R4)         )
+       )
+
+       (Xnotation
+        (X 2 8)
+        (X 1 8)
+        (X 5 8)
+        (X 2 8)
+        (X 4 8)
+        (X 1 8)
+        (X 6 8)
+        (X 3 8)
+        (X 6 4)
+        (X 1 4)
+        (X b3 8)
+        (X #5 8)
+        (X #4 8)
+        (X 6 8)
+        (X 7 8)
+        (X 1 8)
+        (X 6 8)
+        (X 5 8)
+        (X #5 8)
+        (X 3 8)
+        (X b2 8)
+        (X b3 8)
+        (X 6 8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 8)
+        (X #4 8)
+        (X 6 8)
+       R4       )
+
+      (Brick-type null)
+     Chorus6 3840 81 60 79 60 74 60 69 60 72 60 67 60 64 60 70 60 69 120 72 120 75 60 80 60 78 60 81 60 76 60 77 60 74 60 72 60 70 60 66 60 63 60 65 60 64 60 67 60 69 60 74 60 78 60 81 60 -1 120 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -9 -9 C8)
+          (slope 2 2 C8 L8 C8 L8)
+          (slope -2 -2 C8 L8 C8/3)
+          (slope 2 2 C8/3 L8/3 C8)
+          (slope -4 -4 C8)
+          (slope 5 5 R4+8 C4)
+          (slope -9 -9 C8)
+          (slope 1 2 C8 L8 C8 L8 C8)
+          (slope -11 -11 L8)
+          (slope 0 0 R8 L4)
+          (slope 2 2 R4 X8 L8 C8)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 5 8)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 4 8)
+        (X 7 8/3)
+        (X 1 8/3)
+        (X 2 8/3)
+        (X 3 8)
+        (X 1 8)
+       R4+8
+        (X 1 4)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 8)
+        (X #7 8)
+       R8
+        (X #4 4)
+       R4
+        (X b3 8)
+        (X 4 8)
+        (X 5 8)       )
+
+      (Brick-type null)
+     Head 0 79 60 70 60 72 60 74 60 76 60 78 60 76 60 74 60 72 40 74 40 76 40 78 60 74 60 -1 180 79 120 70 60 72 60 74 60 76 60 78 60 79 60 68 60 -1 60 68 120 -1 120 70 60 72 60 74 60 CHORDS C7 Am7 D+7 G9 C7 Am7 D+7 G9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -4 -2 C8)
+          (slope 5 5 C8 C8)
+          (slope -3 -3 L8)
+          (slope 1 4 C8 C8 C8)
+          (slope -6 -1 C8 L8 C8)
+          (slope 4 4 C4)
+          (slope -6 -1 R8 A8 C8 C8)
+          (slope 1 1 C8)
+          (slope -5 -5 C8)
+          (slope 1 5 C8 C8 L8 C8 C8/3 C8/3)
+          (slope -4 -4 C8/3)
+          (slope 3 3 C8)
+          (slope -5 -5 L8)
+          (slope 6 6 R4 C8)
+          (slope -5 -3 C8 C8 C8)         )
+       )
+
+       (Xnotation
+        (X 2 8)
+        (X 5 8)
+        (X 1 8)
+        (X 6 8)
+        (X 7 8)
+        (X 2 8)
+        (X 3 8)
+        (X 1 8)
+        (X #4 8)
+        (X 1 8)
+        (X 3 4)
+       R8
+        (X #7 8)
+        (X 7 8)
+        (X 3 8)
+        (X 1 8)
+        (X 5 8)
+        (X 6 8)
+        (X 2 8)
+        (X #4 8)
+        (X 7 8)
+        (X b3 8/3)
+        (X #5 8/3)
+        (X 3 8/3)
+        (X 2 8)
+        (X 6 8)
+       R4
+        (X 7 8)
+        (X 5 8)
+        (X 2 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus4 3840 69 60 74 60 79 60 76 60 77 60 81 60 82 60 79 60 78 60 72 60 76 120 -1 60 71 60 70 60 64 60 65 60 60 60 62 60 67 60 68 60 72 60 77 40 82 40 78 40 81 60 76 60 -1 120 82 60 79 60 74 60 70 60 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 C8)
+          (slope -2 -1 C8 C8 C8 R8 L8 C8)
+          (slope 5 5 C8)
+          (slope -6 -1 C8 C8)
+          (slope 3 6 L8 L8)
+          (slope -3 -3 L4+8)
+          (slope 2 6 C8 C8 L8 C8)
+          (slope -5 -5 C8)
+          (slope 1 3 L8 C8)
+          (slope -1 -1 C4+8)
+          (slope 5 5 C8)
+          (slope -7 -1 C8 L8 L8)
+          (slope 1 1 C4)
+          (slope -6 -6 C8)         )
+       )
+
+       (Xnotation
+        (X 3 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+       R8
+        (X 6 8)
+        (X 5 8)
+        (X 1 8)
+        (X b2 8)
+        (X 1 8)
+        (X b3 8)
+        (X 6 8)
+        (X #4 4+8)
+        (X 1 8)
+        (X 6 8)
+        (X 7 8)
+        (X 2 8)
+        (X 6 8)
+        (X b2 8)
+        (X 3 8)
+        (X b3 4+8)
+        (X 3 8)
+        (X 2 8)
+        (X 6 8)
+        (X 6 8)
+        (X 7 4)
+        (X 3 8)       )
+
+      (Brick-type null)
+     Chorus5 3840 70 60 69 60 67 60 65 60 -1 60 64 60 62 60 67 60 61 60 60 60 63 60 69 60 66 180 72 60 74 60 76 60 79 60 74 60 75 60 78 60 77 180 82 60 81 60 76 60 69 60 70 120 64 60 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L8)
+          (slope 3 3 C8 C8)
+          (slope -1 -1 L8)
+          (slope 6 6 L8)
+          (slope -3 -3 L8)
+          (slope 1 3 C2 C8 C8)
+          (slope -6 -1 R4 C8 C8 C8)
+          (slope 3 3 L8)
+          (slope -3 -2 C8 C8 L8 C8 L8)
+          (slope 5 6 C8 C8)
+          (slope -2 -2 C8)
+          (slope 2 5 C8 C8 C8)
+          (slope -2 -2 C8)
+          (slope 4 4 C8)
+          (slope -2 -2 C8)         )
+       )
+
+       (Xnotation
+        (X #6 8)
+        (X 1 8)
+        (X 3 8)
+        (X #2 8)
+        (X 6 8)
+        (X 4 8)
+        (X 5 2)
+        (X 3 8)
+        (X 5 8)
+       R4
+        (X b2 8)
+        (X 1 8)
+        (X 2 8)
+        (X 4 8)
+        (X 3 8)
+        (X 1 8)
+        (X 6 8)
+        (X 5 8)
+        (X 4 8)
+        (X 7 8)
+        (X 3 8)
+        (X 2 8)
+        (X 5 8)
+        (X 6 8)
+        (X 1 8)
+        (X 7 8)
+        (X 2 8)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Chorus2 13440 66 60 69 60 72 60 71 60 77 60 74 60 75 240 78 60 81 60 -1 120 75 60 74 60 69 60 72 60 70 60 67 60 64 60 62 60 60 60 65 60 71 60 69 60 74 60 76 60 79 60 77 60 81 60 79 60 CHORDS Am7b5 D7b9 Gm9 G13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -9 -9 C8)
+          (slope 2 2 C8 L8 C8 L8)
+          (slope -2 -2 C8 L8 C8/3)
+          (slope 2 2 C8/3 L8/3 C8)
+          (slope -4 -4 C8)
+          (slope 5 5 R4+8 C4)
+          (slope -9 -9 C8)
+          (slope 1 2 C8 L8 C8 L8 C8)
+          (slope -11 -11 L8)
+          (slope 0 0 R8 L4)
+          (slope 2 2 R4 X8 L8 C8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 4 8)
+        (X 7 8/3)
+        (X 1 8/3)
+        (X 2 8/3)
+        (X 3 8)
+        (X 1 8)
+       R4+8
+        (X 1 4)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 8)
+        (X #7 8)
+       R8
+        (X #4 4)
+       R4
+        (X b3 8)
+        (X 4 8)
+        (X 5 8)       )
+
+      (Brick-type null)
+     Head 3840 79 60 70 60 72 60 74 60 76 60 78 60 76 60 74 60 72 40 74 40 76 40 78 60 74 60 -1 180 79 120 70 60 72 60 74 60 76 60 78 60 79 60 68 60 -1 60 68 120 -1 120 70 60 72 60 74 60 CHORDS C7 Am7 D+7 G9 C7 Am7 D+7 G9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C8)
+          (slope -1 -1 L8)
+          (slope 3 3 L8)
+          (slope -3 -1 C8 C8 L8)
+          (slope 3 3 L8)
+          (slope -3 -1 C8 C8 L8)
+          (slope 3 3 L8)
+          (slope -3 -1 C8 C8 L8)
+          (slope 3 3 L8)
+          (slope -2 -1 C8 C4+8)
+          (slope 3 6 C8 L4+8 C8 C2 C16)
+          (slope -2 -1 L16 C16 C16 C16 C16 C16 C16)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 4 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X #2 8)
+        (X 4 8)
+        (X 3 8)
+        (X 5 8)
+        (X #4 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X b3 8)
+        (X #4 8)
+        (X 3 8)
+        (X 7 4+8)
+        (X 2 8)
+        (X 4 4+8)
+        (X 7 8)
+        (X 3 2)
+        (X 5 16)
+        (X #4 16)
+        (X 3 16)
+        (X 2 16)
+        (X 1 16)
+        (X 7 16)
+        (X 6 16)
+        (X 5 16)       )
+
+      (Brick-type null)
+     Chorus3 5760 75 60 74 60 77 60 75 60 72 60 71 60 74 60 72 60 69 60 68 60 71 60 69 60 66 60 65 60 68 60 66 60 65 180 69 60 72 180 77 60 83 240 86 30 85 30 83 30 81 30 79 30 77 30 76 30 74 30 CHORDS Am7b5 D7b9 Gm9 G13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -9 -9 C8)
+          (slope 2 2 C8 L8 C8 L8)
+          (slope -2 -2 C8 L8 C8/3)
+          (slope 2 2 C8/3 L8/3 C8)
+          (slope -4 -4 C8)
+          (slope 5 5 R4+8 C4)
+          (slope -9 -9 C8)
+          (slope 1 2 C8 L8 C8 L8 C8)
+          (slope -11 -11 L8)
+          (slope 0 0 R8 L4)
+          (slope 2 2 R4 X8 L8 C8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 4 8)
+        (X 7 8/3)
+        (X 1 8/3)
+        (X 2 8/3)
+        (X 3 8)
+        (X 1 8)
+       R4+8
+        (X 1 4)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 8)
+        (X #7 8)
+       R8
+        (X #4 4)
+       R4
+        (X b3 8)
+        (X 4 8)
+        (X 5 8)       )
+
+      (Brick-type null)
+     Head 11520 79 60 70 60 72 60 74 60 76 60 78 60 76 60 74 60 72 40 74 40 76 40 78 60 74 60 -1 180 79 120 70 60 72 60 74 60 76 60 78 60 79 60 68 60 -1 60 68 120 -1 120 70 60 72 60 74 60 CHORDS C7 Am7 D+7 G9 C7 Am7 D+7 G9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -5 -3 C8 R8 C8 C8)
+          (slope 1 4 C8 C8 C8 C8)
+          (slope 0 0 R8 C8)
+          (slope 1 1 L8)
+          (slope -5 -1 C4+8 A8 C8 C8 R8 C8 C8)
+          (slope 1 4 C8 C8 C8 C8 C8 L8)
+          (slope -2 -1 C8 C4 R8 A8)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 3 8)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 5 8)
+        (X 1 8)
+       R8
+        (X 1 8)
+        (X b2 8)
+        (X 1 4+8)
+        (X #7 8)
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 3 8)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 5 8)
+        (X 1 8)
+        (X b2 8)
+        (X b3 8)
+        (X b2 8)
+        (X 1 4)
+       R8
+        (X #7 8)       )
+
+      (Brick-type null)
+     Head 0 72 60 68 60 -1 60 65 60 60 60 61 60 65 60 68 60 72 60 -1 60 72 60 73 60 72 180 71 60 70 60 66 60 -1 60 63 60 58 60 59 60 63 60 66 60 70 60 71 60 73 60 71 60 70 120 -1 60 69 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -3 -2 R8 C8 C8)
+          (slope 1 5 L4 C4 R4 C8)
+          (slope -3 -3 C8)
+          (slope 4 5 C8 L8 C8)
+          (slope -6 -3 C8 L8)
+          (slope 1 4 C8 L8 C8 C8 C8)
+          (slope -4 -3 C8 C8)
+          (slope 1 5 L8 R8 C4+8)
+          (slope -2 -2 C8)
+          (slope 3 3 C8/3)
+          (slope -6 -2 L8/3 L8/3)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 1 8)
+       R8
+        (X 6 8)
+        (X 5 8)
+        (X 7 4)
+        (X 1 4)
+       R4
+        (X 1 8)
+        (X 6 8)
+        (X 2 8)
+        (X #4 8)
+        (X 7 8)
+        (X 3 8)
+        (X #4 8)
+        (X 5 8)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 3 8)
+        (X 1 8)
+        (X 6 8)
+        (X 6 8)
+       R8
+        (X 2 4+8)
+        (X 5 8)
+        (X 7 8/3)
+        (X #5 8/3)
+        (X 2 8/3)       )
+
+      (Brick-type null)
+     Chorus7 0 65 60 -1 60 62 60 60 60 64 120 65 120 -1 120 70 60 67 60 72 60 76 60 80 60 74 60 71 60 72 60 76 60 77 60 79 60 81 60 77 60 74 60 75 60 -1 60 80 180 78 60 81 40 79 40 73 40 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 3 5 C8)
+          (slope -5 -5 L8)
+          (slope 3 3 C8 C8)
+          (slope -3 -3 C8)
+          (slope 1 2 C8 C2)
+          (slope -6 -4 L8 C8)
+          (slope 4 4 C8)
+          (slope -6 -1 C8 L2)
+          (slope 3 5 C8 C8)
+          (slope -2 -2 L8)
+          (slope 3 4 C8 C8)
+          (slope -2 -1 L8 C4)
+          (slope 2 2 C8)
+          (slope -6 -1 C8 C4+8 C8)         )
+       )
+
+       (Xnotation
+        (X 2 8)
+        (X 6 8)
+        (X 1 8)
+        (X 3 8)
+        (X 1 8)
+        (X 2 8)
+        (X 3 2)
+        (X #4 8)
+        (X 1 8)
+        (X 3 8)
+        (X 7 8)
+        (X 6 2)
+        (X 6 8)
+        (X 1 8)
+        (X b2 8)
+        (X 3 8)
+        (X #5 8)
+        (X #4 8)
+        (X 1 4)
+        (X 2 8)
+        (X 7 8)
+        (X 3 4+8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus7 3840 81 60 76 60 79 60 82 60 79 60 81 60 82 240 78 60 72 60 76 60 70 60 69 240 74 60 77 60 75 60 78 60 82 60 80 60 79 120 81 60 77 60 76 180 70 60 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+   )
+ )
+ (cluster
+  (name cluster6)
+   (centroid
+    (noteCount 0.4266666666666666)
+    (syncopation 0.3632720765073706)
+    (diversityIndex 0.19725967097964262)
+    (numContourChanges 0.43703703703703706)
+    (longestNoteLength 0.31851851851851853)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4 C8)
+          (slope -5 -4 L4+8 L8)
+          (slope 2 2 C8 C4)
+          (slope -4 -3 C4 C8 C4+8)
+          (slope 1 1 C1)         )
+       )
+
+       (Xnotation
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X #5 8)
+        (X 7 8)
+        (X 5 4)
+        (X 3 4)
+        (X 5 8)
+        (X 3 4+8)
+        (X 1 1)       )
+
+      (Brick-type null)
+     Chorus2 5760 67 120 63 60 58 180 70 60 72 60 74 120 77 60 72 180 68 60 70 60 72 120 68 120 65 60 62 180 63 480 CHORDS Fm7 Bb7 Gm7 C7 Fm7 Bb7 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4 C8)
+          (slope -5 -4 L4+8 L8)
+          (slope 2 2 C8 C4)
+          (slope -4 -3 C4 C8 C4+8)
+          (slope 1 1 C1)         )
+       )
+
+       (Xnotation
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X #5 8)
+        (X 7 8)
+        (X 5 4)
+        (X 3 4)
+        (X 5 8)
+        (X 3 4+8)
+        (X 1 1)       )
+
+      (Brick-type null)
+     Chorus3 5760 67 120 63 60 58 180 70 60 72 60 74 120 77 60 72 180 68 60 70 60 72 120 68 120 65 60 62 180 63 480 CHORDS Fm7 Bb7 Gm7 C7 Fm7 Bb7 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C4)
+          (slope -1 -1 C8)
+          (slope 1 2 C8 L8)
+          (slope -2 -1 C8 C8)
+          (slope 1 1 C8)
+          (slope -2 -1 C2 C4 R8 L8)
+          (slope 2 2 C4)
+          (slope -2 -2 L8)
+          (slope 1 2 C8 C4+8)
+          (slope -8 -8 C8)
+          (slope 7 7 C2+4)
+          (slope -2 -2 R8 C8)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 1 4)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 1 8)
+        (X 1 2)
+        (X 7 4)
+       R8
+        (X #5 8)
+        (X 7 4)
+        (X 6 8)
+        (X 7 8)
+        (X 1 4+8)
+        (X 3 8)
+        (X 1 2+4)
+       R8
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus3 0 73 120 72 60 73 60 75 60 73 60 72 60 73 60 72 240 70 120 -1 60 68 60 70 120 68 60 70 60 71 180 63 60 70 360 -1 60 68 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4 C8)
+          (slope -5 -4 L4+8 L8)
+          (slope 2 2 C8 C4)
+          (slope -4 -3 C4 C8 C4+8)
+          (slope 1 1 C1)         )
+       )
+
+       (Xnotation
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X #5 8)
+        (X 7 8)
+        (X 5 4)
+        (X 3 4)
+        (X 5 8)
+        (X 3 4+8)
+        (X 1 1)       )
+
+      (Brick-type null)
+     Chorus4 5760 67 120 63 60 58 180 70 60 72 60 74 120 77 60 72 180 68 60 70 60 72 120 68 120 65 60 62 180 63 480 CHORDS Fm7 Bb7 Gm7 C7 Fm7 Bb7 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4 C8)
+          (slope -5 -4 L4+8 L8)
+          (slope 2 2 C8 C4)
+          (slope -4 -3 C4 C8 C4+8)
+          (slope 1 1 C1)         )
+       )
+
+       (Xnotation
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X #5 8)
+        (X 7 8)
+        (X 5 4)
+        (X 3 4)
+        (X 5 8)
+        (X 3 4+8)
+        (X 1 1)       )
+
+      (Brick-type null)
+     Head 5760 67 120 63 60 58 180 70 60 72 60 74 120 77 60 72 180 68 60 70 60 72 120 68 120 65 60 62 180 63 480 CHORDS Fm7 Bb7 Gm7 C7 Fm7 Bb7 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C2+4)
+          (slope -2 -2 C8 C8)
+          (slope 4 4 L8)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C2+8)
+          (slope 6 6 R4 C8)
+          (slope -2 -2 R8 C4+8)
+          (slope 2 2 C2+4)
+          (slope -2 -2 R8 C8 R8)         )
+       )
+
+       (Xnotation
+        (X 2 2+4)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 2+8)
+       R4
+        (X 2 8)
+       R8
+        (X 3 4+8)
+        (X 2 2+4)
+       R8
+        (X 3 8)
+       R8       )
+
+      (Brick-type null)
+     Head 30720 68 360 66 60 64 60 68 60 66 60 68 60 66 300 -1 120 72 60 -1 60 70 180 72 360 -1 60 70 60 -1 60 CHORDS F#m9 B7 NC Bbm9 Gm7 Bbm9 Gm7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C2+4)
+          (slope -2 -2 C8 C8)
+          (slope 4 4 L8)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C4+8)
+          (slope 1 2 L8 C8 C2+4)
+          (slope -3 -3 C8)
+          (slope 3 3 C8)
+          (slope -5 -2 L2 C2)         )
+       )
+
+       (Xnotation
+        (X 2 2+4)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 4+8)
+        (X 6 8)
+        (X 7 8)
+        (X 5 2+4)
+        (X 3 8)
+        (X 5 8)
+        (X 2 2)
+        (X 1 2)       )
+
+      (Brick-type null)
+     Head 32640 68 360 66 60 64 60 68 60 66 60 68 60 66 180 68 60 69 60 71 360 68 60 71 60 66 240 64 240 CHORDS F#m9 B7 EM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C2+8)
+          (slope 7 7 R4+8 C8)
+          (slope 0 0 R8 C8)
+          (slope -3 -3 C8)
+          (slope 2 3 C8 C4)
+          (slope -4 -1 C4+8 L4 C4 C4)
+          (slope 7 7 C8)
+          (slope 0 0 R8 C8)
+          (slope -3 -3 C8)
+          (slope 3 4 C8 L4)
+          (slope -2 -2 C8)         )
+       )
+
+       (Xnotation
+        (X 1 2+8)
+       R4+8
+        (X 3 8)
+       R8
+        (X 3 8)
+        (X 1 8)
+        (X 7 8)
+        (X 1 4)
+        (X 3 4+8)
+        (X 2 4)
+        (X 1 4)
+        (X 7 4)
+        (X 3 8)
+       R8
+        (X 3 8)
+        (X 1 8)
+        (X 7 8)
+        (X 2 4)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 3840 63 300 -1 180 70 60 -1 60 70 60 67 60 70 60 72 120 68 180 67 120 65 120 63 120 70 60 -1 60 70 60 67 60 70 60 74 120 72 60 CHORDS Eb6 Gm7 C7 Fm7 Gm7 C7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C4)
+          (slope 2 2 L4)
+          (slope -3 -3 L8)
+          (slope 1 3 C8 R8 L2+4)
+          (slope -4 -4 R8 C8)
+          (slope 2 3 L8 C4 C4)
+          (slope -3 -3 L8)
+          (slope 1 7 C4 C2+4)
+          (slope -5 -5 R8 C8)
+          (slope 1 1 C8)         )
+       )
+
+       (Xnotation
+        (X 5 4)
+        (X 6 4)
+        (X 4 8)
+        (X 5 8)
+       R8
+        (X #6 2+4)
+       R8
+        (X 1 8)
+        (X b3 8)
+        (X 1 4)
+        (X 2 4)
+        (X #7 8)
+        (X 1 4)
+        (X 5 2+4)
+       R8
+        (X 6 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Head 3840 75 120 77 120 74 60 75 60 -1 60 78 360 -1 60 74 60 77 60 79 120 81 120 78 60 79 120 86 360 -1 60 81 60 82 60 CHORDS Am7b5 D7b9 Gm9 C13     )
+   )
+ )
+ (cluster
+  (name cluster7)
+   (centroid
+    (noteCount 0.7225)
+    (syncopation 0.4840619118200641)
+    (diversityIndex 0.7216305292514676)
+    (numContourChanges 0.5083333333333333)
+    (longestNoteLength 0.07916666666666666)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -6 -4 C8)
+          (slope 4 8 C8 C2)
+          (slope -7 -1 L8 C8 R8 C8 C4 L4 C8 C8)
+          (slope 3 4 C8/3 C8/3)
+          (slope -3 -2 C8/3 L4+8)
+          (slope 4 6 C8 C8 C8)
+          (slope -6 -2 C4+8 C8)
+          (slope 5 5 C8 C8)
+          (slope -4 -4 C4)         )
+       )
+
+       (Xnotation
+        (X 7 8)
+        (X 5 8)
+        (X 7 2)
+        (X 6 8)
+        (X 5 8)
+       R8
+        (X 1 8)
+        (X 7 4)
+        (X #5 4)
+        (X 5 8)
+        (X 1 8)
+        (X 7 8/3)
+        (X 2 8/3)
+        (X 1 8/3)
+        (X 6 4+8)
+        (X 3 8)
+        (X 5 8)
+        (X 1 8)
+        (X 7 4+8)
+        (X 3 8)
+        (X 6 8)
+        (X 2 8)
+        (X 7 4)       )
+
+      (Brick-type null)
+     Chorus2 5760 67 60 75 60 79 240 77 60 75 60 -1 60 74 60 72 120 70 120 69 60 62 60 65 40 69 40 67 40 64 180 70 60 74 60 79 60 77 180 71 60 76 60 81 60 77 120 CHORDS Am7b5 D7b9 Gm9 G13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C8)
+          (slope 3 3 C8)
+          (slope -6 -4 L8 C8)
+          (slope 2 5 C4 C4 C4 C4+8 L8)
+          (slope -6 -6 L8/3)
+          (slope 1 5 L8/3 C8/3 C4+8 C8)
+          (slope -5 -4 L8 C8 C4)
+          (slope 4 4 C8 C8)
+          (slope -6 -1 C8 C8 L8 R8 C4)         )
+       )
+
+       (Xnotation
+        (X 6 8)
+        (X 1 8)
+        (X #4 8)
+        (X 2 8)
+        (X 5 4)
+        (X 7 4)
+        (X 7 4)
+        (X 1 4+8)
+        (X 6 8)
+        (X b3 8/3)
+        (X #5 8/3)
+        (X 1 8/3)
+        (X 2 4+8)
+        (X 3 8)
+        (X 7 8)
+        (X 5 8)
+        (X 2 4)
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X #5 8)
+        (X #4 8)
+       R8
+        (X 1 4)       )
+
+      (Brick-type null)
+     Chorus8 1920 67 60 70 60 64 60 60 60 65 120 68 120 71 120 73 180 75 60 69 40 74 40 78 40 79 180 81 60 76 60 72 60 67 120 71 60 75 60 74 60 70 60 68 60 -1 60 62 120 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 R4+8 C8)
+          (slope 3 4 C8 C8 L8)
+          (slope -3 -3 C8)
+          (slope 1 1 C4)
+          (slope -3 -1 C8/3 A8/3 C8/3)
+          (slope 1 1 X8)
+          (slope -4 -1 C4+8 C2)
+          (slope 2 10 C8 C8 L8)
+          (slope -3 -3 C8)
+          (slope 2 2 C8)
+          (slope -4 -1 C8 C8 C8 C2)         )
+       )
+
+       (Xnotation R4+8
+        (X 5 8)
+        (X 7 8)
+        (X 2 8)
+        (X 4 8)
+        (X 2 8)
+        (X 7 4)
+        (X 5 8/3)
+        (X 4 8/3)
+        (X 3 8/3)
+        (X 4 8)
+        (X b2 4+8)
+        (X 5 2)
+        (X #5 8)
+        (X 7 8)
+        (X b2 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X 1 8)
+        (X 7 8)
+        (X 3 2)       )
+
+      (Brick-type null)
+     Chorus9 3840 -1 180 62 60 65 60 69 60 72 60 69 60 70 120 67 40 65 40 64 40 65 60 61 180 60 240 70 60 72 60 75 60 72 60 74 60 70 60 67 60 65 60 64 240 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 R4+8 C8)
+          (slope 3 4 C8 C8 L8)
+          (slope -3 -3 C8)
+          (slope 1 1 C4)
+          (slope -3 -1 C8/3 A8/3 C8/3)
+          (slope 1 1 X8)
+          (slope -4 -1 C4+8 C2)
+          (slope 2 10 C8 C8 L8)
+          (slope -3 -3 C8)
+          (slope 2 2 C8)
+          (slope -4 -1 C8 C8 C8 C2)         )
+       )
+
+       (Xnotation R4+8
+        (X 5 8)
+        (X 7 8)
+        (X 2 8)
+        (X 4 8)
+        (X 2 8)
+        (X 7 4)
+        (X 5 8/3)
+        (X 4 8/3)
+        (X 3 8/3)
+        (X 4 8)
+        (X b2 4+8)
+        (X 5 2)
+        (X #5 8)
+        (X 7 8)
+        (X b2 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X 1 8)
+        (X 7 8)
+        (X 3 2)       )
+
+      (Brick-type null)
+     Head 3840 -1 180 62 60 65 60 69 60 72 60 69 60 70 120 67 40 65 40 64 40 65 60 61 180 60 240 70 60 72 60 75 60 72 60 74 60 70 60 67 60 65 60 64 240 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 R4+8 C8)
+          (slope 3 4 C8 C8 L8)
+          (slope -3 -3 C8)
+          (slope 1 1 C4)
+          (slope -3 -1 C8/3 A8/3 C8/3)
+          (slope 1 1 X8)
+          (slope -4 -1 C4+8 C2)
+          (slope 2 10 C8 C8 L8)
+          (slope -5 -2 C8 C8 C8)
+          (slope 9 9 C8)
+          (slope -2 -2 R8 C2)         )
+       )
+
+       (Xnotation R4+8
+        (X 5 8)
+        (X 7 8)
+        (X 2 8)
+        (X 4 8)
+        (X 2 8)
+        (X 7 4)
+        (X 5 8/3)
+        (X 4 8/3)
+        (X 3 8/3)
+        (X 4 8)
+        (X b2 4+8)
+        (X 5 2)
+        (X #5 8)
+        (X 7 8)
+        (X b2 8)
+        (X 7 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 1 2)       )
+
+      (Brick-type null)
+     Chorus2 3840 -1 180 62 60 65 60 69 60 72 60 69 60 70 120 67 40 65 40 64 40 65 60 61 180 60 240 70 60 72 60 75 60 72 60 67 60 65 60 74 60 -1 60 72 240 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 L8)
+          (slope -4 -3 C8 R8 C8 C8)
+          (slope 3 4 C8 C8 L8 C8)
+          (slope -3 -3 C8)
+          (slope 1 2 L8 C8)
+          (slope -3 -1 C4 R8 C8 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope 1 1 X8/3)
+          (slope 0 0 R8/3 X8/3)
+          (slope 2 2 C4 R1+4)         )
+       )
+
+       (Xnotation
+        (X 4 8)
+        (X #2 8)
+       R8
+        (X 7 8)
+        (X 5 8)
+        (X 7 8)
+        (X #2 8)
+        (X 4 8)
+        (X b3 8)
+        (X 1 8)
+        (X b2 8)
+        (X b3 8)
+        (X 1 4)
+       R8
+        (X 7 8)
+        (X 3 8/3)
+       R8/3
+        (X 3 8/3)
+        (X 4 8/3)
+       R8/3
+        (X 4 8/3)
+        (X 5 4)
+       R1+4       )
+
+      (Brick-type null)
+     Head 5760 68 60 65 60 -1 60 61 60 57 60 61 60 65 60 68 60 71 60 68 60 69 60 71 60 68 120 -1 60 66 60 65 40 -1 40 65 40 66 40 -1 40 66 40 68 120 -1 600 CHORDS Ebm9b5 Ab7#5#9 DbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R8 L8)
+          (slope -2 -2 C2 C4)
+          (slope 2 5 C8 C8 C4+8)
+          (slope -2 -2 C8)
+          (slope 2 4 C4 C8 C8 C8)
+          (slope -5 -2 C8 L8/3 C8/3 C8/3)
+          (slope 1 2 L8 C8)
+          (slope -6 -2 C8 L8 C8)
+          (slope 0 0 C8)
+          (slope 4 4 L4+8 C8)         )
+
+       STARTER       )
+
+       (Xnotation R8
+        (X 7 8)
+        (X 6 2)
+        (X 5 4)
+        (X 5 8)
+        (X 6 8)
+        (X 1 4+8)
+        (X 7 8)
+        (X 2 4)
+        (X 6 8)
+        (X 1 8)
+        (X 3 8)
+        (X 2 8)
+        (X 7 8/3)
+        (X 6 8/3)
+        (X 3 8/3)
+        (X #4 8)
+        (X 5 8)
+        (X 1 8)
+        (X 6 8)
+        (X 5 8)
+        (X 5 8)
+        (X #4 4+8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus4 0 -1 60 64 60 62 240 60 120 65 60 67 60 70 180 68 60 72 120 74 60 77 60 81 60 79 60 76 40 74 40 69 40 71 60 72 60 66 60 63 60 61 60 61 60 65 180 69 60 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R4 L8)
+          (slope -4 -1 C8 C4+8 C8 C4+8)
+          (slope 11 11 R8 L8)
+          (slope -5 -1 L8 C8 C8)
+          (slope 3 3 C4)
+          (slope -2 -2 L8)
+          (slope 1 2 C8 C8 L4)
+          (slope -3 -1 C8 C8 C8 C8)
+          (slope 1 5 R8 C8 C4)
+          (slope -1 -1 C8)         )
+
+       STARTER       )
+
+       (Xnotation R4
+        (X 2 8)
+        (X 7 8)
+        (X 5 4+8)
+        (X 3 8)
+        (X 3 4+8)
+       R8
+        (X b3 8)
+        (X b2 8)
+        (X 1 8)
+        (X 5 8)
+        (X 7 4)
+        (X 6 8)
+        (X 7 8)
+        (X 1 8)
+        (X 2 4)
+        (X 1 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 1 8)
+        (X b2 4)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Chorus2 0 -1 120 75 60 72 60 68 180 65 60 64 180 -1 60 75 60 73 60 72 60 67 60 70 120 68 60 70 60 71 60 73 120 71 60 70 60 68 60 65 60 -1 60 70 60 71 120 70 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope -5 -5 C8)
+          (slope 2 3 C4 R4 L8 C8 C4)
+          (slope -15 -5 R8 C8 C8)
+          (slope 2 6 C8 R4 C8 C8 R8 C8)
+          (slope -5 -3 L4 L8)
+          (slope 1 3 C8 L8)
+          (slope -2 -2 C8)
+          (slope 3 5 C4 C8)
+          (slope -3 -1 L8 L4)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 1 8)
+        (X 5 8)
+        (X 6 4)
+       R4
+        (X 7 8)
+        (X 2 8)
+        (X 1 4)
+       R8
+        (X 6 8)
+        (X 3 8)
+        (X 7 8)
+       R4
+        (X 6 8)
+        (X 1 8)
+       R8
+        (X 2 8)
+        (X 7 4)
+        (X #4 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 1 4)
+        (X 7 8)
+        (X 6 8)
+        (X #4 4)       )
+
+      (Brick-type null)
+     Chorus5 0 77 60 72 60 74 120 -1 120 76 60 79 60 82 120 -1 60 67 60 62 60 68 60 -1 120 74 60 77 60 -1 60 79 60 76 120 71 60 72 60 75 60 73 60 78 120 81 60 80 60 77 120 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 2 4 C8)
+          (slope 2 2 C8)
+          (slope -3 -3 L8)
+          (slope 3 5 C8 C8 C8 C8)
+          (slope -6 -3 L8 C4 C8)
+          (slope 2 2 R8 C8/3)
+          (slope -4 -1 C8/3 L8/3 L8 C8)
+          (slope 1 5 C4+8 C8 A8 C8)
+          (slope -5 -2 C4 R8 C4 C8 C4 C8)
+          (slope 4 4 C8)         )
+       )
+
+       (Xnotation
+        (X 7 8)
+        (X 1 8)
+        (X 6 8)
+        (X 2 8)
+        (X 5 8)
+        (X 7 8)
+        (X 3 8)
+        (X 6 8)
+        (X b2 4)
+        (X 7 8)
+       R8
+        (X 1 8/3)
+        (X 7 8/3)
+        (X 6 8/3)
+        (X #5 8)
+        (X 3 8)
+        (X 3 4+8)
+        (X 6 8)
+        (X 2 8)
+        (X b3 8)
+        (X 7 4)
+       R8
+        (X 1 4)
+        (X 7 8)
+        (X 2 4)
+        (X 1 8)
+        (X 3 8)       )
+
+      (Brick-type null)
+     Chorus8 3840 65 60 67 60 64 60 69 60 74 60 77 60 82 60 76 60 73 120 70 60 -1 60 72 40 70 40 69 40 68 60 64 60 69 180 74 60 76 60 77 60 72 120 -1 60 67 120 65 60 62 120 60 60 64 60 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 A8)
+          (slope -4 -1 L8 C4 C8)
+          (slope 2 3 C8 C8 R4+8 C8/3 C8/3)
+          (slope -6 -1 C8/3 C8 L4 C8)
+          (slope 3 3 C4+8)
+          (slope -2 -1 C8 L8 C8)
+          (slope 3 3 R8 C8)
+          (slope -4 -1 L8 L8)
+          (slope 2 6 C8 C8 C4 C4)         )
+       )
+
+       (Xnotation
+        (X b5 8)
+        (X 4 8)
+        (X 2 4)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+       R4+8
+        (X b2 8/3)
+        (X 3 8/3)
+        (X b2 8/3)
+        (X 1 8)
+        (X #4 4)
+        (X 3 8)
+        (X 2 4+8)
+        (X 1 8)
+        (X b2 8)
+        (X 1 8)
+       R8
+        (X b3 8)
+        (X 6 8)
+        (X 4 8)
+        (X 5 8)
+        (X 1 8)
+        (X 7 4)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus3 3840 73 60 72 60 69 120 65 60 67 60 70 60 -1 180 73 40 76 40 73 40 72 60 66 120 64 60 67 180 65 60 63 60 62 60 -1 60 65 60 64 60 60 60 62 60 67 60 70 120 76 120 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 L8)
+          (slope 3 3 C8)
+          (slope -6 -2 C8 C8 C2 C8 C4)
+          (slope 4 5 L8 C4 R8 L8)
+          (slope -5 -4 C8 C8)
+          (slope 2 5 C8/3 C8/3 L8/3 C8)
+          (slope -2 -2 C8)
+          (slope 6 6 R8 L8)
+          (slope -4 -1 C4+8 C8 C8)
+          (slope 6 6 L8)
+          (slope -3 -3 C8)
+          (slope 5 5 C8)         )
+       )
+
+       (Xnotation
+        (X #4 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X 7 2)
+        (X 3 8)
+        (X 1 4)
+        (X 4 8)
+        (X 3 4)
+       R8
+        (X #5 8)
+        (X 3 8)
+        (X 1 8)
+        (X 2 8/3)
+        (X 5 8/3)
+        (X 7 8/3)
+        (X 2 8)
+        (X 1 8)
+       R8
+        (X #4 8)
+        (X 1 4+8)
+        (X 3 8)
+        (X 1 8)
+        (X #4 8)
+        (X b3 8)
+        (X #5 8)       )
+
+      (Brick-type null)
+     Chorus6 1920 76 60 79 60 77 60 74 60 68 240 64 60 61 120 66 60 70 120 -1 60 74 60 69 60 65 60 67 40 72 40 76 40 79 60 77 60 -1 60 83 60 82 180 78 60 74 60 80 60 77 60 82 60 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R8 C8)
+          (slope -5 -3 C8 C4 R4+8 L8 C8)
+          (slope 0 0 C8 R4 C8)
+          (slope 2 6 C8 C8 C8)
+          (slope -1 -1 L8)
+          (slope 3 5 C8 C8)
+          (slope -3 -3 L4)
+          (slope 1 1 C8)
+          (slope -5 -5 C8)
+          (slope 6 6 C8)
+          (slope -5 -1 C4 L8 C8 L8 R4)         )
+
+       STARTER       )
+
+       (Xnotation R8
+        (X 1 8)
+        (X 6 8)
+        (X 3 4)
+       R4+8
+        (X #4 8)
+        (X 2 8)
+        (X 2 8)
+       R4
+        (X 2 8)
+        (X 3 8)
+        (X 7 8)
+        (X 5 8)
+        (X #4 8)
+        (X 6 8)
+        (X 2 8)
+        (X 7 4)
+        (X 1 8)
+        (X 5 8)
+        (X 1 8)
+        (X 5 4)
+        (X 4 8)
+        (X 7 8)
+        (X 6 8)
+       R4       )
+
+      (Brick-type null)
+     Chorus8 0 -1 60 77 60 74 60 69 120 -1 180 64 60 60 60 60 60 -1 120 60 60 62 60 68 60 72 60 71 60 74 60 79 60 76 120 77 60 72 60 78 60 73 120 71 60 69 60 68 60 -1 120 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2+8 C8)
+          (slope 2 3 C8 C8 C8)
+          (slope -3 -2 L8 C8 C8)
+          (slope 3 3 C4)
+          (slope 0 0 R8 X8 R4 L4+8)
+          (slope -3 -3 C8)
+          (slope 2 3 C8 C8 L8)
+          (slope -3 -2 C8 C8 C8)
+          (slope 3 3 C8)
+          (slope 0 0 C4 C8)         )
+
+       STARTER       )
+
+       (Xnotation R2+8
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 3 8)
+        (X 5 4)
+       R8
+        (X b6 8)
+       R4
+        (X 6 4+8)
+        (X 1 8)
+        (X 1 8)
+        (X 1 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+        (X 4 8)
+        (X 4 4)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 0 -1 300 60 60 63 60 65 60 67 60 65 60 63 60 60 60 63 120 -1 60 63 60 -1 120 63 180 60 60 63 60 65 60 67 60 65 60 63 60 60 60 63 60 63 120 63 60 CHORDS NC Am7b5 Abm7 Gm7 F#m7 NC Fm7 Bb7sus4 Eb6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C8)
+          (slope -5 -3 C8 R8 C8 C8)
+          (slope 1 4 C8 C8 C8 C8)
+          (slope 0 0 R8 C8)
+          (slope 1 1 L8)
+          (slope -5 -1 C4+8 A8 C8 C8 R8 C8 C4)
+          (slope 1 4 C8/3 C8/3 C8/3 C8 C8 L8)
+          (slope -2 -1 C8 C4 R8 A8)         )
+       )
+
+       (Xnotation
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 3 8)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 5 8)
+        (X 1 8)
+       R8
+        (X 1 8)
+        (X b2 8)
+        (X 1 4+8)
+        (X #7 8)
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 3 8)
+        (X 7 4)
+        (X 1 8/3)
+        (X 3 8/3)
+        (X 5 8/3)
+        (X 1 8)
+        (X b2 8)
+        (X b3 8)
+        (X b2 8)
+        (X 1 4)
+       R8
+        (X #7 8)       )
+
+      (Brick-type null)
+     Head 15360 72 60 68 60 -1 60 65 60 60 60 61 60 65 60 68 60 72 60 -1 60 72 60 73 60 72 180 71 60 70 60 66 60 -1 60 63 60 58 120 59 40 63 40 66 40 70 60 71 60 73 60 71 60 70 120 -1 60 69 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C8)
+          (slope -5 -3 C8 R8 C8 C8)
+          (slope 1 4 C8 C8 C8 C8)
+          (slope 0 0 R8 C8)
+          (slope 1 1 L8)
+          (slope -5 -1 C4+8 A8 C8 C8 R8 C8 C8)
+          (slope 1 4 R8 C8/3 C8/3 C8/3 C8 C8 L8)
+          (slope -2 -1 C8 C4 R8 A8)         )
+       )
+
+       (Xnotation
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 3 8)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 5 8)
+        (X 1 8)
+       R8
+        (X 1 8)
+        (X b2 8)
+        (X 1 4+8)
+        (X #7 8)
+        (X 7 8)
+        (X 5 8)
+       R8
+        (X 3 8)
+        (X 7 8)
+       R8
+        (X 1 8/3)
+        (X 3 8/3)
+        (X 5 8/3)
+        (X 1 8)
+        (X b2 8)
+        (X b3 8)
+        (X b2 8)
+        (X 1 4)
+       R8
+        (X #7 8)       )
+
+      (Brick-type null)
+     Head 3840 72 60 68 60 -1 60 65 60 60 60 61 60 65 60 68 60 72 60 -1 60 72 60 73 60 72 180 71 60 70 60 66 60 -1 60 63 60 58 60 -1 60 59 40 63 40 66 40 70 60 71 60 73 60 71 60 70 120 -1 60 69 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+   )
+ )
+ (cluster
+  (name cluster8)
+   (centroid
+    (noteCount 0.2933333333333333)
+    (syncopation 0.5674005007338341)
+    (diversityIndex 0.3223373958580227)
+    (numContourChanges 0.3407407407407408)
+    (longestNoteLength 0.6962962962962962)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R8 L4)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C8)
+          (slope 3 3 R8 C4+8)
+          (slope -2 -1 C4 C8)
+          (slope 2 2 C8)
+          (slope -4 -3 R8 L2 C1+2+8)         )
+
+       STARTER       )
+
+       (Xnotation R8
+        (X 4 4)
+        (X 3 8)
+        (X 4 8)
+        (X 3 8)
+       R8
+        (X 5 4+8)
+        (X 1 4)
+        (X 7 8)
+        (X 1 8)
+       R8
+        (X #5 2)
+        (X 1 1+2+8)       )
+
+      (Brick-type null)
+     Head 0 -1 60 74 120 72 60 74 60 72 60 -1 60 75 180 74 120 72 60 74 60 -1 60 70 240 67 780 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 R4+8 C8)
+          (slope 3 4 C8 C8 L8)
+          (slope -3 -3 C8)
+          (slope 1 1 C4)
+          (slope -3 -1 C8/3 A8/3 C8/3)
+          (slope 1 1 X8)
+          (slope -4 -1 C4+8 C1)
+          (slope 17 17 R8 C2+4+8)         )
+       )
+
+       (Xnotation R4+8
+        (X 5 8)
+        (X 7 8)
+        (X 2 8)
+        (X 4 8)
+        (X 2 8)
+        (X 7 4)
+        (X 5 8/3)
+        (X 4 8/3)
+        (X 3 8/3)
+        (X 4 8)
+        (X b2 4+8)
+        (X 5 1)
+       R8
+        (X 7 2+4+8)       )
+
+      (Brick-type null)
+     Chorus10 3840 -1 180 62 60 65 60 69 60 72 60 69 60 70 120 67 40 65 40 64 40 65 60 61 180 60 480 -1 60 77 420 CHORDS Gm9 C7b9 F69 D7alt Gm9 C9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 R8 C8)
+          (slope -1 -1 L8)
+          (slope 1 3 C8 C8 L16)
+          (slope -2 -1 C16 L8 C8 C2+8)
+          (slope 4 4 C8)
+          (slope -4 -1 C8 L1+2+8 R8 L4+8)         )
+       )
+
+       (Xnotation R8
+        (X 1 8)
+        (X #7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 4 16)
+        (X 3 16)
+        (X 2 8)
+        (X 1 8)
+        (X 3 2+8)
+        (X 5 8)
+        (X 3 8)
+        (X 2 1+2+8)
+       R8
+        (X #4 4+8)       )
+
+      (Brick-type null)
+     Head 3840 -1 60 67 60 66 60 67 60 70 60 72 30 70 30 69 60 67 60 65 300 69 60 65 60 64 780 -1 60 63 180 CHORDS Gm7 Dm Em7b5 A7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 R8 C8)
+          (slope -1 -1 L8)
+          (slope 1 3 C8 C8 L16)
+          (slope -2 -1 C16 L8 C8 C2)
+          (slope 4 4 R8 C8)
+          (slope -4 -1 C8 L1+2+8 R8 L4+8)         )
+       )
+
+       (Xnotation R8
+        (X 1 8)
+        (X #7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 4 16)
+        (X 3 16)
+        (X 2 8)
+        (X 1 8)
+        (X 3 2)
+       R8
+        (X 5 8)
+        (X 3 8)
+        (X 2 1+2+8)
+       R8
+        (X #4 4+8)       )
+
+      (Brick-type null)
+     Head 9600 -1 60 67 60 66 60 67 60 70 60 72 30 70 30 69 60 67 60 65 240 -1 60 69 60 65 60 64 780 -1 60 63 180 CHORDS Gm7 Dm Em7b5 A7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 6 8 R8 L4)
+          (slope -2 -2 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C8)
+          (slope 5 5 R8 L4+8)
+          (slope -2 -1 C4 C8)
+          (slope 1 1 C8)
+          (slope -2 -1 R8 C1+2+4 R8 C8)
+          (slope 2 2 C8)         )
+       )
+
+       (Xnotation R8
+        (X 4 4)
+        (X 3 8)
+        (X 4 8)
+        (X 3 8)
+       R8
+        (X 6 4+8)
+        (X b2 4)
+        (X 1 8)
+        (X b2 8)
+       R8
+        (X 1 1+2+4)
+       R8
+        (X 1 8)
+        (X 2 8)       )
+
+      (Brick-type null)
+     Head 1920 -1 60 74 120 72 60 74 60 72 60 -1 60 77 180 75 120 74 60 75 60 -1 60 74 840 -1 60 72 60 74 60 CHORDS Am7b5 D7b9 Gm9 C13 C13#11     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C4+8)
+          (slope -2 -2 C8)
+          (slope 2 2 C8)
+          (slope -2 -2 C8)
+          (slope 7 7 R8 L4+8)
+          (slope -2 -1 C4 C8)
+          (slope 1 1 C8)
+          (slope -2 -1 R8 C1+2+4 R8 L8)
+          (slope 2 2 C8)         )
+       )
+
+       (Xnotation
+        (X 1 4+8)
+        (X 7 8)
+        (X 1 8)
+        (X 7 8)
+       R8
+        (X 4 4+8)
+        (X 7 4)
+        (X 6 8)
+        (X 7 8)
+       R8
+        (X 6 1+2+4)
+       R8
+        (X 2 8)
+        (X 3 8)       )
+
+      (Brick-type null)
+     Head 9600 72 180 70 60 72 60 70 60 -1 60 77 180 75 120 74 60 75 60 -1 60 74 840 -1 60 72 60 74 60 CHORDS Cm9 F13b9 BbM7 Bb6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C4+8)
+          (slope -2 -2 L8)
+          (slope 2 2 C8)
+          (slope -2 -2 L4)
+          (slope 3 3 A4+8)
+          (slope -2 -1 C4 L8)
+          (slope 2 2 C8)
+          (slope -3 -2 R8 L4+8 C1+4+8)
+          (slope 0 0 R8 C8)
+          (slope -2 -2 C8)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+        (X 2 8)
+        (X 3 8)
+        (X 2 4)
+        (X #3 4+8)
+        (X 7 4)
+        (X #5 8)
+        (X 7 8)
+       R8
+        (X #5 4+8)
+        (X 1 1+4+8)
+       R8
+        (X 1 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Head 5760 84 180 82 60 84 60 82 120 85 180 84 120 82 60 84 60 -1 60 82 180 79 660 -1 60 79 60 77 60 CHORDS Am7b5 D7b9 Gm9 G13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4)
+          (slope 2 2 L4)
+          (slope -3 -3 C8)
+          (slope 1 3 C8 R8 X2+4+8)
+          (slope -3 -1 R8 C8 C4)
+          (slope 3 3 C1+4+8)
+          (slope -8 -8 R8 C8)
+          (slope 1 1 C8)         )
+       )
+
+       (Xnotation
+        (X 3 4)
+        (X 4 4)
+        (X 2 8)
+        (X 3 8)
+       R8
+        (X b5 2+4+8)
+       R8
+        (X 1 8)
+        (X 3 4)
+        (X 5 1+4+8)
+       R8
+        (X 7 8)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 7680 75 120 77 120 74 60 75 60 -1 60 78 420 -1 60 77 60 74 120 77 660 -1 60 69 60 70 60 CHORDS Cm9 F13b9 BbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C4+8)
+          (slope -2 -2 L8)
+          (slope 2 2 C8)
+          (slope -2 -2 L8)
+          (slope 3 3 R8 A4+8)
+          (slope -2 -1 C4 L8)
+          (slope 2 2 C4)
+          (slope -5 -5 X1+2+4+8 R4)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+        (X 2 8)
+        (X 3 8)
+        (X 2 8)
+       R8
+        (X #3 4+8)
+        (X 7 4)
+        (X #5 8)
+        (X 7 4)
+        (X 4 1+2+4+8)
+       R4       )
+
+      (Brick-type null)
+     Head 13440 72 180 70 60 72 60 70 60 -1 60 73 180 72 120 70 60 72 120 67 900 -1 120 CHORDS Am7b5 D7b9 Gm9 G13     )
+   )
+ )
+ (cluster
+  (name cluster9)
+   (centroid
+    (noteCount 0.6100000000000001)
+    (syncopation 0.478126613856734)
+    (diversityIndex 0.05943891428751177)
+    (numContourChanges 0.3972222222222223)
+    (longestNoteLength 0.19999999999999998)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C4+8)
+          (slope 2 6 R8 C8 C8 C8 C8)
+          (slope -5 -1 C4 C8/3 L8/3 A8/3 C4 R8 L8)
+          (slope 2 5 L8 R8 C8 C2+8 R4 L8)
+          (slope -4 -1 C8 L8 A8 C4)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+       R8
+        (X 7 8)
+        (X 2 8)
+        (X 3 8)
+        (X 5 8)
+        (X 3 4)
+        (X 7 8/3)
+        (X 6 8/3)
+        (X b5 8/3)
+        (X 1 4)
+       R8
+        (X #5 8)
+        (X 7 8)
+       R8
+        (X 3 8)
+        (X 5 2+8)
+       R4
+        (X b2 8)
+        (X 7 8)
+        (X #4 8)
+        (X 4 8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Head 1920 62 180 -1 60 68 60 72 60 74 60 77 60 76 120 71 40 70 40 67 40 66 120 -1 60 62 60 64 60 -1 60 69 60 72 300 -1 120 75 60 72 60 68 60 67 60 66 120 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C4+8)
+          (slope 2 6 R8 C8 C8 C8 C8)
+          (slope -5 -1 C4 C8/3 L8/3 A8/3 C4 R8 L8)
+          (slope 2 5 L8 R8 C8 C2+8 R4 L8)
+          (slope -4 -1 C8 L8 A8 C4)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+       R8
+        (X 7 8)
+        (X 2 8)
+        (X 3 8)
+        (X 5 8)
+        (X 3 4)
+        (X 7 8/3)
+        (X 6 8/3)
+        (X b5 8/3)
+        (X 1 4)
+       R8
+        (X #5 8)
+        (X 7 8)
+       R8
+        (X 3 8)
+        (X 5 2+8)
+       R4
+        (X b2 8)
+        (X 7 8)
+        (X #4 8)
+        (X 4 8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus9 1920 62 180 -1 60 68 60 72 60 74 60 77 60 76 120 71 40 70 40 67 40 66 120 -1 60 62 60 64 60 -1 60 69 60 72 300 -1 120 75 60 72 60 68 60 67 60 66 120 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 R8 C4+8)
+          (slope 0 0 C8)
+          (slope -1 -1 L8)
+          (slope 1 4 C8 C4)
+          (slope 0 0 L4)
+          (slope -2 -2 C2+8 R8 C4+8)
+          (slope 0 0 C8)
+          (slope -1 -1 L8)
+          (slope 1 7 C8 L4+32+120+480)
+          (slope -5 -2 C4/3 L4/3)
+          (slope 8 8 L8)
+          (slope -1 -1 L4 R8)         )
+       )
+
+       (Xnotation R8
+        (X 3 4+8)
+        (X 3 8)
+        (X 2 8)
+        (X 3 8)
+        (X 5 4)
+        (X 2 4)
+        (X 1 2+8)
+       R8
+        (X 3 4+8)
+        (X 3 8)
+        (X 2 8)
+        (X 3 8)
+        (X b7 4+32+120+480)
+        (X 5 4/3)
+        (X 2 4/3)
+        (X b3 8)
+        (X 2 4)
+       R8       )
+
+      (Brick-type null)
+     Head 13440 -1 60 65 180 65 60 64 60 65 60 69 120 69 120 67 300 -1 60 65 180 65 60 64 60 65 60 72 140 70 80 65 80 73 60 72 120 -1 60 CHORDS Dm Gm7 C7 Dm Em7b5 Bb7 A7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 2 4 C4+8)
+          (slope -4 -4 C8)
+          (slope 1 6 C8 C8 C8 C8 C4+8)
+          (slope -2 -2 L16)
+          (slope 2 2 C16)
+          (slope -3 -1 C4+8 C8 C2+4)
+          (slope 0 0 R8 C8)
+          (slope 3 3 C8)
+          (slope -4 -1 A8 C8 L8 C8 C8 C4)         )
+       )
+
+       (Xnotation
+        (X 5 4+8)
+        (X #2 8)
+        (X 3 8)
+        (X 5 8)
+        (X 7 8)
+        (X #2 8)
+        (X b3 4+8)
+        (X b2 16)
+        (X b3 16)
+        (X 1 4+8)
+        (X 7 8)
+        (X 3 2+4)
+       R8
+        (X 3 8)
+        (X 5 8)
+        (X 4 8)
+        (X 3 8)
+        (X 2 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus3 9600 69 180 65 60 66 60 69 60 73 60 77 60 83 180 81 30 83 30 80 180 78 60 77 360 -1 60 77 60 80 60 78 60 77 60 75 60 72 60 68 60 65 120 CHORDS Ebm9b5 Ab7#5#9 DbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C4+8)
+          (slope 2 6 R8 C8 C8 C8 C8)
+          (slope -5 -1 C4 C8/3 L8/3 A8/3 C4 R8 L8)
+          (slope 2 5 L8 R8 C8 C2+8 R4 L8)
+          (slope -4 -1 C8 L8 A8 C4)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+       R8
+        (X 7 8)
+        (X 2 8)
+        (X 3 8)
+        (X 5 8)
+        (X 3 4)
+        (X 7 8/3)
+        (X 6 8/3)
+        (X b5 8/3)
+        (X 1 4)
+       R8
+        (X #5 8)
+        (X 7 8)
+       R8
+        (X 3 8)
+        (X 5 2+8)
+       R4
+        (X b2 8)
+        (X 7 8)
+        (X #4 8)
+        (X 4 8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus2 1920 62 180 -1 60 68 60 72 60 74 60 77 60 76 120 71 40 70 40 67 40 66 120 -1 60 62 60 64 60 -1 60 69 60 72 300 -1 120 75 60 72 60 68 60 67 60 66 120 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C4+8)
+          (slope 2 6 R8 C8 C8 C8 C8)
+          (slope -5 -1 C4 C8/3 L8/3 A8/3 C4 R8 L8)
+          (slope 2 5 L8 R8 C8 C2+8 R4 L8)
+          (slope -4 -1 C8 L8 A8 C4)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+       R8
+        (X 7 8)
+        (X 2 8)
+        (X 3 8)
+        (X 5 8)
+        (X 3 4)
+        (X 7 8/3)
+        (X 6 8/3)
+        (X b5 8/3)
+        (X 1 4)
+       R8
+        (X #5 8)
+        (X 7 8)
+       R8
+        (X 3 8)
+        (X 5 2+8)
+       R4
+        (X b2 8)
+        (X 7 8)
+        (X #4 8)
+        (X 4 8)
+        (X 3 4)       )
+
+      (Brick-type null)
+     Chorus10 1920 62 180 -1 60 68 60 72 60 74 60 77 60 76 120 71 40 70 40 67 40 66 120 -1 60 62 60 64 60 -1 60 69 60 72 300 -1 120 75 60 72 60 68 60 67 60 66 120 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -5 -3 C2)
+          (slope -2 -1 L8 C4 L8 C4+8 A8 C8/3)
+          (slope 3 3 C8/3 C8/3 C8/3)
+          (slope -2 -1 C8/3 C8/3 C4+8 C8)
+          (slope 3 3 L8)
+          (slope -3 -1 C8 C8 C8 C4+8)
+          (slope 0 0 C16)
+          (slope 1 8 A16 L4 R8 C8)         )
+       )
+
+       (Xnotation
+        (X 5 2)
+        (X 4 8)
+        (X 3 4)
+        (X 2 8)
+        (X 5 4+8)
+        (X 4 8)
+        (X 3 8/3)
+        (X 5 8/3)
+        (X 7 8/3)
+        (X b2 8/3)
+        (X 1 8/3)
+        (X 7 8/3)
+        (X 3 4+8)
+        (X 2 8)
+        (X 4 8)
+        (X 3 8)
+        (X 2 8)
+        (X 1 8)
+        (X 3 4+8)
+        (X 3 16)
+        (X 4 16)
+        (X #4 4)
+       R8
+        (X 2 8)       )
+
+      (Brick-type null)
+     Chorus3 1920 75 240 74 60 72 120 70 60 69 180 67 60 66 40 69 40 72 40 75 40 74 40 72 40 70 180 69 60 72 60 70 60 69 60 67 60 64 180 64 30 65 30 66 120 -1 60 74 60 CHORDS Am7b5 D7b9 Gm9 C13 C13#11     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope 2 3 R4 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)       )
+
+      (Brick-type null)
+     Chorus2 3840 67 240 -1 120 70 60 72 60 74 120 70 60 67 180 63 60 65 60 67 120 63 60 58 180 70 60 72 60 74 120 70 60 67 180 63 60 65 60 CHORDS Ab Bb7sus4 Gm7 C7 Fm7 Bb7 Gm7 C7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 2 4 C4+8)
+          (slope -4 -3 C8 C8 L8)
+          (slope 1 7 C8/3 C8/3 C8/3 C8)
+          (slope -5 -1 A16 C16 C2+8 C8 C4+8 L8)
+          (slope 5 7 L4+8 L8 C4+8)
+          (slope -19 -19 C8)
+          (slope 1 4 L16 C16 L16 C16 L16 C16 L16 C16)         )
+       )
+
+       (Xnotation
+        (X 7 4+8)
+        (X 5 8)
+        (X 3 8)
+        (X #7 8)
+        (X 1 8/3)
+        (X 3 8/3)
+        (X 5 8/3)
+        (X 6 8)
+        (X #5 16)
+        (X 5 16)
+        (X 3 2+8)
+        (X b2 8)
+        (X 5 4+8)
+        (X 2 8)
+        (X 6 4+8)
+        (X 2 8)
+        (X 5 4+8)
+        (X 1 8)
+        (X 2 16)
+        (X 3 16)
+        (X #4 16)
+        (X 5 16)
+        (X 7 16)
+        (X 1 16)
+        (X 2 16)
+        (X 3 16)       )
+
+      (Brick-type null)
+     Chorus3 9600 70 180 67 60 63 60 59 60 60 40 63 40 67 40 74 60 73 30 72 30 69 300 66 60 65 180 60 60 67 180 72 60 77 180 58 60 60 30 62 30 64 30 65 30 69 30 70 30 72 30 74 30 CHORDS Cm9 F13b9 BbM7 Bb6     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4)
+          (slope -1 -1 C8)
+          (slope 1 2 C8 L8)
+          (slope -2 -1 C8 C8)
+          (slope 1 5 C8 C2)
+          (slope 0 0 R8 C16)
+          (slope -1 -1 A16 L8+16)
+          (slope 2 2 C16)
+          (slope -3 -3 C2+4)
+          (slope 5 5 R8 C8 C8)
+          (slope -5 -1 L8 C8 C8 C4+8 C8)         )
+       )
+
+       (Xnotation
+        (X 3 4)
+        (X #2 8)
+        (X 3 8)
+        (X 4 8)
+        (X 3 8)
+        (X #2 8)
+        (X 3 8)
+        (X b3 2)
+       R8
+        (X b3 16)
+        (X 2 16)
+        (X b2 8+16)
+        (X b3 16)
+        (X 5 2+4)
+       R8
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)
+        (X 4 8)
+        (X 1 4+8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus3 1920 66 120 65 60 66 60 68 60 66 60 65 60 66 60 71 240 -1 60 71 30 70 30 69 90 71 30 68 360 -1 60 73 60 78 60 77 60 75 60 73 60 68 180 66 60 CHORDS Ebm9b5 Ab7#5#9 DbM7 Ab7sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope 2 3 R4 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)       )
+
+      (Brick-type null)
+     Chorus3 3840 67 240 -1 120 70 60 72 60 74 120 70 60 67 180 63 60 65 60 67 120 63 60 58 180 70 60 72 60 74 120 70 60 67 180 63 60 65 60 CHORDS Ab Bb7sus4 Gm7 C7 Fm7 Bb7 Gm7 C7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope 2 3 R4 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)       )
+
+      (Brick-type null)
+     Chorus4 3840 67 240 -1 120 70 60 72 60 74 120 70 60 67 180 63 60 65 60 67 120 63 60 58 180 70 60 72 60 74 120 70 60 67 180 63 60 65 60 CHORDS Ab Bb7sus4 Gm7 C7 Fm7 Bb7 Gm7 C7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 2 4 C4+8)
+          (slope 0 0 C8)
+          (slope 7 7 L8)
+          (slope -4 -3 C8 C8 C8)
+          (slope 4 6 L8 C2+4)
+          (slope -4 -4 C8)
+          (slope 3 3 L4+8)
+          (slope -2 -1 C16 C16 C2)
+          (slope 4 4 L4+8)
+          (slope -4 -1 C16 C16 C4 R8 C8)         )
+       )
+
+       (Xnotation
+        (X 5 4+8)
+        (X 5 8)
+        (X 2 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X 2 8)
+        (X #5 2+4)
+        (X 3 8)
+        (X 2 4+8)
+        (X 1 16)
+        (X 7 16)
+        (X 3 2)
+        (X 2 4+8)
+        (X 1 16)
+        (X 7 16)
+        (X 3 4)
+       R8
+        (X 1 8)       )
+
+      (Brick-type null)
+     Chorus3 13440 73 180 73 60 80 60 76 60 73 60 69 60 73 60 79 360 75 60 78 180 76 30 74 30 73 240 77 180 75 30 73 30 72 120 -1 60 68 60 CHORDS F#m7 B7#5 B7b9 Em7 A7 Ebm7 Ab7#11     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C2+4)
+          (slope 0 0 R4 C8 R8 C8)
+          (slope -1 -1 L8)
+          (slope 1 2 C8 C4)
+          (slope -4 -1 C4+8 C4 C4 L4)
+          (slope 3 3 L8)
+          (slope -3 -2 C8 C8 C8)
+          (slope 3 3 C8)
+          (slope -3 -3 C8)
+          (slope 3 4 C8 L8)         )
+       )
+
+       (Xnotation
+        (X 5 2+4)
+       R4
+        (X 3 8)
+       R8
+        (X 3 8)
+        (X 2 8)
+        (X 7 8)
+        (X 1 4)
+        (X 3 4+8)
+        (X 1 4)
+        (X 7 4)
+        (X 6 4)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+        (X 7 8)
+        (X 5 8)
+        (X 7 8)
+        (X 2 8)       )
+
+      (Brick-type null)
+     Head 5760 72 360 -1 120 72 60 -1 60 72 60 71 60 72 60 74 120 70 180 67 120 65 120 64 120 67 60 65 60 63 60 60 60 63 60 60 60 63 60 67 60 CHORDS Fm7 Am7 D7 Gm7 Fm7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope 2 3 R4 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8 L4)
+          (slope -5 -4 C8 L4+8)
+          (slope 2 12 C8 L8 C4)
+          (slope -4 -3 C8 C4+8 L8)
+          (slope 2 2 L8)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)
+        (X 2 4)
+        (X 7 8)
+        (X 4 4+8)
+        (X 1 8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8)
+        (X 1 4+8)
+        (X b3 8)
+        (X 4 8)       )
+
+      (Brick-type null)
+     Head 3840 67 240 -1 120 70 60 72 60 74 120 70 60 67 180 63 60 65 60 67 120 63 60 58 180 70 60 72 60 74 120 70 60 67 180 63 60 65 60 CHORDS Ab Bb7sus4 Gm7 C7 Fm7 Bb7 Gm7 C7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -4 -2 C4)
+          (slope 10 10 L8)
+          (slope -3 -3 C8)
+          (slope 5 5 C8)
+          (slope -4 -1 L8 C8 C8 C2)
+          (slope 1 5 C8 L8)
+          (slope -7 -1 C8 A8 C2 C8)
+          (slope 1 3 L8 L8 C8 C2+8)
+          (slope -2 -1 R8 C8 C8)         )
+       )
+
+       (Xnotation
+        (X 3 4)
+        (X 2 8)
+        (X 7 8)
+        (X 3 8)
+        (X 2 8)
+        (X 7 8)
+        (X 5 8)
+        (X 5 2)
+        (X 1 8)
+        (X b2 8)
+        (X 1 8)
+        (X #7 8)
+        (X 7 2)
+        (X 3 8)
+        (X #4 8)
+        (X 6 8)
+        (X 7 8)
+        (X b2 2+8)
+       R8
+        (X 1 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus3 15360 65 120 75 60 72 60 77 60 75 60 72 60 68 60 67 240 72 60 73 60 72 60 71 60 70 240 63 60 65 60 68 60 70 60 71 300 -1 60 70 60 68 60 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C4+8)
+          (slope 2 4 L8 C8)
+          (slope -3 -1 C4 L4 C4 C4 C4 C16 A16 L8)
+          (slope 1 5 C4 C8 L4+8 C8 C8)
+          (slope -2 -2 C8)
+          (slope 2 2 C2+4)         )
+       )
+
+       (Xnotation
+        (X 5 4+8)
+        (X 6 8)
+        (X 1 8)
+        (X 7 4)
+        (X 6 4)
+        (X b2 4)
+        (X 1 4)
+        (X 7 4)
+        (X 5 16)
+        (X 4 16)
+        (X #7 8)
+        (X 1 4)
+        (X 3 8)
+        (X 4 4+8)
+        (X 7 8)
+        (X 2 8)
+        (X 1 8)
+        (X 2 2+4)       )
+
+      (Brick-type null)
+     Chorus3 13440 75 180 77 60 81 60 79 120 77 120 75 120 74 120 72 120 69 30 67 30 66 60 67 120 70 60 72 180 77 60 81 60 79 60 81 360 CHORDS Am7b5 D7b9 Gm9 G13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C4)
+          (slope 2 2 C4+8)
+          (slope -6 -2 C8 L8 C16)
+          (slope 1 5 C16 L8 C8 C8)
+          (slope -4 -1 C8 L2 C8 R8 L8 C8)
+          (slope 1 5 C4+8 C8 C8 C8 C8/3 C8/3)
+          (slope -4 -4 A8/3)
+          (slope 1 1 C4)
+          (slope -2 -2 C8)
+          (slope 5 5 C8)         )
+       )
+
+       (Xnotation
+        (X 2 4)
+        (X 3 4+8)
+        (X 1 8)
+        (X #4 8)
+        (X 3 16)
+        (X 5 16)
+        (X 4 8)
+        (X 5 8)
+        (X 1 8)
+        (X 7 8)
+        (X b3 2)
+        (X 1 8)
+       R8
+        (X 7 8)
+        (X 5 8)
+        (X 6 4+8)
+        (X 2 8)
+        (X 1 8)
+        (X 1 8)
+        (X 1 8/3)
+        (X b3 8/3)
+        (X #7 8/3)
+        (X 1 4)
+        (X 7 8)
+        (X b3 8)       )
+
+      (Brick-type null)
+     Chorus7 1920 72 120 74 180 70 60 64 60 62 30 65 30 66 60 68 60 73 60 71 60 69 240 65 60 -1 60 64 60 60 60 62 180 67 60 69 60 70 60 74 40 77 40 73 40 74 120 72 60 77 60 CHORDS Bb13 Dbm7 Gb7 FM69 NC D7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4)
+          (slope -1 -1 L8/3)
+          (slope 1 8 C8/3 C8/3 L4+8)
+          (slope -3 -1 C8 C8 X8 C8 C8 X8)
+          (slope 3 4 R8 C8 C8)
+          (slope -4 -3 C2+4 R8 C8)
+          (slope 8 8 C8)
+          (slope -3 -3 L8)
+          (slope 2 2 L8)
+          (slope -4 -4 C8)
+          (slope 2 2 L8)
+          (slope -4 -1 C8 L8 C8)         )
+       )
+
+       (Xnotation
+        (X 3 4)
+        (X #2 8/3)
+        (X 3 8/3)
+        (X 5 8/3)
+        (X #2 4+8)
+        (X 1 8)
+        (X 3 8)
+        (X 2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+       R8
+        (X 1 8)
+        (X 3 8)
+        (X 5 2+4)
+       R8
+        (X 3 8)
+        (X 4 8)
+        (X 2 8)
+        (X 3 8)
+        (X 1 8)
+        (X 2 8)
+        (X 7 8)
+        (X 6 8)
+        (X 5 8)       )
+
+      (Brick-type null)
+     Chorus2 17280 66 120 65 40 66 40 69 40 77 180 75 60 72 60 70 60 68 60 66 60 65 60 -1 60 68 60 72 60 68 360 -1 60 65 60 73 60 70 60 72 60 68 60 70 60 66 60 65 60 63 60 CHORDS Ebm7b5 Ab7#5#9 DbM7 Ab7sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 7 9 C2)
+          (slope -6 -1 C2 C8 L8)
+          (slope 1 7 C8 L4+8)
+          (slope -2 -2 C4)
+          (slope 1 1 R8 A8 C8)
+          (slope -4 -4 C8)
+          (slope 2 2 C8)
+          (slope -1 -1 L8)
+          (slope 1 1 C8)
+          (slope -3 -3 C8)
+          (slope 1 1 C8)
+          (slope -9 -9 L8)
+          (slope 1 7 C8 L4+8)
+          (slope -2 -2 C4)         )
+       )
+
+       (Xnotation
+        (X 3 2)
+        (X 5 2)
+        (X 1 8)
+        (X b5 8)
+        (X 5 8)
+        (X 2 4+8)
+        (X 3 4)
+       R8
+        (X b3 8)
+        (X 3 8)
+        (X 1 8)
+        (X 7 8)
+        (X 6 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X b5 8)
+        (X 5 8)
+        (X 2 4+8)
+        (X 5 4)       )
+
+      (Brick-type null)
+     Head 5760 77 240 76 240 74 60 68 60 69 60 76 180 74 120 -1 60 75 60 76 60 72 60 74 60 73 60 74 60 71 60 72 60 63 60 64 60 71 180 69 120 CHORDS Dm A7 Dm Fm Bb7 C E7 Am D7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C4)
+          (slope -5 -2 C4+8 C8)
+          (slope 1 2 L8 C8)
+          (slope -5 -2 C2 R8 C8)
+          (slope 1 5 R4 A8 C8 C8/3)
+          (slope -6 -2 C8/3 L8/3 C2)
+          (slope 6 6 L4)
+          (slope -5 -1 C8 R8 L8 L8 C4)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 3 4)
+        (X 2 4+8)
+        (X 6 8)
+        (X 7 8)
+        (X 1 8)
+        (X 2 2)
+       R8
+        (X 1 8)
+       R4
+        (X #5 8)
+        (X 6 8)
+        (X 2 8/3)
+        (X 1 8/3)
+        (X #4 8/3)
+        (X 3 2)
+        (X 6 4)
+        (X 5 8)
+       R8
+        (X b2 8)
+        (X #5 8)
+        (X 5 4)       )
+
+      (Brick-type null)
+     Chorus3 0 81 120 79 180 74 60 76 60 77 60 72 240 -1 60 70 60 -1 120 73 60 74 60 79 40 77 40 71 40 69 240 75 120 73 60 -1 60 72 60 67 60 66 120 CHORDS FM69 Bb13 FM69 F#m9 B7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C4)
+          (slope -3 -3 C4)
+          (slope 0 0 C4+8)
+          (slope -3 -1 L8 C4 C8/3)
+          (slope 3 5 C8/3 C8/3 C8)
+          (slope -2 -1 L8 C8 C8 C4)
+          (slope 2 2 L8)
+          (slope -2 -2 C8)
+          (slope 3 3 C8)
+          (slope -4 -1 L4 C8 L8)
+          (slope 1 1 L2+8 R8 C8)         )
+       )
+
+       (Xnotation
+        (X 5 4)
+        (X 3 4)
+        (X 3 4+8)
+        (X 2 8)
+        (X 5 4)
+        (X 3 8/3)
+        (X 5 8/3)
+        (X 7 8/3)
+        (X b3 8)
+        (X b2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 3 4)
+        (X 4 8)
+        (X 3 8)
+        (X 5 8)
+        (X 4 4)
+        (X 3 8)
+        (X #4 8)
+        (X 5 2+8)
+       R8
+        (X #5 8)       )
+
+      (Brick-type null)
+     Chorus3 7680 73 120 70 120 70 180 68 60 67 120 64 40 67 40 70 40 75 60 73 60 72 60 70 60 68 120 70 60 68 60 71 60 70 120 68 60 64 60 65 300 -1 60 66 60 CHORDS Gm7b5 C7#9 Fm7b5 Bb7alt     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C4+8)
+          (slope -1 -1 L8)
+          (slope 1 1 C8)
+          (slope -1 -1 L4)
+          (slope 3 3 L4)
+          (slope -5 -1 C4 C4+8 R8 C8)
+          (slope 3 3 L4+8)
+          (slope -2 -2 C8)
+          (slope 2 2 L8 C8)
+          (slope -7 -7 R8 C2+4)
+          (slope 1 2 R8 C8 C8)         )
+       )
+
+       (Xnotation
+        (X 5 4+8)
+        (X 4 8)
+        (X 5 8)
+        (X 4 4)
+        (X 6 4)
+        (X b2 4)
+        (X 1 4+8)
+       R8
+        (X 5 8)
+        (X 4 4+8)
+        (X 3 8)
+        (X 4 8)
+        (X 5 8)
+       R8
+        (X 1 2+4)
+       R8
+        (X 6 8)
+        (X 7 8)       )
+
+      (Brick-type null)
+     Head 11520 75 180 74 60 75 60 74 120 77 120 75 120 74 180 -1 60 69 60 72 180 70 60 72 60 74 60 -1 60 67 360 -1 60 69 60 70 60 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4+8)
+          (slope -5 -5 C8)
+          (slope 2 7 C8 C8 X8 L8)
+          (slope -4 -1 L2+4 C8/3 C8/3 C8/3 C8/3)
+          (slope 0 0 R8/3 C8/3)
+          (slope 1 1 X8/3)
+          (slope 0 0 R8/3 X8/3)
+          (slope 2 2 C8/3 R1+4+8+32+120+480)         )
+       )
+
+       (Xnotation
+        (X 3 4+8)
+        (X 7 8)
+        (X 1 8)
+        (X 3 8)
+        (X #5 8)
+        (X #2 8)
+        (X 5 2+4)
+        (X 3 8/3)
+        (X 1 8/3)
+        (X 7 8/3)
+        (X 3 8/3)
+       R8/3
+        (X 3 8/3)
+        (X 4 8/3)
+       R8/3
+        (X 4 8/3)
+        (X 5 8/3)
+       R1+4+8+32+120+480       )
+
+      (Brick-type null)
+     Chorus3 17280 66 180 61 60 63 60 66 60 70 60 77 60 75 360 72 40 68 40 66 40 65 40 -1 40 65 40 66 40 -1 40 66 40 68 40 -1 680 CHORDS Ebm7b5 Ab7#5#9 DbM7 Ab7sus4     )
+   )
+ )
+ (cluster
+  (name cluster10)
+   (centroid
+    (noteCount 0.5720000000000001)
+    (syncopation 0.5310092633544645)
+    (diversityIndex 0.7277496505032395)
+    (numContourChanges 0.3866666666666667)
+    (longestNoteLength 0.23333333333333334)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 5 7 C8)
+          (slope -3 -3 C8)
+          (slope 7 7 L8)
+          (slope -7 -4 C8 C4)
+          (slope 4 7 C8 L8)
+          (slope -7 -1 C4+8 L8 X4)
+          (slope 1 7 C8 X8 L8)
+          (slope -3 -3 C8)
+          (slope 1 2 C8 L8)
+          (slope -3 -3 C1+4)
+          (slope 0 0 R8 C8)         )
+       )
+
+       (Xnotation
+        (X 7 8)
+        (X 5 8)
+        (X 2 8)
+        (X 7 8)
+        (X 3 4)
+        (X 5 8)
+        (X 2 8)
+        (X #5 4+8)
+        (X b2 8)
+        (X 6 4)
+        (X 3 8)
+        (X 4 8)
+        (X 2 8)
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 7 1+4)
+       R8
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus3 11520 71 60 68 60 75 60 71 60 64 120 68 60 75 60 74 180 67 60 63 120 70 60 71 60 73 60 70 60 71 60 73 60 70 600 -1 60 70 60 CHORDS Dbm7 Gb7+ BM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -2 -1 C8)
+          (slope 3 3 C2)
+          (slope 0 0 R8 C8)
+          (slope 2 3 L8 L4)
+          (slope -1 -1 C8)
+          (slope 3 3 L8)
+          (slope -4 -1 L8 C8 L8 C8)
+          (slope 6 6 C16)
+          (slope -2 -2 L16)
+          (slope 1 2 C2+8 C8)
+          (slope -6 -1 C8 L8)
+          (slope 1 3 C2+8 R8+16 C16)         )
+       )
+
+       (Xnotation
+        (X 3 8)
+        (X 5 2)
+       R8
+        (X 5 8)
+        (X 6 8)
+        (X b2 4)
+        (X 1 8)
+        (X b3 8)
+        (X b2 8)
+        (X 1 8)
+        (X #5 8)
+        (X 3 8)
+        (X 7 16)
+        (X 6 16)
+        (X 7 2+8)
+        (X 1 8)
+        (X 7 8)
+        (X #4 8)
+        (X 5 2+8)
+       R8+16
+        (X 7 16)       )
+
+      (Brick-type null)
+     Chorus2 15360 65 60 68 240 -1 60 68 60 70 60 73 120 72 60 75 60 73 60 72 60 68 60 64 60 70 30 68 30 70 300 71 60 70 60 64 60 65 300 -1 90 68 30 CHORDS DbM7 C7 BM7 Bb7b9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 R8 C8)
+          (slope -1 -1 L8)
+          (slope 1 3 C8 C8 L16)
+          (slope -2 -1 C16 L8 C8 C2)
+          (slope 4 4 R8 C8)
+          (slope -5 -4 C8 L8)
+          (slope 5 5 R8 C4)
+          (slope 0 0 R8 C4)
+          (slope 2 2 C4 L4+8)
+          (slope 0 0 L8 R2)         )
+       )
+
+       (Xnotation R8
+        (X 1 8)
+        (X #7 8)
+        (X 1 8)
+        (X 3 8)
+        (X 4 16)
+        (X 3 16)
+        (X 2 8)
+        (X 1 8)
+        (X 3 2)
+       R8
+        (X 5 8)
+        (X 3 8)
+        (X b7 8)
+       R8
+        (X 4 4)
+       R8
+        (X 4 4)
+        (X 5 4)
+        (X 6 4+8)
+        (X 6 8)
+       R2       )
+
+      (Brick-type null)
+     Head 17280 -1 60 67 60 66 60 67 60 70 60 72 30 70 30 69 60 67 60 65 240 -1 60 69 60 65 60 60 60 -1 60 65 120 -1 60 65 120 67 120 69 180 69 60 -1 240 CHORDS Gm7 Dm C7sus4 C7sus4     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope 2 3 C8 L8 L2+8)
+          (slope -2 -2 R8 L8)
+          (slope 2 2 L8)
+          (slope -2 -2 L8)
+          (slope 2 2 L8)
+          (slope -10 -2 L4+8 C8)
+          (slope 2 3 C8 L8 L2+8)
+          (slope -2 -2 R8 L8)
+          (slope 2 2 L8)
+          (slope -2 -2 L8)
+          (slope 2 2 L8)
+          (slope -2 -2 C4+8)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 3 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 2+8)
+       R8
+        (X 6 8)
+        (X 7 8)
+        (X 6 8)
+        (X 7 8)
+        (X 6 4+8)
+        (X 3 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 2+8)
+       R8
+        (X 6 8)
+        (X 7 8)
+        (X 6 8)
+        (X 2 8)
+        (X 1 4+8)       )
+
+      (Brick-type null)
+     Head 0 69 60 72 60 74 60 76 300 -1 60 74 60 76 60 74 60 76 60 74 180 64 60 67 60 69 60 71 300 -1 60 69 60 71 60 69 60 71 60 69 180 CHORDS F Fm C Em C A7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 R4 C8)
+          (slope 2 9 C8 L8 L8 L8)
+          (slope -4 -1 C2+8 R8 C8 L8 C8 C4 L8 C8 L4)
+          (slope 3 4 R8 L8 C8 C8)
+          (slope -4 -3 C8 C8 C4)
+          (slope 4 4 R8 C8)         )
+       )
+
+       (Xnotation R4
+        (X 7 8)
+        (X 1 8)
+        (X 2 8)
+        (X 4 8)
+        (X 2 8)
+        (X 1 2+8)
+       R8
+        (X 3 8)
+        (X b3 8)
+        (X b2 8)
+        (X 5 4)
+        (X 4 8)
+        (X 3 8)
+        (X #4 4)
+       R8
+        (X 6 8)
+        (X 5 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X #4 4)
+       R8
+        (X 7 8)       )
+
+      (Brick-type null)
+     Chorus2 13440 -1 120 64 60 66 60 68 60 71 60 80 60 78 300 -1 60 75 60 74 60 72 60 71 120 69 60 67 60 63 120 -1 60 66 60 70 60 73 60 70 60 66 60 62 120 -1 60 66 60 CHORDS F#m7 B7#5 B7b9 Em7 A7 Ebm7 Ab7#11     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C8)
+          (slope 2 3 C8 L8 L2+8)
+          (slope -2 -2 R8 L8)
+          (slope 2 2 L8)
+          (slope -2 -2 L8)
+          (slope 2 2 L8)
+          (slope -10 -2 L4+8 C8)
+          (slope 2 3 C8 L8 L2+8)
+          (slope -2 -2 R8 L8)
+          (slope 2 2 L8)
+          (slope -2 -2 L8)
+          (slope 2 2 L8)
+          (slope -2 -2 C4+8)         )
+       )
+
+       (Xnotation
+        (X 3 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 2+8)
+       R8
+        (X 6 8)
+        (X 7 8)
+        (X 6 8)
+        (X 7 8)
+        (X 6 4+8)
+        (X 3 8)
+        (X 5 8)
+        (X 6 8)
+        (X 7 2+8)
+       R8
+        (X 6 8)
+        (X 7 8)
+        (X 6 8)
+        (X 2 8)
+        (X 1 4+8)       )
+
+      (Brick-type null)
+     Head 3840 69 60 72 60 74 60 76 300 -1 60 74 60 76 60 74 60 76 60 74 180 64 60 67 60 69 60 71 300 -1 60 69 60 71 60 69 60 71 60 69 180 CHORDS F Fm C Em C A7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope 1 2 L8 C8)
+          (slope -6 -1 C2 C8 C2)
+          (slope 9 9 C8)
+          (slope -3 -1 C8 C8 C8)
+          (slope 1 1 C8)
+          (slope -4 -4 L8)
+          (slope 3 3 C8)
+          (slope -3 -3 L8)
+          (slope 1 7 C4+8 C16 C16 C8 C2+8)
+          (slope -2 -2 R8 C8)         )
+
+       STARTER       )
+
+       (Xnotation
+        (X 3 8)
+        (X 4 8)
+        (X 5 8)
+        (X 1 2)
+        (X 7 8)
+        (X 3 2)
+        (X b2 8)
+        (X 1 8)
+        (X 7 8)
+        (X 5 8)
+        (X 3 8)
+        (X #7 8)
+        (X 2 8)
+        (X #7 8)
+        (X 1 4+8)
+        (X 2 16)
+        (X 3 16)
+        (X 2 8)
+        (X 6 2+8)
+       R8
+        (X 5 8)       )
+
+      (Brick-type null)
+     Chorus3 0 72 60 74 60 75 60 69 240 67 60 66 240 75 60 74 60 72 60 69 60 70 60 66 60 69 60 66 60 67 180 69 30 70 30 74 60 81 300 -1 60 79 60 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C8)
+          (slope 7 7 C8)
+          (slope -6 -1 L4+8 C8 L8 C8 C8)
+          (slope 8 8 C8)
+          (slope -7 -1 C4+8 C8 L8 C8 C2+4 R8 C8)
+          (slope 2 7 C8 C8 C8 C8 C8)
+          (slope -4 -3 L4 C8)         )
+       )
+
+       (Xnotation
+        (X 3 8)
+        (X 7 8)
+        (X 6 4+8)
+        (X 5 8)
+        (X 4 8)
+        (X 3 8)
+        (X 3 8)
+        (X 1 8)
+        (X 7 4+8)
+        (X 5 8)
+        (X #4 8)
+        (X 3 8)
+        (X 7 2+4)
+       R8
+        (X 3 8)
+        (X 1 8)
+        (X 3 8)
+        (X 6 8)
+        (X 3 8)
+        (X 6 8)
+        (X #4 4)
+        (X 2 8)       )
+
+      (Brick-type null)
+     Chorus3 3840 72 60 79 60 77 180 75 60 74 60 72 60 66 60 74 60 72 180 69 60 68 60 66 60 65 360 -1 60 58 60 60 60 64 60 69 60 76 60 81 60 78 120 74 60 CHORDS Am7b5 D7b9 Gm9 C13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 R2+4 C8)
+          (slope 1 4 C8 C4 C8)
+          (slope -6 -6 C4)
+          (slope 1 4 C8 C8 C8 C4 C8)
+          (slope -3 -1 C8 R8 C4 C8 C4)
+          (slope 5 5 C8)
+          (slope -3 -3 C2+8)         )
+
+       STARTER       )
+
+       (Xnotation R2+4
+        (X 1 8)
+        (X b2 8)
+        (X 4 4)
+        (X 5 8)
+        (X b2 4)
+        (X 4 8)
+        (X 5 8)
+        (X 7 8)
+        (X 1 4)
+        (X b2 8)
+        (X 1 8)
+       R8
+        (X 7 4)
+        (X 5 8)
+        (X 4 4)
+        (X 7 8)
+        (X 5 2+8)       )
+
+      (Brick-type null)
+     Head 0 -1 360 62 60 63 60 67 120 69 60 63 120 67 60 69 60 72 60 74 120 75 60 74 60 -1 60 72 120 69 60 67 120 72 60 69 300 CHORDS Dsusb9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 C8)
+          (slope 7 7 L4)
+          (slope 0 0 L2+8)
+          (slope -7 -7 L8)
+          (slope 5 5 C4)
+          (slope 0 0 C2+8)
+          (slope -7 -7 R8 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C8)
+          (slope 4 4 L8)
+          (slope -4 -4 C8)
+          (slope 2 2 L8)
+          (slope -2 -2 C8)
+          (slope 5 5 C8)
+          (slope -8 -8 C4)
+          (slope 3 3 C2+8)         )
+       )
+
+       (Xnotation
+        (X 5 8)
+        (X 2 4)
+        (X 2 2+8)
+        (X 2 8)
+        (X 5 4)
+        (X 5 2+8)
+       R8
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 7 8)
+        (X 5 8)
+        (X 6 8)
+        (X 5 8)
+        (X 1 8)
+        (X 3 4)
+        (X 5 2+8)       )
+
+      (Brick-type null)
+     Head 1920 69 60 76 120 76 300 69 60 74 120 74 300 -1 60 67 60 69 60 67 60 71 60 67 60 69 60 67 60 72 60 64 120 67 300 CHORDS D7 G7 C C7     )
+   )
+ )
+ (cluster
+  (name cluster11)
+   (centroid
+    (noteCount 0.3)
+    (syncopation 0.34044289044289044)
+    (diversityIndex 0.12871550669481305)
+    (numContourChanges 0.17777777777777778)
+    (longestNoteLength 0.3888888888888889)   )
+
+   (ruleStringList
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 3 5 L2)
+          (slope 3 3 L8)
+          (slope -3 -3 L8)
+          (slope 1 2 C8 L8)
+          (slope -3 -3 C2+8)
+          (slope 0 0 R8 C8)
+          (slope 3 4 C8 L4+8)
+          (slope -4 -3 C8 C2 R1)         )
+       )
+
+       (Xnotation
+        (X 4 2)
+        (X 6 8)
+        (X 4 8)
+        (X 5 8)
+        (X 6 8)
+        (X 1 2+8)
+       R8
+        (X 1 8)
+        (X 3 8)
+        (X 2 4+8)
+        (X 7 8)
+        (X 5 2)
+       R1       )
+
+      (Brick-type null)
+     Chorus2 9600 68 240 71 60 68 60 69 60 71 60 68 300 -1 60 68 60 72 60 75 180 72 60 68 240 -1 480 CHORDS Ebm9b5 Ab7#5#9 DbM7     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C2+4)
+          (slope -3 -3 C8)
+          (slope 3 3 C8)
+          (slope -5 -2 L2 C2)
+          (slope 7 7 C2+4)
+          (slope -3 -3 C8)
+          (slope 3 3 C8)
+          (slope -5 -2 C2 C2)         )
+       )
+
+       (Xnotation
+        (X 5 2+4)
+        (X 3 8)
+        (X 5 8)
+        (X 2 2)
+        (X 1 2)
+        (X b3 2+4)
+        (X 1 8)
+        (X b3 8)
+        (X 7 2)
+        (X #5 2)       )
+
+      (Brick-type null)
+     Head 3840 71 360 68 60 71 60 66 240 64 240 71 360 68 60 71 60 66 240 64 240 CHORDS EM7 Ab7#5#9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4+8)
+          (slope 1 5 L8 C4 L8 C2+8 R4 X8 L4+8)
+          (slope -2 -1 C8 L4+8 L8 C1+8)         )
+       )
+
+       (Xnotation
+        (X 1 4+8)
+        (X 2 8)
+        (X 3 4)
+        (X 4 8)
+        (X 5 2+8)
+       R4
+        (X 4 8)
+        (X 5 4+8)
+        (X 1 8)
+        (X b7 4+8)
+        (X b2 8)
+        (X 1 1+8)       )
+
+      (Brick-type null)
+     Head 1920 62 180 64 60 65 120 67 60 69 300 -1 120 74 60 76 180 74 60 72 180 70 60 69 540 CHORDS Dm Em7b5 A7alt Dm A7alt Dm     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -3 -1 C4+8)
+          (slope 1 5 L8 C4 L8 C2+8 R4 X8 L4+8)
+          (slope -2 -1 C8 L4+8 L8 C1+8)         )
+       )
+
+       (Xnotation
+        (X 1 4+8)
+        (X 2 8)
+        (X 3 4)
+        (X 4 8)
+        (X 5 2+8)
+       R4
+        (X 4 8)
+        (X 5 4+8)
+        (X 1 8)
+        (X b7 4+8)
+        (X b2 8)
+        (X 1 1+8)       )
+
+      (Brick-type null)
+     Head 7680 62 180 64 60 65 120 67 60 69 300 -1 120 74 60 76 180 74 60 72 180 70 60 69 540 CHORDS Dm Em7b5 A7alt Dm A7alt Dm     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C2+4)
+          (slope -3 -3 C8)
+          (slope 3 3 C8)
+          (slope -5 -2 L2 C2)
+          (slope 7 7 C2+4)
+          (slope -3 -3 C8)
+          (slope 3 3 C8)
+          (slope -5 -2 C2 C2)         )
+       )
+
+       (Xnotation
+        (X 5 2+4)
+        (X 3 8)
+        (X 5 8)
+        (X 2 2)
+        (X 1 2)
+        (X b3 2+4)
+        (X 1 8)
+        (X b3 8)
+        (X 7 2)
+        (X #5 2)       )
+
+      (Brick-type null)
+     Head 13440 71 360 68 60 71 60 66 240 64 240 71 360 68 60 71 60 66 240 64 240 CHORDS EM7 Ab7#5#9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 3 C1)
+          (slope 1 1 C4+8)
+          (slope -4 -1 C8 C8 R8 C8)
+          (slope 1 5 C1+8 C4+8)
+          (slope -4 -1 C8 C8 R8 C8)
+          (slope 5 5 C8)         )
+       )
+
+       (Xnotation
+        (X 5 1)
+        (X 5 4+8)
+        (X 3 8)
+        (X 6 8)
+       R8
+        (X 5 8)
+        (X 1 1+8)
+        (X 5 4+8)
+        (X 3 8)
+        (X 6 8)
+       R8
+        (X 5 8)
+        (X 1 8)       )
+
+      (Brick-type null)
+     Head 19200 71 480 72 180 68 60 67 60 -1 60 65 60 70 540 71 180 67 60 66 60 -1 60 64 60 69 60 CHORDS EM7 Fm9 Bb13 EbM7 Em9 A13     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope -9 -9 R4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Chorus4 1920 67 240 -1 120 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Ab Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope -9 -9 R4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Chorus2 1920 67 240 -1 120 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Ab Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope -9 -9 R4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Head 1920 67 240 -1 120 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Ab Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 1 2 C1)
+          (slope 2 2 C4+8)
+          (slope -5 -3 C8 C8 R8 C8)
+          (slope 1 12 C1+8 C4+8)
+          (slope -4 -3 C8 X8 R8 C8)
+          (slope 11 11 C8)         )
+       )
+
+       (Xnotation
+        (X 5 1)
+        (X 3 4+8)
+        (X 1 8)
+        (X 6 8)
+       R8
+        (X 3 8)
+        (X 3 1+8)
+        (X b3 4+8)
+        (X 1 8)
+        (X #5 8)
+       R8
+        (X 3 8)
+        (X b3 8)       )
+
+      (Brick-type null)
+     Head 23040 69 480 71 180 67 60 64 60 -1 60 59 60 71 540 72 180 69 60 65 60 -1 60 61 60 72 60 CHORDS Dm9 G13 Em9 A13#9     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope 0 0 L2)
+          (slope -9 -9 R4 C8)
+          (slope 2 3 L8 C4+8)
+          (slope 0 0 C8 C4 C8 C8 C4+8 C8 C4)
+          (slope 2 2 C4 C1)         )
+       )
+
+       (Xnotation
+        (X 7 2)
+       R4
+        (X 1 8)
+        (X 2 8)
+        (X 1 4+8)
+        (X 1 8)
+        (X 1 4)
+        (X 1 8)
+        (X 1 8)
+        (X 5 4+8)
+        (X 5 8)
+        (X 4 4)
+        (X 5 4)
+        (X 3 1)       )
+
+      (Brick-type null)
+     Chorus3 1920 67 240 -1 120 58 60 60 60 63 180 63 60 63 120 63 60 63 60 63 180 63 60 63 120 65 120 67 480 CHORDS Ab Bb7sus4 Eb Eb/G Ab Bb7sus4 Eb Eb/G     )
+
+     (ruleString
+       (rule
+        (Seg16)
+         (         
+          (slope -11 -9 C4+8)
+          (slope 1 5 L8 C4 L8 C2+8 R4 X8 L4+8)
+          (slope -2 -1 C8 L4+8 L8 C1+8)         )
+       )
+
+       (Xnotation
+        (X 1 4+8)
+        (X 2 8)
+        (X 3 4)
+        (X 4 8)
+        (X 5 2+8)
+       R4
+        (X 4 8)
+        (X 5 4+8)
+        (X 1 8)
+        (X b7 4+8)
+        (X b2 8)
+        (X 1 1+8)       )
+
+      (Brick-type null)
+     Head 15360 62 180 64 60 65 120 67 60 69 300 -1 120 74 60 76 180 74 60 72 180 70 60 69 540 CHORDS Dm Em7b5 A7alt Dm A7alt Dm     )
+   )
+ )
