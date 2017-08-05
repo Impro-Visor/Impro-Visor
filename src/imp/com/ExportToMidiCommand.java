@@ -126,7 +126,7 @@ public class ExportToMidiCommand implements Command, Constants
             System.out.println("InvalideMidiDataException " + e);
         }
         
-        System.out.println("sequence in Midi = " + seq);
+        //System.out.println("sequence in Midi = " + seq);
         
         // Get the array of tracks from the render.
         Track[] tracks = seq.getTracks();
