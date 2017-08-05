@@ -289,9 +289,9 @@ public class NoteConverter {
                     totalChordDurationInMelody += allChords.get(chordNumber).getRhythmValue();
                 } 
             } catch (Exception e) {
-                System.out.println("Exception when matching notes to chords: " + e.toString());
-                System.out.println("Exact melody: " + exactMelody);
-                System.out.println("\n");
+                //System.out.println("Exception when matching notes to chords: " + e.toString());
+                //System.out.println("Exact melody: " + exactMelody);
+                //System.out.println("\n");
             }
             
             try {
@@ -311,7 +311,7 @@ public class NoteConverter {
                     relativePitchMelody.append(rest.toString());
                 }
             } catch (Exception e) {
-                System.out.println("Problem processing note: " + e.toString());
+                //System.out.println("Problem processing note: " + e.toString());
             }
             totalNoteDurationInMelody += duration;
         }
