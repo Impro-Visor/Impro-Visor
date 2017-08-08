@@ -349,10 +349,11 @@ public class MidiRecorder implements Constants, Receiver
      */
     private void setNote(MelodyPart melodyPart, int index, Note noteToAdd) //THIS COULD BE It
     {
-        if( index == lastIndex )
-          {
-            return;
-          }
+          // Avoid, as this cuts long notes short.  
+          //if( index == lastIndex )
+          //{
+          //  return;
+          //}
         
         try
           {
@@ -391,7 +392,7 @@ public class MidiRecorder implements Constants, Receiver
                 Note firstSwingNote = lastNoteAdded2.copy();
                 Note secondSwingNote = lastNoteAdded.copy();
                 int beat = (1 + lastIndex)/BEAT;
-                int bar = 1 + beat/4;
+                //int bar = 1 + beat/4;
                 beat = 1 + (beat % 4);
                 
 //            System.out.print("\nswing conversion in bar " + bar 

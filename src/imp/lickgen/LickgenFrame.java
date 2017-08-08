@@ -1272,7 +1272,6 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         gridBagConstraints.weightx = 0.2;
         rectifyPanel.add(chordBox, gridBagConstraints);
 
-        colorBox.setSelected(true);
         colorBox.setText("Color");
         colorBox.setMaximumSize(new java.awt.Dimension(200, 25));
         colorBox.setMinimumSize(new java.awt.Dimension(90, 25));
