@@ -39,16 +39,18 @@ import polya.Tokenizer;
 /*
  * @author David Morrison, modifications by Robert Keller, 21 June 2012,
  * Revised method by Robert Keller, 1 August 2014
- * Further revised by Robert Keller, 31 July 2017 to include wrappers share, unshare, fill
+ * Further revised by Robert Keller, 31 July 2017 to include wrappers share,
+ * unshare, fill
  * Further revised by Robert Keller, 3 August 2017 to include unshareall, which
  * will be inserted automatically after any fill.
  */
 public class Grammar
   {
+
     /**
      * Set traceLevel to 1 to see which rules are being applied and also
      * any bricks identified.
-     * 
+     *
      * Set traceLevel to 2 to see frontier of derivation in addition to rules.
      */
     int traceLevel = 0;
@@ -107,6 +109,7 @@ public class Grammar
      */
     class ExpansionResult
       {
+
         public ExpansionResult(Polylist stack, int numSlotsToFill)
         {
             this.stack = stack;
@@ -114,17 +117,17 @@ public class Grammar
         }
         Polylist stack;
         int numSlotsToFill;
-        
+
         public boolean moreToDo()
         {
             return numSlotsToFill > 0 && stack.nonEmpty();
         }
-        
+
         @Override
         public String toString()
-          {
-          return "slotsToFill = " + numSlotsToFill + " stack = " + stack;
-          }
+        {
+            return "slotsToFill = " + numSlotsToFill + " stack = " + stack;
+        }
       }
 
     /**
@@ -132,7 +135,6 @@ public class Grammar
      * one call to run. applyRules will have a side-effect on it.
      */
     PolylistBuffer terminalBuffer;
-
 
     /**
      *
@@ -153,7 +155,7 @@ public class Grammar
     {
         notate = myNotate;
         currentSlot = startSlot;
-        chordSlot = startSlot;    
+        chordSlot = startSlot;
         int numSlotsToFill;
         int totalSlotsToFill = initialNumSlots;
         int padding;
@@ -195,41 +197,47 @@ public class Grammar
 
             // Inner loop fills up to one quantum worth of abstract melody, or the
             // entire abstract melody if not trading.
-            Polylist stack = addStart(numSlotsToFill);
-
-            //System.out.println("\nTop Level");
-            ExpansionResult result = outerFill(stack, numSlotsToFill);
-            totalSlotsToFill = result.numSlotsToFill;
-            stack = result.stack;
-            if( improVisorFirst && padding > 0 ) // Pad the user's part after
+            // Inner loop fills up to one quantum worth of abstract melody, or the
+            // entire abstract melody if not trading.
+            while( numSlotsToFill > 0 )
               {
-                String fillRests = Note.getDurationString(padding);
-                terminalBuffer.append("R" + fillRests);
+                Polylist stack = addStart(numSlotsToFill);
+
+                //System.out.println("\nTop Level");
+                ExpansionResult result = outerFill(stack, numSlotsToFill);
+                numSlotsToFill = result.numSlotsToFill;
+                stack = result.stack;
+                if( improVisorFirst && padding > 0 ) // Pad the user's part after
+                  {
+                    String fillRests = Note.getDurationString(padding);
+                    terminalBuffer.append("R" + fillRests);
+                  }
               }
           }
-
         // Return the abstract melody, truncated to the desired number of slots.
         // Truncation should not be necessary if everything was done right, but
         // it seems that we go over sometime. Not sure why.
         return Terminals.truncateAbstractMelody(terminalBuffer.toPolylist(),
                                                 initialNumSlots);
     }
-    
-private void trace(Polylist stack)
-{
-  if( traceLevel > 1 )
-    {
-    System.out.println("STACK: " + stack + " OUT: " + terminalBuffer.toPolylist());
-    }
-}
 
-/**
- * outerFill refills the stack if numSlotsToFill > 0
- * @param stack
- * @param numSlotsToFill
- * @return 
- */
-ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
+    private void trace(Polylist stack)
+    {
+        if( traceLevel > 1 )
+          {
+            System.out.println("STACK: " + stack + " OUT: " + terminalBuffer.
+                    toPolylist());
+          }
+    }
+
+    /**
+     * outerFill refills the stack if numSlotsToFill > 0
+     *
+     * @param stack
+     * @param numSlotsToFill
+     * @return
+     */
+    ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
     {
         trace(stack);
 
@@ -240,20 +248,18 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
               {
                 stack = originalStack;
               }
-            
+
             ExpansionResult result = accumulateTerminals(stack, numSlotsToFill);
             stack = result.stack;
             numSlotsToFill = result.numSlotsToFill;
-            
+
             result = applyRules(stack, numSlotsToFill);
-            
+
             numSlotsToFill = result.numSlotsToFill;
             stack = result.stack;
-           }
-        
+          }
         return new ExpansionResult(stack, numSlotsToFill);
     }
-        
 
     /**
      * Add terminal to the list of terminals generated, as long as the quota has
@@ -407,7 +413,7 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
           {
             return aList;
           }
-        Polylist firstList = (Polylist)aList.first();
+        Polylist firstList = (Polylist) aList.first();
         if( firstList.first().equals(find) )
           {
             return aList.rest();
@@ -415,7 +421,7 @@ ExpansionResult outerFill(Polylist stack, int numSlotsToFill)
         return drop(aList.rest(), find).cons(firstList);
     }
 
-public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
+    public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
     {
         //System.out.println("expandNonTerminal " + slotsToFill + " " + token);
         boolean shareable = false;
@@ -424,6 +430,7 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
           {
             case NONE:
                 break;
+                
             case FILL:
                 token = ((Polylist) token).rest(); // leave as a list
                 Object value = token.first();
@@ -439,7 +446,7 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
 
             case UNSHARE:
                 unshare = true;
-                // Intentional fall-through
+            // Intentional fall-through
             case SHARE:
                 shareable = true;
 
@@ -455,17 +462,18 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
                     return new ExpansionResult(found.rest(), slotsToFill);
                   }
                 break;
+                
             case UNSHAREALL:
                 cache = Polylist.nil;
                 return new ExpansionResult(Polylist.nil, slotsToFill);
           } // switch
-        
+
         WeightedRule ruleToUse = findRule(token);
         if( ruleToUse == null )
           {
             return null;
           }
- 
+
         Polylist expansion = ruleToUse.rhs;
         if( shareable && !unshare )
           {
@@ -474,15 +482,15 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
             cache = cache.cons(newCacheItem);
             //System.out.println("sharing " + newCacheItem + " giving shareable " + cache);
           }
-        
+
         if( traceLevel > 0 )
           {
-          System.out.println("\nRULE: " + ruleToUse);
+            System.out.println("\nRULE: " + ruleToUse);
           }
-        
+
         return new ExpansionResult(expansion, slotsToFill);
     }
-        
+
     public WeightedRule findRule(Polylist token)
     {
         ArrayList<WeightedRule> ruleList = new ArrayList<>();
@@ -514,7 +522,6 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
             // If a lhs matches both a RULE and a BASE, it will always choose the BASE.
             // This basically short-circuits any computation and provides an easy way
             // to find base cases.
-            
             if( type.equals(BASE) && next.length() == 4 )
               {
                 //System.out.println("\nbase = " + next);
@@ -663,9 +670,8 @@ public ExpansionResult expandNonTerminal(Polylist token, int slotsToFill)
         return null;
     }
 
-
-    
-private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
+    private ExpansionResult accumulateTerminals(Polylist stack,
+                                                int numSlotsToFill)
     {
         Object token;
 
@@ -677,7 +683,7 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
               {
                 return new ExpansionResult(stack, numSlotsToFill);
               }
-            
+
             if( isWrappedTerminal(token) )
               {
                 numSlotsToFill = accumulateTerminal(((Polylist) token).first(),
@@ -690,7 +696,7 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
 
             stack = stack.rest();
           }
-    return new ExpansionResult(stack, numSlotsToFill);
+        return new ExpansionResult(stack, numSlotsToFill);
     }
 
     /**
@@ -716,7 +722,7 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
           {
             token = Polylist.list(token);
           }
-        
+
         ExpansionResult result = expandNonTerminal((Polylist) token,
                                                    numSlotsToFill);
         if( result == null ) // How can this happen?
@@ -728,9 +734,9 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
         Polylist expansion = result.stack;
 
         stack = expansion.append(stack);
-        
+
         trace(stack);
-   
+
         return new ExpansionResult(stack, numSlotsToFill);
     }
 
@@ -788,7 +794,7 @@ private ExpansionResult accumulateTerminals(Polylist stack, int numSlotsToFill)
     }
 
 // Load the rules in from a file.
-public int loadGrammar(String filename)
+    public int loadGrammar(String filename)
     {
         //System.out.println("Grammar loadGrammar " + filename);
         PolylistBuffer buffer = new PolylistBuffer();
@@ -816,7 +822,7 @@ public int loadGrammar(String filename)
           }
     }
 
-public int saveGrammar(String filename)
+    public int saveGrammar(String filename)
     {
         //  System.out.println("rules = " + rules);
         try
@@ -1000,14 +1006,6 @@ public int saveGrammar(String filename)
         return currentSlot;
     }
 
-// For testing purposes only:
-    int expectancyValue = 0;
-    int syncopationValue = 1;
-// Of course these should not stand, because the length of trade
-// won't always be the same. FIX
-//private static int LENGTH_OF_TRADE = 4 * 480;
-//private static int SLOTS_PER_MEASURE = 480;
-
     /**
      * Evaluates the arguments following the builtin operator. So far only
      * implemented for expectancy and syncopation
@@ -1076,10 +1074,9 @@ public int saveGrammar(String filename)
         return ZERO;
     }
 
-
-/**
- * Recursively replace all instances of varName with value in toReplace
- */
+    /**
+     * Recursively replace all instances of varName with value in toReplace
+     */
     private Polylist replace(String varName, Long value, Polylist toReplace)
     {
         Polylist toReturn = Polylist.nil;
@@ -1168,6 +1165,5 @@ public int saveGrammar(String filename)
         {
             return lhs + " -> " + rhs + " [prob " + weight + "]";
         }
-
       }
   }

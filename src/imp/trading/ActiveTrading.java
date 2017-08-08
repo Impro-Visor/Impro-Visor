@@ -647,11 +647,11 @@ public class ActiveTrading {
             //TODO make a nice comment
             phase = TradePhase.PROCESS_INPUT;
             MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
-            System.out.println("part before quantization: " + currentMelodyPart.toString());
+            //System.out.println("part before quantization: " + currentMelodyPart.toString());
             currentMelodyPart = currentMelodyPart.quantizeMelody(notate.getQuantizationQuanta(),
                                                                             notate.getQuantizationSwing(),
                                                                             notate.getQuantizationRestAbsorption());
-            System.out.println("part after quantization: " + currentMelodyPart.toString());
+            //System.out.println("part after quantization: " + currentMelodyPart.toString());
             currentMelodyPart.altPasteOver(response, 0);
             currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);
         }

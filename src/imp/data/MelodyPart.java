@@ -2342,7 +2342,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
 {
     int gcd = gcd(quanta[0], quanta[1]);
     
-    System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
+    //System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
     
     MelodyPart result = this; // will be replaced if part is non-empty
     
@@ -2375,7 +2375,7 @@ public MelodyPart quantizeMelody(int quanta[], boolean toSwing, int restAbsorpti
                  if( inputSlot < outputSlot )
                    {
                      // Lose thisNote
-                     System.out.println("note lost at beat " + (inputSlot/BEAT) + ": " + thisNote.toLeadsheet());
+                     //System.out.println("note lost at beat " + (inputSlot/BEAT) + ": " + thisNote.toLeadsheet());
                      notesLost++;
                    }
                  else

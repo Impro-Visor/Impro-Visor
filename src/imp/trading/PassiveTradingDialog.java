@@ -63,7 +63,8 @@ public class PassiveTradingDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         whoPlaysFirstGroup = new javax.swing.ButtonGroup();
@@ -94,19 +95,25 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         setMinimumSize(new java.awt.Dimension(800, 200));
         setPreferredSize(new java.awt.Dimension(800, 200));
         setSize(new java.awt.Dimension(800, 200));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
+        addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentShown(java.awt.event.ComponentEvent evt)
+            {
                 passiveTradingShown(evt);
             }
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
+            public void componentHidden(java.awt.event.ComponentEvent evt)
+            {
                 passiveTradingHidden(evt);
             }
         });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosed(evt);
             }
         });
@@ -131,8 +138,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         whoPlaysFirstGroup.add(userFirst);
         userFirst.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         userFirst.setText("User First");
-        userFirst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        userFirst.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 userFirstActionPerformed(evt);
             }
         });
@@ -149,8 +158,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         switchToActiveTradingButton.setMaximumSize(new java.awt.Dimension(260, 21));
         switchToActiveTradingButton.setMinimumSize(new java.awt.Dimension(260, 21));
         switchToActiveTradingButton.setPreferredSize(new java.awt.Dimension(260, 21));
-        switchToActiveTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        switchToActiveTradingButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 switchToActiveTradingButtonswitchToActiveTradingHandler(evt);
             }
         });
@@ -192,8 +203,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         numberOfBarsGroup.add(four);
         four.setSelected(true);
         four.setText("four");
-        four.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        four.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 fourActionPerformed(evt);
             }
         });
@@ -239,8 +252,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
 
         countToggle.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         countToggle.setText("Count");
-        countToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        countToggle.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 countToggleActionPerformed(evt);
             }
         });
@@ -259,8 +274,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         startTradingButton.setMaximumSize(new java.awt.Dimension(140, 28));
         startTradingButton.setMinimumSize(new java.awt.Dimension(140, 28));
         startTradingButton.setPreferredSize(new java.awt.Dimension(140, 28));
-        startTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        startTradingButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 startTradingButtonActionPerformed(evt);
             }
         });
@@ -279,8 +296,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
         generationGapSpinner.setMinimumSize(new java.awt.Dimension(70, 45));
         generationGapSpinner.setPreferredSize(new java.awt.Dimension(70, 45));
         generationGapSpinner.setValue(0.5);
-        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 generationGapSpinnergenerationLeadSpinnerChanged(evt);
             }
         });
@@ -303,8 +322,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
 
         tradePlayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
         tradePlayMenuItem.setText("Trade");
-        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradePlayMenuItemActionPerformed(evt);
             }
         });
@@ -312,8 +333,10 @@ public class PassiveTradingDialog extends javax.swing.JDialog
 
         tradeStopMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         tradeStopMenuItem.setText("Stop");
-        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradeStopMenuItemActionPerformed(evt);
             }
         });

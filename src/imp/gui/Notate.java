@@ -27763,7 +27763,6 @@ private void handleAutoImprov(int slotInPlayback)
      {
        //System.out.println("failed, lastSave = " + lastSave + ", vs. " + slotInPlayback );
      }
-    
         originalGenerate(lickgen, improviseStartSlot, improviseEndSlot);
       }
   } // handleAutoImprov

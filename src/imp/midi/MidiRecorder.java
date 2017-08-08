@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -271,10 +271,11 @@ public class MidiRecorder implements Constants, Receiver
     {
         //System.out.println("noteOff: " + noteOff + "; event: " + lastEvent);
 
-        if( note != prevNote )
-          {
-            return;
-          }
+        // This has the effect of truncating long notes to just a quarter note.
+        //if( note != prevNote )
+        //  {
+        //    return;
+        //  }
 
         // use the one in constructor: Notate notate = imp.ImproVisor.getCurrentWindow();
         noteOff = lastEvent;
@@ -321,19 +322,18 @@ public class MidiRecorder implements Constants, Receiver
         if(auxMelodyPart != null){
             synchronized(auxMelodyPart){
                 
-////                int length = auxMelodyPart.getSize();
+//              int length = auxMelodyPart.getSize();
                 setNote(auxMelodyPart, index, noteToAdd);
 //                
                 auxMelodyPart.setSize(index + lastNoteAdded.getRhythmValue());
-                        //+ (lastNoteAdded2 != null ? lastNoteAdded2.getRhythmValue() : 0));
-//                
-                System.out.println("note to add: " + noteToAdd + "\t at index: " + index + "\tend time: " + auxMelodyPart.getEndTime());
-                System.out.println("size: " + auxMelodyPart.getSize() + "\tend: " + auxMelodyPart.getEndTime());
+                //+ (lastNoteAdded2 != null ? lastNoteAdded2.getRhythmValue() : 0));
                 
-                System.out.println("\n_______________________\nmelody part notified\n_______________________\n");
+                //System.out.println("note to add: " + noteToAdd + "\t at index: " + index + "\tend time: " + auxMelodyPart.getEndTime());
+                //System.out.println("size: " + auxMelodyPart.getSize() + "\tend: " + auxMelodyPart.getEndTime());
+                
+                //System.out.println("\n_______________________\nmelody part notified\n_______________________\n");
                 
                 auxMelodyPart.notifyAll();
-        
             }
         }
     }
@@ -349,7 +349,6 @@ public class MidiRecorder implements Constants, Receiver
      */
     private void setNote(MelodyPart melodyPart, int index, Note noteToAdd) //THIS COULD BE It
     {
-        
         if( index == lastIndex )
           {
             return;
@@ -358,7 +357,6 @@ public class MidiRecorder implements Constants, Receiver
         try
           {
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
-
 
             index = (index % melodyPart.size()) - recordLatency;
             if( index < 0 )
@@ -513,7 +511,8 @@ int round(int slot)
     return Math.round(((float)slot)/gcd)*gcd;
 }
 
-public void close()
+    @Override
+    public void close()
     {
     }
   }
