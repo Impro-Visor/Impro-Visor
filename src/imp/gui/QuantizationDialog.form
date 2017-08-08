@@ -42,6 +42,7 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="tripletNoneBox">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="No Triplet"/>
       </Properties>
       <Events>
@@ -69,7 +70,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="triplet04box">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Quarter-Note Triplet"/>
       </Properties>
       <Events>
@@ -97,7 +97,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="triplet08box">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Eighth-Note Triplet"/>
       </Properties>
       <Events>
@@ -282,7 +281,7 @@
     <Component class="javax.swing.JTextField" name="tripletQuantumTextField">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="40"/>
+        <Property name="text" type="java.lang.String" value="120"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder justification="2" title="Second Quantum in Slots">

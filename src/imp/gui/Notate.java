@@ -33,7 +33,6 @@ import imp.midi.MidiDeviceChooser;
 import imp.midi.MidiLatencyMeasurementTool;
 import imp.midi.MidiStepEntryActionHandler;
 import imp.midi.MidiRecorder;
-import imp.midi.StreamingMidiRecorder;
 import imp.midi.MidiImportFrame;
 import imp.style.stylePatterns.DrumRuleDisplay;
 import imp.style.stylePatterns.DrumPatternDisplay;
@@ -55,6 +54,7 @@ import imp.audio.SCHandler;
 import imp.roadmap.brickdictionary.Block;
 import imp.com.*;
 import imp.data.*;
+import static imp.data.MelodyPart.gcd;
 import imp.data.musicXML.ChordDescription;
 import imp.lickgen.LickGen;
 import imp.lickgen.LickgenFrame;
@@ -11048,7 +11048,7 @@ public MidiRecorder getMidiRecorder(){
 
 public void initTradingRecorder(MelodyPart aMelodyPart){
     if (this.midiRecorder == null) {
-        this.midiRecorder = new StreamingMidiRecorder(this, this.score);
+        this.midiRecorder = new MidiRecorder(this, this.score);
         this.midiRecorder.setDestination(aMelodyPart);
     } else{
         this.midiRecorder.setDestination(aMelodyPart);
@@ -11131,7 +11131,7 @@ private void startRecordingHelper()
 
     if( midiRecorder == null )
       {
-        midiRecorder = new StreamingMidiRecorder(this, this.score);
+        midiRecorder = new MidiRecorder(this, this.score);
       }
 
 //    no longer used
@@ -11181,7 +11181,7 @@ public void enableRecording()
 
     if( midiRecorder == null )
       {
-        midiRecorder = new StreamingMidiRecorder(this, score);
+        midiRecorder = new MidiRecorder(this, score);
       }
 
     midiSynth.registerReceiver(midiRecorder);
@@ -24135,6 +24135,12 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     public int[] getQuantizationQuanta()
     {
         return quantizationDialog.getQuanta();
+    }
+    
+    public int getRealtimeQuantizationGCD()
+    {
+        int quanta[] = realtimeQuantizationDialog.getQuanta();
+        return gcd(quanta[0], quanta[1]);
     }
     
     /**

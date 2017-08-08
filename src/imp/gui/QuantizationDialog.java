@@ -88,6 +88,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(noteNoneBox, gridBagConstraints);
 
+        tripletNoneBox.setSelected(true);
         tripletNoneBox.setText("No Triplet");
         tripletNoneBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -117,7 +118,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(note04box, gridBagConstraints);
 
-        triplet04box.setSelected(true);
         triplet04box.setText("Quarter-Note Triplet");
         triplet04box.addActionListener(new java.awt.event.ActionListener()
         {
@@ -147,7 +147,6 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(note08box, gridBagConstraints);
 
-        triplet08box.setSelected(true);
         triplet08box.setText("Eighth-Note Triplet");
         triplet08box.addActionListener(new java.awt.event.ActionListener()
         {
@@ -343,7 +342,7 @@ public class QuantizationDialog extends javax.swing.JDialog
         getContentPane().add(noteQuantumTextField, gridBagConstraints);
 
         tripletQuantumTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tripletQuantumTextField.setText("40");
+        tripletQuantumTextField.setText("120");
         tripletQuantumTextField.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Second Quantum in Slots", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 11))); // NOI18N
         tripletQuantumTextField.setFocusTraversalKeysEnabled(false);
         tripletQuantumTextField.addActionListener(new java.awt.event.ActionListener()

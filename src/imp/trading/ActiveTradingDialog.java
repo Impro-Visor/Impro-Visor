@@ -26,13 +26,10 @@ import imp.gui.TransformMenuDialog;
  * changed to ActiveTradingDialog by Robert Keller, so it can be non-modal
  */
 
-import imp.ImproVisor;
-import imp.data.RhythmCluster;
 import imp.gui.Notate;
 import imp.gui.QuantizationDialog;
 import imp.lickgen.LickgenFrame;
 import imp.trading.tradingResponseModes.AbstractTRM;
-import imp.trading.tradingResponseModes.AutoencoderTRM;
 import imp.trading.tradingResponseModes.ChopAndMemorizeTRM;
 import imp.trading.tradingResponseModes.CorrectRhythmTRM;
 import imp.trading.tradingResponseModes.GrammarTRM;
@@ -41,34 +38,24 @@ import imp.trading.tradingResponseModes.ModifyAndRectifyTRM;
 import imp.trading.tradingResponseModes.RepeatAndRectifyTRM;
 import imp.trading.tradingResponseModes.RepeatTRM;
 import imp.trading.tradingResponseModes.RhythmHelperTRM;
-import imp.trading.tradingResponseModes.StreamRepeatTRM;
 import imp.trading.tradingResponseModes.SuggestRhythmTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.trading.tradingResponseModes.TransformTRM;
 import imp.util.NonExistentParameterException;
 import imp.util.Preferences;
-import imp.util.TransformFilter;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.SpinnerNumberModel;
 
 public class ActiveTradingDialog extends javax.swing.JDialog implements TradeListener, ActionListener {
  
