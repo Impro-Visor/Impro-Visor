@@ -29,18 +29,20 @@ public class NoteStatistics {
     int redCount; //redCount gives the number of red notes on the leadsheet
     long redDuration; //redDuration gives the total duration length of the red notes on the leadsheet
     float redDurationPercent; //redDurationPercent gives the percentage of the duration of red notes over the total duration
+    int blueCount;
     
-    public NoteStatistics(int color[], int redCount, long redDuration, float redDurationPercent)
+    public NoteStatistics(int color[], int redCount, long redDuration, long totalDuration, int blueCount)
     {
         this.color = color;
         this.redCount = redCount;
         this.redDuration = redDuration;
-        this.redDurationPercent = redDurationPercent;        
+        this.redDurationPercent = Math.round((100*(float)redDuration) / totalDuration);       
+        this.blueCount = blueCount;
     }
     
-    public int [] getColor()
+    public int getColor(int i)
     {
-        return color;
+        return color[i];
     }
     
     public int getredCount()
@@ -56,5 +58,15 @@ public class NoteStatistics {
     public float getredDurationPercent()
     {
         return redDurationPercent;
+    }
+    
+    public int getBlueCount()
+    {
+        return blueCount;
+    }
+    
+    public String toString()
+    {
+        return (" " + redCount + " red notes (" + redDurationPercent  + "%), " + blueCount + " blue");
     }
 }

@@ -2675,6 +2675,8 @@ public boolean contains(String chordName, String target)
     return false;
 }
 
+NoteStatistics noteStat;
+
 /**
  * Cycles through the slots in a given MelodyPart, part, and draws the
  * entire stave consisting of the construction lines, notes, accidentals,
@@ -2744,7 +2746,7 @@ private boolean drawPart(MelodyPart part, Graphics g)
     int inext;
 
     // the color indices for the notes in the part
-    int[] noteColors = this.collectNoteColors(part).getColor();
+    noteStat = collectNoteColors(part);
 
     // box a group of tied notes
     boolean boxTies = false;
@@ -3056,18 +3058,18 @@ private boolean drawPart(MelodyPart part, Graphics g)
                         )
                   {
                     //System.out.println("Case A " + beamed + " " + note);
-                    drawNote(note, true, i, g, g2, noteColors[i], part, beamThis, inext, stemUp);
+                    drawNote(note, true, i, g, g2, noteStat.getColor(i), part, beamThis, inext, stemUp);
                     boxTies = true;
                   }
                 else if( boxTies == true && !note.firstTied() && note.isTied() )
                   {
                     //System.out.println("Case B " + beamed + " " + note);
-                    drawNote(note, true, i, g, g2, noteColors[i], part, beamThis, inext, stemUp);
+                    drawNote(note, true, i, g, g2, noteStat.getColor(i), part, beamThis, inext, stemUp);
                   }
                 else
                   {
                     //System.out.println("Case C " + beamed + " " + note);
-                    drawNote(note, false, i, g, g2, noteColors[i], part, beamThis, inext, stemUp);
+                    drawNote(note, false, i, g, g2, noteStat.getColor(i), part, beamThis, inext, stemUp);
                     boxTies = false;
                   }
 
@@ -3767,44 +3769,54 @@ boolean sameBeat(int i, int j)
  * colors as well as statistics such as the number of red notes
  * and the amount of space they entail.
  */
-public NoteStatistics collectNoteColors(MelodyPart part)
+public NoteStatistics collectNoteColors(MelodyPart displayPart)
 {
-    int number = part.size();
-    int redCount = 0;
+    int number = displayPart.size();
     long redDuration = 0;
+    long totalDuration = 0;
     final int RED_VALUE = 1;
-
+    final int BLUE_VALUE = 3;
+   int counts[]= {0, 0, 0, 0};
+    
+    MelodyPart origPart = this.getMelodyPart();
     int[] color = new int[number];
     for( int i = 0; i < number; i++ )
       {
-        Note curNote = part.getNote(i);
-        if( curNote != null )
+        Note curNote = displayPart.getNote(i);
+        if( curNote != null && curNote.nonRest() )
           {
-            Note origNote = this.getMelodyPart().getNote(i);
-            color[i] = determineColor(curNote, origNote,
-                                      i, false, color);
-          if( color[i] == RED_VALUE )
-            {
-            //System.out.println("red in bar #" + 1 + i/480);
-            redCount++;
-            redDuration += part.getNote(i).getRhythmValue();  
-            }
+          Note origNote = origPart.getNote(i);
+          color[i] = determineColor(curNote, origNote, i, false, color);
+          }
+      }
+    // Establishes coloration for tied notes.
+    for( int i = 0; i < number; i++ )
+      {
+        Note curNote = displayPart.getNote(i);
+        if( curNote != null && curNote.isTied() && !curNote.firstTied() && displayPart.
+                getPrevIndex(i) >= 0 )
+          {
+            color[i] = color[displayPart.getPrevIndex(i)];
           }
       }
 
     for( int i = 0; i < number; i++ )
       {
-        Note curNote = part.getNote(i);
-        if( curNote != null && curNote.isTied() && !curNote.firstTied() && part.
-                getPrevIndex(i) >= 0 )
+        Note curNote = displayPart.getNote(i);
+        if( curNote != null && curNote.nonRest() )
           {
-            color[i] = color[part.getPrevIndex(i)];
+           counts[color[i]]++;
+          //System.out.print(color[i]+" ");
+          if( color[i] == RED_VALUE )
+            {
+            redDuration += curNote.getRhythmValue();  
+            }
+          totalDuration += curNote.getRhythmValue();   
           }
       }
+    //System.out.println(counts[0] + " " + counts[1] + " " + counts[2] + " " + counts[3] + " ");
 
-    float redDurationPercent;
-    redDurationPercent = 100 * ((float)redDuration / number);
-    return new NoteStatistics(color, redCount, redDuration, redDurationPercent);
+    return new NoteStatistics(color, counts[RED_VALUE], redDuration, totalDuration, counts[BLUE_VALUE]);
 }
 
 /**
@@ -3816,13 +3828,17 @@ public NoteStatistics collectNoteColors(MelodyPart part)
  * because determining an approach note requires a look-behind from all determined
  * chord tones), and a color array to modify.
  */
-public int determineColor(Note note, Note pitchDeterminer, int i, 
-                          boolean isApproach, int[] colorArray)
+public int determineColor(Note note, 
+                          Note pitchDeterminer, 
+                          int i, 
+                          boolean isApproach, 
+                          int[] colorArray)
   {
     if( !notate.getColoration() )
       {
         return 0;
       }
+    
     Chord c = chordProg.getCurrentChord(i);
 
     // Deal with note coloration
@@ -3839,8 +3855,9 @@ public int determineColor(Note note, Note pitchDeterminer, int i,
         noteType = APPROACH_TONE;
       }
 
-    int prevIndex = this.getMelodyPart().getPrevIndex(i);
-    Note prevNote = this.getMelodyPart().getNote(prevIndex);
+    MelodyPart melPart = getMelodyPart();
+    int prevIndex = melPart.getPrevIndex(i);
+    Note prevNote = melPart.getNote(prevIndex);
 
     boolean approachable = (noteType == CHORD_TONE || noteType == COLOR_TONE);
 
@@ -3853,17 +3870,15 @@ public int determineColor(Note note, Note pitchDeterminer, int i,
      && !prevNote.isRest() 
      && !isApproach )
       {
-
-        if( prevNote.getPitch() == note.getPitch() - 1
-                || prevNote.getPitch() == note.getPitch() + 1 )
+        int diff = prevNote.getPitch() - note.getPitch();
+        if( diff == 1 || diff == -1 )
           {
-
-            colorArray[prevIndex] = determineColor(prevNote,
-                                                   getMelodyPart().getNote(prevIndex),
-                                                   prevIndex, true, colorArray);
-
+          colorArray[prevIndex] = determineColor(prevNote,
+                                                 melPart.getNote(prevIndex),
+                                                 prevIndex, 
+                                                 true, 
+                                                 colorArray);
           }
-
       }
 
     // Avoid re-parsing.  Also, should do some range checking on digits

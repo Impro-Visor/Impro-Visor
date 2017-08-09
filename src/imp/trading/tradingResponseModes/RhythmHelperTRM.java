@@ -369,17 +369,15 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     }
     
 
-    /**Helpful function for printing an array 
-     * 
-     * @param a - the array to be printed
-     */
-    protected static void printArray(double[] a){
-        for(int i = 0; i < a.length; i++){
-            System.out.println("    `" + a[i]);
-        }
-    }
-    
-
+//    /**Helpful function for printing an array 
+//     * 
+//     * @param a - the array to be printed
+//     */
+//    protected static void printArray(double[] a){
+//        for(int i = 0; i < a.length; i++){
+//            System.out.println("    `" + a[i]);
+//        }
+//    }
     
      protected int getProblemMetricIndex(RhythmCluster biggestCluster){
          double minDistance = Double.MAX_VALUE;

@@ -585,7 +585,6 @@ private SourceEditorDialog grammarEditor = null;
  */
 public enum Mode
 {
-
 NORMAL,
 DRAWING,
 RECORDING,
@@ -4468,6 +4467,13 @@ public Critic getCritic()
         colorColorBtnGrp.add(blackColorBtn);
         if (Preferences.getPreference(Preferences.NOTE_COLORING).charAt(1) == '1')
         blackColorBtn.setSelected(true);
+        blackColorBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                blackColorBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -10957,10 +10963,8 @@ public void setMode(Mode mode)
 public void setMode(Mode mode, String modifier)
   {
     MelodyPart currentPart = getCurrentStave().getDisplayPart();
-    int RED_COUNT = getCurrentStave().collectNoteColors(currentPart).getredCount();
-    float RED_DUR_PERCENT = getCurrentStave().collectNoteColors(currentPart).getredDurationPercent();
-    int ROUNDED_RED_PERCENT = (int)(RED_DUR_PERCENT);
-    String redNoteTool = (" " + RED_COUNT + " red notes (" + ROUNDED_RED_PERCENT  + "%) ");
+
+    String redNoteTool = getCurrentStave().collectNoteColors(currentPart).toString();
     
     previousMode = this.mode;
 
@@ -10986,7 +10990,7 @@ public void setMode(Mode mode, String modifier)
             setStatus("Draw notes with the mouse (set slots first).");
             break;
         case GENERATING:
-            setStatus("Generating melody "+ recurrentIteration);
+            setStatus("Generating chorus "+ recurrentIteration);
             break;
         case GENERATED:
             setStatus("Using " + modifier);
@@ -11271,8 +11275,7 @@ if( scoreToSave == null )
 
     File newFile = new File(leadsheetDirName, newStem);
     saveLeadsheet(newFile, scoreToSave);
-    System.out.println("saving improvisation file: " + newStem);
-     
+    //System.out.println("saving improvisation file: " + newStem);
     initSaveImprovisation();
 }
 
@@ -23973,6 +23976,11 @@ private boolean isDotted = false;
     {//GEN-HEADEREND:event_chordTonesCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chordTonesCheckBoxActionPerformed
+
+    private void blackColorBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_blackColorBtnActionPerformed
+    {//GEN-HEADEREND:event_blackColorBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_blackColorBtnActionPerformed
 
     private String adviceRhythm = "";
     
