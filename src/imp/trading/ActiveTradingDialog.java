@@ -871,6 +871,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
          tradingNow = true;
          notate.setToTrade();
     }
+    
     private void showUserRhythmSelecterDialog(){
         userRhythmSelecterDialog = new UserRhythmSelecterDialog(activeTrading.getTradeMode());
         userRhythmSelecterDialog.setLocation(userRhythmSelecterDialog.INITIAL_OPEN_POINT);

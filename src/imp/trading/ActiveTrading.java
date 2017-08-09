@@ -284,14 +284,15 @@ public class ActiveTrading {
         }
         
         //if the current slot is nearing the slot at which we need the melody response part for, go grab it and any other available parts
-        if(tradeResponseController.hasNext() && currentComputerTurnStartSlot + nextPartOffset - generatedPartPasteBuffer < currentPosition) {
+        if(tradeResponseController.hasNext() 
+         && currentComputerTurnStartSlot + nextPartOffset - generatedPartPasteBuffer < currentPosition) {
            
             //System.out.println("At slot for retrieving next parts: " + currentPosition);
             pasteNextAvailableParts(true); //we need the next part to play asap, and give us all additional ready parts, if any
-             tradeScore = new Score("trading", notate.getTempo(), ZERO);
+            tradeScore = new Score("trading", notate.getTempo(), ZERO);
             tradeScore.setBassMuted(true);
             tradeScore.delPart(0);
-            Long delayCopy = slotDelay;
+            //Long delayCopy = slotDelay;
             tradeScore.addPart(response);
             playCommand = new PlayScoreCommand(
                     tradeScore,
@@ -311,9 +312,10 @@ public class ActiveTrading {
            As parts are generated and added to response, if the current midiSynth has already been started, it will not play the added parts.
            Thus, in the if statement above, a playCommand to play the most up to date response parts on the midiSynth is created, and in this if statement the playCommand is executed
         */
-        if(phase == TradePhase.COMPUTER_TURN && nextPlayPartOffset < nextPartOffset && currentComputerTurnStartSlot + nextPlayPartOffset < currentPosition) {
-   
-            
+        if(phase == TradePhase.COMPUTER_TURN 
+                && nextPlayPartOffset < nextPartOffset 
+                && currentComputerTurnStartSlot + nextPlayPartOffset < currentPosition) {
+         
             //System.out.println("activating new midi Synth when next part offset is " + nextPartOffset);
             long slotsBefore = notate.getSlotInPlayback();
             midiSynth.setSlot(nextPlayPartOffset);
@@ -351,9 +353,7 @@ public class ActiveTrading {
                 break;
             default:
                 break;
-
         }
-
     }
 
      public void userTurn() {
@@ -398,9 +398,10 @@ public class ActiveTrading {
         int userStartSlot = triggers.get(userStartIndex);
         MelodyPart melodyPart = notate.getCurrentMelodyPart();
 
-        response = response.quantizeUserMelody(notate.getQuantizationQuanta(),
-                                            notate.getQuantizationSwing(),
-                                            notate.getQuantizationRestAbsorption());
+// FIX: I think this quantization interferes with Impro-Visor first Active Trading.
+//        response = response.quantizeUserMelody(notate.getQuantizationQuanta(),
+//                                            notate.getQuantizationSwing(),
+//                                            notate.getQuantizationRestAbsorption());
 
         melodyPart.altPasteOver(response, userStartSlot);
         melodyPart.altPasteOver(new MelodyPart(slotsPerTurn), (userStartSlot + slotsPerTurn) % this.adjustedLength);
@@ -622,7 +623,7 @@ public class ActiveTrading {
             response = tradeResponseController.extractFromGrammarSolo(0, slotsPerTurn);
             Long delayCopy = slotDelay;
             MelodyPart adjustedResponse = response.extract(delayCopy.intValue(), slotsPerTurn - ONE, true, true);
-            //notate.establishCountIn(tradeScore);  // Doesn't work for Impro-Visor first
+
             tradeScore.addPart(adjustedResponse);
             playCommand = new PlayScoreCommand(
                     tradeScore,
@@ -647,10 +648,11 @@ public class ActiveTrading {
             //TODO make a nice comment
             phase = TradePhase.PROCESS_INPUT;
             MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
-            //System.out.println("part before quantization: " + currentMelodyPart.toString());
-            currentMelodyPart = currentMelodyPart.quantizeMelody(notate.getQuantizationQuanta(),
-                                                                            notate.getQuantizationSwing(),
-                                                                            notate.getQuantizationRestAbsorption());
+            //System.out.println("part before quantization: " + currentMelodyPart.toString
+// FIX: I think this quantization interferes with Impro-Visor first Active Trading.
+//            currentMelodyPart = currentMelodyPart.quantizeMelody(notate.getQuantizationQuanta(),
+//                                                                 notate.getQuantizationSwing(),
+//                                                                 notate.getQuantizationRestAbsorption());
             //System.out.println("part after quantization: " + currentMelodyPart.toString());
             currentMelodyPart.altPasteOver(response, 0);
             currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);

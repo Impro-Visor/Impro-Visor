@@ -1620,7 +1620,7 @@ public int getUnitRhythmValue(int unitIndex)
             if( unit != null )
               {
               Unit newUnit = unit.copy();
-              int rhythmValue = newUnit.getRhythmValue();
+              //int rhythmValue = newUnit.getRhythmValue();
               setUnit(j, newUnit);
               }
             else
