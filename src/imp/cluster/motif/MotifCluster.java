@@ -36,7 +36,7 @@ public final class MotifCluster {
     //NOTE: this is implemented in a sort of set like sense (aka never adds same element twice (that's the idea at least))
     private PriorityBlockingQueue<Motif> _melodies; // keeps track of most common Motif, used as Representative Motif
     private static final int QUEUE_SIZE = 10;  // initial capacity of queue (will grow)
-    private ArrayList<Motif> _members; // al Motifs in MotifCluster instance
+    private ArrayList<Motif> _members; // all Motifs in MotifCluster instance
     private String _clusterName = null;
     private int _totalMotifsCount = 0;
     
@@ -215,6 +215,20 @@ public final class MotifCluster {
      */
     public Motif getMotif(){
         return _melodies.peek();
+    }
+    
+    /**
+     * Returns the first n motifs ordered by count from highest to lowest.
+     * @param n the number of motifs to return
+     * @return an ArrayList of motifs
+     */
+    public ArrayList<Motif> getMotifs(int n){
+        ArrayList<Motif> motifs = new ArrayList<>();
+        PriorityBlockingQueue<Motif> tempQueue = new PriorityBlockingQueue<>(_melodies);
+        tempQueue.drainTo(motifs, n);
+        
+        return motifs;
+        
     }
     
     /**

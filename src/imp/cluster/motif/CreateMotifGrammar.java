@@ -246,7 +246,9 @@ public class CreateMotifGrammar {
         
         // add terminal rules for motifs
         for(MotifCluster mc : motifClusters){
-            finalGrammar.add(mc.getMotif().grammarRule());
+            
+            mc.getMotifs(3).forEach((Motif m) -> finalGrammar.add(m.grammarRule()));
+            //finalGrammar.add(mc.getMotif().grammarRule());
         }
         
         // add terminal rules for non-motifs
@@ -332,7 +334,7 @@ public class CreateMotifGrammar {
         
         int maxMotifID = -1;
         
-        String baseString = "MotifClass_";
+        String baseString = "Motif_";
         Polylist shared = Polylist.list("share");
         Polylist unshared = Polylist.list("unshare");
         
@@ -384,7 +386,7 @@ public class CreateMotifGrammar {
             rules.add(temp_rule);
         }
 
-        
+        /*
         for(int i = 0; i <= maxMotifID; i++){
             
             Polylist lhs = Polylist.list("rule", Polylist.list(baseString.concat(String.format("%03d", i))));
@@ -397,7 +399,7 @@ public class CreateMotifGrammar {
             
 //            Polylist rule = Polylist.list("rule", Polylist.list(baseString.concat(String.format("%03d", i))), Polylist.list(), DEFAULT_PROB);
         }
-        
+        */
         return rules.toArray(new Polylist[rules.size()]);
     }
     
