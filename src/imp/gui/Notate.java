@@ -9329,6 +9329,7 @@ public Critic getCritic()
         });
         utilitiesMenu.add(grammarChooserMI);
 
+        lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK));
         lickGeneratorMI.setMnemonic('g');
         lickGeneratorMI.setText("Grammar Control");
         lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
