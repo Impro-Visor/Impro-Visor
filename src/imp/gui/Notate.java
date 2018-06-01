@@ -11317,7 +11317,7 @@ private void recordFromMidi()
 
 public void playBtnPressed()
     {
-        improvisationOn = false;
+        improvise = false;
         playAll();   
     }
 
@@ -18371,7 +18371,7 @@ public void playScore()
 
     improvMelodyIndex = 0;
     setFirstChorus(true);
-    if( improvisationOn ){
+    if( improvise ){
         improviseContinuously();
     }
     else{
@@ -23076,7 +23076,7 @@ private void drumChannelSpinnerChanged(javax.swing.event.ChangeEvent evt)//GEN-F
 
 private void improviseButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_improviseButtonActionPerformed
   {//GEN-HEADEREND:event_improviseButtonActionPerformed
-      improviseButtonToggled();
+      improviseButtonToggled(improviseButton.isSelected());
   }//GEN-LAST:event_improviseButtonActionPerformed
 
 private void importMidiMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_importMidiMIActionPerformed
@@ -24348,7 +24348,7 @@ public void textRequestFocus()
   }
 
 int improviseStartSlot, improviseEndSlot;
-boolean improvisationOn = false;
+boolean improvise = false;
 
 public void toggleCountIn()
 {
@@ -24364,45 +24364,60 @@ public void toggleCountIn()
 
 public void remoteToggleImprovise()
 {
-    if( !improvisationOn )
+    if( !improvise )
       {
-        improvisationOn = true;
+        improvise = true;
         playAll();
       }
     else
       {
         stopPlaying();
-        improvisationOn = false;
+        improvise = false;
       }
 }
 
-public void improviseButtonToggled()
+public void improviseButtonToggled(boolean improvisationOn)
   {
-    improvisationOn = improviseButton.isSelected();
-    if( improvisationOn )
+//System.out.println("in notate " + improvise);
+improvise = improvisationOn;
+      if( improvisationOn )
       {
-        improviseButton.setBackground(new Color(255, 0, 0));
-        improviseButton.setText("<html><center>Stop</center></html>");
+        improvisationOn();
+        //improviseButton.setBackground(new Color(255, 0, 0));
+        //improviseButton.setText("<html><center>Stop</center></html>");
         improviseButton.setOpaque(true);
 
         playAll();
       }
     else
       {
+        improvisationOff();
         stopPlaying();
         improviseButton.setOpaque(true);
      }
   }
 
+public void improvisationOn()
+{
+    improvise = true;
+    improviseButton.setSelected(true);
+    lickgenFrame.setRecurrent(true);
+    improviseButton.setBackground(new Color(255, 0, 0));
+    improviseButton.setText("<html><center>Stop</center></html>");
+    tradeCheckbox.setSelected(false);  
+    grammarMenuDialog.improvisationOn();
+}
+
 public void improvisationOff()
   {
     //System.out.println("improvisationOff");
-    improvisationOn = false;
+    improvise = false;
     improviseButton.setSelected(false);
     lickgenFrame.setRecurrent(false);
     improviseButton.setBackground(new Color(0, 255, 0));
     improviseButton.setText("<html><center>Improv</center></html>");
     tradeCheckbox.setSelected(false);
+    grammarMenuDialog.improvisationOff();
   }
 
 /**
@@ -27675,7 +27690,7 @@ public void actionPerformed(ActionEvent evt) {
     }
 
     //handleAudioInput(slotInPlayback);
-    if( improvisationOn )
+    if( improvise )
       {
         handleAutoImprov(synthSlot);
       }

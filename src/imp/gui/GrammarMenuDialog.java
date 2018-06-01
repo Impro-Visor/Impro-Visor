@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College.
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College.
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -19,6 +19,8 @@
  */
 
 package imp.gui;
+
+import java.awt.Color;
 
 /**
  *
@@ -90,7 +92,8 @@ public class GrammarMenuDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         grammarButtonGroup = new javax.swing.ButtonGroup();
@@ -98,6 +101,7 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         chosenGrammarButton = new javax.swing.JRadioButton();
         cycleGrammarButton = new javax.swing.JRadioButton();
         shuffleGrammarButton = new javax.swing.JRadioButton();
+        improviseButton = new javax.swing.JToggleButton();
         grammarListScrollPane = new javax.swing.JScrollPane();
         grammarJlist = new javax.swing.JList<>();
 
@@ -111,32 +115,74 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         grammarButtonGroup.add(chosenGrammarButton);
         chosenGrammarButton.setSelected(true);
         chosenGrammarButton.setText("Chosen");
-        chosenGrammarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        chosenGrammarButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 chosenGrammarButtonActionPerformed(evt);
             }
         });
-        grammarButtonPanel.add(chosenGrammarButton, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        grammarButtonPanel.add(chosenGrammarButton, gridBagConstraints);
 
         grammarButtonGroup.add(cycleGrammarButton);
         cycleGrammarButton.setLabel("Cycle");
-        cycleGrammarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cycleGrammarButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 cycleGrammarButtonActionPerformed(evt);
             }
         });
-        grammarButtonPanel.add(cycleGrammarButton, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        grammarButtonPanel.add(cycleGrammarButton, gridBagConstraints);
 
         grammarButtonGroup.add(shuffleGrammarButton);
         shuffleGrammarButton.setLabel("Shuffle");
-        shuffleGrammarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        shuffleGrammarButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 shuffleGrammarButtonActionPerformed(evt);
             }
         });
-        grammarButtonPanel.add(shuffleGrammarButton, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        grammarButtonPanel.add(shuffleGrammarButton, gridBagConstraints);
 
-        getContentPane().add(grammarButtonPanel, new java.awt.GridBagConstraints());
+        improviseButton.setBackground(new java.awt.Color(0, 255, 0));
+        improviseButton.setText("Improv");
+        improviseButton.setToolTipText("Press to start improvisation.");
+        improviseButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        improviseButton.setFocusable(false);
+        improviseButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        improviseButton.setIconTextGap(0);
+        improviseButton.setMaximumSize(new java.awt.Dimension(50, 30));
+        improviseButton.setMinimumSize(new java.awt.Dimension(50, 30));
+        improviseButton.setOpaque(true);
+        improviseButton.setPreferredSize(new java.awt.Dimension(50, 30));
+        improviseButton.setRequestFocusEnabled(false);
+        improviseButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        improviseButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                improviseButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        grammarButtonPanel.add(improviseButton, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        getContentPane().add(grammarButtonPanel, gridBagConstraints);
 
         grammarListScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         grammarListScrollPane.setAutoscrolls(true);
@@ -153,8 +199,10 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         grammarJlist.setToolTipText("");
         grammarJlist.setBounds(new java.awt.Rectangle(0, 0, 300, 600));
         grammarJlist.setVisibleRowCount(200);
-        grammarJlist.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        grammarJlist.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 grammarJlistMouseClicked(evt);
             }
         });
@@ -163,7 +211,7 @@ public class GrammarMenuDialog extends javax.swing.JDialog
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 1.0;
@@ -196,6 +244,36 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         grammarAction();
     }//GEN-LAST:event_cycleGrammarButtonActionPerformed
 
+    private void improviseButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_improviseButtonActionPerformed
+    {//GEN-HEADEREND:event_improviseButtonActionPerformed
+    boolean improvisationOn = improviseButton.isSelected();
+    if( improvisationOn )
+      {
+        notate.improvisationOn();
+        improvisationOn();
+     }
+    else
+      {
+        notate.improvisationOff();
+        improvisationOff();
+     }        
+    improviseButton.setOpaque(true);
+    notate.improviseButtonToggled(improvisationOn);
+    }//GEN-LAST:event_improviseButtonActionPerformed
+
+    public void improvisationOn()
+    {
+        improviseButton.setBackground(new Color(255, 0, 0));
+        improviseButton.setText("<html><center>Stop</center></html>");
+        improviseButton.setSelected(true);
+    }
+    
+    public void improvisationOff()
+    {
+        improviseButton.setBackground(new Color(0, 255, 0));
+        improviseButton.setText("<html><center>Improv</center></html>"); 
+        improviseButton.setSelected(false);
+    }
     private void grammarAction()
     {
         currentSelection = grammarJlist.getSelectedValue();
@@ -210,6 +288,7 @@ public class GrammarMenuDialog extends javax.swing.JDialog
     private javax.swing.JPanel grammarButtonPanel;
     private javax.swing.JList<String> grammarJlist;
     private javax.swing.JScrollPane grammarListScrollPane;
+    private javax.swing.JToggleButton improviseButton;
     private javax.swing.JRadioButton shuffleGrammarButton;
     // End of variables declaration//GEN-END:variables
   }
