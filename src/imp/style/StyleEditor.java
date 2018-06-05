@@ -656,12 +656,12 @@ public void updateAllBassPatterns(String name, String rules)
 public void updateAllChordPatterns(String name, String rules)
 {   
     Iterator chordIt = allChordPatterns.iterator();
-    //System.out.println("all chord patterns: " + allChordPatterns);
+//    System.out.println("all chord patterns: " + allChordPatterns);
     while( chordIt.hasNext() )
     {
-        if( chordIt.next() != null )
+        ChordPatternDisplay chord = (ChordPatternDisplay)chordIt.next();
+        if( chord != null )
         {
-            ChordPatternDisplay chord = (ChordPatternDisplay)chordIt.next();
             String chordText = chord.getPatternText();
             
             if( rules.equals(chordText) )
