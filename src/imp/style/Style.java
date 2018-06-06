@@ -1017,12 +1017,13 @@ public class Style
    * @param desiredDuration  an int determining the desiredDuration to fill
    * @return the Pattern chosen
    */
-  private <T extends Pattern> T getPattern(ArrayList<T> patterns,
-                                           int desiredDuration)
+  private static <T extends Pattern> T getPattern(ArrayList<T> patterns,
+                                                    int duration)
     {
-    ArrayList<T> goodPatterns = new ArrayList<>();
+    // this ArrayList will hold patterns that are the correct duration
+    ArrayList<T> goodPatterns = new ArrayList<T>();
 
-    // find the largest pattern desiredDuration that is less than desiredDuration
+    // find the largest pattern duration that is less than duration
     int largestDuration = 0;
     for( int i = 0; i < patterns.size(); i++ )
       {
@@ -1030,32 +1031,33 @@ public class Style
       int tempDuration = temp.getDuration();
 
       if( tempDuration > largestDuration &&
-              tempDuration <= desiredDuration )
+              tempDuration <= duration )
         {
         largestDuration = tempDuration;
         }
       }
 
+    // if we don't have a short enough pattern, we'll play nothing
     if( largestDuration == 0 )
       {
       // NEW: Instead of playing nothing, find the shortest pattern
-      // that is longer than desiredDuration and splitChordPattern its desiredDuration.
-      T shortestPattern = patterns.get(0);
-      int shortestDuration = shortestPattern.getDuration();
+      // that is longer than duration and truncate it.
+      int shortestDuration = Integer.MAX_VALUE;
+      T shortestPattern = null;
 
-      for( int i = 1; i < patterns.size(); i++ )
+      for( int i = 0; i < patterns.size(); i++ )
         {
         T temp = patterns.get(i);
         int tempDuration = temp.getDuration();
 
-        if( tempDuration >= desiredDuration &&
+        if( tempDuration >= duration &&
                 tempDuration < shortestDuration )
           {
-          shortestPattern = temp;
           shortestDuration = tempDuration;
+          shortestPattern = temp;
           }
         }
-      return shortestPattern;
+      return null;
       }
 
     // sum the weights of the patterns we are choosing from
@@ -1332,8 +1334,8 @@ private Polylist makeChordline(
         // Get a pattern for this chord.
         // A pattern can contain volume information.
         
-        ChordPattern pattern = getChordPattern(chordPatterns, duration);
-        //System.out.println("chord pattern = " + pattern);
+        ChordPattern pattern = getPattern(chordPatterns, duration);
+
         ChordPatternVoiced c;
         
         if( pattern == null  || constantBass )
