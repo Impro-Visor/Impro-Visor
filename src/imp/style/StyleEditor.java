@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1784,7 +1784,6 @@ public void updateAllDrumPatterns(String name, String rules)
     interpolables = style.getDefinedInterpolables();
     substitutions = style.getDefinedSubs();
             
-    
     updateBassList();
     updateChordList();
     updateDrumList();
@@ -7794,6 +7793,10 @@ private void openStyleMixer()
         String name = (String)bassPatternList.getSelectedValue();
         Color background = BASS_COLOR;
         Polylist rules = (Polylist)definedBassRules.get(name);
+        if( rules == null || rules.isEmpty() )
+          {
+            return;
+          }
         String pattern = rules.rest().toStringSansParens();
         if( evt.getClickCount() == 2 )
         {
@@ -7811,6 +7814,10 @@ private void openStyleMixer()
         String name = (String)chordPatternList.getSelectedValue();
         Color background = CHORD_COLOR;
         Polylist rules = (Polylist)definedChordRules.get(name);
+        if( rules == null || rules.isEmpty() )
+          {
+            return;
+          }
         String pattern = rules.rest().toStringSansParens();
         if( evt.getClickCount() == 2 )
         {
@@ -7828,6 +7835,10 @@ private void openStyleMixer()
         String name = (String)drumPatternList.getSelectedValue();
         Color background = DRUM_COLOR;
         Polylist rules = (Polylist)definedDrumRules.get(name);
+        if( rules == null || rules.isEmpty() )
+          {
+            return;
+          }
         String pattern = rules.rest().toStringSansParens();
         if( evt.getClickCount() == 2 )
         {
