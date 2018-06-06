@@ -7772,18 +7772,27 @@ private void openStyleMixer()
         Color background = nameField3.getBackground();
         if( background == BASS_COLOR )
         {
+          if( bassListModel != null && !bassListModel.isEmpty() )
+            {
             bassListModel.removeElement(name);
             definedBassRules.remove(name);
+            }
         }
         else if( background == CHORD_COLOR )
         {
-            chordListModel.removeElement(name);
+        if( chordListModel != null && !chordListModel.isEmpty() )
+            {
+              chordListModel.removeElement(name);
             definedChordRules.remove(name);
+            }
         }
         else
         {
+        if( drumListModel != null && !drumListModel.isEmpty() )
+          {
             drumListModel.removeElement(name);
             definedDrumRules.remove(name);
+          }
         }
         
     }//GEN-LAST:event_removePatternButtonMouseClicked
