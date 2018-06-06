@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1057,7 +1057,7 @@ public class Style
           shortestPattern = temp;
           }
         }
-      return null;
+      return shortestPattern;
       }
 
     // sum the weights of the patterns we are choosing from
@@ -1334,7 +1334,7 @@ private Polylist makeChordline(
         // Get a pattern for this chord.
         // A pattern can contain volume information.
         
-        ChordPattern pattern = getPattern(chordPatterns, duration);
+        ChordPattern pattern = getChordPattern(chordPatterns, duration);
 
         ChordPatternVoiced c;
         
@@ -2279,7 +2279,7 @@ public long render(MidiSequence seq, // called from SectionInfo
                                           time,
                                           currentChord,
                                           previousChord,
-                                          currentChord.getRhythmValue(),
+                                          rhythmValue, //currentChord.getRhythmValue(),
                                           transposition,
                                           endLimitIndex,
                                           constantBass);
@@ -2336,7 +2336,7 @@ public long render(MidiSequence seq, // called from SectionInfo
             bassline.add(rest);
           }
 
-        time += currentChord.getRhythmValue() * seq.getResolution() / BEAT;
+        time += rhythmValue /*currentChord.getRhythmValue()*/ * seq.getResolution() / BEAT;
         
         if( endIndex <= index )
           {
