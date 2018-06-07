@@ -1109,7 +1109,7 @@ public Brick(String brickName,
         
         String name = (String)temp.second();
         temp = blockPolylist.assoc("variant");
-        String variant = temp.rest().nonEmpty()? (String)temp.second() : DEFAULT_VARIANT;
+        String variant = temp.rest().nonEmpty()? ("" + temp.second()) : DEFAULT_VARIANT;
         
         temp = blockPolylist.assoc("type");
         String type = (String)temp.second();
