@@ -1194,7 +1194,7 @@ public class Style
     
     // As a last result, select from all patterns regardless of duration
     
-    System.out.println("no ChordPattern of duration " + desiredDuration + " found");
+    //System.out.println("no ChordPattern of duration " + desiredDuration + " found");
     return null;
     }
 
@@ -1579,7 +1579,7 @@ static Polylist filterOutVolumes(Polylist L)
         Object lastOb = bassline.getLast();
         if( lastOb instanceof Polylist && basslineSegment.getFirst() instanceof NoteSymbol )
           {
-System.out.println("mystery code on bassline " + bassline);
+          //System.out.println("mystery code on bassline " + bassline);
             Polylist L = (Polylist)lastOb;
             String dur = (String)L.first();
             bassline.removeLast();
@@ -1990,7 +1990,7 @@ private Polylist mapPC(Polylist results) {
                 continue;
             
             Polylist possubs = first.getChordForm().getSubstitutions();
-            System.out.println("possubs " + possubs);
+            //System.out.println("possubs " + possubs);
                 if (possubs.nonEmpty()) {
                     int randindex = gen.nextInt(possubs.length());
                     String sym = (String) possubs.nth(randindex);
