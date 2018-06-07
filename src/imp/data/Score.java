@@ -1100,14 +1100,14 @@ public class Score implements Constants, Serializable {
      * in Leadsheet notation.
      * @param out       a BufferedWriter to save the score onto
      */
-    public void saveLeadsheet(BufferedWriter out) throws IOException {
+    public void saveLeadsheet(BufferedWriter out, boolean saveRoadMap) throws IOException {
         Chord.initSaveToLeadsheet();
-    	chordProg.saveLeadsheet(out, "chords");
+    	chordProg.saveLeadsheet(out, "chords", saveRoadMap);
         out.newLine();
 
         ListIterator<MelodyPart> i = partList.listIterator();
         while(i.hasNext()) {
-            ((MelodyPart)i.next()).saveLeadsheet(out, "melody");
+            ((MelodyPart)i.next()).saveLeadsheet(out, "melody", saveRoadMap);
             out.newLine();
         }
     }

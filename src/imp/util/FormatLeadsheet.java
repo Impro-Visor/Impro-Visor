@@ -71,6 +71,6 @@ public class FormatLeadsheet {
     public static void formatLeadsheet(File file) {
         Score score = new Score();
         new OpenLeadsheetCommand(file, score).execute();
-        new SaveLeadsheetCommand(file, score).execute();
+        new SaveLeadsheetCommand(file, score, true).execute();
     }
 }

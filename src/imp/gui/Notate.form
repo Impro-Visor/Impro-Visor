@@ -7873,6 +7873,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createRoadMapCheckBoxActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="saveRoadMapCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save Roadmap (if computed) with Leadsheet File"/>
+                <Property name="toolTipText" type="java.lang.String" value="Save Roadmap with Leadsheet File if checked and the roadmap is computed."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveRoadMapCheckBoxActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="utilitiesMenu">

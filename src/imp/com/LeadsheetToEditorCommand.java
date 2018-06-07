@@ -21,6 +21,7 @@
 package imp.com;
 
 import imp.data.*;
+import imp.gui.Notate;
 import imp.util.BasicEditor;
 import java.io.*;
 
@@ -34,10 +35,7 @@ import java.io.*;
  */
 public class LeadsheetToEditorCommand implements Command {
 
-    /**
-     * the Score to read the File into
-     */
-    private Score score;
+    Notate notate;
 
     /**
      * editor for the file source
@@ -49,15 +47,18 @@ public class LeadsheetToEditorCommand implements Command {
      */
     private boolean undoable = false;
 
+    private boolean saveRoadMap;
+    
     /**
      * Creates a new Command that can read a File into a Score.
      * @param file      the File to read
      * @param score     the Score to read the File into
      */
-    public LeadsheetToEditorCommand(Score score, BasicEditor sourceEditor) {
-        this.score = score;
+    public LeadsheetToEditorCommand(Notate notate, BasicEditor sourceEditor) {
+        this.notate = notate;
+        this.saveRoadMap = notate.getSaveRoadMap();
         this.sourceEditor = sourceEditor;
-        sourceEditor.setTitle(score.getTitle());
+        sourceEditor.setTitle(notate.getScore().getTitle());
     }
 
     /**
@@ -67,7 +68,7 @@ public class LeadsheetToEditorCommand implements Command {
         StringWriter writer = new StringWriter();
         BufferedWriter out = new BufferedWriter(writer);
         try {
-            Leadsheet.saveLeadSheet(out, score);
+            Leadsheet.saveLeadSheet(out, notate.getScore(), notate.getSaveRoadMap());
             out.close();
         } catch( Exception e ) {}
         sourceEditor.setText(writer.toString());

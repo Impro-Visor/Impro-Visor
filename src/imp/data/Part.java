@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2014 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1690,7 +1690,7 @@ public int getUnitRhythmValue(int unitIndex)
      * @param out       the BufferedWriter to write the Part onto
      */
     
-public void saveLeadsheet(BufferedWriter out, String type) throws IOException
+public void saveLeadsheet(BufferedWriter out, String type, boolean saveRoadMap) throws IOException
   {
     out.write("(part");
     out.newLine();
@@ -1712,12 +1712,13 @@ public void saveLeadsheet(BufferedWriter out, String type) throws IOException
         out.write("    (stave " + staveType.toString().toLowerCase() + ")");
         out.newLine();
       }
-// For now, saving roadmaps is disabled
-//    else
-//    {
-//        out.write(Formatting.prettyFormat(4, ((ChordPart)this).getRoadMap() == null ? "" : ((ChordPart)this).getRoadmapPoly()));
-//        out.newLine();
-//    }
+ //For now, saving roadmaps is disabled
+    else /* ChordPart */
+    {
+      if( saveRoadMap )
+        out.write(polya.Formatting.prettyFormat(4, ((ChordPart)this).getRoadMap() == null ? "" : ((ChordPart)this).getRoadmapPoly()));
+        out.newLine();
+    }
 
     out.write(")");
     out.newLine();

@@ -128,7 +128,7 @@ static final int UNKNOWN = -1;
   /**
    * Save a Score as a Leadsheet.
    */
-  public static void saveLeadSheet(BufferedWriter out, Score score)
+  public static void saveLeadSheet(BufferedWriter out, Score score, boolean saveRoadMap)
           throws IOException
     {
     // Write out score information
@@ -182,7 +182,7 @@ static final int UNKNOWN = -1;
       style.saveLeadsheet(out);
       }
     // Write out the parts
-    score.saveLeadsheet(out);
+    score.saveLeadsheet(out, saveRoadMap);
     }
 
   public static String concatElements(Polylist item)

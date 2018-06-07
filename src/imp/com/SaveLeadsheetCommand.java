@@ -57,19 +57,22 @@ public class SaveLeadsheetCommand implements Command {
      */
     Exception error = null;
     
+    private boolean saveRoadMap;
+    
     /**
      * Creates a new Command that can save a Score to a File.
      * @param file      the File to save to
      * @param score     the Score to save
      */
-    public SaveLeadsheetCommand(File file, Score score, CommandManager cm) {
+    public SaveLeadsheetCommand(File file, Score score, CommandManager cm, boolean saveRoadMap) {
         this.cm = cm;
         this.file = file;
         this.score = score;
+        this.saveRoadMap = saveRoadMap;
     }
 
-    public SaveLeadsheetCommand(File file, Score score) {
-        this(file, score, null);
+    public SaveLeadsheetCommand(File file, Score score, boolean saveRoadMap) {
+        this(file, score, null, saveRoadMap);
     }
     
     /**
@@ -78,7 +81,7 @@ public class SaveLeadsheetCommand implements Command {
     public void execute() {
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(file));
-            Leadsheet.saveLeadSheet(out, score);
+            Leadsheet.saveLeadSheet(out, score, saveRoadMap);
             out.close();
             RecentFiles recent = new RecentFiles(file.getAbsolutePath());
             recent.writeNewFile();

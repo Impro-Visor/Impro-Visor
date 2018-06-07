@@ -2091,6 +2091,7 @@ public Critic getCritic()
         emptyRoadMapMI = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         createRoadMapCheckBox = new javax.swing.JCheckBoxMenuItem();
+        saveRoadMapCheckBox = new javax.swing.JCheckBoxMenuItem();
         utilitiesMenu = new javax.swing.JMenu();
         adviceMI = new javax.swing.JMenuItem();
         stepKeyboardMI = new javax.swing.JMenuItem();
@@ -9177,6 +9178,17 @@ public Critic getCritic()
         });
         roadmapMenu.add(createRoadMapCheckBox);
 
+        saveRoadMapCheckBox.setText("Save Roadmap (if computed) with Leadsheet File");
+        saveRoadMapCheckBox.setToolTipText("Save Roadmap with Leadsheet File if checked and the roadmap is computed.");
+        saveRoadMapCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                saveRoadMapCheckBoxActionPerformed(evt);
+            }
+        });
+        roadmapMenu.add(saveRoadMapCheckBox);
+
         menuBar.add(roadmapMenu);
 
         utilitiesMenu.setMnemonic('U');
@@ -13908,7 +13920,7 @@ public boolean saveLeadsheet()
 
 private boolean saveLeadsheet(File file, Score score)
   {
-    SaveLeadsheetCommand s = new SaveLeadsheetCommand(file, score, cm);
+    SaveLeadsheetCommand s = new SaveLeadsheetCommand(file, score, cm, getSaveRoadMap());
 
     s.execute();
 
@@ -14379,6 +14391,12 @@ void cutChords()
         closeWindow();
     }//GEN-LAST:event_formWindowClosing
 
+public boolean getSaveRoadMap()
+{
+    return saveRoadMapCheckBox.isSelected();
+}
+
+            
 public boolean unsavedChanges()
   {
 
@@ -14395,7 +14413,7 @@ public boolean unsavedChanges()
         try
           {
             BufferedWriter out = new BufferedWriter(strWriter);
-            Leadsheet.saveLeadSheet(out, score);
+            Leadsheet.saveLeadSheet(out, score, getSaveRoadMap());
             out.close();
           }
         catch( IOException e )
@@ -23983,6 +24001,11 @@ private boolean isDotted = false;
         // TODO add your handling code here:
     }//GEN-LAST:event_blackColorBtnActionPerformed
 
+    private void saveRoadMapCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveRoadMapCheckBoxActionPerformed
+    {//GEN-HEADEREND:event_saveRoadMapCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveRoadMapCheckBoxActionPerformed
+
     private String adviceRhythm = "";
     
     public Polylist getAdviceRhythms()
@@ -26800,6 +26823,7 @@ private ImageIcon pauseButton =
     private javax.swing.JCheckBoxMenuItem saveImprovCheckBoxMenuItem;
     private javax.swing.JMenuItem saveLeadsheetMI;
     private javax.swing.JButton savePrefsBtn;
+    private javax.swing.JCheckBoxMenuItem saveRoadMapCheckBox;
     private javax.swing.JMenuItem saveSelectionAsLick;
     private javax.swing.ButtonGroup saveTypeButtonGroup;
     private javax.swing.JCheckBox scaleTonesCheckBox;

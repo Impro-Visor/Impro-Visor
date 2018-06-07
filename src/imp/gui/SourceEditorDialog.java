@@ -158,7 +158,7 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
     switch (type)
         {
             case LEADSHEET:
-                cm.execute(new LeadsheetToEditorCommand(parent.getScore(), this));
+                cm.execute(new LeadsheetToEditorCommand(parent, this));
                 parent.setStatus("Text loaded from leadsheet");
                 break;
             case GRAMMAR:
