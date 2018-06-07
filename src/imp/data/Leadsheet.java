@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,8 @@ public class Leadsheet
            "stave", "treble", "bass", "grand", "auto", "none", "layout",
            "bass-volume", "drum-volume", "chord-volume", "style", "section",
            "bass-instrument", "playback-transpose", "show", "year",
-           "chord-font-size", "phrase", "roadmap-layout", "roadmap","voicing-name"
+           "chord-font-size", "phrase", "roadmap-layout", "roadmap",
+           "voicing-name", "melody-volume"
   };
 
   static final int TITLE = 0;
@@ -119,6 +120,8 @@ public class Leadsheet
  static final int ROADMAP = 35;
  
  static final int VOICING_FILE = 36;
+ 
+ static final int MELODY_VOLUME = 37;
 
 static final int UNKNOWN = -1;
 
@@ -164,6 +167,8 @@ static final int UNKNOWN = -1;
     out.write(score.getLayoutList().cons(keyword[LAYOUT]).toString());
     out.newLine();
     out.write("(" + keyword[ROADMAP_LAYOUT] + " " + score.getRoadmapLayout() + ")");
+    out.newLine();
+    out.write("(" + keyword[MELODY_VOLUME] + " " + score.getMelodyVolume() + ")");
     out.newLine();
 
     Style style = score.getChordProg().getStyle();
@@ -393,6 +398,14 @@ static final int UNKNOWN = -1;
                   score.setChordVolume(((Long)item.first()).intValue());
                   }
                 break;
+
+              case MELODY_VOLUME:
+                if( item.nonEmpty() && item.first() instanceof Long )
+                  {
+                  score.setMelodyVolume(((Long)item.first()).intValue());
+                  }
+                break;
+
 
               case STYLE:
                 if( item.nonEmpty() && item.first() instanceof String )
