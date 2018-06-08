@@ -91,7 +91,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         this.addRhythmHelperModeRadioPanel();
         transformMenuDialog = new TransformMenuDialog(notate, this, false);
         
-        notate.populateGenericGrammarMenu(tradeGrammarMenu);
+        //notate.populateGenericGrammarMenu(tradeGrammarMenu);
         notate.populateMusicianList();
         Component[] modes = modeMenu.getMenuComponents();
         for (Component c : modes) {
@@ -156,10 +156,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeStore = new javax.swing.JRadioButtonMenuItem();
         MemorizeMotifsMenuItem = new javax.swing.JRadioButtonMenuItem();
         RhythmHelperMenuItem = new javax.swing.JRadioButtonMenuItem();
-        tradeGrammarMenu = new javax.swing.JMenu();
         tradePlayMenu = new javax.swing.JMenu();
         tradePlayMenuItem = new javax.swing.JMenuItem();
         tradeStopMenuItem = new javax.swing.JMenuItem();
+        tradeGrammarMenu = new javax.swing.JMenu();
 
         setTitle("Impro-Visor Active Trading");
         setBackground(new java.awt.Color(204, 204, 255));
@@ -310,8 +310,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         modePanel.add(grammarStatusButton, gridBagConstraints);
 
         transformStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        transformStatusButton.setToolTipText("Click to select trade musician.");
-        transformStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transform", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        transformStatusButton.setToolTipText("Click to select transform for transform mode.");
+        transformStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transform Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         transformStatusButton.setPreferredSize(new java.awt.Dimension(210, 45));
         transformStatusButton.addActionListener(new java.awt.event.ActionListener()
         {
@@ -632,9 +632,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         mainTradeMenuBar.add(modeMenu);
 
-        tradeGrammarMenu.setText("Grammar");
-        mainTradeMenuBar.add(tradeGrammarMenu);
-
         tradePlayMenu.setText("Play");
 
         tradePlayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
@@ -660,6 +657,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradePlayMenu.add(tradeStopMenuItem);
 
         mainTradeMenuBar.add(tradePlayMenu);
+
+        tradeGrammarMenu.setText("Rhythm Cluster");
+        mainTradeMenuBar.add(tradeGrammarMenu);
 
         setJMenuBar(mainTradeMenuBar);
 
@@ -843,7 +843,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         modeStatus.setText("Mode: " + activeTrading.getTradeModeName());
         transformStatusButton.setText("" + activeTrading.getMusician());
         String gramm = activeTrading.getGrammar();
-        tradeGrammarMenu.setText("Grammar:" + gramm);
+        //tradeGrammarMenu.setText("Grammar:" + gramm);
+        tradeGrammarMenu.setVisible(false);
         grammarStatusButton.setText("" + gramm);
     }
 
@@ -987,6 +988,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private void setMenuAndStatusToGrammarOrRhythmCluster(String tradeMode){
         if(tradeMode.equals("Rhythm Helper")){
             createRhythmClusterMenuAndStatus();
+            tradeGrammarMenu.setVisible(true);
+ 
         }else{
 //            notate.populateNotateGrammarMenu();
 //            notate.populateGenericGrammarMenu(tradeGrammarMenu);
@@ -1013,7 +1016,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         //grammarStatusButton.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
         
         //System.out.println("setting text for trade grammar menu to rhythmCluster....");
-        tradeGrammarMenu.setText("RhythmCluster");
+        tradeGrammarMenu.setText("Rhythm Cluster");
         //System.out.println("trade grammar menu text is: " + tradeGrammarMenu.getText());
         
     }
@@ -1088,12 +1091,14 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
     public void refreshSelectedRhythmCluster(String gram) {
         //tradeGrammarMenu.setText(gram);
-        grammarStatusButton.setText("RhythmCluster: " + notate.getRhythmClusterName());
+        grammarStatusButton.setText("Rhythm Cluster: " + notate.getRhythmClusterName());
     }
 
     public void refreshSelectedGrammar(String gram) {
-        tradeGrammarMenu.setText(gram);
+        //tradeGrammarMenu.setText(gram);
+        tradeGrammarMenu.setVisible(false);    
         grammarStatusButton.setText("" + activeTrading.getGrammar());
+        ((javax.swing.border.TitledBorder)grammarStatusButton.getBorder()).setTitle("Grammar Chooser");
     }
 
     
