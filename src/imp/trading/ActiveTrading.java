@@ -642,21 +642,14 @@ public class ActiveTrading {
         midiSynth.setMasterVolume(volume);
         notate.playFirstChorus();
 
+        MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
         if (isUserLeading) {
             phase = TradePhase.COMPUTER_TURN;
         } else {
-            //TODO make a nice comment
             phase = TradePhase.PROCESS_INPUT;
-            MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
-            //System.out.println("part before quantization: " + currentMelodyPart.toString
-// FIX: I think this quantization interferes with Impro-Visor first Active Trading.
-//            currentMelodyPart = currentMelodyPart.quantizeMelody(notate.getQuantizationQuanta(),
-//                                                                 notate.getQuantizationSwing(),
-//                                                                 notate.getQuantizationRestAbsorption());
-            //System.out.println("part after quantization: " + currentMelodyPart.toString());
-            currentMelodyPart.altPasteOver(response, 0);
-            currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);
         }
+        currentMelodyPart.altPasteOver(response, 0);
+        currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);  
     }
 
     private void populateTriggers() {
