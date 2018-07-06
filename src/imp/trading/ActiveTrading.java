@@ -139,6 +139,11 @@ public class ActiveTrading {
         return measures;
     }
     
+    public int getSlotsPerTurn()
+    {
+        return getMeasures() * notate.getSlotsPerMeasure();
+    }
+    
     public boolean getIsLoop(){
         return this.isLoop;
     }

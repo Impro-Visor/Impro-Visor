@@ -43,7 +43,6 @@ import polya.Polylist;
 import polya.PolylistEnum;
 import imp.generalCluster.Cluster;
 import imp.generalCluster.DataPoint;
-import imp.generalCluster.IndexedMelodyPart;
 import imp.generalCluster.JCA;
 import imp.generalCluster.ClusterSet;
 
@@ -134,7 +133,6 @@ private double expectancyConstant   = defaultExpectancyConstant;
 
 public Integer integer;
 
-    private int lengthOfTrade;
     private static final int SLOTS_PER_MEASURE = 480;
     private static final int QUARTER_NOTE = 120;
     private static final int BASE_WEIGHT = 15;
@@ -208,7 +206,7 @@ public Integer integer;
     private boolean lastWasTied = false;
 
     private final Notate notate;
-    private final PassiveTradingDialog passiveTradingDialog;
+    //private final PassiveTradingDialog passiveTradingDialog;
     private int prevPitch = (int)(Math.random() * 20 + 60);
     private int prevPrevPitch = 0;
     private int prevQuarter = prevPitch;
@@ -219,12 +217,12 @@ public Integer integer;
      * sets all note probabilities to 1.
      * @param grammarFile
      * @param notate
-     * @param passiveTradingWindow
+     * @param passiveTradingDialog
      */
     public LickGen(String grammarFile, Notate notate, PassiveTradingDialog passiveTradingDialog) {
     //System.out.println("Lickgen constructor grammarFile = " + grammarFile);
         this.notate = notate;
-        this.passiveTradingDialog = passiveTradingDialog;
+        //this.passiveTradingDialog = passiveTradingDialog;
         grammar = new Grammar(grammarFile);
         loadGrammar(grammarFile);
         probs = new ArrayList<double[]>();
@@ -807,6 +805,7 @@ public void loadGrammar(String grammarFile)
       {
       // This will cause a different value of syncopationConstant to be saved.
       // For now, I am setting it back to its default value.
+      int lengthOfTrade = notate.getTradingQuantum();
       syncopationConstant = Double.parseDouble(getParameterQuietly(SYNCOPATION_CONSTANT)) * MAX_SYNCO * (lengthOfTrade/SLOTS_PER_MEASURE);
       syncopationConstant = defaultSyncopationConstant;
     //System.out.println("Syncopation constant: " + syncopationConstant);
@@ -1102,13 +1101,18 @@ public Polylist generateRhythmFromGrammar(int startSlot, int slots)
     return grammar.run(startSlot, 
                        slots, 
                        notate, 
-                       passiveTradingDialog.isVisible(),
-                       passiveTradingDialog.getImprovisorTradeFirst(),
-                       passiveTradingDialog.getTradingQuantum());
+                       notate.getPassiveTrading(),
+                       notate.getImprovisorTradeFirst(),
+                       notate.getTradingQuantum());
   }
 
 /**
  * Randomly generate a rhythm based on a minimum and maximum allowed duration.
+     * @param slots
+     * @param minDuration
+     * @param maxDuration
+     * @param restProb
+     * @return 
  */
 
 public Polylist generateRandomRhythm(int slots, 
@@ -1159,6 +1163,8 @@ public Polylist generateRandomRhythm(int slots,
 /**
  * Takes a polylist containing a series of grammar terminals and returns the
  * number of slots in the list
+ * @param rhythmString
+ * @return 
  */
 
 public int getNumSlots(Polylist rhythmString)
@@ -1543,7 +1549,7 @@ public MelodyPart fillMelody(int minPitch,
 
     MelodyPart melPart = new MelodyPart();
     
-    lengthOfTrade = passiveTradingDialog.getTradingQuantum();
+    int lengthOfTrade = notate.getTradingQuantum();
 
    //Generates a rhythm with matched syncopation
     if(useSyncopation)
@@ -2567,6 +2573,7 @@ private boolean fillMelodyHelper(MelodyPart lick,
     */
     private double getExpectancyPerNote()
     {
+        int lengthOfTrade = notate.getTradingQuantum();
         //Gets first two notes of melody
         MelodyPart melody = notate.getCurrentMelodyPart();
         int currentSlot = grammar.getCurrentSlot();

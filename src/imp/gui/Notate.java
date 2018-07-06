@@ -619,7 +619,7 @@ private MidiLatencyMeasurementTool midiLatencyMeasurement = new MidiLatencyMeasu
  */
 //ActiveTradingWindow trader;
 ActiveTradingDialog traderDialog = null;
-private boolean isActiveTrading = false;
+private boolean isTrading = false;
 
 /**
  * If playback indicator goes off the screen, autoscroll to show it again
@@ -657,8 +657,8 @@ private int lazyGeneratedGoodUntil;
 private Future<MelodyPart> nextLazyPart;
 private final int lazyGeneratePreemptiveFactor = Constants.BEAT;
 
-private boolean isPassiveTrading;
-private int passiveTradingQuantum;
+//private boolean isPassiveTrading;
+//private int passiveTradingQuantum;
 private boolean passiveTradingImprovisorFirst;
 
 private javax.swing.JList grammarList;
@@ -1003,7 +1003,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     rhythmClusterName = extractClusterName(Preferences.getPreference(Preferences.CLUSTER_FILENAME));
 
-    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, passiveTradingDialog); //orig
+    lickgen = new LickGen(ImproVisor.getGrammarFile().getAbsolutePath(), this, null); //orig
     lickgenFrame = new LickgenFrame(this, lickgen, cm);
     transformFrame = new TransformFrame(this, lickgen, cm);
     fractalFrame = new FractalFrame(this, cm);
@@ -11060,16 +11060,15 @@ public Mode getMode()
  * @return instance of MidiRecorder
  */
 public MidiRecorder getMidiRecorder(){
+    if( this.midiRecorder == null )
+      {
+        this.midiRecorder = new MidiRecorder(this, this.score);
+      }
     return this.midiRecorder;
 }
 
 public void initTradingRecorder(MelodyPart aMelodyPart){
-    if (this.midiRecorder == null) {
-        this.midiRecorder = new MidiRecorder(this, this.score);
-        this.midiRecorder.setDestination(aMelodyPart);
-    } else{
-        this.midiRecorder.setDestination(aMelodyPart);
-    }
+    getMidiRecorder().setDestination(aMelodyPart);
 }
 
 /**
@@ -11146,20 +11145,9 @@ private void startRecordingHelper()
 
     //recordBtn.setBackground(Color.RED);
 
-    if( midiRecorder == null )
-      {
-        midiRecorder = new MidiRecorder(this, this.score);
-      }
+    MidiRecorder recorder = getMidiRecorder();
 
-//    no longer used
-//    Deal with latency
-//    if( superColliderMode )
-//      {//Set latency to default
-//        double latency = Preferences.getAudioInLatency();
-//        midiRecorder.setLatency(latency);
-//      }
-
-    midiSynth.registerReceiver(midiRecorder);
+    midiSynth.registerReceiver(recorder);
 
     staveRequestFocus();
 
@@ -11169,9 +11157,9 @@ private void startRecordingHelper()
 
     midiSynth.unregisterReceiver(midiStepInput);  // disable step input during recording
 
-    midiSynth.registerReceiver(midiRecorder);
+    midiSynth.registerReceiver(recorder);
 
-    midiRecorder.start(this.score.getCountInOffset(), getRecordLatency());   // set time to 0
+    recorder.start(this.score.getCountInOffset(), getRecordLatency());   // set time to 0
   }
 
 
@@ -11196,12 +11184,9 @@ public void enableRecording()
 
     //recordBtn.setBackground(Color.RED);
 
-    if( midiRecorder == null )
-      {
-        midiRecorder = new MidiRecorder(this, score);
-      }
-
-    midiSynth.registerReceiver(midiRecorder);
+    MidiRecorder recorder = getMidiRecorder();
+            
+    midiSynth.registerReceiver(recorder);
 
     staveRequestFocus();
 
@@ -11212,9 +11197,9 @@ public void enableRecording()
 
     midiSynth.unregisterReceiver(midiStepInput);  // disable step input during recording
 
-    // redundant midiSynth.registerReceiver(midiRecorder);
+    // redundant midiSynth.registerReceiver(recorder);
 
-    midiRecorder.start(score.getCountInOffset(), getRecordLatency());
+    recorder.start(score.getCountInOffset(), getRecordLatency());
   }
 
 private int getRecordLatency()
@@ -11239,7 +11224,7 @@ public void stopPlaying()
 
 int savNum = 1;
 
-//made public for active trading - zach
+//made public for active passiveTrading - zach
 public void stopPlaying(String reason)
   {
     //System.out.println("stopPlaying called in Notate for reason: " + reason);
@@ -11253,8 +11238,6 @@ public void stopPlaying(String reason)
     cancelLazyGeneration();
     setNormalMode();
     setShowConstructionLinesAndBoxes(showConstructionLinesMI.isSelected());
-    
-    isPassiveTrading = false;
     
     //from here end enables saving improv in the lickgenframe
     if(saveImprovCheckBoxMenuItem.isSelected())
@@ -21882,8 +21865,8 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
         if (lstmNetworkFrame.justInTimeGenerationEnabled()) {
             if (passiveTradingDialog.isVisible()) {
                 lstmGen.startGenerateTrading(chords, offset,
-                        passiveTradingDialog.getImprovisorTradeFirst(),
-                        passiveTradingDialog.getTradingQuantum());
+                        getImprovisorTradeFirst(),
+                        getTradingQuantum());
                 
             } else {
                 lstmGen.startGenerate(chords, offset, 1920);
@@ -21896,8 +21879,8 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
             MelodyPart lick;
             if (passiveTradingDialog.isVisible()) {
                 lick = lstmGen.generateTrading(chords, offset,
-                        passiveTradingDialog.getImprovisorTradeFirst(),
-                        passiveTradingDialog.getTradingQuantum());
+                        getImprovisorTradeFirst(),
+                        getTradingQuantum());
             } else {
                 lick = lstmGen.generate(chords, offset);
             }
@@ -21990,14 +21973,37 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     }
     setMode(Mode.GENERATED, modifier);
     
-    isPassiveTrading = passiveTradingDialog.isVisible();
-    passiveTradingQuantum = passiveTradingDialog.getTradingQuantum();
-    passiveTradingImprovisorFirst = passiveTradingDialog.getImprovisorTradeFirst();
+    //isPassiveTrading = traderDialog.passiveTradingChecked(); // passiveTradingDialog.isVisible();
+    //passiveTradingQuantum = passiveTradingDialog.getTradingQuantum();
+    //passiveTradingImprovisorFirst = traderDialog.getImprovisorTradeFirst();
 
-    if( isPassiveTrading && enableRecording )
+    if( getPassiveTrading() && enableRecording )
     {
         enableRecording(); // TRIAL
     }
+}
+
+public boolean getPassiveTrading()
+{
+    return getTradingDialog().passiveTradingChecked();
+}   
+
+public int getTradingQuantum()
+{
+    return getTradingDialog().getSlotsPerTurn();
+//    if( passiveTradingDialog != null )
+//      {
+//        return passiveTradingDialog.getTradingQuantum();
+//      }
+//    else
+//      {
+//        return 1960;    //TEMP FIX!!
+//      }
+}
+
+public boolean getImprovisorTradeFirst()
+{
+    return getTradingDialog().getImprovisorTradeFirst();
 }
   
 public void saveImprovChorus()
@@ -22201,14 +22207,15 @@ public void addNextLazyGeneratedPart(boolean hotSwapIn){
     lazyGeneratedGoodUntil = getCurrentSelectionStart() + nextPart.size();
     nextPart = nextPart.copy();
     nextPart.addNote(Note.makeRest(selectionLen - nextPart.size()));
-    if(isPassiveTrading && hotSwapIn){
+    if(getPassiveTrading() && hotSwapIn){
+        int quantum = getTradingQuantum();
         MelodyPart workingPart = getCurrentStave().getMelodyPart().copy();
         int startPos = getCurrentSelectionStart()
-                        + (passiveTradingImprovisorFirst ? 0 : passiveTradingQuantum);
+                        + (getImprovisorTradeFirst() ? 0 : quantum);
         for(int partPos = startPos;
                 partPos < getCurrentSelectionEnd();
-                partPos += 2*passiveTradingQuantum) {
-            workingPart.newPasteOver(nextPart.extract(partPos, partPos+passiveTradingQuantum-1), partPos);
+                partPos += 2*quantum) {
+            workingPart.newPasteOver(nextPart.extract(partPos, partPos+quantum-1), partPos);
         }
         nextPart = workingPart;
     }
@@ -23595,21 +23602,23 @@ private boolean isDotted = false;
     {
         tradingWindowActionPerformed(null);
     }
-    
-    private void tradingWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradingWindowActionPerformed
-        // Open New Trading window
-        this.setToNotLoop();
+   
+   public ActiveTradingDialog getTradingDialog()
+   {
         if( traderDialog == null )
           {
             traderDialog = new ActiveTradingDialog(this); // Not modal
             traderDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
             traderDialog.setSize(800, 200);
           }
-        else
-          {
-            traderDialog.tradingDialogOpened();
-          }
-        traderDialog.setVisible(true);
+        return traderDialog;
+   }
+    
+    private void tradingWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradingWindowActionPerformed
+        // Open New Trading window
+        this.setToNotLoop();
+        getTradingDialog().tradingDialogOpened();
+        getTradingDialog().setVisible(true);
     }//GEN-LAST:event_tradingWindowActionPerformed
 
     private void delAllMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delAllMIActionPerformed
@@ -24144,8 +24153,8 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     
     public void updateMusicianNotate(String newMusician)
     {
-        traderDialog.getActiveTrading().setMusician(newMusician);
-        traderDialog.setTransformStatusButtonText(newMusician);
+        getTradingDialog().getActiveTrading().setMusician(newMusician);
+        getTradingDialog().setTransformStatusButtonText(newMusician);
     }
     
     public String getGrammarName()
@@ -24443,16 +24452,21 @@ public void improvisationOff()
     grammarMenuDialog.improvisationOff();
   }
 
+public void setTradeCheckbox(boolean value)
+{
+    tradeCheckbox.setSelected(value);
+}
+
 /**
  * improviseContinuously() is called for straight improvisation or
- * passive trading, but not for active trading.
+ passive passiveTrading, but not for active passiveTrading.
  */
 
 public void improviseContinuously()
   {
     // This first line is really important. Without it, bad things
-    // can happen in MidiRecorder do to resetting the destination melodyPart.
-    isActiveTrading = false;
+    // can happen in MidiRecorder due to resetting the destination melodyPart.
+    isTrading = false;
     
     // Looping is also automatically implied with improvisation.
     loopButton.setSelected(false);
@@ -24846,9 +24860,7 @@ private void notateGrammarMenuAction(java.awt.event.ActionEvent evt)
     JMenuItem item = (JMenuItem) evt.getSource();
     String stem = item.getText();
     setGrammarName(stem);
-    if(traderDialog != null){
-        traderDialog.refreshSelectedGrammar(stem);
-    }
+    getTradingDialog().refreshSelectedGrammar(stem);
     fullName = stem + GrammarFilter.EXTENSION;
     grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + fullName;
     lickgen.loadGrammar(grammarFilename);
@@ -24885,9 +24897,7 @@ private void notateRhythmClusterMenuAction(java.awt.event.ActionEvent evt)
         clusterFileName = stem + ".cluster";
     }
     Preferences.setPreference(Preferences.CLUSTER_FILENAME, clusterFileName);
-    if(traderDialog != null){
-        traderDialog.refreshSelectedRhythmCluster(stem);
-    }
+    getTradingDialog().refreshSelectedRhythmCluster(stem);
 
     //lickgenFrame.resetTriageParameters(false);
 
@@ -24926,9 +24936,7 @@ public void grammarSelected(String stem, int mode)
 
     shufCount = 0;
     setGrammarName(stem);
-    if(traderDialog != null){
-        traderDialog.refreshSelectedGrammar(stem);
-    }
+    getTradingDialog().refreshSelectedGrammar(stem);
     fullName = stem + GrammarFilter.EXTENSION;
     grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + fullName;
     lickgen.loadGrammar(grammarFilename);
@@ -24989,14 +24997,14 @@ public boolean getWhetherToThemeWeave()
 
 public void setToTrade()
 {
-    isActiveTrading = true;
+    isTrading = true;
     //System.out.println("Active Trading set ON");
 }
 
 public void setNotToTrade()
 {
     tradeCheckbox.setSelected(false);
-    isActiveTrading = false;
+    isTrading = false;
     //System.out.println("Active Trading set OFF");
 }
 
@@ -25026,7 +25034,7 @@ public void populateNotateGrammarMenu()
 
         });
 
-        // Setup grammar menu items involving trading
+        // Setup grammar menu items involving passiveTrading
        //Add Cycle and Shuffle options at top
        
        cycle.addActionListener(new java.awt.event.ActionListener() {
@@ -25094,7 +25102,7 @@ public void populateGenericGrammarMenu(JMenu menu){
 
         });
 
-        // Setup grammar menu items involving trading
+        // Setup grammar menu items involving passiveTrading
         menu.removeAll();
         menu.add(new JLabel("Grammar"));
         
@@ -25155,7 +25163,7 @@ public void populateRhythmClusterMenu(JMenu menu){
 
         });
 
-        // Setup grammar menu items involving trading
+        // Setup grammar menu items involving passiveTrading
         menu.removeAll();
         menu.setText("RhythmCluster");
         menu.add(new JLabel("Rhythm Cluster"));
@@ -27268,7 +27276,7 @@ public ChordPart getChordProg()
 
 public ActiveTradingDialog getActiveTradingDialog()
 {
-    return traderDialog;
+    return getTradingDialog();
 }
 
 public int getTotalSlots()
@@ -27576,7 +27584,7 @@ public void setLayoutTF(String text)
   }
 
 public void tradingDialogClosed(){
-    isActiveTrading = false;
+    isTrading = false;
 }
 
 public boolean getUseNoteCursor()
@@ -27649,10 +27657,10 @@ class PlayActionListener implements ActionListener
  * @param evt
  */
 public void actionPerformed(ActionEvent evt) {
-        //this is used to pass info for interactive trading
-        if (isActiveTrading) {
+        //this is used to pass info for interactive passiveTrading
+        if (isTrading) {
 //            Notate.this.trader.trackPlay(evt);
-            Notate.this.traderDialog.trackPlay(evt);
+            getTradingDialog().trackPlay(evt);
         }
 
     if( playingStopped() )
@@ -27688,24 +27696,19 @@ public void actionPerformed(ActionEvent evt) {
       }
     previousSynthSlot = synthSlot;
     
-    if(isPassiveTrading) {
-//        int relativePosition = (slotInPlayback
-//                                    - getCurrentSelectionStart()
-//                                    + (passiveTradingImprovisorFirst
-//                                        ? passiveTradingQuantum : 0))
-//                                % (2 * passiveTradingQuantum);
-//        System.out.println("Passive trading! Rel pos is " + relativePosition); // TODO remove
-        
+    if(getPassiveTrading()) {
+        int quantum = getTradingQuantum();
         boolean isUserTurn = (slotInPlayback
                                     - getCurrentSelectionStart()
-                                    + (passiveTradingImprovisorFirst
-                                        ? passiveTradingQuantum : 0))
-                                % (2 * passiveTradingQuantum)
-                                < passiveTradingQuantum;
-        if(isUserTurn && midiRecorder.getSuspended())
-            midiRecorder.unSuspend();
-        else if(!isUserTurn && !midiRecorder.getSuspended())
-            midiRecorder.suspend();
+                                    + (getImprovisorTradeFirst()
+                                        ? quantum : 0))
+                                % (2 * quantum)
+                                < quantum;
+        MidiRecorder recorder = getMidiRecorder();
+        if(isUserTurn && recorder.getSuspended())
+            recorder.unSuspend();
+        else if(!isUserTurn && !recorder.getSuspended())
+            recorder.suspend();
     }
 
     if(nextLazyPart != null && slotInPlayback > lazyGeneratedGoodUntil - lazyGeneratePreemptiveFactor) {
@@ -27778,7 +27781,7 @@ public void actionPerformed(ActionEvent evt) {
 
 /**
  * Handle automatic improvisation This is called at practically every slot
- * in straight improvisation or passive trading, but not in active trading.
+ in straight improvisation or passive passiveTrading, but not in active passiveTrading.
  *
  * @param slotInPlayback
  */

@@ -22,9 +22,6 @@ package imp.trading;
 
 import imp.lickgen.LickgenFrame;
 import imp.gui.Notate;
-import java.util.Enumeration;
-import javax.swing.AbstractButton;
-import javax.swing.JRadioButton;
 
 /**
  *
@@ -384,7 +381,7 @@ public class PassiveTradingDialog extends javax.swing.JDialog
 
     private void generationGapSpinnergenerationLeadSpinnerChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_generationGapSpinnergenerationLeadSpinnerChanged
     {//GEN-HEADEREND:event_generationGapSpinnergenerationLeadSpinnerChanged
-        System.out.println("lickgenFrame = " + lickgenFrame);
+        //System.out.println("lickgenFrame = " + lickgenFrame);
         lickgenFrame.setGap(Double.parseDouble(generationGapSpinner.getValue().toString()));
     }//GEN-LAST:event_generationGapSpinnergenerationLeadSpinnerChanged
 
@@ -435,16 +432,18 @@ public boolean getImprovisorTradeFirst(){
     }
     
 public int getTradingQuantum(){
-      Enumeration<AbstractButton> bars = numberOfBarsGroup.getElements();
-      for(int i = 0; i < numberOfBarsGroup.getButtonCount(); i++){
-          JRadioButton button = (JRadioButton) bars.nextElement();
-          if(button.isSelected()){
-              return tradingQuantum[i] * notate.getSlotsPerMeasure();
-              //return ((Integer)wordToNumber.get(button.getText()))*score.getSlotsPerMeasure();
-          }
-      }
-      
-      return notate.getSlotsPerMeasure(); // default, should not get used
+    return notate.getTradingQuantum();
+    
+//    Enumeration<AbstractButton> bars = numberOfBarsGroup.getElements();
+//      for(int i = 0; i < numberOfBarsGroup.getButtonCount(); i++){
+//          JRadioButton button = (JRadioButton) bars.nextElement();
+//          if(button.isSelected()){
+//              return tradingQuantum[i] * notate.getSlotsPerMeasure();
+//              //return ((Integer)wordToNumber.get(button.getText()))*score.getSlotsPerMeasure();
+//          }
+//      }
+//      
+//      return notate.getSlotsPerMeasure(); // default, should not get used
     }
 
 

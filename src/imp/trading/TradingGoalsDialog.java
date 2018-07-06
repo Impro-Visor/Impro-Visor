@@ -149,7 +149,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
                public void windowClosing(java.awt.event.WindowEvent windowEvent){
                   // System.out.println("window closing, about to kill all threads");
                    killAllThreads();
-                   activeTradingDialog.stopTrading();   
+                   activeTradingDialog.stopActiveTrading();   
 
 //                   for(int i = 0; i < threadList.size(); i++){
 //                        if(threadList.get(i).isAlive()){

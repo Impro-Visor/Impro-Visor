@@ -127,18 +127,20 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         improvisorFirstButton = new javax.swing.JRadioButton();
         switchToPassiveTradingButton = new javax.swing.JButton();
         swingCheckBox = new javax.swing.JCheckBox();
+        passiveCheckBox = new javax.swing.JCheckBox();
         modePanel = new javax.swing.JPanel();
         modeStatus = new javax.swing.JLabel();
         grammarStatusButton = new javax.swing.JButton();
         transformStatusButton = new javax.swing.JButton();
         controlsPanel = new javax.swing.JPanel();
         processTimeSelector = new javax.swing.JTextField();
-        tempoPanel = new javax.swing.JPanel();
-        tempoLabel = new javax.swing.JLabel();
-        tempoSlider = new javax.swing.JSlider();
+        generationGapSpinner = new javax.swing.JSpinner();
         volumePanel = new javax.swing.JPanel();
         volumeLabel = new javax.swing.JLabel();
         volumeSlider = new javax.swing.JSlider();
+        tempoPanel = new javax.swing.JPanel();
+        tempoLabel = new javax.swing.JLabel();
+        tempoSlider = new javax.swing.JSlider();
         playbackControls = new javax.swing.JPanel();
         countToggle = new javax.swing.JCheckBox();
         loopToggle = new javax.swing.JCheckBox();
@@ -258,8 +260,21 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         swingCheckBox.setText("Swing");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         leadSelectors.add(swingCheckBox, gridBagConstraints);
+
+        passiveCheckBox.setText("Passive");
+        passiveCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                passiveCheckBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        leadSelectors.add(passiveCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -378,6 +393,67 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.weighty = 0.3;
         controlsPanel.add(processTimeSelector, gridBagConstraints);
 
+        generationGapSpinner.setModel(new javax.swing.SpinnerNumberModel(4.0d, -20.0d, 20.0d, 0.01d));
+        generationGapSpinner.setToolTipText("Specifies the lead time, in beats, for generating next chorus before the end of the current chorus, if Recur is toggled on.");
+        generationGapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lead", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 10))); // NOI18N
+        generationGapSpinner.setInheritsPopupMenu(true);
+        generationGapSpinner.setMaximumSize(new java.awt.Dimension(70, 45));
+        generationGapSpinner.setMinimumSize(new java.awt.Dimension(70, 45));
+        generationGapSpinner.setPreferredSize(new java.awt.Dimension(70, 45));
+        generationGapSpinner.setValue(0.5);
+        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                generationGapSpinnergenerationLeadSpinnerChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 19, 0, 0);
+        controlsPanel.add(generationGapSpinner, gridBagConstraints);
+
+        volumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Response Volume", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        volumePanel.setLayout(new java.awt.GridBagLayout());
+
+        volumeLabel.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
+        volumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        volumeLabel.setText("120");
+        volumeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.3;
+        volumePanel.add(volumeLabel, gridBagConstraints);
+
+        volumeSlider.setMaximumSize(new java.awt.Dimension(150, 29));
+        volumeSlider.setMinimumSize(new java.awt.Dimension(150, 29));
+        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                volumeSliderStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        volumePanel.add(volumeSlider, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.3;
+        controlsPanel.add(volumePanel, gridBagConstraints);
+
         tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (Beats per Minute)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
         tempoPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -404,7 +480,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -414,47 +490,11 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.3;
         controlsPanel.add(tempoPanel, gridBagConstraints);
-
-        volumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Response Volume", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        volumePanel.setLayout(new java.awt.GridBagLayout());
-
-        volumeLabel.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        volumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        volumeLabel.setText("120");
-        volumeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.3;
-        volumePanel.add(volumeLabel, gridBagConstraints);
-
-        volumeSlider.setMaximumSize(new java.awt.Dimension(150, 29));
-        volumeSlider.setMinimumSize(new java.awt.Dimension(150, 29));
-        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                volumeSliderStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        volumePanel.add(volumeSlider, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.3;
-        controlsPanel.add(volumePanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -693,14 +733,45 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private void tempoSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tempoSliderStateChanged
         updateTempo();
     }//GEN-LAST:event_tempoSliderStateChanged
+    
+    boolean passiveTrading = false;
+    
+    public void startPassiveTrading() {
+        startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
+        startOrStopTradingButton.setText("Stop Trading");
+        passiveTrading = true;
+    }
 
+    public void stopPassiveTrading() {
+        startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif")));
+        startOrStopTradingButton.setText("Start Trading");
+        passiveTrading = false;
+    }
+    
     private void startOrStopTradingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startOrStopTradingButtonActionPerformed
+        if( passiveCheckBox.isSelected() )
+          {
+          /* The following applies to passive trading. */
+          notate.remoteToggleImprovise();
+          if( passiveTrading )
+            {
+            stopPassiveTrading();
+            }
+          else
+            {
+            startPassiveTrading();
+            }   
+          return;
+           }
+        
+        /* The following applies to active trading. */
+        
         if( tradingNow )
           {
             if(activeTrading.getTradeMode() instanceof RhythmHelperTRM){
             showUserRhythmSelecterDialog();
             }
-            stopTrading();
+            stopActiveTrading();
           }
         else
           {
@@ -711,7 +782,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
                 cancelButton.setVisible(true);
                 //System.out.println("cancel button is visible: "+ cancelButton.isVisible());
             }
-            startTrading();
+            startActiveTrading();
           }
     }//GEN-LAST:event_startOrStopTradingButtonActionPerformed
 
@@ -732,27 +803,27 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     }//GEN-LAST:event_countToggleActionPerformed
 
     private void tradeStopMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeStopMenuItemActionPerformed
-        stopTrading();
+        stopActiveTrading();
         if(activeTrading.getTradeMode() instanceof RhythmHelperTRM){
             showUserRhythmSelecterDialog();
         }
     }//GEN-LAST:event_tradeStopMenuItemActionPerformed
 
     private void tradePlayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradePlayMenuItemActionPerformed
-       startTrading();
+       startActiveTrading();
     }//GEN-LAST:event_tradePlayMenuItemActionPerformed
 
     private void activeTradingWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_activeTradingWindowClosed
-        stopTrading();
+        stopActiveTrading();
     }//GEN-LAST:event_activeTradingWindowClosed
 
     private void activeTradingWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_activeTradingWindowClosing
-        stopTrading();
+        stopActiveTrading();
     }//GEN-LAST:event_activeTradingWindowClosing
 
     private void switchToPassiveTradingButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_switchToPassiveTradingButtonActionPerformed
     {//GEN-HEADEREND:event_switchToPassiveTradingButtonActionPerformed
-        stopTrading();
+        stopActiveTrading();
         setVisible(false);
         notate.openPassiveTradingWindow();
     }//GEN-LAST:event_switchToPassiveTradingButtonActionPerformed
@@ -791,11 +862,42 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private void transformStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transformStatusButtonActionPerformed
         notate.openTransformMenuDialog();     
     }//GEN-LAST:event_transformStatusButtonActionPerformed
+
+    private void passiveCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_passiveCheckBoxActionPerformed
+    {//GEN-HEADEREND:event_passiveCheckBoxActionPerformed
+        notate.setTradeCheckbox(true);
+    }//GEN-LAST:event_passiveCheckBoxActionPerformed
+
+    private void generationGapSpinnergenerationLeadSpinnerChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_generationGapSpinnergenerationLeadSpinnerChanged
+    {//GEN-HEADEREND:event_generationGapSpinnergenerationLeadSpinnerChanged
+        //System.out.println("lickgenFrame = " + lickgenFrame);
+        notate.getLickgenFrame().setGap(Double.parseDouble(generationGapSpinner.getValue().toString()));
+    }//GEN-LAST:event_generationGapSpinnergenerationLeadSpinnerChanged
+    
+public void setGenerationGap(double value)
+  {
+    generationGapSpinner.setValue(0.01 * (int) (100 * value));
+  }
+
+public double getGenerationGap()
+  {
+    return (Double) generationGapSpinner.getValue();
+  }
+
+public boolean passiveTradingChecked()
+    {
+        return passiveCheckBox.isSelected();
+    }
     
     public ActiveTrading getActiveTrading()
      {
          return activeTrading;
      }
+    
+    public int getSlotsPerTurn()
+    {
+        return activeTrading.getSlotsPerTurn();
+    }
     
     public void setTransformStatusButtonText(String musicianName)
     {
@@ -855,7 +957,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         setMenuAndStatusToGrammarOrRhythmCluster(getFromDropDown(modeMenu));
     }
 
-    private void startTrading()
+    private void startActiveTrading()
     {
          if (!isUserInputError) {
             updateMusician();
@@ -867,7 +969,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             }else{  
             activeTrading.startTrading();
             }
-            //nnActiveTrading.startTrading();
+            //nnActiveTrading.startActiveTrading();
          }
          tradingNow = true;
          notate.setToTrade();
@@ -883,38 +985,36 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         userRhythmSelecterDialog.setVisible(true);
     }
     
-    public void stopTrading()
+    public void stopActiveTrading()
     {
-        if(cancelButton.isVisible()){
-                loopToggle.setVisible(true);
-                countToggle.setVisible(true);
-                //System.out.println("about to make cancel button invisible");
-                cancelButton.setVisible(false);
-                //System.out.println("cancel button is visible: "+ cancelButton.isVisible());
-                
-        }
-        
-        
-        activeTrading.stopTrading(); 
-        tradingNow = false;
-        notate.setNotToTrade();
+    if( cancelButton.isVisible() )
+      {
+        loopToggle.setVisible(true);
+        countToggle.setVisible(true);
+        cancelButton.setVisible(false);
+      }
 
-        
-        //this.setVisible(false);
-
+    activeTrading.stopTrading();
+    tradingNow = false;
+    notate.setNotToTrade();
     }
     
-    private void updateProcessTimeText() {
+    private void updateProcessTimeText()
+    {
         int slotsForProcessing = activeTrading.getSlotsForProcessing();
-        if (slotsForProcessing == 1) {
+        if( slotsForProcessing == 1 )
+          {
             processTimeSelector.setText("0.0");
-        } else {
+          }
+        else
+          {
             Double newBeatVal = activeTrading.slotsToBeats(slotsForProcessing);
             processTimeSelector.setText(newBeatVal.toString());
-        }
+          }
     }
 
-    private void updateTradeMode(){
+    private void updateTradeMode()
+    {
         String newMode = getFromDropDown(modeMenu);
         setMenuAndStatusToGrammarOrRhythmCluster(newMode);
         TradingResponseMode tradeMode;
@@ -925,8 +1025,9 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         userFirstButton.setVisible(true);
         improvisorFirstButton.setVisible(true);
         rhythmHelperModeRadioPanel.setVisible(false);
-        
-        switch (newMode) {
+
+        switch( newMode )
+          {
             case "Repeat":
                 tradeMode = new RepeatTRM(newMode);
                 break;
@@ -948,25 +1049,12 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             case "Chop and Memorize":
                 tradeMode = new ChopAndMemorizeTRM(newMode);
                 break;
-//            case "Autoencoder (Experimental)":
-//                tradeMode = new AutoencoderTRM(newMode); 
-//                //these parameters aren't used for Autoenoder trade, so make them invisible
-//                tradeLengthSpinner.setVisible(false);
-//                grammarStatusButton.setVisible(false);
-//                transformStatusButton.setVisible(false);
-//                break;
-//            case "Stream Repeat":
-//                tradeMode = new StreamRepeatTRM(newMode);
-//                grammarStatus.setVisible(false);
-//                transformStatus.setVisible(false);
-//                break;
             case "Rhythm Helper":
                 grammarStatusButton.setVisible(false);
                 transformStatusButton.setVisible(false);
                 rhythmHelperModeRadioPanel.setVisible(true);
                 tradeMode = getRhythmHelperSelectedTRM();
                 toggleTradeFirstButtons(tradeMode);
-                
                 break;
             case "Memorize Motifs":
                 transformStatusButton.setVisible(false);
@@ -975,27 +1063,34 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             default:
                 tradeMode = null;
                 break;
-        }
+          }
         activeTrading.setTradeMode(tradeMode);
-        if(tradeMode != null) {
-        modeStatus.setText("Mode: " + newMode);
-        }
-        else {
+        if( tradeMode != null )
+          {
+            modeStatus.setText("Mode: " + newMode);
+          }
+        else
+          {
             modeStatus.setText("Mode: NOT RECOGNIZED");
-        }
+          }
+    }
+    
+    public boolean getImprovisorTradeFirst()
+    {
+        return improvisorFirstButton.isSelected();
     }
 
-    private void setMenuAndStatusToGrammarOrRhythmCluster(String tradeMode){
-        if(tradeMode.equals("Rhythm Helper")){
+    private void setMenuAndStatusToGrammarOrRhythmCluster(String tradeMode)
+    {
+        if( tradeMode.equals("Rhythm Helper") )
+          {
             createRhythmClusterMenuAndStatus();
             tradeGrammarMenu.setVisible(true);
- 
-        }else{
-//            notate.populateNotateGrammarMenu();
-//            notate.populateGenericGrammarMenu(tradeGrammarMenu);
+          }
+        else
+          {
             refreshSelectedGrammar("Grammar");
-           
-        }
+          }
     }
     
     public void createRhythmClusterMenuAndStatus(){
@@ -1101,48 +1196,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         ((javax.swing.border.TitledBorder)grammarStatusButton.getBorder()).setTitle("Grammar Chooser");
     }
 
-    
-//    public void populateMusicianList() 
-//    {
-//        File directory = ImproVisor.getTransformDirectory();
-//        //System.out.println("populating from " + directory);
-//        if (directory.isDirectory()) 
-//        {
-//            String fileName[] = directory.list();
-//
-//            // 6-25-13 Hayden Blauzvern
-//            // Fix for Linux, where the file list is not in alphabetic order
-//            Arrays.sort(fileName, new Comparator<String>() 
-//            {
-//                public int compare(String s1, String s2) 
-//                {
-//                    return s1.toUpperCase().compareTo(s2.toUpperCase());
-//                }
-//
-//            });
-//
-//            // Add names of grammar files
-//            for (String name : fileName) 
-//            {
-//                if (name.endsWith(TransformFilter.EXTENSION)) 
-//                {
-//                    int len = name.length();
-//                    String stem = name.substring(0, len - TransformFilter.EXTENSION.length());
-//                    JRadioButtonMenuItem newMusician = new JRadioButtonMenuItem();
-//                    newMusician.setText(stem);
-//                    newMusician.addActionListener(this);
-//                    newMusician.setSelected(true);
-//                    transformFileSelector.add(newMusician);
-//                    tradeMusicianMenu.add(newMusician);
-//                    //transformMenuDialog.getTransformListModel().addElement(stem);
-//                    //System.out.println("transform list just added: " + stem);
-//
-//                }
-//            }
-//        }
-//        updateMusician();
-//    }
-
     public void tradingStarted() {
         startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
         startOrStopTradingButton.setText("Stop Trading");
@@ -1241,7 +1294,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             @Override
             public void actionPerformed(ActionEvent e){
                 if(tradingNow){
-                    stopTrading();
+                    stopActiveTrading();
                 }
             }
         });
@@ -1263,6 +1316,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JRadioButtonMenuItem RhythmHelperMenuItem;
     private javax.swing.JPanel controlsPanel;
     private javax.swing.JCheckBox countToggle;
+    private javax.swing.JSpinner generationGapSpinner;
     private javax.swing.ButtonGroup grammarGroup;
     private javax.swing.JButton grammarStatusButton;
     private javax.swing.JRadioButton improvisorFirstButton;
@@ -1274,6 +1328,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     private javax.swing.JPanel modePanel;
     private javax.swing.ButtonGroup modeSelector;
     private javax.swing.JLabel modeStatus;
+    private javax.swing.JCheckBox passiveCheckBox;
     private javax.swing.JPanel playbackControls;
     private javax.swing.JTextField processTimeSelector;
     private javax.swing.JButton startOrStopTradingButton;

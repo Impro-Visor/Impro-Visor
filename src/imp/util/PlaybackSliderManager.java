@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
  * along with Impro-Visor; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
-
 
 /**
  * Written by Martin Hunt
@@ -106,8 +104,6 @@ public class PlaybackSliderManager implements MidiPlayListener, ChangeListener, 
 
         long newValue = (long) (totalTimeMicroseconds * fraction);
 
-        //System.out.println("slider fraction = " + fraction + ", midiSynth fraction = " + midiSynth.getFraction() + ", new time = " + newValue + " total = " + totalTimeMicroseconds);
-
         if(!slider.getValueIsAdjusting())
           {
             //System.out.println("stateChanged, fraction = " + fraction);
@@ -117,17 +113,19 @@ public class PlaybackSliderManager implements MidiPlayListener, ChangeListener, 
           }
     }
     
-    /**
-     * Called on timer firing
-     */
+/**
+ * Called on timer firing
+ * @param e
+ */
 
+@Override
 public void actionPerformed(ActionEvent e)
   {
     final ActionEvent evt = e;
 
     SwingUtilities.invokeLater(new Runnable()
     {
-
+    @Override
     public void run()
       {
         if( status != MidiPlayListener.Status.STOPPED )
@@ -135,8 +133,6 @@ public void actionPerformed(ActionEvent e)
 
             if( !slider.getValueIsAdjusting() )
               {
-
-                long microsecond = midiSynth.getMicrosecond();
 
                 updateTimeSlider(true);
 
@@ -177,7 +173,7 @@ public void actionPerformed(ActionEvent e)
 
     /**
      * sets the totalTime, given the current tempo
-     @param seconds
+     * @param microseconds
      */
 
     public void setTotalTime(long microseconds) {
@@ -204,7 +200,7 @@ public void actionPerformed(ActionEvent e)
 
    /**
      * sets the current time showing on the slider
-     @param seconds
+     * @param microseconds
      */
 
     public void setCurrentTimeMicroseconds(long microseconds) {
@@ -214,7 +210,6 @@ public void actionPerformed(ActionEvent e)
     /**
      * Update the time slider, according to specified number of microseconds
      * into the piece.
-     @param microseconds
      @param updateSlider
      */
 
@@ -228,11 +223,12 @@ public void updateTimeSlider(boolean updateSlider)
         ignoreEvent = true;
         slider.setValue((int) (midiSynth.getFraction() * slider.getMaximum()));
         ignoreEvent = false;
-
       }
   }
 
-    public void setPlaying(MidiPlayListener.Status playing, Transposition transposition) {
+    @Override
+    public void setPlaying(MidiPlayListener.Status playing, 
+                           Transposition transposition) {
         MidiPlayListener.Status oldStatus = status;
         status = playing;
         switch(playing) {
@@ -251,6 +247,7 @@ public void updateTimeSlider(boolean updateSlider)
         }
     }
 
+    @Override
     public MidiPlayListener.Status getPlaying() {
         return status;
     }
