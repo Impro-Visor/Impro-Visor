@@ -825,7 +825,6 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     {//GEN-HEADEREND:event_switchToPassiveTradingButtonActionPerformed
         stopActiveTrading();
         setVisible(false);
-        notate.openPassiveTradingWindow();
     }//GEN-LAST:event_switchToPassiveTradingButtonActionPerformed
 
     private void activeTradingShown(java.awt.event.ComponentEvent evt)//GEN-FIRST:event_activeTradingShown

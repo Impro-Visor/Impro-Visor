@@ -2117,7 +2117,6 @@ public Critic getCritic()
         saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
         tradingWindow = new javax.swing.JMenuItem();
-        passiveTradingMI = new javax.swing.JMenuItem();
         improvSeparator2 = new javax.swing.JPopupMenu.Separator();
         tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
         lstmNetworkRadio = new javax.swing.JRadioButtonMenuItem();
@@ -9428,7 +9427,7 @@ public Critic getCritic()
         improvMenu.add(saveImprovCheckBoxMenuItem);
         improvMenu.add(improvSeparator1);
 
-        tradingWindow.setText("Active Trading");
+        tradingWindow.setText("Trading");
         tradingWindow.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9437,16 +9436,6 @@ public Critic getCritic()
             }
         });
         improvMenu.add(tradingWindow);
-
-        passiveTradingMI.setText("Passive Trading");
-        passiveTradingMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                passiveTradingMIActionPerformed(evt);
-            }
-        });
-        improvMenu.add(passiveTradingMI);
         improvMenu.add(improvSeparator2);
 
         tradeCheckbox.setText("Passive Trading Options");
@@ -23593,11 +23582,6 @@ private boolean isDotted = false;
         shouldFilter = false;
     }//GEN-LAST:event_clearRangeBtnActionPerformed
 
-   public void openPassiveTradingWindow()
-    {
-        passiveTradingMIActionPerformed(null);
-    }
-   
    public void openActiveTradingWindow()
     {
         tradingWindowActionPerformed(null);
@@ -23655,11 +23639,6 @@ private boolean isDotted = false;
         conPanel.setStyleEditor(getStyleEditor());
         conPanel.setVisible(true);
     }//GEN-LAST:event_fluidVoicingsActionPerformed
-
-    private void passiveTradingMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passiveTradingMIActionPerformed
-        passiveTradingDialog.setVisible(true);
-        tradeCheckbox.setSelected(true);
-    }//GEN-LAST:event_passiveTradingMIActionPerformed
 
     private void tradeCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradeCheckboxActionPerformed
         if( tradeCheckbox.isSelected() )
@@ -24489,12 +24468,12 @@ public void setShowConstructionLinesAndBoxes(boolean value)
 
 public void setGenerationGap(double value)
   {
-    passiveTradingDialog.setGenerationGap(value);
+    traderDialog.setGenerationGap(value);
   }
 
 public double getGenerationGap()
   {
-    return passiveTradingDialog.getGenerationGap();
+    return traderDialog.getGenerationGap();
   }
 
 boolean recurrentImprovisation = false;
@@ -26745,7 +26724,6 @@ private ImageIcon pauseButton =
     private javax.swing.JTextField partComposerTF;
     private javax.swing.JLabel partTitleLabel;
     private javax.swing.JTextField partTitleTF;
-    private javax.swing.JMenuItem passiveTradingMI;
     private javax.swing.JButton pasteBothBtn;
     private javax.swing.JMenuItem pasteBothMI;
     private javax.swing.JMenuItem pasteBothPMI;
@@ -27656,10 +27634,10 @@ class PlayActionListener implements ActionListener
  *
  * @param evt
  */
+@Override
 public void actionPerformed(ActionEvent evt) {
         //this is used to pass info for interactive passiveTrading
         if (isTrading) {
-//            Notate.this.trader.trackPlay(evt);
             getTradingDialog().trackPlay(evt);
         }
 
@@ -27736,8 +27714,6 @@ public void actionPerformed(ActionEvent evt) {
 
     if( slotInPlayback > stopPlaybackAtSlot )
       {
-//        System.out.println("stop at " + slotInPlayback + " vs. " + stopPlaybackAtSlot);
-
         stopPlaying("slotInPlayback > stopPlaybackAtSlot " + slotInPlayback + " > " + stopPlaybackAtSlot);
         return;
       }
@@ -27747,8 +27723,6 @@ public void actionPerformed(ActionEvent evt) {
     int slotInChorus = slotInPlayback % chorusSize;
 
     Chord currentChord = chordProg.getCurrentChord(slotInChorus);
-
-    //currentChord.getChordForm(); // value not used?
 
     currentPlaybackTab = slotInPlayback / chorusSize;
 
