@@ -8117,7 +8117,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="tradingWindow">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Trading"/>
+                <Property name="text" type="java.lang.String" value="Trade"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradingWindowActionPerformed"/>

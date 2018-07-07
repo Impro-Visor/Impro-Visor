@@ -123,6 +123,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         transformFileSelector = new javax.swing.ButtonGroup();
         grammarGroup = new javax.swing.ButtonGroup();
         activePassiveGroup = new javax.swing.ButtonGroup();
+        tradeLengthGroup = new javax.swing.ButtonGroup();
         leadSelectors = new javax.swing.JPanel();
         userFirstButton = new javax.swing.JRadioButton();
         improvisorFirstButton = new javax.swing.JRadioButton();
@@ -147,6 +148,10 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         loopToggle = new javax.swing.JCheckBox();
         startOrStopTradingButton = new javax.swing.JButton();
         tradeLengthPanel = new javax.swing.JPanel();
+        trade1 = new javax.swing.JRadioButton();
+        trade2 = new javax.swing.JRadioButton();
+        trade4 = new javax.swing.JRadioButton();
+        trade8 = new javax.swing.JRadioButton();
         tradeLengthSpinner = new javax.swing.JSpinner();
         mainTradeMenuBar = new javax.swing.JMenuBar();
         tradePlayMenu = new javax.swing.JMenu();
@@ -583,14 +588,85 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints.weighty = 0.3;
         getContentPane().add(playbackControls, gridBagConstraints);
 
+        tradeLengthPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trade length (bars)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         tradeLengthPanel.setMaximumSize(new java.awt.Dimension(200, 123));
+        tradeLengthPanel.setMinimumSize(new java.awt.Dimension(153, 50));
+        tradeLengthPanel.setPreferredSize(new java.awt.Dimension(153, 50));
         tradeLengthPanel.setLayout(new java.awt.GridBagLayout());
+
+        tradeLengthGroup.add(trade1);
+        trade1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        trade1.setText("1");
+        trade1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                trade1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        tradeLengthPanel.add(trade1, gridBagConstraints);
+
+        tradeLengthGroup.add(trade2);
+        trade2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        trade2.setLabel("2");
+        trade2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                trade2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        tradeLengthPanel.add(trade2, gridBagConstraints);
+
+        tradeLengthGroup.add(trade4);
+        trade4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        trade4.setSelected(true);
+        trade4.setText("4");
+        trade4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                trade4ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        tradeLengthPanel.add(trade4, gridBagConstraints);
+
+        tradeLengthGroup.add(trade8);
+        trade8.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        trade8.setText("8");
+        trade8.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                trade8ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        tradeLengthPanel.add(trade8, gridBagConstraints);
 
         tradeLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(4, 1, null, 1));
         tradeLengthSpinner.setToolTipText("The number of bars in melody.");
-        tradeLengthSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Length of Trade (bars)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(200, 50));
-        tradeLengthSpinner.setPreferredSize(new java.awt.Dimension(200, 50));
+        tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(50, 30));
+        tradeLengthSpinner.setPreferredSize(new java.awt.Dimension(50, 30));
         tradeLengthSpinner.setValue(new Integer(4));
         tradeLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener()
         {
@@ -600,8 +676,8 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         tradeLengthPanel.add(tradeLengthSpinner, gridBagConstraints);
@@ -609,7 +685,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.25;
         getContentPane().add(tradeLengthPanel, gridBagConstraints);
@@ -880,6 +956,30 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
     {//GEN-HEADEREND:event_passiveButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passiveButtonActionPerformed
+
+    private void trade4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_trade4ActionPerformed
+    {//GEN-HEADEREND:event_trade4ActionPerformed
+        tradeLengthSpinner.setValue(4);
+        tradeLengthSpinnerlengthOfTradeSet(null);
+    }//GEN-LAST:event_trade4ActionPerformed
+
+    private void trade8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_trade8ActionPerformed
+    {//GEN-HEADEREND:event_trade8ActionPerformed
+        tradeLengthSpinner.setValue(8);
+        tradeLengthSpinnerlengthOfTradeSet(null);
+    }//GEN-LAST:event_trade8ActionPerformed
+
+    private void trade2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_trade2ActionPerformed
+    {//GEN-HEADEREND:event_trade2ActionPerformed
+        tradeLengthSpinner.setValue(2);
+        tradeLengthSpinnerlengthOfTradeSet(null);
+    }//GEN-LAST:event_trade2ActionPerformed
+
+    private void trade1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_trade1ActionPerformed
+    {//GEN-HEADEREND:event_trade1ActionPerformed
+        tradeLengthSpinner.setValue(1);
+        tradeLengthSpinnerlengthOfTradeSet(null);
+    }//GEN-LAST:event_trade1ActionPerformed
     
 public void setGenerationGap(double value)
   {
@@ -1345,9 +1445,14 @@ public boolean passiveSelected()
     private javax.swing.JLabel tempoLabel;
     private javax.swing.JPanel tempoPanel;
     private javax.swing.JSlider tempoSlider;
+    private javax.swing.JRadioButton trade1;
+    private javax.swing.JRadioButton trade2;
+    private javax.swing.JRadioButton trade4;
+    private javax.swing.JRadioButton trade8;
     private javax.swing.JRadioButtonMenuItem tradeAbstract;
     private javax.swing.JMenu tradeGrammarMenu;
     private javax.swing.JRadioButtonMenuItem tradeGrammarSolo;
+    private javax.swing.ButtonGroup tradeLengthGroup;
     private javax.swing.JPanel tradeLengthPanel;
     private javax.swing.JSpinner tradeLengthSpinner;
     private javax.swing.JMenu tradePlayMenu;

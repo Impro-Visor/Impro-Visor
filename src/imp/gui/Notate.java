@@ -9427,7 +9427,7 @@ public Critic getCritic()
         improvMenu.add(saveImprovCheckBoxMenuItem);
         improvMenu.add(improvSeparator1);
 
-        tradingWindow.setText("Trading");
+        tradingWindow.setText("Trade");
         tradingWindow.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
