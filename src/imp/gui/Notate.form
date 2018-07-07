@@ -8127,7 +8127,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Passive Trading Options"/>
+                <Property name="text" type="java.lang.String" value="Improv and Passive Trading Options"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>

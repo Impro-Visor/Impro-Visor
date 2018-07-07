@@ -9438,7 +9438,7 @@ public Critic getCritic()
         improvMenu.add(tradingWindow);
         improvMenu.add(improvSeparator2);
 
-        tradeCheckbox.setText("Passive Trading Options");
+        tradeCheckbox.setText("Improv and Passive Trading Options");
         tradeCheckbox.setEnabled(false);
         tradeCheckbox.addActionListener(new java.awt.event.ActionListener()
         {
