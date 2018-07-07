@@ -21962,7 +21962,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     }
     setMode(Mode.GENERATED, modifier);
     
-    //isPassiveTrading = traderDialog.passiveTradingChecked(); // passiveTradingDialog.isVisible();
+    //isPassiveTrading = traderDialog.passiveSelected(); // passiveTradingDialog.isVisible();
     //passiveTradingQuantum = passiveTradingDialog.getTradingQuantum();
     //passiveTradingImprovisorFirst = traderDialog.getImprovisorTradeFirst();
 
@@ -21974,7 +21974,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
 
 public boolean getPassiveTrading()
 {
-    return getTradingDialog().passiveTradingChecked();
+    return getTradingDialog().passiveSelected();
 }   
 
 public int getTradingQuantum()
