@@ -124,6 +124,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         grammarGroup = new javax.swing.ButtonGroup();
         activePassiveGroup = new javax.swing.ButtonGroup();
         tradeLengthGroup = new javax.swing.ButtonGroup();
+        passiveOptionGroup = new javax.swing.ButtonGroup();
         leadSelectors = new javax.swing.JPanel();
         userFirstButton = new javax.swing.JRadioButton();
         improvisorFirstButton = new javax.swing.JRadioButton();
@@ -167,9 +168,14 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeStore = new javax.swing.JRadioButtonMenuItem();
         MemorizeMotifsMenuItem = new javax.swing.JRadioButtonMenuItem();
         RhythmHelperMenuItem = new javax.swing.JRadioButtonMenuItem();
+        improvMenu = new javax.swing.JMenu();
+        lstmNetworkRadio = new javax.swing.JRadioButtonMenuItem();
+        grammarRadio = new javax.swing.JRadioButtonMenuItem();
+        transformRadio = new javax.swing.JRadioButtonMenuItem();
+        grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
         tradeGrammarMenu = new javax.swing.JMenu();
 
-        setTitle("Impro-Visor Active Trading");
+        setTitle("Impro-Visor Trading");
         setBackground(new java.awt.Color(204, 204, 255));
         setBounds(new java.awt.Rectangle(25, 0, 850, 220));
         setLocation(new java.awt.Point(25, 0));
@@ -718,7 +724,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
 
         mainTradeMenuBar.add(tradePlayMenu);
 
-        modeMenu.setText("Active Trading Mode");
+        modeMenu.setText("Active Modes");
 
         modeSelector.add(tradeRepeat);
         tradeRepeat.setText("Repeat");
@@ -782,6 +788,55 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         modeMenu.add(RhythmHelperMenuItem);
 
         mainTradeMenuBar.add(modeMenu);
+
+        improvMenu.setText("Passive Modes");
+
+        passiveOptionGroup.add(lstmNetworkRadio);
+        lstmNetworkRadio.setText("Use Deep Learning");
+        lstmNetworkRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                lstmNetworkRadioActionPerformed(evt);
+            }
+        });
+        improvMenu.add(lstmNetworkRadio);
+
+        passiveOptionGroup.add(grammarRadio);
+        grammarRadio.setSelected(true);
+        grammarRadio.setText("Use Grammar");
+        grammarRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                grammarRadioActionPerformed(evt);
+            }
+        });
+        improvMenu.add(grammarRadio);
+
+        passiveOptionGroup.add(transformRadio);
+        transformRadio.setText("Use Grammar & Transform");
+        transformRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                transformRadioActionPerformed(evt);
+            }
+        });
+        improvMenu.add(transformRadio);
+
+        passiveOptionGroup.add(grammarDivideRadio);
+        grammarDivideRadio.setText("Use Grammar & Divide");
+        grammarDivideRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                grammarDivideRadioActionPerformed(evt);
+            }
+        });
+        improvMenu.add(grammarDivideRadio);
+
+        mainTradeMenuBar.add(improvMenu);
 
         tradeGrammarMenu.setText("Rhythm Cluster");
         mainTradeMenuBar.add(tradeGrammarMenu);
@@ -980,6 +1035,26 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
         tradeLengthSpinner.setValue(1);
         tradeLengthSpinnerlengthOfTradeSet(null);
     }//GEN-LAST:event_trade1ActionPerformed
+
+    private void lstmNetworkRadioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_lstmNetworkRadioActionPerformed
+    {//GEN-HEADEREND:event_lstmNetworkRadioActionPerformed
+        notate.setUseDeepLearning();
+    }//GEN-LAST:event_lstmNetworkRadioActionPerformed
+
+    private void grammarRadioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarRadioActionPerformed
+    {//GEN-HEADEREND:event_grammarRadioActionPerformed
+        notate.setUseGrammar();
+    }//GEN-LAST:event_grammarRadioActionPerformed
+
+    private void transformRadioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_transformRadioActionPerformed
+    {//GEN-HEADEREND:event_transformRadioActionPerformed
+        notate.setUseGrammarAndTransform();
+    }//GEN-LAST:event_transformRadioActionPerformed
+
+    private void grammarDivideRadioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarDivideRadioActionPerformed
+    {//GEN-HEADEREND:event_grammarDivideRadioActionPerformed
+        notate.setUseGrammarAndDivide();
+    }//GEN-LAST:event_grammarDivideRadioActionPerformed
     
 public void setGenerationGap(double value)
   {
@@ -1426,18 +1501,23 @@ public boolean passiveSelected()
     private javax.swing.JPanel controlsPanel;
     private javax.swing.JCheckBox countToggle;
     private javax.swing.JSpinner generationGapSpinner;
+    private javax.swing.JRadioButtonMenuItem grammarDivideRadio;
     private javax.swing.ButtonGroup grammarGroup;
+    private javax.swing.JRadioButtonMenuItem grammarRadio;
     private javax.swing.JButton grammarStatusButton;
+    private javax.swing.JMenu improvMenu;
     private javax.swing.JRadioButton improvisorFirstButton;
     private javax.swing.JPanel leadSelectors;
     private javax.swing.ButtonGroup leadingSelector;
     private javax.swing.JCheckBox loopToggle;
+    private javax.swing.JRadioButtonMenuItem lstmNetworkRadio;
     private javax.swing.JMenuBar mainTradeMenuBar;
     private javax.swing.JMenu modeMenu;
     private javax.swing.JPanel modePanel;
     private javax.swing.ButtonGroup modeSelector;
     private javax.swing.JLabel modeStatus;
     private javax.swing.JRadioButton passiveButton;
+    private javax.swing.ButtonGroup passiveOptionGroup;
     private javax.swing.JPanel playbackControls;
     private javax.swing.JTextField processTimeSelector;
     private javax.swing.JButton startOrStopTradingButton;
@@ -1464,6 +1544,7 @@ public boolean passiveSelected()
     private javax.swing.JRadioButtonMenuItem tradeStore;
     private javax.swing.JRadioButtonMenuItem tradeWithAMusician;
     private javax.swing.ButtonGroup transformFileSelector;
+    private javax.swing.JRadioButtonMenuItem transformRadio;
     private javax.swing.JButton transformStatusButton;
     private javax.swing.JRadioButton userFirstButton;
     private javax.swing.JLabel volumeLabel;
