@@ -43,7 +43,7 @@ import static imp.gui.Notate.DEFAULT_BARS_PER_PART;
 import imp.lickgen.LickGen;
 import imp.lickgen.LickgenFrame;
 import imp.lickgen.NoteConverter;
-import imp.trading.ActiveTradingDialog;
+import imp.trading.TradingDialog;
 import imp.trading.TradingResponseInfo;
 import imp.trading.UserRhythmSelecterDialog;
 import imp.util.NonExistentParameterException;
@@ -73,7 +73,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     protected Double[] maxMetricValues;
     protected Double[] minMetricValues;
     protected String clusterFileName;
-    protected ActiveTradingDialog activeTradingDialog;
+    protected TradingDialog activeTradingDialog;
     protected int tradeLengthInSlots;
     protected int windowSize;
     protected double[] savedDatapointAverages;

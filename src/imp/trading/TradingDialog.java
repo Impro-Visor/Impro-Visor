@@ -57,7 +57,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 
-public class ActiveTradingDialog extends javax.swing.JDialog implements TradeListener, ActionListener {
+public class TradingDialog extends javax.swing.JDialog implements TradeListener, ActionListener {
  
     private final ActiveTrading activeTrading;
     private boolean tradingNow = false;
@@ -80,7 +80,7 @@ public class ActiveTradingDialog extends javax.swing.JDialog implements TradeLis
      * @param notate
      * @param modal
      */
-    public ActiveTradingDialog(Notate notate) {
+    public TradingDialog(Notate notate) {
         super(notate, false);
         this.notate = notate;
         initComponents();

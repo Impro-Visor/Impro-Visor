@@ -100,7 +100,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
     /**
      * Creates new customizer TradingGoalsDialog
      */
-    public TradingGoalsDialog(TradingResponseMode trm, ActiveTradingDialog activeTradingDialog) {
+    public TradingGoalsDialog(TradingResponseMode trm, TradingDialog activeTradingDialog) {
         if( !(trm instanceof CorrectRhythmTRM) ){
             System.out.println("As of now, TradingGoalsDialog Dialog only works with TRM's of type CorrectRhythmTRM! "
                     + "Not going to show TradingGoalsDialog.");

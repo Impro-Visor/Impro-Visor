@@ -42,7 +42,7 @@ import imp.midi.MidiSynth;
 import imp.midi.MidiImport;
 import imp.style.stylePatterns.ChordPattern;
 import imp.trading.PassiveTradingDialog;
-import imp.trading.ActiveTradingDialog;
+import imp.trading.TradingDialog;
 import imp.data.advice.*;
 import imp.Constants;
 import imp.Constants.ExtractMode;
@@ -618,7 +618,7 @@ private MidiLatencyMeasurementTool midiLatencyMeasurement = new MidiLatencyMeasu
  * Trading prefs
  */
 //ActiveTradingWindow trader;
-ActiveTradingDialog traderDialog = null;
+TradingDialog traderDialog = null;
 private boolean isTrading = false;
 
 /**
@@ -23587,11 +23587,11 @@ private boolean isDotted = false;
         tradingWindowActionPerformed(null);
     }
    
-   public ActiveTradingDialog getTradingDialog()
+   public TradingDialog getTradingDialog()
    {
         if( traderDialog == null )
           {
-            traderDialog = new ActiveTradingDialog(this); // Not modal
+            traderDialog = new TradingDialog(this); // Not modal
             traderDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
             traderDialog.setSize(800, 200);
           }
@@ -27252,7 +27252,7 @@ public ChordPart getChordProg()
     return score.getChordProg();
   }
 
-public ActiveTradingDialog getActiveTradingDialog()
+public TradingDialog getActiveTradingDialog()
 {
     return getTradingDialog();
 }
@@ -27966,4 +27966,25 @@ public JTabbedPane getScoreTab(){
     return this.scoreTab;
 }
 
+/**
+ * For controlling from Trading menu
+ */
+public void setUseGrammar()
+    {
+    grammarRadio.setSelected(true);
+    }
+
+public void setUseDeepLearning()
+    {
+    lstmNetworkRadio.setSelected(true);
+    }
+public void setUseGrammarAndTransform()
+    {
+    transformRadio.setSelected(true);
+    }
+
+public void setUseGrammarAndDivide()
+    {
+    grammarDivideRadio.setSelected(true);
+    }
 } //Notate

@@ -19,7 +19,7 @@
  */
 
 package imp.gui;
-import imp.trading.ActiveTradingDialog;
+import imp.trading.TradingDialog;
 
 /**
  *
@@ -29,14 +29,14 @@ import imp.trading.ActiveTradingDialog;
 public class TransformMenuDialog extends javax.swing.JDialog {
 
      Notate notate;
-     ActiveTradingDialog activeTradingDialog;
+     TradingDialog activeTradingDialog;
      javax.swing.DefaultListModel transformListModel = new javax.swing.DefaultListModel();
      String DEFAULT_TRANSFORM = "BillEvans";
      String transform;
     /**
      * Creates new form TransformMenuDialog
      */
-    public TransformMenuDialog(Notate notate, ActiveTradingDialog activeTradingDialog, boolean modal) {
+    public TransformMenuDialog(Notate notate, TradingDialog activeTradingDialog, boolean modal) {
         super(notate, modal);
         initComponents();
         this.setTitle("Transform Menu");

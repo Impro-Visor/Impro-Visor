@@ -484,7 +484,7 @@ public class ActiveTrading {
     }
 
     
-    public void showGoalsDialog(ActiveTradingDialog activeTradingDialog){
+    public void showGoalsDialog(TradingDialog activeTradingDialog){
         notifyListeners(true);
         //make this more general      
         phase = TradePhase.NONE;
@@ -575,7 +575,7 @@ public class ActiveTrading {
     }
     
     
-    private void showTradingGoalsDialog(ActiveTradingDialog activeTradingDialog){
+    private void showTradingGoalsDialog(TradingDialog activeTradingDialog){
         TradingGoalsDialog userGoalsDialog = new TradingGoalsDialog(tradeMode, activeTradingDialog);
         userGoalsDialog.setLocation(TradingGoalsDialog.INITIAL_OPEN_POINT);
         userGoalsDialog.setSize(800, 400);

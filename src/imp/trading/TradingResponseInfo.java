@@ -95,7 +95,7 @@ public class TradingResponseInfo {
     private Double[] maxMetricValues;
     private Double[] minMetricValues;
     private String clusterFileName;
-    private ActiveTradingDialog activeTradingDialog;
+    private TradingDialog activeTradingDialog;
     int tradeLengthInSlots;
     private int windowSize;
     private double[] savedDatapointAverages;
