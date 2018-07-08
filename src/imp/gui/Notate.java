@@ -9427,6 +9427,7 @@ public Critic getCritic()
         improvMenu.add(saveImprovCheckBoxMenuItem);
         improvMenu.add(improvSeparator1);
 
+        tradingWindow.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         tradingWindow.setText("Trade");
         tradingWindow.addActionListener(new java.awt.event.ActionListener()
         {
@@ -11236,6 +11237,11 @@ public void stopPlaying(String reason)
       
     requestFocusInWindow();
   }
+
+public void setSaveImprov(boolean value)
+{
+    saveImprovCheckBoxMenuItem.setSelected(value);
+}
 
 private void initSaveImprovisation()
 {
