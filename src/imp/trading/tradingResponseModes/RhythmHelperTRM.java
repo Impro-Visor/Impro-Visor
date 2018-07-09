@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2017-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     protected Double[] maxMetricValues;
     protected Double[] minMetricValues;
     protected String clusterFileName;
-    protected TradingDialog activeTradingDialog;
+    protected TradingDialog tradingDialog;
     protected int tradeLengthInSlots;
     protected int windowSize;
     protected double[] savedDatapointAverages;
@@ -152,8 +152,8 @@ public abstract class RhythmHelperTRM extends BlockResponseMode{
     private void setGlobals(){
         this.metre = this.responseInfo.getMetre();
         this.notate = this.responseInfo.getNotate();
-        this.activeTradingDialog = this.notate.getActiveTradingDialog();
-        tradeLengthInSlots = this.activeTradingDialog.getUpdatedTradeLength() * BEAT * metre[0];
+        this.tradingDialog = this.notate.getTradingDialog();
+        tradeLengthInSlots = this.tradingDialog.getUpdatedTradeLength() * BEAT * metre[0];
         this.clusterArray = new ArrayList<RhythmCluster>();
         this.clusterFileName = retrieveClusterFileName();
         this.numMetrics = (new RhythmMetricListFactory()).getNumMetrics();   

@@ -8107,7 +8107,8 @@
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="saveImprovCheckBoxMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Save Improvisation"/>
+                <Property name="text" type="java.lang.String" value="Record Improvisation"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rememberImprovCheckBoxActionPerformed"/>

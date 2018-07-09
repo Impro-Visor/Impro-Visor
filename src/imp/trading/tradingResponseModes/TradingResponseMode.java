@@ -56,4 +56,9 @@ public abstract class TradingResponseMode {
     public void printTradeType() {
         System.out.println(message);
     }
+    
+    public String toString()
+    {
+        return message;
+    }
 }

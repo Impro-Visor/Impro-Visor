@@ -1,8 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2015 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College.
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -38,5 +37,5 @@ public class TransformTRM extends BlockResponseMode{
         responseInfo.musicianResponse();
         return responseInfo.getResponse();
     }
-    
+
 }

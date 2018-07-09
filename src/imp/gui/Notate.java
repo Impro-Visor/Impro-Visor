@@ -41,7 +41,6 @@ import imp.midi.MidiPlayListener;
 import imp.midi.MidiSynth;
 import imp.midi.MidiImport;
 import imp.style.stylePatterns.ChordPattern;
-import imp.trading.PassiveTradingDialog;
 import imp.trading.TradingDialog;
 import imp.data.advice.*;
 import imp.Constants;
@@ -112,7 +111,6 @@ public class Notate
         extends javax.swing.JFrame
         implements Constants, MidiPlayListener
 {
-private PassiveTradingDialog passiveTradingDialog;
 public GuideToneLineDialog guideToneLineDialog;
 public static int midiImportXoffset = 200;
 public static int midiImportYoffset = 200;
@@ -618,7 +616,7 @@ private MidiLatencyMeasurementTool midiLatencyMeasurement = new MidiLatencyMeasu
  * Trading prefs
  */
 //ActiveTradingWindow trader;
-TradingDialog traderDialog = null;
+TradingDialog tradingDialog = null;
 private boolean isTrading = false;
 
 /**
@@ -982,13 +980,8 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     replaceWithDelta.setState(false);
 
     critic = new Critic();
-    
-    passiveTradingDialog = new PassiveTradingDialog(this, false);
-    passiveTradingDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
-    passiveTradingDialog.setSize(800, 200);
-    passiveTradingDialog.setVisible(false);
-    
-    transformMenuDialog = new TransformMenuDialog(this, traderDialog, false);
+   
+    transformMenuDialog = new TransformMenuDialog(this, tradingDialog, false);
     transformList = transformMenuDialog.getTransformList();
     transformListModel = transformMenuDialog.getTransformListModel();
     
@@ -9416,7 +9409,8 @@ public Critic getCritic()
 
         improvMenu.setText("Improv");
 
-        saveImprovCheckBoxMenuItem.setText("Save Improvisation");
+        saveImprovCheckBoxMenuItem.setText("Record Improvisation");
+        saveImprovCheckBoxMenuItem.setToolTipText("");
         saveImprovCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -21858,7 +21852,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
                 improviseEndSlot);
         int offset = getCurrentSelectionStart();
         if (lstmNetworkFrame.justInTimeGenerationEnabled()) {
-            if (passiveTradingDialog.isVisible()) {
+            if (getPassiveTrading()) {
                 lstmGen.startGenerateTrading(chords, offset,
                         getImprovisorTradeFirst(),
                         getTradingQuantum());
@@ -21872,7 +21866,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
             lazyGenerateNext();
         } else {
             MelodyPart lick;
-            if (passiveTradingDialog.isVisible()) {
+            if (getPassiveTrading()) {
                 lick = lstmGen.generateTrading(chords, offset,
                         getImprovisorTradeFirst(),
                         getTradingQuantum());
@@ -21968,10 +21962,6 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
     }
     setMode(Mode.GENERATED, modifier);
     
-    //isPassiveTrading = traderDialog.passiveSelected(); // passiveTradingDialog.isVisible();
-    //passiveTradingQuantum = passiveTradingDialog.getTradingQuantum();
-    //passiveTradingImprovisorFirst = traderDialog.getImprovisorTradeFirst();
-
     if( getPassiveTrading() && enableRecording )
     {
         enableRecording(); // TRIAL
@@ -21986,14 +21976,6 @@ public boolean getPassiveTrading()
 public int getTradingQuantum()
 {
     return getTradingDialog().getSlotsPerTurn();
-//    if( passiveTradingDialog != null )
-//      {
-//        return passiveTradingDialog.getTradingQuantum();
-//      }
-//    else
-//      {
-//        return 1960;    //TEMP FIX!!
-//      }
 }
 
 public boolean getImprovisorTradeFirst()
@@ -23595,13 +23577,13 @@ private boolean isDotted = false;
    
    public TradingDialog getTradingDialog()
    {
-        if( traderDialog == null )
+        if( tradingDialog == null )
           {
-            traderDialog = new TradingDialog(this); // Not modal
-            traderDialog.setLocation(traderDialog.INITIAL_OPEN_POINT);
-            traderDialog.setSize(800, 200);
+            tradingDialog = new TradingDialog(this); // Not modal
+            tradingDialog.setLocation(tradingDialog.INITIAL_OPEN_POINT);
+            tradingDialog.setSize(800, 200);
           }
-        return traderDialog;
+        return tradingDialog;
    }
     
     private void tradingWindowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tradingWindowActionPerformed
@@ -24474,12 +24456,12 @@ public void setShowConstructionLinesAndBoxes(boolean value)
 
 public void setGenerationGap(double value)
   {
-    traderDialog.setGenerationGap(value);
+    tradingDialog.setGenerationGap(value);
   }
 
 public double getGenerationGap()
   {
-    return traderDialog.getGenerationGap();
+    return tradingDialog.getGenerationGap();
   }
 
 boolean recurrentImprovisation = false;
@@ -27257,11 +27239,6 @@ public ChordPart getChordProg()
   {
     return score.getChordProg();
   }
-
-public TradingDialog getActiveTradingDialog()
-{
-    return getTradingDialog();
-}
 
 public int getTotalSlots()
   {

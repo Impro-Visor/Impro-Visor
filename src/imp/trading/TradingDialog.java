@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College.
+ * Copyright (C) 2015-2018 Robert Keller and Harvey Mudd College.
  *
  * Impro-Visor is free software; you can redistribute it and/or modifyc it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -23,13 +23,13 @@ import imp.gui.TransformMenuDialog;
 
 /**
  * @author Zachary Kondak, formerly ActiveTradingWindow
- * changed to ActiveTradingDialog by Robert Keller, so it can be non-modal
+ * changed to TradingDialog by Robert Keller, so it can be non-modal
  */
 
 import imp.gui.Notate;
 import imp.gui.QuantizationDialog;
 import imp.lickgen.LickgenFrame;
-import imp.trading.tradingResponseModes.AbstractTRM;
+import imp.trading.tradingResponseModes.AbstractMelodyTRM;
 import imp.trading.tradingResponseModes.ChopAndMemorizeTRM;
 import imp.trading.tradingResponseModes.CorrectRhythmTRM;
 import imp.trading.tradingResponseModes.GrammarTRM;
@@ -64,16 +64,16 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
     private boolean userFirst = true;
     private boolean isUserInputError = false;
     private final Integer initialTradeLength = 4;
-    public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 0);
+    public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(275, 0);
     UserRhythmSelecterDialog userRhythmSelecterDialog;
     TradingGoalsDialog userGoalsDialog;
     TransformMenuDialog transformMenuDialog;
     
     private final Notate notate;
-    private JPanel rhythmHelperModeRadioPanel;
+    private final JPanel rhythmHelperModeRadioPanel;
     JRadioButton suggestRhythmRadioButton;
     JRadioButton correctRhythmRadioButton;
-    private JButton cancelButton;
+    private final JButton cancelButton;
     
     /**
      * Creates new form ActiveTradingDialog
@@ -181,6 +181,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         setTitle("Impro-Visor Trading");
         setBackground(new java.awt.Color(204, 204, 255));
         setBounds(new java.awt.Rectangle(25, 0, 850, 220));
+        setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         setLocation(new java.awt.Point(25, 0));
         setMinimumSize(new java.awt.Dimension(850, 220));
         setSize(new java.awt.Dimension(850, 220));
@@ -214,16 +215,19 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         modePanel.setPreferredSize(new java.awt.Dimension(200, 90));
         modePanel.setLayout(new java.awt.GridBagLayout());
 
-        modeStatus.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        modeStatus.setText("Mode: Use Transform ");
-        modeStatus.setMaximumSize(new java.awt.Dimension(200, 30));
-        modeStatus.setMinimumSize(new java.awt.Dimension(200, 30));
-        modeStatus.setPreferredSize(new java.awt.Dimension(200, 30));
+        modeStatus.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        modeStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        modeStatus.setText("Use Transform ");
+        modeStatus.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Active Mode", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        modeStatus.setMaximumSize(new java.awt.Dimension(200, 50));
+        modeStatus.setMinimumSize(new java.awt.Dimension(200, 40));
+        modeStatus.setPreferredSize(new java.awt.Dimension(200, 40));
+        modeStatus.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         modePanel.add(modeStatus, gridBagConstraints);
 
         grammarStatusButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -231,7 +235,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         grammarStatusButton.setToolTipText("Click to select grammar.");
         grammarStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         grammarStatusButton.setBounds(new java.awt.Rectangle(0, 0, 170, 45));
-        grammarStatusButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        grammarStatusButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         grammarStatusButton.setMaximumSize(new java.awt.Dimension(170, 50));
         grammarStatusButton.setMinimumSize(new java.awt.Dimension(200, 40));
         grammarStatusButton.setPreferredSize(new java.awt.Dimension(200, 40));
@@ -252,7 +256,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         transformStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         transformStatusButton.setToolTipText("Click to select transform for transform mode.");
         transformStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transform Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        transformStatusButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        transformStatusButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         transformStatusButton.setMaximumSize(new java.awt.Dimension(200, 50));
         transformStatusButton.setMinimumSize(new java.awt.Dimension(200, 40));
         transformStatusButton.setPreferredSize(new java.awt.Dimension(200, 40));
@@ -1178,7 +1182,8 @@ public boolean passiveSelected()
         Double newTempo = activeTrading.getTempo();
         tempoSlider.setValue(newTempo.intValue());
         tempoLabel.setText(newTempo.toString());
-        modeStatus.setText("Mode: " + activeTrading.getTradeModeName()); ///
+        String statusValue = activeTrading.getTradeModeName();
+        modeStatus.setText(statusValue); ///
         transformStatusButton.setText("" + activeTrading.getMusician());
         String gramm = activeTrading.getGrammar();
         //tradeGrammarMenu.setText("Grammar:" + gramm);
@@ -1276,7 +1281,7 @@ public boolean passiveSelected()
                 tradeMode = new TransformTRM(newMode);
                 break;
             case "Use Abstract Melody":
-                tradeMode = new AbstractTRM(newMode);
+                tradeMode = new AbstractMelodyTRM(newMode);
                 break;
             case "Use Grammar":
                 tradeMode = new GrammarTRM(newMode);
@@ -1302,11 +1307,11 @@ public boolean passiveSelected()
         activeTrading.setTradeMode(tradeMode);
         if( tradeMode != null )
           {
-            modeStatus.setText("Mode: " + newMode);
+            modeStatus.setText(newMode);
           }
         else
           {
-            modeStatus.setText("Mode: NOT RECOGNIZED");
+            modeStatus.setText("NOT RECOGNIZED");
           }
     }
     
@@ -1626,10 +1631,8 @@ public boolean passiveSelected()
         }
     }
     
-    
     public JRadioButton getCorrectRhythmRadioButton(){
         return correctRhythmRadioButton;
     }
-    
     
 }

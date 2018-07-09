@@ -1,8 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2015 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2015 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College.
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -20,16 +19,15 @@
  */
 package imp.trading.tradingResponseModes;
 
-import imp.trading.TradingResponseInfo;
 import imp.data.MelodyPart;
 
 /**
  *
  * @author Zach Kondak
  */
-public class AbstractTRM extends BlockResponseMode{
+public class AbstractMelodyTRM extends BlockResponseMode{
 
-    public AbstractTRM(String message) {
+    public AbstractMelodyTRM(String message) {
         super(message);
     }
     

@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College XML export code
+ * Copyright (C) 2015-2018 Robert Keller and Harvey Mudd College XML export code
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -95,7 +95,7 @@ public class TradingResponseInfo {
     private Double[] maxMetricValues;
     private Double[] minMetricValues;
     private String clusterFileName;
-    private TradingDialog activeTradingDialog;
+    private TradingDialog tradingDialog;
     int tradeLengthInSlots;
     private int windowSize;
     private double[] savedDatapointAverages;
@@ -113,11 +113,11 @@ public class TradingResponseInfo {
         
         numMetrics = (new DefaultMetricListFactory()).getNumMetrics();
         
-        this.activeTradingDialog = notate.getActiveTradingDialog();
-        tradeLengthInSlots = activeTradingDialog.getUpdatedTradeLength() * BEAT * metre[0];
+        this.tradingDialog = notate.getTradingDialog();
+        tradeLengthInSlots = tradingDialog.getUpdatedTradeLength() * BEAT * metre[0];
         //grammarSolo = notate.genSolo(0, notate.getScoreLength());
         
-        //if(!activeTradingDialog.getTradeModeName().equals("Rhythm Helper")){
+        //if(!tradingDialog.getTradeModeName().equals("Rhythm Helper")){
            // System.out.println("entering the if statement and doing unnecessary grammar stuff");
             grammarSolo = generateFromGrammar(notate.getScoreLength(), notate.getChordProg());
         //}
