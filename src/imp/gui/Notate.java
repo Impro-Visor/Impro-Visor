@@ -18349,6 +18349,7 @@ public void playFirstChorus(){
  */
 public void playScore()
   {
+    autoScrollOnPlayback = true;
     slotDelay =
             (int) (midiSynth.getTotalSlots() * (1e6 * trackerDelay / midiSynth.getTotalMicroseconds()));
 
@@ -24378,8 +24379,8 @@ public void remoteToggleImprovise()
 public void improviseButtonToggled(boolean improvisationOn)
   {
 //System.out.println("in notate " + improvise);
-improvise = improvisationOn;
-      if( improvisationOn )
+  improvise = improvisationOn;
+  if( improvisationOn )
       {
         improvisationOn();
         //improviseButton.setBackground(new Color(255, 0, 0));
