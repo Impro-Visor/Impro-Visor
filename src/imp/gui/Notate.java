@@ -465,7 +465,7 @@ private File savedVocab;
 private File savedMidi;
 private File savedMusicXML;
 private String grammarFilename = null;
-private String lickTitle = "unnamed";
+private final String lickTitle = "unnamed";
 /**
  * Midi Preferences reference to the midiManager and JComboBox models
  */
@@ -1127,6 +1127,8 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
+    
+    setLooping(false);
   } // end of Notate constructor
 
 boolean showConstructionLinesAndBoxes = true;
@@ -9333,7 +9335,6 @@ public Critic getCritic()
         });
         utilitiesMenu.add(grammarChooserMI);
 
-        lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK));
         lickGeneratorMI.setMnemonic('g');
         lickGeneratorMI.setText("Grammar Control");
         lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
@@ -9750,20 +9751,14 @@ public Critic getCritic()
 
   private void loopButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_loopButtonActionPerformed
   {//GEN-HEADEREND:event_loopButtonActionPerformed
-      if( loopButton.isSelected() )
-        {
-          setToLoop();
-        }
-      else
-        {
-          setToNotLoop();
-        }
+      setLooping( loopButton.isSelected() );
   }//GEN-LAST:event_loopButtonActionPerformed
 
 public void playCurrentSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message)
   {
     playCurrentSelection(playToEndOfChorus, loopCount, useDrums, message, false);
   }
+
 public void playCurrentSelection(boolean playToEndOfChorus, int loopCount, boolean useDrums, String message, boolean hotSwap)
   {
     setMode(Mode.PLAYING);
@@ -9777,16 +9772,32 @@ private void setToLoop()
     loopButton.setBackground(Color.RED);
   }
 
-public void setLoop(boolean loop){
-    toLoop = loop;
-}
-
 private void setToNotLoop()
   {
     toLoop = false;
     stopPlaying("set not to Loop");
     loopButton.setText("<html><center>Loop</center></html>");
     loopButton.setBackground(Color.GREEN);
+  }
+
+public void setLooping(boolean value){
+    if( value )
+      {
+        setToLoop();
+      }
+    else
+      {
+        setToNotLoop();
+      }
+    if( tradingDialog != null )
+      {
+      tradingDialog.setLooping(value);
+      }
+}
+
+private boolean getLooping()
+  {
+    return toLoop;
   }
 
 public void showCritic()
@@ -13738,97 +13749,75 @@ public void updateSelection()
     }//GEN-LAST:event_staveTypeMenuActionPerformed
 
     public void transposeMelodyUpOctaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeMelodyUpOctaveActionPerformed
-
         getCurrentStave().transposeMelodyUpOctave();
     }//GEN-LAST:event_transposeMelodyUpOctaveActionPerformed
 
     private void textEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textEntryActionPerformed
-
         staveRequestFocus();
     }//GEN-LAST:event_textEntryActionPerformed
 
     private void openBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openBtnActionPerformed
-
         openLeadsheet(false);
     }//GEN-LAST:event_openBtnActionPerformed
 
     public void enterChordsMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterChordsMIActionPerformed
-
         enterChords();
     }//GEN-LAST:event_enterChordsMIActionPerformed
 
     public void transposeBothDownSemitoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeBothDownSemitoneActionPerformed
-
         getCurrentStave().transposeChordsDownSemitone();
-
         getCurrentStave().transposeMelodyDownSemitone();
     }//GEN-LAST:event_transposeBothDownSemitoneActionPerformed
 
     public void transposeChordsDownSemitoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeChordsDownSemitoneActionPerformed
-
         getCurrentStave().transposeChordsDownSemitone();
     }//GEN-LAST:event_transposeChordsDownSemitoneActionPerformed
 
     public void transposeChordsUpSemitoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeChordsUpSemitoneActionPerformed
-
         getCurrentStave().transposeChordsUpSemitone();
     }//GEN-LAST:event_transposeChordsUpSemitoneActionPerformed
 
     public void transposeBothUpSemitoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeBothUpSemitoneActionPerformed
-
         getCurrentStave().transposeChordsUpSemitone();
-
         getCurrentStave().transposeMelodyUpSemitone();
     }//GEN-LAST:event_transposeBothUpSemitoneActionPerformed
 
     public void transposeMelodyDownOctaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeMelodyDownOctaveActionPerformed
-
         getCurrentStave().transposeMelodyDownOctave();
     }//GEN-LAST:event_transposeMelodyDownOctaveActionPerformed
 
     public void transposeMelodyDownSemitoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeMelodyDownSemitoneActionPerformed
-
         getCurrentStave().transposeMelodyDownSemitone();
     }//GEN-LAST:event_transposeMelodyDownSemitoneActionPerformed
 
     public void transposeMelodyUpSemitoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transposeMelodyUpSemitoneActionPerformed
-
         getCurrentStave().transposeMelodyUpSemitone();
     }//GEN-LAST:event_transposeMelodyUpSemitoneActionPerformed
 
     public void pasteBothMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteBothMIActionPerformed
-
         pasteMelody();
-
         pasteChords();
     }//GEN-LAST:event_pasteBothMIActionPerformed
 
     public void copyBothMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyBothMIActionPerformed
-
         copyMelody();
-
         copyChords();
     }//GEN-LAST:event_copyBothMIActionPerformed
 
     public void cutBothMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutBothMIActionPerformed
-
         cutChords();
-
         cutMelody();
     }//GEN-LAST:event_cutBothMIActionPerformed
 
     public void enterMelodyMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterMelodyMIActionPerformed
-
         enterMelody();
     }//GEN-LAST:event_enterMelodyMIActionPerformed
 
     public void enterBothMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBothMIActionPerformed
-
         enterBoth();
     }//GEN-LAST:event_enterBothMIActionPerformed
 
     private void textEntryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textEntryKeyPressed
-
     textEntryLabel.setForeground(Color.black);
 
     if( evt.getKeyCode() == KeyEvent.VK_ENTER )
@@ -13843,7 +13832,11 @@ public void updateSelection()
 
         if( enteredText.length() > 0 )
           {
-            cm.execute(
+          if( getLooping() )
+            {
+            setLooping(false);       
+            }
+          cm.execute(
                     new SetChordsCommand(getCurrentSelectionStart(),
                                          parseListFromString(enteredText),
                                          chordProg,
@@ -13869,7 +13862,6 @@ public void updateSelection()
     }//GEN-LAST:event_textEntryKeyPressed
 
     public void saveLeadsheetMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveLeadsheetMIActionPerformed
-
         saveLeadsheet();
     }//GEN-LAST:event_saveLeadsheetMIActionPerformed
 
@@ -24437,7 +24429,7 @@ public void improviseContinuously()
     isTrading = false;
     
     // Looping is also automatically implied with improvisation.
-    loopButton.setSelected(false);
+    setToNotLoop();
     lickgenFrame.setRecurrent(true);
 
     adjustSelection();
@@ -24977,8 +24969,8 @@ public void setNotToTrade()
 }
 
 
-ArrayList<String> gramList = new ArrayList<String>();
-ArrayList<String> shufGramList = new ArrayList<String>();
+ArrayList<String> gramList = new ArrayList<>();
+ArrayList<String> shufGramList = new ArrayList<>();
 JCheckBoxMenuItem cycle = new JCheckBoxMenuItem("Cycle");
 JCheckBoxMenuItem shuffle = new JCheckBoxMenuItem("Shuffle");
 ButtonGroup group = new ButtonGroup();

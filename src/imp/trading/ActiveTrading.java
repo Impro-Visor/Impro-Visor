@@ -203,7 +203,7 @@ public class ActiveTrading {
     
     public void setLoop(boolean isLoop){
         this.isLoop = isLoop;
-        notate.setLoop(true);
+        notate.setLooping(true);
     }
     
     public void setTempo(int tempo) {
@@ -224,7 +224,7 @@ public class ActiveTrading {
         firstPlay = true;
         isTrading = false;
         //notate.setEnabled(false);
-        notate.setLoop(true);
+        notate.setLooping(true);
     }
      
      public void register(TradeListener tradeListener){
@@ -794,7 +794,7 @@ public class ActiveTrading {
             stopTrading();
         }
         //notate.setEnabled(true);
-        notate.setLoop(false);
+        notate.setLooping(false);
         //notate.tradingDialogClosed();
     }
 

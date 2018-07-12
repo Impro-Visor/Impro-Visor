@@ -1190,7 +1190,7 @@ public boolean passiveSelected()
         tradeGrammarMenu.setVisible(false);
         grammarStatusButton.setText("" + gramm);
     }
-
+    
     public void tradingDialogOpened() {
         activeTrading.setNotateDefaults();
         updateGUIComponents();
@@ -1367,8 +1367,15 @@ public boolean passiveSelected()
         return rtn;
     }
 
+    public void setLooping(boolean value)
+    {
+        loopToggle.setSelected(value);
+    }
+
     private void updateLoop() {
-        activeTrading.setLoop(loopToggle.isSelected());
+        boolean value = loopToggle.isSelected();
+        activeTrading.setLoop(value);
+        notate.setLooping(value);
     }
     
     private void updateCountIn() {
