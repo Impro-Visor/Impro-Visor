@@ -10926,7 +10926,10 @@ public void changeTempo(int newTemp){
 private void setPlaybackManagerTime()
   {
     establishCountIn();
-    playbackManager.setTotalTime(million * score.getTotalTime());
+    if( playbackManager != null )
+      {
+      playbackManager.setTotalTime(million * score.getTotalTime());
+      }
   }
 
     private void closeWindowMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowMIActionPerformed
@@ -14090,7 +14093,11 @@ public void staveRequestFocus()
     textEntryLabel.setForeground(Color.red);
     textEntry.setEnabled(false);
 
-    getCurrentStave().requestFocusInWindow();
+    Stave currentStave = getCurrentStave();
+    if( currentStave != null )
+      {
+      getCurrentStave().requestFocusInWindow();
+      }
 
     setItemStates();
   }
@@ -16624,16 +16631,16 @@ public void setAdviceUsed()
 
             case KeyEvent.VK_DOWN:
               {
-                DefaultMutableTreeNode node =
-                        (DefaultMutableTreeNode) adviceTree.getSelectionPath().getLastPathComponent();
+                TreeNode node =
+                        (TreeNode) adviceTree.getSelectionPath().getLastPathComponent();
 
                 TreeNode parent = node.getParent();
 
-                Enumeration<DefaultMutableTreeNode> e = parent.children();
+                Enumeration<TreeNode> e = parent.children();
 
-                DefaultMutableTreeNode prev = null;
+                TreeNode prev = null;
 
-                DefaultMutableTreeNode next = null;
+                TreeNode next = null;
 
                 // This hack is necessary because the only path component available
                 // is the one FROM which we moved, not to which.
@@ -16642,7 +16649,7 @@ public void setAdviceUsed()
                 // In either case, we have to go through the enumeration of siblings to find where the
                 // node from which we moved is.
 
-                // Note that if weWERE at a non-leaf node and arrive at a leaf, nothing
+                // Note that if we WERE at a non-leaf node and arrive at a leaf, nothing
                 // will be selected below. This can be FIXed later when there is time.
 
                 while( e.hasMoreElements() && !node.equals(next) )
@@ -16659,12 +16666,12 @@ public void setAdviceUsed()
 
                 if( up && prev != null )
                   {
-                    adviceSelected(prev.getUserObject());
+                    adviceSelected(((DefaultMutableTreeNode)prev).getUserObject());
                   }
                 // Moving down
                 else if( !up && e.hasMoreElements() )
                   {
-                    adviceSelected(e.nextElement().getUserObject());
+                    adviceSelected(((DefaultMutableTreeNode)e.nextElement()).getUserObject());
                   }
 
 
