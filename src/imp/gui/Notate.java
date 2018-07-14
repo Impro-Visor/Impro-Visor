@@ -24436,7 +24436,7 @@ public void improviseContinuously()
     isTrading = false;
     
     // Looping is also automatically implied with improvisation.
-    setToNotLoop();
+    loopButton.setSelected(false);
     lickgenFrame.setRecurrent(true);
 
     adjustSelection();
