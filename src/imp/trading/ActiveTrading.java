@@ -709,7 +709,8 @@ public class ActiveTrading {
             int trig = triggers.get(i) % adjustedLength;
             triggers.set(i, trig);
         }
-        //System.out.println(triggers);
+
+        //System.out.println("triggers = " + triggers);
     }
 
     /**

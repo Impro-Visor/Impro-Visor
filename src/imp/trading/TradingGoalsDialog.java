@@ -1,9 +1,26 @@
+/**
+ * This Java Class is part of the Impro-Visor Application.
+ *
+ * Copyright (C) 2017-2018 Robert Keller and Harvey Mudd College.
+ *
+ * Impro-Visor is free software; you can redistribute it and/or modifyc it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * Impro-Visor is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of merchantability or fitness
+ * for a particular purpose. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Impro-Visor; if not, write to the Free Software Foundation, Inc., 51 Franklin
+ * St, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
 package imp.trading;//GEN-LINE:variables
  
-import static imp.Constants.DEFAULT_BEATS_PER_BAR;
 import imp.com.CommandManager;
-import imp.data.Chord;
-import imp.data.ChordPart;
 import imp.data.Key;
 import imp.data.LeadsheetImageListModel;
 import imp.data.MelodyPart;
@@ -11,38 +28,19 @@ import imp.data.NoteSymbol;
 import imp.data.RhythmCluster;
 import imp.data.RhythmListCellRenderer;
 import imp.data.RhythmSelecterEntry;
-import imp.data.Score;
-import imp.data.Transposition;
 import imp.data.advice.AdviceForMelody;
 import static imp.generalCluster.CreateGrammar.SEG_LENGTH;
 import imp.generalCluster.DataPoint;
 import imp.gui.Notate;
-import static imp.gui.Notate.DEFAULT_BARS_PER_PART;
-import static imp.trading.UserRhythmSelecterDialog.readInRuleStringsFromFile;
 import imp.trading.tradingResponseModes.CorrectRhythmTRM;
-import imp.trading.tradingResponseModes.RhythmHelperTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
-import imp.util.Preferences;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -50,10 +48,6 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import polya.Polylist;
@@ -68,7 +62,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
     /*
      The list of rhythm clusters from the last trading session
     */
-    private ArrayList<RhythmCluster> rhythmClusters;
+    private final ArrayList<RhythmCluster> rhythmClusters;
    
     public static final java.awt.Point INITIAL_OPEN_POINT = new java.awt.Point(25, 0);
     /*
@@ -76,7 +70,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
     */
     private ArrayList<JCheckBox> checkBoxArray;
    
-    private Notate notate;
+    private final Notate notate;
    
     private JButton addButton;
  
@@ -84,7 +78,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
 
     private CorrectRhythmTRM rhythmHelperTRM;
     
-    private ArrayList<Polylist> clusterRuleStrings;
+    private final ArrayList<Polylist> clusterRuleStrings;
     
     JButton tradeButton;
     
@@ -94,7 +88,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
    
     private JList goalsList;
     
-    private ArrayList<Thread> threadList;
+    private final ArrayList<Thread> threadList;
    
    
     /**
@@ -107,7 +101,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
             dispose();
         }
            
-        threadList = new ArrayList<Thread>();
+        threadList = new ArrayList<>();
         rhythmHelperTRM = (CorrectRhythmTRM) trm;
         this.notate  = rhythmHelperTRM.getNotate();
         //rhythmHelperTRM.getFutureInvisibleNotate();
@@ -124,9 +118,10 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
        
        
         tradeButton.addActionListener(new ActionListener(){
+          @Override
           public void actionPerformed(ActionEvent e){
               ArrayList<Polylist> selectedRuleStrings = getSelectedRuleStrings();
-              if(selectedRuleStrings.size() == 0){
+              if(selectedRuleStrings.isEmpty()){
                   JOptionPane.showMessageDialog(framePanel, "Please select at least one rhythm to emulate!", "Warning", JOptionPane.WARNING_MESSAGE); 
               }else{
                   //System.out.println("hit trade button");
@@ -150,21 +145,9 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
                   // System.out.println("window closing, about to kill all threads");
                    killAllThreads();
                    activeTradingDialog.stopActiveTrading();   
-
-//                   for(int i = 0; i < threadList.size(); i++){
-//                        if(threadList.get(i).isAlive()){
-//                            System.out.println("thread is alive :(");
-//                        }else{
-//                            System.out.println("thread is dead!");
-//                        }
-//                    }
                    dispose();
-                   
                }
-        });
-       
-       
-       
+        });    
     }
     
     private void killAllThreads(){
@@ -176,31 +159,10 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
         for(int i = 0; i < threadList.size(); i++){
             threadList.get(i).interrupt();
         }
-        
-        
     }
     
-//    private void killInvisibleNotate(){
-//        System.out.println("in kill invisible notate...");
-//        
-//        SwingUtilities.invokeLater(new Runnable(){
-//            @Override
-//            public void run() {
-//                try {
-//                    Notate rhythmNotate = rhythmHelperTRM.getFutureInvisibleNotate().get();
-//                    rhythmNotate.dispose();
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(TradingGoalsDialog.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ExecutionException ex) {
-//                    Logger.getLogger(TradingGoalsDialog.class.getName()).log(Level.SEVERE, null, ex);
-//                }               
-//            }
-//                    
-//        });
-//    }
-    
     private ArrayList<Polylist> getSelectedRuleStrings(){
-        ArrayList<Polylist> selectedRuleStrings = new ArrayList<Polylist>();
+        ArrayList<Polylist> selectedRuleStrings = new ArrayList<>();
         List<RhythmSelecterEntry> selectedValues = goalsList.getSelectedValuesList();
         for(int i = 0; i < selectedValues.size(); i++){
             selectedRuleStrings.add(selectedValues.get(i).getRuleStringPL());
@@ -267,7 +229,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
     }
        
     private ArrayList<RhythmSelecterEntry> getGoalsEntries(){
-        ArrayList<RhythmSelecterEntry> goalsEntries = new ArrayList<RhythmSelecterEntry>();
+        ArrayList<RhythmSelecterEntry> goalsEntries = new ArrayList<>();
         for(int i = 0; i < clusterRuleStrings.size(); i++){
             //System.out.println("ruleString: " + clusterRuleStrings.get(i));
             Polylist ruleString = clusterRuleStrings.get(i);
@@ -322,10 +284,8 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
    
     private String getVisualizationFromRuleStringPolylist(Polylist rulePL){   
         Polylist rhythmPL = getRhythmPolylistFromRuleStringPL(rulePL);
-        
-        
-        String visualization = makeRealMelodyFromRhythmPolylist(rhythmPL);
        
+        String visualization = makeRealMelodyFromRhythmPolylist(rhythmPL);
        
         return visualization;    
     }
@@ -418,110 +378,7 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
         notate.playCurrentSelection(false, 0, false, "Printing Rhythm");//play the leadsheet    
     }
  
-//    public BufferedImage createRhythmImage(String userRhythm, int idNum){
-////        System.out.println("\n\nuserRhythm is: " + userRhythm);
-//        String[] userRhythmNoteStrings = userRhythm.split(" ");
-//        Polylist noteSymbolPolylist = new Polylist();
-//        Polylist pitchNoteSymbolPolylist = new Polylist();
-//        for (int i = 0; i < userRhythmNoteStrings.length; i++){
-//            NoteSymbol noteSymbol = NoteSymbol.makeNoteSymbol(userRhythmNoteStrings[i]);
-//            noteSymbolPolylist = noteSymbolPolylist.addToEnd(noteSymbol);
-//            pitchNoteSymbolPolylist = pitchNoteSymbolPolylist.addToEnd(NoteSymbol.makeNoteSymbol("c4"));
-//        }
-//        
-//        Polylist notePolylistToWrite = NoteSymbol.newPitchesForNotes(noteSymbolPolylist, pitchNoteSymbolPolylist);
-//        System.out.println(notePolylistToWrite);
-//        
-//        MelodyPart melodyPartToWrite = new MelodyPart(notePolylistToWrite.toStringSansParens());
-//        //System.out.println("melody part from user is: "+ melodyPartToWrite.toString());
-//        
-//        
-//        AdviceForMelody advice = new AdviceForMelody("RhythmPreview", notePolylistToWrite, "c", Key.getKey("c"),
-//                        rhythmHelperTRM.getMetre(), 0);//make a new advice for melody object 
-//        
-//        advice.setNewPart(melodyPartToWrite);//new part of advice object is the part that gets pasted to the leadsheet
-//        
-//        advice.insertInPart(rhythmNotate.getScore().getPart(0), 0, new CommandManager(), rhythmNotate);//insert melodyPartToWrite into the notate score
-//        rhythmNotate.getCurrentStave().setSelection(rhythmNotate.getCurrentStave().getMelodyPart().size() - 1);
-//        rhythmNotate.repaint();//refresh the notate page
-//      
-//
-//        BufferedImage notateScreenshot = new BufferedImage(rhythmNotate.getSize().width, rhythmNotate.getSize().height-100, BufferedImage.TYPE_INT_ARGB);
-//        Graphics g = notateScreenshot.createGraphics();
-//
-//        rhythmNotate.paint(g);
-//        rhythmNotate.paint(g);
-//        g.dispose();
-//
-//        
-//        g.dispose();
-////        System.out.println("width: " + notateScreenshot.getWidth());
-////        System.out.println("height: " + notateScreenshot.getHeight());
-//        int notateScreenshotWidth = notateScreenshot.getWidth();
-//        int notateScreenshotHeight = notateScreenshot.getHeight();
-//        int croppedXStart = (int) (0.069 * notateScreenshotWidth);//(75 / notateScreenshotWidth);
-//        int croppedYStart = (int) (0.32 * notateScreenshotHeight);// * (290 / notateScreenshotWidth);
-//        int croppedWidth = (int) (0.855 * notateScreenshotWidth);
-//        int croppedHeight = (int) (0.08 * notateScreenshotHeight);
-//        //BufferedImage dest = bi;
-//        //BufferedImage dest = notateScreenshot.getSubimage(78, 295, 963, 70);
-//        BufferedImage dest = notateScreenshot.getSubimage(croppedXStart, croppedYStart, croppedWidth, croppedHeight);
-//        
-//        return dest;
-//    }
-    
-    
-//    public Notate getRhythmNotate(){
-//        Score newScore = new Score("");
-//        //newScore.setLayoutList(Polylist.list("2"));
-//        
-//        int chordFontSize = Integer.valueOf(Preferences.getPreference(Preferences.DEFAULT_CHORD_FONT_SIZE));
-//
-//        newScore.setChordFontSize(chordFontSize);
-//
-//        newScore.setTempo(1);
-//
-//        ChordPart chords = new ChordPart();
-//
-//        chords.addChord(new Chord("NC")); // Some chord is necessary to preven screw-ups
-//
-//        newScore.setChordProg(chords);
-//
-//
-//        /**@TODO don't hardcode measure length to 480*/
-//        newScore.addPart(new MelodyPart(DEFAULT_BARS_PER_PART * 480));
-//
-//        newScore.setStyle(Preferences.getPreference(Preferences.DEFAULT_STYLE));
-//
-//        Transposition transposition =
-//                new Transposition(notate.getIntFromSpinner(notate.getLeadsheetChordTranspositionSpinner()),
-//                                  notate.getIntFromSpinner(notate.getLeadsheetBassTranspositionSpinner()),
-//                                  notate.getIntFromSpinner(notate.getChorusMelodyTranspositionSpinner()));
-//        newScore.setTransposition(transposition);
-//
-//        // open a new window
-//
-//        rhythmNotate = //new Notate(newScore, -1, -1);
-//               new Notate(newScore, Integer.MAX_VALUE, Integer.MAX_VALUE);
-//        
-//        System.out.println("layout: " + rhythmNotate.getScore().getLayoutList());
-//        //rhythmNotate.setLayoutPreference(Polylist.list("2"));
-////
-////
-////            Notate invisibleNotate =
-////                new Notate(newScore);
-//
-//        /**@TODO decide if this makes it invisible*/
-//        //newNotate.makeVisible(this);
-//
-//        rhythmNotate.setTransposition(transposition);
-//
-//
-//        rhythmNotate.makeVisible();
-//        
-//        return rhythmNotate;
-//    }
-    
+  
  
     /**
      * This method is called from within the constructor to initialize the form.
@@ -531,9 +388,6 @@ public class TradingGoalsDialog extends javax.swing.JDialog implements java.bean
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
     }// </editor-fold>                        
-
-
-
 
     // Variables declaration - do not modify                     
     // End of variables declaration                   

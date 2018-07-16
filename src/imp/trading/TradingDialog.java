@@ -78,7 +78,6 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
     /**
      * Creates new form ActiveTradingDialog
      * @param notate
-     * @param modal
      */
     public TradingDialog(Notate notate) {
         super(notate, false);
@@ -1149,10 +1148,7 @@ public boolean passiveSelected()
      {
          return transformStatusButton;
      }
-
-    private void tradeGrammarMenuActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        // TODO add your handling code here:
-    }                                                
+                                                
 
     private float tryFloat(String number) {
         float newNumber;
@@ -1168,7 +1164,6 @@ public boolean passiveSelected()
         
     public String getTradeModeName(){
         return activeTrading.getTradeModeName();
-        
     }
         
     public void updateGUIComponents() {
@@ -1443,11 +1438,13 @@ public boolean passiveSelected()
         ((javax.swing.border.TitledBorder)grammarStatusButton.getBorder()).setTitle("Grammar Chooser");
     }
 
+    @Override
     public void tradingStarted() {
         startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif")));
         startOrStopTradingButton.setText("Stop Trading");
     }
 
+    @Override
     public void tradingStopped() {
         startOrStopTradingButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif")));
         startOrStopTradingButton.setText("Start Trading");
@@ -1457,6 +1454,7 @@ public boolean passiveSelected()
         activeTrading.trackPlay(e);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         updateMusician();
         updateTradeMode();
@@ -1487,9 +1485,7 @@ public boolean passiveSelected()
         group.add(correctRhythmRadioButton);
         
         radioButtonMenuPanel.add(suggestRhythmRadioButton);
-        radioButtonMenuPanel.add(correctRhythmRadioButton);
-        
-        
+        radioButtonMenuPanel.add(correctRhythmRadioButton);        
         
         addRhythmRadioButtonActionListeners();
         
