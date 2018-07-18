@@ -181,8 +181,8 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         setBounds(new java.awt.Rectangle(25, 0, 850, 220));
         setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         setLocation(new java.awt.Point(25, 0));
-        setMinimumSize(new java.awt.Dimension(850, 150));
-        setPreferredSize(new java.awt.Dimension(661, 150));
+        setMinimumSize(new java.awt.Dimension(850, 220));
+        setPreferredSize(new java.awt.Dimension(661, 220));
         setSize(new java.awt.Dimension(850, 220));
         addComponentListener(new java.awt.event.ComponentAdapter()
         {
@@ -276,7 +276,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.7;
         getContentPane().add(modePanel, gridBagConstraints);
 
@@ -326,7 +326,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.3;
         getContentPane().add(tempoPanel, gridBagConstraints);
 
@@ -374,7 +374,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.3;
         getContentPane().add(volumePanel, gridBagConstraints);
 
@@ -452,7 +452,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.3;
         getContentPane().add(controlsPanel, gridBagConstraints);
 
@@ -520,7 +520,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.35;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.3;
         getContentPane().add(playbackControls, gridBagConstraints);
 
@@ -640,7 +640,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 0.35;
+        gridBagConstraints.weightx = 0.3;
         getContentPane().add(tradeLengthPanel, gridBagConstraints);
 
         leadSelectors.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trading Mode", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
@@ -724,7 +724,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.35;
+        gridBagConstraints.weightx = 0.3;
         getContentPane().add(leadSelectors, gridBagConstraints);
 
         optionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Options", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
@@ -768,7 +768,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.35;
+        gridBagConstraints.weightx = 0.3;
         getContentPane().add(optionsPanel, gridBagConstraints);
 
         mainTradeMenuBar.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
