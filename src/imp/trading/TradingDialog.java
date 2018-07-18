@@ -625,6 +625,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         leadingSelector.add(userFirstButton);
         userFirstButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        userFirstButton.setSelected(true);
         userFirstButton.setText("User First");
         userFirstButton.addActionListener(new java.awt.event.ActionListener()
         {
@@ -717,6 +718,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         optionsPanel.add(swingCheckBox, gridBagConstraints);
 
         recordCheckBox.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        recordCheckBox.setSelected(true);
         recordCheckBox.setText("Record");
         recordCheckBox.setMaximumSize(new java.awt.Dimension(81, 25));
         recordCheckBox.setMinimumSize(new java.awt.Dimension(81, 25));

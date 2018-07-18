@@ -9410,6 +9410,7 @@ public Critic getCritic()
 
         improvMenu.setText("Improv");
 
+        saveImprovCheckBoxMenuItem.setSelected(true);
         saveImprovCheckBoxMenuItem.setText("Record Improvisation");
         saveImprovCheckBoxMenuItem.setToolTipText("");
         saveImprovCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener()

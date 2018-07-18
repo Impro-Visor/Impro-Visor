@@ -8104,6 +8104,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="saveImprovCheckBoxMenuItem">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Record Improvisation"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
