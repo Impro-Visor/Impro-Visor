@@ -2109,9 +2109,9 @@ public Critic getCritic()
         customSoloGeneratorMI = new javax.swing.JMenuItem();
         transformMI = new javax.swing.JMenuItem();
         improvMenu = new javax.swing.JMenu();
-        saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
-        improvSeparator1 = new javax.swing.JPopupMenu.Separator();
         tradingWindow = new javax.swing.JMenuItem();
+        improvSeparator1 = new javax.swing.JPopupMenu.Separator();
+        saveImprovCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         improvSeparator2 = new javax.swing.JPopupMenu.Separator();
         tradeCheckbox = new javax.swing.JCheckBoxMenuItem();
         lstmNetworkRadio = new javax.swing.JRadioButtonMenuItem();
@@ -9410,6 +9410,18 @@ public Critic getCritic()
 
         improvMenu.setText("Improv");
 
+        tradingWindow.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        tradingWindow.setText("Trade");
+        tradingWindow.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                tradingWindowActionPerformed(evt);
+            }
+        });
+        improvMenu.add(tradingWindow);
+        improvMenu.add(improvSeparator1);
+
         saveImprovCheckBoxMenuItem.setSelected(true);
         saveImprovCheckBoxMenuItem.setText("Record Improvisation");
         saveImprovCheckBoxMenuItem.setToolTipText("");
@@ -9421,18 +9433,6 @@ public Critic getCritic()
             }
         });
         improvMenu.add(saveImprovCheckBoxMenuItem);
-        improvMenu.add(improvSeparator1);
-
-        tradingWindow.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        tradingWindow.setText("Trade");
-        tradingWindow.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                tradingWindowActionPerformed(evt);
-            }
-        });
-        improvMenu.add(tradingWindow);
         improvMenu.add(improvSeparator2);
 
         tradeCheckbox.setText("Improv and Passive Trading Options");

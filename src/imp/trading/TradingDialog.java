@@ -129,15 +129,15 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         modeStatus = new javax.swing.JLabel();
         grammarStatusButton = new javax.swing.JButton();
         transformStatusButton = new javax.swing.JButton();
-        controlsPanel = new javax.swing.JPanel();
-        processTimeSelector = new javax.swing.JTextField();
-        generationGapSpinner = new javax.swing.JSpinner();
-        volumePanel = new javax.swing.JPanel();
-        volumeLabel = new javax.swing.JLabel();
-        volumeSlider = new javax.swing.JSlider();
         tempoPanel = new javax.swing.JPanel();
         tempoLabel = new javax.swing.JLabel();
         tempoSlider = new javax.swing.JSlider();
+        volumePanel = new javax.swing.JPanel();
+        volumeLabel = new javax.swing.JLabel();
+        volumeSlider = new javax.swing.JSlider();
+        controlsPanel = new javax.swing.JPanel();
+        processTimeSelector = new javax.swing.JTextField();
+        generationGapSpinner = new javax.swing.JSpinner();
         playbackControls = new javax.swing.JPanel();
         countToggle = new javax.swing.JCheckBox();
         loopToggle = new javax.swing.JCheckBox();
@@ -147,6 +147,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         trade2 = new javax.swing.JRadioButton();
         trade4 = new javax.swing.JRadioButton();
         trade8 = new javax.swing.JRadioButton();
+        trade12 = new javax.swing.JRadioButton();
         tradeLengthSpinner = new javax.swing.JSpinner();
         leadSelectors = new javax.swing.JPanel();
         userFirstButton = new javax.swing.JRadioButton();
@@ -182,7 +183,8 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         setBounds(new java.awt.Rectangle(25, 0, 850, 220));
         setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         setLocation(new java.awt.Point(25, 0));
-        setMinimumSize(new java.awt.Dimension(850, 220));
+        setMinimumSize(new java.awt.Dimension(850, 150));
+        setPreferredSize(new java.awt.Dimension(661, 150));
         setSize(new java.awt.Dimension(850, 220));
         addComponentListener(new java.awt.event.ComponentAdapter()
         {
@@ -210,17 +212,16 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         modePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         modePanel.setMaximumSize(new java.awt.Dimension(200, 140));
-        modePanel.setMinimumSize(new java.awt.Dimension(200, 90));
-        modePanel.setPreferredSize(new java.awt.Dimension(200, 90));
+        modePanel.setMinimumSize(new java.awt.Dimension(200, 110));
+        modePanel.setPreferredSize(new java.awt.Dimension(200, 110));
         modePanel.setLayout(new java.awt.GridBagLayout());
 
-        modeStatus.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         modeStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         modeStatus.setText("Use Transform ");
-        modeStatus.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Active Mode", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        modeStatus.setMaximumSize(new java.awt.Dimension(200, 50));
-        modeStatus.setMinimumSize(new java.awt.Dimension(200, 40));
-        modeStatus.setPreferredSize(new java.awt.Dimension(200, 40));
+        modeStatus.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Active Mode", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        modeStatus.setMaximumSize(new java.awt.Dimension(270, 50));
+        modeStatus.setMinimumSize(new java.awt.Dimension(270, 35));
+        modeStatus.setPreferredSize(new java.awt.Dimension(270, 35));
         modeStatus.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -230,14 +231,13 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         modePanel.add(modeStatus, gridBagConstraints);
 
         grammarStatusButton.setBackground(new java.awt.Color(255, 255, 255));
-        grammarStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         grammarStatusButton.setToolTipText("Click to select grammar.");
         grammarStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        grammarStatusButton.setBounds(new java.awt.Rectangle(0, 0, 170, 45));
         grammarStatusButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        grammarStatusButton.setMaximumSize(new java.awt.Dimension(170, 50));
-        grammarStatusButton.setMinimumSize(new java.awt.Dimension(200, 40));
-        grammarStatusButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        grammarStatusButton.setMaximumSize(new java.awt.Dimension(270, 50));
+        grammarStatusButton.setMinimumSize(new java.awt.Dimension(270, 35));
+        grammarStatusButton.setPreferredSize(new java.awt.Dimension(270, 35));
+        grammarStatusButton.setSize(new java.awt.Dimension(270, 35));
         grammarStatusButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -252,13 +252,12 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         modePanel.add(grammarStatusButton, gridBagConstraints);
 
-        transformStatusButton.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         transformStatusButton.setToolTipText("Click to select transform for transform mode.");
         transformStatusButton.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transform Chooser", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         transformStatusButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        transformStatusButton.setMaximumSize(new java.awt.Dimension(200, 50));
-        transformStatusButton.setMinimumSize(new java.awt.Dimension(200, 40));
-        transformStatusButton.setPreferredSize(new java.awt.Dimension(200, 40));
+        transformStatusButton.setMaximumSize(new java.awt.Dimension(270, 50));
+        transformStatusButton.setMinimumSize(new java.awt.Dimension(270, 35));
+        transformStatusButton.setPreferredSize(new java.awt.Dimension(270, 35));
         transformStatusButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -283,19 +282,118 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.weighty = 0.7;
         getContentPane().add(modePanel, gridBagConstraints);
 
+        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (Beats per Minute)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        tempoPanel.setMinimumSize(new java.awt.Dimension(140, 40));
+        tempoPanel.setName(""); // NOI18N
+        tempoPanel.setPreferredSize(new java.awt.Dimension(140, 40));
+        tempoPanel.setLayout(new java.awt.GridBagLayout());
+
+        tempoLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        tempoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tempoLabel.setText("120");
+        tempoLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        tempoLabel.setMaximumSize(new java.awt.Dimension(21, 15));
+        tempoLabel.setMinimumSize(new java.awt.Dimension(21, 15));
+        tempoLabel.setPreferredSize(new java.awt.Dimension(21, 15));
+        tempoLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        tempoPanel.add(tempoLabel, gridBagConstraints);
+
+        tempoSlider.setMaximum(300);
+        tempoSlider.setMinimum(30);
+        tempoSlider.setValue(120);
+        tempoSlider.setMaximumSize(new java.awt.Dimension(150, 29));
+        tempoSlider.setMinimumSize(new java.awt.Dimension(150, 25));
+        tempoSlider.setPreferredSize(new java.awt.Dimension(190, 25));
+        tempoSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                tempoSliderStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.3;
+        tempoPanel.add(tempoSlider, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 0.3;
+        getContentPane().add(tempoPanel, gridBagConstraints);
+
+        volumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Response Volume", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        volumePanel.setMinimumSize(new java.awt.Dimension(140, 40));
+        volumePanel.setName(""); // NOI18N
+        volumePanel.setPreferredSize(new java.awt.Dimension(140, 40));
+        volumePanel.setLayout(new java.awt.GridBagLayout());
+
+        volumeLabel.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        volumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        volumeLabel.setText("120");
+        volumeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        volumeLabel.setMaximumSize(new java.awt.Dimension(21, 15));
+        volumeLabel.setMinimumSize(new java.awt.Dimension(21, 15));
+        volumeLabel.setPreferredSize(new java.awt.Dimension(21, 15));
+        volumeLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.3;
+        volumePanel.add(volumeLabel, gridBagConstraints);
+
+        volumeSlider.setMaximumSize(new java.awt.Dimension(150, 29));
+        volumeSlider.setMinimumSize(new java.awt.Dimension(150, 25));
+        volumeSlider.setPreferredSize(new java.awt.Dimension(190, 25));
+        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                volumeSliderStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.3;
+        volumePanel.add(volumeSlider, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 0.3;
+        getContentPane().add(volumePanel, gridBagConstraints);
+
         controlsPanel.setMaximumSize(new java.awt.Dimension(200, 50));
-        controlsPanel.setMinimumSize(new java.awt.Dimension(200, 50));
-        controlsPanel.setPreferredSize(new java.awt.Dimension(200, 50));
+        controlsPanel.setMinimumSize(new java.awt.Dimension(154, 40));
+        controlsPanel.setPreferredSize(new java.awt.Dimension(145, 40));
         controlsPanel.setLayout(new java.awt.GridBagLayout());
 
         processTimeSelector.setBackground(new java.awt.Color(238, 238, 238));
         processTimeSelector.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         processTimeSelector.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         processTimeSelector.setText("1.0");
-        processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing (in beats)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing (beats)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
         processTimeSelector.setMaximumSize(new java.awt.Dimension(200, 50));
-        processTimeSelector.setMinimumSize(new java.awt.Dimension(200, 50));
-        processTimeSelector.setPreferredSize(new java.awt.Dimension(200, 50));
+        processTimeSelector.setMinimumSize(new java.awt.Dimension(170, 50));
+        processTimeSelector.setPreferredSize(new java.awt.Dimension(170, 50));
+        processTimeSelector.setSize(new java.awt.Dimension(170, 50));
         processTimeSelector.addCaretListener(new javax.swing.event.CaretListener()
         {
             public void caretUpdate(javax.swing.event.CaretEvent evt)
@@ -319,11 +417,11 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.3;
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.weighty = 0.6;
         controlsPanel.add(processTimeSelector, gridBagConstraints);
 
         generationGapSpinner.setModel(new javax.swing.SpinnerNumberModel(4.0d, -20.0d, 20.0d, 0.01d));
@@ -343,113 +441,26 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(0, 19, 0, 0);
         controlsPanel.add(generationGapSpinner, gridBagConstraints);
 
-        volumePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Response Volume", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        volumePanel.setMinimumSize(new java.awt.Dimension(150, 45));
-        volumePanel.setPreferredSize(new java.awt.Dimension(150, 45));
-        volumePanel.setLayout(new java.awt.GridBagLayout());
-
-        volumeLabel.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        volumeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        volumeLabel.setText("120");
-        volumeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        volumeLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.3;
-        volumePanel.add(volumeLabel, gridBagConstraints);
-
-        volumeSlider.setMaximumSize(new java.awt.Dimension(150, 29));
-        volumeSlider.setMinimumSize(new java.awt.Dimension(150, 29));
-        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                volumeSliderStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        volumePanel.add(volumeSlider, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.3;
-        controlsPanel.add(volumePanel, gridBagConstraints);
-
-        tempoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tempo (Beats per Minute)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        tempoPanel.setMinimumSize(new java.awt.Dimension(150, 45));
-        tempoPanel.setPreferredSize(new java.awt.Dimension(150, 45));
-        tempoPanel.setLayout(new java.awt.GridBagLayout());
-
-        tempoLabel.setFont(new java.awt.Font("Helvetica", 0, 12)); // NOI18N
-        tempoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tempoLabel.setText("120");
-        tempoLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        tempoLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        tempoPanel.add(tempoLabel, gridBagConstraints);
-
-        tempoSlider.setMaximum(300);
-        tempoSlider.setMinimum(30);
-        tempoSlider.setValue(120);
-        tempoSlider.setMaximumSize(new java.awt.Dimension(150, 29));
-        tempoSlider.setMinimumSize(new java.awt.Dimension(150, 29));
-        tempoSlider.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                tempoSliderStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.7;
-        tempoPanel.add(tempoSlider, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.4;
-        controlsPanel.add(tempoPanel, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
         gridBagConstraints.weightx = 0.25;
         gridBagConstraints.weighty = 0.3;
         getContentPane().add(controlsPanel, gridBagConstraints);
 
         playbackControls.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        playbackControls.setMinimumSize(new java.awt.Dimension(261, 50));
-        playbackControls.setPreferredSize(new java.awt.Dimension(261, 50));
+        playbackControls.setMinimumSize(new java.awt.Dimension(261, 40));
+        playbackControls.setPreferredSize(new java.awt.Dimension(261, 40));
         playbackControls.setLayout(new java.awt.GridBagLayout());
 
         countToggle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -510,15 +521,15 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.35;
         gridBagConstraints.weighty = 0.3;
         getContentPane().add(playbackControls, gridBagConstraints);
 
         tradeLengthPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trade length (bars)", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
         tradeLengthPanel.setMaximumSize(new java.awt.Dimension(200, 123));
-        tradeLengthPanel.setMinimumSize(new java.awt.Dimension(153, 50));
-        tradeLengthPanel.setPreferredSize(new java.awt.Dimension(153, 50));
+        tradeLengthPanel.setMinimumSize(new java.awt.Dimension(153, 40));
+        tradeLengthPanel.setPreferredSize(new java.awt.Dimension(153, 40));
         tradeLengthPanel.setLayout(new java.awt.GridBagLayout());
 
         tradeLengthGroup.add(trade1);
@@ -590,6 +601,23 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         tradeLengthPanel.add(trade8, gridBagConstraints);
 
+        tradeLengthGroup.add(trade12);
+        trade12.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        trade12.setText("12");
+        trade12.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                trade12ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        tradeLengthPanel.add(trade12, gridBagConstraints);
+
         tradeLengthSpinner.setModel(new javax.swing.SpinnerNumberModel(4, 1, null, 1));
         tradeLengthSpinner.setToolTipText("The number of bars in melody.");
         tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(50, 30));
@@ -603,24 +631,24 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         tradeLengthPanel.add(tradeLengthSpinner, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.35;
         getContentPane().add(tradeLengthPanel, gridBagConstraints);
 
         leadSelectors.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trading Mode", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
         leadSelectors.setMaximumSize(new java.awt.Dimension(200, 140));
-        leadSelectors.setMinimumSize(new java.awt.Dimension(200, 75));
-        leadSelectors.setPreferredSize(new java.awt.Dimension(200, 75));
+        leadSelectors.setMinimumSize(new java.awt.Dimension(200, 55));
+        leadSelectors.setPreferredSize(new java.awt.Dimension(200, 55));
         leadSelectors.setLayout(new java.awt.GridBagLayout());
 
         leadingSelector.add(userFirstButton);
@@ -696,15 +724,15 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weightx = 0.35;
         getContentPane().add(leadSelectors, gridBagConstraints);
 
         optionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Options", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
         optionsPanel.setMaximumSize(new java.awt.Dimension(200, 140));
-        optionsPanel.setMinimumSize(new java.awt.Dimension(200, 45));
-        optionsPanel.setPreferredSize(new java.awt.Dimension(200, 45));
+        optionsPanel.setMinimumSize(new java.awt.Dimension(200, 30));
+        optionsPanel.setPreferredSize(new java.awt.Dimension(200, 30));
         optionsPanel.setLayout(new java.awt.GridBagLayout());
 
         swingCheckBox.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -742,7 +770,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weightx = 0.35;
         getContentPane().add(optionsPanel, gridBagConstraints);
 
         mainTradeMenuBar.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
@@ -1114,6 +1142,12 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
     {//GEN-HEADEREND:event_recordCheckBoxActionPerformed
         notate.setSaveImprov(recordCheckBox.isSelected());
     }//GEN-LAST:event_recordCheckBoxActionPerformed
+
+    private void trade12ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_trade12ActionPerformed
+    {//GEN-HEADEREND:event_trade12ActionPerformed
+        tradeLengthSpinner.setValue(12);
+        tradeLengthSpinnerlengthOfTradeSet(null);
+    }//GEN-LAST:event_trade12ActionPerformed
     
 public void setGenerationGap(double value)
   {
@@ -1591,6 +1625,7 @@ public boolean passiveSelected()
     private javax.swing.JPanel tempoPanel;
     private javax.swing.JSlider tempoSlider;
     private javax.swing.JRadioButton trade1;
+    private javax.swing.JRadioButton trade12;
     private javax.swing.JRadioButton trade2;
     private javax.swing.JRadioButton trade4;
     private javax.swing.JRadioButton trade8;
