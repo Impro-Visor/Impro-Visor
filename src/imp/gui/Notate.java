@@ -1,8 +1,8 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2017 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College XML export code
+ * is also Copyright (C) 2009-2018 Nicolas Froment (aka Lasconic).
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -68,8 +68,6 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.Sequencer;
 import javax.swing.*;
@@ -984,6 +982,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     transformMenuDialog = new TransformMenuDialog(this, tradingDialog, false);
     transformList = transformMenuDialog.getTransformList();
     transformListModel = transformMenuDialog.getTransformListModel();
+    populateMusicianList();
     
     grammarMenuDialog = new GrammarMenuDialog(this, false);
     grammarList = grammarMenuDialog.getGrammarList();
@@ -16442,6 +16441,11 @@ private void setLayoutPreference(Polylist layout)
     }      
     }//GEN-LAST:event_scoreTabStateChanged
 
+public TransformMenuDialog getTransformMenuDialog()
+{
+    return transformMenuDialog;
+}
+
 public Rectangle getCurrentScrollPosition()
   {
 
@@ -24100,6 +24104,7 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
             // Fix for Linux, where the file list is not in alphabetic order
             Arrays.sort(fileName, new Comparator<String>() 
             {
+                @Override
                 public int compare(String s1, String s2) 
                 {
                     return s1.toUpperCase().compareTo(s2.toUpperCase());
@@ -24121,8 +24126,7 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     
     public void updateMusicianNotate(String newMusician)
     {
-        getTradingDialog().getActiveTrading().setMusician(newMusician);
-        getTradingDialog().setTransformStatusButtonText(newMusician);
+        getTradingDialog().setMusician(newMusician);
     }
     
     public String getGrammarName()

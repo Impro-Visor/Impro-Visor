@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College XML export code
+ * Copyright (C) 2015-2018 Robert Keller and Harvey Mudd College XML export code
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -21,19 +21,13 @@ package imp.trading;
 
 import imp.data.ChordPart;
 import imp.data.MelodyPart;
-import imp.data.RhythmCluster;
 import imp.gui.Notate;
-import imp.gui.QuantizationDialog;
-import imp.lickgen.LickgenFrame;
 import imp.lickgen.transformations.Transform;
 import imp.trading.tradingResponseModes.*;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -49,12 +43,10 @@ public class TradingResponseController {
     //the time that the last finish signal was processed
     private long finishTime;
     //the amount of time (in nanoseconds) which we would like to wait for the melody to be complete after the finish signal is sent
-    private long desiredFinishDuration;
+    private final long desiredFinishDuration;
     boolean generationCancelled;
-    private Notate notate;
+    private final Notate notate;
     
-    
-
     public TradingResponseController(Notate notate, int[] metre, int tradeLength, TradingResponseMode responseMode) throws ExceptionTradeModeNotFound {
         responseInfo = new TradingResponseInfo(notate, metre, tradeLength);
         //response mode is now initialized on creation of controller so that we aren't creating a new one AND doing all of our operations at the response method call

@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2015-2018 Robert Keller and Harvey Mudd College.
  *
- * Impro-Visor is free software; you can redistribute it and/or modifyc it under
+ * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
@@ -88,10 +88,8 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         cancelButton = createCancelButton();
         playbackControls.add(cancelButton);
         this.addRhythmHelperModeRadioPanel();
-        transformMenuDialog = new TransformMenuDialog(notate, this, false);
+        transformMenuDialog = notate.getTransformMenuDialog();
         
-        //notate.populateGenericGrammarMenu(tradeGrammarMenu);
-        notate.populateMusicianList();
         Component[] modes = modeMenu.getMenuComponents();
         for (Component c : modes) {
             JRadioButtonMenuItem mode = (JRadioButtonMenuItem) c;
@@ -1422,8 +1420,13 @@ public boolean passiveSelected()
     private void updateMusician() 
     {
         String newMusician = transformMenuDialog.getMusicianName();
+        setMusician(newMusician);
+    }
+    
+    public void setMusician(String newMusician)
+    {
         activeTrading.setMusician(newMusician);
-        transformStatusButton.setText("" + newMusician);
+        transformStatusButton.setText("" + newMusician);        
     }
 
     private void updateVolume() {

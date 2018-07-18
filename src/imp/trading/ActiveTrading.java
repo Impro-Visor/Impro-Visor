@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College.
+ * Copyright (C) 2015-2018 Robert Keller and Harvey Mudd College.
  * 
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -31,7 +31,6 @@ import imp.gui.Notate;
 import imp.lickgen.transformations.Transform;
 import imp.midi.MidiManager;
 import imp.trading.tradingResponseModes.CorrectRhythmTRM;
-import imp.trading.tradingResponseModes.GrammarTRM;
 import imp.trading.tradingResponseModes.TradingResponseMode;
 import imp.util.TransformFilter;
 import java.awt.event.ActionEvent;
@@ -79,7 +78,7 @@ public class ActiveTrading {
     private boolean loopLock;
     private TradePhase phase;
     private TradingResponseMode tradeMode;
-    private Transform transform;
+    private Transform currentTransform;
     private PlayScoreCommand playCommand;
     private static MidiManager midiManager;
     //magic values
@@ -511,10 +510,10 @@ public class ActiveTrading {
         notifyListeners(true);
         //make this more general
         File directory = ImproVisor.getTransformDirectory();
-        File file = new File(directory, musician + TransformFilter.EXTENSION);
+        File file = new File(directory, getMusician() + TransformFilter.EXTENSION);
         //String dir = System.getProperty("user.dir");
-        //File file = new File(dir + "/transforms/"+musician+".transform");
-        transform = new Transform(file);
+        //File file = new File(dir + "/transforms/"+musician+".currentTransform");
+        currentTransform = new Transform(file);
 
         response = new MelodyPart();
         firstPlay = true;
@@ -589,10 +588,10 @@ public class ActiveTrading {
         notifyListeners(true);
         //make this more general
         File directory = ImproVisor.getTransformDirectory();
-        File file = new File(directory, musician + TransformFilter.EXTENSION);
+        File file = new File(directory, getMusician() + TransformFilter.EXTENSION);
         //String dir = System.getProperty("user.dir");
-        //File file = new File(dir + "/transforms/"+musician+".transform");
-        transform = new Transform(file);
+        //File file = new File(dir + "/transforms/"+musician+".currentTransform");
+        currentTransform = new Transform(file);
 
         response = new MelodyPart();
         firstPlay = true;
@@ -753,11 +752,11 @@ public class ActiveTrading {
     }
 
     private void applyTradingMode() {
-        tradeResponseController.setMusician(transform);
+        tradeResponseController.setMusician(currentTransform);
         tradeResponseController.finishResponse(response, soloChords, responseChords, nextSection);
         /*
         //Old usage of tradeResponseController, where you update information and then perform calculations. ^above call is for new usage, where calculating has been done in the background
-        tradeResponseController.updateResponse(response, soloChords, responseChords, nextSection, transform);
+        tradeResponseController.updateResponse(response, soloChords, responseChords, nextSection, currentTransform);
         response = tradeResponseController.response();
          */
         //System.out.println(response);

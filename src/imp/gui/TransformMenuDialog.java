@@ -1,9 +1,9 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2017 Robert Keller and Harvey Mudd College.
+ * Copyright (C) 2017-2018 Robert Keller and Harvey Mudd College.
  *
- * Impro-Visor is free software; you can redistribute it and/or modifyc it under
+ * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
