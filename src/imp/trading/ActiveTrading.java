@@ -89,12 +89,12 @@ public class ActiveTrading {
     public static final int DEFAULT_TRADE_LENGTH = 4;
     public static final String DEFAULT_TRADE_MODE = "Transform";
     public static final int DEFAULT_VOLUME = 80;
-    private final LinkedList<TradeListener> tradeListeners = new LinkedList<TradeListener>();
+    private final LinkedList<TradeListener> tradeListeners = new LinkedList<>();
     
     //fields used in functionality changes for asynchronous processing
     private int nextPartOffset; //The slot where we will check if the next desired response part (during the computer's turn) is done processing
     private int currentComputerTurnStartSlot; //The slot when the current computer turn started
-    private int generatedPartPasteBuffer = 50; //The number of slots to request the next part from the tradingResponseController in advance of when that part will be played
+    private final int generatedPartPasteBuffer = 50; //The number of slots to request the next part from the tradingResponseController in advance of when that part will be played
     private int nextPlayPartOffset;
     
     
@@ -234,6 +234,7 @@ public class ActiveTrading {
      * Method converts a delay given in a factor of beats to delay in slots,
      *
      * @param beatDelay
+     * @return 
      */
     public int beatsToSlots(float beatDelay) {
         int newDelay = Math.round(BEAT * beatDelay);
@@ -254,45 +255,52 @@ public class ActiveTrading {
      *
      * @param e
      */
-    public void trackPlay(ActionEvent e) {
+    public void trackPlay(ActionEvent e)
+    {
         long currentPosition = notate.getSlotInPlayback();
         //System.out.println(currentPosition);
 
-        if ((triggers.isEmpty() || currentPosition == scoreLength) && !isLoop) {
+        if( (triggers.isEmpty() || currentPosition == scoreLength) && !isLoop )
+          {
             stopTrading();
-        } else {
+          }
+        else
+          {
             long nextTrig = (long) triggers.get(triggerIndex);
             //if you passed the point to trigger the next phase
-            if (nextTrig <= currentPosition && !loopLock) {
-                if (nextTrig == 0 && !firstPlay && !isLoop) {
+            if( nextTrig <= currentPosition && !loopLock )
+              {
+                if( nextTrig == 0 && !firstPlay && !isLoop )
+                  {
                     stopTrading();
-                } else {
+                  }
+                else
+                  {
                     firstPlay = false;
                     //System.out.println("Increment to trig: " + nextTrig + " at index " + triggerIndex);
                     int nextIndex = triggerIndex + 1;
                     //System.out.println("Triggers length " + triggers.size() + " next index " + nextIndex);
-                    if (nextIndex >= triggers.size()) {
+                    if( nextIndex >= triggers.size() )
+                      {
                         nextIndex = 0;
-                    }
-                    if (triggers.get(nextIndex) == 0) {
-                        loopLock = true;
-                        //System.out.println("Setting lock on");
-                    } else {
-                        loopLock = false;
-                    }
+                      }
+                    loopLock = triggers.get(nextIndex) == 0; //System.out.println("Setting lock on");
                     triggerIndex = nextIndex;
                     //System.out.println("Trigs: " + triggers);
                     switchTurn();
-                }
-            }
-        }
-        
-        //if the current slot is nearing the slot at which we need the melody response part for, go grab it and any other available parts
-        if(tradeResponseController.hasNext() 
-         && currentComputerTurnStartSlot + nextPartOffset - generatedPartPasteBuffer < currentPosition) {
-           
+                  }
+              }
+          }
+
+        //if the current slot is nearing the slot for which we need the melody
+        // response part, go grab it and any other available parts
+        if( tradeResponseController.hasNext()
+         && currentComputerTurnStartSlot + nextPartOffset - generatedPartPasteBuffer < currentPosition )
+          {
+
             //System.out.println("At slot for retrieving next parts: " + currentPosition);
-            pasteNextAvailableParts(true); //we need the next part to play asap, and give us all additional ready parts, if any
+            //we need the next part to play asap, and give us all additional ready parts, if any
+            pasteNextAvailableParts(true); 
             tradeScore = new Score("trading", notate.getTempo(), ZERO);
             tradeScore.setBassMuted(true);
             tradeScore.delPart(0);
@@ -310,16 +318,21 @@ public class ActiveTrading {
                     slotsPerTurn - END_LIMIT_INDEX,
                     true
             );
-        }
-        
-        /* This if statement checks if we need to refresh playback on our midiSynth. 
-           As parts are generated and added to response, if the current midiSynth has already been started, it will not play the added parts.
-           Thus, in the if statement above, a playCommand to play the most up to date response parts on the midiSynth is created, and in this if statement the playCommand is executed
-        */
-        if(phase == TradePhase.COMPUTER_TURN 
-                && nextPlayPartOffset < nextPartOffset 
-                && currentComputerTurnStartSlot + nextPlayPartOffset < currentPosition) {
-         
+          }
+
+        /*
+         * This if statement checks if we need to refresh playback on our
+         * midiSynth.
+         * As parts are generated and added to response, if the current
+         * midiSynth has already been started, it will not play the added parts.
+         * Thus, in the if statement above, a playCommand to play the most up to
+         * date response parts on the midiSynth is created, and in this if
+         * statement the playCommand is executed
+         */
+        if( phase == TradePhase.COMPUTER_TURN
+         && nextPlayPartOffset < nextPartOffset
+         && currentComputerTurnStartSlot + nextPlayPartOffset < currentPosition )
+          {
             //System.out.println("activating new midi Synth when next part offset is " + nextPartOffset);
             long slotsBefore = notate.getSlotInPlayback();
             midiSynth.setSlot(nextPlayPartOffset);
@@ -329,15 +342,17 @@ public class ActiveTrading {
 
             //update delay
             slotDelay = (slotDelay + (slotsAfter - slotsBefore)) / 2;
-        }
-        
+          }
+
         //TODO : EXPLAIN THIS
-        if (loopLock) {
-            if (currentPosition < lastPosition) {
+        if( loopLock )
+          {
+            if( currentPosition < lastPosition )
+              {
                 loopLock = false;
-            }
+              }
             lastPosition = currentPosition;
-        }
+          }
     }
 
     /**
@@ -346,21 +361,26 @@ public class ActiveTrading {
      */
     public void switchTurn() {
         switch (phase) {
+            
             case USER_TURN:
                 processInput();
                 break;
+                
             case PROCESS_INPUT:
                 computerTurn();
                 break;
+                
             case COMPUTER_TURN:
                 userTurn();
                 break;
+                
             default:
                 break;
         }
     }
 
-     public void userTurn() {
+    public void userTurn()
+    {
         //System.out.println("User turn at slot: " + notate.getSlotInPlayback());
         phase = TradePhase.USER_TURN;
         int nextSectionIndex = (triggerIndex + 1) % triggers.size();
@@ -371,49 +391,54 @@ public class ActiveTrading {
         notate.enableRecording();
         int sectionStart;
         int sectionEnd;
-        if (nextSection == 0){
+        if( nextSection == 0 )
+          {
             sectionStart = adjustedLength - slotsPerTurn;
             sectionEnd = adjustedLength - 1;
-        } else {
+          }
+        else
+          {
             sectionStart = nextSection - slotsPerTurn;
             sectionEnd = nextSection - 1;
-        }
+          }
         ChordPart chordProg = notate.getChordProg();
         soloChords = chordProg.extract(sectionStart, sectionEnd);
-        responseChords = chordProg.extract(nextSection, nextSection + slotsPerTurn - 1);
-        
-        //start generation of the response by passing the next section of chords to the trading response controller
-        tradeResponseController.startTradingGeneration(responseChords, nextSection);
-        
+        responseChords = chordProg.extract(nextSection,
+                                           nextSection + slotsPerTurn - 1);
+
+        //start generation of the response by passing the next section 
+        // of chords to the trading response controller
+        tradeResponseController.startTradingGeneration(responseChords,
+                                                       nextSection);
+
         tradeScore = new Score("trading", notate.getTempo(), ZERO);
         tradeScore.setChordProg(responseChords);
         tradeScore.addPart(response);
     }
 
-    public void processInput() {
+    public void processInput()
+    {
         //System.out.println("Process input at slot: " + notate.getSlotInPlayback());
         phase = TradePhase.PROCESS_INPUT;
         notate.stopRecording();
 
         int userStartIndex = triggerIndex - 2;
-        if(userStartIndex < 0){
+        if( userStartIndex < 0 )
+          {
             userStartIndex = triggers.size() + userStartIndex;
-        }
+          }
         int userStartSlot = triggers.get(userStartIndex);
         MelodyPart melodyPart = notate.getCurrentMelodyPart();
 
-// FIX: I think this quantization interferes with Impro-Visor first Active Trading.
-//        response = response.quantizeUserMelody(notate.getQuantizationQuanta(),
-//                                            notate.getQuantizationSwing(),
-//                                            notate.getQuantizationRestAbsorption());
-
         melodyPart.altPasteOver(response, userStartSlot);
-        melodyPart.altPasteOver(new MelodyPart(slotsPerTurn), (userStartSlot + slotsPerTurn) % this.adjustedLength);
+        melodyPart.altPasteOver(new MelodyPart(slotsPerTurn),
+                                (userStartSlot + slotsPerTurn) % this.adjustedLength);
 
-        //trigger index is incremented before calling processInput, so triggerIndex points to the computer turn's trigger
+        // trigger index is incremented before calling processInput, 
+        // so triggerIndex points to the computer turn's trigger
         nextPartOffset = 0;
         nextPlayPartOffset = 0;
-        
+
         currentComputerTurnStartSlot = triggers.get(triggerIndex);
         //System.out.println("Next computer turn will be at slot: " + currentComputerTurnStartSlot);
         tradeScore.setBassMuted(true);
@@ -425,7 +450,10 @@ public class ActiveTrading {
         tradeScore.deleteChords();
 
         Long delayCopy = slotDelay;
-        response = response.extract(delayCopy.intValue(), slotsPerTurn - ONE, true, true);
+        response = response.extract(delayCopy.intValue(), 
+                                    slotsPerTurn - ONE,
+                                    true, 
+                                    true);
         //System.out.println(response);
         tradeScore.addPart(response);
         //System.out.println("TRADE SCORE" + tradeScore);
@@ -436,6 +464,7 @@ public class ActiveTrading {
         //System.out.println("NOTATE: " + notate.getMidiSynth().getSequencer());
         //System.out.println("TRADING WINDOW: " + midiSynth.getSequencer());
 
+        // This command will be executed in computerTurn()
         playCommand = new PlayScoreCommand(
                 tradeScore,
                 ZERO,
@@ -456,8 +485,10 @@ public class ActiveTrading {
         nextPlayPartOffset = nextPartOffset;
         long slotsBefore = notate.getSlotInPlayback();
 
-        midiSynth.setSlot(notate.getSlotInPlayback() % slotsPerTurn);
+        midiSynth.setSlot(slotsBefore % slotsPerTurn);
+        
         playCommand.execute();
+        
         long slotsAfter = notate.getSlotInPlayback();
 
         //update delay
@@ -466,16 +497,22 @@ public class ActiveTrading {
         phase = TradePhase.COMPUTER_TURN;
     }
 
-    private void notifyListeners(boolean isTradeStarted) {
-        if (isTradeStarted) {
-            for (TradeListener tradeListener : tradeListeners) {
+    private void notifyListeners(boolean isTradeStarted)
+    {
+        if( isTradeStarted )
+          {
+            for( TradeListener tradeListener : tradeListeners )
+              {
                 tradeListener.tradingStarted();
-            }
-        } else {
-            for (TradeListener tradeListener : tradeListeners) {
+              }
+          }
+        else
+          {
+            for( TradeListener tradeListener : tradeListeners )
+              {
                 tradeListener.tradingStopped();
-            }
-        }
+              }
+          }
     }
 
     public TradingResponseController getTradeResponseController(){
@@ -483,6 +520,10 @@ public class ActiveTrading {
     }
 
     
+    /**
+     * This is used for the rhythm helper, not normal trading.
+     * @param activeTradingDialog 
+     */
     public void showGoalsDialog(TradingDialog activeTradingDialog){
         notifyListeners(true);
         //make this more general      
@@ -506,13 +547,14 @@ public class ActiveTrading {
         showTradingGoalsDialog(activeTradingDialog);
     }
     
+   /**
+    * Used for the rhythm helper, not normal trading.
+    */
     public void startTradingFromTradingGoalsDialog(){
         notifyListeners(true);
         //make this more general
         File directory = ImproVisor.getTransformDirectory();
         File file = new File(directory, getMusician() + TransformFilter.EXTENSION);
-        //String dir = System.getProperty("user.dir");
-        //File file = new File(dir + "/transforms/"+musician+".currentTransform");
         currentTransform = new Transform(file);
 
         response = new MelodyPart();
@@ -584,13 +626,13 @@ public class ActiveTrading {
     /**
      * Starts interactive trading
      */
-    public void startTrading() {
+    public void startTrading()
+    {
         notifyListeners(true);
         //make this more general
         File directory = ImproVisor.getTransformDirectory();
-        File file = new File(directory, getMusician() + TransformFilter.EXTENSION);
-        //String dir = System.getProperty("user.dir");
-        //File file = new File(dir + "/transforms/"+musician+".currentTransform");
+        File file = new File(directory,
+                             getMusician() + TransformFilter.EXTENSION);
         currentTransform = new Transform(file);
 
         response = new MelodyPart();
@@ -604,12 +646,19 @@ public class ActiveTrading {
         slotsPerMeasure = notate.getScore().getSlotsPerMeasure();
         metre = notate.getScore().getMetre();
         slotsPerTurn = measures * slotsPerMeasure;
-        try {
-            tradeResponseController = new TradingResponseController(notate, metre, slotsPerTurn, tradeMode);
+        try
+          {
+            tradeResponseController = new TradingResponseController(notate,
+                                                                    metre,
+                                                                    slotsPerTurn,
+                                                                    tradeMode);
             tradeResponseController.onStartTrading();
-        } catch (ExceptionTradeModeNotFound ex) {
-            Logger.getLogger(ActiveTrading.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          }
+        catch( ExceptionTradeModeNotFound ex )
+          {
+            Logger.getLogger(ActiveTrading.class.getName()).log(Level.SEVERE,
+                                                                null, ex);
+          }
         adjustedLength = scoreLength - (scoreLength % slotsPerTurn);
         numberOfTurns = adjustedLength / slotsPerTurn;
         notate.getCurrentStave().setSelection(0, scoreLength);
@@ -620,15 +669,21 @@ public class ActiveTrading {
         //initDelay();
 
         //if computer is leading, generate a solo via selected grammar
-        if (!isUserLeading) {
+        if( !isUserLeading )
+          {
             tradeScore = new Score("trading", notate.getTempo(), ZERO);
             tradeScore.setBassMuted(true);
             tradeScore.delPart(0);
-            response = tradeResponseController.extractFromGrammarSolo(0, slotsPerTurn);
+            response = tradeResponseController.extractFromGrammarSolo(0,
+                                                                      slotsPerTurn);
             Long delayCopy = slotDelay;
-            MelodyPart adjustedResponse = response.extract(delayCopy.intValue(), slotsPerTurn - ONE, true, true);
-
+            MelodyPart adjustedResponse = response.extract(delayCopy.intValue(),
+                                                           slotsPerTurn - ONE,
+                                                           true, 
+                                                           true);
             tradeScore.addPart(adjustedResponse);
+            
+            // This command will be executed in next phase.
             playCommand = new PlayScoreCommand(
                     tradeScore,
                     ZERO,
@@ -641,83 +696,89 @@ public class ActiveTrading {
                     slotsPerTurn - END_LIMIT_INDEX,
                     true
             );
-        }
+          }
 
         midiSynth.setMasterVolume(volume);
         notate.playFirstChorus();
 
         MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
-        if (isUserLeading) {
+        if( isUserLeading )
+          {
             phase = TradePhase.COMPUTER_TURN;
-        } else {
+          }
+        else
+          {
             phase = TradePhase.PROCESS_INPUT;
-        }
+          }
         currentMelodyPart.altPasteOver(response, 0);
-        currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 0 + slotsPerTurn);  
+        currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn),
+                                       0 + slotsPerTurn);
     }
 
-    private void populateTriggers() {
+    private void populateTriggers()
+    {
         //clear triggers
         triggers.clear();
         //populate trigger stack (scheduler)
         boolean computerTurnNext;
-        if (numberOfTurns % 2 == ZERO) {
+        if( numberOfTurns % 2 == ZERO )
+          {
             //even number of turns
-            if (isUserLeading) {
-                //user turn first.
-                //this seems couter-intuitive, but this is the case since we're
-                //working from the end of the score (backwards)
-                computerTurnNext = false;
-
-            } else {
-                //computer turn first.
-                computerTurnNext = true;
-            }
-        } else {
+            computerTurnNext = !isUserLeading; //user turn first.
+            //this seems couter-intuitive, but this is the case since we're
+            //working from the end of the score (backwards)
+            //computer turn first.
+          }
+        else
+          {
             //odd number of turns
-            if (isUserLeading) {
-                //user turn first.
-                computerTurnNext = true;
-            } else {
-                //computer turn first.
-                computerTurnNext = false;
-            }
-        }
+            computerTurnNext = isUserLeading; //user turn first.
+            //computer turn first.
+          }
         int length = adjustedLength;
-        if (isLoop) {
-            if ((numberOfTurns % 2) == 1) {
+        if( isLoop )
+          {
+            if( (numberOfTurns % 2) == 1 )
+              {
                 //do this to deal with scores that have odd trading parts
                 length = adjustedLength * 2;
                 computerTurnNext = !computerTurnNext;
-            }
-        }
-        for (int trigSlot = length; trigSlot >= ZERO; trigSlot = trigSlot - slotsPerTurn) {
+              }
+          }
+        for( int trigSlot = length; trigSlot >= ZERO; trigSlot = trigSlot - slotsPerTurn )
+          {
             triggers.push(trigSlot);
-            if (computerTurnNext) {
+            if( computerTurnNext )
+              {
                 computerTurnNext = false;
-                if (trigSlot != ZERO) {
+                if( trigSlot != ZERO )
+                  {
                     triggers.push(trigSlot - slotsForProcessing);
-                }
-            } else {
+                  }
+              }
+            else
+              {
                 computerTurnNext = true;
-            }
-        }
+              }
+          }
         triggers.removeLast();
         //this loop modulos all of the triggers by the length of the leadsheet in slots
-        for (int i = 0; i < triggers.size(); i++) {
+        for( int i = 0; i < triggers.size(); i++ )
+          {
             int trig = triggers.get(i) % adjustedLength;
             triggers.set(i, trig);
-        }
-
+          }
         //System.out.println("triggers = " + triggers);
     }
 
     /**
      * Stops interactive trading
      */
-    public void stopTrading() {
+    public void stopTrading()
+    {
         notifyListeners(false);
-        if (isTrading) {
+        if( isTrading )
+          {
             isTrading = false;
             notate.stopRecording();
             notate.stopPlaying("stop trading");
@@ -726,87 +787,116 @@ public class ActiveTrading {
             //to avoid an extremely stange error that occurs when
             //the user presses sstop trading before the initialization
             //process has finished
-            if (notate.getMidiRecorder() != null) {
+            if( notate.getMidiRecorder() != null )
+              {
                 notate.getMidiRecorder().setDestination(null);
-            }
-        }
+              }
+          }
     }
     
-    private void pasteNextAvailableParts(boolean forceFirstPart) {
+    private void pasteNextAvailableParts(boolean forceFirstPart)
+    {
         //System.out.println("starting to paste parts");
         //use this boolean to make an easy toggleable do-while loop
         boolean isForcedPart = forceFirstPart;
-        while((tradeResponseController.hasNext() && tradeResponseController.hasNextReady()) || isForcedPart) {
+        while( (    tradeResponseController.hasNext() 
+                 && tradeResponseController.hasNextReady()
+               )
+            || isForcedPart )
+          {
             //System.out.println("pasting a ready part");
             //if the next part is ready, we'll paste it and increment nextGenerationCheckSlotOffset by its length
             MelodyPart currentMelodyPart = notate.getCurrentMelodyPart(); //get the current melody part (of the entire leadsheet we're working in) from notate
             MelodyPart responsePart = tradeResponseController.retrieveNext(); //ask our tradeResponseController nicely for the next melody part (it will be ready immediately - we checked)
             //System.out.println(responsePart + "with offset " + nextPartOffset);
             response.altPasteOver(responsePart, nextPartOffset); //paste our generated response part onto our response part our own midiSynth is playing from
-            currentMelodyPart.altPasteOver(responsePart, (currentComputerTurnStartSlot % adjustedLength) + nextPartOffset); //paste our generated response onto the melody part from notate (so that it will be visible)
+            currentMelodyPart.altPasteOver(responsePart,
+                                           (currentComputerTurnStartSlot % adjustedLength) + nextPartOffset); //paste our generated response onto the melody part from notate (so that it will be visible)
             nextPartOffset += responsePart.getSize(); //increment our slotOffset
             //System.out.println(responsePart.getSize());
             isForcedPart = false; //regardless of whether we forced the first part
-        }
-        
+          }
     }
 
-    private void applyTradingMode() {
+    private void applyTradingMode()
+    {
         tradeResponseController.setMusician(currentTransform);
-        tradeResponseController.finishResponse(response, soloChords, responseChords, nextSection);
+        tradeResponseController.finishResponse(response, 
+                                               soloChords,
+                                               responseChords, 
+                                               nextSection);
         /*
-        //Old usage of tradeResponseController, where you update information and then perform calculations. ^above call is for new usage, where calculating has been done in the background
-        tradeResponseController.updateResponse(response, soloChords, responseChords, nextSection, currentTransform);
-        response = tradeResponseController.response();
+         * //Old usage of tradeResponseController, where you update information
+         * and then perform calculations. ^above call is for new usage, where
+         * calculating has been done in the background
+         * tradeResponseController.updateResponse(response, soloChords,
+         * responseChords, nextSection, currentTransform);
+         * response = tradeResponseController.response();
          */
         //System.out.println(response);
         //For new trading response system, while we have another melodyPart in the response
+        
         pasteNextAvailableParts(false);
 
-        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn), triggers.get(triggerIndex) + slotsPerTurn);
-        if (notate.getSlotInPlayback() >= notate.getChordProg().size() - 2 * slotsPerTurn) {
+        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn),
+                                                   triggers.get(triggerIndex) + slotsPerTurn);
+        
+        if( notate.getSlotInPlayback() >= notate.getChordProg().size() - 2 * slotsPerTurn )
+          {
             //System.out.println("succeeded at " + notate.getSlotInPlayback() );
             notate.saveImprovChorus();
-        } else {
-            //System.out.println("failed at " + notate.getSlotInPlayback() + ", slotsPerTurn = " + slotsPerTurn );
-        }
+          }
     }
 
-    public void updateTradeLength(String newLength) {
+    public void updateTradeLength(String newLength)
+    {
         int length = 1;
-        try {
+        try
+          {
             length = Integer.parseInt(newLength);
-        } catch (Exception e) {
-        }
+          }
+        catch( Exception e )
+          {
+          }
 
-        int numOfMeasuresInScore = notate.getScoreLength() / notate.getScore().getSlotsPerMeasure();
-        if (length > numOfMeasuresInScore) {
+        int numOfMeasuresInScore = notate.getScoreLength() 
+                                 / notate.getScore().getSlotsPerMeasure();
+        
+        if( length > numOfMeasuresInScore )
+          {
             length = numOfMeasuresInScore;
-        } else if (length < 1) {
+          }
+        else if( length < 1 )
+          {
             length = 1;
-        }
+          }
         measures = length;
     }
     
     
-    public void tradingClosed() {
-        if (isTrading) {
+    public void tradingClosed()
+    {
+        if( isTrading )
+          {
             stopTrading();
-        }
+          }
         //notate.setEnabled(true);
         notate.setLooping(false);
         //notate.tradingDialogClosed();
     }
 
-    public void startOrSsettop() {
-        if (!isUserInputError) {
-            if (!isTrading) {
-                //System.out.println("Starting");
+    public void startOrSsettop()
+    {
+        if( !isUserInputError )
+          {
+            if( !isTrading )
+              {
                 startTrading();
-            } else {
+              }
+            else
+              {
                 stopTrading();
-            }
-        }
+              }
+          }
     }
-
 }
