@@ -2,9 +2,9 @@
          xmlns:ivy="antlib:org.apache.ivy.ant">
 
 <description>
-Build-file for Impro-Visor 9.2
+Build-file for Impro-Visor version 10
 
-Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
 
 Impro-Visor is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     
 <target name="init">
     <property name="appName"                value="Impro-Visor"              />
-    <property name="distDir"                value="improvisor920"            />
-    <property name="dist-mac"               value="improvisor920-mac"        />
-    <property name="dist-win"               value="improvisor920-win"        />
-    <property name="zipName"                value="improvisor920.zip"        />
-    <property name="zipMacName"             value="improvisor920mac.zip"     />
+    <property name="distDir"                value="improvisor1000"            />
+    <property name="dist-mac"               value="improvisor1000-mac"        />
+    <property name="dist-win"               value="improvisor1000-win"        />
+    <property name="zipName"                value="improvisor1000.zip"        />
+    <property name="zipMacName"             value="improvisor1000mac.zip"     />
     <property name="miscDir"                value="improvisor"               />
     <property name="srcDir"                 value="src"                      />
     <property name="impDir"                 value="src/imp"                  />
@@ -417,7 +417,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 </target>
 
 <target name="zipSrc" depends="cleanSrc" description="zips up the source">
-    <zip destfile="improvisor920-src.zip" basedir="${srcDir}" />
+    <zip destfile="improvisor1000-src.zip" basedir="${srcDir}" />
 </target>
 
 <target name="cleanJavadoc" depends="init" description="">
@@ -452,7 +452,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 </target>
 
 <target name="cleanZipSrc" depends="init" description="removes zipSrc file">
-   <delete file="improvisor508-src.zip" />
+   <delete file="improvisor1000-src.zip" />
 </target>
 
 <target name="clean" depends="cleanBuild,cleanTest,cleanDist,cleanZip,cleanSrc,cleanZipSrc,cleanJavadoc,cleanLib" 

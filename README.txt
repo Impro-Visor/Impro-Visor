@@ -1,6 +1,6 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 9.2 BETA,
-from Prof. Robert Keller at Harvey Mudd College, June 19, 2017.
+Welcome to Impro-Visor (Improvisation Advisor) Version 10,
+from Prof. Robert Keller at Harvey Mudd College, July 21, 2018.
 
 Release notes for this version may be found at the end.
 
@@ -8,7 +8,7 @@ If you need help, please post to the Yahoo! impro-visor user group:
 
      https://groups.yahoo.com/neo/groups/impro-visor/info
 
-Impro-Visor is free and runs on any platform that supports Java 1.7 or
+Impro-Visor is free and runs on any platform that supports Java 1.8 or
 later, including:
  
     Windows (XP, 2000, Vista, 7, 8, 10)
@@ -97,8 +97,9 @@ I am pleased to acknowledge contributions from the following developers:
  Mark Heimann, Nava Dallal, Carli Lessard, Alex Putman, Becki Yukman
  Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
  Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, David Siah,
- Mira Jambusaria, Daniel Johnson, Sam Goree, Samantha Long, and 
- Joseph Yaconelli.
+ Mira Jambusaria, Daniel Johnson, Sam Goree, Samantha Long, 
+ Joseph Yaconelli, Isys Archell Johnson, Cai Glencross, Lukas Gnirke,
+ Erika Rice Sherpelz, Jeff Sherpelz, Gabriel Neer, and Adrian Mettler.
 
 
 We hope you enjoy using Impro-Visor. 
@@ -113,7 +114,28 @@ Claremont, CA 91711
 Please send issues to: keller@cs.hmc.edu
 
 ===============================================================================
-Release notes for Impro-Visor 9.2
+Release notes for Impro-Visor 10
+
+
+ The Transposition Wizard has been included. This replaces the old playback
+ transposition spinner that effects bass and chord parts only. The new feature
+ allows one-time transposition of any or all parts, as well as playback 
+ adjustment of any part.
+
+ Active and passive trading controls have been merged into a single dialog.
+
+ Several new and more interesting comping styles that are sub-styles of swing 
+ have been added, such as Bud Powell, Horace Silver, Sonny Clark, etc. To 
+ accommodate these, the style mechanism has been changed so that patterns can
+ be truncated without having the need to provide short versions of the pattern.
+ Consequently, few chord patterns are needed.
+
+ Various small bugs were fixed.
+
+ Known bug:
+ In active trading, with Impro-Visor going first, the first trade played by
+ the user in a chorus is not recorded. Subsequent trades in the chorus are
+ recorded properly.
 
 ===============================================================================
 Release notes for Impro-Visor 9.1
@@ -160,7 +182,7 @@ Release notes for Impro-Visor 9.0
  Also added is a chord voicing visualizer on a grand staff. This is a partial
  port from a former stand-alone app called "Visichord", which was a software
  development class project constructed by Adrian Mettler, Gabriel Neer,
- Erika Rice Sherpelz, and Jeffrey Sherpelz.
+ Erika Rice Sherpelz, and Jeffrey Sherpelz circa 2003.
 
  There are a few changes in the user interface.
 

@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application v. 9.01
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,16 +28,11 @@ import imp.com.LoadAdviceCommand;
 import imp.data.*;
 import imp.gui.FirstTimeDialog;
 import imp.gui.Notate;
-import static imp.gui.Notate.DEFAULT_BARS_PER_PART;
 import imp.gui.ToolkitImages;
 import imp.util.*;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import javax.sound.midi.InvalidMidiDataException;
 import polya.*;
 
@@ -45,12 +40,12 @@ import polya.*;
  * Impro-Visor main class
  *
  * @author Stephen Jones, Aaron Wolin, Robert Keller
- * @version 8.11
+ * @version 10
  */
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "9.2";
+    public static final String version = "10";
     
     private static boolean firstTime = false;
     
@@ -168,6 +163,7 @@ public class ImproVisor implements Constants {
 
     /**
      * Get the version string of this version
+     * @return 
      */
 
     public static String getVersion()
@@ -177,6 +173,7 @@ public class ImproVisor implements Constants {
 
     /**
      * Get the singleton Advisor for this instance of ImproVisor.
+     * @return 
      */
 
     public static Advisor getAdvisor()
@@ -191,6 +188,7 @@ public class ImproVisor implements Constants {
     
     /**
      * Get the indication of whether to play insertions.
+     * @return 
      */
 
     public static boolean getPlay()
@@ -200,6 +198,9 @@ public class ImproVisor implements Constants {
     
     /**
      * Play the current selection
+     * @param toEnd
+     * @param loop
+     * @param useDrums
      */
 
     public static void playCurrentSelection(boolean toEnd, int loop, boolean useDrums)
@@ -209,6 +210,7 @@ public class ImproVisor implements Constants {
     
     /**
      * Get the entry-note volume.
+     * @return 
      */
     
     public static int getEntryVolume()
@@ -218,6 +220,7 @@ public class ImproVisor implements Constants {
     
     /**
      * Get the indication of whether to play insertions.
+     * @return 
      */
 
     public static boolean getShowAdvice()
@@ -237,6 +240,7 @@ public class ImproVisor implements Constants {
     
     /**
      * Set the entry volume.
+     * @param x
      */
     
     public static void setEntryVolume(int x)
@@ -477,6 +481,7 @@ public int getPasteType()
  * Main Impro-Visor program. Creates an ImproVisor instance, which will 
  * initialize the array of Notate frames.
  * @param args
+ * @throws javax.sound.midi.InvalidMidiDataException
  */
 
 public static void main(String[] args) throws InvalidMidiDataException
