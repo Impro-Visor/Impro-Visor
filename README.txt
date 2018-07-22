@@ -87,9 +87,14 @@ earlier Java synthesizer. We recommend using one of the following instead:
 
 You can also use any external MIDI instrument, such as most digital pianos.
 
-
 You cannot start the application by clicking on individual leadsheet files.
 Instead these files must be opened from within Impro-Visor.
+ 
+ New issues (bugs and feature requests, should be reported on github:
+ https://github.com/Impro-Visor/Impro-Visor/issues
+ 
+ There are a few leftover issues on SourceForge:
+ https://sourceforge.net/p/impro-visor/_list/tickets
  
 
 I am pleased to acknowledge contributions from the following developers:
@@ -124,6 +129,7 @@ Please send issues to: keller@cs.hmc.edu
 ===============================================================================
 Release notes for Impro-Visor 10
 
+ Using Java 1.8 is recommended for installation.
 
  The Transposition Wizard has been included. This replaces the old playback
  transposition spinner that effects bass and chord parts only. The new feature
@@ -132,23 +138,40 @@ Release notes for Impro-Visor 10
 
  Active and passive trading controls have been merged into a single dialog.
 
+ Improv controls and settings have been moved from the Utilities menu to the
+ Improv menu.
+
  Several new and more interesting comping styles that are sub-styles of swing 
  have been added, such as Bud Powell, Horace Silver, Sonny Clark, etc. To 
  accommodate these, the style mechanism has been changed so that patterns can
  be truncated without having the need to provide short versions of the pattern.
- Consequently, few chord patterns are needed.
+ Consequently, fewer chord patterns are needed in general. If the old patterns
+ are used, the algorithm may generate too many comping hits.
 
  There is a checkbox to save the roadmap whenever a leadsheet is saved. This
  roadmap is represented in S expression form and is primarily of interest to
- certain developers and researchers at present.
+ certain developers and researchers at present. The first 20 or so roadmaps
+ in the Imaginary Book have already been saved.
 
  Various bugs were fixed, including one in the Style Editor.
+
+ Auto-scroll now works with improvisation. (Thanks to Evelina Gkougklia for 
+ identifying the fix.)
+
+ After printing, the cursor now returns to its proper form.
+
+ MIDI export works if style is set to no-style.
 
  Known bug remaining:
 
  In active trading, with Impro-Visor going first, the first trade played by
  the user in a chorus is not recorded. Subsequent trades in the chorus are
  recorded properly.
+
+ If count-in is on when MIDI is exported, the count-in clicks are not recorded
+ in the .mid file. (It is debatable whether this should occur.)
+
+ There may be some remaining problems with print-all-pages.
 
 ===============================================================================
 Release notes for Impro-Visor 9.1
