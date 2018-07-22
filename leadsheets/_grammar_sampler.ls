@@ -6,22 +6,25 @@
 (meter 4 4)
 (key -1)
 (tempo 180.0)
-(volume 127)
-(playback-transpose 0)
+(volume 80)
+(playback-transpose 0 0 0)
+(chord-font-size 16)
 (bass-instrument 33)
-(bass-volume 31)
-(drum-volume 48)
-(chord-volume 37)
+(bass-volume 93)
+(drum-volume 91)
+(chord-volume 106)
 (breakpoint 54)
 (layout 4)
-(style swing
+(roadmap-layout 8)
+(melody-volume 127)
+(style swing-HoraceSilver
     (swing 0.67)
     (comp-swing 0.67)
-    (bass-high g-)
-    (bass-low g---)
-    (bass-base c--)
+    (bass-high c)
+    (bass-low g--)
     (chord-high a)
-    (chord-low b--)
+    (chord-low d-)
+    (voicing-name default.fv)
     (chord-base c- e- g-)
 )
 (part
@@ -31,9 +34,11 @@
     (instrument 0)
     (volume 65)
     (key -1)
+
 )
 
-(section (style swing)) 
+
+(section (style swing-HoraceSilver)) 
 
 F13 | Bb13 Bo7 | F13 | Cm9 F13b9 | 
 Bb13 | Bo7 | F13 | D7#5#9 | 

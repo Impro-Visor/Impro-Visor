@@ -6,8 +6,8 @@
 (meter 4 4)
 (key 1)
 (tempo 200.0)
-(volume 100)
-(playback-transpose 0)
+(volume 80)
+(playback-transpose 0 0 0)
 (chord-font-size 16)
 (bass-instrument 33)
 (bass-volume 100)
@@ -16,14 +16,15 @@
 (breakpoint 54)
 (layout 4)
 (roadmap-layout 8)
+(melody-volume 127)
 (style latin-pedal-bass-1
     (swing 0.55)
     (comp-swing 0.55)
-    (bass-high g-)
+    (bass-high c)
     (bass-low g--)
-    (bass-base c--)
     (chord-high a)
     (chord-low c-)
+    (voicing-name default.fv)
     (chord-base c- e- g-)
 )
 (part
@@ -33,6 +34,7 @@
     (instrument 0)
     (volume 100)
     (key 1)
+
 )
 
 
@@ -42,7 +44,7 @@ GM9 | / | Am7/G | / |
 GM9 | / | Am7/G | / | 
 
 
-(section (style swing)) 
+(section (style swing-SonnyClark)) 
 
 Dm9 | G13b9 | CM9 | F13#11 | 
 Bm9 Bbo7 | Am9 D13b9 | GM9 | / | 
@@ -54,7 +56,7 @@ GM9 | / | Am7/G | / |
 GM9 | / | Am7/G | / | 
 
 
-(section (style swing)) 
+(section (style swing-BarryHarris)) 
 
 Dm9 | G13b9 | CM9 | F13#11 | 
 Bm9 Bbo7 | Am9 D13b9 | GM9 | / | 

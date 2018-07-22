@@ -6,8 +6,8 @@
 (meter 4 4)
 (key -1)
 (tempo 180.0)
-(volume 100)
-(playback-transpose 0)
+(volume 80)
+(playback-transpose 0 0 0)
 (chord-font-size 16)
 (bass-instrument 33)
 (bass-volume 100)
@@ -16,14 +16,15 @@
 (breakpoint 54)
 (layout 4)
 (roadmap-layout 8)
-(style swing
+(melody-volume 127)
+(style swing-SonnyClark
     (swing 0.67)
     (comp-swing 0.67)
-    (bass-high g-)
+    (bass-high c)
     (bass-low g--)
-    (bass-base c--)
     (chord-high a)
-    (chord-low c-)
+    (chord-low d-)
+    (voicing-name default.fv)
     (chord-base c- e- g-)
 )
 (part
@@ -33,10 +34,11 @@
     (instrument 0)
     (volume 100)
     (key -1)
+
 )
 
 
-(section (style swing)) 
+(section (style swing-SonnyClark)) 
 
 F13_ | Bb13 Bo7 | F13_ | Cm9 F13b9 | 
 

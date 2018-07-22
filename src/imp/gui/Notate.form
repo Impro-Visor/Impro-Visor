@@ -7989,112 +7989,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator10">
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="controlsCheckBox">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Improv Controls"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="controlsCheckBoxActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="lstmNetworkMI">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Deep Learning"/>
-                <Property name="toolTipText" type="java.lang.String" value="Improvise using a recurrent neural network."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lstmNetworkMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="fractalMI">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Division"/>
-                <Property name="toolTipText" type="java.lang.String" value="Improvise by dividing notes into smaller notes."/>
-                <Property name="actionCommand" type="java.lang.String" value="Improvisation"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fractalMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="grammarChooserMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+G"/>
-                </Property>
-                <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Grammar Chooser"/>
-                <Property name="toolTipText" type="java.lang.String" value="Open grammar chooser."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="grammarChooserMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
-              <Properties>
-                <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Grammar Control"/>
-                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lickGeneratorMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="guideToneLine">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+Ctrl+G"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Guide Tone Line"/>
-                <Property name="toolTipText" type="java.lang.String" value="Generate a guide tone line."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guideToneLineActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="intervalLearningMI">
-              <Properties>
-                <Property name="mnemonic" type="int" value="103"/>
-                <Property name="text" type="java.lang.String" value="Interval Learning "/>
-                <Property name="toolTipText" type="java.lang.String" value="Improvisation using interval learning"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="intervalLearningMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="soloGeneratorMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+H"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Theme Weaver"/>
-                <Property name="toolTipText" type="java.lang.String" value="Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soloGeneratorMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="customSoloGeneratorMI">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+H"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Theme Weaver - Custom"/>
-                <Property name="toolTipText" type="java.lang.String" value="Opens a version of Theme Weaver in which position of each theme is specified by the user."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customSoloGeneratorMIActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="transformMI">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Transform"/>
-                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for improvisation using transformations, grammar editing, and transform editing."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transformMIActionPerformed"/>
-              </Events>
-            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="improvMenu">
@@ -8185,6 +8079,15 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="afterGrammarSeparator">
             </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="tradeCheckbox1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Improv Options"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tradeCheckbox1ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="guideToneRadio">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
@@ -8224,6 +8127,117 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Theme Weave"/>
               </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="improvSeparator3">
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="controlsCheckBox">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Improv Controls"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="controlsCheckBoxActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="transformMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Transform"/>
+                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for improvisation using transformations, grammar editing, and transform editing."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transformMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="lstmNetworkMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Deep Learning"/>
+                <Property name="toolTipText" type="java.lang.String" value="Improvise using a recurrent neural network."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lstmNetworkMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="fractalMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Division"/>
+                <Property name="toolTipText" type="java.lang.String" value="Improvise by dividing notes into smaller notes."/>
+                <Property name="actionCommand" type="java.lang.String" value="Improvisation"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fractalMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="grammarChooserMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+G"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="103"/>
+                <Property name="text" type="java.lang.String" value="Grammar Chooser"/>
+                <Property name="toolTipText" type="java.lang.String" value="Open grammar chooser."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="grammarChooserMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="lickGeneratorMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+G"/>
+                </Property>
+                <Property name="mnemonic" type="int" value="103"/>
+                <Property name="text" type="java.lang.String" value="Grammar Control"/>
+                <Property name="toolTipText" type="java.lang.String" value="Multi-tab control for lick generation, grammar editing, and transform editing."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lickGeneratorMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="guideToneLine">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+Ctrl+G"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Guide Tone Line"/>
+                <Property name="toolTipText" type="java.lang.String" value="Generate a guide tone line."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guideToneLineActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="intervalLearningMI">
+              <Properties>
+                <Property name="mnemonic" type="int" value="103"/>
+                <Property name="text" type="java.lang.String" value="Interval Learning "/>
+                <Property name="toolTipText" type="java.lang.String" value="Improvisation using interval learning"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="intervalLearningMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="soloGeneratorMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+H"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Theme Weaver"/>
+                <Property name="toolTipText" type="java.lang.String" value="Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soloGeneratorMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="customSoloGeneratorMI">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+H"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Theme Weaver - Custom"/>
+                <Property name="toolTipText" type="java.lang.String" value="Opens a version of Theme Weaver in which position of each theme is specified by the user."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customSoloGeneratorMIActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

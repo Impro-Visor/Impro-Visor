@@ -2097,16 +2097,6 @@ public Critic getCritic()
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
-        controlsCheckBox = new javax.swing.JCheckBoxMenuItem();
-        lstmNetworkMI = new javax.swing.JMenuItem();
-        fractalMI = new javax.swing.JMenuItem();
-        grammarChooserMI = new javax.swing.JMenuItem();
-        lickGeneratorMI = new javax.swing.JMenuItem();
-        guideToneLine = new javax.swing.JMenuItem();
-        intervalLearningMI = new javax.swing.JMenuItem();
-        soloGeneratorMI = new javax.swing.JMenuItem();
-        customSoloGeneratorMI = new javax.swing.JMenuItem();
-        transformMI = new javax.swing.JMenuItem();
         improvMenu = new javax.swing.JMenu();
         tradingWindow = new javax.swing.JMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -2119,11 +2109,23 @@ public Critic getCritic()
         transformRadio = new javax.swing.JRadioButtonMenuItem();
         grammarDivideRadio = new javax.swing.JRadioButtonMenuItem();
         afterGrammarSeparator = new javax.swing.JPopupMenu.Separator();
+        tradeCheckbox1 = new javax.swing.JCheckBoxMenuItem();
         guideToneRadio = new javax.swing.JRadioButtonMenuItem();
         guideToneTransformRadio = new javax.swing.JRadioButtonMenuItem();
         guideToneDivideRadio = new javax.swing.JRadioButtonMenuItem();
         intervalsRadio = new javax.swing.JRadioButtonMenuItem();
         themeWeaveRadio = new javax.swing.JRadioButtonMenuItem();
+        improvSeparator3 = new javax.swing.JPopupMenu.Separator();
+        controlsCheckBox = new javax.swing.JCheckBoxMenuItem();
+        transformMI = new javax.swing.JMenuItem();
+        lstmNetworkMI = new javax.swing.JMenuItem();
+        fractalMI = new javax.swing.JMenuItem();
+        grammarChooserMI = new javax.swing.JMenuItem();
+        lickGeneratorMI = new javax.swing.JMenuItem();
+        guideToneLine = new javax.swing.JMenuItem();
+        intervalLearningMI = new javax.swing.JMenuItem();
+        soloGeneratorMI = new javax.swing.JMenuItem();
+        customSoloGeneratorMI = new javax.swing.JMenuItem();
         windowMenu = new javax.swing.JMenu();
         closeWindowMI = new javax.swing.JMenuItem();
         cascadeMI = new javax.swing.JMenuItem();
@@ -9287,124 +9289,6 @@ public Critic getCritic()
         utilitiesMenu.add(styleGenerator1);
         utilitiesMenu.add(jSeparator10);
 
-        controlsCheckBox.setText("Improv Controls");
-        controlsCheckBox.setEnabled(false);
-        controlsCheckBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                controlsCheckBoxActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(controlsCheckBox);
-
-        lstmNetworkMI.setText("Deep Learning");
-        lstmNetworkMI.setToolTipText("Improvise using a recurrent neural network.");
-        lstmNetworkMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                lstmNetworkMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(lstmNetworkMI);
-
-        fractalMI.setText("Division");
-        fractalMI.setToolTipText("Improvise by dividing notes into smaller notes.");
-        fractalMI.setActionCommand("Improvisation");
-        fractalMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                fractalMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(fractalMI);
-
-        grammarChooserMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        grammarChooserMI.setMnemonic('g');
-        grammarChooserMI.setText("Grammar Chooser");
-        grammarChooserMI.setToolTipText("Open grammar chooser.");
-        grammarChooserMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                grammarChooserMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(grammarChooserMI);
-
-        lickGeneratorMI.setMnemonic('g');
-        lickGeneratorMI.setText("Grammar Control");
-        lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
-        lickGeneratorMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                lickGeneratorMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(lickGeneratorMI);
-
-        guideToneLine.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        guideToneLine.setText("Guide Tone Line");
-        guideToneLine.setToolTipText("Generate a guide tone line.");
-        guideToneLine.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                guideToneLineActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(guideToneLine);
-
-        intervalLearningMI.setMnemonic('g');
-        intervalLearningMI.setText("Interval Learning ");
-        intervalLearningMI.setToolTipText("Improvisation using interval learning");
-        intervalLearningMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                intervalLearningMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(intervalLearningMI);
-
-        soloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
-        soloGeneratorMI.setText("Theme Weaver");
-        soloGeneratorMI.setToolTipText("Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation.");
-        soloGeneratorMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                soloGeneratorMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(soloGeneratorMI);
-
-        customSoloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_MASK));
-        customSoloGeneratorMI.setText("Theme Weaver - Custom");
-        customSoloGeneratorMI.setToolTipText("Opens a version of Theme Weaver in which position of each theme is specified by the user.");
-        customSoloGeneratorMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                customSoloGeneratorMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(customSoloGeneratorMI);
-
-        transformMI.setText("Transform");
-        transformMI.setToolTipText("Multi-tab control for improvisation using transformations, grammar editing, and transform editing.");
-        transformMI.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                transformMIActionPerformed(evt);
-            }
-        });
-        utilitiesMenu.add(transformMI);
-
         menuBar.add(utilitiesMenu);
 
         improvMenu.setText("Improv");
@@ -9487,6 +9371,17 @@ public Critic getCritic()
         improvMenu.add(grammarDivideRadio);
         improvMenu.add(afterGrammarSeparator);
 
+        tradeCheckbox1.setText("Improv Options");
+        tradeCheckbox1.setEnabled(false);
+        tradeCheckbox1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                tradeCheckbox1ActionPerformed(evt);
+            }
+        });
+        improvMenu.add(tradeCheckbox1);
+
         improvButtonGroup.add(guideToneRadio);
         guideToneRadio.setText("Guide Tone Line");
         improvMenu.add(guideToneRadio);
@@ -9506,6 +9401,126 @@ public Critic getCritic()
         improvButtonGroup.add(themeWeaveRadio);
         themeWeaveRadio.setText("Theme Weave");
         improvMenu.add(themeWeaveRadio);
+        improvMenu.add(improvSeparator3);
+
+        controlsCheckBox.setText("Improv Controls");
+        controlsCheckBox.setEnabled(false);
+        controlsCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                controlsCheckBoxActionPerformed(evt);
+            }
+        });
+        improvMenu.add(controlsCheckBox);
+
+        transformMI.setText("Transform");
+        transformMI.setToolTipText("Multi-tab control for improvisation using transformations, grammar editing, and transform editing.");
+        transformMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                transformMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(transformMI);
+
+        lstmNetworkMI.setText("Deep Learning");
+        lstmNetworkMI.setToolTipText("Improvise using a recurrent neural network.");
+        lstmNetworkMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                lstmNetworkMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(lstmNetworkMI);
+
+        fractalMI.setText("Division");
+        fractalMI.setToolTipText("Improvise by dividing notes into smaller notes.");
+        fractalMI.setActionCommand("Improvisation");
+        fractalMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                fractalMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(fractalMI);
+
+        grammarChooserMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        grammarChooserMI.setMnemonic('g');
+        grammarChooserMI.setText("Grammar Chooser");
+        grammarChooserMI.setToolTipText("Open grammar chooser.");
+        grammarChooserMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                grammarChooserMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(grammarChooserMI);
+
+        lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK));
+        lickGeneratorMI.setMnemonic('g');
+        lickGeneratorMI.setText("Grammar Control");
+        lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
+        lickGeneratorMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                lickGeneratorMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(lickGeneratorMI);
+
+        guideToneLine.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        guideToneLine.setText("Guide Tone Line");
+        guideToneLine.setToolTipText("Generate a guide tone line.");
+        guideToneLine.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                guideToneLineActionPerformed(evt);
+            }
+        });
+        improvMenu.add(guideToneLine);
+
+        intervalLearningMI.setMnemonic('g');
+        intervalLearningMI.setText("Interval Learning ");
+        intervalLearningMI.setToolTipText("Improvisation using interval learning");
+        intervalLearningMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                intervalLearningMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(intervalLearningMI);
+
+        soloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        soloGeneratorMI.setText("Theme Weaver");
+        soloGeneratorMI.setToolTipText("Theme Weaver is a tool for creating improvisations containing specified themes, with various kinds of transformation.");
+        soloGeneratorMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                soloGeneratorMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(soloGeneratorMI);
+
+        customSoloGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_MASK));
+        customSoloGeneratorMI.setText("Theme Weaver - Custom");
+        customSoloGeneratorMI.setToolTipText("Opens a version of Theme Weaver in which position of each theme is specified by the user.");
+        customSoloGeneratorMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                customSoloGeneratorMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(customSoloGeneratorMI);
 
         menuBar.add(improvMenu);
 
@@ -23987,6 +24002,11 @@ private boolean isDotted = false;
         // TODO add your handling code here:
     }//GEN-LAST:event_saveRoadMapCheckBoxActionPerformed
 
+    private void tradeCheckbox1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_tradeCheckbox1ActionPerformed
+    {//GEN-HEADEREND:event_tradeCheckbox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tradeCheckbox1ActionPerformed
+
     private String adviceRhythm = "";
     
     public Polylist getAdviceRhythms()
@@ -26550,6 +26570,7 @@ private ImageIcon pauseButton =
     private javax.swing.JMenu improvMenu;
     private javax.swing.JPopupMenu.Separator improvSeparator1;
     private javax.swing.JPopupMenu.Separator improvSeparator2;
+    private javax.swing.JPopupMenu.Separator improvSeparator3;
     private javax.swing.JToggleButton improviseButton;
     private javax.swing.JMenuItem insertChorusTabMI;
     private javax.swing.JMenuItem insertPhraseAfterPMI;
@@ -26878,6 +26899,7 @@ private ImageIcon pauseButton =
     private javax.swing.JLabel trackerDelayLabel;
     private javax.swing.JTextField trackerDelayTextField;
     private javax.swing.JCheckBoxMenuItem tradeCheckbox;
+    private javax.swing.JCheckBoxMenuItem tradeCheckbox1;
     private javax.swing.JMenuItem tradingWindow;
     private javax.swing.JMenuItem transformMI;
     private javax.swing.JRadioButtonMenuItem transformRadio;
