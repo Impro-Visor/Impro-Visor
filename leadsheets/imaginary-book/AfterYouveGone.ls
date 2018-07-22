@@ -6,22 +6,25 @@
 (meter 4 4)
 (key -2)
 (tempo 160.0)
-(volume 127)
-(playback-transpose 0)
+(volume 80)
+(playback-transpose 0 0 0)
+(chord-font-size 16)
 (bass-instrument 33)
-(bass-volume 60)
+(bass-volume 33)
 (drum-volume 60)
-(chord-volume 60)
+(chord-volume 88)
 (breakpoint 54)
-(layout)
+(layout 4)
+(roadmap-layout 8)
+(melody-volume 127)
 (style swing
     (swing 0.67)
     (comp-swing 0.67)
-    (bass-high g-)
-    (bass-low g---)
-    (bass-base c--)
+    (bass-high c)
+    (bass-low g--)
     (chord-high a)
     (chord-low c-)
+    (voicing-name default.fv)
     (chord-base c- e- g-)
 )
 (part
@@ -31,14 +34,28 @@
     (instrument 0)
     (volume 65)
     (key -2)
+
 )
 
-(section (style swing)) 
+(phrase (style swing)) 
+EbM7 | Ab7#11 | BbM7 | Dm7 G7 | 
 
-EbM7 | Ab7#11 | BbM7 | Dm7 G7 | 
+
+(section (style)) 
+
 C7 | F7 | Bb6 | Bb7 | 
+
+(phrase (style)) 
 EbM7 | Ab7#11 | BbM7 | Dm7 G7 | 
+
+
+(section (style)) 
+
 Cm7 G7 | Cm7 Ab7b5 | BbM7 D7/A | Gm7 Gm7/F Eo7 / | 
+
+
+(section (style)) 
+
 BbM7 G7 | Cm7 F7 | Bb6 | Bb7 | 
 
 (part
@@ -50,4 +67,4 @@ BbM7 G7 | Cm7 F7 | Bb6 | Bb7 |
     (key -2)
     (stave treble)
 )
- g4 r1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+2+4
+ r1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1
