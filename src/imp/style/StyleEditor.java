@@ -38,9 +38,6 @@ import imp.style.stylePatterns.BassPatternElement;
 import imp.style.stylePatterns.BassPattern;
 import imp.style.stylePatterns.ChordPatternElement;
 import imp.style.stylePatterns.ChordPattern;
-import imp.style.stylePatterns.Interpolant;
-import imp.style.stylePatterns.Interpolable;
-import imp.style.stylePatterns.Substitution;
 import imp.data.advice.Advisor;
 import imp.voicing.AutomaticVoicingSettings;
 import imp.Constants;
@@ -1099,7 +1096,7 @@ public void updateAllDrumPatterns(String name, String rules)
             } catch (ClassCastException e) {
             }
       }
-       System.out.println("inside interpolations: " + buffer.toString());
+       //System.out.println("inside interpolations: " + buffer.toString());
     }
   
   public void getInterpolables(StringBuilder buffer)

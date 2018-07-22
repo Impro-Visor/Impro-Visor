@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,8 @@ public class BassPattern
   /**
    * array containing the types of rules
    */
-  private static String ruleTypes[] = {"X", "1", "2", "3", "4", "5", "6", "7", 
+  private static String ruleTypes[] = {"X", "1", "2", "3", "4", "5", "6", "7",
+                                       "8", "9", "10",
                                        "B", "C", "S", "A", "N", "R", "=", "U",
                                        "D", "V"};
 
@@ -93,25 +94,25 @@ public class BassPattern
    */
   private static final int PITCH    = 0;
 
-  private static final int BASS     = 8;
+  private static final int BASS     = 11;
 
-  private static final int CHORD    = 9;
+  private static final int CHORD    = 12;
 
-  private static final int SCALE    = 10;
+  private static final int SCALE    = 13;
 
-  private static final int APPROACH = 11;
+  private static final int APPROACH = 14;
 
-  private static final int NEXT     = 12;
+  private static final int NEXT     = 15;
 
-  private static final int REST     = 13;
+  private static final int REST     = 16;
 
-  private static final int EQUAL    = 14;
+  private static final int EQUAL    = 17;
 
-  private static final int UP       = 15;
+  private static final int UP       = 18;
 
-  private static final int DOWN     = 16;
+  private static final int DOWN     = 19;
 
-  private static final int VOLUME   = 17;
+  private static final int VOLUME   = 20;
 
 
 
@@ -139,7 +140,7 @@ public class BassPattern
   /**
    * Allow internal bass to exceed limits by this amount.
    */
-  private static final int MARGIN = 8;
+  private static final int MARGIN = 11;
 
   private static final int SOFTMARGIN = 6;
 
@@ -783,7 +784,7 @@ public LinkedList<Object> applyRules(ChordSymbol chord, ChordSymbol nextChord,
 
             default:
               {                             // higher than 99 means flat/sharp
-                if( (rule > 0 && rule < 8) || rule > 99 )
+                if( (rule > 0 && rule < 11) || rule > 99 )
                   {
                     Polylist scales = chordForm.getScales();
 
@@ -814,13 +815,13 @@ public LinkedList<Object> applyRules(ChordSymbol chord, ChordSymbol nextChord,
                     tones = tones.reverse().rest().reverse();
 
                     // flattened notes
-                    if( rule > FLATTEN && rule < FLATTEN + 8 )
+                    if( rule > FLATTEN && rule < FLATTEN + 11 )
                       {
                         rule = rule - FLATTEN;
                         NoteSymbol noteSymbol = getInterval(rule, tones);
                         melodySymbol = noteSymbol.transpose(-1);
                       }   // sharpened notes
-                    else if( rule > SHARPEN && rule < SHARPEN + 8 )
+                    else if( rule > SHARPEN && rule < SHARPEN + 11 )
                       {
                         rule = rule - SHARPEN;
                         NoteSymbol noteSymbol = getInterval(rule, tones);
@@ -863,6 +864,10 @@ public LinkedList<Object> applyRules(ChordSymbol chord, ChordSymbol nextChord,
                     else if( modifier.equals("D") )
                       {
                         noteSymbol = placePitchBelow(noteSymbol, lastNote);
+                      }
+                    else if( modifier.equals("DD") )
+                      {
+                        noteSymbol = placePitchOctaveBelow(noteSymbol, lastNote);
                       }
                     else
                       {
@@ -936,11 +941,11 @@ public LinkedList<Object> applyRules(ChordSymbol chord, ChordSymbol nextChord,
    */
 public static NoteSymbol getInterval(int interval, Polylist notes)
     {
-    if( interval > 7 )
+    if( interval > 10 )
         {
-        interval = interval - 7;
+        interval = interval - 10;
         }
-    interval = (interval % 8 - 1) % notes.length();// FIX!
+    interval = (interval % 11 - 1) % notes.length();// FIX!
     return (NoteSymbol)notes.nth(interval);
     }
   
@@ -1001,6 +1006,14 @@ public static NoteSymbol placePitchAbove(NoteSymbol pitch,
     // Note the role reversal of melodySymbol and base from the previous method
     int semitones = pitch.getSemitonesAbove(base);
     return base.transpose(-semitones);
+    }
+  
+    public static NoteSymbol placePitchOctaveBelow(NoteSymbol pitch,
+                                           NoteSymbol base)
+    {
+    // Note the role reversal of melodySymbol and base from the previous method
+    int semitones = pitch.getSemitonesAbove(base);
+    return base.transpose(-semitones).transpose(-12);
     }
 
   

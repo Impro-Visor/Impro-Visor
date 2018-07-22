@@ -4,9 +4,17 @@ from Prof. Robert Keller at Harvey Mudd College, July 21, 2018.
 
 Release notes for this version may be found at the end.
 
+This application is not "signed" for Microsoft or Apple, so to install you
+may need to temporarily turn off security settings, as we will be called an
+"unknown developer".
+
 If you need help, please post to the Yahoo! impro-visor user group:
 
      https://groups.yahoo.com/neo/groups/impro-visor/info
+
+Frequently Asked Questions (FAQ) can be found here:
+
+     https://www.cs.hmc.edu/~keller/jazz/improvisor/faq.html
 
 Impro-Visor is free and runs on any platform that supports Java 1.8 or
 later, including:
@@ -15,8 +23,8 @@ later, including:
     MacOSX
     Linux 
 
-Java virtual machines are currently bundled in the release for Windows and
-MacOSX, but not for Linux.
+Java virtual machines (1.8) are currently bundled in the release for Windows and
+MacOSX, but not for Linux (per advice from Linux specialists).
 
 The official information site for Impro-Visor is:
 
@@ -130,9 +138,14 @@ Release notes for Impro-Visor 10
  be truncated without having the need to provide short versions of the pattern.
  Consequently, few chord patterns are needed.
 
- Various small bugs were fixed.
+ There is a checkbox to save the roadmap whenever a leadsheet is saved. This
+ roadmap is represented in S expression form and is primarily of interest to
+ certain developers and researchers at present.
 
- Known bug:
+ Various bugs were fixed, including one in the Style Editor.
+
+ Known bug remaining:
+
  In active trading, with Impro-Visor going first, the first trade played by
  the user in a chorus is not recorded. Subsequent trades in the chorus are
  recorded properly.
