@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <install4j version="5.1.15" transformSequenceNumber="4">
-  <directoryPresets config="." />
-  <application name="Impro-Visor" distributionSourceDir="" applicationId="6140-2535-4985-4395" mediaDir="../../../Desktop/Impro-Visor Release10" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}" compression="6" lzmaCompression="false" pack200Compression="false" excludeSignedFromPacking="true" commonExternalFiles="false" createMd5Sums="true" shrinkRuntime="true" shortName="Impro-Visor" publisher="Robert Keller" publisherWeb="http://www.cs.hmc.edu/~keller/jazz/improvisor" version="10" allPathsRelative="true" backupOnSave="false" autoSave="false" convertDotsToUnderscores="true" macSignature="????" installerName="" javaMinVersion="1.8" javaMaxVersion="" allowBetaVM="true" jdkMode="runtimeJre" jdkName="">
+  <directoryPresets config=".." />
+  <application name="Impro-Visor" distributionSourceDir="" applicationId="6140-2535-4985-4395" mediaDir="../../Desktop/Impro-Visor Release10" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}" compression="6" lzmaCompression="false" pack200Compression="false" excludeSignedFromPacking="true" commonExternalFiles="false" createMd5Sums="true" shrinkRuntime="true" shortName="Impro-Visor" publisher="Robert Keller" publisherWeb="http://www.cs.hmc.edu/~keller/jazz/improvisor" version="10" allPathsRelative="true" backupOnSave="false" autoSave="false" convertDotsToUnderscores="true" macSignature="????" installerName="" javaMinVersion="1.8" javaMaxVersion="" allowBetaVM="true" jdkMode="runtimeJre" jdkName="">
     <languages skipLanguageSelection="false" languageSelectionInPrincipalLanguage="false">
       <principalLanguage id="en" customLocalizationFile="" />
       <additionalLanguages />
@@ -22,15 +22,15 @@
       <mountPoint id="87" root="" location="" mode="755" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="87" file="./improvisor1000" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="improvisor1000" excludeSuffixes="" dirMode="755" overrideDirMode="false">
+      <dirEntry mountPoint="87" file="." overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="2018-July-22-Release10" excludeSuffixes="" dirMode="755" overrideDirMode="false">
         <exclude />
       </dirEntry>
     </entries>
     <components />
   </files>
   <launchers>
-    <launcher name="impro-visor" id="22" customizedId="" external="false" excludeFromMenu="false" unixMode="755" menuName="" icnsFile="./packaging/ImproVisor.icns" customMacBundleIdentifier="false" macBundleIdentifier="" swtApp="false" fileset="" macBundleBinary="JavaApplicationStub" addMacEntitlements="false" macEntitlementsFile="">
-      <executable name="impro-visor" type="1" iconSet="true" iconFile="./packaging/ImproVisor.ico" executableDir="." redirectStderr="true" stderrFile="error.log" stderrMode="overwrite" redirectStdout="false" stdoutFile="output.log" stdoutMode="overwrite" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="false" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="asInvoker" checkConsoleParameter="false" globalSingleInstance="false" singleInstanceActivate="true">
+    <launcher name="impro-visor" id="22" customizedId="" external="false" excludeFromMenu="false" unixMode="755" menuName="" icnsFile="../2018-July-20/Impro-Visor/packaging/ImproVisor.icns" customMacBundleIdentifier="false" macBundleIdentifier="" swtApp="false" fileset="" macBundleBinary="JavaApplicationStub" addMacEntitlements="false" macEntitlementsFile="">
+      <executable name="impro-visor" type="1" iconSet="true" iconFile="../2018-July-20/Impro-Visor/packaging/ImproVisor.ico" executableDir="." redirectStderr="true" stderrFile="error.log" stderrMode="overwrite" redirectStdout="false" stdoutFile="output.log" stdoutMode="overwrite" failOnStderrOutput="true" executableMode="1" changeWorkingDirectory="true" workingDirectory="." singleInstance="false" serviceStartType="2" serviceDependencies="" serviceDescription="" jreLocation="" executionLevel="asInvoker" checkConsoleParameter="false" globalSingleInstance="false" singleInstanceActivate="true">
         <versionInfo include="false" fileVersion="" fileDescription="" legalCopyright="" internalName="" productName="" />
       </executable>
       <splashScreen show="false" autoOff="true" alwaysOnTop="true" width="0" height="0" bitmapFile="" java6SplashScreen="false">
@@ -57,7 +57,7 @@
         <content />
       </infoPlist>
       <iconImageFiles>
-        <file path="./packaging/Impro-Visor16.png" />
+        <file path="../2018-July-20/Impro-Visor/packaging/Impro-Visor16.png" />
       </iconImageFiles>
     </launcher>
   </launchers>
