@@ -1,8 +1,10 @@
 
 Welcome to Impro-Visor (Improvisation Advisor) Version 10,
-from Prof. Robert Keller at Harvey Mudd College, July 21, 2018.
+from Prof. Robert Keller at Harvey Mudd College, July 22, 2018.
 
-Release notes for this version may be found at the end.
+Release notes for this version may be found below.
+
+ Using Java 1.8 is recommended for installation.
 
 This application is not "signed" for Microsoft or Apple, so to install you
 may need to temporarily turn off security settings, as we will be called an
@@ -90,14 +92,17 @@ You can also use any external MIDI instrument, such as most digital pianos.
 You cannot start the application by clicking on individual leadsheet files.
 Instead these files must be opened from within Impro-Visor.
  
- New issues (bugs and feature requests, should be reported on github:
- https://github.com/Impro-Visor/Impro-Visor/issues
+Please send issues to: keller@cs.hmc.edu
+
+New issues (bugs and feature requests, should be reported on github:
+https://github.com/Impro-Visor/Impro-Visor/issues
  
- There are a few leftover issues on SourceForge:
- https://sourceforge.net/p/impro-visor/_list/tickets
+There are a few leftover issues on SourceForge:
+https://sourceforge.net/p/impro-visor/_list/tickets
  
 
-I am pleased to acknowledge contributions from the following developers:
+I am pleased to acknowledge contributions from the following developers, who
+have worked on the project since June of 2005:
 
  Stephen Jones, Aaron Wolin, David Morrison, Martin Hunt, 
  Steven Gomez, Jim Herold, Brandy McMenamy, Sayuri Soejima, Emma Carlson, 
@@ -110,10 +115,8 @@ I am pleased to acknowledge contributions from the following developers:
  Mark Heimann, Nava Dallal, Carli Lessard, Alex Putman, Becki Yukman
  Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
  Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, David Siah,
- Mira Jambusaria, Daniel Johnson, Sam Goree, Samantha Long, 
- Joseph Yaconelli, Isys Archell Johnson, Cai Glencross, Lukas Gnirke,
- Erika Rice Sherpelz, Jeff Sherpelz, Gabriel Neer, and Adrian Mettler.
-
+ Mira Jambusaria, Daniel Johnson, Sam Goree, Samantha Long, Nic Trieu,
+ Joseph Yaconelli, Isys Archell Johnson, Cai Glencross, and Lukas Gnirke.
 
 We hope you enjoy using Impro-Visor. 
 
@@ -124,12 +127,8 @@ Professor of Computer Science
 Harvey Mudd College
 Claremont, CA 91711
 
-Please send issues to: keller@cs.hmc.edu
-
 ===============================================================================
 Release notes for Impro-Visor 10
-
- Using Java 1.8 is recommended for installation.
 
  The Transposition Wizard has been included. This replaces the old playback
  transposition spinner that effects bass and chord parts only. The new feature
@@ -147,6 +146,12 @@ Release notes for Impro-Visor 10
  be truncated without having the need to provide short versions of the pattern.
  Consequently, fewer chord patterns are needed in general. If the old patterns
  are used, the algorithm may generate too many comping hits.
+
+ Grammar learning now includes a facility for motifs and their exploitation in
+ improvisation.
+
+ There is a mode within Active Trading intended to provide practice with 
+ learning rhythms. A better description of how to use will be forthcoming.
 
  There is a checkbox to save the roadmap whenever a leadsheet is saved. This
  roadmap is represented in S expression form and is primarily of interest to
