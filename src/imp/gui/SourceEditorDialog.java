@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
      */
     
     Notate parent;
+    java.awt.Frame frameParent;
     CommandManager cm;
     int type;
     
@@ -44,16 +45,18 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
     public static final int LEADSHEET = 0;
     public static final int GRAMMAR = 1;
     public static final int STYLE = 2;
-     public static final String[] typeStr = {"Leadsheet", "Grammar", "Style"};
+    public static final int DICTIONARY = 3;
+    public static final String[] typeStr = {"Leadsheet", "Grammar", "Style", "Dictionary"};
 
     public static String editorTitlePrefix = "Editor for: ";
     
     private boolean firstTime = true;
    
     /** Creates new form sourceEditorDialog */
-    public SourceEditorDialog(boolean modal, Notate p, CommandManager cm, int type)
+    public SourceEditorDialog(java.awt.Frame parent, boolean modal, Notate p, CommandManager cm, int type)
     {
-        super(p, modal);
+        super(parent, modal);
+        frameParent = parent;
         this.parent = p;
         this.cm = cm;
         this.type = type;
@@ -167,6 +170,9 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
             case STYLE:
                 cm.execute(new StylesToEditorCommand(this));
                 break;
+            case DICTIONARY:
+                new DictionaryToEditorCommand(((RoadMapFrame)frameParent).getDictionaryFilename(), this).execute();
+                break;
         }
     if( firstTime )
       {
@@ -193,6 +199,9 @@ public class SourceEditorDialog extends javax.swing.JDialog implements BasicEdit
             case STYLE:
                 cm.execute(new EditorToStylesCommand(this));
                 //parent.reloadStyles();
+                break;
+            case DICTIONARY:
+                new EditorToDictionaryCommand((RoadMapFrame)frameParent, this).execute();
                 break;
         }
     }//GEN-LAST:event_editorToSourceButtonActionPerformed

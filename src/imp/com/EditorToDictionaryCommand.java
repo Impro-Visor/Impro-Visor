@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ package imp.com;
 import imp.data.*;
 import imp.gui.SourceEditorDialog;
 import imp.roadmap.RoadMapFrame;
-import imp.roadmap.brickdictionary.BrickDictionaryEditorDialog;
 import imp.util.*;
 import java.io.*;
 
@@ -45,7 +44,7 @@ public class EditorToDictionaryCommand implements Command {
     /**
      * editor for the file source
      */
-    BrickDictionaryEditorDialog sourceEditor;
+    SourceEditorDialog sourceEditor;
 
     RoadMapFrame roadMapFrame;
             
@@ -59,7 +58,7 @@ public class EditorToDictionaryCommand implements Command {
      * @param file      the File to read
      * @param score     the Score to read the File into
      */
-    public EditorToDictionaryCommand(RoadMapFrame roadMapFrame, BrickDictionaryEditorDialog sourceEditor) {
+    public EditorToDictionaryCommand(RoadMapFrame roadMapFrame, SourceEditorDialog sourceEditor) {
         dictionaryFilename = roadMapFrame.getDictionaryFilename();
         this.sourceEditor = sourceEditor;
         this.roadMapFrame = roadMapFrame;

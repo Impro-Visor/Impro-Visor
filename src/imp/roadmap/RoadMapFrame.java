@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ import imp.data.advice.Advisor;
 import imp.ImproVisor;
 import imp.roadmap.brickdictionary.Block;
 import imp.roadmap.brickdictionary.Brick;
-import imp.roadmap.brickdictionary.BrickDictionaryEditorDialog;
 import imp.roadmap.brickdictionary.BrickLibrary;
 import imp.roadmap.brickdictionary.ChordBlock;
 import imp.roadmap.cykparser.CYKParser;
@@ -59,7 +58,7 @@ import polya.Tokenizer;
  * @author August Toman-Yih
  */
 
-public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListener {
+public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener {
 
     public static final String DICTIONARY_EXT = ".dictionary";
 
@@ -174,7 +173,7 @@ public class RoadMapFrame extends javax.swing.JDialog implements MidiPlayListene
     /** Time signature of this piece */
     public int[] metre = {4,4};
     
-    private BrickDictionaryEditorDialog dictionaryEditor = null;
+    private SourceEditorDialog dictionaryEditor = null;
     
     private static int DICTIONARY_EDITOR_ROWS = 3000;
     private static int DICTIONARY_EDITOR_WIDTH = 700;
@@ -4808,7 +4807,8 @@ public String getDictionaryFilename()
 
 private void openDictionaryEditor()
   {
-      dictionaryEditor = new BrickDictionaryEditorDialog(this, false, notate, null);
+    dictionaryEditor = new SourceEditorDialog(this, false, notate, null,
+            SourceEditorDialog.DICTIONARY);
 
     dictionaryEditor.setRows(DICTIONARY_EDITOR_ROWS);
     dictionaryEditor.setSize(DICTIONARY_EDITOR_WIDTH, DICTIONARY_EDITOR_HEIGHT);
