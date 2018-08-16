@@ -477,7 +477,7 @@ public int getEndTime()
 public int getBars()
   {
     int bars = (int) Math.ceil(size / measureLength);
-    //System.out.println("bars = " + bars);
+    //System.out.println("bars in Part = " + bars);
     return bars;
   }
 

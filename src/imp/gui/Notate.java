@@ -10196,6 +10196,16 @@ public Style getCurrentStyle()
     return ImproVisor.getCurrentWindow().score.getChordProg().getStyle();
   }
 
+public Style getStyleAtSlot(int n)
+  {
+    return ImproVisor.getCurrentWindow().score.getChordProg().getStyleAtSlot(n);
+  }
+
+public double getSwingAtSlot(int n)
+  {
+    return getStyleAtSlot(n).getSwing();
+  }
+
 /**
  * Plays a string of pitches as a chord over a given symbol.
  *
@@ -27532,6 +27542,11 @@ public int getBarsPerChorus()
   {
     return score.getBarsPerChorus();
   }
+
+public int getSlotsPerChorus()
+{
+    return score.getLength();
+}
 
 public SectionInfo getSectionInfo()
   {
