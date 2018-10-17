@@ -4856,7 +4856,7 @@ public Critic getCritic()
         gridBagConstraints.gridy = 0;
         midiQuantizationPanel.add(recordingLatency, gridBagConstraints);
 
-        recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2"}));
+        recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8"}));
         recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(100, 26));
         recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(100, 26));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -18923,7 +18923,7 @@ public boolean saveAsLeadsheet()
  */
 public boolean saveAsLeadsheetAWT()
   {
-
+    // FIX: What if saveAWT is null?
     //System.out.println("using AWT: " + lastLeadsheetFileStem);
     if( saveAWT.getDirectory().equals("/") )
       {

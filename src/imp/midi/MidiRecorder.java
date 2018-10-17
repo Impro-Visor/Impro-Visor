@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
  */
 package imp.midi;
 
-import imp.Constants;
 import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.Rest;
@@ -105,6 +104,7 @@ public long getTick()
 
 public void start(int countInOffset, int insertionOffset) {
         this.countInOffset = countInOffset;
+        this.insertionOffset = insertionOffset;
         snapTo = notate.getRealtimeQuantizationGCD();
         //System.out.println("start snapTo = " + snapTo + " countInOffset = " + countInOffset + " insertionOffset = " + insertionOffset);
         this.sequencer = notate.getSequencer();

@@ -4089,6 +4089,18 @@
                             <ListItem value="1"/>
                             <ListItem value="1.5"/>
                             <ListItem value="2"/>
+                            <ListItem value="2.5"/>
+                            <ListItem value="3"/>
+                            <ListItem value="3.5"/>
+                            <ListItem value="4"/>
+                            <ListItem value="4.5"/>
+                            <ListItem value="5"/>
+                            <ListItem value="5.5"/>
+                            <ListItem value="6"/>
+                            <ListItem value="6.5"/>
+                            <ListItem value="7"/>
+                            <ListItem value="7.5"/>
+                            <ListItem value="8"/>
                           </SpinnerModel>
                         </Property>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
