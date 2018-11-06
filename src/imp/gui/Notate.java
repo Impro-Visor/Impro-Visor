@@ -11180,8 +11180,9 @@ private void startRecordingHelper()
     midiSynth.unregisterReceiver(midiStepInput);  // disable step input during recording
 
     midiSynth.registerReceiver(recorder);
-
-    recorder.start(this.score.getCountInOffset(), getRecordLatency());   // set time to 0
+    recorder.start(this.score.getCountInOffset(), 
+                   getRecordLatency(), 
+                   -masterTransposition.getMelodyTransposition());   // set time to 0
   }
 
 
@@ -11221,7 +11222,9 @@ public void enableRecording()
 
     // redundant midiSynth.registerReceiver(recorder);
 
-    recorder.start(score.getCountInOffset(), getRecordLatency());
+    recorder.start(score.getCountInOffset(), 
+                   getRecordLatency(), 
+                   -masterTransposition.getMelodyTransposition());
   }
 
 private int getRecordLatency()

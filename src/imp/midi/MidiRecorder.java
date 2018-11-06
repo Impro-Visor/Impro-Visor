@@ -55,6 +55,7 @@ public class MidiRecorder implements imp.Constants, Receiver
     int snapTo;
     double latency = 0;
     boolean isSuspended = false;
+    int transposition = 0;
     
  
 public MidiRecorder(Notate notate, Score score)
@@ -101,10 +102,15 @@ public long getTick()
             return -1;
         }
     }
+public void start(int countInOffset, int insertionOffset)
+{
+    start(countInOffset, insertionOffset, 0);
+}
 
-public void start(int countInOffset, int insertionOffset) {
+public void start(int countInOffset, int insertionOffset, int transposition) {
         this.countInOffset = countInOffset;
         this.insertionOffset = insertionOffset;
+        this.transposition = transposition;
         snapTo = notate.getRealtimeQuantizationGCD();
         //System.out.println("start snapTo = " + snapTo + " countInOffset = " + countInOffset + " insertionOffset = " + insertionOffset);
         this.sequencer = notate.getSequencer();
@@ -174,7 +180,7 @@ public void start(int countInOffset, int insertionOffset) {
                 }
 
                 channel = lowNibble;
-                note = m[1];
+                note = m[1] + transposition;
                 velocity = m[2];
                 if ((velocity == 0 || note < this.notate.getLow() || note > this.notate.getHigh()) && this.notate.getFilter()) {
                 // this is actually a note-off event, done to allow 
@@ -195,7 +201,7 @@ public void start(int countInOffset, int insertionOffset) {
                 }
 
                 channel = lowNibble;
-                note = m[1];
+                note = m[1] + transposition;
                 velocity = m[2];
 
                 handleNoteOff(note, velocity, channel);
