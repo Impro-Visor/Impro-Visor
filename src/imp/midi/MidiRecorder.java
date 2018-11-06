@@ -102,10 +102,13 @@ public long getTick()
             return -1;
         }
     }
-public void start(int countInOffset, int insertionOffset)
-{
-    start(countInOffset, insertionOffset, 0);
-}
+
+/**
+ * Start MIDI recording
+ * @param countInOffset
+ * @param insertionOffset
+ * @param transposition 
+ */
 
 public void start(int countInOffset, int insertionOffset, int transposition) {
         this.countInOffset = countInOffset;
