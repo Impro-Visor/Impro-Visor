@@ -7621,7 +7621,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="earlyScrollCheckBoxMI">
               <Properties>
-                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Early Scroll"/>
                 <Property name="toolTipText" type="java.lang.String" value="If selected, long pages will scroll before the cursor is at the last line."/>
               </Properties>

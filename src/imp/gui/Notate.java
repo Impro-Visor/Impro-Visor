@@ -8888,7 +8888,6 @@ public Critic getCritic()
         });
         viewMenu.add(autoAdjustMI);
 
-        earlyScrollCheckBoxMI.setSelected(true);
         earlyScrollCheckBoxMI.setText("Early Scroll");
         earlyScrollCheckBoxMI.setToolTipText("If selected, long pages will scroll before the cursor is at the last line.");
         viewMenu.add(earlyScrollCheckBoxMI);
