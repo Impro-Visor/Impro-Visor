@@ -11951,7 +11951,7 @@ private JToggleButton currentGenButton = null;
 /**
  * Used to provide access to switching preferences tabs from another class file
  */
-void changePrefTab(JToggleButton button, JPanel tab)
+private void changePrefTab(JToggleButton button, JPanel tab)
   {
 
     button.setSelected(true);
@@ -12601,7 +12601,7 @@ public Object getSelectedItem()
  */
 private boolean initLocationPreferencesDialog = false;
 
-private void showPreferencesDialog()
+public void showPreferencesDialog()
   {
     setPrefsDialog();
 

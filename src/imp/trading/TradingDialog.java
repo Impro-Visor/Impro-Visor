@@ -145,6 +145,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         volumeLabel = new javax.swing.JLabel();
         volumeSlider = new javax.swing.JSlider();
         controlsPanel = new javax.swing.JPanel();
+        midiPreferencesBtn = new javax.swing.JButton();
         processTimeSelector = new javax.swing.JTextField();
         generationGapSpinner = new javax.swing.JSpinner();
         playbackControls = new javax.swing.JPanel();
@@ -505,15 +506,39 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         controlsPanel.setPreferredSize(new java.awt.Dimension(200, 40));
         controlsPanel.setLayout(new java.awt.GridBagLayout());
 
+        midiPreferencesBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/preferences/smallMidi.png"))); // NOI18N
+        midiPreferencesBtn.setToolTipText("Open MIDI Preferences dialog.");
+        midiPreferencesBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        midiPreferencesBtn.setFocusable(false);
+        midiPreferencesBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        midiPreferencesBtn.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        midiPreferencesBtn.setMaximumSize(new java.awt.Dimension(40, 30));
+        midiPreferencesBtn.setMinimumSize(new java.awt.Dimension(40, 30));
+        midiPreferencesBtn.setPreferredSize(new java.awt.Dimension(40, 30));
+        midiPreferencesBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        midiPreferencesBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                midiPreferencesBtnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 1.0;
+        controlsPanel.add(midiPreferencesBtn, gridBagConstraints);
+
         processTimeSelector.setBackground(new java.awt.Color(238, 238, 238));
         processTimeSelector.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         processTimeSelector.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         processTimeSelector.setText("1.0");
-        processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing (beats)", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
-        processTimeSelector.setMaximumSize(new java.awt.Dimension(200, 50));
-        processTimeSelector.setMinimumSize(new java.awt.Dimension(180, 25));
-        processTimeSelector.setPreferredSize(new java.awt.Dimension(180, 25));
-        processTimeSelector.setSize(new java.awt.Dimension(180, 40));
+        processTimeSelector.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing beats", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 11))); // NOI18N
+        processTimeSelector.setMaximumSize(new java.awt.Dimension(140, 50));
+        processTimeSelector.setMinimumSize(new java.awt.Dimension(140, 25));
+        processTimeSelector.setPreferredSize(new java.awt.Dimension(140, 25));
         processTimeSelector.addCaretListener(new javax.swing.event.CaretListener()
         {
             public void caretUpdate(javax.swing.event.CaretEvent evt)
@@ -536,17 +561,17 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 0.6;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
         controlsPanel.add(processTimeSelector, gridBagConstraints);
 
         generationGapSpinner.setModel(new javax.swing.SpinnerNumberModel(4.0d, -20.0d, 20.0d, 0.01d));
         generationGapSpinner.setToolTipText("Specifies the lead time, in beats, for generating next chorus before the end of the current chorus, if Recur is toggled on.");
-        generationGapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lead", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        generationGapSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lead", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 11))); // NOI18N
         generationGapSpinner.setInheritsPopupMenu(true);
         generationGapSpinner.setMaximumSize(new java.awt.Dimension(80, 45));
         generationGapSpinner.setMinimumSize(new java.awt.Dimension(80, 30));
@@ -560,11 +585,12 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.weighty = 1.0;
         controlsPanel.add(generationGapSpinner, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1185,6 +1211,12 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
     {//GEN-HEADEREND:event_trade16ActionPerformed
         setTradeLength(16);
     }//GEN-LAST:event_trade16ActionPerformed
+
+    private void midiPreferencesBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_midiPreferencesBtnActionPerformed
+    {//GEN-HEADEREND:event_midiPreferencesBtnActionPerformed
+        notate.openMidiPreferences();
+        notate.showPreferencesDialog();
+    }//GEN-LAST:event_midiPreferencesBtnActionPerformed
     
 public void setGenerationGap(double value)
   {
@@ -1641,6 +1673,7 @@ public boolean passiveSelected()
     private javax.swing.JCheckBox loopToggle;
     private javax.swing.JRadioButtonMenuItem lstmNetworkRadio;
     private javax.swing.JMenuBar mainTradeMenuBar;
+    private javax.swing.JButton midiPreferencesBtn;
     private javax.swing.JMenu modeMenu;
     private javax.swing.ButtonGroup modeSelector;
     private javax.swing.JPanel optionsPanel;
