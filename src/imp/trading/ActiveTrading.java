@@ -472,10 +472,10 @@ public class ActiveTrading {
             userStartIndex = triggers.size() + userStartIndex;
           }
         int userStartSlot = triggers.get(userStartIndex);
-        MelodyPart melodyPart = notate.getCurrentMelodyPart();
-
-        melodyPart.altPasteOver(response, userStartSlot);
-        melodyPart.altPasteOver(new MelodyPart(slotsPerTurn),
+        
+        MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
+        currentMelodyPart.altPasteOver(response, userStartSlot);
+        currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn),
                           (userStartSlot + slotsPerTurn) % this.adjustedLength);
 
         // trigger index is incremented before calling processInput, 
@@ -770,7 +770,6 @@ public class ActiveTrading {
         midiSynth.setMasterVolume(volume);
         notate.playFirstChorus();
 
-        MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
         if( isUserLeading )
           {
             phase = TradePhase.COMPUTER_TURN;
@@ -779,6 +778,7 @@ public class ActiveTrading {
           {
             phase = TradePhase.PROCESS_INPUT;
           }
+        MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
         currentMelodyPart.altPasteOver(response, 0);
         currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn),
                                        0 + slotsPerTurn);
@@ -938,8 +938,8 @@ public class ActiveTrading {
         
         pasteNextAvailableParts(false);
 
-        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn),
-                                     triggers.get(triggerIndex) + slotsPerTurn);
+//        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn),
+//                                     triggers.get(triggerIndex) + slotsPerTurn);
         
         if( notate.getSlotInPlayback() >= 
                 notate.getChordProg().size() - 2 * slotsPerTurn )
