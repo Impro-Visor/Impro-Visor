@@ -102,7 +102,7 @@ public class TradingResponseController {
     
     public boolean hasNextReady()
     {
-        return responseSections[sectionIndex].isDone();
+        return hasNext() && responseSections[sectionIndex].isDone();
     }
     
     public MelodyPart retrieveNext()

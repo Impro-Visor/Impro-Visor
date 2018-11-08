@@ -872,10 +872,7 @@ public class ActiveTrading {
         //System.out.println("starting to paste parts");
         //use this boolean to make an easy toggleable do-while loop
         boolean isForcedPart = forceFirstPart;
-        while( (    tradeResponseController.hasNext() 
-                 && tradeResponseController.hasNextReady()
-               )
-            || isForcedPart )
+        while( isForcedPart || tradeResponseController.hasNextReady() )
           {
             //System.out.println("pasting a ready part");
             
@@ -936,6 +933,9 @@ public class ActiveTrading {
         // For new trading response system, while we have another melodyPart 
         // in the response
         
+        // BUG?
+        // I think this is pasting one part too many. It is over-writing the
+        // first trade.
         pasteNextAvailableParts(false);
 
 //        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn),
@@ -973,31 +973,5 @@ public class ActiveTrading {
         measures = length;
         slotsPerTurn = slotsPerBar * measures;
     }
-    
-    
-    public void tradingClosed()
-    {
-        if( isTrading )
-          {
-            stopTrading();
-          }
-        //notate.setEnabled(true);
-        notate.setLooping(false);
-        //notate.tradingDialogClosed();
-    }
 
-    public void startOrSsettop()
-    {
-        if( !isUserInputError )
-          {
-            if( !isTrading )
-              {
-                startTrading();
-              }
-            else
-              {
-                stopTrading();
-              }
-          }
-    }
 }
