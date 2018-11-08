@@ -67,11 +67,10 @@ public class ActiveTrading {
     private int[] metre;
     private ChordPart soloChords;
     private ChordPart responseChords;
-    private MelodyPart response;
+    private MelodyPart userResponse;
     private MidiSynth midiSynth;
     private long slotDelay;
     private boolean isTrading;
-    private boolean isUserInputError;
     private boolean firstPlay;
     private boolean isUserLeading;
     private boolean isLoop;
@@ -94,7 +93,7 @@ public class ActiveTrading {
     private int slotsPerChorus;
     
     //fields used in functionality changes for asynchronous processing
-    // The slot where we will check if the next desired response part 
+    // The slot where we will check if the next desired userResponse part 
     // (during the computer's turn) is done processing.
     private int nextPartOffset; 
     
@@ -332,7 +331,7 @@ public class ActiveTrading {
           }
 
         //if the current slot is nearing the slot for which we need the melody
-        // response part, go grab it and any other available parts
+        // userResponse part, go grab it and any other available parts
         
 // Not sure, but this seems to be redundant, generating part that is overwritten
 //        int value = currentComputerTurnStartSlot + nextPartOffset 
@@ -346,7 +345,7 @@ public class ActiveTrading {
 //            // ready parts, if any.
 //            
 //            pasteNextAvailableParts(true); 
-//            tradeScore = makeTradeScore(response);
+//            tradeScore = makeTradeScore(userResponse);
 //            
 //            int slot = currentComputerTurnStartSlot;
 //            int barNumber = 1 + (slot/slotsPerMeasure);
@@ -361,10 +360,10 @@ public class ActiveTrading {
         /*
          * This if statement checks if we need to refresh playback on our
          * midiSynth.
-         * As parts are generated and added to response, if the current
+         * As parts are generated and added to userResponse, if the current
          * midiSynth has already been started, it will not play the added parts.
          * Thus, in the if statement above, a playCommand to play the most up to
-         * date response parts on the midiSynth is created, and in this if
+         * date userResponse parts on the midiSynth is created, and in this if
          * statement the playCommand is executed
          */
         if( phase == TradePhase.COMPUTER_TURN
@@ -429,8 +428,8 @@ public class ActiveTrading {
         nextSection = triggers.get(nextSectionIndex);
         //System.out.println("Chords extracted from chord prog from : " + 
         // nextSection + " to " + (nextSection + slotsPerTurn - one));
-        response = new MelodyPart(slotsPerTurn);
-        notate.initTradingRecorder(response);
+        userResponse = new MelodyPart(slotsPerTurn);
+        notate.initTradingRecorder(userResponse);
         notate.enableRecording();
         int sectionStart;
         int sectionEnd;
@@ -449,11 +448,11 @@ public class ActiveTrading {
         responseChords = chordProg.extract(nextSection,
                                            nextSection + slotsPerTurn - 1);
 
-        //start generation of the response by passing the next section 
-        // of chords to the trading response controller
+        //start generation of the userResponse by passing the next section 
+        // of chords to the trading userResponse controller
         tradeResponseController.startTradingGeneration(responseChords,
                                                        nextSection);
-        tradeScore = makeTradeScore(response);
+        tradeScore = makeTradeScore(userResponse);
         tradeScore.setChordProg(responseChords);
     }
 
@@ -474,7 +473,7 @@ public class ActiveTrading {
         int userStartSlot = triggers.get(userStartIndex);
         
         MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
-        currentMelodyPart.altPasteOver(response, userStartSlot);
+        currentMelodyPart.altPasteOver(userResponse, userStartSlot);
         currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn),
                           (userStartSlot + slotsPerTurn) % this.adjustedLength);
 
@@ -495,12 +494,12 @@ public class ActiveTrading {
         tradeScore.deleteChords();
 
         Long delayCopy = slotDelay;
-        response = response.extract(delayCopy.intValue(), 
+        userResponse = userResponse.extract(delayCopy.intValue(), 
                                     slotsPerTurn - ONE,
                                     true, 
                                     true);
-        //System.out.println(response);
-        tradeScore.addPart(response);
+        //System.out.println(userResponse);
+        tradeScore.addPart(userResponse);
         //System.out.println("TRADE SCORE" + tradeScore);
         //System.out.println("NOTATE SCORE" + notate.getScore());
 
@@ -627,7 +626,7 @@ public class ActiveTrading {
         File file = new File(directory, getMusician() + TransformFilter.EXTENSION);
         currentTransform = new Transform(file);
 
-        response = new MelodyPart();
+        userResponse = new MelodyPart();
         firstPlay = true;
         notate.setFirstTab();
         lastPosition = 0;
@@ -648,9 +647,9 @@ public class ActiveTrading {
 
         //if computer is leading, generate a solo via selected grammar
         if (!isUserLeading) {
-            response = ((CorrectRhythmTRM) tradeMode).getFirstRhythm();
+            userResponse = ((CorrectRhythmTRM) tradeMode).getFirstRhythm();
             Long delayCopy = slotDelay;
-            MelodyPart adjustedResponse = response.extract(delayCopy.intValue(), 
+            MelodyPart adjustedResponse = userResponse.extract(delayCopy.intValue(), 
                                                  slotsPerTurn - ONE, true, true);
             //notate.establishCountIn(tradeScore);  
             // Doesn't work for Impro-Visor first
@@ -681,7 +680,7 @@ public class ActiveTrading {
             //TODO make a nice comment
             phase = TradePhase.PROCESS_INPUT;
             MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
-            currentMelodyPart.altPasteOver(response, 0);
+            currentMelodyPart.altPasteOver(userResponse, 0);
             currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn), 
                                                           0 + slotsPerTurn);
         }
@@ -710,7 +709,7 @@ public class ActiveTrading {
                              getMusician() + TransformFilter.EXTENSION);
         currentTransform = new Transform(file);
 
-        response = new MelodyPart();
+        userResponse = new MelodyPart();
         firstPlay = true;
         notate.setFirstTab();
         lastPosition = 0;
@@ -743,10 +742,10 @@ public class ActiveTrading {
         //if computer is leading, generate a solo via selected grammar
         if( !isUserLeading )
           {
-            response = tradeResponseController.
+            userResponse = tradeResponseController.
                     extractFromGrammarSolo(0, slotsPerTurn);
             Long delayCopy = slotDelay;
-            MelodyPart adjustedResponse = response.extract(delayCopy.intValue(),
+            MelodyPart adjustedResponse = userResponse.extract(delayCopy.intValue(),
                                                            slotsPerTurn - ONE,
                                                            true, 
                                                            true);
@@ -779,7 +778,7 @@ public class ActiveTrading {
             phase = TradePhase.PROCESS_INPUT;
           }
         MelodyPart currentMelodyPart = notate.getCurrentMelodyPart();
-        currentMelodyPart.altPasteOver(response, 0);
+        currentMelodyPart.altPasteOver(userResponse, 0);
         currentMelodyPart.altPasteOver(new MelodyPart(slotsPerTurn),
                                        0 + slotsPerTurn);
     }
@@ -891,12 +890,12 @@ public class ActiveTrading {
             
             //System.out.println(responsePart + "with offset " + nextPartOffset);
             
-            // Paste our generated response part onto our response part from  
+            // Paste our generated userResponse part onto our userResponse part from  
             // which our own midiSynth is playing.
             
-            response.altPasteOver(responsePart, nextPartOffset); 
+            userResponse.altPasteOver(responsePart, nextPartOffset); 
             
-            // Paste our generated response onto the melody part from notate 
+            // Paste our generated userResponse onto the melody part from notate 
             // (so that it will be visible).
             
             currentMelodyPart.altPasteOver(responsePart,
@@ -917,7 +916,7 @@ public class ActiveTrading {
     private void applyTradingMode()
     {
         tradeResponseController.setMusician(currentTransform);
-        tradeResponseController.finishResponse(response, 
+        tradeResponseController.finishResponse(userResponse, 
                                                soloChords,
                                                responseChords, 
                                                nextSection);
@@ -925,13 +924,13 @@ public class ActiveTrading {
          * //Old usage of tradeResponseController, where you update information
          * and then perform calculations. ^above call is for new usage, where
          * calculating has been done in the background
-         * tradeResponseController.updateResponse(response, soloChords,
+         * tradeResponseController.updateResponse(userResponse, soloChords,
          * responseChords, nextSection, currentTransform);
-         * response = tradeResponseController.response();
+         * userResponse = tradeResponseController.userResponse();
          */
-        //System.out.println(response);
-        // For new trading response system, while we have another melodyPart 
-        // in the response
+        //System.out.println(userResponse);
+        // For new trading userResponse system, while we have another melodyPart 
+        // in the userResponse
         
         // BUG?
         // I think this is pasting one part too many. It is over-writing the
