@@ -724,6 +724,7 @@ public class ActiveTrading {
         scoreLength = notate.getScoreLength();
         metre = notate.getScore().getMetre();
         slotsPerTurn = measures * slotsPerBar;
+        assert( slotsPerTurn != 0 );
         try
           {
           tradeResponseController = 
@@ -937,13 +938,12 @@ public class ActiveTrading {
         // For new trading userResponse system, while we have another melodyPart 
         // in the userResponse
         
-        // BUG?
-        // I think this is pasting one part too many. It is over-writing the
-        // first trade.
+        // Check whether this is pasting one part too many, over-writing the
+        // first trade; I think it is okay now, with other changes.
         pasteNextAvailableParts(false);
 
-//        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn),
-//                                     triggers.get(triggerIndex) + slotsPerTurn);
+        notate.getCurrentMelodyPart().altPasteOver(new MelodyPart(slotsPerTurn),
+                                     triggers.get(triggerIndex) + slotsPerTurn);
         
         if( isUserLeading )
         {
