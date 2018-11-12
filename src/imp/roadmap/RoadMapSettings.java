@@ -166,7 +166,7 @@ public class RoadMapSettings {
      * whether to show the starting note from the leadsheet or not
      * 
      */
-    public boolean showVariants = true;
+    public boolean showVariants = false;
     
     /**
      * whether to show the starting note from the leadsheet or not
