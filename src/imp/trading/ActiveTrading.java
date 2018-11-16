@@ -83,7 +83,7 @@ public class ActiveTrading {
     private static MidiManager midiManager;
     //magic values
     private static final int END_LIMIT_INDEX = 1;
-    private final javax.swing.JCheckBox swingCheckBox;
+    //private final javax.swing.JCheckBox swingCheckBox;
     public static final int ZERO = 0;
     public static final int ONE = 1;
     public static final int DEFAULT_TRADE_LENGTH = 4;
@@ -116,11 +116,9 @@ public class ActiveTrading {
      * Creates new form TradingWindow
      *
      * @param notate
-     * @param swingCheckBox
      */
-    public ActiveTrading(Notate notate, javax.swing.JCheckBox swingCheckBox) {
+    public ActiveTrading(Notate notate) {
         this.notate = notate;
-        this.swingCheckBox = swingCheckBox;
         //defaults on open
         //tradeScore = new Score();
         slotsPerBar = notate.getSlotsPerMeasure();
@@ -671,7 +669,7 @@ public class ActiveTrading {
 
             playCommand = makePlayCommand(                    
                     tradeScore,
-                    swingCheckBox.isSelected(),
+                    false, // was swingCheckBox.isSelected(),
                     midiSynth
                    );
      }

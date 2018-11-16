@@ -85,7 +85,7 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         super(notate, false);
         this.notate = notate;
         initComponents();
-        activeTrading = new ActiveTrading(notate, swingCheckBox);
+        activeTrading = new ActiveTrading(notate);
         rhythmHelperModeRadioPanel = createRhythmHelperModeRadioPanel();
         cancelButton = createCancelButton();
         playbackControls.add(cancelButton);
@@ -135,7 +135,6 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         passiveButton = new javax.swing.JRadioButton();
         optionsPanel = new javax.swing.JPanel();
         recordCheckBox = new javax.swing.JCheckBox();
-        swingCheckBox = new javax.swing.JCheckBox();
         grammarStatusButton = new javax.swing.JButton();
         transformStatusButton = new javax.swing.JButton();
         tempoPanel = new javax.swing.JPanel();
@@ -338,16 +337,6 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         optionsPanel.add(recordCheckBox, gridBagConstraints);
-
-        swingCheckBox.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        swingCheckBox.setSelected(true);
-        swingCheckBox.setText("Swing");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        optionsPanel.add(swingCheckBox, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -1689,7 +1678,6 @@ public boolean passiveSelected()
     private javax.swing.JTextField processTimeSelector;
     private javax.swing.JCheckBox recordCheckBox;
     private javax.swing.JButton startOrStopTradingButton;
-    private javax.swing.JCheckBox swingCheckBox;
     private javax.swing.JLabel tempoLabel;
     private javax.swing.JPanel tempoPanel;
     private javax.swing.JSlider tempoSlider;
