@@ -383,7 +383,6 @@ public void toFront() {
         gridBagConstraints.weighty = 1.0;
         visichordDialog.getContentPane().add(voicingStaffPanel, gridBagConstraints);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Keyboard");
         setMinimumSize(new java.awt.Dimension(1100, 370));
         setPreferredSize(new java.awt.Dimension(1100, 370));
