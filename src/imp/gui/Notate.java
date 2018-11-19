@@ -21682,7 +21682,7 @@ private void rootEqualBassCheckboxKeyPressed(java.awt.event.KeyEvent evt) {//GEN
 
 private void pianoKeyboardMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pianoKeyboardMIActionPerformed
 
-    if( playingStopped() )
+//    if( playingStopped() )
       {
         openKeyboard();
       }
