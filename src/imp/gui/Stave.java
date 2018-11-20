@@ -5393,7 +5393,7 @@ public void rectifySelection(int startIndex, int endIndex, boolean directional, 
                                       options[0], 
                                       options[1], 
                                       options[2],
-                                      options[3]));
+                                      false));
 
     if( startIndex == endIndex )
       {
