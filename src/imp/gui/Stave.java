@@ -5243,15 +5243,14 @@ void redoAdvice()
 void transposeMelodyHarmonically()
   {
     Trace.log(2, "applying smart transpose");
-    rectifySelection(getSelectionStart(),
-                 getSelectionEnd(), false, false);
+    rectifySelection(getSelectionStart(), getSelectionEnd(), false, false, false);
     playSelection(false, 0, PlayScoreCommand.USEDRUMS, "transpose harmonically");
   }
 
 void transposeMelodyUpHarmonically()
   {
     Trace.log(2, "applying harmonic transpose up");
-    rectifySelection(getSelectionStart(), getSelectionEndNote(), true, true);
+    rectifySelection(getSelectionStart(), getSelectionEndNote(), true, true, false);
     notate.noCountIn();
     playSelection(false, 0, PlayScoreCommand.USEDRUMS, "transpose up harmonically");
   }
@@ -5259,8 +5258,7 @@ void transposeMelodyUpHarmonically()
 void transposeMelodyDownHarmonically()
   {
     Trace.log(2, "applying harmonic transpose down");
-    rectifySelection(getSelectionStart(),
-                 getSelectionEndNote(), true, false);
+    rectifySelection(getSelectionStart(), getSelectionEndNote(), true, false, false);
     notate.noCountIn();
     playSelection(false, 0, PlayScoreCommand.USEDRUMS, "transpose down harmonically");
   }
@@ -5379,7 +5377,7 @@ public void shiftPitch(int startIndex, int endIndex, boolean up,
     repaint();
   }
 
-public void rectifySelection(int startIndex, int endIndex, boolean directional, boolean direction)
+public void rectifySelection(int startIndex, int endIndex, boolean directional, boolean direction, boolean mergePitches)
   {
     boolean [] options = notate.getLickgenFrame().getRectifyOptions();
     MelodyPart melodyPart = getMelodyPart();
@@ -5393,7 +5391,7 @@ public void rectifySelection(int startIndex, int endIndex, boolean directional, 
                                       options[0], 
                                       options[1], 
                                       options[2],
-                                      false));
+                                      mergePitches));
 
     if( startIndex == endIndex )
       {

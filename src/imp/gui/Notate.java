@@ -11321,6 +11321,7 @@ private void setStepInput(boolean active)
   }
 
     private void recordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordBtnActionPerformed
+        turnStepInputOff();
         recordFromMidi();
     }//GEN-LAST:event_recordBtnActionPerformed
 
@@ -22266,7 +22267,7 @@ public void cancelLazyGeneration(){
 public void rectifySelection(Stave stave, int selectionStart, int selectionEnd)
   {
     //System.out.println("rectifying from  " + selectionStart + " to " + selectionEnd);
-    stave.rectifySelection(selectionStart, selectionEnd, false, false);
+    stave.rectifySelection(selectionStart, selectionEnd, false, false, true);
   }
 
 /**
