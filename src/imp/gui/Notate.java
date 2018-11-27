@@ -18927,6 +18927,10 @@ public boolean saveAsLeadsheet()
 public boolean saveAsLeadsheetAWT()
   {
     // FIX: What if saveAWT is null?
+    if( saveAWT == null )
+      {
+        return false;
+      }
     //System.out.println("using AWT: " + lastLeadsheetFileStem);
     if( saveAWT.getDirectory().equals("/") )
       {

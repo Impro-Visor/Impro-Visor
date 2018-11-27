@@ -74,9 +74,12 @@ public class StyleCellRenderer
           int column)
     {
 
-    Component component = null;
-
     Object data = table.getValueAt(row, column);
+    
+    if( data == null )
+    {
+        return new JTextField(NULL_DATA_RENDERING);
+    }
 
     String rendering;
 
@@ -122,13 +125,13 @@ public class StyleCellRenderer
       {
       DrumRuleDisplay rule = (DrumRuleDisplay)value;
 
-      JTextField field = new JTextField(rule.getDisplayText());
+      JTextField field = new JTextField(rule.getDisplayText()); // null pointer error
       field.setBackground(isSelected ? selectedColor : rule.getColor());
       return field;
       }
     else
       {
-      rendering = data == null ? NULL_DATA_RENDERING : data.toString();
+      rendering = data.toString();
       JTextField field = new JTextField(rendering);
 
       // How to make cell not be highlighted??
