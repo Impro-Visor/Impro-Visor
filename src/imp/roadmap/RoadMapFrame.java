@@ -101,7 +101,7 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
     private final int roadMapBufferWidth  = 2400;
     
     /** Height of the roadmap buffer */
-    private final int roadMapBufferHeight = 2400;
+    private final int roadMapBufferHeight = 6000;
     
     /** Dictionary frame location, relative to the roadmap panel */
     private final int dictionaryFrameX = 910;
