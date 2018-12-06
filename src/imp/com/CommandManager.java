@@ -126,7 +126,10 @@ public class CommandManager {
             changedByCommand = true;
             Command cmd = undoStack.pop();
             cmd.undo();
-            redoStack.push(cmd);
+            if( cmd.isUndoable() )
+              {
+              redoStack.push(cmd);
+              }
         }
     }
 

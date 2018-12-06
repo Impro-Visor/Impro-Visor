@@ -88,7 +88,7 @@ public class PasteCommand implements Command, Constants {
     /**
      * true since the pasting can be undone
      */
-    protected boolean undoable = false;
+    protected boolean undoable = true;
 
     /**
      * whether to play when pasting

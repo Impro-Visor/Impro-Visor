@@ -246,7 +246,10 @@ public class SafePasteCommand implements Command {
      * Undoes the paste.
      */
     public void undo() {
-        pasteCommand.undo();
+        if( !undoable )
+          {
+            return;
+          }    pasteCommand.undo();
     }
 
     /**

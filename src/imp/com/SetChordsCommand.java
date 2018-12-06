@@ -24,7 +24,7 @@ import imp.data.*;
 import polya.*;
 
 /**
- * An undoable Command that places a render of Chords at a certain 
+ * An undoable Command that places a sequence of Chords at a certain 
  * position in a ChordPart.  
 
  * Works by creating a new Part, then pasting that, exploiting the
@@ -118,5 +118,24 @@ public class SetChordsCommand extends PasteCommand
           Leadsheet.addToMelodyPart(notes.reverse(), (MelodyPart)source, 0, measureLength, Key.Ckey);
           }
         
+    }
+    
+    /**
+     * To avoid a bug, undoing and redoing chord pastes is temporarily disabled
+     */
+    @Override
+    public void undo()
+    {
+      System.err.println("For now, undo is disabled for chord pasting. Delete the chord using X.");
+     }
+    
+    @Override
+    public void redo()
+    {
+    }
+    
+    @Override
+    public boolean isUndoable() {
+        return false;
     }
 }
