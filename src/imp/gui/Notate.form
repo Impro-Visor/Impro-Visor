@@ -6825,7 +6825,7 @@
                   <KeyStroke key="Ctrl+N"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="110"/>
-                <Property name="text" type="java.lang.String" value="New Leadsheet"/>
+                <Property name="text" type="java.lang.String" value="New Leadsheet (new window)"/>
                 <Property name="toolTipText" type="java.lang.String" value="Start a new leadsheet in its own window."/>
               </Properties>
               <Events>
@@ -6841,7 +6841,7 @@
                   <KeyStroke key="Ctrl+O"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="111"/>
-                <Property name="text" type="java.lang.String" value="Open Leadsheet"/>
+                <Property name="text" type="java.lang.String" value="Open Leadsheet (same window)"/>
                 <Property name="toolTipText" type="java.lang.String" value="Open a leadsheet in the current window."/>
               </Properties>
               <Events>
