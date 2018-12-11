@@ -7948,7 +7948,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="voicingTestMI">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+I"/>
+                  <KeyStroke key="Shift+Ctrl+I"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="118"/>
                 <Property name="text" type="java.lang.String" value="Voicing Editor"/>

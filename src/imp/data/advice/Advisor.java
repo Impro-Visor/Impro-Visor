@@ -1351,6 +1351,10 @@ public void addVoicing(String chordString, String id, String type, Polylist note
         
 private void addVoicing(ChordSymbol chordSymbol, String id, String type, Polylist notes, Polylist extension)
 {
+if( chordSymbol == null )
+  {
+    return;
+  }
 ChordForm chordForm = chordSymbol.getChordForm();
 chordForm.addVoicing(id, type, notes, extension);
 }

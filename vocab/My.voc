@@ -2420,11 +2420,12 @@
     (priority db8 bb8 e8 c8)
     (approach (c8 b8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 a8 b8) (db8 d8 eb8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 bb8 db+8)(extension))
-        (left-hand-B (type closed)(notes bb8 db+8 e+8 g+8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 bb-8 db8)(extension))
+        (left-hand-B (type closed)(notes bb-8 db8 e8 g8)(extension))
         (two-hand-A (type open)(notes e-8 bb8 db8 g8)(extension))
         (two-hand-B (type open)(notes bb--8 g-8 db8 e8)(extension))
         (two-hand-C (type open)(notes g-8 e8 bb8 db+8)(extension))
+        (two-hand-C1 (type open)(notes g-8 db8 e8 bb8)(extension))
         )
     (extensions C7b9#11 C13b9#11 C7b9b13)
     (scales
