@@ -29,7 +29,7 @@
  * John Elliott's book"Insights in Jazz", 2009, published in the UK by Jazzwise 
  * Publications, and on Conrad Cork's book "The New Guide to Harmony with Lego 
  * Bricks", published in the UK by Tadley Ewing Publications, 1996. We do not  
- * claim completeagreement with those works, only that they will be a useful 
+ * claim complete agreement with those works, only that they will be a useful 
  * guide to understanding the bricks defined herein. 
  * Also, any mistakes are ours and not those of the above authors.
  *
@@ -1250,7 +1250,7 @@
 (defbrick Night-&-Day-Cadence Major Cadence C
           (chord AbM7 1)
           (chord G7 1)
-          (chord C 1))
+          (chord C *))
 
 // Nobody
 
@@ -1946,7 +1946,7 @@
 
 (defbrick Surprise-Minor-Cadence Minor Cadence C
           (brick Straight-Approach C 2)
-          (chord Cm 2))
+          (brick Minor-On C *))
 
 (defbrick Surprise-Major-Cadence Major Cadence C
          (brick Sad-Approach C 2)
@@ -1957,7 +1957,7 @@
 (defbrick Sus-Approach Major Approach C
           (brick Major-On D 1)
           (chord D7 1)
-          (brick Major-On G 2))
+          (brick Major-On G *))
 
 (defbrick Sus-Approach(var 1) Major Approach C
           (brick Minor-On D 1)
@@ -2007,7 +2007,7 @@
           (chord C 1)
           (brick Minor-On D 1)
           (chord Ebm7b5 1)
-          (brick Major-On C 1))
+          (brick Major-On C *))
 
 (defbrick To-Somewhere Major Approach C
           (chord C 1)
@@ -2339,17 +2339,17 @@
           (chord Bb7 1))
 
 (defbrick Yardbird-Cadence(main) Major Cadence C
-          (brick Yardbird-Approach C 1)
-          (chord C 1))
+          (brick Yardbird-Approach Eb 1)
+          (chord C *))
 
 (defbrick Yardbird-Cadence(var) Major Cadence C
           (chord Bb7 1)
-          (chord C 1))
+          (chord C *))
 
 (defbrick Yardbird-Sub-Cadence Major Cadence C
           (chord Dm7 1)
           (brick GenDom Eb 1)
-          (chord C 1))
+          (chord C *))
 
 (defbrick Yardbird-Sub-Turnaround Major Turnaround C
           (chord C 1)
@@ -2909,3 +2909,22 @@
         (chord Bb 1)
         (chord Eb7 1)
         (chord F *))
+
+(defbrick POT(simple) Major Turnaround C
+        (brick On-Off-Major-VI C 2)
+        (brick On-Off-Minor-IV D 2))
+
+(defbrick Two-goes-minor-up-step Minor On-Off E
+        (brick Minor-On E 1)
+        (brick Minor-Chromatic-Walkdown Eb 2)
+        (brick Minor-On F 1))
+
+(defbrick Descending-Approach Minor Approach E
+        (brick Minor-On A 1)
+        (chord Gm7 1)
+        (brick Sad-Approach E 2))
+
+(defbrick Suspended-Approach Minor Approach Bb
+        (brick Minor-On C 1)
+        (chord Ebm7 1)
+        (brick Straight-Approach C 2))
