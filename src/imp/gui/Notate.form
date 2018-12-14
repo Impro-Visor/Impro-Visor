@@ -5450,8 +5450,8 @@
                     <Property name="name" type="java.lang.String" value="Voicing Table" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="voicingTableKeyPressed"/>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="voicingTableMouseClicked"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="voicingTableKeyPressed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(voicingTableModel);"/>
@@ -5913,6 +5913,8 @@
     <Container class="javax.swing.JDialog" name="newVoicingDialog">
       <Properties>
         <Property name="title" type="java.lang.String" value="Add Chord Voicing"/>
+        <Property name="alwaysOnTop" type="boolean" value="true"/>
+        <Property name="modal" type="boolean" value="true"/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
@@ -6054,6 +6056,8 @@
     <Container class="javax.swing.JDialog" name="deleteVoicingDialog">
       <Properties>
         <Property name="title" type="java.lang.String" value="Delete"/>
+        <Property name="alwaysOnTop" type="boolean" value="true"/>
+        <Property name="modal" type="boolean" value="true"/>
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
 

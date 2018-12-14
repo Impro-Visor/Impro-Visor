@@ -1322,8 +1322,7 @@ public Polylist getAdviceTree(ChordSymbol chordSymbol,
 
       if( bricksTree.nonEmpty() || (BRICKTREE & mask) != 0 )
         {
-        advice = advice.cons(bricksTree.cons(" bricks"));
-        
+        advice = advice.cons(bricksTree.cons(" bricks"));        
         }
       }
     }

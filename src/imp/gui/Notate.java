@@ -5830,18 +5830,18 @@ public Critic getCritic()
 
         voicingTable.setModel(voicingTableModel);
         voicingTable.setName("Voicing Table"); // NOI18N
-        voicingTable.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
-                voicingTableKeyPressed(evt);
-            }
-        });
         voicingTable.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
                 voicingTableMouseClicked(evt);
+            }
+        });
+        voicingTable.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                voicingTableKeyPressed(evt);
             }
         });
         voicingScrollPane.setViewportView(voicingTable);
@@ -6267,6 +6267,8 @@ public Critic getCritic()
         voicingTestDialog.getContentPane().add(jPanel2);
 
         newVoicingDialog.setTitle("Add Chord Voicing");
+        newVoicingDialog.setAlwaysOnTop(true);
+        newVoicingDialog.setModal(true);
         newVoicingDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         newVoicingNameLabel.setText("Name:");
@@ -6378,6 +6380,8 @@ public Critic getCritic()
         newVoicingDialog.getContentPane().add(newVoicingTypeCB, gridBagConstraints);
 
         deleteVoicingDialog.setTitle("Delete");
+        deleteVoicingDialog.setAlwaysOnTop(true);
+        deleteVoicingDialog.setModal(true);
         deleteVoicingDialog.setResizable(false);
         deleteVoicingDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -10404,6 +10408,8 @@ public void playCurrentVoicing()
 
         ChordSymbol c =
                 ChordSymbol.makeChordSymbol(voicingTableModel.getValueAt(row, VoicingTableChordColumn).toString());
+
+        keyboard.setPresentChordDisplayText(c.getName());
 
         String s = voicingTableModel.getValueAt(row, VoicingTableChordColumn).toString();
 
@@ -22394,6 +22400,8 @@ private void chordSearchTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN
       {
         chordSearchTF.setText(redirectName);
       }
+    
+    keyboard.setPresentChordDisplayText(chordSearchTF.getText());
 }//GEN-LAST:event_chordSearchTFActionPerformed
 
 private void newVoicingNameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newVoicingNameTFActionPerformed
@@ -25303,6 +25311,8 @@ public void showNewVoicingDialog()
         Object o = voicingTable.getValueAt(rowIndex, colIndex);
 
         String chord = o.toString();
+        
+        keyboard.setPresentChordDisplayText(chord);
 
         newVoicingChordTF.setText(chord);
       }
