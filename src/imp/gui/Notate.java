@@ -6271,11 +6271,14 @@ public Critic getCritic()
         newVoicingDialog.setModal(true);
         newVoicingDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        newVoicingNameLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         newVoicingNameLabel.setText("Name:");
+        newVoicingNameLabel.setPreferredSize(new java.awt.Dimension(42, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         newVoicingDialog.getContentPane().add(newVoicingNameLabel, gridBagConstraints);
 
         newVoicingNameTF.setMinimumSize(new java.awt.Dimension(100, 20));
@@ -6289,40 +6292,45 @@ public Critic getCritic()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 20);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 20);
         newVoicingDialog.getContentPane().add(newVoicingNameTF, gridBagConstraints);
 
+        newVoicingTypeLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         newVoicingTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         newVoicingTypeLabel.setText("Type:");
         newVoicingTypeLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        newVoicingTypeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        newVoicingTypeLabel.setPreferredSize(new java.awt.Dimension(42, 16));
         newVoicingTypeLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         newVoicingDialog.getContentPane().add(newVoicingTypeLabel, gridBagConstraints);
 
+        newVoicingChordLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         newVoicingChordLabel.setText("Chord:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         newVoicingDialog.getContentPane().add(newVoicingChordLabel, gridBagConstraints);
 
         newVoicingChordTF.setMinimumSize(new java.awt.Dimension(82, 20));
         newVoicingChordTF.setPreferredSize(new java.awt.Dimension(100, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 20);
         newVoicingDialog.getContentPane().add(newVoicingChordTF, gridBagConstraints);
 
         newVoicingSaveButton.setText("Save Voicing");
@@ -6376,7 +6384,7 @@ public Critic getCritic()
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 20);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 20);
         newVoicingDialog.getContentPane().add(newVoicingTypeCB, gridBagConstraints);
 
         deleteVoicingDialog.setTitle("Delete");
@@ -20405,7 +20413,7 @@ private void newVoicingButtonActionPerformed(java.awt.event.ActionEvent evt) {//
         return;
       }
 
-    showNewVoicingDialog();
+    showNewVoicingDialog(v);
 }//GEN-LAST:event_newVoicingButtonActionPerformed
 
 private void newVoicingTypeCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newVoicingTypeCBActionPerformed
@@ -25292,13 +25300,12 @@ public void showDeleteVoicingDialog()
   }
 
 public void showNewVoicingDialog()
+{
+    showNewVoicingDialog(chordSearchTF.getText());
+}
+
+public void showNewVoicingDialog(String chord)
   {
-    newVoicingDialog.setSize(350, 200);
-
-    newVoicingDialog.setLocationRelativeTo(this);
-
-    newVoicingDialog.setVisible(true);
-
     ListSelectionModel rowSM = voicingTable.getSelectionModel();
 
     if( !rowSM.isSelectionEmpty() )
@@ -25309,8 +25316,8 @@ public void showNewVoicingDialog()
         int colIndex = 0;
 
         Object o = voicingTable.getValueAt(rowIndex, colIndex);
-
-        String chord = o.toString();
+        
+        chord = o.toString();
         
         keyboard.setPresentChordDisplayText(chord);
 
@@ -25318,9 +25325,13 @@ public void showNewVoicingDialog()
       }
     else
       {
-        newVoicingChordTF.setText("");
+        newVoicingChordTF.setText(chord);
       }
+    newVoicingDialog.setSize(350, 200);
 
+    newVoicingDialog.setLocationRelativeTo(this);
+
+    newVoicingDialog.setVisible(true);
   }
 
 /**

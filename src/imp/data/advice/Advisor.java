@@ -3444,7 +3444,7 @@ public void showMarkedItems()
  */
 public void saveRules(File file)
   {
-    System.out.println("saving to " + file.getAbsolutePath());
+  //System.out.println("saving to " + file.getAbsolutePath());
   try
     {
     saveRules(new PrintStream(new FileOutputStream(file)));

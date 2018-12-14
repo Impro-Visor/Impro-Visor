@@ -235,7 +235,7 @@ public void toFront() {
         chordStepBackButton = new javax.swing.JButton();
         chordReplayButton = new javax.swing.JButton();
         chordStepForwardButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        saveVoicingBtn = new javax.swing.JButton();
         keyNamesPanel = new javax.swing.JPanel();
         whiteKeyLabels = new javax.swing.JPanel();
         A0 = new javax.swing.JLabel();
@@ -931,19 +931,19 @@ public void toFront() {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(jToolBar1, gridBagConstraints);
 
-        jButton2.setText("Save Voicing");
-        jButton2.addActionListener(new java.awt.event.ActionListener()
+        saveVoicingBtn.setText("Save Voicing");
+        saveVoicingBtn.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jButton2ActionPerformed(evt);
+                saveVoicingBtnActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        getContentPane().add(jButton2, gridBagConstraints);
-        jButton2.getAccessibleContext().setAccessibleName("VoicingChord");
+        getContentPane().add(saveVoicingBtn, gridBagConstraints);
+        saveVoicingBtn.getAccessibleContext().setAccessibleName("VoicingChord");
 
         keyNamesPanel.setAlignmentX(0.0F);
         keyNamesPanel.setAlignmentY(0.0F);
@@ -3537,9 +3537,9 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
         notate.constructAndPlayChord(c,s);
     }//GEN-LAST:event_playChordButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void saveVoicingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveVoicingBtnActionPerformed
         saveChord();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_saveVoicingBtnActionPerformed
 /**
  * if turned off, the labels will set invisible and turnOnOffLabels is changed to false
  * otherwise, goes through pianoKeys() and determines which ones are on and turns on their labels
@@ -3942,7 +3942,7 @@ public void showLine(int panelNum, int yOffset)
         String v = notate.voicingEntryTFText();
         String root = notate.getChordRootTFText();
         //notate.voicingToList(v)
-        //String chordName = this.getPresentChordDisplayText();
+        String chordName = this.getPresentChordDisplayText();
         Polylist chordList=notate.voicingToList(v);
         Object chordNotes[]=  chordList.array();
         NoteSymbol cNote=NoteSymbol.makeNoteSymbol("c");
@@ -3960,7 +3960,7 @@ public void showLine(int panelNum, int yOffset)
         chordString += ")";
 //        String userDescription=null;
         
-        notate.showNewVoicingDialog();
+        notate.showNewVoicingDialog(chordName);
         
 //        while(userDescription==null || userDescription.equals(""))
 //                userDescription = JOptionPane.showInputDialog("Please name this voicing (e.g. left-hand-A)");
@@ -4405,7 +4405,6 @@ private void forcePaint()
     private javax.swing.JLabel ctrlShiftClickExtLabel;
     private javax.swing.JMenuItem downHalfStepMI;
     private javax.swing.JMenuItem downOctaveMI;
-    private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
@@ -4508,6 +4507,7 @@ private void forcePaint()
     private javax.swing.JLabel pointerC4;
     private javax.swing.JLabel presentChordDisplay;
     private javax.swing.JMenuItem resetChordDisplayMI;
+    private javax.swing.JButton saveVoicingBtn;
     private javax.swing.JMenuItem singleNoteModeMI;
     private javax.swing.JMenuItem startPlayMI;
     private javax.swing.JMenuItem startSelPlayMI;
