@@ -489,6 +489,8 @@
     (priority c8)
     (approach (c8 b8 c#8 d8))
     (voicings
+        (all (type closed)(notes c8)(extension))
+        (all (type open)(notes c8)(extension))
         )
     (extensions)
     (scales
@@ -527,12 +529,12 @@
     (priority e8 g8 c8)
     (approach (c8 b8 c#8 d8) (e8 eb8 f8) (g8 f#8 g#8 a8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 c+8)(extension))
-        (left-hand-B (type closed)(notes g8 c+8 e+8)(extension))
-        (open-A (type open)(notes e8 c+8 g+8)(extension))
-        (open-B (type open)(notes g8 c+8 e+8)(extension))
-        (open-C (type open)(notes g8 e+8 c++8)(extension))
-        (open-D (type open)(notes c8 g8 e+8 c++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 c8)(extension))
+        (left-hand-B (type closed)(notes g-8 c8 e8)(extension))
+        (open-A (type open)(notes e-8 c8 g8)(extension))
+        (open-B (type open)(notes g-8 c8 e8)(extension))
+        (open-C (type open)(notes g-8 e8 c+8)(extension))
+        (open-D (type open)(notes c-8 g-8 e8 c+8)(extension))
         (open-E (type open)(notes e-8 g-8 c8 e8 g8)(extension))
         )
     (extensions CM6 CM7 CMadd9)
@@ -565,11 +567,12 @@
     (priority e8 a8 g8 c8)
     (approach (c8 b8 c#8 d8) (e8 eb8 f8) (g8 f#8 g#8) (a8 g#8 bb8))
     (voicings
+        (two-handed-C (type open)(notes e-8 a-8 f#8 g8)(extension))
         (left-hand-C (type closed)(notes a-8 c8 e8 g8)(extension))
-        (left-hand-A (type closed)(notes e8 g8 a8 c+8)(extension))
-        (left-hand-B (type closed)(notes g8 c+8 e+8 a+8)(extension))
-        (open-A (type open)(notes e8 a8 c+8 g+8)(extension))
-        (open-B (type open)(notes g8 e+8 a+8 c++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 a-8 c8)(extension))
+        (left-hand-B (type closed)(notes g-8 c8 e8 a8)(extension))
+        (open-A (type open)(notes e-8 a-8 c8 g8)(extension))
+        (open-B (type open)(notes g-8 e8 a8 c+8)(extension))
         (drop-2-A (type open)(notes a--8 e-8 g-8 c8)(extension))
         (drop-2-B (type open)(notes c-8 g-8 a-8 e8)(extension))
         (drop-2-C (type open)(notes e-8 a-8 c8 g8)(extension))
@@ -605,11 +608,11 @@
     (priority d8 e8 a8 g8 c8)
     (approach (c8 b8 c#8) (e8 eb8 f8) (g8 f#8 g#8) (a8 g#8 bb8) (d8 c#8 eb8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 a8 d+8)(extension))
-        (left-hand-B (type closed)(notes g8 d+8 e+8 a+8)(extension))
-        (quartal (type open)(notes e8 a8 d+8 g+8)(extension))
-        (shout-A (type shout)(notes e8 g8 a8 d+8)(extension d++8 g++8 d+++8))
-        (shout-B (type shout)(notes g8 d+8 e+8 a+8)(extension d++8 g++8 d+++8))
+        (left-hand-A (type closed)(notes e-8 g-8 a-8 d8)(extension))
+        (left-hand-B (type closed)(notes g-8 d8 e8 a8)(extension))
+        (quartal (type open)(notes e-8 a-8 d8 g8)(extension))
+        (shout-A (type shout)(notes e-8 g-8 a8 d8)(extension d++8 g++8 d+++8))
+        (shout-B (type shout)(notes g-8 d8 e8 a8)(extension d++8 g++8 d+++8))
         )
     (extensions CM69#11)
     (scales
@@ -641,6 +644,16 @@
     (priority f#8 a8 e8 g8 c8)
     (approach (c8 b8 c#8) (e8 eb8 f8) (g8 g#8) (a8 g#8 bb8) (f#8 f8 g8))
     (voicings
+        (two-handed-G (type open)(notes g-8 a-8 c8 e8 f#8)(extension))
+        (left-hand-D (type closed)(notes g-8 a-8 e8 f#8)(extension))
+        (two-handed-F (type open)(notes g-8 c8 e8 f#8 a8)(extension))
+        (two-handed-E (type open)(notes g-8 a-8 e8 f#8)(extension))
+        (two-handed-D (type open)(notes e-8 g-8 a-8 f#8)(extension))
+        (left-hand-C (type closed)(notes g-8 e8 f#8 a8)(extension))
+        (two-handed-C (type open)(notes g-8 e8 f#8 a8)(extension))
+        (left-hand-A (type closed)(notes g-8 a-8 e8 f#8)(extension))
+        (left-hand-B (type closed)(notes g-8 e8 f#8 a8)(extension))
+        (two-handed-A (type open)(notes e-8 g-8 f#8 a8)(extension))
         )
     (extensions)
     (scales
@@ -676,11 +689,11 @@
     (priority f#8 d8 a8 e8 g8 c8)
     (approach (c8 b8 c#8) (e8 eb8 f8) (g8 g#8) (a8 g#8 bb8) (d8 c#8 eb8) (f#8 f8 g8))
     (voicings
-        (left-hand-A (type closed)(notes e8 a8 d+8 f#+8)(extension))
-        (left-hand-B (type closed)(notes a8 d+8 e+8 f#+8 a+8)(extension))
-        (open-A (type open)(notes e8 g8 d+8 f#+8 a+8)(extension))
-        (shout-A (type shout)(notes e8 a8 d+8 f#+8)(extension d++8 g++8 d+++8))
-        (shout-B (type shout)(notes a8 d+8 e+8 f#+8 a+8)(extension d++8 g++8 d+++8))
+        (left-hand-A (type closed)(notes e-8 a-8 d8 f#8)(extension))
+        (left-hand-B (type closed)(notes a-8 d8 e8 f#8 a8)(extension))
+        (open-A (type open)(notes e-8 g-8 d8 f#8 a8)(extension))
+        (shout-A (type shout)(notes e-8 a-8 d8 f#8)(extension d++8 g++8 d+++8))
+        (shout-B (type shout)(notes a-8 d8 e8 f#8 a8)(extension d++8 g++8 d+++8))
         )
     (extensions)
     (scales
@@ -704,10 +717,10 @@
     (priority d8 e8 g8 c8)
     (approach (c8 b8 c#8) (e8 eb8 f8) (g8 f#8 g#8 a8) (d8 c#8 eb8))
     (voicings
-        (left-hand-B (type closed)(notes d8 e8 g8)(extension))
-        (left-hand-A (type closed)(notes e8 g8 d+8)(extension))
-        (two-hand-B (type open)(notes e8 c+8 g+8 d++8)(extension))
-        (two-hand-A (type open)(notes e8 c+8 d+8 g+8)(extension))
+        (left-hand-B (type closed)(notes d-8 e-8 g-8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 d8)(extension))
+        (two-hand-B (type open)(notes e-8 c8 g8 d+8)(extension))
+        (two-hand-A (type open)(notes e-8 c8 d8 g8)(extension))
         )
     (extensions CM69)
     (scales
@@ -740,9 +753,9 @@
     (priority d8 g8 c8)
     (approach (c8 b8 c#8) (g8 f#8 g#8 a8) (d8 c#8 eb8))
     (voicings
-        (left-hand-B (type closed)(notes d8 g8 c+8)(extension))
-        (left-hand-A (type closed)(notes g8 c+8 d+8)(extension))
-        (two-hand-A (type open)(notes g8 d+8 c++8)(extension))
+        (left-hand-B (type closed)(notes d-8 g-8 c8)(extension))
+        (left-hand-A (type closed)(notes g-8 c8 d8)(extension))
+        (two-hand-A (type open)(notes g-8 d8 c8)(extension))
         )
     (extensions CMadd9)
     (scales
@@ -785,9 +798,9 @@
     (priority d8 f8 g8 c8)
     (approach (c8 b8 c#8) (g8 f#8 g#8 a8) (d8 c#8 eb8) (f8 e8 f#8))
     (voicings
-        (left-hand-B (type closed)(notes d8 f8 g8 c+8)(extension))
-        (left-hand-A (type closed)(notes g8 c+8 d+8 f+8)(extension))
-        (two-hand-A (type open)(notes g8 d+8 c++8 f++8)(extension))
+        (left-hand-B (type closed)(notes d-8 f-8 g-8 c8)(extension))
+        (left-hand-A (type closed)(notes g-8 c8 d8 f8)(extension))
+        (two-hand-A (type open)(notes g-8 d8 c+8 f+8)(extension))
         )
     (extensions)
     (scales
@@ -812,11 +825,11 @@
     (priority b8 e8 g8 c8)
     (approach (c8 c#8 d8) (e8 eb8 f8) (g8 f#8 g#8) (b8 bb8 c8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 b8)(extension))
-        (left-hand-B (type closed)(notes b8 e+8 g+8)(extension))
-        (left-hand-C (type closed)(notes g8 b8 e+8)(extension))
-        (two-hand-A (type open)(notes g8 e+8 b+8)(extension))
-        (two-hand-B (type open)(notes b8 g+8 e++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 b-8)(extension))
+        (left-hand-B (type closed)(notes b-8 e8 g8)(extension))
+        (left-hand-C (type closed)(notes g-8 b-8 e8)(extension))
+        (two-hand-A (type open)(notes g-8 e8 b8)(extension))
+        (two-hand-B (type open)(notes b-8 g8 e+8)(extension))
         (two-hand-C (type open)(notes e-8 b-8 g8)(extension))
         )
     (extensions CM9 CM7#11 CM7add13)
@@ -857,9 +870,9 @@
     (priority b8 e8 d8 g8 c8)
     (approach (c8 c#8) (e8 eb8 f8) (g8 f#8 g#8) (a8 g#8 bb8) (d8 c#8 eb8) (b8 bb8 c8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 b8 d+8)(extension))
-        (left-hand-B (type closed)(notes b8 d+8 e+8 g+8)(extension))
-        (left-hand-C (type closed)(notes g8 b8 d+8 e+8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 b-8 d8)(extension))
+        (left-hand-B (type closed)(notes b-8 d8 e8 g8)(extension))
+        (left-hand-C (type closed)(notes g-8 b-8 d8 e8)(extension))
         (drop-2-A (type open)(notes b-8 e8 g8 d+8)(extension))
         (drop-2-B (type open)(notes g-8 d8 e8 b8)(extension))
         (drop-2-C (type open)(notes e-8 b-8 d8 g8)(extension))
@@ -873,8 +886,8 @@
         (two-hand-A (type open)(notes g8 d+8 b+8 e++8)(extension))
         (two-hand-B (type open)(notes b8 e+8 g+8 d++8)(extension))
         (two-hand-C (type open)(notes e-8 b-8 d8 g8)(extension))
-        (shout-A (type shout)(notes e8 g8 b8 d+8)(extension g++8 d+++8 g+++8))
-        (shout-B (type shout)(notes b8 e+8 g+8)(extension g++8 d+++8 g+++8))
+        (shout-A (type shout)(notes e-8 g-8 b-8 d8)(extension g++8 d+++8 g+++8))
+        (shout-B (type shout)(notes b-8 e8 g8)(extension g++8 d+++8 g+++8))
         )
     (extensions CM9#11 CM13)
     (scales
@@ -909,11 +922,11 @@
     (priority f#8 b8 e8 g8 c8)
     (approach (c8 c#8) (e8 eb8 f8) (g8 g#8) (f#8 f8))
     (voicings
-        (left-hand-A (type closed)(notes e8 f#8 b8)(extension))
-        (left-hand-B (type closed)(notes b8 e+8 f#+8)(extension))
-        (left-hand-C (type closed)(notes g8 b8 e+8 f#+8)(extension))
-        (two-hand-A (type open)(notes g8 e+8 b+8 f#++8)(extension))
-        (two-hand-B (type open)(notes g8 f#+8 b+8 e++8)(extension))
+        (left-hand-A (type closed)(notes e-8 f#-8 b-8)(extension))
+        (left-hand-B (type closed)(notes b-8 e8 f#8)(extension))
+        (left-hand-C (type closed)(notes g-8 b-8 e8 f#8)(extension))
+        (two-hand-A (type open)(notes g-8 e8 b8 f#+8)(extension))
+        (two-hand-B (type open)(notes g-8 f#8 b8 e+8)(extension))
         (two-hand-C (type open)(notes e-8 g-8 b-8 e8 f#8)(extension))
         )
     (extensions CM9#11)
@@ -952,11 +965,11 @@
     (priority f#8 b8 e8 d8 g8 c8)
     (approach (c8 c#8) (e8 eb8 f8) (g8 g#8) (d8 c#8 eb8) (f#8 g8))
     (voicings
-        (left-hand-A (type closed)(notes e8 f#8 b8 d+8)(extension))
-        (left-hand-B (type closed)(notes b8 d+8 e+8 f#+8)(extension))
-        (left-hand-C (type closed)(notes g8 b8 d+8 e+8 f#8)(extension))
-        (two-hand-A (type open)(notes g8 d+8 e+8 b+8 f#++8)(extension))
-        (two-hand-B (type open)(notes g8 d+8 f#+8 b+8 e++8)(extension))
+        (left-hand-A (type closed)(notes e-8 f#-8 b-8 d8)(extension))
+        (left-hand-B (type closed)(notes b-8 d8 e8 f#8)(extension))
+        (left-hand-C (type closed)(notes g-8 b-8 d8 e8 f#8)(extension))
+        (two-hand-A (type open)(notes g-8 d8 e8 b8 f#+8)(extension))
+        (two-hand-B (type open)(notes g-8 d8 f#8 b8 e+8)(extension))
         )
     (extensions CM13#11)
     (scales
@@ -991,13 +1004,13 @@
     (priority a8 b8 e8 d8 g8 c8)
     (approach (c8 c#8) (e8 eb8 f8) (g8 f#8 g#8) (a8 g#8 bb8) (d8 c#8 eb8) (b8 bb8 c8))
     (voicings
-        (two-hand-A (type open)(notes e8 b8 d+8 a+8 g++8)(extension))
-        (two-hand-B (type open)(notes b8 d+8 a+8 e++8 g++8)(extension))
-        (two-hand-C (type open)(notes e8 g8 b8 d+8 a+8)(extension))
+        (two-hand-A (type open)(notes e-8 b-8 d8 a8 g+8)(extension))
+        (two-hand-B (type open)(notes b-8 d8 a8 e+8 g+8)(extension))
+        (two-hand-C (type open)(notes e-8 g-8 b-8 d8 a8)(extension))
         (quartal-A (type open)(notes b-8 e8 a8 d+8 g+8)(extension))
-        (so-what (type open)(notes e8 a8 d+8 g+8 b+8)(extension))
-        (shout-A (type shout)(notes e8 b8 d+8 a+8)(extension d++8 g++8 d+++8))
-        (shout-B (type shout)(notes b8 d+8 a+8 e++8)(extension d++8 g++8 d+++8))
+        (so-what (type open)(notes e-8 a-8 d8 g8 b8)(extension))
+        (shout-A (type shout)(notes e-8 b-8 d8 a8)(extension d++8 g++8 d+++8))
+        (shout-B (type shout)(notes b-8 d8 a8 e+8)(extension d++8 g++8 d+++8))
         )
     (extensions CM13#11)
     (scales
@@ -1032,8 +1045,8 @@
     (voicings
         (two-hand-A (type open)(notes e-8 g-8 b-8 a8)(extension))
         (two-hand-B (type open)(notes g-8 b-8 e8 a8)(extension))
-        (left-hand-A (type closed)(notes e8 a8 b8)(extension))
-        (left-hand-B (type closed)(notes b8 e+8 a+8)(extension))
+        (left-hand-A (type closed)(notes e-8 a-8 b-8)(extension))
+        (left-hand-B (type closed)(notes b-8 e8 a8)(extension))
         )
     (extensions CM13#11)
     (scales
@@ -1056,13 +1069,13 @@
     (priority f#8 a8 b8 e8 d8 g8 c8)
     (approach (c8 c#8) (e8 eb8 f8) (g8 g#8) (a8 g#8 bb8) (d8 c#8 eb8) (b8 bb8))
     (voicings
-        (two-hand-A (type open)(notes e8 b8 d+8 a+8 f#++8)(extension))
+        (two-hand-A (type open)(notes e-8 b-8 d8 a8 f#+8)(extension))
         (two-hand-B (type open)(notes e-8 b-8 d8 f#8 a8)(extension))
         (two-hand-C (type open)(notes e-8 a-8 b-8 d8 f#8)(extension))
-        (left-hand-A (type closed)(notes e8 a8 b8 d+8 f#+8)(extension))
-        (left-hand-B (type closed)(notes e8 b8 d+8 f#+8 a+8)(extension))
-        (shout-A (type shout)(notes e8 a8 b8 d+8 f#+8)(extension d++8 g++8 d+++8))
-        (shout-B (type shout)(notes b8 d+8 e+8 f#+8 a+8)(extension d++8 g++8 d+++8))
+        (left-hand-A (type closed)(notes e-8 a-8 b-8 d8 f#8)(extension))
+        (left-hand-B (type closed)(notes e-8 b-8 d8 f#8 a8)(extension))
+        (shout-A (type shout)(notes e-8 a-8 b-8 d8 f#8)(extension d++8 g++8 d+++8))
+        (shout-B (type shout)(notes b-8 d8 e8 f#8 a8)(extension d++8 g++8 d+++8))
         )
     (extensions CM13#11)
     (scales
@@ -1098,11 +1111,11 @@
     (approach (c8 c#8) (e8 eb8 f8) (g8 g#8) (a8 g#8 bb8) (d8 c#8 eb8) (f#8 f8))
     (voicings
         (two-hand-B (type open)(notes e-8 b-8 d8 a8)(extension))
-        (left-hand-A (type closed)(notes e8 a8 d+8 f#+8)(extension))
-        (left-hand-B (type closed)(notes e8 d+8 f#+8 a+8)(extension))
-        (two-hand-A (type open)(notes e8 d+8 a+8 f#++8)(extension))
-        (shout-A (type shout)(notes e8 a8 d+8 f#+8)(extension d++8 g++8 d+++8))
-        (shout-B (type shout)(notes d+8 e+8 f#+8 a+8)(extension d++8 g++8 d+++8))
+        (left-hand-A (type closed)(notes e-8 a-8 d8 f#8)(extension))
+        (left-hand-B (type closed)(notes e-8 d8 f#8 a8)(extension))
+        (two-hand-A (type open)(notes e-8 d8 a8 f#+8)(extension))
+        (shout-A (type shout)(notes e-8 a-8 d8 f#8)(extension d++8 g++8 d+++8))
+        (shout-B (type shout)(notes d-8 e8 f#8 a8)(extension d++8 g++8 d+++8))
         )
     (extensions CM13#11)
     (scales
@@ -1128,7 +1141,7 @@
     (approach (c8 c#8 b8 d8) (e8 eb8 f8) (gb8 f8 g8))
     (voicings
         (two-hand-A (type open)(notes e-8 c8 f#8)(extension))
-        (left-hand-A (type closed)(notes f#8 c+8 e+8)(extension))
+        (left-hand-A (type closed)(notes f#-8 c8 e8)(extension))
         (left-hand-B (type closed)(notes e-8 f#-8 c8)(extension))
         )
     (extensions CM7b5)
@@ -1149,8 +1162,8 @@
     (priority b8 gb8 e8 c8)
     (approach (c8 c#8 d8) (e8 eb8 f8) (gb8 f8 g8))
     (voicings
-        (left-hand-A (type closed)(notes e8 b8 gb+8)(extension))
-        (left-hand-B (type closed)(notes gb8 e+8 b+8)(extension))
+        (left-hand-A (type closed)(notes e-8 b-8 gb8)(extension))
+        (left-hand-B (type closed)(notes gb-8 e8 b8)(extension))
         )
     (extensions CM9b5)
     (scales
@@ -1171,8 +1184,8 @@
     (priority b8 d8 gb8 e8 c8)
     (approach (c8 c#8) (e8 eb8 f8) (gb8 f8 g8))
     (voicings
-        (left-hand-A (type closed)(notes e8 b8 d+8 gb+8)(extension))
-        (left-hand-B (type closed)(notes b8 d+8 e+8 gb+8)(extension))
+        (left-hand-A (type closed)(notes e-8 b-8 d8 gb8)(extension))
+        (left-hand-B (type closed)(notes b-8 d8 e8 gb8)(extension))
         )
     (extensions)
     (scales
@@ -1192,11 +1205,11 @@
     (priority f#8 d#8 b8 e8 g8 c8)
     (approach (c8 c#8) (e8 eb8 f8) (g8 g#8) (d#8 d8 e8) (f#8 g8))
     (voicings
-        (left-hand-A (type closed)(notes e8 f#8 b8 d#+8)(extension))
-        (left-hand-B (type closed)(notes b8 d#+8 e+8 f#+8)(extension))
-        (left-hand-C (type closed)(notes g8 b8 d#+8 e+8 f#8)(extension))
-        (two-hand-A (type open)(notes g8 d#+8 e+8 b+8 f#++8)(extension))
-        (two-hand-B (type open)(notes g8 d#+8 f#+8 b+8 e++8)(extension))
+        (left-hand-A (type closed)(notes e-8 f#-8 b-8 d#8)(extension))
+        (left-hand-B (type closed)(notes b-8 d#8 e8 f#8)(extension))
+        (left-hand-C (type closed)(notes g-8 b-8 d#8 e8 f#8)(extension))
+        (two-hand-A (type open)(notes g-8 d#8 e8 b8 f#+8)(extension))
+        (two-hand-B (type open)(notes g-8 d#8 f#8 b8 e+8)(extension))
         )
     (extensions)
     (scales
@@ -1216,8 +1229,8 @@
     (approach (c8 c#8 b8 d8) (f8 f#8) (g8 f#8))
     (voicings
         (open-A (type open)(notes c-8 f-8 g-8)(extension))
-        (left-hand-A (type closed)(notes f8 g8 c+8)(extension))
-        (left-hand-B (type closed)(notes g8 c+8 f+8)(extension))
+        (left-hand-A (type closed)(notes f-8 g-8 c8)(extension))
+        (left-hand-B (type closed)(notes g-8 c8 f8)(extension))
         )
     (extensions C7sus4)
     (scales
@@ -1243,8 +1256,8 @@
     (priority ab8 b8 e8 c8)
     (approach (c8 c#8 d8) (e8 eb8 f8) (g8 f#8) (ab8 a8))
     (voicings
-        (left-hand-A (type closed)(notes e8 ab8 b8)(extension))
-        (left-hand-B (type closed)(notes b8 e+8 ab+8)(extension))
+        (left-hand-A (type closed)(notes e-8 ab-8 b-8)(extension))
+        (left-hand-B (type closed)(notes b-8 e8 ab8)(extension))
         )
     (extensions)
     (scales
@@ -1269,7 +1282,7 @@
     (priority f8 bb8 eb8 c8)
     (approach (c8 b8 c#8 d8) (f8 f#8) (bb8 a8 b8) (eb8 db8))
     (voicings
-        (left-hand-A (type closed)(notes f8 bb8 eb+8)(extension))
+        (left-hand-A (type closed)(notes f-8 bb-8 eb8)(extension))
         )
     (extensions C7sus4)
     (scales
@@ -1315,7 +1328,7 @@
     (priority d8 bb8 e8 c8)
     (approach (c8 b8 c#8 d8) (e8 f8 eb8) (bb8 a8 b8) (d8 eb8 c#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 bb8 d+8)(extension))
+        (left-hand-A (type closed)(notes e-8 bb-8 d8)(extension))
         )
     (extensions C9 C7b9 C7#5#9)
     (scales
@@ -1337,10 +1350,10 @@
     (priority g#8 e8 c8)
     (approach (c8 c#8 b8 d8) (e8 eb8 f8) (g#8 g8 a8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g#8 c+8)(extension))
-        (left-hand-B (type closed)(notes g#8 c+8 e+8)(extension))
-        (open-A (type open)(notes e8 c+8 g#+8)(extension))
-        (open-B (type open)(notes g#8 e+8 c++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g#-8 c8)(extension))
+        (left-hand-B (type closed)(notes g#-8 c8 e8)(extension))
+        (open-A (type open)(notes e-8 c8 g#8)(extension))
+        (open-B (type open)(notes g#-8 e8 c+8)(extension))
         )
     (extensions CM7#5)
     (scales
@@ -1377,9 +1390,9 @@
     (priority b8 g#8 e8 c8)
     (approach (c8 c#8 d8) (e8 eb8 f8) (g#8 g8 a8) (b8 c8 bb8))
     (voicings
-        (closed-1 (type closed)(notes e8 g#8 b8)(extension))
-        (open-1 (type open)(notes e8 b8 g#+8)(extension))
-        (open-2 (type open)(notes b8 e+8 g#+8)(extension))
+        (closed-1 (type closed)(notes e-8 g#-8 b-8)(extension))
+        (open-1 (type open)(notes e-8 b-8 g#8)(extension))
+        (open-2 (type open)(notes b-8 e8 g#8)(extension))
         )
     (extensions CM9#5)
     (scales
@@ -1415,10 +1428,10 @@
     (priority d8 b8 g#8 e8 c8)
     (approach (c8 c#8) (d8 c#8 d#8) (e8 eb8 f8) (g#8 g8 a8) (b8 c8 bb8))
     (voicings
-        (closed-1 (type closed)(notes e8 g#8 b8 d+8)(extension))
-        (closed-2 (type closed)(notes b8 d+8 e+8 g#+8)(extension))
-        (open-1 (type open)(notes e8 b8 d+8 g#+8)(extension))
-        (open-2 (type open)(notes b8 e+8 g#+8 d++8)(extension))
+        (closed-1 (type closed)(notes e-8 g#-8 b-8 d8)(extension))
+        (closed-2 (type closed)(notes b-8 d8 e8 g#8)(extension))
+        (open-1 (type open)(notes e-8 b-8 d8 g#8)(extension))
+        (open-2 (type open)(notes b-8 e8 g#8 d+8)(extension))
         )
     (extensions)
     (scales
@@ -1451,10 +1464,10 @@
     (priority g#8 d8 e8 c8)
     (approach (c8 c#8 b8) (e8 eb8 f8) (g#8 g8 a8) (d8 eb8 c#8))
     (voicings
-        (closed-1 (type closed)(notes e8 g#8 d+8)(extension))
-        (closed-2 (type closed)(notes d8 e8 g#8)(extension))
-        (open-1 (type open)(notes e8 d+8 g#+8)(extension))
-        (open-2 (type open)(notes e8 g#8 d+8)(extension))
+        (closed-1 (type closed)(notes e-8 g#-8 d8)(extension))
+        (closed-2 (type closed)(notes d-8 e-8 g-8)(extension))
+        (open-1 (type open)(notes e-8 d8 g#8)(extension))
+        (open-2 (type open)(notes e-8 g#-8 d8)(extension))
         )
     (extensions CM9#5)
     (scales
@@ -1477,8 +1490,8 @@
     (priority b8 f8 g8 c8)
     (approach (c8 c#8 d8) (f8 e8 f#8) (g8 g#8 f#8 a8) (b8 c8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes f8 g8 b8)(extension))
-        (open-1 (type open)(notes g8 b8 f+8)(extension))
+        (left-hand-A (type closed)(notes f-8 g-8 b8)(extension))
+        (open-1 (type open)(notes g-8 b-8 f8)(extension))
         )
     (extensions CM9sus4)
     (scales
@@ -1498,8 +1511,8 @@
     (priority b8 f8 d8 g8 c8)
     (approach (c8 c#8) (f8 e8 f#8) (g8 g#8 f#8 a8) (d8 c#8 eb8) (b8 c8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes f8 g8 b8 d+8)(extension))
-        (open-1 (type open)(notes g8 d+8 f+8 b8)(extension))
+        (left-hand-A (type closed)(notes f-8 g-8 b-8 d8)(extension))
+        (open-1 (type open)(notes g-8 d8 f8 b8)(extension))
         )
     (extensions CM9sus4)
     (scales
@@ -1519,8 +1532,8 @@
     (priority b8 g#8 f8 c8)
     (approach (c8 c#8 d8) (f8 e8 f#8) (g#8 g8 a8) (b8 c8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes f8 g#8 b8 d+8)(extension))
-        (open-1 (type open)(notes g#8 d+8 f+8 b8)(extension))
+        (left-hand-A (type closed)(notes f-8 g#-8 b-8 d8)(extension))
+        (open-1 (type open)(notes g#-8 d8 f8 b8)(extension))
         )
     (extensions CM9#5)
     (scales
@@ -1540,9 +1553,9 @@
     (priority b8 g#8 f8 d8 c8)
     (approach (c8 c#8) (d8 c#8) (f8 e8 f#8) (g#8 g8 a8) (b8 c8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes f8 g#8 b8 d+8)(extension))
-        (left-hand-B (type closed)(notes b8 d+8 f+8 g#+8)(extension))
-        (open-A (type open)(notes g#8 d+8 f+8 b+8)(extension))
+        (left-hand-A (type closed)(notes f-8 g#-8 b-8 d8)(extension))
+        (left-hand-B (type closed)(notes b-8 d8 f8 g#8)(extension))
+        (open-A (type open)(notes g#-8 d8 f8 b8)(extension))
         )
     (extensions)
     (scales
@@ -1582,9 +1595,9 @@
     (priority d#8 g#8 e8 c8)
     (approach (c8 b8) (e8 f8) (g#8 g8 a8) (d#8 d8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g#8 d#+8)(extension))
-        (left-hand-B (type closed)(notes d#+8 e+8 g#+8)(extension))
-        (open-A (type open)(notes e8 g#8 d#+8)(extension))
+        (left-hand-A (type closed)(notes e-8 g#-8 d#8)(extension))
+        (left-hand-B (type closed)(notes d-8 e-8 g-8)(extension))
+        (open-A (type open)(notes e-8 g#-8 d#8)(extension))
         )
     (extensions)
     (scales
@@ -1604,8 +1617,8 @@
     (priority db8 b8 e8 g8 c8)
     (approach (c8 c#8 d8) (e8 eb8 f8) (g8 f#8 g#8 a8) (b8 c8 bb8) (db8 c8 d8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 b8 db+8)(extension))
-        (left-hand-B (type closed)(notes b8 db+8 e+8 g+8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 b-8 db8)(extension))
+        (left-hand-B (type closed)(notes b-8 db8 e8 g8)(extension))
         )
     (extensions)
     (scales
@@ -1625,8 +1638,8 @@
     (priority ab8 e8 c8)
     (approach (c8 c#8 b8 d8) (e8 eb8 f8) (ab8 g8 a8))
     (voicings
-        (left-hand-A (type closed)(notes e8 ab8 c8)(extension))
-        (left-hand-B (type closed)(notes g8 e+8 ab+8)(extension))
+        (left-hand-A (type closed)(notes e-8 ab-8 c8)(extension))
+        (left-hand-B (type closed)(notes ab-8 c8 e8)(extension))
         )
     (extensions)
     (scales
@@ -1646,10 +1659,10 @@
     (priority eb8 g8 c8)
     (approach (c8 b8 c#8 d8) (eb8 d8 e8 f8) (g8 f#8 g#8 a8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g8 c+8)(extension))
-        (left-hand-B (type closed)(notes g8 c+8 eb+8)(extension))
-        (open-A (type open)(notes eb8 c+8 g+8)(extension))
-        (open-B (type open)(notes g8 eb+8 c++8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g-8 c8)(extension))
+        (left-hand-B (type closed)(notes g-8 c8 eb8)(extension))
+        (open-A (type open)(notes eb-8 c8 g8)(extension))
+        (open-B (type open)(notes g-8 eb8 c+8)(extension))
         (open-C (type open)(notes eb-8 c8 g8)(extension))
         (open-D (type open)(notes c-8 g-8 eb8)(extension))
         )
@@ -1685,9 +1698,9 @@
         (left-hand-A (type open)(notes d#-8 g-8 a#-8 c8)(extension))
         (left-hand-B (type open)(notes a#-8 c8 d#8 g8)(extension))
         (left-hand-C (type open)(notes g-8 a#-8 d#8)(extension))
-        (two-hand-A (type open)(notes g8 c+8 eb+8 bb+8)(extension))
-        (two-hand-B (type open)(notes eb8 bb8 c+8 g+8)(extension))
-        (two-hand-C (type open)(notes a#-8 c8 d#8 g8)(extension))
+        (two-hand-A (type open)(notes g-8 c8 eb8 bb8)(extension))
+        (two-hand-B (type open)(notes eb-8 bb-8 c8 g8)(extension))
+        (two-hand-C (type open)(notes bb-8 c8 eb8 g8)(extension))
         (drop-2-A (type open)(notes bb--8 eb-8 g-8 c8)(extension))
         (drop-2-B (type open)(notes eb-8 bb-8 c8 g8)(extension))
         )
@@ -1724,7 +1737,7 @@
     (priority eb8 a8 g8 c8)
     (approach (c8 b8 c#8 d8) (eb8 d8 e8 f8) (g8 f#8 g#8) (a8 g#8))
     (voicings
-        (two-hand-A (type open)(notes a8 eb+8 c++8 g++8)(extension))
+        (two-hand-A (type open)(notes a-8 eb8 c+8 g+8)(extension))
         (two-hand-B (type open)(notes a--8 eb-8 g-8 c8)(extension))
         (left-hand-A (type closed)(notes eb-8 g-8 a-8 c8)(extension))
         (left-hand-B (type closed)(notes a--8 c-8 eb8 g-8)(extension))
@@ -1756,10 +1769,10 @@
     (priority eb8 a8 d8 g8 c8)
     (approach (c8 b8 c#8) (eb8 d8 e8 f8) (g8 f#8 g#8) (a8 g#8) (d8 c#8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g8 a8 d+8)(extension))
-        (left-hand-B (type closed)(notes a8 d+8 eb+8 g+8)(extension))
-        (two-hand-A (type open)(notes a8 eb+8 d++8 g++8)(extension))
-        (two-hand-B (type open)(notes eb8 a8 d+8 g+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g-8 a-8 d8)(extension))
+        (left-hand-B (type closed)(notes a-8 d8 eb8 g8)(extension))
+        (two-hand-A (type open)(notes a-8 d8 eb8 g8)(extension))
+        (two-hand-B (type open)(notes eb-8 a-8 d8 g8)(extension))
         )
     (extensions)
     (scales
@@ -1783,9 +1796,9 @@
     (priority eb8 d8 g8 c8)
     (approach (c8 b8 c#8) (eb8 d8 e8 f8) (g8 f#8 g#8 a8) (d8 c#8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g8 d+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g-8 d8)(extension))
         (left-hand-B (type closed)(notes d8 eb8 g8)(extension))
-        (two-hand-A (type open)(notes eb+8 d++8 g++8)(extension))
+        (two-hand-A (type open)(notes eb-8 d8 g8)(extension))
         )
     (extensions Cm69)
     (scales
@@ -1809,9 +1822,9 @@
     (priority eb8 d8 g8 c8)
     (approach (c8 b8 c#8) (eb8 d8 e8 f8) (g8 f#8 g#8 a8) (f8 f#8 e8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g8 f+8)(extension))
-        (left-hand-B (type closed)(notes eb8 f8 g8)(extension))
-        (two-hand-A (type open)(notes eb+8 f8 d++8 g++8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g-8 f8)(extension))
+        (left-hand-B (type closed)(notes eb-8 f-8 g8)(extension))
+        (two-hand-A (type open)(notes eb-8 f-8 d8 g8)(extension))
         )
     (extensions)
     (scales
@@ -1831,8 +1844,8 @@
     (priority b8 eb8 g8 c8)
     (approach (c8 c#8) (eb8 d8 e8 f8) (g8 f#8 g#8) (b8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g8 b8)(extension))
-        (left-hand-B (type closed)(notes b8 eb+8 g+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g-8 b-8)(extension))
+        (left-hand-B (type closed)(notes b-8 eb8 g8)(extension))
         )
     (extensions)
     (scales
@@ -1867,8 +1880,8 @@
     (priority b8 d8 eb8 g8 c8)
     (approach (c8 c#8) (eb8 d8 e8 f8) (g8 f#8 g#8) (b8 bb8) (d8 c#8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g8 b8 d+8)(extension))
-        (left-hand-B (type closed)(notes b+8 d+8 eb+8 g+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g-8 b-8 d8)(extension))
+        (left-hand-B (type closed)(notes b-8 d8 eb8 g8)(extension))
         )
     (extensions)
     (scales
@@ -1899,8 +1912,8 @@
     (priority b8 eb8 ab8 g8 c8)
     (approach (c8 c#8) (eb8 d8 e8 f8) (g8 f#8) (ab8 a8) (b8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 ab8 b8)(extension))
-        (left-hand-B (type closed)(notes b8 eb+8 ab+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 ab-8 b-8)(extension))
+        (left-hand-B (type closed)(notes b-8 eb8 ab8)(extension))
         )
     (extensions)
     (scales
@@ -1926,8 +1939,8 @@
     (priority d8 b8 eb8 ab8 g8 c8)
     (approach (c8 c#8) (eb8 d8 e8 f8) (g8 f#8) (ab8 a8) (b8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 ab8 b8 d8)(extension))
-        (left-hand-B (type closed)(notes b8 d8 eb+8 ab+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 ab-8 b-8 d8)(extension))
+        (left-hand-B (type closed)(notes b-8 d8 eb8 ab8)(extension))
         )
     (extensions)
     (scales
@@ -1953,10 +1966,10 @@
     (priority eb8 bb8 d8 g8 c8)
     (approach (c8 b8 c#8) (eb8 e8 f8) (g8 f#8 g#8) (bb8 a8 b8) (d8 c#8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 eb+8 g+8)(extension))
-        (two-hand-A (type open)(notes g8 d+8 bb+8 eb++8)(extension))
-        (two-hand-B (type open)(notes eb8 bb8 d+8 g+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 eb8 g8)(extension))
+        (two-hand-A (type open)(notes g-8 d8 bb8 eb+8)(extension))
+        (two-hand-B (type open)(notes eb-8 bb-8 d8 g8)(extension))
         (drop-2-A (type open)(notes bb-8 eb8 g8 d+8)(extension))
         (drop-2-B (type open)(notes g8 d+8 eb+8 bb+8)(extension))
         (drop-2-C (type open)(notes eb8 bb8 d+8 g+8)(extension))
@@ -1966,9 +1979,9 @@
         (drop-3-C (type open)(notes bb-8 g8 d+8 eb+8)(extension))
         (drop-2-3-A (type open)(notes g-8 bb-8 eb8 d+8)(extension))
         (drop-2-3-B (type open)(notes eb-8 g-8 d8 bb8)(extension))
-        (drop-2-3-C (type open)(notes d8 eb8 bb8 g+8)(extension))
-        (shout-A (type shout)(notes eb8 g8 bb8 d+8)(extension g++8 d+++8 g+++8))
-        (shout-B (type shout)(notes bb8 d+8 eb+8 g+8)(extension g++8 d+++8 g+++8))
+        (drop-2-3-C (type open)(notes d-8 eb-8 bb-8 g8)(extension))
+        (shout-A (type shout)(notes eb-8 g-8 bb-8 d+8)(extension g++8 d+++8 g+++8))
+        (shout-B (type shout)(notes bb8 d8 eb8 g8)(extension g++8 d+++8 g+++8))
         )
     (extensions Cm11 Cm13)
     (scales
@@ -1999,7 +2012,7 @@
     (voicings
         (two-hand-B (type open)(notes bb--8 g-8 bb-8 d8 f8)(extension))
         (so-what (type open)(notes g--8 c-8 f-8 bb-8 d8)(extension))
-        (two-hand-A (type open)(notes g8 d+8 eb+8 bb+8 f++8)(extension))
+        (two-hand-A (type open)(notes g-8 d8 eb8 bb8 f+8)(extension))
         )
     (extensions Cm13)
     (scales
@@ -2021,7 +2034,7 @@
     (priority f8 eb8 bb8 g8 c8)
     (approach (c8 b8 c#8) (eb8 e8) (g8 f#8 g#8) (bb8 a8 b8) (f8 e8 f#8))
     (voicings
-        (two-hand-A (type open)(notes g8 eb+8 bb+8 f++8)(extension))
+        (two-hand-A (type open)(notes g-8 eb8 bb8 f+8)(extension))
         )
     (extensions Cm11)
     (scales
@@ -2048,7 +2061,7 @@
     (priority f8 a8 eb8 bb8 d8 g8 c8)
     (approach (c8 b8 c#8) (eb8 e8) (g8 f#8 g#8) (bb8 b8) (d8 c#8) (f8 e8 f#8) (a8 g#8))
     (voicings
-        (two-hand-A (type open)(notes g8 d+8 f+8 a+8 bb+8 eb++8)(extension))
+        (two-hand-A (type open)(notes g-8 d8 f8 a8 bb8 eb+8)(extension))
         )
     (extensions)
     (scales
@@ -2068,9 +2081,9 @@
     (priority gb8 eb8 bb8 c8)
     (approach (c8 b8 c#8 d8) (eb8 d8 e8 f8) (gb8 f8 g8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 gb8 bb8 c+8)(extension))
-        (left-hand-B (type closed)(notes bb8 c+8 eb+8 gb+8)(extension))
-        (two-hand-A (type open)(notes gb8 c+8 eb+8 bb+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 gb-8 bb-8 c8)(extension))
+        (left-hand-B (type closed)(notes bb-8 c8 eb8 gb8)(extension))
+        (two-hand-A (type open)(notes gb-8 c8 eb8 bb8)(extension))
         )
     (extensions Cm9b5)
     (scales
@@ -2118,9 +2131,9 @@
     (priority eb8 bb8 gb8 d8 c8)
     (approach (c8 b8 c#8) (eb8 d8 e8 f8) (gb8 f8 g8) (bb8 a8 b8) (d8 c#8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 gb8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 eb+8 gb+8)(extension))
-        (two-hand-A (type open)(notes gb8 eb+8 bb+8 d++8)(extension))
+        (left-hand-A (type closed)(notes eb-8 gb-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 eb8 gb8)(extension))
+        (two-hand-A (type open)(notes gb-8 eb8 bb8 d+8)(extension))
         )
     (extensions Cm11b5)
     (scales
@@ -2149,7 +2162,7 @@
     (priority f8 eb8 bb8 gb8 d8 c8)
     (approach (c8 b8 c#8) (eb8 d8 e8) (f8 e8) (gb8 g8) (bb8 a8 b8) (d8 c#8))
     (voicings
-        (two-hand-A (type open)(notes gb8 eb+8 bb+8 d++8 f++8)(extension))
+        (two-hand-A (type open)(notes gb-8 eb8 bb8 d+8 f+8)(extension))
         )
     (extensions)
     (scales
@@ -2176,10 +2189,10 @@
     (priority eb8 g#8 c8)
     (approach (c8 b8 c#8 d8) (eb8 d8 e8 f8) (g#8 a8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g#8 c+8)(extension))
-        (left-hand-B (type closed)(notes g#8 c+8 eb+8)(extension))
-        (open-A (type open)(notes eb8 c+8 g#+8)(extension))
-        (open-B (type open)(notes g#8 eb+8 c++8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g#-8 c8)(extension))
+        (left-hand-B (type closed)(notes g#-8 c8 eb8)(extension))
+        (open-A (type open)(notes eb-8 c8 g#8)(extension))
+        (open-B (type open)(notes g#-8 eb8 c+8)(extension))
         )
     (extensions)
     (scales
@@ -2211,10 +2224,10 @@
     (priority eb8 db8 ab8 c8)
     (approach (c8 b8) (eb8 d8 e8 f8) (ab8 a8) (db8 d8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 ab8 db+8)(extension))
-        (left-hand-B (type closed)(notes ab8 db+8 eb+8)(extension))
-        (open-A (type open)(notes eb8 c+8 g#+8 db++8)(extension))
-        (open-B (type open)(notes g#8 db+8 eb+8 c++8)(extension))
+        (left-hand-A (type closed)(notes eb-8 ab-8 db8)(extension))
+        (left-hand-B (type closed)(notes ab-8 db8 eb8)(extension))
+        (open-A (type open)(notes eb-8 c8 g#8 db+8)(extension))
+        (open-B (type open)(notes g#-8 db8 eb8 c+8)(extension))
         )
     (extensions)
     (scales
@@ -2234,10 +2247,10 @@
     (priority b8 eb8 ab8 c8)
     (approach (c8 b8 c#8 d8) (eb8 d8 e8 f8) (ab8 a8) (b8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 ab8 b8)(extension))
-        (left-hand-B (type closed)(notes ab8 b8 eb+8)(extension))
-        (open-A (type open)(notes eb8 b8 c+8 g#+8)(extension))
-        (open-B (type open)(notes g#8 eb+8 b+8 c++8)(extension))
+        (left-hand-A (type closed)(notes eb-8 ab-8 b-8)(extension))
+        (left-hand-B (type closed)(notes ab-8 b-8 eb8)(extension))
+        (open-A (type open)(notes eb-8 b-8 c8 g#8)(extension))
+        (open-B (type open)(notes g#-8 eb8 b8 c+8)(extension))
         )
     (extensions)
     (scales
@@ -2257,8 +2270,8 @@
     (priority ab8 eb8 bb8 c8)
     (approach (c8 b8 c#8 d8) (eb8 d8 e8 f8) (ab8 g8 a8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g#8 bb8)(extension))
-        (left-hand-B (type closed)(notes g#8 bb8 eb+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g#-8 bb-8)(extension))
+        (left-hand-B (type closed)(notes g#-8 bb-8 eb8)(extension))
         )
     (extensions Cm9#5)
     (scales
@@ -2279,8 +2292,8 @@
     (priority ab8 d8 eb8 bb8 c8)
     (approach (c8 b8 c#8) (eb8 e8 f8) (ab8 g8 a8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g#8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes g#8 bb8 d+8 eb+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g#-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes g#-8 bb-8 d8 eb8)(extension))
         )
     (extensions Cm11#5)
     (scales
@@ -2301,8 +2314,8 @@
     (priority f8 ab8 d8 eb8 bb8 c8)
     (approach (c8 b8 c#8) (eb8 e8) (ab8 g8 a8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 g#8 bb8 d+8 f+8)(extension))
-        (left-hand-B (type closed)(notes f8 g#8 bb8 d+8 eb+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 g#-8 bb-8 d8 f8)(extension))
+        (left-hand-B (type closed)(notes f-8 g#-8 bb-8 d8 eb8)(extension))
         )
     (extensions)
     (scales
@@ -2323,10 +2336,10 @@
     (priority db8 e8 g8 c8)
     (approach (c8 b8 c#8) (e8 eb8 f8) (g8 f#8 g#8 a8) (db8 d8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 db+8)(extension))
-        (left-hand-B (type closed)(notes db8 e8 g8)(extension))
-        (two-hand-A (type open)(notes e8 c+8 db+8 g+8)(extension))
-        (two-hand-B (type open)(notes e8 c+8 g+8 db++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 db8)(extension))
+        (left-hand-B (type closed)(notes db-8 e-8 g-8)(extension))
+        (two-hand-A (type open)(notes e-8 c8 db8 g8)(extension))
+        (two-hand-B (type open)(notes e-8 c8 g8 db+8)(extension))
         )
     (extensions)
     (scales
@@ -2349,10 +2362,10 @@
         (two-hand-C (type open)(notes bb--8 g-8 bb-8 e8)(extension))
         (two-hand-B (type open)(notes e--8 bb--8 g-8 e8)(extension))
         (two-hand-A (type open)(notes g--8 bb--8 e-8 g-8 bb-8)(extension))
-        (left-hand-A (type closed)(notes e8 g8 bb8)(extension))
-        (left-hand-B (type closed)(notes bb8 e+8 g+8)(extension))
-        (left-hand-C (type open)(notes g--8 bb--8 e-8 g-8)(extension))
-        (left-hand-D (type open)(notes bb--8 e-8 g-8 bb-8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 bb-8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8 g8)(extension))
+        (left-hand-C (type open)(notes g-8 bb-8 e8 g8)(extension))
+        (left-hand-D (type open)(notes bb-8 e8 g8 bb8)(extension))
         (drop-2-A (type open)(notes a#-8 e8 g8 c+8)(extension))
         (drop-2-B (type open)(notes c-8 g-8 a#-8 e8)(extension))
         (drop-2-C (type open)(notes e-8 a#-8 c8 g8)(extension))
@@ -2396,7 +2409,7 @@
     (approach (c8 b8 c#8 d8) (e8 f8 eb8) (bb8 a8 b8))
     (voicings
         (left-hand-A (type open)(notes e-8 bb-8 c8)(extension))
-        (left-hand-B (type closed)(notes bb8 e+8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8)(extension))
         (two-hand-A (type open)(notes bb--8 e-8 c8)(extension))
         )
     (extensions C9no5 C7b9 C7#5#9)
@@ -2449,8 +2462,8 @@
     (priority d#8 db8 bb8 e8 c8)
     (approach (c8 b8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 a8 b8) (db8 d8 eb8) (d#8 d8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 bb8 db+8)(extension))
-        (two-hand-A (type open)(notes g8 e+8 bb+8 db++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 bb-8 db8)(extension))
+        (two-hand-A (type open)(notes g-8 e8 bb8 db+8)(extension))
         )
     (extensions C7b9#11 C13b9#11 C7b9b13)
     (scales
@@ -2477,7 +2490,7 @@
         (two-hand-A (type open)(notes e--8 bb--8 c-8 g#-8)(extension))
         (left-hand-C (type closed)(notes g#--8 bb--8 c-8 e-8)(extension))
         (left-hand-A (type closed)(notes c-8 e-8 ab-8 bb-8)(extension))
-        (left-hand-B (type closed)(notes bb8 e+8 g#+8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8 g#8)(extension))
         (two-hand-B (type open)(notes bb--8 e-8 ab-8 c8)(extension))
         )
     (extensions C7#5#9 C7#5b9)
@@ -2522,9 +2535,9 @@
     (priority d#8 bb8 e8 c8)
     (approach (c8 b8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 a8 b8) (d#8 d8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g8 bb8 d#+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d#+8 e+8 g+8)(extension))
-        (two-hand-A (type open)(notes g8 e+8 bb+8 d#++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 bb-8 d#8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d#8 e8 g8)(extension))
+        (two-hand-A (type open)(notes g-8 e8 bb8 d#+8)(extension))
         )
     (extensions C7#9#11)
     (scales
@@ -2547,9 +2560,9 @@
     (priority f#8 bb8 e8 c8 g8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (bb8 a8 b8) (d8 c#8 eb8) (f#8 f8 g8) (g8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes bb--8 c-8 e-8 gb-8)(extension))
-        (left-hand-B (type closed)(notes bb--8 e-8 gb-8 g-8)(extension))
-        (two-hand-A (type open)(notes e--8 g--8 bb--8 gb-8)(extension))
+        (left-hand-A (type closed)(notes bb-8 c8 e8 gb8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8 gb8 g8)(extension))
+        (two-hand-A (type open)(notes e-8 g-8 bb-8 gb8)(extension))
         (two-hand-B (type open)(notes bb--8 e-8 gb-8 c8)(extension))
         )
     (extensions C9#11 C7#9#11)
@@ -2666,9 +2679,9 @@
     (voicings
         (shout-A (type shout)(notes bb--8 e-8 g-8 bb-8 g8 c+8 g+8)(extension))
         (two-hand-B (type open)(notes bb--8 d-8 e-8 g-8 bb-8)(extension))
-        (left-hand-A (type closed)(notes e8 g8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 g+8)(extension))
-        (two-hand-A (type open)(notes g8 d+8 e+8 bb+8)(extension))
+        (left-hand-A (type closed)(notes e-8 g-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 g8)(extension))
+        (two-hand-A (type open)(notes g-8 d8 e8 bb8)(extension))
         )
     (extensions C9#11 C13)
     (scales
@@ -2690,10 +2703,10 @@
     (priority f#8 bb8 e8 d8 c8 g8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (bb8 a8 b8) (d8 c#8 eb8) (f#8 f8 g8))
     (voicings
-        (left-hand-A (type closed)(notes e8 f#8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 f#+8)(extension))
-        (two-hand-A (type open)(notes e8 d+8 bb+8 f#++8)(extension))
-        (two-hand-B (type open)(notes bb8 e+8 f#+8 d++8)(extension))
+        (left-hand-A (type closed)(notes e8 f#-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 f#8)(extension))
+        (two-hand-A (type open)(notes e-8 d8 bb8 f#+8)(extension))
+        (two-hand-B (type open)(notes bb-8 e8 f#8 d+8)(extension))
         )
     (extensions C13#11)
     (scales
@@ -2715,10 +2728,10 @@
     (priority d8 gb8 bb8 e8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (gb8 g8 f8) (bb8 a8 b8) (d8 c#8 eb8))
     (voicings
-        (left-hand-A (type closed)(notes e8 gb8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 gb+8)(extension))
-        (two-hand-A (type open)(notes d+8 e+8 bb+8 gb++8)(extension))
-        (two-hand-B (type open)(notes bb8 e+8 gb+8 d++8)(extension))
+        (left-hand-A (type closed)(notes e-8 gb-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 gb8)(extension))
+        (two-hand-A (type open)(notes d8 e8 bb8 gb+8)(extension))
+        (two-hand-B (type open)(notes bb-8 e8 gb8 d+8)(extension))
         )
     (extensions C13b5)
     (scales
@@ -2739,10 +2752,10 @@
     (priority d8 g#8 bb8 e8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (g#8 g8 a8) (bb8 a8 b8) (d8 c#8 eb8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g#8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 g#+8)(extension))
-        (two-hand-A (type open)(notes d+8 e+8 bb+8 g#++8)(extension))
-        (two-hand-B (type open)(notes bb8 e+8 g#+8 d++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g#-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 g#8)(extension))
+        (two-hand-A (type open)(notes d8 e8 bb8 g#+8)(extension))
+        (two-hand-B (type open)(notes bb-8 e8 g#8 d+8)(extension))
         )
     (extensions C9#5#11)
     (scales
@@ -2767,9 +2780,9 @@
     (priority f#8 g#8 bb8 e8 d8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (g#8 g8 a8) (bb8 a8 b8) (d8 c#8 eb8) (f#8 f8 g8))
     (voicings
-        (left-hand-A (type closed)(notes e8 g#8 bb8 d+8 f#+8)(extension))
-        (two-hand-A (type open)(notes e8 bb8 g#+8 f#++8)(extension))
-        (two-hand-B (type open)(notes bb8 e+8 g#+8 f#++8)(extension))
+        (left-hand-A (type closed)(notes e-8 g#-8 bb-8 d8 f#8)(extension))
+        (two-hand-A (type open)(notes e-8 bb-8 g#8 f#+8)(extension))
+        (two-hand-B (type open)(notes bb-8 e8 g#8 f#+8)(extension))
         )
     (extensions)
     (scales
@@ -2828,21 +2841,21 @@
     (priority a8 d8 bb8 e8 g8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 b8) (d8 c#8 eb8) (a8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 a8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 a+8)(extension))
-        (drop-2-A (type open)(notes e8 bb8 d+8 a+8)(extension))
-        (drop-2-B (type open)(notes d8 a8 bb8 e+8)(extension))
+        (left-hand-A (type closed)(notes e-8 a-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 a8)(extension))
+        (drop-2-A (type open)(notes e-8 bb-8 d8 a8)(extension))
+        (drop-2-B (type open)(notes d-8 a-8 bb-8 e8)(extension))
         (drop-2-C (type open)(notes bb-8 e8 a8 d+8)(extension))
         (drop-2-D (type open)(notes a-8 d8 e8 bb8)(extension))
-        (drop-3-A (type open)(notes d8 bb8 e+8 a+8)(extension))
+        (drop-3-A (type open)(notes d-8 bb-8 e8 a8)(extension))
         (drop-3-B (type open)(notes bb-8 a8 d+8 e+8)(extension))
-        (drop-3-C (type open)(notes e8 d+8 a+8 bb+8)(extension))
-        (drop-2-3-A (type open)(notes d8 e8 bb8 a+8)(extension))
+        (drop-3-C (type open)(notes e-8 d8 a8 bb8)(extension))
+        (drop-2-3-A (type open)(notes d-8 e-8 bb-8 a8)(extension))
         (drop-2-3-B (type open)(notes bb-8 d8 a8 e+8)(extension))
-        (drop-2-3-C (type open)(notes a8 bb8 e+8 d++8)(extension))
-        (two-hand-A (type open)(notes a8 d+8 e+8 bb+8)(extension))
-        (shout-A (type shout)(notes e8 a8 bb8 d+8)(extension d++8 a++8 d+++8))
-        (shout-B (type shout)(notes bb8 e+8 a+8)(extension d++8 a++8 d+++8))
+        (drop-2-3-C (type open)(notes a-8 bb-8 e8 d+8)(extension))
+        (two-hand-A (type open)(notes a-8 d8 e8 bb8)(extension))
+        (shout-A (type shout)(notes e-8 a-8 bb-8 d8)(extension d++8 a++8 d+++8))
+        (shout-B (type shout)(notes bb-8 e8 a8)(extension d++8 a++8 d+++8))
         )
     (extensions C13#11)
     (scales
@@ -2864,19 +2877,19 @@
     (priority a8 bb8 e8 g8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 b8) (a8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 a8 bb8)(extension))
-        (left-hand-B (type closed)(notes bb8 e+8 a+8)(extension))
-        (drop-2-A (type open)(notes e8 bb8 a+8)(extension))
-        (drop-2-B (type open)(notes d8 a8 bb8 e+8)(extension))
+        (left-hand-A (type closed)(notes e-8 a-8 bb-8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8 a8)(extension))
+        (drop-2-A (type open)(notes e-8 bb-8 a8)(extension))
+        (drop-2-B (type open)(notes d-8 a-8 bb-8 e8)(extension))
         (drop-2-C (type open)(notes bb-8 e8 a8)(extension))
         (drop-2-D (type open)(notes a-8 e8 bb8)(extension))
-        (drop-3-A (type open)(notes bb8 e+8 a+8)(extension))
-        (drop-3-B (type open)(notes bb-8 a8 e+8)(extension))
-        (drop-3-C (type open)(notes e8 a+8 bb+8)(extension))
-        (drop-2-3-A (type open)(notes e8 bb8 a+8)(extension))
-        (drop-2-3-B (type open)(notes bb-8 a8 e+8)(extension))
-        (drop-2-3-C (type open)(notes a8 bb8 e+8)(extension))
-        (two-hand-A (type open)(notes a8 e+8 bb+8)(extension))
+        (drop-3-A (type open)(notes bb-8 e8 a8)(extension))
+        (drop-3-B (type open)(notes bb--8 a-8 e8)(extension))
+        (drop-3-C (type open)(notes e-8 a8 bb8)(extension))
+        (drop-2-3-A (type open)(notes e-8 bb-8 a8)(extension))
+        (drop-2-3-B (type open)(notes bb--8 a-8 e8)(extension))
+        (drop-2-3-C (type open)(notes a-8 bb-8 e8)(extension))
+        (two-hand-A (type open)(notes a-8 e8 bb8)(extension))
         )
     (extensions C13)
     (scales
@@ -2908,11 +2921,11 @@
     (priority a8 d8 bb8 e8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 b8) (d8 c#8 eb8) (a8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 a8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 a+8)(extension))
-        (two-hand-A (type open)(notes a8 d+8 e+8 bb+8)(extension))
-        (shout-A (type shout)(notes e8 a8 bb8 d+8)(extension d++8 a++8 d+++8))
-        (shout-B (type shout)(notes bb8 e+8 a+8)(extension d++8 a++8 d+++8))
+        (left-hand-A (type closed)(notes e-8 a-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 a8)(extension))
+        (two-hand-A (type open)(notes a-8 d8 e8 bb8)(extension))
+        (shout-A (type shout)(notes e-8 a-8 bb-8 d8)(extension d++8 a++8 d+++8))
+        (shout-B (type shout)(notes bb-8 e8 a8)(extension d++8 a++8 d+++8))
         )
     (extensions C13#11)
     (scales
@@ -2934,9 +2947,9 @@
     (priority ab8 bb8 e8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (ab8 g8 a8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes e8 ab8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 ab+8)(extension))
-        (two-hand-A (type open)(notes ab8 d+8 e+8 bb+8)(extension))
+        (left-hand-A (type closed)(notes e-8 ab-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 ab8)(extension))
+        (two-hand-A (type open)(notes ab-8 d8 e8 bb8)(extension))
         )
     (extensions C9b13)
     (scales
@@ -2960,9 +2973,9 @@
     (priority ab8 bb8 e8 c8 g8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (ab8 a8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes e8 ab8 bb8)(extension))
-        (left-hand-B (type closed)(notes bb8 e+8 ab+8)(extension))
-        (two-hand-A (type open)(notes ab8 e+8 bb+8)(extension))
+        (left-hand-A (type closed)(notes e-8 ab-8 bb-8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8 ab8)(extension))
+        (two-hand-A (type open)(notes ab-8 e8 bb8)(extension))
         )
     (extensions)
     (scales
@@ -2982,9 +2995,9 @@
     (priority ab8 d8 bb8 e8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (ab8 g8 a8) (bb8 a8 b8) (d8 c#8 eb8))
     (voicings
-        (left-hand-A (type closed)(notes e8 ab8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 ab+8)(extension))
-        (two-hand-A (type open)(notes ab8 e+8 bb+8 d++8)(extension))
+        (left-hand-A (type closed)(notes e-8 ab-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 ab8)(extension))
+        (two-hand-A (type open)(notes ab-8 e8 bb8 d+8)(extension))
         )
     (extensions)
     (scales
@@ -3005,9 +3018,9 @@
     (priority ab8 f#8 bb8 e8 c8 g8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (ab8 g8 a8) (bb8 a8 b8) (d8 c#8 eb8) (f#8 f8 g8) (g8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 ab8 bb8 f#+8)(extension))
-        (left-hand-B (type closed)(notes bb8 e+8 f#+8 ab+8)(extension))
-        (two-hand-A (type open)(notes ab8 e+8 bb+8 f#++8)(extension))
+        (left-hand-A (type closed)(notes e-8 ab-8 bb-8 f#8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8 f#8 ab8)(extension))
+        (two-hand-A (type open)(notes ab-8 e8 bb8 f#+8)(extension))
         )
     (extensions C9#11b13)
     (scales
@@ -3028,9 +3041,9 @@
     (priority ab8 f#8 d8 bb8 e8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (ab8 g8 a8) (bb8 a8 b8) (d8 c#8 eb8) (f#8 f8 g8) (g8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 ab8 bb8 d+8 f#+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 f#+8 ab+8)(extension))
-        (two-hand-A (type open)(notes ab8 e+8 bb+8 d++8 f#++8)(extension))
+        (left-hand-A (type closed)(notes e-8 ab-8 bb-8 d8 f#8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 f#8 ab8)(extension))
+        (two-hand-A (type open)(notes ab-8 e8 bb8 d+8 f#+8)(extension))
         )
     (extensions)
     (scales
@@ -3055,12 +3068,12 @@
     (priority db8 a8 bb8 e8 c8)
     (approach (c8 b8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 b8) (db8 d8 eb8))
     (voicings
-        (left-hand-A (type closed)(notes bb8 db+8 e+8 a+8)(extension))
-        (two-hand-A (type open)(notes bb8 a+8 e+8 db++8)(extension))
-        (two-hand-B (type open)(notes e8 bb8 db+8 a+8)(extension))
-        (two-hand-C (type open)(notes e-8 bb8 db8 a8)(extension))
-        (shout-A (type shout)(notes bb8 a+8 e+8 db++8)(extension g++8 c+++8 g+++8))
-        (shout-B (type shout)(notes e8 bb8 db+8 a+8)(extension c++8 g++8 c+++8))
+        (left-hand-A (type closed)(notes bb-8 db8 e8 a8)(extension))
+        (two-hand-A (type open)(notes bb-8 a8 e8 db+8)(extension))
+        (two-hand-B (type open)(notes e-8 bb-8 db8 a8)(extension))
+        (two-hand-C (type open)(notes e-8 bb-8 db8 a8)(extension))
+        (shout-A (type shout)(notes bb-8 a8 e8 db+8)(extension g++8 c+++8 g+++8))
+        (shout-B (type shout)(notes e-8 bb-8 db8 a8)(extension c++8 g++8 c+++8))
         (shout-C (type shout)(notes e-8 bb-8 db8 a8)(extension c+8 g+8 c++8))
         )
     (extensions C13b9#11)
@@ -3082,9 +3095,9 @@
     (priority a8 gb8 d8 bb8 e8 c8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (gb8 g8 f8) (bb8 a8 b8) (d8 c#8 eb8) (a8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 gb8 a8 bb8 d8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 e+8 gb+8 a+8)(extension))
-        (two-hand-A (type open)(notes bb8 e+8 a+8 d++8 gb++8)(extension))
+        (left-hand-A (type closed)(notes e-8 gb-8 a-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 gb8 a8)(extension))
+        (two-hand-A (type open)(notes bb-8 e8 a8 d+8 gb+8)(extension))
         )
     (extensions)
     (scales
@@ -3106,8 +3119,8 @@
     (priority d#8 a8 bb8 e8 g8)
     (approach (c8 b8) (e8 f8 eb8) (g8 f#8 g#8) (bb8 b8) (db8 eb8 c8))
     (voicings
-        (left-hand-A (type closed)(notes e8 a8 bb8 d#+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d#+8 a+8 e++8)(extension))
+        (left-hand-A (type closed)(notes e-8 a-8 bb-8 d#8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d#8 a8 e+8)(extension))
         (open-A (type open)(notes bb-8 e8 a8 d#+8)(extension))
         )
     (extensions C13#9#11)
@@ -3128,10 +3141,9 @@
     (priority f#8 a8 bb8 e8 d8 c8 g8)
     (approach (c8 b8 c#8) (e8 f8 eb8) (bb8 b8) (d8 c#8 eb8) (f#8 f8 g8) (a8 g#8) (g8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 f#8 a8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 e+8 f#+8 a+8 d++8)(extension))
-        (open-A (type open)(notes bb8 e+8 d+8 d++8 f#++8)(extension))
-        (open-B (type open)(notes bb8 e+8 a+8 d++8 f#++8)(extension))
+        (left-hand-A (type closed)(notes e-8 f#-8 a-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 e8 f#8 a8 d+8)(extension))
+        (open-A (type open)(notes bb-8 e8 d8 d+8 f#+8)(extension))
         )
     (extensions)
     (scales
@@ -3153,9 +3165,9 @@
     (priority a8 f#8 d#8 d8 bb8 e8 c8)
     (approach (c8 b8) (e8 f8 eb8) (g8 g#8) (bb8 b8) (d#8 d8 e8) (f#8 f8) (a8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes e8 f#8 a8 bb8 d#+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d#+8 e+8 f#+8 a+8)(extension))
-        (open-A (type open)(notes bb8 e+8 f#+8 d#++8 a++8)(extension))
+        (left-hand-A (type closed)(notes e-8 f#-8 a-8 bb-8 d#8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d#8 e8 f#8 a8)(extension))
+        (open-A (type open)(notes bb-8 e8 f#8 d#+8 a+8)(extension))
         )
     (extensions C13b9#11 C7b9#11b13)
     (scales
@@ -3175,9 +3187,9 @@
     (priority f8 bb8 g8 c8)
     (approach (c8 b8 c#8 d8) (f8 f#8) (g8 f#8 g#8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes f8 g8 bb8)(extension))
-        (left-hand-B (type closed)(notes g8 bb8 f+8)(extension))
-        (two-hand-A (type open)(notes f8 bb8 g+8)(extension))
+        (left-hand-A (type closed)(notes f-8 g-8 bb-8)(extension))
+        (left-hand-B (type closed)(notes g-8 bb-8 f8)(extension))
+        (two-hand-A (type open)(notes f-8 bb-8 g8)(extension))
         )
     (extensions C9sus4)
     (scales
@@ -3207,9 +3219,9 @@
     (priority f8 bb8 d8 g8 c8)
     (approach (c8 b8 c#8) (f8 f#8) (g8 f#8 g#8) (bb8 a8 b8) (d8 c#8))
     (voicings
-        (left-hand-A (type closed)(notes f8 bb8 d+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 f+8)(extension))
-        (open-A (type open)(notes f8 d+8 bb+8)(extension))
+        (left-hand-A (type closed)(notes f-8 bb-8 d8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 f8)(extension))
+        (open-A (type open)(notes f-8 d8 bb8)(extension))
         (open-B (type open)(notes bb-8 f8 d+8)(extension))
         )
     (extensions C13sus4)
@@ -3238,9 +3250,9 @@
     (priority g#8 bb8 f8 c8)
     (approach (c8 b8 c#8) (f8 e8 f#8) (g#8 g8 a8) (bb8 a8 b8) (d8 c#8 eb8))
     (voicings
-        (left-hand-A (type closed)(notes f8 g#8 bb8)(extension))
-        (left-hand-B (type closed)(notes bb8 f+8 g#+8)(extension))
-        (two-hand-A (type open)(notes f8 bb8 g#+8)(extension))
+        (left-hand-A (type closed)(notes f-8 g#-8 bb-8)(extension))
+        (left-hand-B (type closed)(notes bb-8 f8 g#8)(extension))
+        (two-hand-A (type open)(notes f-8 bb-8 g#8)(extension))
         )
     (extensions)
     (scales
@@ -3260,8 +3272,8 @@
     (priority f8 bb8 db8 g8 c8)
     (approach (c8 b8 c#8) (f8 f#8) (g8 f#8 g#8) (bb8 a8 b8) (db8 d8))
     (voicings
-        (left-hand-A (type closed)(notes bb8 db+8 f+8)(extension))
-        (open-A (type open)(notes f8 bb8 db+8)(extension))
+        (left-hand-A (type closed)(notes bb-8 db8 f8)(extension))
+        (open-A (type open)(notes f-8 bb-8 db8)(extension))
         (open-B (type open)(notes bb-8 f8 db+8)(extension))
         )
     (extensions)
@@ -3289,10 +3301,10 @@
     (priority f8 ab8 bb8 db8 g8 c8)
     (approach (c8 b8 c#8) (f8 f#8) (g8 f#8) (ab8 a8) (bb8 a8 b8) (db8 d8))
     (voicings
-        (left-hand-A (type closed)(notes ab8 bb8 db+8 f+8)(extension))
-        (left-hand-B (type closed)(notes bb8 db+8 f+8 ab+8)(extension))
-        (open-A (type open)(notes f8 bb8 db+8 ab+8)(extension))
-        (open-B (type open)(notes bb-8 f8 db+8 ab+8)(extension))
+        (left-hand-A (type closed)(notes ab-8 bb-8 db8 f8)(extension))
+        (left-hand-B (type closed)(notes bb-8 db8 f8 ab8)(extension))
+        (open-A (type open)(notes f-8 bb-8 db8 ab8)(extension))
+        (open-B (type open)(notes bb--8 f-8 db8 ab8)(extension))
         )
     (extensions)
     (scales
@@ -3322,9 +3334,9 @@
     (priority f8 a8 bb8 d8 c8)
     (approach (c8 b8 c#8) (f8 f#8) (g8 f#8 g#8) (bb8 b8) (d8 c#8) (a8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes a8 bb8 d+8 f+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d+8 f+8 a+8)(extension))
-        (open-A (type open)(notes f8 bb8 d+8 a+8)(extension))
+        (left-hand-A (type closed)(notes a-8 bb-8 d8 f8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 f8 a8)(extension))
+        (open-A (type open)(notes f-8 bb-8 d8 a8)(extension))
         (open-B (type open)(notes bb-8 f8 d+8 a+8)(extension))
         )
     (extensions)
@@ -3350,8 +3362,10 @@
     (priority f#8 db8 bb8 e8 c8 g8)
     (approach (c8 b8) (e8 f8 eb8) (bb8 a8 b8) (db8 d8 eb8) (f#8 f8) (g8 g#8))
     (voicings
-        (open-A (type open)(notes bb-8 e8 db+8 f#+8)(extension))
-        (open-B (type open)(notes bb-8 db+8 e+8 f#+8)(extension))
+        (left-hand-A (type closed)(notes e-8 bb-8 d8 f#8)(extension))
+        (left-hand-B (type closed)(notes bb-8 d8 e8 f#8)(extension))
+        (open-A (type open)(notes bb-8 db8 e8 f#8)(extension))
+        (open-B (type open)(notes bb-8 db8 e8 f#8)(extension))
         )
     (extensions C13b9#11 C7b9#11b13)
     (scales
@@ -3392,8 +3406,8 @@
     (priority f#8 a8 db8 bb8 e8 c8 g8)
     (approach (c8 b8) (e8 f8 eb8) (bb8 a8 b8) (db8 d8 eb8) (f#8 f8) (g8 g#8))
     (voicings
-        (open-A (type open)(notes bb8 e+8 a+8 db++8 f#++8)(extension))
-        (shout-A (type shout)(notes bb8 a+8 db++8 f#++8)(extension e+++8))
+        (open-A (type open)(notes bb-8 e8 a8 db+8 f#+8)(extension))
+        (shout-A (type shout)(notes bb-8 a8 db++8 f#+8)(extension e++8))
         )
     (extensions)
     (scales
@@ -3501,9 +3515,8 @@
     (priority d#8 g#8 bb8 e8 c8)
     (approach (c8 b8) (e8 f8) (g#8 g8 a8) (bb8 a8 b8) (d#8 d8))
     (voicings
-        (left-hand-C (type closed)(notes bb--8 eb-8 e-8 ab-8)(extension))
-        (left-hand-A (type closed)(notes e8 g#8 bb8 d#+8)(extension))
-        (left-hand-B (type closed)(notes bb8 d#+8 e+8 g#+8)(extension))
+        (left-hand-A (type closed)(notes e-8 g#-8 bb-8 d#8)(extension))
+        (left-hand-B (type closed)(notes bb-8 eb8 e8 ab8)(extension))
         (open-A (type open)(notes bb-8 e8 g#8 d#+8)(extension))
         )
     (extensions)
@@ -3535,11 +3548,11 @@
     (priority gb8 eb8 c8)
     (approach (c8 b8 d8 db8) (eb8 d8 e8 f8) (gb8 f8 g8 g#8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 gb8 c+8)(extension))
-        (left-hand-B (type closed)(notes gb8 c+8 eb+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 gb-8 c8)(extension))
+        (left-hand-B (type closed)(notes gb-8 c8 eb8)(extension))
         (left-hand-C (type closed)(notes c8 eb8 gb8)(extension))
-        (open-A (type open)(notes eb8 c+8 gb+8)(extension))
-        (open-B (type open)(notes gb8 c+8 eb+8)(extension))
+        (open-A (type open)(notes eb-8 c8 gb8)(extension))
+        (open-B (type open)(notes gb-8 c8 eb8)(extension))
         )
     (extensions Co7 Cm7b5)
     (scales
@@ -3564,19 +3577,19 @@
     (voicings
         (open-G (type open)(notes a-8 c8 d#8 f#8 a8)(extension))
         (open-F (type open)(notes d#-8 f#-8 c8 f#8 a8)(extension))
-        (open-E (type open)(notes eb--8 a--8 c-8 gb-8)(extension))
-        (left-hand-A (type closed)(notes eb8 gb8 a8 c+8)(extension))
-        (left-hand-B (type closed)(notes gb8 a8 c+8 eb+8)(extension))
-        (left-hand-C (type closed)(notes a8 c+8 eb+8 gb+8)(extension))
-        (left-hand-D (type closed)(notes c-8 eb-8 gb-8 a-8)(extension))
-        (open-A (type open)(notes eb8 a8 gb+8 c++8)(extension))
-        (open-B (type open)(notes gb8 eb+8 a+8 c++8)(extension))
-        (open-C (type open)(notes a--8 gb-8 c8 eb8)(extension))
+        (open-E (type open)(notes eb-8 a-8 c8 gb8)(extension))
+        (left-hand-A (type closed)(notes eb-8 gb-8 a-8 c8)(extension))
+        (left-hand-B (type closed)(notes gb-8 a-8 c8 eb8)(extension))
+        (left-hand-C (type closed)(notes a-8 c8 eb8 gb8)(extension))
+        (left-hand-D (type closed)(notes c8 eb8 gb8 a8)(extension))
+        (open-A (type open)(notes eb-8 a-8 gb8 c+8)(extension))
+        (open-B (type open)(notes gb-8 eb8 a8 c+8)(extension))
+        (open-C (type open)(notes a-8 gb8 c8 eb8)(extension))
         (open-D (type open)(notes c-8 gb-8 a-8 eb8)(extension))
-        (shout-A (type shout)(notes eb8 gb8 a8 c+8)(extension gb+8 eb+8))
-        (shout-B (type shout)(notes gb8 a8 c+8 eb+8)(extension a+8 c++8))
-        (shout-C (type shout)(notes a8 c+8 eb+8 gb+8)(extension c++8 a++8))
-        (shout-D (type shout)(notes c-8 eb-8 gb-8 a-8)(extension eb8 c+8))
+        (shout-A (type shout)(notes eb-8 gb-8 a-8 c8)(extension gb+8 eb+8))
+        (shout-B (type shout)(notes gb-8 a-8 c8 eb8)(extension a+8 c++8))
+        (shout-C (type shout)(notes a-8 c8 eb8 gb8)(extension c+8 a+8))
+        (shout-D (type shout)(notes c-8 eb-8 gb-8 a-8)(extension eb+8 c++8))
         )
     (extensions CoM7)
     (scales
@@ -3626,11 +3639,11 @@
     (priority b8 a8 eb8 gb8 c8)
     (approach (c8 b8 db8) (eb8 e8 f8) (gb8 f8 g8 g#8) (a8 g#8 bb8 b8) (b8 bb8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 gb8 a8 b8)(extension))
-        (left-hand-B (type closed)(notes gb8 a8 b8 eb+8)(extension))
-        (left-hand-C (type closed)(notes b8 eb+8 gb+8 a+8)(extension))
-        (open-A (type open)(notes eb8 a8 gb+8 b+8)(extension))
-        (open-B (type open)(notes gb8 b8 eb+8 a+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 gb-8 a-8 b-8)(extension))
+        (left-hand-B (type closed)(notes gb-8 a-8 b-8 eb8)(extension))
+        (left-hand-C (type closed)(notes b-8 eb8 gb8 a8)(extension))
+        (open-A (type open)(notes eb-8 a-8 gb8 b8)(extension))
+        (open-B (type open)(notes gb-8 b-8 eb8 a8)(extension))
         )
     (extensions)
     (scales
@@ -3650,10 +3663,10 @@
     (priority c8 eb8 f8 g8 bb8 gb8)
     (approach (c8 b8 db8) (eb8 e8 f8) (f8 gb8 e8) (gb8 f8 g8) (g8 gb8 ab8) (bb8 a8 b8))
     (voicings
-        (left-hand-A (type closed)(notes eb8 f8 gb8 bb8)(extension))
-        (left-hand-B (type closed)(notes f8 gb8 bb8 eb+8)(extension))
-        (open-A (type open)(notes eb8 gb8 bb8 f+8)(extension))
-        (open-B (type open)(notes f8 gb8 eb+8 bb+8)(extension))
+        (left-hand-A (type closed)(notes eb-8 f-8 gb-8 bb-8)(extension))
+        (left-hand-B (type closed)(notes f-8 gb-8 bb-8 eb8)(extension))
+        (open-A (type open)(notes eb-8 gb-8 bb8 f+8)(extension))
+        (open-B (type open)(notes f-8 gb8 eb8 bb+8)(extension))
         )
     (extensions)
     (scales
@@ -3673,7 +3686,7 @@
     (priority g8 c8)
     (approach (c8 b8 c#8 d8) (g8 f#8 g#8))
     (voicings
-        (left-hand-B (type open)(notes c8 g8 c+8)(extension))
+        (two-hand-B (type open)(notes c8 g8 c+8)(extension))
         )
     (extensions)
     (scales
@@ -3692,7 +3705,7 @@
     (priority e8 g8 c8)
     (approach (c8 b8 c#8 d8) (g8 f#8 g#8) (e8 f8 eb8))
     (voicings
-        (left-hand-A (type open)(notes c8 g8 e+8)(extension))
+        (two-hand-A (type open)(notes c8 g8 e+8)(extension))
         )
     (extensions)
     (scales
@@ -3712,7 +3725,7 @@
     (priority eb8 g8 c8)
     (approach (c8 b8 c#8 d8) (g8 f#8 g#8) (eb8 e8 d8))
     (voicings
-        (left-hand-A (type open)(notes c8 g8 eb+8)(extension))
+        (left-hand-A (type open)(notes c-8 g-8 eb8)(extension))
         )
     (extensions)
     (scales
