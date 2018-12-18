@@ -694,8 +694,9 @@ public ChordPatternVoiced applyRules(ChordSymbol chord, Polylist lastChord, Styl
     
     else
       {
-      System.out.println("default rule form encountered: " + rule);
-      // When is this used?? When is the rule part an integer?
+      // This is used for single notes in the chord pattern, 
+      // such as in the "La Bomba" pattern:
+      // (X 1 4) (X 3 8) (X 5 8) (X 3 4) (X 6 8) (X 5 8)
         int interval = Integer.parseInt(rule);
          
         durationMelody.addNote(new Rest(Duration.getDuration(duration)));
