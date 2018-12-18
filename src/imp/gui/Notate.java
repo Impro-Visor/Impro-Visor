@@ -22717,6 +22717,7 @@ private boolean skippedBack = false;
 
 public void playAndCaptureChordAtIndex(int index)
   {
+    System.out.println("playAndCaptureChord " + index);
     indexOfLastChordPlayed = index;
     playChordAtIndex(index);
   }
@@ -22735,6 +22736,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
     int progSize = chordProg.getSize();
     if( skippedBack )
       {
+        System.out.println("skip back");
         // will play current chord iff back button was pressed; will not move forward
         currIndex = midiSynth.getSlot();
         if( currIndex > progSize )
@@ -22751,6 +22753,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
         switch( playingStatus )
           {
             case PLAYING:
+            System.out.println("playing");
                 midiSynth.pause();
                 currIndex = midiSynth.getSlot();
                 nextChordIndex = chordProg.getNextChordIndex(currIndex);
@@ -22787,6 +22790,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                   }
                 break;
             case PAUSED:
+                System.out.println("paused");
                 currIndex = midiSynth.getSlot();
                 nextChordIndex = chordProg.getNextChordIndex(currIndex);
                 if( currIndex >= progSize )
@@ -22822,6 +22826,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                   }
                 break;
             case STOPPED:
+                System.out.println("stopped");
                 Stave tempStave = getCurrentStave();
                 if( tempStave.getSelectionStart() >= 0 )
                   {
@@ -22874,9 +22879,6 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
         if( nextChordIndex != -1 )
           {
             playAndCaptureChordAtIndex(indexOfChordToPlay);
-          }
-        else
-          {
           }
       }
 }//GEN-LAST:event_chordStepForwardButtonActionPerformed
@@ -23194,7 +23196,6 @@ public void chordReplayDo(){
 }
 
     private void chordReplayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordReplayButtonActionPerformed
-
         midiSynth.setSlot(indexOfLastChordPlayed);
         playAndCaptureChordAtIndex(indexOfLastChordPlayed);
     }//GEN-LAST:event_chordReplayButtonActionPerformed
