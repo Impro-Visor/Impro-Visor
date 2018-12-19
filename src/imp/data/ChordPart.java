@@ -289,6 +289,33 @@ public int getNextUniqueChordIndex(int slotIndex)
       }
    return size;
     }
+    
+    /**
+     * Returns the Chord after the indicated slot index, cycling back
+     * to the beginning if there is no chord after
+     * @param slotIndex         the index to start searching at
+     * @return Chord            the Chord after the specified index
+     */
+    
+    public int getNextChordIndexCyclic(int slotIndex) {
+    for( int i = slotIndex + 1; i < size; i++ )
+        {
+        Unit unit = slots.get(i);
+        if( unit != null && unit instanceof Chord )
+          {
+           return i;
+          }
+        }
+    for( int i = 0; i < size; i++ )
+        {
+        Unit unit = slots.get(i);
+        if( unit != null && unit instanceof Chord )
+          {
+           return i;
+          }
+        }
+    return -1;
+    }
 
     /**
      * Returns the Chord before the indicated slot index.

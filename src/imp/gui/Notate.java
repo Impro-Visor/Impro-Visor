@@ -18901,6 +18901,10 @@ public boolean playingPaused()
 
 public MidiSynth getMidiSynth()
   {
+    if( midiSynth == null )
+    {
+        midiSynth = new MidiSynth(midiManager);
+    }
     return midiSynth;
   }
 
@@ -22722,6 +22726,7 @@ public void playAndCaptureChordAtIndex(int index)
     playChordAtIndex(index);
   }
 
+
 public void chordStepForwardDo(){
     chordStepForwardButton.doClick();
 }
@@ -22734,9 +22739,10 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
     int increment;
     autoScrollOnPlayback = true;
     int progSize = chordProg.getSize();
+    Stave tempStave = getCurrentStave();
     if( skippedBack )
       {
-        System.out.println("skip back");
+        System.out.println("\nskip back");
         // will play current chord iff back button was pressed; will not move forward
         currIndex = midiSynth.getSlot();
         if( currIndex > progSize )
@@ -22753,7 +22759,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
         switch( playingStatus )
           {
             case PLAYING:
-            System.out.println("playing");
+            System.out.println("\nplaying");
                 midiSynth.pause();
                 currIndex = midiSynth.getSlot();
                 nextChordIndex = chordProg.getNextChordIndex(currIndex);
@@ -22790,7 +22796,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                   }
                 break;
             case PAUSED:
-                System.out.println("paused");
+                System.out.println("\npaused");
                 currIndex = midiSynth.getSlot();
                 nextChordIndex = chordProg.getNextChordIndex(currIndex);
                 if( currIndex >= progSize )
@@ -22826,59 +22832,77 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                   }
                 break;
             case STOPPED:
-                System.out.println("stopped");
-                Stave tempStave = getCurrentStave();
-                if( tempStave.getSelectionStart() >= 0 )
+                System.out.println("\nstopped");
+//                if( tempStave.getSelectionStart() >= 0 )
                   {
-                    currIndex = tempStave.getSelectionStart() + ((progSize) * (currTabIndex));
-                    playScoreBody(currIndex);
-                    midiSynth.pause();
-                    if( currIndex >= progSize )
+                   System.out.println("case 1");
+                   currIndex = tempStave.getSelectionStart() % progSize;
+                    //playScoreBody(currIndex);
+                    getMidiSynth().setSequencer();
+                    midiSynth.truePause();
+//                    if( currIndex >= progSize )
+//                      {
+//                        System.out.println("case 1.1");
+//                        modedIndex = currIndex % progSize;
+//                        indexOfChordToPlay = chordProg.getCurrentChordIndex(modedIndex);
+//                        increment = indexOfChordToPlay - modedIndex;
+//                        nextChordIndex = currIndex + increment;
+//                        indexOfChordToPlay = nextChordIndex % progSize;
+//                        if( nextChordIndex >= -1 )
+//                          {
+//                            System.out.println("case 1.1.1");
+//                            midiSynth.setSlot((long) nextChordIndex);
+//                          }
+//                        else
+//                          {
+//                            System.out.println("case 1.1.2");
+//                            indexOfChordToPlay = (indexOfChordToPlay + 1) % progSize;
+//                            nextChordIndex = nextChordIndex + 1;
+//                            midiSynth.setSlot((long) nextChordIndex);
+//                          }
+//                      }
+//                    else
                       {
-                        modedIndex = currIndex % progSize;
-                        indexOfChordToPlay = chordProg.getCurrentChordIndex(modedIndex);
-                        increment = indexOfChordToPlay - modedIndex;
-                        nextChordIndex = currIndex + increment;
-                        indexOfChordToPlay = nextChordIndex % progSize;
-                        if( nextChordIndex >= -1 )
-                          {
-                            midiSynth.setSlot((long) nextChordIndex);
-                          }
-                        else
-                          {
-                            indexOfChordToPlay = (indexOfChordToPlay + 1) % progSize;
-                            nextChordIndex = nextChordIndex + 1;
-                            midiSynth.setSlot((long) nextChordIndex);
-                          }
-                      }
-                    else
-                      {
+                        System.out.println("case 1.2");
                         nextChordIndex = chordProg.getCurrentChordIndex(currIndex);
-                        if( nextChordIndex >= 0 )
+                        tempStave.setSelection(nextChordIndex);
+//                        if( nextChordIndex >= 0 )
                           {
+                            System.out.println("case 1.2.1");
                             midiSynth.setSlot((long) nextChordIndex);
                           }
-                        else
-                          {
-                            midiSynth.setSlot((long) 0);
-                          }
+//                        else
+//                          {
+//                            System.out.println("case 1.2.2");
+//                            midiSynth.setSlot((long) 0);
+//                          }
                         indexOfChordToPlay = nextChordIndex;
                       }
                   }
-                else
-                  {
-                    currIndex = 0;
-                    nextChordIndex = currIndex;
-                    playScoreBody(0);
-                    midiSynth.pause();
-                    midiSynth.setSlot(0);
-                    indexOfChordToPlay = nextChordIndex;
-                  }
+//                else
+//                  {
+//                    System.out.println("case 2");
+//                    currIndex = 0;
+//                    nextChordIndex = currIndex;
+//                    playScoreBody(0);
+//                    midiSynth.pause();
+//                    midiSynth.setSlot(0);
+//                    indexOfChordToPlay = nextChordIndex;
+//                  }
                 break;
           }
         if( nextChordIndex != -1 )
           {
-            playAndCaptureChordAtIndex(indexOfChordToPlay);
+            //playAndCaptureChordAtIndex(indexOfChordToPlay);
+            //midiSynth.setSlot((long) nextChordIndex);
+            nextChordIndex = chordProg.getNextChordIndex(indexOfChordToPlay);
+            System.out.println("case 3, nextChordIndex = " + nextChordIndex);
+            tempStave.playSelection(indexOfChordToPlay, nextChordIndex-1, 0, false, "chord play", false);
+            if( nextChordIndex >= progSize )
+              {
+                nextChordIndex = 0;
+              }
+           tempStave.setSelection(nextChordIndex);
           }
       }
 }//GEN-LAST:event_chordStepForwardButtonActionPerformed

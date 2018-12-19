@@ -827,7 +827,7 @@ public void meta(MetaMessage metaEvent)
 
 public void pause()
   {
-    Trace.log(3, playCounter + ": Pausing MidiSynth, paused was " + paused);
+    Trace.log(0, playCounter + ": Pausing MidiSynth, paused was " + paused);
     if( paused )
       {
         sequencer.start();
@@ -842,6 +842,26 @@ public void pause()
       }
   }
 
+public void truePause()
+  {
+    Trace.log(0, playCounter + ": Pausing MidiSynth, paused was " + paused);
+    if( sequencer != null && sequencer.isRunning() )
+        {
+        sequencer. stop();
+        }
+    paused = true;
+    if( playListener != null )
+      {
+      playListener.setPlaying(MidiPlayListener.Status.PAUSED, Transposition.none);
+      }
+  }
+    
+public void stop()
+  {
+        sequencer.stop();
+        paused = false;
+        playListener.setPlaying(MidiPlayListener.Status.STOPPED, Transposition.none);
+  }
 
 public void setPlayListener(MidiPlayListener listener)
   {
