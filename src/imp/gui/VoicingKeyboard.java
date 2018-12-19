@@ -135,6 +135,7 @@ public void toFront() {
         visichordDialog = new javax.swing.JDialog();
         voicingStaffPanel = new javax.swing.JPanel();
         clefLabel = new javax.swing.JLabel();
+        playStopButtonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         keyboardLP = new javax.swing.JLayeredPane();
         keyA0 = new javax.swing.JLabel();
@@ -234,6 +235,9 @@ public void toFront() {
         chordStepBackButton = new javax.swing.JButton();
         chordReplayButton = new javax.swing.JButton();
         chordStepForwardButton = new javax.swing.JButton();
+        pauseBtn = new javax.swing.JToggleButton();
+        playBtn = new javax.swing.JButton();
+        stopBtn = new javax.swing.JButton();
         saveVoicingBtn = new javax.swing.JButton();
         keyNamesPanel = new javax.swing.JPanel();
         whiteKeyLabels = new javax.swing.JPanel();
@@ -385,6 +389,7 @@ public void toFront() {
 
         setTitle("Keyboard");
         setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(255, 51, 51));
         setMinimumSize(new java.awt.Dimension(1100, 370));
         setPreferredSize(new java.awt.Dimension(1100, 370));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -911,6 +916,58 @@ public void toFront() {
             }
         });
         jToolBar1.add(chordStepForwardButton);
+
+        playStopButtonGroup.add(pauseBtn);
+        pauseBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/pause.gif"))); // NOI18N
+        pauseBtn.setToolTipText("Pause or resume playback.");
+        pauseBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pauseBtn.setFocusable(false);
+        pauseBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pauseBtn.setMaximumSize(new java.awt.Dimension(30, 30));
+        pauseBtn.setMinimumSize(new java.awt.Dimension(30, 30));
+        pauseBtn.setPreferredSize(new java.awt.Dimension(30, 30));
+        pauseBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        pauseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseBtnActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(pauseBtn);
+
+        playBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/play.gif"))); // NOI18N
+        playBtn.setToolTipText("Play the entire leadsheet, starting with the first chorus.\nTo play just the current chorus, select the first beat of that chorus and press Shift-Enter.");
+        playBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        playStopButtonGroup.add(playBtn);
+        playBtn.setFocusable(false);
+        playBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        playBtn.setMaximumSize(new java.awt.Dimension(30, 30));
+        playBtn.setMinimumSize(new java.awt.Dimension(30, 30));
+        playBtn.setPreferredSize(new java.awt.Dimension(30, 30));
+        playBtn.setSelected(true);
+        playBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        playBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playBtnActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(playBtn);
+
+        stopBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imp/gui/graphics/toolbar/stop.gif"))); // NOI18N
+        stopBtn.setToolTipText("Stop playback.");
+        stopBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        playStopButtonGroup.add(stopBtn);
+        stopBtn.setFocusable(false);
+        stopBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        stopBtn.setMaximumSize(new java.awt.Dimension(30, 30));
+        stopBtn.setMinimumSize(new java.awt.Dimension(30, 30));
+        stopBtn.setPreferredSize(new java.awt.Dimension(30, 30));
+        stopBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        stopBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopBtnActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(stopBtn);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
@@ -3382,17 +3439,35 @@ private void playChordMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_playChordMIActionPerformed
 
 private void startPlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startPlayMIActionPerformed
-    playback = true;
-    notate.playScore();
+    startPlayback();
 }//GEN-LAST:event_startPlayMIActionPerformed
 
 private void stopPlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopPlayMIActionPerformed
+    stopPlayback();
+}//GEN-LAST:event_stopPlayMIActionPerformed
+
+private void startPlayback()
+{
+    playback = true;
+    notate.playScore();  
+}
+
+private void pausePlayback()
+{
+  if (playback)
+    {
+        notate.pauseToKeyboard();
+    }    
+}
+
+private void stopPlayback()
+{
     playback = false;
     notate.stopPlaying();
     clearKeyboard();
     notate.clearVoicingEntryTF();
-    resetChordDisplay();    
-}//GEN-LAST:event_stopPlayMIActionPerformed
+    resetChordDisplay();     
+}
 
 private void startSelPlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSelPlayMIActionPerformed
 
@@ -3415,10 +3490,7 @@ private void resetChordDisplayMIActionPerformed(java.awt.event.ActionEvent evt) 
 }//GEN-LAST:event_resetChordDisplayMIActionPerformed
 
 private void pausePlayMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pausePlayMIActionPerformed
-  if (playback)
-    {
-        notate.pauseToKeyboard();
-    }   
+    pausePlayback();   
 }//GEN-LAST:event_pausePlayMIActionPerformed
 
 private void closeWindowMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowMIActionPerformed
@@ -3513,6 +3585,18 @@ private void windowMenuMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRS
             turnOnOffLabels = true; 
         }
     }//GEN-LAST:event_turnOnOffKeyLabelsMIActionPerformed
+
+    private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
+        startPlayback();
+    }//GEN-LAST:event_playBtnActionPerformed
+
+    private void stopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopBtnActionPerformed
+       stopPlayback();
+    }//GEN-LAST:event_stopBtnActionPerformed
+
+    private void pauseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseBtnActionPerformed
+    pausePlayback();
+    }//GEN-LAST:event_pauseBtnActionPerformed
     /**
      * For Voicing Data/info
      */
@@ -4446,9 +4530,12 @@ private void forcePaint()
     private javax.swing.JPanel keyNamesPanel;
     private javax.swing.JLayeredPane keyboardLP;
     public javax.swing.JMenu optionsMenu;
+    private javax.swing.JToggleButton pauseBtn;
     private javax.swing.JMenuItem pausePlayMI;
+    private javax.swing.JButton playBtn;
     private javax.swing.JButton playChordButton;
     private javax.swing.JMenuItem playChordMI;
+    private javax.swing.ButtonGroup playStopButtonGroup;
     private javax.swing.JMenu playbackMenu;
     private javax.swing.JLabel pointerC4;
     private javax.swing.JLabel presentChordDisplay;
@@ -4457,6 +4544,7 @@ private void forcePaint()
     private javax.swing.JMenuItem singleNoteModeMI;
     private javax.swing.JMenuItem startPlayMI;
     private javax.swing.JMenuItem startSelPlayMI;
+    private javax.swing.JButton stopBtn;
     private javax.swing.JMenuItem stopPlayMI;
     private javax.swing.JMenuItem stopSelPlayMI;
     private javax.swing.JCheckBoxMenuItem turnOnOffKeyLabelsMI;
