@@ -280,7 +280,7 @@ public class LeadsheetPreview extends javax.swing.JPanel implements PropertyChan
 
     private void playBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playBtnActionPerformed
         if(status != MidiPlayListener.Status.STOPPED) {
-            midiSynth.pause();
+            midiSynth.togglePause();
         } else {
             playLeadsheet(Transposition.none);
         }

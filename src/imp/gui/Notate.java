@@ -10942,7 +10942,7 @@ public void pauseScore()
   {
     if( !playingStopped() )
       {
-        midiSynth.pause();
+        midiSynth.togglePause();
       }
   }
 
@@ -22750,8 +22750,9 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
             modedIndex = currIndex % progSize;
           }
         midiSynth.setSlot(currIndex);
-        playAndCaptureChordAtIndex(modedIndex);
+        //playAndCaptureChordAtIndex(modedIndex);
         skippedBack = false;
+        chordStepForwardButtonActionPerformed(evt);
       }
     else
       {
@@ -22759,8 +22760,8 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
         switch( playingStatus )
           {
             case PLAYING:
-            System.out.println("\nplaying");
-                midiSynth.pause();
+                //System.out.println("\nplaying");
+                midiSynth.togglePause();
                 currIndex = midiSynth.getSlot();
                 nextChordIndex = chordProg.getNextChordIndex(currIndex);
                 if( currIndex >= progSize )
@@ -22796,7 +22797,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                   }
                 break;
             case PAUSED:
-                System.out.println("\npaused");
+                //System.out.println("\npaused");
                 currIndex = midiSynth.getSlot();
                 nextChordIndex = chordProg.getNextChordIndex(currIndex);
                 if( currIndex >= progSize )
@@ -22832,63 +22833,15 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                   }
                 break;
             case STOPPED:
-                System.out.println("\nstopped");
-//                if( tempStave.getSelectionStart() >= 0 )
-                  {
-                   System.out.println("case 1");
+                  //System.out.println("\nstopped");
                    currIndex = tempStave.getSelectionStart() % progSize;
                     //playScoreBody(currIndex);
                     getMidiSynth().setSequencer();
                     midiSynth.truePause();
-//                    if( currIndex >= progSize )
-//                      {
-//                        System.out.println("case 1.1");
-//                        modedIndex = currIndex % progSize;
-//                        indexOfChordToPlay = chordProg.getCurrentChordIndex(modedIndex);
-//                        increment = indexOfChordToPlay - modedIndex;
-//                        nextChordIndex = currIndex + increment;
-//                        indexOfChordToPlay = nextChordIndex % progSize;
-//                        if( nextChordIndex >= -1 )
-//                          {
-//                            System.out.println("case 1.1.1");
-//                            midiSynth.setSlot((long) nextChordIndex);
-//                          }
-//                        else
-//                          {
-//                            System.out.println("case 1.1.2");
-//                            indexOfChordToPlay = (indexOfChordToPlay + 1) % progSize;
-//                            nextChordIndex = nextChordIndex + 1;
-//                            midiSynth.setSlot((long) nextChordIndex);
-//                          }
-//                      }
-//                    else
-                      {
-                        System.out.println("case 1.2");
-                        nextChordIndex = chordProg.getCurrentChordIndex(currIndex);
-                        tempStave.setSelection(nextChordIndex);
-//                        if( nextChordIndex >= 0 )
-                          {
-                            System.out.println("case 1.2.1");
-                            midiSynth.setSlot((long) nextChordIndex);
-                          }
-//                        else
-//                          {
-//                            System.out.println("case 1.2.2");
-//                            midiSynth.setSlot((long) 0);
-//                          }
-                        indexOfChordToPlay = nextChordIndex;
-                      }
-                  }
-//                else
-//                  {
-//                    System.out.println("case 2");
-//                    currIndex = 0;
-//                    nextChordIndex = currIndex;
-//                    playScoreBody(0);
-//                    midiSynth.pause();
-//                    midiSynth.setSlot(0);
-//                    indexOfChordToPlay = nextChordIndex;
-//                  }
+                    nextChordIndex = chordProg.getCurrentChordIndex(currIndex);
+                    tempStave.setSelection(nextChordIndex);
+                    midiSynth.setSlot((long) nextChordIndex);
+                    indexOfChordToPlay = nextChordIndex;
                 break;
           }
         if( nextChordIndex != -1 )
@@ -22896,7 +22849,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
             //playAndCaptureChordAtIndex(indexOfChordToPlay);
             //midiSynth.setSlot((long) nextChordIndex);
             nextChordIndex = chordProg.getNextChordIndex(indexOfChordToPlay);
-            System.out.println("case 3, nextChordIndex = " + nextChordIndex);
+            //System.out.println("case 3, nextChordIndex = " + nextChordIndex);
             tempStave.playSelection(indexOfChordToPlay, nextChordIndex-1, 0, false, "chord play", false);
             if( nextChordIndex >= progSize )
               {
@@ -22937,14 +22890,14 @@ private void chordStepBackButtonActionPerformed(java.awt.event.ActionEvent evt) 
         switch( playingStatus )
           {
             case PLAYING:
-                midiSynth.pause();
+                midiSynth.togglePause();
                 break;
             case PAUSED:
                 break;
             case STOPPED:
                 prevChordIndex = 0;
                 playScoreBody(0);
-                midiSynth.pause();
+                midiSynth.togglePause();
                 midiSynth.setSlot(0);
                 break;
           }
@@ -22957,13 +22910,13 @@ private void chordStepBackButtonActionPerformed(java.awt.event.ActionEvent evt) 
         switch( playingStatus )
           {
             case PLAYING:
-                midiSynth.pause();
+                midiSynth.togglePause();
                 break;
             case PAUSED:
                 break;
             case STOPPED:
                 playScoreBody(0);
-                midiSynth.pause();
+                midiSynth.togglePause();
                 break;
           }
       }

@@ -825,9 +825,9 @@ public void meta(MetaMessage metaEvent)
   }
 
 
-public void pause()
+public void togglePause()
   {
-    Trace.log(0, playCounter + ": Pausing MidiSynth, paused was " + paused);
+    Trace.log(3, playCounter + ": Pausing MidiSynth, paused was " + paused);
     if( paused )
       {
         sequencer.start();
@@ -844,7 +844,7 @@ public void pause()
 
 public void truePause()
   {
-    Trace.log(0, playCounter + ": Pausing MidiSynth, paused was " + paused);
+    Trace.log(3, playCounter + ": Pausing MidiSynth, paused was " + paused);
     if( sequencer != null && sequencer.isRunning() )
         {
         sequencer. stop();
