@@ -22740,21 +22740,21 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
     autoScrollOnPlayback = true;
     int progSize = chordProg.getSize();
     Stave tempStave = getCurrentStave();
-    if( skippedBack )
-      {
-        System.out.println("\nskip back");
-        // will play current chord iff back button was pressed; will not move forward
-        currIndex = midiSynth.getSlot();
-        if( currIndex > progSize )
-          {
-            modedIndex = currIndex % progSize;
-          }
-        midiSynth.setSlot(currIndex);
-        //playAndCaptureChordAtIndex(modedIndex);
-        skippedBack = false;
-        chordStepForwardButtonActionPerformed(evt);
-      }
-    else
+//    if( skippedBack )
+//      {
+//        System.out.println("\nskip back");
+//        // will play current chord iff back button was pressed; will not move forward
+////        currIndex = midiSynth.getSlot();
+////        if( currIndex > progSize )
+////          {
+////            modedIndex = currIndex % progSize;
+////          }
+////        midiSynth.setSlot(currIndex);
+//        //playAndCaptureChordAtIndex(modedIndex);
+//        skippedBack = false;        
+//        chordStepForwardButtonActionPerformed(evt);
+//       }
+//    else
       {
         //will move to and play next chord
         switch( playingStatus )
@@ -22828,13 +22828,13 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                     else
                       {
                         midiSynth.setSlot((long) 0);
-                        playAndCaptureChordAtIndex(0);
+                        //playAndCaptureChordAtIndex(0);
                       }
                   }
                 break;
             case STOPPED:
                   //System.out.println("\nstopped");
-                   currIndex = tempStave.getSelectionStart() % progSize;
+                    currIndex = tempStave.getSelectionStart() % progSize;
                     //playScoreBody(currIndex);
                     getMidiSynth().setSequencer();
                     midiSynth.truePause();
@@ -22865,61 +22865,71 @@ public void chordStepBackDo(){
 }
 
 private void chordStepBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordStepBackButtonActionPerformed
-    int currChordIndex;
+    Stave tempStave = getCurrentStave();
+    int currChordIndex = tempStave.getSelectionStart();
     autoScrollOnPlayback = true;
     skippedBack = true;
-    currChordIndex = midiSynth.getSlot();
-    int prevChordIndex = chordProg.getPrevUniqueChordIndex(currChordIndex);
-    if( currChordIndex >= chordProg.getSize() )
+    int prevChordIndex = chordProg.getPrevIndex(currChordIndex);
+    if( prevChordIndex < 0 )
       {
-        int modedIndex = currChordIndex % chordProg.getSize();
-        int prevChordMod = chordProg.getPrevUniqueChordIndex(modedIndex);
-        int interval;
-        if( prevChordMod != -1 )
-          {
-            interval = modedIndex - prevChordMod;
-          }
-        else
-          {
-            interval = 0;
-          }
-        prevChordIndex = currChordIndex - interval;
+        prevChordIndex = 0;
       }
-    if( currChordIndex != -1 )
-      {
-        switch( playingStatus )
-          {
-            case PLAYING:
-                midiSynth.togglePause();
-                break;
-            case PAUSED:
-                break;
-            case STOPPED:
-                prevChordIndex = 0;
-                playScoreBody(0);
-                midiSynth.togglePause();
-                midiSynth.setSlot(0);
-                break;
-          }
-        midiSynth.setSlot((long) prevChordIndex);
-        currChordIndex = prevChordIndex;
-        indexOfLastChordPlayed = prevChordIndex;
-      }
-    else
-      {
-        switch( playingStatus )
-          {
-            case PLAYING:
-                midiSynth.togglePause();
-                break;
-            case PAUSED:
-                break;
-            case STOPPED:
-                playScoreBody(0);
-                midiSynth.togglePause();
-                break;
-          }
-      }
+    System.out.println("currChordIndex = " + currChordIndex + 
+                       ", prevChordIndex = " + prevChordIndex);
+    tempStave.setSelection(prevChordIndex % chordProg.getSize());
+    midiSynth.setSlot(prevChordIndex);
+    //midiSynth.truePause();
+    tempStave.repaint();
+//    if( currChordIndex >= chordProg.getSize() )
+//      {
+//        int modedIndex = currChordIndex % chordProg.getSize();
+//        int prevChordMod = chordProg.getPrevUniqueChordIndex(modedIndex);
+//        int interval;
+//        if( prevChordMod != -1 )
+//          {
+//            interval = modedIndex - prevChordMod;
+//          }
+//        else
+//          {
+//            interval = 0;
+//          }
+//        prevChordIndex = currChordIndex - interval;
+//      }
+//    if( currChordIndex != -1 )
+//      {
+//        switch( playingStatus )
+//          {
+//            case PLAYING:
+//                midiSynth.truePause();
+//                break;
+//            case PAUSED:
+//                break;
+//            case STOPPED:
+//                prevChordIndex = 0;
+//                playScoreBody(0);
+//                midiSynth.truePause();
+//                midiSynth.setSlot(0);
+//                break;
+//          }
+//        midiSynth.setSlot((long) prevChordIndex);
+//        currChordIndex = prevChordIndex;
+//        indexOfLastChordPlayed = prevChordIndex;
+//      }
+//    else
+//      {
+//        switch( playingStatus )
+//          {
+//            case PLAYING:
+//                midiSynth.truePause();
+//                break;
+//            case PAUSED:
+//                break;
+//            case STOPPED:
+//                playScoreBody(0);
+//                midiSynth.truePause();
+//                break;
+//          }
+//      }
 }//GEN-LAST:event_chordStepBackButtonActionPerformed
 
 private void EmptyRoadMapAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmptyRoadMapAction
