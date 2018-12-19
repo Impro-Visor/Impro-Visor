@@ -22792,7 +22792,7 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
                     else
                       {
                         midiSynth.setSlot((long) 0);
-                        playAndCaptureChordAtIndex(0);
+                        //playAndCaptureChordAtIndex(0);
                       }
                   }
                 break;
@@ -22850,7 +22850,9 @@ private void chordStepForwardButtonActionPerformed(java.awt.event.ActionEvent ev
             //midiSynth.setSlot((long) nextChordIndex);
             nextChordIndex = chordProg.getNextChordIndex(indexOfChordToPlay);
             //System.out.println("case 3, nextChordIndex = " + nextChordIndex);
-            tempStave.playSelection(indexOfChordToPlay, nextChordIndex-1, 0, false, "chord play", false);
+            endOfLastChordPlayed = nextChordIndex - 10 ;
+            tempStave.playSelection(indexOfChordToPlay, endOfLastChordPlayed, 0, false, "chord play", false);
+            indexOfLastChordPlayed = indexOfChordToPlay;
             if( nextChordIndex >= progSize )
               {
                 nextChordIndex = 0;
@@ -22874,8 +22876,8 @@ private void chordStepBackButtonActionPerformed(java.awt.event.ActionEvent evt) 
       {
         prevChordIndex = 0;
       }
-    System.out.println("currChordIndex = " + currChordIndex + 
-                       ", prevChordIndex = " + prevChordIndex);
+    //System.out.println("currChordIndex = " + currChordIndex + 
+    //                   ", prevChordIndex = " + prevChordIndex);
     tempStave.setSelection(prevChordIndex % chordProg.getSize());
     midiSynth.setSlot(prevChordIndex);
     //midiSynth.truePause();
@@ -23177,14 +23179,17 @@ private void recordMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:
   }//GEN-LAST:event_recordMIActionPerformed
 
 private int indexOfLastChordPlayed = 0;
+private int endOfLastChordPlayed = 0;
 
 public void chordReplayDo(){
     chordReplayButton.doClick();
 }
 
     private void chordReplayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chordReplayButtonActionPerformed
-        midiSynth.setSlot(indexOfLastChordPlayed);
-        playAndCaptureChordAtIndex(indexOfLastChordPlayed);
+        //midiSynth.setSlot(indexOfLastChordPlayed);
+        //playAndCaptureChordAtIndex(indexOfLastChordPlayed);
+        getCurrentStave().playSelection(indexOfLastChordPlayed, endOfLastChordPlayed, 0, false, "chord replay", false);
+
     }//GEN-LAST:event_chordReplayButtonActionPerformed
 
     private void usePreviousStyleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usePreviousStyleButtonActionPerformed
