@@ -597,7 +597,8 @@ STYLE_SAVED,
 EDIT_LEADSHEET,
 PLAYING,
 PLAYING_PAUSED,
-IMPORTING_MIDI
+IMPORTING_MIDI,
+IMPROVISATION_SAVED
 }
 /**
  * current mode, previous mode, play status
@@ -1031,7 +1032,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     // set the menu and button states
 
-    setItemStates();
+    setButtonAndMenuStates();
 
     //okErrorBtn = ErrorLog.setDialog(errorDialog);
 
@@ -11003,6 +11004,22 @@ public void setStatus(String text)
     statusMenu.repaint();
   }
 
+/**
+ * This is so red note count gets updated when tab changes, etc.
+ * as red notes are reported in setMode.
+ */
+private void updateRedNoteCount()
+{
+    setMode(getMode());
+}
+
+private String getRedNotes()
+{
+  MelodyPart currentPart = getCurrentStave().getDisplayPart();
+
+  return getCurrentStave().collectNoteColors(currentPart).toString();
+}
+
 public void setMode(Mode mode)
 {
     setMode(mode, "");
@@ -11019,12 +11036,9 @@ public void setMode(Mode mode)
  * a mode switch, and hence this method is private.
  *
  */
+
 public void setMode(Mode mode, String modifier)
   {
-    MelodyPart currentPart = getCurrentStave().getDisplayPart();
-
-    String redNoteTool = getCurrentStave().collectNoteColors(currentPart).toString();
-    
     previousMode = this.mode;
 
     if( mode == null )
@@ -11037,7 +11051,7 @@ public void setMode(Mode mode, String modifier)
     switch( mode )
       {
         case NORMAL:
-            setStatus("Stopped," + redNoteTool);
+            setStatus("Stopped, " + getRedNotes());
             break;
         case RECORDING:
             setStatus("Chorus " + recurrentIteration);
@@ -11073,13 +11087,16 @@ public void setMode(Mode mode, String modifier)
             setStatus("Edit leadsheet textually");
             break;
         case PLAYING:
-            setStatus("Playing," + redNoteTool);
+            setStatus("Playing, " + getRedNotes());
             break;
         case PLAYING_PAUSED:
-            setStatus("Playing Paused," + redNoteTool);
+            setStatus("Playing Paused, " + getRedNotes());
             break;
         case IMPORTING_MIDI:
             setStatus("Importing MIDI");
+            break;
+        case IMPROVISATION_SAVED:
+            setStatus(getRedNotes() + " Improvisation saved in " + modifier);
             break;
       }
 
@@ -11221,7 +11238,6 @@ public void enableRecording()
     if( midiManager.getInDevice() == null )
       {
         ErrorLog.log(ErrorLog.COMMENT, "No valid MIDI in devices found.  \n\nPlease check your device connection and the MIDI Preferences. It is possible another program is currently using this device.");
-
         return;
       }
 
@@ -11320,13 +11336,14 @@ if( scoreToSave == null )
   {
     return;
     }
-    String originalStem = ImproVisor.getLastLeadsheetFileStem();
-    String newStem = originalStem + "+" + ".ls";
+String originalStem = ImproVisor.getLastLeadsheetFileStem();
+String newStem = originalStem + "+" + ".ls";
 
-    File newFile = new File(leadsheetDirName, newStem);
-    saveLeadsheet(newFile, scoreToSave);
-    //System.out.println("saving improvisation file: " + newStem);
-    initSaveImprovisation();
+File newFile = new File(leadsheetDirName, newStem);
+saveLeadsheet(newFile, scoreToSave);
+//System.out.println("saving improvisation file: " + newStem);
+setMode(Mode.IMPROVISATION_SAVED, newStem);
+initSaveImprovisation();
 }
 
 
@@ -13908,7 +13925,7 @@ public void updateSelection()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
     else
       {
@@ -14151,7 +14168,7 @@ public void staveRequestFocus()
       getCurrentStave().requestFocusInWindow();
       }
 
-    setItemStates();
+    setButtonAndMenuStates();
   }
 
 /**
@@ -14364,7 +14381,7 @@ void copyChords()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -14398,7 +14415,7 @@ void cutChords()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -16003,7 +16020,7 @@ private void saveLeadsheetPreferences()
 
     // set the menu and button states
 
-    setItemStates();
+    setButtonAndMenuStates();
 
     repaint();
 
@@ -16483,14 +16500,16 @@ private void setLayoutPreference(Polylist layout)
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
 
     //UPDATE TRANSFORM BUTTONS IN TRANSFORM PANEL AND GUIDETONELINEDIALOG
     this.transformFrame.getTransformPanel().updateButtons();
     if(guideToneLineDialog!=null){
         guideToneLineDialog.updateTransformButtons();
-    }      
+    }
+    
+    updateRedNoteCount();
     }//GEN-LAST:event_scoreTabStateChanged
 
 public TransformMenuDialog getTransformMenuDialog()
@@ -16734,7 +16753,7 @@ public void setAdviceUsed()
 
                 // set the menu and button states
 
-                setItemStates();
+                setButtonAndMenuStates();
               }
             break;
 
@@ -17214,7 +17233,7 @@ public void moveLeft()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
     }//GEN-LAST:event_adviceTreeMousePressed
 /**
  * Using the selected Advice object, insert a melody at the current selection
@@ -17561,7 +17580,7 @@ public class RecentBricksListModel extends AbstractListModel
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
     }//GEN-LAST:event_autoAdjustMIActionPerformed
 
 /**
@@ -17757,7 +17776,7 @@ private void pasteMelody(Part part, Stave stave)
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -17797,7 +17816,7 @@ void pasteChords()
 
         // set the menu and button states
         redoAdvice();
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -17830,7 +17849,7 @@ void copyMelody()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -17863,7 +17882,7 @@ void cutMelody()
 
         setCurrentSelectionEnd(getCurrentSelectionStart());
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
 
     redoAdvice();
@@ -17896,7 +17915,7 @@ void reverseMelody()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -17926,7 +17945,7 @@ void invertMelody()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -17955,7 +17974,7 @@ void timeWarpMelody(int num, int denom)
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -18000,7 +18019,7 @@ public void undoCommand()
 
     // set the menu and button states
 
-    setItemStates();
+    setButtonAndMenuStates();
   }
 
 /**
@@ -18016,7 +18035,7 @@ public void redoCommand()
 
     // set the menu and button states
 
-    setItemStates();
+    setButtonAndMenuStates();
   }
 
 /**
@@ -19769,7 +19788,7 @@ public void setupScore(Score score)
 
     // set the menu and button states
 
-    setItemStates();
+    setButtonAndMenuStates();
 
     setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
@@ -19841,7 +19860,7 @@ public void newNotate()
 
     // set the menu and button states
 
-    setItemStates();
+    setButtonAndMenuStates();
   }
 
 /**
@@ -22460,7 +22479,7 @@ public void deleteTab()
 
         // set the menu and button states
 
-        setItemStates();
+        setButtonAndMenuStates();
       }
   }
 
@@ -24268,7 +24287,7 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
           }
         scoreTab.setSelectedComponent(staveScrollPane[prevTab]);
 
-        setItemStates();
+        setButtonAndMenuStates();
 
         redoAdvice();
     }
@@ -26061,7 +26080,7 @@ public void measureOverride(int measures, int currLine)
  * Sets all of the menu and button states
  *
  */
-protected void setItemStates()
+protected void setButtonAndMenuStates()
   {
     playAllMI.setEnabled(true);
 

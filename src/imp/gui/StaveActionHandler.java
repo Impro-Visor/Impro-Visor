@@ -2211,7 +2211,7 @@ public void mouseReleased(MouseEvent e)
   lastIndexApproached = OUT_OF_BOUNDS;
 
   // update the menu and toolbar buttons
-  notate.setItemStates();
+  notate.setButtonAndMenuStates();
 
   setCursor();
  }
@@ -2558,7 +2558,7 @@ void setSubDivs(int subDivs, int start, int end)
 public void keyReleased(KeyEvent e)
  {
   // update the menu and toolbar buttons
-  notate.setItemStates();
+  notate.setButtonAndMenuStates();
   switch( e.getKeyCode() )
    {
     case KeyEvent.VK_A:

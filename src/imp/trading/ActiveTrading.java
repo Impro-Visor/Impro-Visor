@@ -952,7 +952,7 @@ public class ActiveTrading {
     private void maybeSaveImprovChorus()
     {
         if( notate.getSlotInPlayback() >= 
-                notate.getChordProg().size() - 2 * slotsPerTurn )
+                notate.getChordProg().size() - 2*slotsPerTurn )
           {
             //System.out.println("succeeded at " + notate.getSlotInPlayback() );
             notate.saveImprovChorus();
