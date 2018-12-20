@@ -1006,7 +1006,7 @@
                 <Component class="javax.swing.JLabel" name="generationGapLabel">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Recurrent Lead (beats):"/>
+                    <Property name="text" type="java.lang.String" value="Lead (beats):"/>
                     <Property name="toolTipText" type="java.lang.String" value="Gap in beats before end of chorus, at which point the next chorus is generated&#xa;"/>
                     <Property name="horizontalTextPosition" type="int" value="4"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1016,7 +1016,7 @@
                       <Dimension value="[220, 16]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[220, 14]"/>
+                      <Dimension value="[100, 14]"/>
                     </Property>
                   </Properties>
                   <AccessibilityProperties>
@@ -1033,7 +1033,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="0.5"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Sets the leading gap between when the next lick is generated and the previous one ends."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Specifies the lead time, in beats, for generating next chorus before the end of the current chorus."/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[45, 24]"/>
                     </Property>
