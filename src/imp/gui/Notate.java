@@ -598,6 +598,7 @@ EDIT_LEADSHEET,
 PLAYING,
 PLAYING_PAUSED,
 IMPORTING_MIDI,
+IMPROVISING,
 IMPROVISATION_SAVED
 }
 /**
@@ -11055,6 +11056,7 @@ public void setMode(Mode mode, String modifier)
             break;
         case RECORDING:
             setStatus("Chorus " + recurrentIteration);
+            recurrentIteration++;
             break;
         case STEP_INPUT:
             setStatus("Step-recording.");
@@ -11064,6 +11066,7 @@ public void setMode(Mode mode, String modifier)
             break;
         case GENERATING:
             setStatus("Generating chorus "+ recurrentIteration);
+            recurrentIteration++;
             break;
         case GENERATED:
             setStatus("Using " + modifier);
@@ -11094,6 +11097,9 @@ public void setMode(Mode mode, String modifier)
             break;
         case IMPORTING_MIDI:
             setStatus("Importing MIDI");
+            break;
+        case IMPROVISING:
+            setStatus("Improvising " + modifier);
             break;
         case IMPROVISATION_SAVED:
             setStatus(getRedNotes() + " Improvisation saved in " + modifier);
@@ -11331,7 +11337,7 @@ Score scoreToSave;
  * the original improvisation plays rather than the new one.
  */
 private void saveImprovisation() {
-
+//System.out.println("saveImprovisation, scoreToSave = " + scoreToSave);
 if( scoreToSave == null )
   {
     return;
@@ -24520,7 +24526,7 @@ public void improviseContinuously()
     improviseStartSlot = stave.getSelectionStart();
     improviseEndSlot = stave.getSelectionEnd();
     
-    recurrentIteration = 1;
+    recurrentIteration = 0;
     originalGenerate(lickgen, improviseStartSlot, improviseEndSlot);
     //System.out.println("*** return from improviseContinuously");
   }
@@ -27844,10 +27850,9 @@ private void handleAutoImprov(int slotInPlayback)
     if( lickgenFrame.getRecurrent() // recurrentCheckbox.isSelected()
             && (slotInPlayback >= stopPlaybackAtSlot - gap) ) // was totalSlots - gap) )
       {
-        recurrentIteration++;
         // firstChorus indicator is used by MidiRecorder to deal with countin
         setFirstChorus(false);
-        setStatus("Improvising Chorus " + recurrentIteration);
+        setMode(Mode.IMPROVISING, "" + recurrentIteration);
         
    // Danger: improviseSlotSlot and improviseEndSlot are instance variables
    // Right now, they seem to be set at 0 and length of chorus -1.
