@@ -756,18 +756,25 @@ public ArrayList<Block> toBlockList()
         
         ChordBlock block = null;
         
+    // Treat NOCHORDs as part of the next chord to avoid messing up roadmap
+    int accumulatedDuration = 0;
+
         for( int slot = startIndex; slot < endIndex; slot++ )
           {
           Chord chord = chords.getChord(slot);
           
           if( chord != null )
             {
-              block = new ChordBlock(chord.getName(), chord.getRhythmValue());
+            accumulatedDuration += chord.getRhythmValue();
+            if( !chord.isNOCHORD() )
+              {
+              block = new ChordBlock(chord.getName(), accumulatedDuration);
               block.setStyleName(styleName);
               blocks.add(block);
+              accumulatedDuration = 0;
+              }
             }
           }
-        
         // For last block in section
         if( block != null )
             {
