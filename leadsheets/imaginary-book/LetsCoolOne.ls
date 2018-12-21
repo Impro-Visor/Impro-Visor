@@ -4,20 +4,20 @@
 (year )
 (comments )
 (meter 4 4)
-(key -3)
+(key -1)
 (tempo 160.0)
 (volume 80)
-(playback-transpose 0 0 0)
+(playback-transpose -2 -2 -2)
 (chord-font-size 16)
 (bass-instrument 33)
-(bass-volume 97)
-(drum-volume 112)
-(chord-volume 93)
+(bass-volume 91)
+(drum-volume 122)
+(chord-volume 94)
 (breakpoint 54)
 (layout 4)
 (roadmap-layout 8)
 (melody-volume 127)
-(style swing-BobbyTimmons
+(style swing
     (swing 0.67)
     (comp-swing 0.67)
     (bass-high c)
@@ -33,33 +33,21 @@
     (composer )
     (instrument 0)
     (volume 65)
-    (key -3)
+    (key -1)
 
 )
 
 
-(section (style swing-BobbyTimmons)) 
+(section (style swing)) 
 
-EbM7 | Fm7 / / Bb7 | EbM7 D7 Db7 G7 | C7b9#11 | 
-F7 | Bb7 | Eb6 | Fm7 Bb7 | 
-
-
-(section (style)) 
-
-EbM7 | Fm7 / / Bb7 | EbM7 D7 Db7 G7 | C7b9#11 | 
-F7 | Bb7 | Eb6 | / | 
-
-
-(section (style)) 
-
-Bbm7 | Eb7 | AbM7 | / | 
-F11 | / | Bb7sus4 | / | 
-
-
-(section (style)) 
-
-EbM7 | Fm7 / / Bb7 | EbM7 D7 Db7 G7 | C7b9#11 | 
-F7 | Bb7 | Eb6 | Fm7 Bb7 | 
+FM7 | Gm7 / / C7 | FM7 E7 Eb7 A7 | D7b9#11 | 
+G7 | C7 | F6 | Gm7 C7 | 
+FM7 | Gm7 / / C7 | FM7 E7 Eb7 A7 | D7b9#11 | 
+G7 | C7 | F6 | / | 
+Cm7 | F7 | BbM7 | / | 
+G11 | / | C7sus4 | / | 
+FM7 | Gm7 / / C7 | FM7 E7 Eb7 A7 | D7b9#11 | 
+G7 | C7 | F6 | / | 
 
 (part
     (type melody)
@@ -67,67 +55,67 @@ F7 | Bb7 | Eb6 | Fm7 Bb7 |
     (composer )
     (instrument 73)
     (volume 85)
-    (key -3)
+    (key -1)
     (stave treble)
 )
- d4 d4 d4 c4
+ e4 e4 e4 d4
 
- eb4 eb4 eb4 f4
+ f4 f4 f4 g4
 
- g4 ab4 bb4 c+4
+ a4 bb4 c+4 d+4
 
- db+2+4 r8 c+8
+ eb+2+4 r8 d+8
 
- bb4 b8 c+2+8
+ c+4 db+8 d+2+8
 
- r2 bb8 b8 c+8 eb+8
+ r2 c+8 db+8 d+8 f+8
 
- c+1
+ d+4 r1+2+4
 
- r1
+ e4
 
- d4 d4 d4 c4
+ e4 e4 d4
 
- eb4 eb4 eb4 f4
+ f4 f4 f4 g4
 
- g4 ab4 bb4 c+4
+ a4 bb4 c+4 d+4
 
- db+2+4 r8 c+8
+ eb+2+4 r8 d+8
 
- bb4 b8 c+2+8
+ c+4 db+8 d+2+8
 
- r2 bb4 b8 c+2+8
-
- r1+2
-
- eb+2
-
- db+8 bb8 r4
-
- eb+2 db+8 cb4 ab2+4
-
- b8 c+8/3 eb+8/3 f+8/3
-
- r1
-
- bb2+4+8+16 bb2
-
- f2 bb-1+16
-
- r1
-
- d4
-
- d4 d4 c4
-
- eb4 eb4 eb4 f4
-
- g4 ab4 bb4 c+4
-
- db+2+4 r8 c+8
-
- bb4 b8 c+2+8
-
- r2 bb4 b8 c+2+8
+ r2 c+4 db+8 d+2+8
 
  r1+2
+
+ f+2
+
+ eb+8 c+8 r4
+
+ f+2 eb+8 db+4 bb2+4
+
+ c#+8 d+8/3 f+8/3 g+8/3
+
+ r1
+
+ c+2+4+8+16 c+2
+
+ g2 c1+16
+
+ r1
+
+ e4
+
+ e4 e4 d4
+
+ f4 f4 f4 g4
+
+ a4 bb4 c+4 d+4
+
+ eb+2+4 r8 d+8
+
+ c+4 db+8 d+2+8
+
+ r2 c+8 c#+8 d+8 c+8
+
+ a8 f8 r1+2+4
