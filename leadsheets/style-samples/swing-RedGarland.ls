@@ -17,7 +17,7 @@
 (layout 4)
 (roadmap-layout 8)
 (melody-volume 127)
-(style swing-square-comp
+(style swing-RedGarland
     (swing 0.67)
     (comp-swing 0.67)
     (bass-high c)
@@ -38,7 +38,7 @@
 )
 
 
-(section (style swing-square-comp)) 
+(section (style swing-RedGarland)) 
 
 F13_ | Bb13 Bo7 | F13_ | Cm9 F13b9 | 
 

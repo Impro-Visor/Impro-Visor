@@ -17,13 +17,13 @@
 (layout 4)
 (roadmap-layout 8)
 (melody-volume 127)
-(style swing-square-comp
-    (swing 0.67)
-    (comp-swing 0.67)
+(style latin-new
+    (swing 0.55)
+    (comp-swing 0.55)
     (bass-high c)
     (bass-low g--)
     (chord-high a)
-    (chord-low d-)
+    (chord-low c-)
     (voicing-name default.fv)
     (chord-base c- e- g-)
 )
@@ -38,7 +38,7 @@
 )
 
 
-(section (style swing-square-comp)) 
+(section (style latin-new)) 
 
 F13_ | Bb13 Bo7 | F13_ | Cm9 F13b9 | 
 

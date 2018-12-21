@@ -17,9 +17,9 @@
 (layout 4)
 (roadmap-layout 8)
 (melody-volume 127)
-(style swing-square-comp
-    (swing 0.67)
-    (comp-swing 0.67)
+(style cabaret-backbeat
+    (swing 0.5)
+    (comp-swing 0.5)
     (bass-high c)
     (bass-low g--)
     (chord-high a)
@@ -38,7 +38,7 @@
 )
 
 
-(section (style swing-square-comp)) 
+(section (style cabaret-backbeat)) 
 
 F13_ | Bb13 Bo7 | F13_ | Cm9 F13b9 | 
 
