@@ -2,7 +2,7 @@
  * File: My.dictionary, version 1.5, Wed. May 16, 2016
  * This dictionary text file accompanies the Impro-Visor Application.
  *
- * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2018 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2725,7 +2725,7 @@
         (chord Gb7 1)
         (chord F7 1)
         (chord EM7 1)
-        (chord EbM7 4))
+        (chord EbM7 *))
 
 (defbrick Rainy-Pullback-Extended Dominant Approach C
         (chord Dm7 1)
@@ -2914,6 +2914,9 @@
         (brick On-Off-Major-VI C 2)
         (brick On-Off-Minor-IV D 2))
 
+(defbrick Longer-Cadence Major Cadence C
+        (brick Minor-On B 1)
+        (brick Long-Cadence C 6))
 (defbrick Two-goes-minor-up-step Minor On-Off E
         (brick Minor-On E 1)
         (brick Minor-Chromatic-Walkdown Eb 2)
@@ -2928,3 +2931,67 @@
         (brick Minor-On C 1)
         (chord Ebm7 1)
         (brick Straight-Approach C 2))
+
+(defbrick Full-Diatonic-Cycle-Cadence Major Cadence C
+        (brick On-Off-Major-#IV F 2)
+        (brick Long-Cadence C 7))
+
+(defbrick Full-Diatonic-Cycle Major Cadence C
+        (brick Major-On C 1)
+        (brick Full-Diatonic-Cycle-Cadence C 9))
+
+(defbrick Dizzy-Cadence-with-bVIm Major Cadence C
+        (chord Abm7 1)
+        (brick Dizzy-Cadence C 4))
+
+(defbrick Extended-Cadence-with-Tritone-Sub Major Cadence C
+        (brick Minor-On A 1)
+        (brick Dizzy-Cadence C 5))
+
+(defbrick Dizzy-Cadence-with-bIII7 Major Cadence C
+        (chord Eb7 1)
+        (brick Dizzy-Cadence C 4))
+
+(defbrick Long-Dizzy-Cadence Major Cadence C
+        (brick Minor-Perfect-Cadence A 2)
+        (brick Dizzy-Cadence C 4))
+
+(defbrick Long-Dizzy-Cadence-with-bVII7 Major Cadence C
+        (brick Off-On-Minor-bII A 2)
+        (brick Dizzy-Cadence C 5))
+
+(defbrick Longer-Cadence-with-Tritone-Sub Major Cadence C
+        (chord Bm7 1)
+        (brick Minor-Perfect-Cadence A 2)
+        (brick Dizzy-Cadence C 5))
+
+(defbrick Longer-Cadence-with-Tritone-Subs Major Cadence C
+        (brick Nowhere-Minor-Cadence A 3)
+        (brick Dizzy-Cadence C 4))
+
+(defbrick Starlight-Cadence-with-Tritone-Sub Major Cadence C
+        (chord F#m7b5 1)
+        (chord Bm7 1)
+        (brick Minor-Perfect-Cadence A 2)
+        (brick Dizzy-Cadence C 4))
+
+(defbrick Starlight-Cadence-with-Tritone-Sub(var 1) Major Cadence C
+        (brick Chromatic-Minor-Descending E 3)
+        (brick Minor-Perfect-Cadence D 2)
+        (brick Dizzy-Cadence C 3))
+
+(defbrick Night-and-Day-Cadence-with-Tritone-Sub Major Cadence C
+        (brick Major-On Ab 1)
+        (brick Dizzy-Cadence C 4))
+
+(defbrick Ladybird-Cadence(var 1) Major Cadence C
+        (brick Perfect-Cadence Ab 2)
+        (brick Dizzy-Cadence C 3))
+
+(defbrick Ladybird-Cycle Major Turnaround C
+        (brick Giant-Step Ab 3)
+        (brick Dizzy-Cadence C 3))
+
+(defbrick Major-to-rel-minor Major Turnaround Eb
+        (brick Major-On Eb 2)
+        (brick Sad-Approach C 2))
