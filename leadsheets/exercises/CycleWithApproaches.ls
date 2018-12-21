@@ -1,11 +1,11 @@
-(title Just In Time)
-(composer Julie Styne)
-(show Bells Are Ringing)
-(year 1956)
+(title )
+(composer )
+(show )
+(year )
 (comments )
 (meter 4 4)
 (key 0)
-(tempo 160.0)
+(tempo 164.0)
 (volume 80)
 (playback-transpose 0 0 0)
 (chord-font-size 16)
@@ -14,10 +14,10 @@
 (drum-volume 100)
 (chord-volume 100)
 (breakpoint 54)
-(layout)
+(layout 3)
 (roadmap-layout 8)
 (melody-volume 127)
-(style swing-SonnyClark
+(style swing
     (swing 0.67)
     (comp-swing 0.67)
     (bass-high c)
@@ -29,7 +29,7 @@
 )
 (part
     (type chords)
-    (title Untitled Part)
+    (title )
     (composer )
     (instrument 0)
     (volume 65)
@@ -38,17 +38,10 @@
 )
 
 
-(section (style swing-SonnyClark)) 
+(section (style swing)) 
 
-BbM7 | / | Am7 | D7 | 
-G7 | / | C7 | / | 
-F7 | / | Bb7 | / | 
-EbM7 | / | AbM7 | Am7b5 D7alt | 
-Gm | Gm/F# | Gm7/F | Gm6 | 
-Bb6 | A7 | Ab7 | G7+ | 
-C7 | F7 | BbM7 | Gm7 | 
-C7 | Cm7 F7 | Bb6 | Cm7 F7 | 
-
+C F | Bb Eb | Ab Db | F# B | 
+E A | D G | 
 (part
     (type melody)
     (title )
@@ -58,4 +51,14 @@ C7 | Cm7 F7 | Bb6 | Cm7 F7 |
     (key 0)
     (stave treble)
 )
- d4 r1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+2+4
+ c+4+8 e8 f4+8 a8
+
+ bb4+8 d8 eb4+8 g8
+
+ ab4+8 c+8 db+4+8 f+8
+
+ f#+4+8 a#8 b4+8 d#+8
+
+ e+4+8 g#8 a4+8 c#+8
+
+ d+4+8 f#8 g4+8 b8

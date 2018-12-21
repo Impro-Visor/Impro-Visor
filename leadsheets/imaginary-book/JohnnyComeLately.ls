@@ -1,22 +1,30 @@
 (title Johnny Come Lately)
 (composer Billy Strayhorn)
+(show )
+(year )
 (comments )
 (meter 4 4)
 (key -2)
 (tempo 200.0)
-(volume 127)
-(bass-volume 60)
+(volume 80)
+(playback-transpose 0 0 0)
+(chord-font-size 16)
+(bass-instrument 33)
+(bass-volume 86)
 (drum-volume 60)
-(chord-volume 60)
+(chord-volume 127)
 (breakpoint 54)
 (layout)
-(style swing
+(roadmap-layout 8)
+(melody-volume 66)
+(style swing-BarryHarris
     (swing 0.67)
-    (bass-high g-)
-    (bass-low g---)
-    (bass-base c--)
+    (comp-swing 0.67)
+    (bass-high c)
+    (bass-low g--)
     (chord-high a)
-    (chord-low c-)
+    (chord-low d-)
+    (voicing-name default.fv)
     (chord-base c- e- g-)
 )
 (part
@@ -26,9 +34,11 @@
     (instrument 0)
     (volume 65)
     (key -2)
+
 )
 
-(section (style swing)) 
+
+(section (style swing-BarryHarris)) 
 
 Gm7 | Eb7 D7alt | Gm7 | Eb7 D7alt | 
 Gm7 | Eb7 D7alt | Gm7 | Eb7 D7alt | 
@@ -48,4 +58,4 @@ Gm7 | Eb7 D7alt | Gm7 | Eb7 D7alt |
     (key -2)
     (stave treble)
 )
- d2+4 r1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+4
+ r1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1

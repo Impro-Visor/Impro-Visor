@@ -1,13 +1,13 @@
-(title Just In Time)
-(composer Julie Styne)
-(show Bells Are Ringing)
-(year 1956)
+(title Take The Coltrane (Bb Instruments))
+(composer )
+(show )
+(year )
 (comments )
 (meter 4 4)
-(key 0)
-(tempo 160.0)
+(key 1)
+(tempo 240.0)
 (volume 80)
-(playback-transpose 0 0 0)
+(playback-transpose -2 -2 -14)
 (chord-font-size 16)
 (bass-instrument 33)
 (bass-volume 100)
@@ -17,7 +17,7 @@
 (layout)
 (roadmap-layout 8)
 (melody-volume 127)
-(style swing-SonnyClark
+(style swing
     (swing 0.67)
     (comp-swing 0.67)
     (bass-high c)
@@ -29,25 +29,20 @@
 )
 (part
     (type chords)
-    (title Untitled Part)
+    (title )
     (composer )
     (instrument 0)
     (volume 65)
-    (key 0)
+    (key 1)
 
 )
 
 
-(section (style swing-SonnyClark)) 
+(section (style swing)) 
 
-BbM7 | / | Am7 | D7 | 
-G7 | / | C7 | / | 
-F7 | / | Bb7 | / | 
-EbM7 | / | AbM7 | Am7b5 D7alt | 
-Gm | Gm/F# | Gm7/F | Gm6 | 
-Bb6 | A7 | Ab7 | G7+ | 
-C7 | F7 | BbM7 | Gm7 | 
-C7 | Cm7 F7 | Bb6 | Cm7 F7 | 
+G7 | C7 | G7 | / | 
+C7 | / | G7 | / | 
+Am7 | D7 | G7 | Am7 D7 | 
 
 (part
     (type melody)
@@ -55,7 +50,29 @@ C7 | Cm7 F7 | Bb6 | Cm7 F7 |
     (composer )
     (instrument 11)
     (volume 85)
-    (key 0)
+    (key 1)
     (stave treble)
 )
- d4 r1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+2+4
+ r4+8 d+8 f+8 d+8 bb8 g8
+
+ r4+8 a8 c+8 a8 f8 d8
+
+ a#8 b8 r2 a#8 b8
+
+ r2 a#8 b8 r4
+
+ r4+8 d+8 f+8 d+8 bb8 g8
+
+ r4+8 a8 c+8 a8 f8 d8
+
+ a#8 b8 r2 a#8 b8
+
+ r2 a#8 b8 r4
+
+ r4+8 d+8 f+8 d+8 bb8 g8
+
+ r4+8 a8 c+8 a8 f8 d8
+
+ a#8 b8 r2 a#8 b8
+
+ r2 a#8 b8 r4

@@ -1,7 +1,7 @@
-(title Just In Time)
-(composer Julie Styne)
-(show Bells Are Ringing)
-(year 1956)
+(title Honeysuckle Rose Lick)
+(composer )
+(show )
+(year )
 (comments )
 (meter 4 4)
 (key 0)
@@ -17,7 +17,7 @@
 (layout)
 (roadmap-layout 8)
 (melody-volume 127)
-(style swing-SonnyClark
+(style swing
     (swing 0.67)
     (comp-swing 0.67)
     (bass-high c)
@@ -29,7 +29,7 @@
 )
 (part
     (type chords)
-    (title Untitled Part)
+    (title )
     (composer )
     (instrument 0)
     (volume 65)
@@ -38,16 +38,11 @@
 )
 
 
-(section (style swing-SonnyClark)) 
+(section (style swing)) 
 
-BbM7 | / | Am7 | D7 | 
-G7 | / | C7 | / | 
-F7 | / | Bb7 | / | 
-EbM7 | / | AbM7 | Am7b5 D7alt | 
-Gm | Gm/F# | Gm7/F | Gm6 | 
-Bb6 | A7 | Ab7 | G7+ | 
-C7 | F7 | BbM7 | Gm7 | 
-C7 | Cm7 F7 | Bb6 | Cm7 F7 | 
+Gm7 C7 | Abm7 Db7 | Am7 D7 | Bbm7 Eb7 | 
+Bm7 E7 | Cm7 F7 | Dbm7 Gb7 | Dm7 G7 | 
+Ebm7 Ab7 | Em7 A7 | Fm7 Bb7 | F#m7 B7 | 
 
 (part
     (type melody)
@@ -58,4 +53,26 @@ C7 | Cm7 F7 | Bb6 | Cm7 F7 |
     (key 0)
     (stave treble)
 )
- d4 r1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+2+4
+ c+8 bb8 d8 f8 a2
+
+ db+8 b8 eb8 gb8 bb2
+
+ d+8 c+8 e8 g8 b2
+
+ eb+8 db+8 f8 ab8 c+2
+
+ e+8 d+8 f#8 a8 c#+2
+
+ f+8 eb+8 g8 bb8 d+2
+
+ gb+8 e+8 ab8 b8 eb+2
+
+ g+8 f+8 a8 c+8 e+2
+
+ ab+8 gb+8 bb8 db+8 f+2
+
+ a+8 g+8 b8 d+8 f#+2
+
+ bb+8 ab+8 c+8 eb+8 g+2
+
+ b+8 a+8 c#+8 e+8 g#+2
