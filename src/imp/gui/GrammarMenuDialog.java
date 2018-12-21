@@ -26,6 +26,7 @@ import java.awt.Color;
  *
  * @author Robert Keller
  */
+
 public class GrammarMenuDialog extends javax.swing.JDialog
   {
   Notate notate;
@@ -224,6 +225,13 @@ public class GrammarMenuDialog extends javax.swing.JDialog
     private void grammarJlistMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_grammarJlistMouseClicked
     {//GEN-HEADEREND:event_grammarJlistMouseClicked
         grammarAction();
+          {
+            if( evt.getClickCount() == 2 )
+              {
+                notateImprovisationOff();
+                notateImprovisationOn();
+              }
+          }
     }//GEN-LAST:event_grammarJlistMouseClicked
 
     private void shuffleGrammarButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_shuffleGrammarButtonActionPerformed
@@ -249,16 +257,12 @@ public class GrammarMenuDialog extends javax.swing.JDialog
     boolean improvisationOn = improviseButton.isSelected();
     if( improvisationOn )
       {
-        notate.improvisationOn();
-        improvisationOn();
+        notateImprovisationOn();
      }
     else
       {
-        notate.improvisationOff();
-        improvisationOff();
-     }        
-    improviseButton.setOpaque(true);
-    notate.improviseButtonToggled(improvisationOn);
+        notateImprovisationOff();
+      }        
     }//GEN-LAST:event_improviseButtonActionPerformed
 
     public void improvisationOn()
@@ -274,10 +278,24 @@ public class GrammarMenuDialog extends javax.swing.JDialog
         improviseButton.setText("<html><center>Improv</center></html>"); 
         improviseButton.setSelected(false);
     }
+    
+    private void notateImprovisationOn()
+    {
+        improvisationOn();
+        notate.improvisationOn();
+        notate.playAll();       
+    }
+    
+    private void notateImprovisationOff()
+    {
+        improvisationOff();
+        notate.improvisationOff();
+        notate.stopPlaying();     
+    }
+    
     private void grammarAction()
     {
         currentSelection = grammarJlist.getSelectedValue();
-        //System.out.println("selected grammar = " + currentSelection);
         notate.grammarSelected(currentSelection, mode);        
     }
 
