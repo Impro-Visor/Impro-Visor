@@ -40,12 +40,12 @@ import polya.*;
  * Impro-Visor main class
  *
  * @author Stephen Jones, Aaron Wolin, Robert Keller
- * @version 10
+ * @version 10.1
  */
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "10";
+    public static final String version = "10.1";
     
     private static boolean firstTime = false;
     

@@ -703,8 +703,12 @@ public class ActiveTrading {
      */
     public void startTrading()
     {
-        notifyListeners(true);
         slotsPerChorus = notate.getSlotsPerChorus();
+        if( slotsPerChorus == 0 )
+          {
+            return; // shouldn't happen, but prevent divide by 0 later
+          }
+        notifyListeners(true);
         //System.out.println("slotsPerChorus = " + slotsPerChorus);
         //make this more general
         File directory = ImproVisor.getTransformDirectory();
