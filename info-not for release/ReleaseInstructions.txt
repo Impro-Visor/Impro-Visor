@@ -1,0 +1,36 @@
+Release Instructions
+
+How to build a new release of Impro-Visor
+
+1. In src/imp/gui/AboutDialog.java, change the version number in two places.
+
+2. In src/imp/Improvisor.java, change the version number.
+
+3. In build.xml change the version numbers. For example, version 5.01 is 501
+   and version 10.1 is 1010.
+
+4. In README.txt change the version number 
+   and add release notes for the new version.
+
+5. From the command line, run
+       ant dist
+   to build the distribution. The result will be in improvisorXXXX where XXXX
+   is the version number as above.
+
+6. Also run
+       ant zip      for the generic archive
+       ant zipSrc   to zip the sources
+
+7. Run install4j. You will have to change a bunch of version numbers, 
+   directories, etc. You will need to navigate to the dist directory, 
+   improvisorXXXX, which will be added to the distribution tree. You will
+   need to change the version number for MacOSx, Windows, etc. separately.
+
+   Don't skip any steps. Use the arrow at the upper right.
+
+8. Save configuration.install4j with the source tree. Do not regenerate the
+   application id.
+
+9. Start the build in install4j (Build All).
+
+10. Test the installation, then fix problems or upload to distribution site.
