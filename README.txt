@@ -135,7 +135,7 @@ keller@cs.hmc.edu
 Release notes for Impro-Visor 10.1
 
  Be aware that when launching a new version of Impro-Visor for the first time,
- an image of the master directory will be created in your home directory"
+ an image of the master directory will be created in your home directory:
      impro-visor-version-10.1-files
  Leadsheets, etc. are opened from that directory by default, not from the
  installation directory. Any files that are associated with previous versions
