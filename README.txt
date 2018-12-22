@@ -1,6 +1,6 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 10,
-from Prof. Robert Keller at Harvey Mudd College, July 22, 2018.
+Welcome to Impro-Visor (Improvisation Advisor) Version 10.1,
+from Prof. Robert Keller at Harvey Mudd College, December 21, 2018.
 
 Release notes for this version may be found below.
 
@@ -87,6 +87,9 @@ earlier Java synthesizer. We recommend using one of the following instead:
             kontakt-5-player/free-download/
     You will also need to download the free Factory Instruments.
 
+    You might also try the Aria Player:
+        https://www.garritan.com/powered-by-aria-player/
+
 You can also use any external MIDI instrument, such as most digital pianos.
 
 You cannot start the application by clicking on individual leadsheet files.
@@ -126,7 +129,70 @@ Robert M. (Bob) Keller, Impro-Visor Project Director
 Professor of Computer Science
 Harvey Mudd College
 Claremont, CA 91711
+keller@cs.hmc.edu
 
+===============================================================================
+Release notes for Impro-Visor 10.1
+
+ Be aware that when launching a new version of Impro-Visor for the first time,
+ an image of the master directory will be created in your home directory"
+     impro-visor-version-10.1-files
+ Leadsheets, etc. are opened from that directory by default, not from the
+ installation directory. Any files that are associated with previous versions
+ are not lost, but you may wish to move or copy them to the new version.
+
+ Now when trading with Impro-Visor first, the first user trade will appear in
+ the recorded improvisation.
+
+ Now double-clicking a grammar entry in the grammar choice menu will stop
+ improvising and restart from the beginning with the selected grammar.
+
+ The "lead" spinner has been added to the main notation window. Its purpose
+ is to make fine adjustments to the lead time for generating the next chorus
+ when Impro-Visor is improvising.
+
+ Several of the more recent styles have been added to the style-samples in 
+ leadsheets.
+
+ More exercises and solos have been added to leadsheets. Some of these appear
+ in Robert Keller's youtube video channel Impro-Visor playlist:
+     https://www.youtube.com/playlist?list=PLXF8-pPLj3EVpNm9WgHrZDHYz72ChW2a2
+ which also provides tutorial information.
+
+ In Roadmaps, an NC (NOCHORD) appearing in a chord progression will have its
+ duration added to the duration of the next chord, rather than messing up
+ the roadmap display as before.
+
+ In Roadmaps, brick variants are not displayed by default.
+
+ Corrections were made to the Voicing Keyboard and Chord Stepping. 
+ There is a remaining problem: ledger lines are not displayed.
+
+ Corrected the octave level in many voicings, which were formerly incorrect.
+
+ The Voicing Editor is now opened with control-shift-I rather than control-I,
+ which is used to start improvisation.
+
+ Some problems with the Style Editor have been corrected.
+
+ Now rectifying pitches in the GUI does not merge repeated notes.
+
+ The Swing button in the trading dialog has been removed. Now swing is
+ inferred from the style of the current section.
+
+ Now the melody transposition is used in recording inputs.
+
+ The Trading dialog has a button to open MIDI settings for convenience.
+
+ The MIDI recording Offset setting, primarily used for recording from Audio,
+ is now observed. Before it was being ignored.
+
+ 
+
+ 
+
+ 
+ 
 ===============================================================================
 Release notes for Impro-Visor 10
 
