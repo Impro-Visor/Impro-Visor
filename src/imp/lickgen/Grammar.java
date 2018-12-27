@@ -79,6 +79,7 @@ public class Grammar
     public static final String DIVIDE = "/";
 // Builtin variables:
     public static final String BRICK = "brick";
+    public static final String MUSE = "muse";
     public static final String CHORD_FAMILY = "chord-family";
     public static final String EXPECTANCY = "expectancy";
     public static final String SYNCOPATION = "syncopation";
@@ -1071,9 +1072,19 @@ public class Grammar
             //           + " brickname " + brickname + " doesn't match " + blockName);
             return 0.1; //ZERO;
           }
+        
+        if( MUSE.equals(arg1) )
+        {
+            return getMuseValue();
+        }
         return ZERO;
     }
 
+    private double getMuseValue()
+    {
+        return 0.0;
+    }
+    
     /**
      * Recursively replace all instances of varName with value in toReplace
      */
