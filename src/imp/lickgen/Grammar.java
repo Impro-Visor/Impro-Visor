@@ -1082,7 +1082,7 @@ public class Grammar
 
     private double getMuseValue()
     {
-        return 0.0;
+        return Math.random();
     }
     
     /**
