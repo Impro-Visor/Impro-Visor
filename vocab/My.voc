@@ -567,7 +567,7 @@
     (priority e8 a8 g8 c8)
     (approach (c8 b8 c#8 d8) (e8 eb8 f8) (g8 f#8 g#8) (a8 g#8 bb8))
     (voicings
-        (two-handed-C (type open)(notes e-8 a-8 f#8 g8)(extension))
+        (two-handed-C (type open)(notes e-8 a-8 g8)(extension))
         (left-hand-C (type closed)(notes a-8 c8 e8 g8)(extension))
         (left-hand-A (type closed)(notes e-8 g-8 a-8 c8)(extension))
         (left-hand-B (type closed)(notes g-8 c8 e8 a8)(extension))
