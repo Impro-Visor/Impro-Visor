@@ -24,6 +24,7 @@ import imp.data.Chord;
 import imp.data.ChordPart;
 import imp.data.Note;
 import imp.gui.Notate;
+import static imp.osc.MuseReceiver.getMuseValue;
 import static imp.lickgen.Terminals.getDuration;
 import static imp.lickgen.Terminals.isTerminal;
 import static imp.lickgen.Terminals.isWrappedTerminal;
@@ -1078,11 +1079,6 @@ public class Grammar
             return getMuseValue();
         }
         return ZERO;
-    }
-
-    private double getMuseValue()
-    {
-        return Math.random();
     }
     
     /**
