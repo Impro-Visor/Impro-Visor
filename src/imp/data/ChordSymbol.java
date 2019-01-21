@@ -465,6 +465,10 @@ public class ChordSymbol implements Constants, Serializable {
 
   public ChordSymbol transpose(int semitones)
     {
+    if( getName().equals(NOCHORD) )
+        {
+        return this;
+        }
     return new ChordSymbol(root.transpose(semitones), 
                            type, 
                            bass.transpose(semitones), 
