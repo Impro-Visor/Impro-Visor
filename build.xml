@@ -34,6 +34,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="jmDir"                  value="src/jm"                   />
     <property name="polyaDir"               value="src/polya"                />
     <property name="mikeraDir"              value="src/mikera"               />
+    <property name="oscP5Dir"               value="src/oscP5"                />
+    <property name="netP5Dir"               value="src/netP5"                />
     <property name="testDir"                value="test"                     />
     <property name="buildDir"               value="build"                    />
     <property name="libDir"                 value="lib"                      />
@@ -190,6 +192,22 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </javac>
 </target>
 
+<target name="oscP5" depends="buildInit,libInit,init" description="compile oscP5">
+    <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
+        <classpath refid="base.classpath" />
+        <include name="oscP5/**/*.java"/>
+        <exclude name="**/package-info.java"/>
+    </javac>
+</target>
+
+<target name="netP5" depends="buildInit,libInit,init" description="compile netP5">
+    <javac srcdir="${srcDir}" destdir = "${buildDir}" debug="true" includeantruntime="false">
+        <classpath refid="base.classpath" />
+        <include name="netP5/**/*.java"/>
+        <exclude name="**/package-info.java"/>
+    </javac>
+</target>
+
 <target name="buildImp" depends="buildInit,libInit,imp" description="compile imp in build">
     <copy todir="${buildDir}">
         <fileset dir="${srcDir}">
@@ -230,10 +248,28 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     </copy>
 </target>
 
-<target name="compile" depends="polya,imp,jm,mikera" description="compile the source">
+<target name="buildOscP5" depends="buildInit,libInit,oscP5" description="compile oscP5 in build">
+    <copy todir="${buildDir}">
+        <fileset dir="${srcDir}">
+            <include name="oscP5/**/*.class" />
+            <exclude name="**/package-info.java" />
+        </fileset>
+    </copy>
 </target>
 
-<target name="build" depends="buildPolya,buildImp,buildJm,buildMikera" description="build the source in build">
+<target name="buildNetP5" depends="buildInit,libInit,netP5" description="compile netP5 in build">
+    <copy todir="${buildDir}">
+        <fileset dir="${srcDir}">
+            <include name="netP5/**/*.class" />
+            <exclude name="**/package-info.java" />
+        </fileset>
+    </copy>
+</target>
+
+<target name="compile" depends="polya,imp,jm,mikera,oscP5,netP5" description="compile the source">
+</target>
+
+<target name="build" depends="buildPolya,buildImp,buildJm,buildMikera,buildOscP5,buildNetP5" description="build the source in build">
 </target>
 
 <target name="dist" depends="distInit,build" description="make a distribution">
