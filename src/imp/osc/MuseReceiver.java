@@ -34,8 +34,24 @@ public class MuseReceiver {
 	museServer.oscServer = new OscP5(museServer, recvPort);
     }
     
-public static double getMuseValue()
+    public static double getMuseValue()
     {
+        // Ask server for message
+        // Parse the received message
+        // Return relevant value
+        
+        double currentAccValue = museServer.getAccValue();
+        
+        if (currentAccValue < -0.2) {
+            System.out.print("LEFT\n");
+            return 1.0;
+        } else if (currentAccValue > 0.2) {
+            System.out.print("RIGHT\n");
+            return 0.0;
+        } else {
+            System.out.print("MIDDLE\n");
+        }	
+                
         return Math.random();
     }
 }
