@@ -1,7 +1,7 @@
 /**
- * This Java Class is part of the Impro-Visor Application v. 9.01
+ * This Java Class is part of the Impro-Visor Application v. 10.2
  *
- * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,17 +35,18 @@ import java.io.File;
 import java.io.IOException;
 import javax.sound.midi.InvalidMidiDataException;
 import polya.*;
+import imp.osc.*;
 
 /**
  * Impro-Visor main class
  *
  * @author Stephen Jones, Aaron Wolin, Robert Keller
- * @version 10.1
+ * @version 10.2
  */
 
 public class ImproVisor implements Constants {
     
-    public static final String version = "10.1";
+    public static final String version = "10.2";
     
     private static boolean firstTime = false;
     
@@ -839,6 +840,15 @@ public static Color getWindowFrameColor()
     return windowFrameColor;
   }
     
+static MuseReceiver museReceiver;
     
+public static MuseReceiver getMuseReceiver()
+  {
+    if( museReceiver == null )
+    {
+        museReceiver = new MuseReceiver();
+    }
+    return museReceiver;
+  }
 
 }

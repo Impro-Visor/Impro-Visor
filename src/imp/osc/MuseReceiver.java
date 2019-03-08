@@ -18,12 +18,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 package imp.osc;
+import oscP5.*;
 
 /**
  *
  * @author Andy and Rachel
  */
 public class MuseReceiver {
+    
+    static MuseServer museServer;
+    static int recvPort = 5000;	
+
+    public MuseReceiver() {
+        museServer = new MuseServer();
+	museServer.oscServer = new OscP5(museServer, recvPort);
+    }
     
 public static double getMuseValue()
     {

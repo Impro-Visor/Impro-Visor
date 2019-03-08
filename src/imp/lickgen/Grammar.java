@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -25,6 +25,8 @@ import imp.data.ChordPart;
 import imp.data.Note;
 import imp.gui.Notate;
 import static imp.osc.MuseReceiver.getMuseValue;
+import imp.osc.MuseReceiver;
+import imp.ImproVisor;
 import static imp.lickgen.Terminals.getDuration;
 import static imp.lickgen.Terminals.isTerminal;
 import static imp.lickgen.Terminals.isWrappedTerminal;
@@ -1076,6 +1078,7 @@ public class Grammar
         
         if( MUSE.equals(arg1) )
         {
+            MuseReceiver receiver = ImproVisor.getMuseReceiver();
             return getMuseValue();
         }
         return ZERO;
