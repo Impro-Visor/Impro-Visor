@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College.
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College.
  *
  * Impro-Visor is free software; you can redistribute it and/or modifyc it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -35,9 +35,6 @@ import imp.gui.LogDialog;
 import imp.gui.Notate;
 import imp.gui.WindowMenuItem;
 import imp.gui.WindowRegistry;
-import imp.lickgen.Grammar;
-import imp.lickgen.LickGen;
-import imp.lickgen.NoteConverter;
 import imp.neuralnet.Critic;
 import imp.util.ProfileFilter;
 import java.awt.*;
@@ -56,13 +53,7 @@ import javax.swing.plaf.metal.MetalButtonUI;
 import javax.swing.table.DefaultTableModel;
 import polya.Polylist;
 import polya.Tokenizer;
-import imp.generalCluster.Cluster;
-import imp.generalCluster.DataPoint;
-import imp.generalCluster.IndexedMelodyPart;
-import imp.generalCluster.JCA;
-import imp.generalCluster.ClusterSet;
 import imp.generalCluster.CreateGrammar;
-import imp.generalCluster.metrics.Metric;
 import imp.generalCluster.metrics.MetricListFactories.DefaultMetricListFactory;
 import imp.generalCluster.metrics.MetricListFactories.MetricListFactory;
 import imp.generalCluster.metrics.MetricListFactories.RhythmMetricListFactory;
@@ -3372,6 +3363,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
                     // input.
 
                     prefs[j].addActionListener(new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                             verifyProbs();
                         }

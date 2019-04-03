@@ -2135,6 +2135,7 @@ public Critic getCritic()
         fractalMI = new javax.swing.JMenuItem();
         grammarChooserMI = new javax.swing.JMenuItem();
         lickGeneratorMI = new javax.swing.JMenuItem();
+        grammarEditorMI = new javax.swing.JMenuItem();
         guideToneLine = new javax.swing.JMenuItem();
         intervalLearningMI = new javax.swing.JMenuItem();
         soloGeneratorMI = new javax.swing.JMenuItem();
@@ -9513,6 +9514,19 @@ public Critic getCritic()
             }
         });
         improvMenu.add(lickGeneratorMI);
+
+        grammarEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK));
+        grammarEditorMI.setMnemonic('g');
+        grammarEditorMI.setText("Grammar Editor");
+        grammarEditorMI.setToolTipText("Open Grammar Editor");
+        grammarEditorMI.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                grammarEditorMIActionPerformed(evt);
+            }
+        });
+        improvMenu.add(grammarEditorMI);
 
         guideToneLine.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         guideToneLine.setText("Guide Tone Line");
@@ -24085,6 +24099,11 @@ private boolean isDotted = false;
         getLickgenFrame().setGap(Double.parseDouble(generationGapSpinner.getValue().toString()));
     }//GEN-LAST:event_generationGapSpinnergenerationLeadSpinnerChanged
 
+    private void grammarEditorMIActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarEditorMIActionPerformed
+    {//GEN-HEADEREND:event_grammarEditorMIActionPerformed
+        editGrammar();
+    }//GEN-LAST:event_grammarEditorMIActionPerformed
+
     private String adviceRhythm = "";
     
     public Polylist getAdviceRhythms()
@@ -26629,6 +26648,7 @@ private ImageIcon pauseButton =
     private javax.swing.JTabbedPane globalTabs;
     private javax.swing.JMenuItem grammarChooserMI;
     private javax.swing.JRadioButtonMenuItem grammarDivideRadio;
+    private javax.swing.JMenuItem grammarEditorMI;
     private javax.swing.ButtonGroup grammarExtractionButtonGroup;
     private javax.swing.JRadioButtonMenuItem grammarRadio;
     private javax.swing.JRadioButton grandStave;
@@ -27136,6 +27156,7 @@ public void setGrammarFilename(String name)
 public void reloadGrammar()
   {
     lickgen.loadGrammar(grammarFilename);
+    lickgenFrame.resetTriageParameters(true);
   }
 
 void playbackGoToTab(int tab)
