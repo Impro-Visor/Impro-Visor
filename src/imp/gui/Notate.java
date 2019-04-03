@@ -55,6 +55,7 @@ import imp.com.*;
 import imp.data.*;
 import static imp.data.MelodyPart.gcd;
 import imp.data.musicXML.ChordDescription;
+import imp.lickgen.GrammarEditorDialog;
 import imp.lickgen.LickGen;
 import imp.lickgen.LickgenFrame;
 import imp.neuralnet.*;
@@ -570,7 +571,7 @@ private InstrumentChooser melodyInst,
         defChordInst,
         defBassInst;
 private SourceEditorDialog leadsheetEditor = null;
-private SourceEditorDialog grammarEditor = null;
+private GrammarEditorDialog grammarEditor = null;
 ;
 
   private StyleEditor styleEditor = null;
@@ -820,7 +821,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     leadsheetEditor.setRows(LEADSHEET_EDITOR_ROWS);
 
-    grammarEditor = new SourceEditorDialog(this, false, this, cm,
+    grammarEditor = new GrammarEditorDialog(this, false, this, cm,
                                            SourceEditorDialog.GRAMMAR);
 
     grammarEditor.setRows(GRAMMAR_EDITOR_ROWS);

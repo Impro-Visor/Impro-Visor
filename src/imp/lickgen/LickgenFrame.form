@@ -13,7 +13,6 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="grammarMenu1">
           <Properties>
-            <Property name="mnemonic" type="int" value="71"/>
             <Property name="text" type="java.lang.String" value="Grammar Options"/>
             <Property name="toolTipText" type="java.lang.String" value="Edit or change the current grammar file."/>
           </Properties>
@@ -129,7 +128,6 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Grammar Controls"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1000, 850]"/>
