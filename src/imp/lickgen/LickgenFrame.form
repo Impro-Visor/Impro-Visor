@@ -195,7 +195,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="rhythmPanel">
+            <Container class="javax.swing.JPanel" name="abstractMelodyPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d7" green="d7" red="da" type="rgb"/>
@@ -222,7 +222,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
               <SubComponents>
-                <Container class="javax.swing.JScrollPane" name="rhythmScrollPane">
+                <Container class="javax.swing.JScrollPane" name="abstractMelodyScrollPane">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
@@ -245,7 +245,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTextArea" name="rhythmField">
+                    <Component class="javax.swing.JTextArea" name="abstractMelodyField">
                       <Properties>
                         <Property name="columns" type="int" value="20"/>
                         <Property name="lineWrap" type="boolean" value="true"/>

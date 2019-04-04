@@ -9517,7 +9517,6 @@ public Critic getCritic()
         improvMenu.add(lickGeneratorMI);
 
         grammarEditorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK));
-        grammarEditorMI.setMnemonic('g');
         grammarEditorMI.setText("Grammar Editor");
         grammarEditorMI.setToolTipText("Open Grammar Editor");
         grammarEditorMI.addActionListener(new java.awt.event.ActionListener()
@@ -13130,7 +13129,8 @@ public String[] getNoteLabels(int location)
 
     Polylist scales = chordProg.getCurrentChord(location).getScales();
 
-    if( scales == null
+    if( scales == null 
+            || preferredScale == null
             || scales.isEmpty()
             || preferredScale.isEmpty()
             || ((String) preferredScale.second()).equals(NONE) )
@@ -21819,6 +21819,11 @@ public void refreshGrammarEditor()
     grammarEditor.performEditorToSourceButton(null);
   }
 
+public void setAbstractMelodyField(String string)
+  {
+    grammarEditor.setAbstractMelodyField(string);
+  }
+
 public void adjustSelection()
   {
     Stave stave = getCurrentStave();
@@ -22075,7 +22080,7 @@ public void originalGenerate(LickGen lickgen, int improviseStartSlot, int improv
 
         if( abstractMelody != null )
           {
-            lickgenFrame.setRhythmFieldText(Formatting.prettyFormat(abstractMelody));
+            lickgenFrame.setAbstractMelodyField(Formatting.prettyFormat(abstractMelody));
           }
     }
     setMode(Mode.GENERATED, modifier);
@@ -24143,7 +24148,6 @@ private boolean isDotted = false;
 /**
  * Change the clef type in each Stave.
  * Returns an ArrayList of the types of each stave for possible redo.
- * @param type
  */
 public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
   {

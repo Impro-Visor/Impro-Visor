@@ -8226,7 +8226,6 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+E"/>
                 </Property>
-                <Property name="mnemonic" type="int" value="103"/>
                 <Property name="text" type="java.lang.String" value="Grammar Editor"/>
                 <Property name="toolTipText" type="java.lang.String" value="Open Grammar Editor"/>
               </Properties>

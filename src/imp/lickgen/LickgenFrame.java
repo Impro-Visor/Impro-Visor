@@ -222,9 +222,9 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         learningBaseButtonGroup = new javax.swing.ButtonGroup();
         generatorPane = new javax.swing.JTabbedPane();
         lickGenPanel = new javax.swing.JPanel();
-        rhythmPanel = new javax.swing.JPanel();
-        rhythmScrollPane = new javax.swing.JScrollPane();
-        rhythmField = new javax.swing.JTextArea();
+        abstractMelodyPanel = new javax.swing.JPanel();
+        abstractMelodyScrollPane = new javax.swing.JScrollPane();
+        abstractMelodyField = new javax.swing.JTextArea();
         relativePanel = new javax.swing.JPanel();
         relativeScrollPane = new javax.swing.JScrollPane();
         relativeField = new javax.swing.JTextArea();
@@ -438,23 +438,23 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         lickGenPanel.setPreferredSize(new java.awt.Dimension(1450, 903));
         lickGenPanel.setLayout(new java.awt.GridBagLayout());
 
-        rhythmPanel.setBackground(new java.awt.Color(218, 215, 215));
-        rhythmPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Abstract Melody", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        rhythmPanel.setMinimumSize(new java.awt.Dimension(500, 200));
-        rhythmPanel.setPreferredSize(new java.awt.Dimension(500, 200));
-        rhythmPanel.setLayout(new java.awt.GridBagLayout());
+        abstractMelodyPanel.setBackground(new java.awt.Color(218, 215, 215));
+        abstractMelodyPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Abstract Melody", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        abstractMelodyPanel.setMinimumSize(new java.awt.Dimension(500, 200));
+        abstractMelodyPanel.setPreferredSize(new java.awt.Dimension(500, 200));
+        abstractMelodyPanel.setLayout(new java.awt.GridBagLayout());
 
-        rhythmScrollPane.setBorder(null);
-        rhythmScrollPane.setMinimumSize(new java.awt.Dimension(223, 180));
-        rhythmScrollPane.setPreferredSize(new java.awt.Dimension(223, 180));
+        abstractMelodyScrollPane.setBorder(null);
+        abstractMelodyScrollPane.setMinimumSize(new java.awt.Dimension(223, 180));
+        abstractMelodyScrollPane.setPreferredSize(new java.awt.Dimension(223, 180));
 
-        rhythmField.setColumns(20);
-        rhythmField.setLineWrap(true);
-        rhythmField.setRows(500);
-        rhythmField.setBorder(null);
-        rhythmField.setMinimumSize(new java.awt.Dimension(440, 100));
-        rhythmField.setPreferredSize(new java.awt.Dimension(440, 1000));
-        rhythmScrollPane.setViewportView(rhythmField);
+        abstractMelodyField.setColumns(20);
+        abstractMelodyField.setLineWrap(true);
+        abstractMelodyField.setRows(500);
+        abstractMelodyField.setBorder(null);
+        abstractMelodyField.setMinimumSize(new java.awt.Dimension(440, 100));
+        abstractMelodyField.setPreferredSize(new java.awt.Dimension(440, 1000));
+        abstractMelodyScrollPane.setViewportView(abstractMelodyField);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -462,7 +462,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.2;
-        rhythmPanel.add(rhythmScrollPane, gridBagConstraints);
+        abstractMelodyPanel.add(abstractMelodyScrollPane, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -471,7 +471,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 0.4;
-        lickGenPanel.add(rhythmPanel, gridBagConstraints);
+        lickGenPanel.add(abstractMelodyPanel, gridBagConstraints);
 
         relativePanel.setBackground(new java.awt.Color(218, 215, 215));
         relativePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Relative-Pitch Melody", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
@@ -3692,10 +3692,11 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
      *
      * @param string
      */
-    public void setRhythmFieldText(String string) {
-        rhythmField.setText(string);
-        rhythmField.setCaretPosition(0);
-        rhythmScrollPane.getViewport().setViewPosition(new Point(0, 0));
+    public void setAbstractMelodyField(String string) {
+        abstractMelodyField.setText(string);
+        abstractMelodyField.setCaretPosition(0);
+        abstractMelodyScrollPane.getViewport().setViewPosition(new Point(0, 0));
+        notate.setAbstractMelodyField(string);
     }
     
     public void setRelativeFieldText(String string) {
@@ -4990,7 +4991,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
                         }
                     });
 
-                    setRhythmFieldText("Preparing critics for grading...");
+                    setAbstractMelodyField("Preparing critics for grading...");
 
                     // Prepare all critics, and pair them with a file name
                     for (File f : files)
@@ -5016,7 +5017,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
                         }
                     }
 
-                    setRhythmFieldText("");
+                    setAbstractMelodyField("");
 
                     if (critics.size() != numCritics)
                     {
@@ -5377,7 +5378,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
 
         rhythmString = rhythmString.reverse();
 
-        setRhythmFieldText(rhythmString.toString());
+        setAbstractMelodyField(rhythmString.toString());
     }//GEN-LAST:event_getSelRhythmButtonActionPerformed
 
     private void getAbstractMelodyButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_getAbstractMelodyButtonActionPerformed
@@ -5576,7 +5577,7 @@ public void getAbstractMelody()
               {
                 production = production.substring(0, production.indexOf("CHORDS"));
               }
-            setRhythmFieldText(production);
+            setAbstractMelodyField(production);
           }
       }
   }
@@ -5644,7 +5645,7 @@ public void extractAbstractMelody()
 
     if( production != null )
       {
-        setRhythmFieldText(production);
+        setAbstractMelodyField(production);
       }
     
     MelodyPart segment = notate.getCurrentMelodyPart().extract(selStart, selEnd);
@@ -6500,7 +6501,7 @@ public void addProduction(String production, int measureWindow, double prob) //f
 
     private void fillMelodyButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_fillMelodyButtonActionPerformed
     {//GEN-HEADEREND:event_fillMelodyButtonActionPerformed
-        fillMelodyFromText(rhythmField.getText());
+        fillMelodyFromText(abstractMelodyField.getText());
     }//GEN-LAST:event_fillMelodyButtonActionPerformed
 
 /**
@@ -6528,7 +6529,7 @@ public void fillMelodyFromText(String r)
         r = r.concat(")");
       }
 
-    setRhythmFieldText(r);
+    setAbstractMelodyField(r);
 
     Polylist rhythm = new Polylist();
     StringReader rhythmReader = new StringReader(r);
@@ -6563,7 +6564,7 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
         r = r.concat(")");
       }
 
-    setRhythmFieldText(r);
+    setAbstractMelodyField(r);
 
     Polylist rhythm = new Polylist();
     StringReader rhythmReader = new StringReader(r);
@@ -6587,12 +6588,12 @@ public MelodyPart fillAndReturnMelodyFromText(String r, ChordPart chordPart)
 
         if( useGrammar )
           {
-            setRhythmFieldText(
+            setAbstractMelodyField(
                     lickgen.generateRhythmFromGrammar(0, notate.getTotalSlots()).toString());
           }
         else
           {
-            setRhythmFieldText(lickgen.generateRandomRhythm(totalSlots,
+            setAbstractMelodyField(lickgen.generateRandomRhythm(totalSlots,
                                                             minDuration,
                                                             maxDuration,
                                                              restProb).toString());
@@ -6838,6 +6839,9 @@ private void updateUseSoloist()
     private javax.swing.JButton FillProbsButton;
     private javax.swing.JTextField MarkovLengthField;
     private javax.swing.JPanel ProbFillClearPanel;
+    private javax.swing.JTextArea abstractMelodyField;
+    private javax.swing.JPanel abstractMelodyPanel;
+    private javax.swing.JScrollPane abstractMelodyScrollPane;
     private javax.swing.JButton addLayerToTableButton;
     private javax.swing.JCheckBox approachBox;
     private javax.swing.JCheckBox autoFillCheckBox;
@@ -6972,9 +6976,6 @@ private void updateUseSoloist()
     private javax.swing.JLabel restProbLabel;
     private javax.swing.JCheckBox rhythmClusterCheckbox;
     private javax.swing.JPanel rhythmClusterPanel;
-    private javax.swing.JTextArea rhythmField;
-    private javax.swing.JPanel rhythmPanel;
-    private javax.swing.JScrollPane rhythmScrollPane;
     private javax.swing.JComboBox rootComboBox;
     private javax.swing.JLabel rootLabel;
     private javax.swing.JButton saveGrammarAsButton;
