@@ -541,9 +541,27 @@ public class Grammar
             else if( type.equals(RULE) && next.length() == 4 )
               {
                 //System.out.println("\nrule = " + next);
-                Polylist lhs = (Polylist) next.second();
-                Polylist rhs = (Polylist) next.third();
-
+                Object rawLHS = next.second();
+                Object rawRHS = next.third();
+                Polylist lhs;
+                Polylist rhs;
+                if( rawLHS instanceof Polylist )
+                   {
+                    lhs = (Polylist)rawLHS;
+                   }
+                else
+                   {
+                     lhs = Polylist.list(rawLHS);
+                   }
+                if( rawRHS instanceof Polylist )
+                   {
+                    rhs = (Polylist)rawRHS;
+                   }
+                else
+                   {
+                     rhs = Polylist.list(rawRHS);
+                   }
+                
                 //System.out.println(" rhs before evaluation  " + rhs);
                 //System.out.println("token = " + token);
                 if( token instanceof Polylist
