@@ -9491,7 +9491,6 @@ public Critic getCritic()
         improvMenu.add(fractalMI);
 
         grammarChooserMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        grammarChooserMI.setMnemonic('g');
         grammarChooserMI.setText("Grammar Chooser");
         grammarChooserMI.setToolTipText("Open grammar chooser.");
         grammarChooserMI.addActionListener(new java.awt.event.ActionListener()
@@ -9504,7 +9503,6 @@ public Critic getCritic()
         improvMenu.add(grammarChooserMI);
 
         lickGeneratorMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK));
-        lickGeneratorMI.setMnemonic('g');
         lickGeneratorMI.setText("Grammar Control");
         lickGeneratorMI.setToolTipText("Multi-tab control for lick generation, grammar editing, and transform editing.");
         lickGeneratorMI.addActionListener(new java.awt.event.ActionListener()
@@ -9540,7 +9538,6 @@ public Critic getCritic()
         });
         improvMenu.add(guideToneLine);
 
-        intervalLearningMI.setMnemonic('g');
         intervalLearningMI.setText("Interval Learning ");
         intervalLearningMI.setToolTipText("Improvisation using interval learning");
         intervalLearningMI.addActionListener(new java.awt.event.ActionListener()
