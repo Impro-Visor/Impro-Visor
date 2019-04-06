@@ -40,18 +40,17 @@ public class MuseReceiver {
         // Parse the received message
         // Return relevant value
         
-        double currentAccValue = museServer.getAccValue();
+        // Uncomment for muse installation
+        //double currentAccValue = museServer.getAccValue();
         
-        if (currentAccValue < -0.2) {
-            System.out.print("LEFT\n");
-            return 1.0;
-        } else if (currentAccValue > 0.2) {
-            System.out.print("RIGHT\n");
-            return 0.0;
-        } else {
-            System.out.print("MIDDLE\n");
-        }	
+        double currentAccValue = 0.4*Math.random() - 0.2; 
                 
-        return Math.random();
+        if (currentAccValue < -0.2) {
+            return 0;
+        } else if (currentAccValue > 0.2) {
+            return 2;
+        } else {
+            return 1;
+        }	
     }
 }
