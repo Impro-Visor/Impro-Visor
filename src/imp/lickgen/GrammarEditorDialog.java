@@ -115,6 +115,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         editorToSourceButton = new javax.swing.JButton();
         abstractMelodyScrollPane = new javax.swing.JScrollPane();
         abstractMelodyField = new javax.swing.JTextArea();
+        saveGrammarAsButton = new javax.swing.JButton();
 
         setTitle("Editor");
         setAlwaysOnTop(true);
@@ -146,7 +147,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.weighty = 0.05;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         getContentPane().add(grammarChooserButton, gridBagConstraints);
         grammarChooserButton.getAccessibleContext().setAccessibleDescription("Open the Grammar Chooser");
@@ -170,7 +171,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.weighty = 0.05;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         getContentPane().add(sourceToEditorButton, gridBagConstraints);
 
@@ -196,9 +197,9 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         getContentPane().add(sourceEditorScrollPane, gridBagConstraints);
 
         editorToSourceButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        editorToSourceButton.setText("Editor to Grammar");
         editorToSourceButton.setToolTipText("Load the editor contents to the current grammar.\n");
         editorToSourceButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editorToSourceButton.setLabel("Editor to Grammar (also saves grammar)");
         editorToSourceButton.setMaximumSize(new java.awt.Dimension(600, 40));
         editorToSourceButton.setMinimumSize(new java.awt.Dimension(600, 40));
         editorToSourceButton.setPreferredSize(new java.awt.Dimension(600, 40));
@@ -214,7 +215,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.weighty = 0.05;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         getContentPane().add(editorToSourceButton, gridBagConstraints);
 
@@ -233,11 +234,34 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.2;
         getContentPane().add(abstractMelodyScrollPane, gridBagConstraints);
+
+        saveGrammarAsButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        saveGrammarAsButton.setText("Save Grammar As ...");
+        saveGrammarAsButton.setToolTipText("Saves the grammar to a new file.");
+        saveGrammarAsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveGrammarAsButton.setMaximumSize(new java.awt.Dimension(600, 40));
+        saveGrammarAsButton.setMinimumSize(new java.awt.Dimension(600, 40));
+        saveGrammarAsButton.setPreferredSize(new java.awt.Dimension(600, 40));
+        saveGrammarAsButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                saveGrammarAsButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
+        getContentPane().add(saveGrammarAsButton, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -271,7 +295,14 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
     private void grammarChooserButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarChooserButtonActionPerformed
     {//GEN-HEADEREND:event_grammarChooserButtonActionPerformed
         notate.openGrammarMenuDialog();
+        
     }//GEN-LAST:event_grammarChooserButtonActionPerformed
+
+    private void saveGrammarAsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveGrammarAsButtonActionPerformed
+    {//GEN-HEADEREND:event_saveGrammarAsButtonActionPerformed
+        notate.saveGrammarAs();
+        setTitle(notate.getGrammarFileName());
+    }//GEN-LAST:event_saveGrammarAsButtonActionPerformed
     
     //used when calling the grammar to editor button automatically from Notate
     public void performEditorToSourceButton(java.awt.event.ActionEvent evt) {
@@ -289,6 +320,7 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
     private javax.swing.JScrollPane abstractMelodyScrollPane;
     private javax.swing.JButton editorToSourceButton;
     private javax.swing.JButton grammarChooserButton;
+    private javax.swing.JButton saveGrammarAsButton;
     private javax.swing.JTextArea sourceEditor;
     private javax.swing.JScrollPane sourceEditorScrollPane;
     private javax.swing.JButton sourceToEditorButton;
