@@ -225,6 +225,7 @@ public class GrammarMenuDialog extends javax.swing.JDialog
     private void grammarJlistMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_grammarJlistMouseClicked
     {//GEN-HEADEREND:event_grammarJlistMouseClicked
         grammarAction();
+        notate.editGrammar();
           {
             if( evt.getClickCount() == 2 )
               {

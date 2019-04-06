@@ -10585,6 +10585,7 @@ public void openGrammar()
 
         lickgen.loadGrammar(filename);
       }
+    grammarEditor.fillEditor();
 
     grammarfc.setCurrentDirectory(oldDirectory);
     lickgenFrame.toFront();

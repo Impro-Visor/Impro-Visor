@@ -41,18 +41,8 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
     int type;
     
     public static final String titlePrefix = "Editor For: ";
-    
-    public static final int LEADSHEET = 0;
-    public static final int GRAMMAR = 1;
-    public static final int STYLE = 2;
-    public static final int DICTIONARY = 3;
-    public static final String[] typeStr = {"Leadsheet", "Grammar", "Style", "Dictionary"};
-
-    public static String editorTitlePrefix = "Editor for: ";
-    
-    private boolean firstTime = true;
    
-    /** Creates new form sourceEditorDialog */
+    /** Creates new form GrammarEditorDialog */
     public GrammarEditorDialog(java.awt.Frame parent, boolean modal, Notate p, CommandManager cm, int type)
     {
         super(parent, modal);
@@ -61,10 +51,10 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         this.cm = cm;
         this.type = type;
         initComponents();
-        setSize(200,200);
+        setSize(650,600);
         setTitle("");
-        editorToSourceButton.setText("Editor to " + typeStr[type]);
-        sourceToEditorButton.setText(typeStr[type] + " to Editor");        
+        editorToSourceButton.setText("Editor to Grammar");
+        sourceToEditorButton.setText("Grammar to Editor");        
         sourceEditor.setFont(new java.awt.Font("Lucida Console", java.awt.Font.PLAIN, 13));
     }
 
@@ -273,13 +263,15 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
 
     public void fillEditor()
     {
+    positionCaret(0);
     cm.execute(new GrammarToEditorCommand(notate.getGrammarFileName(), this));
-    if( firstTime )
-      {
-      sourceEditor.moveCaretPosition(0);
-      firstTime = false;
-      }
+    positionCaret(0);
     }
+    
+    public void positionCaret(int value)
+      {
+        sourceEditor.setCaretPosition(0);
+      }
     
     private void editorToSourceButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_editorToSourceButtonActionPerformed
     {//GEN-HEADEREND:event_editorToSourceButtonActionPerformed
@@ -295,7 +287,7 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
     private void grammarChooserButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_grammarChooserButtonActionPerformed
     {//GEN-HEADEREND:event_grammarChooserButtonActionPerformed
         notate.openGrammarMenuDialog();
-        
+        fillEditor();
     }//GEN-LAST:event_grammarChooserButtonActionPerformed
 
     private void saveGrammarAsButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveGrammarAsButtonActionPerformed
