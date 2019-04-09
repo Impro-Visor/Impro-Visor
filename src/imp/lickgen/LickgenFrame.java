@@ -3887,7 +3887,7 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
                 scaleComboBox.setSelectedIndex(scaleIndex);
 
                 lickgen.setPreferredScale(lickgen.getParameter(LickGen.SCALE_ROOT),
-                        lickgen.getParameter(LickGen.SCALE_TYPE));
+                                          lickgen.getParameter(LickGen.SCALE_TYPE));
             }
         } catch (Exception e) {
         }

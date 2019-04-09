@@ -159,7 +159,7 @@ public Integer integer;
     public ArrayList<double[]> probs;  // Array of note probabilities
     private final Grammar grammar;
     private final double[] pitchUsed = new double[TOTALPITCHES];
-    private Polylist preferredScale = Polylist.nil;
+    private Polylist preferredScale = Polylist.list("C", FIRST_SCALE);
     ArrayList<String> chordUsed = new ArrayList<String>();
     // Indices that are global to an instance
     ArrayList<Integer> chordUsedSection = new ArrayList<Integer>();    
@@ -2850,10 +2850,7 @@ public static Note makeRelativeNote(Object ob, Chord chord)
     }
 
     public void setPreferredScale(String r, String s) {
-        preferredScale = Polylist.nil;
-        preferredScale = preferredScale.cons(s);
-        preferredScale = preferredScale.cons(r);
-
+        preferredScale = Polylist.list(r, s);
     }
 
     public Polylist getPreferredScale() {

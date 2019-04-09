@@ -10598,7 +10598,7 @@ public void setGrammar(String grammarName)
     String extendedName = grammarName + GrammarFilter.EXTENSION;
     grammarFilename = ImproVisor.getGrammarDirectory() + File.separator + extendedName;
     lickgen.loadGrammar(grammarFilename);
-    lickgenFrame.resetTriageParameters(false);
+    lickgenFrame.resetTriageParameters(true);
     Preferences.setPreference(Preferences.DEFAULT_GRAMMAR_FILE, extendedName);
   }
 
@@ -13121,11 +13121,11 @@ public String[] getNoteLabels(int location)
   {
     String[] notes = new String[12];
 
-    Polylist preferredScale = lickgen.getPreferredScale();
-
+    Polylist preferredScale = lickgen.getPreferredScale(); //Polylist.list("", FIRST_SCALE);
     Polylist scaleTones;
+    Chord currentChord = chordProg.getCurrentChord(location);
 
-    Polylist scales = chordProg.getCurrentChord(location).getScales();
+    Polylist scales = currentChord.getScales();
 
     if( scales == null 
             || preferredScale == null
@@ -13143,7 +13143,7 @@ public String[] getNoteLabels(int location)
       {
         scaleTones = Advisor.getScale((String) preferredScale.first(), (String) preferredScale.second());
       }
-
+    
     boolean[] enh = score.getCurrentEnharmonics(location,
                                                 scaleTones.append(chordProg.getCurrentChord(location).getPriority()));
 

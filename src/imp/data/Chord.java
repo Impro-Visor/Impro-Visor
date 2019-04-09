@@ -280,7 +280,6 @@ public class Chord implements Constants, Unit, Serializable {
     {
         if (getName().equals(NOCHORD))
             return null;
-        
 	ChordForm chordForm = symbol.getChordForm();
         if( chordForm == null )
           {
