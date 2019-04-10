@@ -2762,7 +2762,6 @@ public static Note makeRelativeNote(Object ob, Chord chord)
               }
  
               pitch += octaveAdjustment * OCTAVE;
-    System.out.println("final pitch = " + pitch);
               
                 // Get the duration
 
