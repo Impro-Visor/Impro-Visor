@@ -24530,6 +24530,7 @@ public void improvisationOn()
     improviseButton.setText("<html><center>Stop</center></html>");
     tradeCheckbox.setSelected(false);  
     grammarMenuDialog.improvisationOn();
+    grammarEditor.improvisationOn();
 }
 
 public void improvisationOff()
@@ -24542,6 +24543,7 @@ public void improvisationOff()
     improviseButton.setText("<html><center>Improv</center></html>");
     tradeCheckbox.setSelected(false);
     grammarMenuDialog.improvisationOff();
+    grammarEditor.improvisationOff();
   }
 
 public void setTradeCheckbox(boolean value)

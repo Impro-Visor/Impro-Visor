@@ -23,6 +23,7 @@ package imp.lickgen;
 import imp.gui.*;
 import imp.com.*;
 import imp.util.BasicEditor;
+import java.awt.Color;
 import java.awt.Point;
 
 /**
@@ -106,6 +107,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         abstractMelodyScrollPane = new javax.swing.JScrollPane();
         abstractMelodyField = new javax.swing.JTextArea();
         saveGrammarAsButton = new javax.swing.JButton();
+        improviseButton = new javax.swing.JToggleButton();
 
         setTitle("Editor");
         setAlwaysOnTop(true);
@@ -157,8 +159,9 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.05;
@@ -180,7 +183,8 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.4;
@@ -201,8 +205,8 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.05;
@@ -224,7 +228,8 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.2;
@@ -246,12 +251,37 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.05;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         getContentPane().add(saveGrammarAsButton, gridBagConstraints);
+
+        improviseButton.setBackground(new java.awt.Color(0, 255, 0));
+        improviseButton.setText("Improv");
+        improviseButton.setToolTipText("Press to start improvisation.");
+        improviseButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        improviseButton.setFocusable(false);
+        improviseButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        improviseButton.setIconTextGap(0);
+        improviseButton.setMaximumSize(new java.awt.Dimension(50, 30));
+        improviseButton.setMinimumSize(new java.awt.Dimension(50, 30));
+        improviseButton.setOpaque(true);
+        improviseButton.setPreferredSize(new java.awt.Dimension(50, 30));
+        improviseButton.setRequestFocusEnabled(false);
+        improviseButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        improviseButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                improviseButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        getContentPane().add(improviseButton, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -295,6 +325,47 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
         notate.saveGrammarAs();
         setTitle(notate.getGrammarFileName());
     }//GEN-LAST:event_saveGrammarAsButtonActionPerformed
+
+    private void improviseButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_improviseButtonActionPerformed
+    {//GEN-HEADEREND:event_improviseButtonActionPerformed
+        boolean improvisationOn = improviseButton.isSelected();
+        if( improvisationOn )
+        {
+            notateImprovisationOn();
+        }
+        else
+        {
+            notateImprovisationOff();
+        }
+    }//GEN-LAST:event_improviseButtonActionPerformed
+    
+    public void improvisationOn()
+    {
+        improviseButton.setBackground(new Color(255, 0, 0));
+        improviseButton.setText("<html><center>Stop</center></html>");
+        improviseButton.setSelected(true);
+    }
+    
+    public void improvisationOff()
+    {
+        improviseButton.setBackground(new Color(0, 255, 0));
+        improviseButton.setText("<html><center>Improv</center></html>"); 
+        improviseButton.setSelected(false);
+    }
+    
+    private void notateImprovisationOn()
+    {
+        improvisationOn();
+        notate.improvisationOn();
+        notate.playAll();       
+    }
+    
+    private void notateImprovisationOff()
+    {
+        improvisationOff();
+        notate.improvisationOff();
+        notate.stopPlaying();     
+    }
     
     //used when calling the grammar to editor button automatically from Notate
     public void performEditorToSourceButton(java.awt.event.ActionEvent evt) {
@@ -312,6 +383,7 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
     private javax.swing.JScrollPane abstractMelodyScrollPane;
     private javax.swing.JButton editorToSourceButton;
     private javax.swing.JButton grammarChooserButton;
+    private javax.swing.JToggleButton improviseButton;
     private javax.swing.JButton saveGrammarAsButton;
     private javax.swing.JTextArea sourceEditor;
     private javax.swing.JScrollPane sourceEditorScrollPane;
