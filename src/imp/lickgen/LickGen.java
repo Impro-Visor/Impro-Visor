@@ -2663,11 +2663,12 @@ public static Note makeRelativeNote(Object ob, Chord chord)
                 octaveAdjustment -= 1; 
                 degreeValue += 8;
                 }
-              while( degreeValue >= 8 )
+              while( degreeValue > 7 )
                 {
                   octaveAdjustment += 1;
-                  degreeValue -= 8;
+                  degreeValue -= 7;
                 }
+              
               if( chordFamily.equals("minor") )
                 {
                   switch(degreeValue)
@@ -2761,6 +2762,7 @@ public static Note makeRelativeNote(Object ob, Chord chord)
               }
  
               pitch += octaveAdjustment * OCTAVE;
+    System.out.println("final pitch = " + pitch);
               
                 // Get the duration
 
