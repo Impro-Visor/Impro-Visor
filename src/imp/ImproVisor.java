@@ -374,7 +374,8 @@ private ImproVisor(String leadsheet)
     // Load most recent file, if there is one.
 
     recFiles = new RecentFiles();
-    String pathName = recFiles.getFirstPathName();
+    String pathName = recFiles.getMostRecentNonGeneratedFile(); // was getFirstPathName
+    
     if( pathName != null )
       {
         File f = new File(pathName);

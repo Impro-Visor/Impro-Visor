@@ -215,6 +215,37 @@ public class RecentFiles {
         }
     }
     
+    /**
+     * Reads the most recent file not generated as an improvisation
+     * (i.e. not ending in '+', the current Constants.SAVE_IMPROVISATION_STEM).
+     * @return 
+     */
+    public String getMostRecentNonGeneratedFile()
+    {
+        File file = ImproVisor.getRecentFilesFile();
+        if( file == null )
+           {
+           return null;
+           }
+        try{
+            FileInputStream inStream = new FileInputStream(file);
+            DataInputStream datIn = new DataInputStream(inStream);
+            BufferedReader buffRead = new BufferedReader(new InputStreamReader(datIn));
+            String line;
+            Stack temp = new Stack();
+            while((line = buffRead.readLine()) != null)
+            {
+            if( !line.endsWith(Constants.SAVE_IMPROVISATION_EXTENSION) )
+              {
+              return line;
+              }
+            }
+        return null;
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
     
     /**
      * Method removes any duplicate paths that might occur

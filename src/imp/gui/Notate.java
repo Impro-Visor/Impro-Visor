@@ -11372,7 +11372,7 @@ if( scoreToSave == null )
     return;
     }
 String originalStem = ImproVisor.getLastLeadsheetFileStem();
-String newStem = originalStem + "+" + ".ls";
+String newStem = originalStem + Constants.SAVE_IMPROVISATION_EXTENSION;
 
 File newFile = new File(leadsheetDirName, newStem);
 saveLeadsheet(newFile, scoreToSave);

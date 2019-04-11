@@ -30,6 +30,10 @@ package imp;
 
 public interface Constants {
         
+    public static final String LEADSHEET_FILE_EXTENSION = ".ls";
+    public static final String SAVE_IMPROVISATION_STEM = "+";
+    public static final String SAVE_IMPROVISATION_EXTENSION = SAVE_IMPROVISATION_STEM + LEADSHEET_FILE_EXTENSION;
+
     public static final int MAX_VOLUME = 127;
     public static final int NUM_CHANNELS = 16;
     public static final int MAX_BEATS_PER_BAR = 12;
