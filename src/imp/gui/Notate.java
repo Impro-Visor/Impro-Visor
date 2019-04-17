@@ -13121,19 +13121,22 @@ public String[] getNoteLabels(int location)
   {
     String[] notes = new String[12];
 
-    Polylist preferredScale = lickgen.getPreferredScale(); //Polylist.list("", FIRST_SCALE);
-    Polylist scaleTones;
+    // Caution: Hack Alert!
     Chord currentChord = chordProg.getCurrentChord(location);
+    Polylist preferredScale = lickgen.getPreferredScale();
+    if( preferredScale == null || preferredScale.isEmpty() )
+      {
+        preferredScale = Polylist.list(currentChord.getRootPitchClass(), FIRST_SCALE);
+      }
+
+    Polylist scaleTones = Polylist.nil;
 
     Polylist scales = currentChord.getScales();
-
+    try {
     if( scales == null 
-            || preferredScale == null
-            || scales.isEmpty()
-            || preferredScale.isEmpty()
-            || ((String) preferredScale.second()).equals(NONE) )
+     || scales.isEmpty()
+     || ((String) preferredScale.second()).equals(NONE) )
       {
-        scaleTones = Polylist.nil;
       }
     else if( ((String) preferredScale.second()).equals(FIRST_SCALE) )
       {
@@ -13142,6 +13145,11 @@ public String[] getNoteLabels(int location)
     else
       {
         scaleTones = Advisor.getScale((String) preferredScale.first(), (String) preferredScale.second());
+      }
+    }
+    catch( Exception e)
+      {
+        System.out.println("exception: " + e);
       }
     
     boolean[] enh = score.getCurrentEnharmonics(location,

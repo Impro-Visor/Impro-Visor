@@ -506,6 +506,10 @@ public class Grammar
           {
             // Next is the next rule to compare to
             Polylist next = (Polylist) search.first();
+            if( next == null | next.isEmpty() )
+              {
+                continue;
+              }
             String type = (String) next.first();
             //System.out.println("\nnext = " + next);
 
@@ -1056,7 +1060,7 @@ public class Grammar
                 return ZERO;
               }
 
-            return families.member(currentChord.getFamily()) ? ONE : 0.1;
+            return families.member(currentChord.getFamily()) ? ONE : ZERO;
           }
         // Is evaluable of the form (builtin brick <brickname>)
         if( BRICK.equals(arg1) )
