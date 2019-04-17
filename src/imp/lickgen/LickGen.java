@@ -2668,7 +2668,7 @@ public static Note makeRelativeNote(Object ob, Chord chord)
                   octaveAdjustment += 1;
                   degreeValue -= 7;
                 }
-              
+
               if( chordFamily.equals("minor") )
                 {
                   switch(degreeValue)
