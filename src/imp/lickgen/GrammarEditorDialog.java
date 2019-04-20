@@ -105,15 +105,17 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         reloadGrammarButton = new javax.swing.JButton();
         sourceEditorScrollPane = new javax.swing.JScrollPane();
         sourceEditor = new javax.swing.JTextArea();
-        abstractMelodyScrollPane = new javax.swing.JScrollPane();
-        abstractMelodyField = new javax.swing.JTextArea();
         midPanel = new javax.swing.JPanel();
         editorToSourceButton = new javax.swing.JButton();
         saveGrammarAsButton = new javax.swing.JButton();
         improviseButton = new javax.swing.JToggleButton();
+        abstractMelodyScrollPane = new javax.swing.JScrollPane();
+        abstractMelodyField = new javax.swing.JTextArea();
 
-        setTitle("Editor");
+        setTitle("Grammar Editor");
         setAlwaysOnTop(true);
+        setLocation(new java.awt.Point(0, 800));
+        setSize(new java.awt.Dimension(800, 660));
         addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
@@ -123,6 +125,9 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        topPanel.setMaximumSize(new java.awt.Dimension(2147483647, 40));
+        topPanel.setMinimumSize(new java.awt.Dimension(100, 40));
+        topPanel.setPreferredSize(new java.awt.Dimension(800, 40));
         topPanel.setLayout(new java.awt.GridBagLayout());
 
         grammarChooserButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
@@ -143,10 +148,10 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.4;
-        gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         topPanel.add(grammarChooserButton, gridBagConstraints);
         grammarChooserButton.getAccessibleContext().setAccessibleDescription("Open the Grammar Chooser");
@@ -169,9 +174,9 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.4;
-        gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         topPanel.add(sourceToEditorButton, gridBagConstraints);
 
@@ -184,6 +189,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         reloadGrammarButton.setMaximumSize(new java.awt.Dimension(600, 40));
         reloadGrammarButton.setMinimumSize(new java.awt.Dimension(100, 40));
         reloadGrammarButton.setPreferredSize(new java.awt.Dimension(100, 40));
+        reloadGrammarButton.setSize(new java.awt.Dimension(100, 40));
         reloadGrammarButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -194,10 +200,10 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         topPanel.add(reloadGrammarButton, gridBagConstraints);
 
@@ -205,7 +211,8 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.1;
         getContentPane().add(topPanel, gridBagConstraints);
 
         sourceEditorScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
@@ -214,6 +221,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         sourceEditorScrollPane.setVerifyInputWhenFocusTarget(false);
 
         sourceEditor.setColumns(20);
+        sourceEditor.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         sourceEditor.setLineWrap(true);
         sourceEditor.setRows(5);
         sourceEditor.setAutoscrolls(false);
@@ -224,32 +232,14 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weighty = 0.5;
         getContentPane().add(sourceEditorScrollPane, gridBagConstraints);
 
-        abstractMelodyScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Abstract Melody Reference", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        abstractMelodyScrollPane.setMinimumSize(new java.awt.Dimension(223, 180));
-        abstractMelodyScrollPane.setPreferredSize(new java.awt.Dimension(800, 180));
-
-        abstractMelodyField.setEditable(false);
-        abstractMelodyField.setColumns(20);
-        abstractMelodyField.setLineWrap(true);
-        abstractMelodyField.setRows(500);
-        abstractMelodyField.setBorder(null);
-        abstractMelodyField.setMinimumSize(new java.awt.Dimension(440, 100));
-        abstractMelodyField.setPreferredSize(new java.awt.Dimension(440, 400));
-        abstractMelodyScrollPane.setViewportView(abstractMelodyField);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        getContentPane().add(abstractMelodyScrollPane, gridBagConstraints);
-
+        midPanel.setMaximumSize(new java.awt.Dimension(2147483647, 40));
+        midPanel.setMinimumSize(new java.awt.Dimension(200, 40));
+        midPanel.setPreferredSize(new java.awt.Dimension(800, 40));
         midPanel.setLayout(new java.awt.GridBagLayout());
 
         editorToSourceButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
@@ -270,9 +260,9 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.45;
-        gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         midPanel.add(editorToSourceButton, gridBagConstraints);
 
@@ -294,13 +284,14 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.45;
-        gridBagConstraints.weighty = 0.05;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 1);
         midPanel.add(saveGrammarAsButton, gridBagConstraints);
 
         improviseButton.setBackground(new java.awt.Color(0, 255, 0));
+        improviseButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         improviseButton.setText("Improv");
         improviseButton.setToolTipText("Press to start improvisation.");
         improviseButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -324,15 +315,38 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 1.0;
         midPanel.add(improviseButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.1;
         getContentPane().add(midPanel, gridBagConstraints);
+
+        abstractMelodyScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Abstract Melody Reference", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
+        abstractMelodyScrollPane.setMinimumSize(new java.awt.Dimension(223, 180));
+        abstractMelodyScrollPane.setPreferredSize(new java.awt.Dimension(800, 180));
+
+        abstractMelodyField.setEditable(false);
+        abstractMelodyField.setColumns(20);
+        abstractMelodyField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        abstractMelodyField.setLineWrap(true);
+        abstractMelodyField.setRows(500);
+        abstractMelodyField.setBorder(null);
+        abstractMelodyField.setMinimumSize(new java.awt.Dimension(440, 100));
+        abstractMelodyScrollPane.setViewportView(abstractMelodyField);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.2;
+        getContentPane().add(abstractMelodyScrollPane, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

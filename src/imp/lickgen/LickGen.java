@@ -2669,7 +2669,20 @@ public static Note makeRelativeNote(Object ob, Chord chord)
                   degreeValue -= 7;
                 }
 
-              if( chordFamily.equals("minor") )
+              if( chordFamily.equals("major") )
+                {
+                  switch(degreeValue)
+                      {
+                        case  2:  pitch+=2;  break;
+                        case  3:  pitch+=4;  break;
+                        case  4:  pitch+=5;  break;
+                        case  5:  pitch+=7;  break;
+                        case  6:  pitch+=9;  break;
+                        case  7:  pitch+=11; break;
+                        default:
+                      }
+                }
+              else if( chordFamily.equals("minor") )
                 {
                   switch(degreeValue)
                       {
@@ -2747,7 +2760,7 @@ public static Note makeRelativeNote(Object ob, Chord chord)
                         default:
                       }
                 }
-              else // major, or anything else for now
+              else // anything else for now, same as major
                 {
                   switch(degreeValue)
                       {
@@ -3162,9 +3175,6 @@ private void makeBassNote(Note note, int pos, ChordPart chordProg)
         for (int j = 0; j == 0 || (type == CHORD && j < 3 && numTypes[0] == 0); j++) {
             //if(j > 0) System.out.println("Expanding interval: " + j);
             noteTypes = getNoteTypes(pos, low, high, chordProg);
-            
-
-
 
             //get distribution of note types
             //index 0 = chord tones, 1 = color tones, 2 = random tones, 3 = scale tones

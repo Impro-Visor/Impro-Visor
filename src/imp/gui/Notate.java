@@ -10554,6 +10554,7 @@ public void editGrammar()
     grammarEditor.fillEditor();
     grammarEditor.setSize(new Dimension(800, 700));
     grammarEditor.setLocationRelativeTo(this);
+    grammarEditor.setLocation(100, 700);
     grammarEditor.setVisible(true);
     grammarEditor.toFront();
   }
