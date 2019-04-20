@@ -361,7 +361,7 @@ public class Grammar
         if( wt instanceof Number )
           {
             Double weight = ((Number) wt).doubleValue();
-            if( weight >= 0 )
+            if( weight > 0 )
               {
                 ruleList.add(new WeightedRule(lhs, rhs, weight));
               }
@@ -947,7 +947,9 @@ public class Grammar
 
                 if( BUILTIN.equals(parsing.first()) )
                   {
-                    return evaluateBuiltin(parsing.second(), parsing.third());
+                    Object value = evaluateBuiltin(parsing.second(), parsing.third());
+                    //System.out.println("evaluate value = " + value);
+                    return value;
                   }
                 else if( PLUS.equals(parsing.first()) )
                   {
@@ -1059,8 +1061,9 @@ public class Grammar
               {
                 return ZERO;
               }
-
-            return families.member(currentChord.getFamily()) ? ONE : ZERO;
+            String family = currentChord.getFamily();
+            //System.out.println("family " + family + " " + currentChord + " families " + families);
+            return families.member(family) ? ONE : ZERO;
           }
         // Is evaluable of the form (builtin brick <brickname>)
         if( BRICK.equals(arg1) )
