@@ -10552,9 +10552,9 @@ public void saveGrammar()
 public void editGrammar()
   {
     grammarEditor.fillEditor();
-    grammarEditor.setSize(new Dimension(900, 700));
+    grammarEditor.setSize(new Dimension(1000, 600));
     grammarEditor.setLocationRelativeTo(this);
-    grammarEditor.setLocation(100, 700);
+    grammarEditor.setLocation(50, 800);
     grammarEditor.setVisible(true);
     grammarEditor.toFront();
   }
