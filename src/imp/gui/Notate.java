@@ -10552,7 +10552,7 @@ public void saveGrammar()
 public void editGrammar()
   {
     grammarEditor.fillEditor();
-    grammarEditor.setSize(new Dimension(800, 700));
+    grammarEditor.setSize(new Dimension(900, 700));
     grammarEditor.setLocationRelativeTo(this);
     grammarEditor.setLocation(100, 700);
     grammarEditor.setVisible(true);
@@ -21826,10 +21826,6 @@ public void refreshGrammarEditor()
     grammarEditor.performEditorToSourceButton(null);
   }
 
-public void setAbstractMelodyField(String string)
-  {
-    grammarEditor.setAbstractMelodyField(string);
-  }
 
 public void adjustSelection()
   {

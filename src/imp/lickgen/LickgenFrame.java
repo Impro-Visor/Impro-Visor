@@ -3696,7 +3696,6 @@ private void gradeGoodBtnActionPerformed(java.awt.event.ActionEvent evt)
         abstractMelodyField.setText(string);
         abstractMelodyField.setCaretPosition(0);
         abstractMelodyScrollPane.getViewport().setViewPosition(new Point(0, 0));
-        notate.setAbstractMelodyField(string);
     }
     
     public void setRelativeFieldText(String string) {

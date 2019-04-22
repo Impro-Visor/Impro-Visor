@@ -109,8 +109,6 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         editorToSourceButton = new javax.swing.JButton();
         saveGrammarAsButton = new javax.swing.JButton();
         improviseButton = new javax.swing.JToggleButton();
-        abstractMelodyScrollPane = new javax.swing.JScrollPane();
-        abstractMelodyField = new javax.swing.JTextArea();
 
         setTitle("Grammar Editor");
         setAlwaysOnTop(true);
@@ -327,27 +325,6 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         gridBagConstraints.weighty = 0.1;
         getContentPane().add(midPanel, gridBagConstraints);
 
-        abstractMelodyScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Abstract Melody Reference", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        abstractMelodyScrollPane.setMinimumSize(new java.awt.Dimension(223, 180));
-        abstractMelodyScrollPane.setPreferredSize(new java.awt.Dimension(800, 180));
-
-        abstractMelodyField.setEditable(false);
-        abstractMelodyField.setColumns(20);
-        abstractMelodyField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        abstractMelodyField.setLineWrap(true);
-        abstractMelodyField.setRows(500);
-        abstractMelodyField.setBorder(null);
-        abstractMelodyField.setMinimumSize(new java.awt.Dimension(440, 100));
-        abstractMelodyScrollPane.setViewportView(abstractMelodyField);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.2;
-        getContentPane().add(abstractMelodyScrollPane, gridBagConstraints);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -444,15 +421,8 @@ private void windowClosingHandler(java.awt.event.WindowEvent evt)//GEN-FIRST:eve
         editorToSourceButtonActionPerformed(evt);
     }
     
-    public void setAbstractMelodyField(String string) {
-        abstractMelodyField.setText(string);
-        abstractMelodyField.setCaretPosition(0);
-        abstractMelodyScrollPane.getViewport().setViewPosition(new Point(0, 0));
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea abstractMelodyField;
-    private javax.swing.JScrollPane abstractMelodyScrollPane;
     private javax.swing.JButton editorToSourceButton;
     private javax.swing.JButton grammarChooserButton;
     private javax.swing.JToggleButton improviseButton;
