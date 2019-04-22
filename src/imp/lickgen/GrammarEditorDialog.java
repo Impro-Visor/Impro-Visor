@@ -115,8 +115,8 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         setBackground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         setLocation(new java.awt.Point(0, 800));
-        setMinimumSize(new java.awt.Dimension(800, 480));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 200));
+        setPreferredSize(new java.awt.Dimension(800, 660));
         setSize(new java.awt.Dimension(800, 660));
         addWindowListener(new java.awt.event.WindowAdapter()
         {
@@ -128,7 +128,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         topPanel.setMaximumSize(new java.awt.Dimension(2147483647, 40));
-        topPanel.setMinimumSize(new java.awt.Dimension(100, 40));
+        topPanel.setMinimumSize(new java.awt.Dimension(100, 30));
         topPanel.setPreferredSize(new java.awt.Dimension(800, 40));
         topPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -225,7 +225,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         getContentPane().add(topPanel, gridBagConstraints);
 
         midPanel.setMaximumSize(new java.awt.Dimension(2147483647, 40));
-        midPanel.setMinimumSize(new java.awt.Dimension(200, 40));
+        midPanel.setMinimumSize(new java.awt.Dimension(200, 30));
         midPanel.setPreferredSize(new java.awt.Dimension(800, 40));
         midPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -323,7 +323,7 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         getContentPane().add(midPanel, gridBagConstraints);
 
         sourceEditorScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grammar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
-        sourceEditorScrollPane.setMinimumSize(new java.awt.Dimension(600, 400));
+        sourceEditorScrollPane.setMinimumSize(new java.awt.Dimension(600, 100));
         sourceEditorScrollPane.setPreferredSize(new java.awt.Dimension(800, 400));
         sourceEditorScrollPane.setVerifyInputWhenFocusTarget(false);
 
