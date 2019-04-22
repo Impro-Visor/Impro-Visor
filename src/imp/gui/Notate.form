@@ -8442,7 +8442,7 @@
       <Connection code="(new ImageIcon(getClass().getResource(&quot;/imp/gui/graphics/icons/trumpetsmall.png&quot;))).getImage()" type="code"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[800, 600]"/>
+      <Dimension value="[800, 200]"/>
     </Property>
     <Property name="name" type="java.lang.String" value="notateFrame" noResource="true"/>
   </Properties>

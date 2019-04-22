@@ -6958,7 +6958,7 @@ public Critic getCritic()
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFocusCycleRoot(false);
         setIconImage((new ImageIcon(getClass().getResource("/imp/gui/graphics/icons/trumpetsmall.png"))).getImage());
-        setMinimumSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 200));
         setName("notateFrame"); // NOI18N
         addFocusListener(new java.awt.event.FocusAdapter()
         {
