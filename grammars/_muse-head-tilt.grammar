@@ -1,4 +1,8 @@
 (startsymbol P)
+(rule (P) ( (muse-switch 0 ((0 left) (1 right))) ) 1)
+(rule (left) (C4) 1)
+(rule (right) (C8 C8) 1)
+
 (parameter (use-grammar true))
 (parameter (rectify true))
 (parameter (avoid-repeats true))
@@ -23,9 +27,3 @@
 (parameter (chord-tone-decay 0.0))
 (parameter (auto-fill true))
 (parameter (scale-root C))
-(base (P 0) () 1.0)
-(rule (P Y) (Seg1 (P (- Y 120))) 1)
-(rule (Seg1) (C4) (builtin muse 0)) 
-(rule (Seg1) (C8 C8) (- 1 (builtin muse 0)))
-
-
