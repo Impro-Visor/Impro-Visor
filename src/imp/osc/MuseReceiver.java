@@ -26,46 +26,57 @@ import oscP5.*;
  */
 public class MuseReceiver {
     
-    static MuseServer museServer;
-    static int recvPort = 5000;	
+    MuseServer museServer;
+    int recvPort = 5003;	
 
     public MuseReceiver() {
         museServer = new MuseServer();
 	museServer.oscServer = new OscP5(museServer, recvPort);
     }
     
-    public static Long getMuseValue(Long arg)
-    {
-        // Ask server for message
-        // Parse the received message
-        // Return relevant value
-        
-        // Uncomment for muse installation
-        //double currentAccValue = museServer.getAccValue();
-        
-        // For testing purposes only, to simulate a muse device:
-        // If the argument to this function is 1, it will return 0, 2, or 1
-        // depending on whether a random value is low, high, or mid-range
-        // respectively.
-        //
-        // If the argument to this function is not 1, it will return -1.
-        
-        double currentAccValue = 0.4*Math.random() - 0.2; // dummy for testing
+    public Long getMuseValue(Long grammarMode)
+    {       
+        // _muse-head-tilt grammar
+        if (grammarMode == 0) {    
+            double currentAccValue = museServer.getAccValue();
 
-        if( arg.equals(1L) )
-          {
-            if (currentAccValue < -0.1) {
+            if (currentAccValue < -0.2) {
+                System.out.println("LEFT");
                 return 0L;
-            } else if (currentAccValue > 0.1) {
-                return 2L;
-            } else {
+            } else if (currentAccValue > 0.2) {
+                System.out.println("RIGHT");
                 return 1L;
+            } else {
+                System.out.println("MIDDLE");               
+                return (long)Math.round(Math.random());
             }
-          }
-        else
-          {
-            return -1L;
-          }
-
+        }
+        
+        // _muse-brainwave grammar
+        else {
+            double currentAlphaValue = museServer.getAlphaValue();
+            double averageAlpha = museServer.getAverageAlpha();
+            double standev = museServer.getSD();
+            
+            // Only outputs when calibration is complete
+            if (averageAlpha != 0.0) {
+            	double zscore = (currentAlphaValue - averageAlpha)/standev;
+            	if (zscore < -1) {
+                    System.out.println("HIGH");
+                    return 2L;
+                }
+                else if (zscore >= -1 && zscore <= 1) {
+                    System.out.println("MEDIUM");
+                    return 1L;
+                }
+                else {
+                    System.out.println("LOW");
+                    return 0L;
+                }
+            } 
+            else {
+            	return -1L;
+            }
+        }
     }
 }

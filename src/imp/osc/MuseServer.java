@@ -20,6 +20,7 @@
 
 package imp.osc;
 import oscP5.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,20 +30,58 @@ public class MuseServer {
     OscP5 oscServer;
     
     double currentAccValue = 0.0;
+    double currentAlphaValue = 0.0;
+    
+    int alphasSize = 100;
+    ArrayList<Double> alphas = new ArrayList<Double>();
+    double averageAlpha = 0.0;
+    double standev = 0.0;
 
     void oscEvent(OscMessage msg) {
+        
+        // Accelerometer Data
         if (msg.checkAddrPattern("/muse/acc")==true) {  
             this.currentAccValue = msg.get(1).floatValue();
-            
-            if (currentAccValue < -0.2) {
-                System.out.print("LEFT\n");
-            } else if (currentAccValue > 0.2) {
-                System.out.print("RIGHT\n");
-            } else {
-                System.out.print("MIDDLE\n");
-            }
         }
+        
+        // Brain Data
+    	if (msg.checkAddrPattern("/muse/elements/alpha_absolute") == true) {
+            this.currentAlphaValue = msg.get(0).floatValue();
+            
+            // Saves a collection of alpha values to compute an average from (calibration phase)
+            if (alphas.size() < alphasSize) {
+        	alphas.add(currentAccValue);
+            } else {
+                if (averageAlpha == 0.0) {
+                    System.out.println("CALIBRATION COMPLETE");
+                    this.calculateAverage();
+                    this.calculateStandardDeviation();
+                }
+            }
+    	}
+    }
+    
+    void calculateAverage() {
+    	Double sum = 0.0;
+    	for (Double alpha : alphas) {
+            sum += alpha;
+    	}
+    	averageAlpha = sum / alphas.size();
+    }
+    
+    void calculateStandardDeviation() {
+    	Double sum = 0.0;
+    	for (Double alpha : alphas) {
+            sum += Math.pow((alpha - averageAlpha), 2);
+    	}
+    	standev = Math.sqrt(sum/alphas.size());
     }
     
     double getAccValue() { return currentAccValue; }
+    
+    double getAlphaValue() { return currentAlphaValue; }
+    
+    double getAverageAlpha() { return averageAlpha; }
+    
+    double getSD() { return standev; }
 }
