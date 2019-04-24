@@ -71,6 +71,8 @@ public class Grammar
     public static final String SHARE = "share";
     public static final String UNSHARE = "unshare";
     public static final String UNSHAREALL = "unshareall";
+    public static final String MUSE_SWITCH = "muse-switch"; // keyword for muse
+    public static final String MUSE_DEFAULT = "default";    // keyword for muse
 // Special forms:
     public static final String BUILTIN = "builtin";
     public static final String SPLICE = "splice";
@@ -403,7 +405,10 @@ public class Grammar
                       {
                         return FILL;
                       }
-                    break;
+                    if( polylistToken.first().equals(MUSE_SWITCH) )
+                      {
+                        return MUSE_SWITCH;
+                      }                    break;
               }
           }
         return NONE; // Not a wrapper
@@ -448,9 +453,72 @@ public class Grammar
                 Polylist stack = result.stack.cons(Polylist.list(UNSHAREALL));
                 return new ExpansionResult(stack, slotsToFill - slots);
 
+            case MUSE_SWITCH:
+                token = ((Polylist) token).rest();
+                // token is now the list after muse-switch, which should be
+                // two items:
+                //    an argument to be evaluated (should return a Long)
+                //
+                //    an association list which gives a replacement 
+                //    for each value that getMuseValue can return
+                //    and a special default pair indicating the replacement in 
+                //    case said value is not in the list
+                
+                Object rawMuseArgument = token.first();
+                
+                //System.out.println("argument to muse-switch = " + rawArgument);
+                
+                // Revisit: Provide a proper error message in case assertion
+                // fails.
+                Object evaluationResult = evaluate(rawMuseArgument);
+                assert(evaluationResult instanceof Long);
+                
+                Long argValue = (Long)evaluationResult;
+                
+                Polylist alist = (Polylist)token.second();
+                
+                //System.out.println("muse-switch alist = " + alist);
+                
+                // Get the value from muse, which generally depends on argValue
+                Long museValue = getMuseValue(argValue);
+                
+                // Find the pair having the first component equal to museValue.
+                // These components should be Long (because of polya) constants,
+                // or the String MUSE_DEFAULT.
+                
+                // If there is no match to museValue and no default specified,
+                // then we continue with no replacement (??).
+                // If any item in the putative association list is not a pair
+                // this thing might crash. REVISIT.
+                
+                Polylist pair = alist.assoc(museValue);
+                
+                //System.out.println("pair = " + pair);
+                
+                // The replacement for this muse-switch expression
+                Object replacement;
+                
+                if( pair == null )
+                  {
+                    replacement = alist.assoc(MUSE_DEFAULT).second();
+                    if( replacement == null )
+                      {
+                        // Not sure if this is correct. REVISIT.
+                        return applyRules(Polylist.nil, slotsToFill);
+                      }
+                  }
+                else
+                  {
+                    replacement = pair.second();
+                  }
+                
+                //System.out.println("replacement = " + replacement);
+                
+                return applyRules(Polylist.list(replacement), slotsToFill);
+
             case UNSHARE:
                 unshare = true;
-            // Intentional fall-through
+            // NOTE: Intentional fall-through
             case SHARE:
                 shareable = true;
 
@@ -1101,11 +1169,6 @@ public class Grammar
             return 0.1; //ZERO;
           }
         
-        if( MUSE.equals(arg1) )
-        {
-            MuseReceiver receiver = ImproVisor.getMuseReceiver();
-            return getMuseValue();
-        }
         return ZERO;
     }
     
