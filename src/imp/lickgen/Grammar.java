@@ -479,8 +479,14 @@ public class Grammar
                 
                 //System.out.println("muse-switch alist = " + alist);
                 
+                // Make sure the Muse receiver is instantiated.
+                MuseReceiver receiver = ImproVisor.getMuseReceiver();
+                
                 // Get the value from muse, which generally depends on argValue
-                Long museValue = getMuseValue(argValue);
+                // Technically we don't need the receiver. part since it's
+                // static method, but doesn't hurt as a reminder.
+                
+                Long museValue = receiver.getMuseValue(argValue);
                 
                 // Find the pair having the first component equal to museValue.
                 // These components should be Long (because of polya) constants,
