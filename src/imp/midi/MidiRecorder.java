@@ -385,4 +385,9 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
 
     public void close() {
     }
+    
+    public void setMIDIinputChannel(int value)
+    {
+        inputChannel = value;
+    }
 }

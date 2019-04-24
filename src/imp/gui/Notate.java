@@ -1614,14 +1614,13 @@ public Critic getCritic()
         midiInComboBox = new javax.swing.JComboBox();
         midiInStatus = new javax.swing.JLabel();
         midiQuantizationPanel = new javax.swing.JPanel();
-        recordingLatency = new javax.swing.JLabel();
         recordingLatencySpinner = new javax.swing.JSpinner();
         openQuantizationButton = new javax.swing.JButton();
         echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
+        inputChannelSpinner = new javax.swing.JSpinner();
         rangeFilterBtn = new javax.swing.JButton();
-        clearRangeBtn = new javax.swing.JButton();
         latencyTab = new javax.swing.JPanel();
         midiLatencyPanel = new javax.swing.JPanel();
         midiLatencyLabel = new javax.swing.JLabel();
@@ -4795,6 +4794,7 @@ public Critic getCritic()
         midiPreferences.setPreferredSize(new java.awt.Dimension(390, 370));
         midiPreferences.setLayout(new java.awt.GridBagLayout());
 
+        devicesTab.setBackground(new java.awt.Color(245, 245, 245));
         devicesTab.setLayout(new java.awt.GridBagLayout());
 
         midiLabel.setText("<html>Changing the MIDI devices takes effect <em>immediately</em></html>");
@@ -4805,6 +4805,7 @@ public Critic getCritic()
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         devicesTab.add(midiLabel, gridBagConstraints);
 
+        midiOutPanel.setBackground(new java.awt.Color(245, 245, 245));
         midiOutPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Select a device for MIDI output"));
         midiOutPanel.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -4818,6 +4819,7 @@ public Critic getCritic()
         });
         midiOutPanel.add(midiOutComboBox);
 
+        midiOutStatus.setBackground(new java.awt.Color(245, 245, 245));
         midiOutStatus.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         midiOutStatus.setText("Status:");
         midiOutStatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -4826,9 +4828,11 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         devicesTab.add(midiOutPanel, gridBagConstraints);
 
+        midiInPanel.setBackground(new java.awt.Color(245, 245, 245));
         midiInPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Select a device for MIDI input"));
         midiInPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -4846,6 +4850,7 @@ public Critic getCritic()
         gridBagConstraints.weightx = 1.0;
         midiInPanel.add(midiInComboBox, gridBagConstraints);
 
+        midiInStatus.setBackground(new java.awt.Color(245, 245, 245));
         midiInStatus.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         midiInStatus.setText("Status:");
         midiInStatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -4860,27 +4865,28 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         devicesTab.add(midiInPanel, gridBagConstraints);
 
+        midiQuantizationPanel.setBackground(new java.awt.Color(245, 245, 245));
         midiQuantizationPanel.setLayout(new java.awt.GridBagLayout());
 
-        recordingLatency.setText("Recording latency (beats):");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        midiQuantizationPanel.add(recordingLatency, gridBagConstraints);
-
         recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8"}));
-        recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(100, 26));
-        recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(100, 26));
+        recordingLatencySpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Recording Latency in Beats"));
+        recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(200, 40));
+        recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(200, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         midiQuantizationPanel.add(recordingLatencySpinner, gridBagConstraints);
 
-        openQuantizationButton.setText("Recording Quantization");
+        openQuantizationButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        openQuantizationButton.setLabel("Open Recording Quantization");
+        openQuantizationButton.setMaximumSize(new java.awt.Dimension(195, 30));
+        openQuantizationButton.setMinimumSize(new java.awt.Dimension(195, 30));
+        openQuantizationButton.setPreferredSize(new java.awt.Dimension(195, 30));
         openQuantizationButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4898,9 +4904,11 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
         devicesTab.add(midiQuantizationPanel, gridBagConstraints);
 
         echoMidiCheckBox.setSelected(midiManager.getEcho());
+        echoMidiCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         echoMidiCheckBox.setLabel("Echo MIDI input (send MIDI messages from MIDI input to MIDI output).");
         echoMidiCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
@@ -4912,11 +4920,17 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(10, 11, 10, 11);
         devicesTab.add(echoMidiCheckBox, gridBagConstraints);
 
         sendSetBankCheckBox.setSelected(Preferences.getMidiSendBankSelect());
+        sendSetBankCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         sendSetBankCheckBox.setLabel("Send SetBank-to-0 MIDI messages with each note.");
+        sendSetBankCheckBox.setMaximumSize(new java.awt.Dimension(477, 23));
+        sendSetBankCheckBox.setMinimumSize(new java.awt.Dimension(477, 23));
+        sendSetBankCheckBox.setPreferredSize(new java.awt.Dimension(477, 23));
         sendSetBankCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4927,21 +4941,45 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(10, 11, 10, 11);
         devicesTab.add(sendSetBankCheckBox, gridBagConstraints);
 
-        jLabel1.setText("MIDI channel assignments are found in the Mixer panel.");
+        jLabel1.setText("MIDI output channel assignments are found in the Mixer panel.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 2;
         gridBagConstraints.ipady = 2;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         devicesTab.add(jLabel1, gridBagConstraints);
 
-        rangeFilterBtn.setText("Midi Input Range");
+        inputChannelSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));
+        inputChannelSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("MIDI Input Channel"));
+        inputChannelSpinner.setMaximumSize(new java.awt.Dimension(32767, 40));
+        inputChannelSpinner.setMinimumSize(new java.awt.Dimension(150, 40));
+        inputChannelSpinner.setPreferredSize(new java.awt.Dimension(150, 40));
+        inputChannelSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                inputChannelSpinnerStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        devicesTab.add(inputChannelSpinner, gridBagConstraints);
+
+        rangeFilterBtn.setText("Open MIDI Input Range");
+        rangeFilterBtn.setActionCommand("MIDI Input Range");
+        rangeFilterBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        rangeFilterBtn.setMaximumSize(new java.awt.Dimension(160, 30));
+        rangeFilterBtn.setMinimumSize(new java.awt.Dimension(160, 30));
+        rangeFilterBtn.setPreferredSize(new java.awt.Dimension(160, 30));
         rangeFilterBtn.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4950,26 +4988,11 @@ public Critic getCritic()
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
         devicesTab.add(rangeFilterBtn, gridBagConstraints);
-
-        clearRangeBtn.setText("Clear Range");
-        clearRangeBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                clearRangeBtnActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 50);
-        devicesTab.add(clearRangeBtn, gridBagConstraints);
 
         jTabbedPane2.addTab("MIDI Devices", devicesTab);
 
@@ -23681,12 +23704,6 @@ private boolean isDotted = false;
         shouldFilter = true;
     }//GEN-LAST:event_rangeFilterBtnActionPerformed
 
-    private void clearRangeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearRangeBtnActionPerformed
-        range[0] = 0;
-        range[1] = 127;
-        shouldFilter = false;
-    }//GEN-LAST:event_clearRangeBtnActionPerformed
-
    public void openActiveTradingWindow()
     {
         tradingWindowActionPerformed(null);
@@ -24112,6 +24129,11 @@ private boolean isDotted = false;
     {//GEN-HEADEREND:event_grammarEditorMIActionPerformed
         editGrammar();
     }//GEN-LAST:event_grammarEditorMIActionPerformed
+
+    private void inputChannelSpinnerStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_inputChannelSpinnerStateChanged
+    {//GEN-HEADEREND:event_inputChannelSpinnerStateChanged
+        getMidiRecorder().setMIDIinputChannel((int)inputChannelSpinner.getValue() - 1);
+    }//GEN-LAST:event_inputChannelSpinnerStateChanged
 
     private String adviceRhythm = "";
     
@@ -26527,7 +26549,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel chorusSpecificPanel;
     private javax.swing.JButton clearButton;
     private javax.swing.JMenuItem clearHistoryMI;
-    private javax.swing.JButton clearRangeBtn;
     private javax.swing.JButton clearRecentButton;
     private javax.swing.JMenuItem closeWindowMI;
     private javax.swing.ButtonGroup colorColorBtnGrp;
@@ -26686,6 +26707,7 @@ private ImageIcon pauseButton =
     private javax.swing.JPopupMenu.Separator improvSeparator2;
     private javax.swing.JPopupMenu.Separator improvSeparator3;
     private javax.swing.JToggleButton improviseButton;
+    private javax.swing.JSpinner inputChannelSpinner;
     private javax.swing.JMenuItem insertChorusTabMI;
     private javax.swing.JMenuItem insertPhraseAfterPMI;
     private javax.swing.JMenuItem insertPhraseBeforePMI;
@@ -26903,7 +26925,6 @@ private ImageIcon pauseButton =
     private javax.swing.JScrollPane recentStyleListScrollPane;
     private javax.swing.JButton recordBtn;
     private javax.swing.JMenuItem recordMI;
-    private javax.swing.JLabel recordingLatency;
     private javax.swing.JSpinner recordingLatencySpinner;
     private javax.swing.JRadioButton redApproachBtn;
     private javax.swing.JRadioButton redChordBtn;
