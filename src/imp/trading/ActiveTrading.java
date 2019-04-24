@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2015-2018 Robert Keller and Harvey Mudd College.
+ * Copyright (C) 2015-2019 Robert Keller and Harvey Mudd College.
  * 
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -89,6 +89,7 @@ public class ActiveTrading {
     public static final int DEFAULT_TRADE_LENGTH = 4;
     public static final String DEFAULT_TRADE_MODE = "Transform";
     public static final int DEFAULT_VOLUME = 80;
+    public static final double SWING_THRESHOLD = 0.6;
     private final LinkedList<TradeListener> tradeListeners = new LinkedList<>();
     private int slotsPerChorus;
     
@@ -536,7 +537,7 @@ public class ActiveTrading {
         //+ styleBar + " swing = " + swing + 
         //" " + currentStyle.getName());
 
-        playCommand = makePlayCommand(tradeScore, swing > 0.6, midiSynth);
+        playCommand = makePlayCommand(tradeScore, swing > SWING_THRESHOLD, midiSynth);
     }
 
     /**
@@ -770,7 +771,7 @@ public class ActiveTrading {
 
             playCommand = makePlayCommand(
                     tradeScore,
-                    swing > 0.6,
+                    swing > SWING_THRESHOLD,
                     midiSynth);
           }
 
