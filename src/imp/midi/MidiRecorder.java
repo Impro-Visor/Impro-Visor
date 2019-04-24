@@ -56,6 +56,7 @@ public class MidiRecorder implements imp.Constants, Receiver
     double latency = 0;
     boolean isSuspended = false;
     int transposition = 0;
+    private int inputChannel = 0;
     
  
 public MidiRecorder(Notate notate, Score score)
@@ -214,7 +215,13 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
     }
 
     void handleNoteOn(int note, int velocity, int channel) {
-    //System.out.println("noteOn: " + noteOn + "; noteOff: " + noteOff + "; event: " + lastEvent);
+        //System.out.print("noteOn: " + note + " channel = " + channel + " ");
+        if( channel != inputChannel )
+          {
+            //System.out.println("skipped");
+            return;
+          }
+        //System.out.println();
         // new note played, so finish up previous notes or insert rests up to the current note
         int index;
         if (notePlaying) {
@@ -310,6 +317,13 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
     }
 
     void handleNoteOff(int note, int velocity, int channel) {
+         //System.out.print("noteOff: " + note + " channel = " + channel + " ");
+         if( channel != inputChannel )
+          {
+            //System.out.println("skipped");
+            return;
+          }
+        //System.out.println();
         //System.out.println("noteOff: " + noteOff + "; event: " + lastEvent);
 
         if (note != prevNote) {

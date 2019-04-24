@@ -23673,7 +23673,7 @@ private boolean isDotted = false;
         guideToneLineDialog.updatePlayButtons();
     }//GEN-LAST:event_stopBtnStateChanged
 
-    private int [] range = {-1, -1};
+    private int [] range = {21, 108};
     private boolean shouldFilter = false;
     private void rangeFilterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rangeFilterBtnActionPerformed
         RangeChooser midiFilter = new RangeChooser(this, range[0], range[1], 1, true);
@@ -23683,7 +23683,7 @@ private boolean isDotted = false;
 
     private void clearRangeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearRangeBtnActionPerformed
         range[0] = 0;
-        range[1] = 128;
+        range[1] = 127;
         shouldFilter = false;
     }//GEN-LAST:event_clearRangeBtnActionPerformed
 
