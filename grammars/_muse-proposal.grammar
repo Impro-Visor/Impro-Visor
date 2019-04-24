@@ -17,7 +17,7 @@
  * there is the right number and that everything matches correctly.
  *
  * The integer (Long) value that getMuseValue returns is used to find the
- * first pair in the association list, the first component of which matces.
+ * first pair in the association list, the first component of which matches.
  * The expansion is then the second component.
  *
  * If there is no match, the expansion is the one given in the default pair.
@@ -27,7 +27,7 @@
  * 1 is passed to getMuseValue. If the latter returns 0, then the expansion
  * will be low, which is further expanded into C4.
  * But if, instead, getMuseValue returns, say, -1, then default will be
- * used and the expansion will be none, which is further expanded into C1.
+ * used and the expansion will be none, which is further expanded into R1.
  */
 
 /* Note that the (parameter (chord-tone-weight 0.7)) has to be non-zero,
@@ -37,10 +37,8 @@
 
 (startsymbol P)
 
-
 (rule (P) ( (muse-switch 1 ((default none) (0 low) (1 mid) (2 high))) ) 1)
-
-(rule (none) (C1) 1)
+(rule (none) (R1) 1)
 (rule (low) (C4) 1)
 (rule (mid) (C8 C8) 1)
 (rule (high) (C16 C16 C16 C16) 1)
@@ -68,7 +66,3 @@
 (parameter (syncopation-constant 0.2))
 (parameter (expectancy-multiplier 0.0))
 (parameter (expectancy-constant 0.7))
-
-
-
-
