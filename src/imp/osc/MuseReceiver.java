@@ -34,8 +34,7 @@ public class MuseReceiver {
 	museServer.oscServer = new OscP5(museServer, recvPort);
     }
     
-    public Long getMuseValue(Long grammarMode)
-    {       
+    public Long getMuseValue(Long grammarMode) {       
         // _muse-head-tilt grammar
         if (grammarMode == 0) {    
             double currentAccValue = museServer.getAccValue();
@@ -61,19 +60,31 @@ public class MuseReceiver {
             // Only outputs when calibration is complete
             if (averageAlpha != 0.0) {
             	double zscore = (currentAlphaValue - averageAlpha)/standev;
-            	if (zscore < -1) {
+                System.out.println("Z Score: " + zscore);
+            	System.out.println("Average Alpha: " + averageAlpha);
+                System.out.println("current Alpha:" + currentAlphaValue);
+                if (zscore < -1.2) {
+                    System.out.println("VERY HIGH");
+                    return 4L;
+                }
+                else if (zscore >= -1.2 && zscore <= -0.5)
+                {
                     System.out.println("HIGH");
+                    return 3L;
+                }
+                else if (zscore > -0.5 && zscore <= 0.5) {
+                    System.out.println("MEDIUM");
                     return 2L;
                 }
-                else if (zscore >= -1 && zscore <= 1) {
-                    System.out.println("MEDIUM");
+                else if (zscore > 0.5 && zscore <= 1.2) {
+                    System.out.println("LOW");
                     return 1L;
                 }
                 else {
-                    System.out.println("LOW");
+                    System.out.println("VERY LOW");
                     return 0L;
                 }
-            } 
+            }
             else {
             	return -1L;
             }
