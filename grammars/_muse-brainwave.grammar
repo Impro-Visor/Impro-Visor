@@ -37,11 +37,13 @@
 
 (startsymbol P)
 
-(rule (P) ( (muse-switch 1 ((default none) (0 low) (1 mid) (2 high))) ) 1)
+(rule (P) ( (muse-switch 1 ((default none) (0 v_low) (1 low) (2 mid) (3 high) (4 v_high))) ) 1)
 (rule (none) (R1) 1)
-(rule (low) (C4) 1)
-(rule (mid) (C8 C8) 1)
-(rule (high) (C16 C16 C16 C16) 1)
+(rule (v_low) (C1) 1)
+(rule (low) (C2) 1)
+(rule (mid) (C4) 1)
+(rule (high) (C8 C8) 1)
+(rule (v_high) (C16 C16 C16 C16) 1)
 
 (parameter (use-grammar true))
 (parameter (rectify false))
