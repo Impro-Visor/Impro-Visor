@@ -63,20 +63,20 @@ public class MuseReceiver {
                 System.out.println("Z Score: " + zscore);
             	System.out.println("Average Alpha: " + averageAlpha);
                 System.out.println("current Alpha:" + currentAlphaValue);
-                if (zscore < -1.2) {
+                if (zscore < -2.0) {
                     System.out.println("VERY HIGH");
                     return 4L;
                 }
-                else if (zscore >= -1.2 && zscore <= -0.5)
+                else if (zscore >= -2.0 && zscore <= -0.75)
                 {
                     System.out.println("HIGH");
                     return 3L;
                 }
-                else if (zscore > -0.5 && zscore <= 0.5) {
+                else if (zscore > -0.75 && zscore <= 0.75) {
                     System.out.println("MEDIUM");
                     return 2L;
                 }
-                else if (zscore > 0.5 && zscore <= 1.2) {
+                else if (zscore > 0.75 && zscore <= 2.0) {
                     System.out.println("LOW");
                     return 1L;
                 }
