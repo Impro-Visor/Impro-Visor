@@ -32,13 +32,12 @@ public class MuseServer {
     double currentAccValue = 0.0;
     double currentAlphaValue = 0.0;
     
-    int alphasSize = 100;
+    int alphasSize = 200;
     ArrayList<Double> alphas = new ArrayList<Double>();
     double averageAlpha = 0.0;
     double standev = 0.0;
 
     void oscEvent(OscMessage msg) {
-        
         // Accelerometer Data
         if (msg.checkAddrPattern("/muse/acc")==true) {  
             this.currentAccValue = msg.get(1).floatValue();
@@ -50,7 +49,7 @@ public class MuseServer {
             
             // Saves a collection of alpha values to compute an average from (calibration phase)
             if (alphas.size() < alphasSize) {
-        	alphas.add(currentAccValue);
+        	alphas.add(currentAlphaValue);
             } else {
                 if (averageAlpha == 0.0) {
                     System.out.println("CALIBRATION COMPLETE");
