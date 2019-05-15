@@ -24558,6 +24558,12 @@ public void improvisationOn()
     tradeCheckbox.setSelected(false);  
     grammarMenuDialog.improvisationOn();
     grammarEditor.improvisationOn();
+    
+    // Reset Muse calibration if it is being used
+    if(ImproVisor.museIsUsed())
+    {
+        ImproVisor.resetMuse();
+    }
 }
 
 public void improvisationOff()

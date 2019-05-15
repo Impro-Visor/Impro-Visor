@@ -841,15 +841,26 @@ public static Color getWindowFrameColor()
     return windowFrameColor;
   }
     
+//
+// Muse object and functions
+//
 static MuseReceiver museReceiver;
     
 public static MuseReceiver getMuseReceiver()
   {
-    if( museReceiver == null )
+    if(!museIsUsed())
     {
         museReceiver = new MuseReceiver();
     }
     return museReceiver;
   }
+
+public static boolean museIsUsed() {
+    return museReceiver != null;
+}
+
+public static void resetMuse() {
+    museReceiver.resetCalibration();
+}
 
 }
