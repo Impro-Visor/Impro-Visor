@@ -25,18 +25,19 @@ import oscP5.*;
  * @author Andy and Rachel
  */
 public class MuseReceiver {
-    
+
     MuseServer museServer;
-    int recvPort = 5003;	
+    int recvPort = 5003;
 
     public MuseReceiver() {
         museServer = new MuseServer();
-	museServer.oscServer = new OscP5(museServer, recvPort);
+        museServer.oscServer = new OscP5(museServer, recvPort);
     }
-    
-    public Long getMuseValue(Long grammarMode) {       
+
+    public Long getMuseValue(Long grammarMode) {
+
         // _muse-head-tilt grammar
-        if (grammarMode == 0) {    
+        if (grammarMode == 0) {
             double currentAccValue = museServer.getAccValue();
 
             if (currentAccValue < -0.2) {
@@ -46,23 +47,25 @@ public class MuseReceiver {
                 System.out.println("RIGHT");
                 return 1L;
             } else {
-                System.out.println("MIDDLE");               
+                System.out.println("MIDDLE");
                 return (long)Math.round(Math.random());
             }
         }
-        
+
         // _muse-brainwave grammar
         else {
-            double currentAlphaValue = museServer.getAlphaValue();
             double averageAlpha = museServer.getAverageAlpha();
             double standev = museServer.getSD();
-            
+            double sampledAlpha = museServer.getWindowSum() / museServer.windowSize;
+
             // Only outputs when calibration is complete
             if (averageAlpha != 0.0) {
-            	double zscore = (currentAlphaValue - averageAlpha)/standev;
-                System.out.println("Z Score: " + zscore);
-            	System.out.println("Average Alpha: " + averageAlpha);
-                System.out.println("current Alpha:" + currentAlphaValue);
+                double zscore = (sampledAlpha - averageAlpha)/standev;
+                System.out.println("\nZ Score: " + zscore);
+                System.out.println("Average Alpha: " + averageAlpha);
+                System.out.println("Sampled Alpha: " + sampledAlpha);
+                System.out.println("Standard Dev: " + standev);
+
                 if (zscore < -2.0) {
                     System.out.println("VERY HIGH");
                     return 4L;
@@ -72,11 +75,11 @@ public class MuseReceiver {
                     System.out.println("HIGH");
                     return 3L;
                 }
-                else if (zscore > -0.75 && zscore <= 0.75) {
+                else if (zscore > -0.75 && zscore <= 0.70) {
                     System.out.println("MEDIUM");
                     return 2L;
                 }
-                else if (zscore > 0.75 && zscore <= 2.0) {
+                else if (zscore > 0.70 && zscore <= 2.0) {
                     System.out.println("LOW");
                     return 1L;
                 }
@@ -90,4 +93,9 @@ public class MuseReceiver {
             }
         }
     }
+
+    public void resetCalibration() {        
+        museServer.resetCalibration();
+    }
+    
 }

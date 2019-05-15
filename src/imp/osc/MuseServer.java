@@ -21,45 +21,68 @@
 package imp.osc;
 import oscP5.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  *
  * @author Andy and Rachel
  */
 public class MuseServer {
-    OscP5 oscServer;
     
+    OscP5 oscServer;
+
     double currentAccValue = 0.0;
     double currentAlphaValue = 0.0;
-    
-    int alphasSize = 200;
+
+    int alphasSize = 220;
+    public int windowSize = 10;
     ArrayList<Double> alphas = new ArrayList<Double>();
+    Queue<Double> window = new LinkedList<Double>();
+    
     double averageAlpha = 0.0;
     double standev = 0.0;
+    double windowSum = 0.0;
 
     void oscEvent(OscMessage msg) {
+
         // Accelerometer Data
-        if (msg.checkAddrPattern("/muse/acc")==true) {  
-            this.currentAccValue = msg.get(1).floatValue();
+        if (msg.checkAddrPattern("/muse/acc") == true) {
+            currentAccValue = msg.get(1).floatValue();
         }
-        
+
         // Brain Data
     	if (msg.checkAddrPattern("/muse/elements/alpha_absolute") == true) {
-            this.currentAlphaValue = msg.get(0).floatValue();
-            
+            currentAlphaValue = msg.get(0).floatValue();
+            updateWindow();
+
             // Saves a collection of alpha values to compute an average from (calibration phase)
             if (alphas.size() < alphasSize) {
-        	alphas.add(currentAlphaValue);
+                alphas.add(currentAlphaValue);
             } else {
                 if (averageAlpha == 0.0) {
                     System.out.println("CALIBRATION COMPLETE");
-                    this.calculateAverage();
-                    this.calculateStandardDeviation();
+                    calculateAverage();
+                    calculateStandardDeviation();
                 }
             }
     	}
     }
-    
+
+    void updateWindow() {
+    	Double poppedSample = 0.0;
+    	if (window.size() < windowSize) { //initializing queue
+            window.add(currentAlphaValue);
+            windowSum += currentAlphaValue;
+    	}
+    	else {
+            window.add(currentAlphaValue);
+            poppedSample = window.remove();
+            windowSum += currentAlphaValue;
+            windowSum -= poppedSample;
+    	}
+    }
+
     void calculateAverage() {
     	Double sum = 0.0;
     	for (Double alpha : alphas) {
@@ -67,7 +90,7 @@ public class MuseServer {
     	}
     	averageAlpha = sum / alphas.size();
     }
-    
+
     void calculateStandardDeviation() {
     	Double sum = 0.0;
     	for (Double alpha : alphas) {
@@ -75,12 +98,22 @@ public class MuseServer {
     	}
     	standev = Math.sqrt(sum/alphas.size());
     }
-    
+
+    void resetCalibration() {
+        alphas.clear();
+        window.clear();
+        averageAlpha = 0.0;
+        standev = 0.0;
+    }
+
     double getAccValue() { return currentAccValue; }
-    
+
     double getAlphaValue() { return currentAlphaValue; }
-    
+
     double getAverageAlpha() { return averageAlpha; }
-    
+
     double getSD() { return standev; }
+
+    double getWindowSum() { return windowSum; }
+
 }
