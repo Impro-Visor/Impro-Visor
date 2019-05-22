@@ -1348,6 +1348,12 @@ public imp.lickgen.LickgenFrame getLickgenFrame()
     return lickgenFrame;
   }
 
+public boolean [] getRectifyOptions()
+  {
+    return getLickgenFrame().getRectifyOptions();
+  }
+
+
 public HelpDialog getHelpDialog()
 {
     return helpDialog;

@@ -5379,7 +5379,7 @@ public void shiftPitch(int startIndex, int endIndex, boolean up,
 
 public void rectifySelection(int startIndex, int endIndex, boolean directional, boolean direction, boolean mergePitches)
   {
-    boolean [] options = notate.getLickgenFrame().getRectifyOptions();
+    boolean [] options = notate.getRectifyOptions();
     MelodyPart melodyPart = getMelodyPart();
     notate.cm.execute(
             new RectifyPitchesCommand(melodyPart,
@@ -5391,7 +5391,7 @@ public void rectifySelection(int startIndex, int endIndex, boolean directional, 
                                       options[0], 
                                       options[1], 
                                       options[2],
-                                      mergePitches));
+                                      options[3]));
 
     if( startIndex == endIndex )
       {
