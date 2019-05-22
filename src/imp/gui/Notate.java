@@ -10582,6 +10582,17 @@ public void editGrammar()
     grammarEditor.toFront();
   }
 
+/**
+ * Edit grammar, but only if editor already open
+ **/
+public void maybeEditGrammar()
+  {
+    if( grammarEditor.isVisible() )
+      {
+       editGrammar();
+      }
+  }
+
 public void loadGrammar()
   {
     lickgen.loadGrammar(grammarFilename);
