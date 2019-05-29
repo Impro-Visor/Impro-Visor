@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2015-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2015-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -287,7 +287,7 @@ public class GraphicBrick {
     
     /**
      * Draws the brick at its current position
-     * @param g graphics on which to draw the brick
+     * @param g2d graphics on which to draw the brick
      */
     public void draw(Graphics2D g2d)
     {
@@ -494,7 +494,7 @@ public class GraphicBrick {
     
     /**
      * Draws the bricks at a specified location without wrapping
-     * @param g graphics on which to draw
+     * @param g2d graphics on which to draw
      * @param x x-coordinate
      * @param y y-coordinate
      */

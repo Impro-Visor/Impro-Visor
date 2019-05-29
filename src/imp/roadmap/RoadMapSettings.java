@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2016 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ package imp.roadmap;
 import imp.roadmap.brickdictionary.KeySpan;
 import imp.roadmap.brickdictionary.Block;
 import imp.data.PitchClass;
+import polya.Polylist;
 import java.awt.*;
 
 /**
@@ -102,20 +103,24 @@ public class RoadMapSettings {
     /** Color for no key */
     public Color noKeyColor = new Color(235, 235, 235);
     
-    /** Colors associated with different keys */
-    public Color[] keyColors = {new Color(250, 220, 100), // C
-                                        new Color(247, 126, 255), // Db
-                                        new Color(150, 255,   0), // D
-                                        new Color(255, 182, 180), // Eb
-                                        new Color(131, 235, 255),  // E
-                                        new Color(255, 221, 118), // F
-                                        new Color(169, 184, 250), // Gb
-                                        new Color(255, 255,   0), // G
-                                        new Color(255, 189, 255), // Ab
-                                        new Color(150, 255, 202), // A
-                                        new Color(255, 217, 150), // Bb
-                                        new Color(157, 209, 255)};// B
-    
+    /** Colors associated with different keys. These are
+     * defaults and may be set from a Polylist, as acquired from
+     * a preferences file.
+     */
+    public Color[] keyColors = new Color[12];
+//      {new Color(250, 220, 100), // C
+//                                new Color(247, 126, 255), // Db
+//                                new Color(150, 255,   0), // D
+//                                new Color(255, 182, 180), // Eb
+//                                new Color(131, 235, 255),  // E
+//                                new Color(255, 221, 118), // F
+//                                new Color(169, 184, 250), // Gb
+//                                new Color(255, 255,   0), // G
+//                                new Color(255, 189, 255), // Ab
+//                                new Color(150, 255, 202), // A
+//                                new Color(255, 217, 150), // Bb
+//                                new Color(157, 209, 255)};// B
+//    
     private int colorationBias = 0;
     
     /* --- Strokes --- */
@@ -132,11 +137,11 @@ public class RoadMapSettings {
     /* --- Fonts --- */
     /** Font for normal text, such as bricks, joins, rollovers, etc */
     
-    public Font basicFont = new Font("Lucida Grande", Font.BOLD, 14);
+    public Font basicFont = new Font("Lucida Grande", Font.PLAIN, 14);
     
     /** Font for titles */
     
-    public Font titleFont = new Font("Lucida Grande", Font.BOLD, 24);
+    public Font titleFont = new Font("Lucida Grande", Font.PLAIN, 24);
     
     /**
      * whether to show joins in roadmap or not
@@ -408,5 +413,36 @@ public class RoadMapSettings {
     
     public PitchClass getRomanNumeralHomeKey(){
         return romanNumeralHomeKey;
+    }
+    
+    /**
+     * Set the brick colors from a Polylist, such as one acquired from the
+     * Preferences file.
+     * @param colors 
+     */
+    public void setRoadmapColors(Polylist colors)
+    {
+        //System.out.println("colors = " + colors);
+        int index = 0;
+        while( colors.nonEmpty() )
+          {
+            Object raw = colors.first();
+            if( raw instanceof Polylist )
+              {
+                Polylist triple = (Polylist)raw;
+                if( triple.length() == 3
+                    && triple.first()  instanceof Long
+                    && triple.second() instanceof Long
+                    && triple.third()  instanceof Long )
+                  {
+                    keyColors[index] = 
+                            new Color(((Long)triple.first()).intValue(),
+                                      ((Long)triple.second()).intValue(),
+                                      ((Long)triple.third()).intValue());
+                    index++;
+                  }
+              }
+            colors = colors.rest();
+          }
     }
 }

@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -291,6 +291,8 @@ public class Preferences implements imp.Constants
   
   public static final String DEFAULT_CLUSTER_FILENAME = "default.cluster";
   
+  public static final String ROADMAP_COLORS = "roadmap-colors";
+  
   public static final String ALL_DEFAULTS = 
         "(rhythm-cluster-filename default.cluster)" +
         "(my-rhythms-file My.rhythms)" +
@@ -342,8 +344,36 @@ public class Preferences implements imp.Constants
         "(improv-menu-setting (Use Improvise Button))" +
         "(language en)" +
         "(language_list (en , fr))" +
-        "(lstm-gen-params combination.ctome))" +
-        "(transposing-instruments ((No-Transposition 0 0 treble 0)(Bb-Trumpet -2 -2 treble 2) (Bb-TenorSax -14 -2 treble 2) (Bb-SopranoSax -2 -2 treble 2) (Eb-AltoSax -9 3 treble 9) (Eb-BaritoneSax -21 3 treble 9) (F-Horn -5 -5 treble -5) (Trombone -12 0 bass -12) (SopranoRecorder 12 0 treble 0)))";
+        "(lstm-gen-params combination.ctome)" +
+        // Be careful: Outer parens needed below
+        "(transposing-instruments (" +
+            "(No-Transposition 0 0 Treble 0)" +
+            "(Bb-Trumpet -2 -2 Treble 2)" +
+            "(Bb-TenorSax -14 -2 Treble 2)" + 
+            "(Bb-SopranoSax -2 -2 Treble 2)" +
+            "(Eb-AltoSax -9 3 Treble 9)" +
+            "(Eb-BaritoneSax -21 3 Treble 9)" +
+            "(F-Horn -5 -5 Treble -5)" +
+            "(Trombone -12 0 Bass -12)" +
+            "(SopranoRecorder 12 0 Treble 0)" +
+            "(BassRecorder -12 0 Bass -12)" +
+            "))" +
+         // Be careful: Outer parens needed below
+       "(roadmap-colors (" +
+             "(250 220 100)" + // C
+             "(247 126 255)" + // Db
+             "(150 255   0)" + // D
+             "(255 182 180)" + // Eb
+             "(131 235 255)" + // E
+             "(255 221 118)" + // F
+             "(169 184 250)" + // Gb
+             "(255 255   0)" + // G
+             "(255 189 255)" + // Ab
+             "(150 255 202)" + // A
+             "(255 217 150)" + // Bb
+             "(157 209 255)" + // B
+          "))";
+            
 
   /**
    * The ALWAYS_USE_BUTTONS are y or n standing for CHORD, BASS, DRUMS, STAVE.
@@ -387,7 +417,7 @@ public class Preferences implements imp.Constants
         ErrorLog.log(ErrorLog.WARNING, "Failure generating default " +
                 "preference file 'My.prefs'.");
         }
-      } // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch // end of outer catch
+      } // end of outer catch 
     }
 
   public static void savePreferences()
@@ -480,28 +510,23 @@ public class Preferences implements imp.Constants
       {
         if( pref.equals((String)nextPref.first()) )
         {
-          Object value = nextPref.second();
-          
-          if( value instanceof Polylist) 
-          {
-              return Leadsheet.concatElements((Polylist)value);
-          }
-          else
-          {
-              return value.toString();
-          }
+          Object value = nextPref.second();          
+          return value.toString();
         }
       }
        search = search.rest();
     }
     
-        //recovery if user's My.prefs file has missing  preference(s) or is empty
-        Polylist allDefaults = Polylist.PolylistFromString(ALL_DEFAULTS); //My.prefs string into polylist
-        Polylist pair = allDefaults.assoc((String)pref);
-        String value = Leadsheet.concatElements(pair.rest());
-        ErrorLog.log(ErrorLog.WARNING, "Preference " + pref + " did not exist in user preferences, installing  " + value + ".");
-        setPreference(pref, value);
-        return value;
+  //recovery if user's My.prefs file has missing  preference(s) or is empty
+  Polylist allDefaults = Polylist.PolylistFromString(ALL_DEFAULTS); //My.prefs string into polylist
+  Polylist pair = allDefaults.assoc((String)pref);
+  //System.out.println("pair = " + pair);
+  Object second = pair.second();
+  String value = second.toString();
+  ErrorLog.log(ErrorLog.WARNING, "Preference " + pref + " did not exist in user preferences, installing default in preferences file " + value + ".");
+  //System.out.println("set value = " + value);
+  setPreference(pref, value);
+  return value;
 }
   
  /**

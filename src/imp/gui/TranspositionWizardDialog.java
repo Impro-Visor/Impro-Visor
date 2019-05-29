@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2017 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2017-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -50,22 +50,34 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         bassWizardSpinner.setValue(transposition.getBassTransposition());
         chordWizardSpinner.setValue(transposition.getChordTransposition());
         melodyWizardSpinner.setValue(transposition.getMelodyTransposition());
-        String instrumentMappingAsString = Preferences.getPreference("transposing-instruments");
-        instrumentMapping = Polylist.PolylistFromString(instrumentMappingAsString);
+        String instrumentMappingAsString = Preferences.getPreference(Preferences.TRANSPOSING_INSTRUMENTS);
+        //System.out.println("instrumentMappingAsString = " + instrumentMappingAsString);
+        
+        // Caution: The reason for .first() below is that a one-element list
+        // is returned. This is not the best design and should be revisited.
+        instrumentMapping = (Polylist)((Polylist.PolylistFromString(instrumentMappingAsString)).first());
+        
+        //System.out.println("instrumentMapping = " + instrumentMapping);
         instrumentString = new String[instrumentMapping.length()];
         
         // Make an array of strings corresponding to instruments, to be used
         // as a model for the instrument JList.
         Polylist L = instrumentMapping;
-        for( int i = 0; i < instrumentString.length; i++ )
+        int i = 0;
+        while( L.nonEmpty() )
           {
-            instrumentString[i] = (String)((Polylist)L.first()).first();
+            Polylist item = (Polylist)L.first();
+            instrumentString[i] = (String) item.first();
             L = L.rest();
+            i++;
           }
         
         transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>()
         {
+            @Override
             public int getSize() { return instrumentString.length; }
+            
+            @Override
             public String getElementAt(int i) { return instrumentString[i]; }
         });
     }
@@ -147,7 +159,7 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
 
         transpositionWizardJList.setModel(new javax.swing.AbstractListModel<String>()
         {
-            String[] strings = { "No-Transposition", "Bb-Trumpet", "Values set from Preferences" };
+            String[] strings = { "No-Transposition", "Bb-Trumpet", "Bb-TenorSax", "Bb-SopranoSax", "Eb-AltoSax", "Eb-BaritoneSax", "F-Horn", "Trombone", "SopranoRecorder", "BassRecorder" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -351,7 +363,6 @@ public class TranspositionWizardDialog extends javax.swing.JDialog {
         transpositionPreviewPanel.add(playToggleBtn, gridBagConstraints);
 
         allTransposingPreferencesCheckBox.setText("Always Use These");
-        allTransposingPreferencesCheckBox.setActionCommand("Always Use These");
         allTransposingPreferencesCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         allTransposingPreferencesCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         gridBagConstraints = new java.awt.GridBagConstraints();

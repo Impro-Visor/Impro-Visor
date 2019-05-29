@@ -1,3 +1,4 @@
+(roadmap-colors ((250 220 100) (247 126 255) (150 255 0) (255 182 180) (131 235 255) (255 221 118) (169 184 250) (255 255 0) (255 189 255) (150 255 202) (255 217 150) (157 209 255)))
 (transposing-instruments ((No-Transposition 0 0 Treble 0) (Bb-Trumpet -2 -2 Treble 2) (Bb-TenorSax -14 -2 Treble 2) (Bb-SopranoSax -2 -2 Treble 2) (Eb-AltoSax -9 3 Treble 9) (Eb-BaritoneSax -21 3 Treble 9) (F-Horn -5 -5 Treble -5) (Trombone -12 0 Bass -12) (SopranoRecorder 12 0 Treble 0) (BassRecorder -12 0 Bass -12)))
 (rhythm-cluster-filename default.cluster)
 (my-rhythms-file My.rhythms)

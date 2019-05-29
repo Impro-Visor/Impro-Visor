@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2011-2018 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2011-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ import imp.util.DictionaryFilter;
 import imp.util.ErrorLog;
 import imp.util.FileUtilities;
 import imp.midi.MidiPlayListener;
+import imp.util.Preferences;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +51,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import polya.Polylist;
 import polya.Tokenizer;
 
 
@@ -241,6 +243,12 @@ public class RoadMapFrame extends javax.swing.JFrame implements MidiPlayListener
         //settings.generateColors(.3f);
         
         styleComboBox.setSelectedItem(defaultStyleName);
+        
+        // Caution: The reason for .first() below is that a one-element list
+        // is returned. This is not the best design and should be revisited.
+        Polylist colorList = (Polylist)Polylist.PolylistFromString(Preferences.getPreference(Preferences.ROADMAP_COLORS)).first();
+        
+        settings.setRoadmapColors(colorList);
     }
 
     /** This method is called from within the constructor to
