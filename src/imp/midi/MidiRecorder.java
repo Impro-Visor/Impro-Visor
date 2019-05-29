@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ public class MidiRecorder implements imp.Constants, Receiver
     double latency = 0;
     boolean isSuspended = false;
     int transposition = 0;
-    private int inputChannel = 0;
+    private javax.swing.JToggleButton midiInputChannel[];
     
  
 public MidiRecorder(Notate notate, Score score)
@@ -216,7 +216,7 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
 
     void handleNoteOn(int note, int velocity, int channel) {
         //System.out.print("noteOn: " + note + " channel = " + channel + " ");
-        if( channel != inputChannel )
+        if( !midiInputChannel[channel].isSelected() )
           {
             //System.out.println("skipped");
             return;
@@ -317,8 +317,8 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
     }
 
     void handleNoteOff(int note, int velocity, int channel) {
-         //System.out.print("noteOff: " + note + " channel = " + channel + " ");
-         if( channel != inputChannel )
+        //System.out.print("noteOff: " + note + " channel = " + channel + " ");
+        if( !midiInputChannel[channel].isSelected() )
           {
             //System.out.println("skipped");
             return;
@@ -386,8 +386,8 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
     public void close() {
     }
     
-    public void setMIDIinputChannel(int value)
+    public void setMidiInputChannel(javax.swing.JToggleButton[] midiInputChannel)
     {
-        inputChannel = value;
+        this.midiInputChannel = midiInputChannel;
     }
 }

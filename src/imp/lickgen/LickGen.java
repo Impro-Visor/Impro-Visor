@@ -1006,7 +1006,9 @@ public ArrayList<double[]> fillProbs(ChordPart chordProg,
 
             // Get the preferred scale type if it is present.
 
-            if( preferredScale.isEmpty()
+            if( preferredScale == null 
+                    || preferredScale.isEmpty() 
+                    || preferredScale.rest().isEmpty()
                     || ((String) preferredScale.second()).equals(NONE) )
               {
                 scaleTones = Polylist.nil;

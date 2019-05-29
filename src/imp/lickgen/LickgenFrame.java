@@ -7084,7 +7084,7 @@ private void updateUseSoloist()
           {chordBox.isSelected(), 
            colorBox.isSelected(), 
            approachBox.isSelected(),
-           avoidRepeats};
+           avoidRepeatsCheckbox.isSelected()};
         return options;
     }
 

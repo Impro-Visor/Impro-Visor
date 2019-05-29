@@ -1,8 +1,8 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2018 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2018 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College XML export code
+ * is also Copyright (C) 2009-2019 Nicolas Froment (aka Lasconic).
  *
  * Impro-Visor is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -529,6 +529,8 @@ private DefaultListModel voicingSequenceListModel = new DefaultListModel();
 private imp.gui.VoicingKeyboard keyboard = null;
 
 private Future<Notate> futureInvisibleNotate;
+
+private javax.swing.JToggleButton midiInputChannel[]; // init in getMidiRecorder()
 
 public JTable getSectionTable(){
     return sectionTable;
@@ -1625,8 +1627,24 @@ public Critic getCritic()
         echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
-        inputChannelSpinner = new javax.swing.JSpinner();
         rangeFilterBtn = new javax.swing.JButton();
+        inChannelPanel = new javax.swing.JPanel();
+        inChannel1 = new javax.swing.JToggleButton();
+        inChannel2 = new javax.swing.JToggleButton();
+        inChannel3 = new javax.swing.JToggleButton();
+        inChannel4 = new javax.swing.JToggleButton();
+        inChannel5 = new javax.swing.JToggleButton();
+        inChannel6 = new javax.swing.JToggleButton();
+        inChannel7 = new javax.swing.JToggleButton();
+        inChannel8 = new javax.swing.JToggleButton();
+        inChannel9 = new javax.swing.JToggleButton();
+        inChannel10 = new javax.swing.JToggleButton();
+        inChannel11 = new javax.swing.JToggleButton();
+        inChannel12 = new javax.swing.JToggleButton();
+        inChannel13 = new javax.swing.JToggleButton();
+        inChannel14 = new javax.swing.JToggleButton();
+        inChannel15 = new javax.swing.JToggleButton();
+        inChannel16 = new javax.swing.JToggleButton();
         latencyTab = new javax.swing.JPanel();
         midiLatencyPanel = new javax.swing.JPanel();
         midiLatencyLabel = new javax.swing.JLabel();
@@ -4963,23 +4981,6 @@ public Critic getCritic()
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         devicesTab.add(jLabel1, gridBagConstraints);
 
-        inputChannelSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 16, 1));
-        inputChannelSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("MIDI Input Channel"));
-        inputChannelSpinner.setMaximumSize(new java.awt.Dimension(32767, 40));
-        inputChannelSpinner.setMinimumSize(new java.awt.Dimension(150, 40));
-        inputChannelSpinner.setPreferredSize(new java.awt.Dimension(150, 40));
-        inputChannelSpinner.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
-                inputChannelSpinnerStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        devicesTab.add(inputChannelSpinner, gridBagConstraints);
-
         rangeFilterBtn.setText("Open MIDI Input Range");
         rangeFilterBtn.setActionCommand("MIDI Input Range");
         rangeFilterBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -4999,6 +5000,227 @@ public Critic getCritic()
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
         devicesTab.add(rangeFilterBtn, gridBagConstraints);
+
+        inChannelPanel.setBackground(new java.awt.Color(255, 255, 255));
+        inChannelPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("MIDI input channels (grey means selected)"));
+        inChannelPanel.setLayout(new java.awt.GridBagLayout());
+
+        inChannel1.setSelected(true);
+        inChannel1.setText("1");
+        inChannel1.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel1.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        inChannelPanel.add(inChannel1, gridBagConstraints);
+
+        inChannel2.setSelected(true);
+        inChannel2.setLabel("2");
+        inChannel2.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel2.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        inChannelPanel.add(inChannel2, gridBagConstraints);
+
+        inChannel3.setSelected(true);
+        inChannel3.setLabel("3");
+        inChannel3.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel3.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel3ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel3, new java.awt.GridBagConstraints());
+
+        inChannel4.setSelected(true);
+        inChannel4.setLabel("4");
+        inChannel4.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel4.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel4ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel4, new java.awt.GridBagConstraints());
+
+        inChannel5.setSelected(true);
+        inChannel5.setLabel("5");
+        inChannel5.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel5.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel5.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel5ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel5, new java.awt.GridBagConstraints());
+
+        inChannel6.setSelected(true);
+        inChannel6.setLabel("6");
+        inChannel6.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel6.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel6.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel6ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel6, new java.awt.GridBagConstraints());
+
+        inChannel7.setSelected(true);
+        inChannel7.setLabel("7");
+        inChannel7.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel7.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel7.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel7ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel7, new java.awt.GridBagConstraints());
+
+        inChannel8.setSelected(true);
+        inChannel8.setLabel("8");
+        inChannel8.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel8.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel8.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel8ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel8, new java.awt.GridBagConstraints());
+
+        inChannel9.setSelected(true);
+        inChannel9.setLabel("9");
+        inChannel9.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel9.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel9.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel9ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel9, new java.awt.GridBagConstraints());
+
+        inChannel10.setSelected(true);
+        inChannel10.setLabel("10");
+        inChannel10.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel10.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel10.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel10ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel10, new java.awt.GridBagConstraints());
+
+        inChannel11.setSelected(true);
+        inChannel11.setLabel("11");
+        inChannel11.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel11.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel11.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel11ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel11, new java.awt.GridBagConstraints());
+
+        inChannel12.setSelected(true);
+        inChannel12.setLabel("12");
+        inChannel12.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel12.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel12.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel12ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel12, new java.awt.GridBagConstraints());
+
+        inChannel13.setSelected(true);
+        inChannel13.setLabel("13");
+        inChannel13.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel13.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel13.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel13ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel13, new java.awt.GridBagConstraints());
+
+        inChannel14.setSelected(true);
+        inChannel14.setLabel("14");
+        inChannel14.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel14.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel14.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel14ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel14, new java.awt.GridBagConstraints());
+
+        inChannel15.setSelected(true);
+        inChannel15.setLabel("15");
+        inChannel15.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel15.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel15.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel15ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel15, new java.awt.GridBagConstraints());
+
+        inChannel16.setSelected(true);
+        inChannel16.setLabel("16");
+        inChannel16.setMaximumSize(new java.awt.Dimension(30, 29));
+        inChannel16.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel16.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                inChannel16ActionPerformed(evt);
+            }
+        });
+        inChannelPanel.add(inChannel16, new java.awt.GridBagConstraints());
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        devicesTab.add(inChannelPanel, gridBagConstraints);
 
         jTabbedPane2.addTab("MIDI Devices", devicesTab);
 
@@ -11199,11 +11421,29 @@ public Mode getMode()
  * @return instance of MidiRecorder
  */
 public MidiRecorder getMidiRecorder(){
-    if( this.midiRecorder == null )
+    if( midiRecorder == null )
       {
-        this.midiRecorder = new MidiRecorder(this, this.score);
+        midiRecorder = new MidiRecorder(this, this.score);
+        midiInputChannel = new javax.swing.JToggleButton[16];
+        midiInputChannel[0] = inChannel1;
+        midiInputChannel[1] = inChannel2;
+        midiInputChannel[2] = inChannel3;
+        midiInputChannel[3] = inChannel4;
+        midiInputChannel[4] = inChannel5;
+        midiInputChannel[5] = inChannel6;
+        midiInputChannel[6] = inChannel7;
+        midiInputChannel[7] = inChannel8;
+        midiInputChannel[8] = inChannel9;
+        midiInputChannel[9] = inChannel10;
+        midiInputChannel[10] = inChannel11;
+        midiInputChannel[11] = inChannel12;
+        midiInputChannel[12] = inChannel13;
+        midiInputChannel[13] = inChannel14;
+        midiInputChannel[14] = inChannel15;
+        midiInputChannel[15] = inChannel16;
+        midiRecorder.setMidiInputChannel(midiInputChannel);        
       }
-    return this.midiRecorder;
+    return midiRecorder;
 }
 
 public void initTradingRecorder(MelodyPart aMelodyPart){
@@ -24147,10 +24387,85 @@ private boolean isDotted = false;
         editGrammar();
     }//GEN-LAST:event_grammarEditorMIActionPerformed
 
-    private void inputChannelSpinnerStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_inputChannelSpinnerStateChanged
-    {//GEN-HEADEREND:event_inputChannelSpinnerStateChanged
-        getMidiRecorder().setMIDIinputChannel((int)inputChannelSpinner.getValue() - 1);
-    }//GEN-LAST:event_inputChannelSpinnerStateChanged
+    private void inChannel1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel1ActionPerformed
+    {//GEN-HEADEREND:event_inChannel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel1ActionPerformed
+
+    private void inChannel2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel2ActionPerformed
+    {//GEN-HEADEREND:event_inChannel2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel2ActionPerformed
+
+    private void inChannel3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel3ActionPerformed
+    {//GEN-HEADEREND:event_inChannel3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel3ActionPerformed
+
+    private void inChannel4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel4ActionPerformed
+    {//GEN-HEADEREND:event_inChannel4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel4ActionPerformed
+
+    private void inChannel5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel5ActionPerformed
+    {//GEN-HEADEREND:event_inChannel5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel5ActionPerformed
+
+    private void inChannel6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel6ActionPerformed
+    {//GEN-HEADEREND:event_inChannel6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel6ActionPerformed
+
+    private void inChannel7ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel7ActionPerformed
+    {//GEN-HEADEREND:event_inChannel7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel7ActionPerformed
+
+    private void inChannel8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel8ActionPerformed
+    {//GEN-HEADEREND:event_inChannel8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel8ActionPerformed
+
+    private void inChannel9ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel9ActionPerformed
+    {//GEN-HEADEREND:event_inChannel9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel9ActionPerformed
+
+    private void inChannel10ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel10ActionPerformed
+    {//GEN-HEADEREND:event_inChannel10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel10ActionPerformed
+
+    private void inChannel11ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel11ActionPerformed
+    {//GEN-HEADEREND:event_inChannel11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel11ActionPerformed
+
+    private void inChannel12ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel12ActionPerformed
+    {//GEN-HEADEREND:event_inChannel12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel12ActionPerformed
+
+    private void inChannel13ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel13ActionPerformed
+    {//GEN-HEADEREND:event_inChannel13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel13ActionPerformed
+
+    private void inChannel14ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel14ActionPerformed
+    {//GEN-HEADEREND:event_inChannel14ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel14ActionPerformed
+
+    private void inChannel15ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel15ActionPerformed
+    {//GEN-HEADEREND:event_inChannel15ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel15ActionPerformed
+
+    private void inChannel16ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_inChannel16ActionPerformed
+    {//GEN-HEADEREND:event_inChannel16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inChannel16ActionPerformed
 
     private String adviceRhythm = "";
     
@@ -26730,7 +27045,23 @@ private ImageIcon pauseButton =
     private javax.swing.JPopupMenu.Separator improvSeparator2;
     private javax.swing.JPopupMenu.Separator improvSeparator3;
     private javax.swing.JToggleButton improviseButton;
-    private javax.swing.JSpinner inputChannelSpinner;
+    private javax.swing.JToggleButton inChannel1;
+    private javax.swing.JToggleButton inChannel10;
+    private javax.swing.JToggleButton inChannel11;
+    private javax.swing.JToggleButton inChannel12;
+    private javax.swing.JToggleButton inChannel13;
+    private javax.swing.JToggleButton inChannel14;
+    private javax.swing.JToggleButton inChannel15;
+    private javax.swing.JToggleButton inChannel16;
+    private javax.swing.JToggleButton inChannel2;
+    private javax.swing.JToggleButton inChannel3;
+    private javax.swing.JToggleButton inChannel4;
+    private javax.swing.JToggleButton inChannel5;
+    private javax.swing.JToggleButton inChannel6;
+    private javax.swing.JToggleButton inChannel7;
+    private javax.swing.JToggleButton inChannel8;
+    private javax.swing.JToggleButton inChannel9;
+    private javax.swing.JPanel inChannelPanel;
     private javax.swing.JMenuItem insertChorusTabMI;
     private javax.swing.JMenuItem insertPhraseAfterPMI;
     private javax.swing.JMenuItem insertPhraseBeforePMI;
