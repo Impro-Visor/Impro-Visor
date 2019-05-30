@@ -104,6 +104,7 @@ public class MuseServer {
         window.clear();
         averageAlpha = 0.0;
         standev = 0.0;
+        windowSum = 0.0;
     }
 
     double getAccValue() { return currentAccValue; }
