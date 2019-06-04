@@ -1,7 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application
  *
- * Copyright (C) 2005-2009 Robert Keller and Harvey Mudd College
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,15 +22,14 @@
 package imp.lickgen.transformations;
 
 import imp.data.Chord;
-import imp.data.ChordPart;
 import imp.data.Duration;
 import imp.data.Note;
-import imp.data.NoteSymbol;
 import imp.lickgen.LickGen;
 import imp.lickgen.NoteConverter;
 import imp.util.ErrorLog;
 import polya.*;
 import java.util.*;
+
 /**
  * Class that applies the functions of the Transformational Grammar
  * 
