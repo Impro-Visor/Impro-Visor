@@ -238,7 +238,7 @@ public void addNote(Note note)
       
       int stopIndex;
       if (autoFill)  
-        stopIndex = measureLength * (currentMeasure + 2);
+        stopIndex = slotIndex + size; // or measureLength * (currentMeasure + 3);
       else
         stopIndex = slotIndex + noteLength;
 

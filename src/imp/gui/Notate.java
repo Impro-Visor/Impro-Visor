@@ -1143,6 +1143,10 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     guideToneLineDialog.setVisible(false);
     
     setLooping(false);
+    
+    recordingQuantizationSpinner.setModel(new javax.swing.SpinnerListModel(midiRecorder.getQuantumString()));
+    recordingQuantizationSpinner.setValue(midiRecorder.getInitialQuantumString());
+       
   } // end of Notate constructor
 
 boolean showConstructionLinesAndBoxes = true;
@@ -1623,7 +1627,7 @@ public Critic getCritic()
         midiInStatus = new javax.swing.JLabel();
         midiQuantizationPanel = new javax.swing.JPanel();
         recordingLatencySpinner = new javax.swing.JSpinner();
-        openQuantizationButton = new javax.swing.JButton();
+        recordingQuantizationSpinner = new javax.swing.JSpinner();
         echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
@@ -4906,24 +4910,11 @@ public Critic getCritic()
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         midiQuantizationPanel.add(recordingLatencySpinner, gridBagConstraints);
 
-        openQuantizationButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        openQuantizationButton.setLabel("Open Recording Quantization");
-        openQuantizationButton.setMaximumSize(new java.awt.Dimension(195, 30));
-        openQuantizationButton.setMinimumSize(new java.awt.Dimension(195, 30));
-        openQuantizationButton.setPreferredSize(new java.awt.Dimension(195, 30));
-        openQuantizationButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                openQuantizationButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.4;
-        midiQuantizationPanel.add(openQuantizationButton, gridBagConstraints);
+        recordingQuantizationSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"Item 0", "Item 1", "Item 2", "Item 3"}));
+        recordingQuantizationSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Recording Quantization Level"));
+        recordingQuantizationSpinner.setMinimumSize(new java.awt.Dimension(250, 40));
+        recordingQuantizationSpinner.setPreferredSize(new java.awt.Dimension(250, 40));
+        midiQuantizationPanel.add(recordingQuantizationSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -24105,11 +24096,6 @@ private boolean isDotted = false;
         redoAdvice();
     }//GEN-LAST:event_adviceFilterTextFieldChanged
 
-    private void openQuantizationButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openQuantizationButtonActionPerformed
-    {//GEN-HEADEREND:event_openQuantizationButtonActionPerformed
-        openRealTimeQuantization();
-    }//GEN-LAST:event_openQuantizationButtonActionPerformed
-
     private void adviceScrollListRhythmsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_adviceScrollListRhythmsMouseClicked
     {//GEN-HEADEREND:event_adviceScrollListRhythmsMouseClicked
         adviceForRhythmSelected(adviceScrollListRhythms.getSelectedValue());
@@ -24633,6 +24619,19 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     {
         int quanta[] = realtimeQuantizationDialog.getQuanta();
         return gcd(quanta[0], quanta[1]);
+    }
+    
+    public int getRealtimeQuantizationIndex(String quantumString[])
+    {
+        String value = (String)recordingQuantizationSpinner.getValue();
+        for( int index = 0; index < quantumString.length; index++ )
+          {
+            if( quantumString[index].equals(value) )
+              {
+                return index;
+              }
+          }
+        return -1;
     }
     
     /**
@@ -27214,7 +27213,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem openGrammarMenuDialogMI;
     private javax.swing.JMenuItem openLeadsheetEditorMI;
     private javax.swing.JMenuItem openLeadsheetMI;
-    private javax.swing.JButton openQuantizationButton;
     private javax.swing.JMenuItem openQuantizeDialogMI;
     private javax.swing.JMenu openRecentLeadsheetMenu;
     private javax.swing.JMenu openRecentLeadsheetNewWindowMenu;
@@ -27280,6 +27278,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton recordBtn;
     private javax.swing.JMenuItem recordMI;
     private javax.swing.JSpinner recordingLatencySpinner;
+    private javax.swing.JSpinner recordingQuantizationSpinner;
     private javax.swing.JRadioButton redApproachBtn;
     private javax.swing.JRadioButton redChordBtn;
     private javax.swing.JRadioButton redColorBtn;

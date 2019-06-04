@@ -52,7 +52,6 @@ public class MidiRecorder implements imp.Constants, Receiver
     boolean notePlaying = false;
     int prevNote = 0;
     int resolution;
-    int snapTo;
     double latency = 0;
     boolean isSuspended = false;
     int transposition = 0;
@@ -79,29 +78,27 @@ public long getTime()
   {
     if( sequencer != null && sequencer.isRunning() )
       {
-            return sequencer.getMicrosecondPosition();
+      return sequencer.getMicrosecondPosition();
       }
     else
       {
-            //notate.stopRecording();
-            return -1;
-        }
+      return -1;
+      }
     }
 
 public long getTick()
   {
-    if( sequencer != null && sequencer.isRunning() )
+  if( sequencer != null && sequencer.isRunning() )
       {
-            double bpms = ((double) sequencer.getTempoInBPM()) / 60000;    // beats per millisecond
-            long latencyTicks = Math.round(bpms * resolution * latency);
+      double bpms = ((double) sequencer.getTempoInBPM()) / 60000;    // beats per millisecond
+      long latencyTicks = Math.round(bpms * resolution * latency);
 
-            return sequencer.getTickPosition() - latencyTicks;
+       return sequencer.getTickPosition() - latencyTicks;
       }
     else
       {
-            //notate.stopRecording();
-            return -1;
-        }
+      return -1;
+       }
     }
 
 /**
@@ -115,7 +112,7 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         this.countInOffset = countInOffset;
         this.insertionOffset = insertionOffset;
         this.transposition = transposition;
-        snapTo = notate.getRealtimeQuantizationGCD();
+        //snapTo = notate.getRealtimeQuantizationGCD();
         //System.out.println("start snapTo = " + snapTo + " countInOffset = " + countInOffset + " insertionOffset = " + insertionOffset);
         this.sequencer = notate.getSequencer();
         if (sequencer == null || sequencer.getSequence() == null) {
@@ -228,11 +225,11 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
             handleNoteOff(prevNote, velocity, channel);
 
         } else {
-            int duration = snapSlots(tickToSlots(noteOff, lastEvent));
+            int duration = snapSlotsToDuration(tickToSlots(noteOff, lastEvent));
 
             // this try is here because a function a few steps up in the call hierarchy tends to capture error messages
             try {
-                index = snapSlots(tickToSlots(noteOff)) - getCountInBias();
+                index = snapSlotsToIndex(tickToSlots(noteOff));
 
                 // add rests since nothing was played between now and the previous note
                 if (duration > 0 && index >= 0) {
@@ -251,10 +248,11 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         }
 
         noteOn = lastEvent;
-        index = snapSlots(tickToSlots(noteOn)) - getCountInBias();
+        index = snapSlotsToIndex(tickToSlots(noteOn));
 
         // add current note   MAYBE RIGHT HEREEREREREREREER
-        Note noteToAdd = new Note(note, snapTo);
+        int duration = snapSlotsToDuration(tickToSlots(noteOn, noteOff));
+        Note noteToAdd = new Note(note, duration);
 
         try {
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
@@ -334,19 +332,20 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         noteOff = lastEvent;
         notePlaying = false;
 
-        int index = snapSlots(tickToSlots(noteOn)) - getCountInBias();
+        int index = snapSlotsToIndex(tickToSlots(noteOn));
 
         if (index < 0) {
             return;
         }
 
-        int duration = snapSlots(tickToSlots(noteOn, noteOff));
+        int duration = snapSlotsToDuration(tickToSlots(noteOn, noteOff));
 
         if (duration == 0) {
         } else {
             Note noteToAdd = new Note(note, duration);
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
             setNote(index, noteToAdd);
+        //System.out.println("at " + index + " add " + noteToAdd);
         }
 
         index += duration;
@@ -357,10 +356,13 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         notate.repaint();
     }
 
-    int snapToMultiple(int input, int base) {
+    int roundToMultiple(int input, int base) {
         return base * (int) Math.round(((double) input) / base);
     }
 
+    int floorToMultiple(int input, int base) {
+        return base * (int) Math.floor(((double) input) / base);
+    }
     int microsecondsToSlots(long start, long finish) {
         return microsecondsToSlots(finish - start);
     }
@@ -378,9 +380,93 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         return (int) (BEAT * duration / resolution);
     }
 
-    int snapSlots(int slots) {
-        slots = snapToMultiple(slots, snapTo);
-        return slots;
+    boolean multipleOf(int value, int divisor)
+    {
+    return (value % divisor) == 0;  
+    }
+    
+    int quantum[] = {20, 30, 40, 60, 120, 180, 240, 360, 480};
+    
+    static String quantumString[] =             
+      {
+          "sixteenth note triplet",
+          "sixteenth note",
+          "eighth note triplet",
+          "eighth note",
+          "quarternote ",
+          "dotted quarter note",
+          "half note",
+          "dotted half note",
+          "whole note"          
+      };
+    
+    static String intialQuantumString = "eighth note";
+    
+    public static String[] getQuantumString()
+    {
+        return quantumString;
+    }
+    
+    public static String getInitialQuantumString()
+    {
+        return intialQuantumString;
+    }
+    
+    int getSelectedQuantumIndex()
+    {
+        return notate.getRealtimeQuantizationIndex(quantumString);
+    }
+    
+    int snapSlotsToDuration(int slotsIn) {
+    if( slotsIn <= 0 )
+      {
+        return 0;
+      }
+    else
+      {
+      int selectedQuantumIndex = getSelectedQuantumIndex();
+      int selectedQuantum = quantum[selectedQuantumIndex];
+      int slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+      int leastResidue = Math.abs(slotsIn - slotsOut);
+      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
+        {
+          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
+          if( residue < leastResidue )
+            {
+              selectedQuantum = quantum[i];
+              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+            }
+        }
+     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
+    return slotsOut;
+      }
+    }
+    
+    int snapSlotsToIndex(int slotsIn) {
+    slotsIn -= getCountInBias();
+    int slotsOut = 0;
+    if( slotsIn <= 0 )
+      {
+        return slotsOut;
+      }
+    else
+      {
+      int selectedQuantumIndex = getSelectedQuantumIndex();
+      int selectedQuantum = quantum[selectedQuantumIndex];
+      slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+      int leastResidue = Math.abs(slotsIn - slotsOut);
+      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
+        {
+          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
+          if( residue < leastResidue )
+            {
+              selectedQuantum = quantum[i];
+              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+            }
+        }
+     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
+      }
+    return slotsOut;
     }
 
     public void close() {
