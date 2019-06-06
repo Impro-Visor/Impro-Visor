@@ -55,6 +55,7 @@ import imp.com.*;
 import imp.data.*;
 import static imp.data.MelodyPart.gcd;
 import imp.data.musicXML.ChordDescription;
+import static imp.gui.QuantizationDialog.quantumString;
 import imp.lickgen.GrammarEditorDialog;
 import imp.lickgen.LickGen;
 import imp.lickgen.LickgenFrame;
@@ -1144,11 +1145,38 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     
     setLooping(false);
     
-    recordingQuantizationSpinner.setModel(new javax.swing.SpinnerListModel(midiRecorder.getQuantumString()));
-    recordingQuantizationSpinner.setValue(midiRecorder.getInitialQuantumString());
+    recordingQuantizationSpinner.setModel(new javax.swing.SpinnerListModel(quantumString));
+    recordingQuantizationSpinner.setValue(getInitialQuantumString());
        
   } // end of Notate constructor
 
+    static int quantum[] = {20, 30, 40, 60, 120, 180, 240, 360, 480};
+    
+    static String quantumString[] =             
+      {
+          "sixteenth note triplet",
+          "sixteenth note",
+          "eighth note triplet",
+          "eighth note",
+          "quarternote ",
+          "dotted quarter note",
+          "half note",
+          "dotted half note",
+          "whole note"          
+      };
+
+static String intialQuantumString = "eighth note";
+    
+public String[] getQuantumString()
+    {
+        return quantumString;
+    }
+    
+public String getInitialQuantumString()
+    {
+        return intialQuantumString;
+    }
+    
 boolean showConstructionLinesAndBoxes = true;
 boolean saveConstructionLineState;
 
@@ -4902,8 +4930,8 @@ public Critic getCritic()
 
         recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8"}));
         recordingLatencySpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Recording Latency in Beats"));
-        recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(200, 40));
-        recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(200, 40));
+        recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(250, 50));
+        recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(250, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -4912,8 +4940,8 @@ public Critic getCritic()
 
         recordingQuantizationSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"Item 0", "Item 1", "Item 2", "Item 3"}));
         recordingQuantizationSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Recording Quantization Level"));
-        recordingQuantizationSpinner.setMinimumSize(new java.awt.Dimension(250, 40));
-        recordingQuantizationSpinner.setPreferredSize(new java.awt.Dimension(250, 40));
+        recordingQuantizationSpinner.setMinimumSize(new java.awt.Dimension(250, 50));
+        recordingQuantizationSpinner.setPreferredSize(new java.awt.Dimension(250, 50));
         midiQuantizationPanel.add(recordingQuantizationSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -9497,8 +9525,8 @@ public Critic getCritic()
         utilitiesMenu.add(stepKeyboardMI);
 
         quantizeMI.setMnemonic('v');
-        quantizeMI.setText("Quantize Chorus");
-        quantizeMI.setToolTipText("Quantize the current chorus into coarser units. Creates a new chorus.");
+        quantizeMI.setText("Requantize Chorus");
+        quantizeMI.setToolTipText("Requantize the current chorus. Creates a new chorus.");
         quantizeMI.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -11533,6 +11561,10 @@ private void startRecordingHelper()
                    -masterTransposition.getMelodyTransposition());   // set time to 0
   }
 
+int getCountInOffset()
+{
+    return score.getCountInOffset();
+}
 
 /**
  * This is like startRecording() without the playback.
@@ -23912,17 +23944,275 @@ private boolean isDotted = false;
       return quantizationDialog;
   }  
     
-  public void newQuantize(boolean toSwing)
+int getSelectedQuantumIndex()
+{
+    return quantizationDialog.getSelectedQuantumIndex();
+}
+
+
+int getRealtimeQuantizationIndex()
     {
-        int[] quanta = quantizationDialog.getQuanta();
-        int restAbsorption = quantizationDialog.getRestAbsorption();
-        MelodyPart originalPart = getCurrentMelodyPart();
-        MelodyPart quantizedPart = originalPart.quantizeMelody(quanta, 
-                                                               toSwing, 
-                                                               restAbsorption);
-        addChorus(quantizedPart);    
+        String value =getRealtimeQuantumString();
+        for( int index = 0; index < quantumString.length; index++ )
+          {
+            if( quantumString[index].equals(value) )
+              {
+                return index;
+              }
+          }
+        return -1;
     }
-      
+
+String getRealtimeQuantumString()
+{
+    return (String)recordingQuantizationSpinner.getValue();
+}
+
+//  public void newQuantize(boolean toSwing)
+//    {
+//        int restAbsorption = quantizationDialog.getRestAbsorption();
+//        MelodyPart originalPart = getCurrentMelodyPart();
+//        MelodyPart quantizedPart = originalPart.quantizeMelody(quanta, 
+//                                                               toSwing, 
+//                                                               restAbsorption, 
+//                                                               this);
+//        addChorus(quantizedPart);    
+//    }
+  
+   public int snapSlotsToDuration(int slotsIn, int selectedQuantumIndex, int quantum[]) {
+    if( slotsIn <= 0 )
+      {
+        return 0;
+      }
+    else
+      {
+      int selectedQuantum = quantum[selectedQuantumIndex];
+      int slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+      int leastResidue = Math.abs(slotsIn - slotsOut);
+      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
+        {
+          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
+          if( residue < leastResidue )
+            {
+              selectedQuantum = quantum[i];
+              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+            }
+        }
+     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
+    return slotsOut;
+      }
+    }
+    
+    public int snapSlotsToIndex(int slotsIn, int selectedQuantumIndex, int quantum[]) {
+    slotsIn -= getCountInBias();
+    int slotsOut = 0;
+    if( slotsIn <= 0 )
+      {
+        return slotsOut;
+      }
+    else
+      {
+      int selectedQuantum = quantum[selectedQuantumIndex];
+      slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+      int leastResidue = Math.abs(slotsIn - slotsOut);
+      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
+        {
+          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
+          if( residue < leastResidue )
+            {
+              selectedQuantum = quantum[i];
+              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+            }
+        }
+     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
+      }
+    return slotsOut;
+    }
+
+    int roundToMultiple(int input, int base) {
+        return base * (int) Math.round(((double) input) / base);
+    }
+    
+int getCountInBias() {
+        //System.out.println("firstChorus = " + notate.getFirstChorus());
+        return getFirstChorus() ? getCountInOffset() : 0;
+    }  
+
+  public void quantizeCurrentMelody(int level, boolean toSwing)
+    {
+        MelodyPart originalPart = getCurrentMelodyPart();
+        MelodyPart quantizedPart = quantizeMelody(originalPart,
+                                                  60, 
+                                                  toSwing);
+        addChorus(quantizedPart);    
+    }  
+  
+/**
+ * New version of quantizing melody, 21 June 2016.
+ * Self-contained and does not rely on classes in jMusic.
+ * Also preserves accidentals in the original melody.
+ * See "Attempt ..." to see case of swing not handled yet.
+ * @param input
+ * @param quanta
+ * @param toSwing
+ * @param restAbsorption
+ * @return a quantized melody part
+ */
+public MelodyPart quantizeMelody(MelodyPart input,
+                                 int quantum, 
+                                 boolean toSwing)
+    {
+        //System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
+        MelodyPart result = input; // will be replaced if part is non-empty
+
+        int notesLost = 0;
+        Part.PartIterator it = input.iterator();
+
+        // Only quanitize non-empty melody part that is not maximum quantization
+        if( it.hasNext() )
+          {
+            result = new MelodyPart();
+            int originalSlot = 0; // Do not place notes before their original slot
+            int outputSlot = 0;
+            while( it.hasNext() )
+              {
+                Note thisNote = (Note) it.next();
+                int oldDuration = thisNote.getRhythmValue();
+                if( thisNote.isRest() )
+                  {
+                    
+                  }
+                else
+                  {
+                    if( originalSlot < outputSlot )
+                      {
+                        // loose note
+                      }
+                    else
+                      {
+                        // originalSlot >= outputSlot
+                        int accumulatedRest = 0;
+                        while( originalSlot >= outputSlot + quantum )
+                          { // make outputSlot catch up 
+                            outputSlot += quantum;
+                            accumulatedRest += quantum;
+                          }
+                        if( accumulatedRest > 0 )
+                          {
+                            result.addRest(new Rest(accumulatedRest) );
+                          }
+                        Note newNote = thisNote.copy();
+                        int newDuration = snapSlotsToDuration(oldDuration, getSelectedQuantumIndex(), QuantizationDialog.quantum);
+                        newNote.setRhythmValue(newDuration);
+
+                        result.addNote(newNote);
+                        outputSlot += newDuration;
+                      }
+                  }
+                originalSlot += oldDuration;
+              } // while
+          }
+   //System.out.println("quantized melody: " + result);
+   //System.out.println(notesLost + " notes lost in quantization");
+
+    // Handle converting swing-eighth situations to appear as normal eights
+    // including when second third of triplet is sixteenths etc.
+//    if( toSwing )
+//      { 
+//        int swingFirst = (2*BEAT)/3;
+//        int halfBeat = BEAT/2;
+//        int sixthBeat = BEAT/6;
+//        MelodyPart unswung = result.copy();
+//        result = new MelodyPart();
+//        PartIterator it2 = unswung.iterator();
+//        int slot = 0;
+//        while( it2.hasNext() )
+//          {
+//            // Use the note left over from previous iterationr, or a new one
+//            Note unswungNote = (Note)it2.next();
+//            int unswungDuration = unswungNote.getRhythmValue();
+//            if( slot % BEAT == 0 
+//              && (unswungDuration % BEAT) == swingFirst 
+//              && it2.hasNext() 
+//              )
+//              {
+//              // We may have a swing situation. 
+//              // Keep track of "swung" and "unswung" values, until we
+//              // know for sure.
+//                
+//              Note swungNote = unswungNote.copy();
+//              ArrayList<Note> unswungNotes = new ArrayList<Note>();
+//              ArrayList<Note> swungNotes = new ArrayList<Note>();
+//              unswungNotes.add(unswungNote);
+//              swungNote.setRhythmValue(swungNote.getRhythmValue() - sixthBeat);
+//              swungNotes.add(swungNote);
+//               
+//              // See if the notes after the first fit the swing pattern.              
+//              // Adjust note or notes following first swing note, 
+//              // as long as they exactly fit into 1/2 of a beat
+// 
+//              unswungNote = (Note)it2.next();
+//              swungNote = unswungNote.copy();
+//              unswungDuration = unswungNote.getRhythmValue();
+//              int swungDuration = unswungDuration + unswungDuration/2;
+//              // Above converts value of 1/3 into 1/2 by multiplying by 1.5
+//              swungNote.setRhythmValue(swungDuration);
+//              unswungNotes.add(unswungNote);
+//              swungNotes.add(swungNote);
+//              int remainingSpace = halfBeat - swungDuration;
+//              
+//              // Adjust durations in the second half of a swing figure
+//              while( it2.hasNext() && remainingSpace > 0 )
+//                {
+//                  unswungNote = (Note)it2.next();
+//                  swungNote = unswungNote.copy();                 
+//                  unswungDuration = unswungNote.getRhythmValue();
+//                  swungDuration = unswungDuration + unswungDuration/2;                  
+//                  swungNote.setRhythmValue(swungDuration);
+//                  unswungNotes.add(unswungNote);
+//                  swungNotes.add(swungNote);          
+//                  remainingSpace -= swungDuration;
+//                  }
+//              /*
+//              System.out.println("slot = " + slot + ", remainingSpace) = " + remainingSpace);
+//              System.out.println("unswungNotes = " + unswungNotes);
+//              System.out.println("swungNotes = " + swungNotes);
+//              System.out.println("");
+//              */
+//              
+//              // If swing situation fits
+//              if( remainingSpace == 0 )
+//                {
+//                for( Note n: swungNotes )
+//                  {
+//                    result.addNote(n);
+//                  }
+//                }
+//              else
+//                {
+//                for( Note n: unswungNotes )
+//                  {
+//                    result.addNote(n);
+//                    slot += n.getRhythmValue();
+//                  }                  
+//                }
+//              } // end of swing situation
+//            else
+//              {
+//                // Not a swing situation. Just use the note as is.
+//                result.addNote(unswungNote);
+//                slot += unswungDuration;
+//              } // end handling possible swing situation
+//          } // end while
+//      }
+//    if( restAbsorption > 0 )
+//      {
+//        result = result.newAbsorbRests(restAbsorption);
+//      }
+    result.setInstrument(input.getInstrument());
+    return result;
+}
+
     /**
      * guideToneLineActionPerformed
      * Makes guideToneLineDialog visible
@@ -24606,24 +24896,23 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
         realtimeQuantizationDialog.hideQuantizeButton();        
     }
     
-    /**
-     * @return array of two ints indicating the time quanta for realtime
-     * MIDI capture
-     */
-    public int[] getQuantizationQuanta()
-    {
-        return quantizationDialog.getQuanta();
-    }
+//    /**
+//     * @return array of two ints indicating the time quanta for realtime
+//     * MIDI capture
+//     */
+//    public int[] getQuantizationQuanta()
+//    {
+//        return quantizationDialog.getQuanta();
+//    }
+//    
+//    public int getRealtimeQuantizationGCD()
+//    {
+//        int quanta[] = realtimeQuantizationDialog.getQuanta();
+//        return gcd(quanta[0], quanta[1]);
+//    }
     
-    public int getRealtimeQuantizationGCD()
+    public int getRealtimeQuantizationIndex(String value, String quantumString[])
     {
-        int quanta[] = realtimeQuantizationDialog.getQuanta();
-        return gcd(quanta[0], quanta[1]);
-    }
-    
-    public int getRealtimeQuantizationIndex(String quantumString[])
-    {
-        String value = (String)recordingQuantizationSpinner.getValue();
         for( int index = 0; index < quantumString.length; index++ )
           {
             if( quantumString[index].equals(value) )
@@ -24634,6 +24923,16 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
         return -1;
     }
     
+public int getRealtimeQuantization()
+    {
+        return quantum[getRealtimeQuantizationIndex(getRealtimeQuantizationString(), quantumString)];
+    }
+
+public String getRealtimeQuantizationString()
+{
+    return (String)recordingQuantizationSpinner.getValue();
+}
+    
     /**
      * @return boolean indicating the swing for realtime MIDI capture
      */
@@ -24643,13 +24942,13 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     }
     
     
-    /**
-     * @return int indicating the restAbsorption for realtime MIDI capture
-     */
-    public int getQuantizationRestAbsorption()
-    {
-        return quantizationDialog.getRestAbsorption();
-    }
+//    /**
+//     * @return int indicating the restAbsorption for realtime MIDI capture
+//     */
+//    public int getQuantizationRestAbsorption()
+//    {
+//        return quantizationDialog.getRestAbsorption();
+//    }
     
     private void setModesThatCantTrade(boolean enabled)
     {

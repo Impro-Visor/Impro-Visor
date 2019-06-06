@@ -4121,10 +4121,10 @@
                           </Border>
                         </Property>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[200, 40]"/>
+                          <Dimension value="[250, 50]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[200, 40]"/>
+                          <Dimension value="[250, 50]"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -4149,10 +4149,10 @@
                           </Border>
                         </Property>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[250, 40]"/>
+                          <Dimension value="[250, 50]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[250, 40]"/>
+                          <Dimension value="[250, 50]"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -8328,8 +8328,8 @@
             <MenuItem class="javax.swing.JMenuItem" name="quantizeMI">
               <Properties>
                 <Property name="mnemonic" type="int" value="118"/>
-                <Property name="text" type="java.lang.String" value="Quantize Chorus"/>
-                <Property name="toolTipText" type="java.lang.String" value="Quantize the current chorus into coarser units. Creates a new chorus."/>
+                <Property name="text" type="java.lang.String" value="Requantize Chorus"/>
+                <Property name="toolTipText" type="java.lang.String" value="Requantize the current chorus. Creates a new chorus."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quantizeMIActionPerformed"/>

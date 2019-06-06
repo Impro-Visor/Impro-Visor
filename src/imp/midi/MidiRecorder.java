@@ -225,11 +225,11 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
             handleNoteOff(prevNote, velocity, channel);
 
         } else {
-            int duration = snapSlotsToDuration(tickToSlots(noteOff, lastEvent));
+            int duration = notate.snapSlotsToDuration(tickToSlots(noteOff, lastEvent), getSelectedQuantumIndex(), quantum);
 
             // this try is here because a function a few steps up in the call hierarchy tends to capture error messages
             try {
-                index = snapSlotsToIndex(tickToSlots(noteOff));
+                index = notate.snapSlotsToIndex(tickToSlots(noteOff), getSelectedQuantumIndex(), quantum);
 
                 // add rests since nothing was played between now and the previous note
                 if (duration > 0 && index >= 0) {
@@ -248,10 +248,10 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         }
 
         noteOn = lastEvent;
-        index = snapSlotsToIndex(tickToSlots(noteOn));
+        index = notate.snapSlotsToIndex(tickToSlots(noteOn), getSelectedQuantumIndex(), quantum);
 
         // add current note   MAYBE RIGHT HEREEREREREREREER
-        int duration = snapSlotsToDuration(tickToSlots(noteOn, noteOff));
+        int duration = notate.snapSlotsToDuration(tickToSlots(noteOn, noteOff), getSelectedQuantumIndex(), quantum);
         Note noteToAdd = new Note(note, duration);
 
         try {
@@ -332,13 +332,13 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         noteOff = lastEvent;
         notePlaying = false;
 
-        int index = snapSlotsToIndex(tickToSlots(noteOn));
+        int index = notate.snapSlotsToIndex(tickToSlots(noteOn), getSelectedQuantumIndex(), quantum);
 
         if (index < 0) {
             return;
         }
 
-        int duration = snapSlotsToDuration(tickToSlots(noteOn, noteOff));
+        int duration = notate.snapSlotsToDuration(tickToSlots(noteOn, noteOff), getSelectedQuantumIndex(), quantum);
 
         if (duration == 0) {
         } else {
@@ -385,7 +385,7 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
     return (value % divisor) == 0;  
     }
     
-    int quantum[] = {20, 30, 40, 60, 120, 180, 240, 360, 480};
+    static int quantum[] = {20, 30, 40, 60, 120, 180, 240, 360, 480};
     
     static String quantumString[] =             
       {
@@ -414,61 +414,9 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
     
     int getSelectedQuantumIndex()
     {
-        return notate.getRealtimeQuantizationIndex(quantumString);
+        return notate.getRealtimeQuantizationIndex(notate.getRealtimeQuantizationString(), quantumString);
     }
     
-    int snapSlotsToDuration(int slotsIn) {
-    if( slotsIn <= 0 )
-      {
-        return 0;
-      }
-    else
-      {
-      int selectedQuantumIndex = getSelectedQuantumIndex();
-      int selectedQuantum = quantum[selectedQuantumIndex];
-      int slotsOut = roundToMultiple(slotsIn, selectedQuantum);
-      int leastResidue = Math.abs(slotsIn - slotsOut);
-      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
-        {
-          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
-          if( residue < leastResidue )
-            {
-              selectedQuantum = quantum[i];
-              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
-            }
-        }
-     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
-    return slotsOut;
-      }
-    }
-    
-    int snapSlotsToIndex(int slotsIn) {
-    slotsIn -= getCountInBias();
-    int slotsOut = 0;
-    if( slotsIn <= 0 )
-      {
-        return slotsOut;
-      }
-    else
-      {
-      int selectedQuantumIndex = getSelectedQuantumIndex();
-      int selectedQuantum = quantum[selectedQuantumIndex];
-      slotsOut = roundToMultiple(slotsIn, selectedQuantum);
-      int leastResidue = Math.abs(slotsIn - slotsOut);
-      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
-        {
-          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
-          if( residue < leastResidue )
-            {
-              selectedQuantum = quantum[i];
-              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
-            }
-        }
-     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
-      }
-    return slotsOut;
-    }
-
     public void close() {
     }
     

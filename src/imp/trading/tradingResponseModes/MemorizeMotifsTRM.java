@@ -239,9 +239,9 @@ public class MemorizeMotifsTRM extends BlockResponseMode {
             
             if(TESTING) System.err.println("Solo generated. Returning solo...");
             
-            MelodyPart response = responseInfo.getResponse().quantizeMelody(notate.getQuantizationQuanta(),
-                                                                            notate.getQuantizationSwing(),
-                                                                            notate.getQuantizationRestAbsorption());
+            MelodyPart response = notate.quantizeMelody(responseInfo.getResponse(),
+                                                        notate.getRealtimeQuantization(),
+                                                        notate.getQuantizationSwing());
             
             
             return response;
