@@ -23923,27 +23923,7 @@ private boolean isDotted = false;
         themeWeaver.setVisible(true);
     }//GEN-LAST:event_soloGeneratorMIActionPerformed
 
-//    public void originalQuantize()
-//    {
-//        MelodyPart originalPart = getCurrentMelodyPart();
-//        MelodyPart quantizedPart;
-//        String quantizeString = ((String) quantizeComboBox.getSelectedItem());
-//        int quantizeResolution = getSlotsFromString(quantizeString);
-//        
-//        if( quantizeResolution > 0 )
-//          {
-//            int quantum[] = {quantizeResolution, quantizeResolution};
-//            quantizedPart = originalPart.applyResolution(BEAT, quantum, false, 1); // BEAT was quantizeResolution
-//            quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument()); //fix bug 60
-//            addChorus(quantizedPart);
-//          }      
-//    }
-    
-    
-  public QuantizationDialog getQuantizationDialog(){
-      return quantizationDialog;
-  }  
-    
+       
 int getSelectedQuantumIndex()
 {
     return quantizationDialog.getSelectedQuantumIndex();
@@ -23968,18 +23948,8 @@ String getRealtimeQuantumString()
     return (String)recordingQuantizationSpinner.getValue();
 }
 
-//  public void newQuantize(boolean toSwing)
-//    {
-//        int restAbsorption = quantizationDialog.getRestAbsorption();
-//        MelodyPart originalPart = getCurrentMelodyPart();
-//        MelodyPart quantizedPart = originalPart.quantizeMelody(quanta, 
-//                                                               toSwing, 
-//                                                               restAbsorption, 
-//                                                               this);
-//        addChorus(quantizedPart);    
-//    }
   
-   public int snapSlotsToDuration(int slotsIn, int selectedQuantumIndex, int quantum[]) {
+public static int snapSlotsToDuration(int slotsIn, int selectedQuantumIndex, int quantum[]) {
     if( slotsIn <= 0 )
       {
         return 0;
@@ -24029,9 +23999,14 @@ String getRealtimeQuantumString()
     return slotsOut;
     }
 
-    int roundToMultiple(int input, int base) {
+static public int roundToMultiple(int input, int base) {
         return base * (int) Math.round(((double) input) / base);
     }
+
+static public int floorToMultiple(int input, int base) {
+        return base * (int) Math.floor(((double) input) / base);
+    }
+
     
 int getCountInBias() {
         //System.out.println("firstChorus = " + notate.getFirstChorus());

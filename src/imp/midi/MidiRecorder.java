@@ -356,13 +356,6 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         notate.repaint();
     }
 
-    int roundToMultiple(int input, int base) {
-        return base * (int) Math.round(((double) input) / base);
-    }
-
-    int floorToMultiple(int input, int base) {
-        return base * (int) Math.floor(((double) input) / base);
-    }
     int microsecondsToSlots(long start, long finish) {
         return microsecondsToSlots(finish - start);
     }

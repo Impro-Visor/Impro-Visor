@@ -1031,12 +1031,12 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
     private void RhythmHelperMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RhythmHelperMenuItemActionPerformed
         updateTradeMode();
         grammarStatusButton.setVisible(false);
-        QuantizationDialog qd = notate.getQuantizationDialog();
-        qd.unsetQuantization(1);
-        qd.setQuantization(1, 30);
-        qd.setQuantization(0, 30);
-        qd.setTripletQuantizationBoxesOff(80);
-        qd.setNoteQuantizationBoxesOn(30);//set the 16th note quantization box to checked
+//        QuantizationDialog qd = notate.getQuantizationDialog();
+//        qd.unsetQuantization(1);
+//        qd.setQuantization(1, 30);
+//        qd.setQuantization(0, 30);
+//        qd.setTripletQuantizationBoxesOff(80);
+//        qd.setNoteQuantizationBoxesOn(30);//set the 16th note quantization box to checked
         LickgenFrame lg = notate.getLickgenFrame();
         lg.uncheckAvoidNotes();
     }//GEN-LAST:event_RhythmHelperMenuItemActionPerformed
