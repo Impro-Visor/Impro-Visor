@@ -147,18 +147,15 @@ public class QuantizationDialog extends javax.swing.JDialog
     }
     
 
-    int getSelectedQuantumIndex()
+int getSelectedQuantumIndex()
     {
-        String value = getQuantumString();
-        for( int index = 0; index < quantumString.length; index++ )
-          {
-            if( quantumString[index].equals(value) )
-              {
-                return index;
-              }
-          }
-        return -1;
-    }
+        return notate.getQuantumIndex(getQuantumString());
+    }      
+
+int getSelectedQuantumValue()
+{
+    return notate.quantum[getSelectedQuantumIndex()];
+}
     
   public String getQuantumString()
   {

@@ -1165,6 +1165,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
 static String intialQuantumString = "eighth note";
     
+
 public String[] getQuantumString()
     {
         return quantumString;
@@ -23958,8 +23959,11 @@ String getRecordingQuantumString()
     return (String)recordingQuantizationSpinner.getValue();
 }
 
+// Note that duration uses ceil where index uses round.
   
-public static int snapSlotsToDuration(int slotsIn, int selectedQuantumIndex, int quantum[]) {
+public static int snapSlotsToDuration(int slotsIn, 
+                                      int selectedQuantumIndex, 
+                                      int quantum[]) {
     if( slotsIn <= 0 )
       {
         return 0;
@@ -23967,15 +23971,15 @@ public static int snapSlotsToDuration(int slotsIn, int selectedQuantumIndex, int
     else
       {
       int selectedQuantum = quantum[selectedQuantumIndex];
-      int slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+      int slotsOut = ceilToMultiple(slotsIn, selectedQuantum);
       int leastResidue = Math.abs(slotsIn - slotsOut);
       for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
         {
-          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
+          int residue = Math.abs(slotsIn - ceilToMultiple(slotsIn, quantum[i]));
           if( residue < leastResidue )
             {
               selectedQuantum = quantum[i];
-              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+              slotsOut = ceilToMultiple(slotsIn, selectedQuantum);
             }
         }
      //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
@@ -23983,7 +23987,9 @@ public static int snapSlotsToDuration(int slotsIn, int selectedQuantumIndex, int
       }
     }
     
-    public int snapSlotsToIndex(int slotsIn, int selectedQuantumIndex, int quantum[]) {
+    public int snapSlotsToIndex(int slotsIn, 
+                                int selectedQuantumIndex, 
+                                int quantum[]) {
     slotsIn -= getCountInBias();
     int slotsOut = 0;
     if( slotsIn <= 0 )
@@ -24009,6 +24015,28 @@ public static int snapSlotsToDuration(int slotsIn, int selectedQuantumIndex, int
     return slotsOut;
     }
 
+public int getQuantumValue()
+{
+    return quantizationDialog.getSelectedQuantumValue();
+}
+
+public int getQuantum(String value)
+    {
+    return quantum[getQuantumIndex(value)];
+    }
+
+public int getQuantumIndex(String value)  
+    {
+        for( int index = 0; index < quantumString.length; index++ )
+          {
+            if( quantumString[index].equals(value) )
+              {
+                return index;
+              }
+          }
+        return -1;
+    }
+    
 static public int roundToMultiple(int input, int base) {
         return base * (int) Math.round(((double) input) / base);
     }
@@ -24017,17 +24045,20 @@ static public int floorToMultiple(int input, int base) {
         return base * (int) Math.floor(((double) input) / base);
     }
 
+static public int ceilToMultiple(int input, int base) {
+        return base * (int) Math.ceil(((double) input) / base);
+    }
     
 int getCountInBias() {
         //System.out.println("firstChorus = " + notate.getFirstChorus());
         return getFirstChorus() ? getCountInOffset() : 0;
     }  
 
-  public void quantizeCurrentMelody(int level, boolean toSwing)
+public void quantizeCurrentMelody(int level, boolean toSwing)
     {
         MelodyPart originalPart = getCurrentMelodyPart();
         MelodyPart quantizedPart = quantizeMelody(originalPart,
-                                                  60, 
+                                                  getQuantumValue(), 
                                                   toSwing);
         addChorus(quantizedPart);    
     }  
@@ -24038,13 +24069,12 @@ int getCountInBias() {
  * Also preserves accidentals in the original melody.
  * See "Attempt ..." to see case of swing not handled yet.
  * @param input
- * @param quanta
+ * @param quantumValue
  * @param toSwing
- * @param restAbsorption
  * @return a quantized melody part
  */
 public MelodyPart quantizeMelody(MelodyPart input,
-                                 int quantum, 
+                                 int quantumValue, 
                                  boolean toSwing)
     {
         //System.out.println("quantize melody to " + quanta[0] + " & " + quanta[1] + ", gcd = " + gcd + ", restAbsorb = " + restAbsorption);
@@ -24065,29 +24095,35 @@ public MelodyPart quantizeMelody(MelodyPart input,
                 int oldDuration = thisNote.getRhythmValue();
                 if( thisNote.isRest() )
                   {
-                    
+                  // Rests are ignored here, but reconstituted below 
                   }
                 else
                   {
                     if( originalSlot < outputSlot )
                       {
-                        // loose note
+                        // lose note
                       }
                     else
                       {
                         // originalSlot >= outputSlot
                         int accumulatedRest = 0;
-                        while( originalSlot >= outputSlot + quantum )
+                        while( originalSlot >= outputSlot + quantumValue )
                           { // make outputSlot catch up 
-                            outputSlot += quantum;
-                            accumulatedRest += quantum;
+                            outputSlot += quantumValue;
+                            accumulatedRest += quantumValue;
                           }
                         if( accumulatedRest > 0 )
                           {
                             result.addRest(new Rest(accumulatedRest) );
                           }
                         Note newNote = thisNote.copy();
-                        int newDuration = snapSlotsToDuration(oldDuration, getSelectedQuantumIndex(), QuantizationDialog.quantum);
+                        
+                        // Here we should be using ceil rather than round.
+                        int newDuration = 
+                                snapSlotsToDuration(oldDuration, 
+                                                    getSelectedQuantumIndex(), 
+                                                    quantum);
+                        
                         newNote.setRhythmValue(newDuration);
 
                         result.addNote(newNote);
@@ -24097,8 +24133,11 @@ public MelodyPart quantizeMelody(MelodyPart input,
                 originalSlot += oldDuration;
               } // while
           }
+            result.setInstrument(input.getInstrument());
+    return result;
    //System.out.println("quantized melody: " + result);
    //System.out.println(notesLost + " notes lost in quantization");
+    }
 
     // Handle converting swing-eighth situations to appear as normal eights
     // including when second third of triplet is sixteenths etc.
@@ -24194,9 +24233,9 @@ public MelodyPart quantizeMelody(MelodyPart input,
 //      {
 //        result = result.newAbsorbRests(restAbsorption);
 //      }
-    result.setInstrument(input.getInstrument());
-    return result;
-}
+//    result.setInstrument(input.getInstrument());
+//    return result;
+//}
 
     /**
      * guideToneLineActionPerformed
