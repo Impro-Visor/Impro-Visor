@@ -1136,8 +1136,6 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setSliderVolumes(DEFAULT_SLIDER_VOLUME);
 
-    //midiRecordSnapSpinner.setValue(Preferences.getMidiRecordSnap());
-
     setNormalMode();
 
     guideToneLineDialog = new GuideToneLineDialog(this, false);
@@ -1150,9 +1148,9 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
        
   } // end of Notate constructor
 
-    static int quantum[] = {20, 30, 40, 60, 120, 180, 240, 360, 480};
+    public static int quantum[] = {20, 30, 40, 60, 120, 180, 240, 360, 480};
     
-    static String quantumString[] =             
+    public static String quantumString[] =             
       {
           "sixteenth note triplet",
           "sixteenth note",
@@ -9524,6 +9522,7 @@ public Critic getCritic()
         });
         utilitiesMenu.add(stepKeyboardMI);
 
+        quantizeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_MASK));
         quantizeMI.setMnemonic('v');
         quantizeMI.setText("Requantize Chorus");
         quantizeMI.setToolTipText("Requantize the current chorus. Creates a new chorus.");
@@ -23930,9 +23929,20 @@ int getSelectedQuantumIndex()
 }
 
 
-int getRealtimeQuantizationIndex()
+public int snapRecordingSlotsToDuration(int slots)
+{
+    return snapSlotsToDuration(slots, getRecordingQuantizationIndex(), quantum);
+}
+
+public int snapRecordingSlotsToIndex(int slots)
+{
+    return snapSlotsToIndex(slots, getRecordingQuantizationIndex(), quantum);
+}
+
+
+public int getRecordingQuantizationIndex()
     {
-        String value =getRealtimeQuantumString();
+        String value =getRecordingQuantumString();
         for( int index = 0; index < quantumString.length; index++ )
           {
             if( quantumString[index].equals(value) )
@@ -23943,7 +23953,7 @@ int getRealtimeQuantizationIndex()
         return -1;
     }
 
-String getRealtimeQuantumString()
+String getRecordingQuantumString()
 {
     return (String)recordingQuantizationSpinner.getValue();
 }

@@ -58,11 +58,16 @@ public class QuantizationDialog extends javax.swing.JDialog
         setTitle("Requantization");
         setAlwaysOnTop(true);
         setBounds(new java.awt.Rectangle(650, 25, 0, 0));
+        setMinimumSize(new java.awt.Dimension(408, 125));
+        setPreferredSize(new java.awt.Dimension(408, 125));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         eighthNoteSwingBox.setSelected(true);
         eighthNoteSwingBox.setText("Swing Eighth-Notes");
         eighthNoteSwingBox.setToolTipText("");
+        eighthNoteSwingBox.setMaximumSize(new java.awt.Dimension(158, 50));
+        eighthNoteSwingBox.setMinimumSize(new java.awt.Dimension(158, 50));
+        eighthNoteSwingBox.setPreferredSize(new java.awt.Dimension(158, 50));
         eighthNoteSwingBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -77,12 +82,15 @@ public class QuantizationDialog extends javax.swing.JDialog
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         getContentPane().add(eighthNoteSwingBox, gridBagConstraints);
 
+        quantizeButton.setBackground(new java.awt.Color(0, 255, 0));
         quantizeButton.setText("Requantize to New Chorus");
         quantizeButton.setToolTipText("Requantize the current chorus according to the set parameters, resulting in a new chorus that will be added at the end.");
+        quantizeButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         quantizeButton.setContentAreaFilled(false);
-        quantizeButton.setMaximumSize(new java.awt.Dimension(210, 50));
-        quantizeButton.setMinimumSize(new java.awt.Dimension(210, 50));
-        quantizeButton.setPreferredSize(new java.awt.Dimension(210, 50));
+        quantizeButton.setMaximumSize(new java.awt.Dimension(210, 40));
+        quantizeButton.setMinimumSize(new java.awt.Dimension(210, 40));
+        quantizeButton.setOpaque(true);
+        quantizeButton.setPreferredSize(new java.awt.Dimension(210, 40));
         quantizeButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -92,10 +100,10 @@ public class QuantizationDialog extends javax.swing.JDialog
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(quantizeButton, gridBagConstraints);
 
         quantizationSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"Item 0", "Item 1", "Item 2", "Item 3"}));

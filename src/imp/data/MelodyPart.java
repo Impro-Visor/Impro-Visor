@@ -1941,219 +1941,23 @@ public void setAutoFill(boolean fill)
         return result;   
     }
      
-     public int getSize()
+  @Override
+  public int getSize()
      {
          return size;
      }
-    
-//    /**
-//     * Quantization: accounting for the human element of user-generated audio
-//     * input by modifying the computer output
-//     *
-//     * @author Becki Yukman
-//     * @date July 2014
-//     *
-//     */
-//    
-//    /**
-//     * returns the known Note closest to a give irregular Note (from above)
-//     * @param n
-//     * @return int cost
-//     */
-//    
-//    public int closestKnownUnitValueAbove(Note n)
-//    {
-//        if (n.nonRest())
-//        {
-//            for (int i = 0; i<knownNoteValue.length; i++)
-//            {
-//                if (knownNoteValue[i]-n.getRhythmValue() >= 0)
-//                {
-//                    return knownNoteValue[i];
-//                }               
-//            }
-//        }
-//        else
-//        {
-//            for (int i = 0; i<knownRestValue.length; i++)
-//            {
-//                if (knownRestValue[i]-n.getRhythmValue() >= 0)
-//                {
-//                    return knownRestValue[i];
-//                }               
-//            }
-//        }
-//        return -1;
-//    }
-//    
-//    /**
-//     * returns the known Note closest to a give irregular Note (from below)
-//     * @param n
-//     * @return int cost
-//     */
-//    
-//    public int closestKnownUnitValueBelow(Note n)
-//    {
-//        if (n.nonRest())
-//        {
-//            for (int i = knownNoteValue.length-1; i>0; i--)
-//            {
-//                if (knownNoteValue[i]-(n.getRhythmValue()) <= 0)
-//                {
-//                    return knownNoteValue[i];
-//                }               
-//            }
-//        }
-//        else
-//        {
-//            for (int i = knownRestValue.length-1; i>0; i--)
-//            {
-//                if (knownRestValue[i]-(n.getRhythmValue()) <= 0)
-//                {
-//                    return knownRestValue[i];
-//                }               
-//            }
-//        }
-//        return -1;
-//    } 
-//        
-//    /**
-//     * calculates the sum of all the Note rhythm values
-//     * @param MelodyPart m
-//     * @return int sum
-//     */
-//    
-//    public int getNoteSum()
-//    {
-//        MelodyPart m = this;
-//        int sum = 0;
-//        
-//        PartIterator iter = m.iterator();
-//        while(iter.hasNext())
-//        {
-//            if(((Note)iter.next()).nonRest())
-//            {
-//                sum++;
-//            }
-//        }
-//        return sum;
-//    }
-//    
-//    /**
-//     * iterates through the melody Note array and returns the median note length 
-//     * @return int median
-//     */
-//    
-//    public int getMedianNoteLength()
-//    {
-//        MelodyPart m = this;
-//        int median = 0;
-//        int length = m.getNoteSum();
-//        if (length > 0) {
-//           
-//            //System.out.print("Length: "+length+", ");
-//            int[] rhythmValues = new int[length];
-//        
-//            int i = 0;
-//        
-//            PartIterator iter = m.iterator();
-//            while(iter.hasNext())
-//            {
-//                Note n = ((Note)iter.next());
-//                if(n.nonRest())
-//                {
-//                    rhythmValues[i] = n.getRhythmValue();
-//                    i++;
-//                }
-//            }              
-//            Arrays.sort(rhythmValues);
-//            median = rhythmValues[(length-1)/2];
-//            //System.out.println("Median: "+median);
-//            return median;
-//        }
-//        else
-//        {
-//            return 480;
-//        }
-//    }
-    
-//    public boolean isValidNoteLength(int length)
-//    {
-//        if (java.util.Arrays.binarySearch(knownNoteValue, length) >= 0)
-//            {
-//               return true; 
-//            }
-//        return false;
-//    }
-//    
-//    public boolean isValidRestLength(int length)
-//    {
-//        if (java.util.Arrays.binarySearch(knownRestValue, length) >= 0)
-//            {
-//               return true; 
-//            }
-//        return false;
-//    }
-    
-//    public boolean isValidUnitLength(int length, boolean isRest)
-//    {
-//        if (isRest)
-//        {
-//            return isValidRestLength(length);
-//        }
-//        else
-//        {
-//            return isValidNoteLength(length);
-//        }
-//    }
-    
-//    /**
-//     * calculates the distance between a note and the closest known Note rhythmically
-//     * @param note
-//     * @return int cost
-//     */
-//    
-//    public int getUnitCost (Note note)
-//    {
-//        int length = note.getRhythmValue();
-//        if (isValidUnitLength(length, note.isRest()))
-//        {
-//            return 0;
-//        }
-//        else
-//        {
-//            // calculate known Notes on either side using helper functions (above)
-//            int highValue = closestKnownUnitValueAbove(note);
-//            int lowValue = closestKnownUnitValueBelow(note);
-//     
-//            // calculate distance between note and known Notes on each side
-//            int highDist = highValue - note.getRhythmValue();
-//            int lowDist = lowValue - note.getRhythmValue();
+       
+
+//public static int quantizeDown(int duration, int quantum)
+//{
+//    int result = quantum * Math.floorDiv(duration, quantum);
+//    return result;
+//}
 //
-//            if (Math.abs(highDist) < Math.abs(lowDist))
-//            {
-//                return highDist;
-//            }
-//            // choice to favor lower known Note in equal distance cases for less 
-//            // overlap conditions
-//            else 
-//            {
-//                return lowDist;
-//            }
-//        }
-//    }
-    
-
-public static int quantizeDown(int duration, int quantum)
-{
-    int result = quantum * Math.floorDiv(duration, quantum);
-    return result;
-}
-
-public static int quantizeUp(int duration, int quantum)
-{
-    return quantum * (int)Math.ceil(((double)duration)/quantum);
-}
+//public static int quantizeUp(int duration, int quantum)
+//{
+//    return quantum * (int)Math.ceil(((double)duration)/quantum);
+//}
     
 /**
  * Finds the Greatest Common Denominator of two integers, a & b
@@ -2173,52 +1977,52 @@ public static int gcd(int a, int b)
       }
   }
        
-    public void mergeAdjacentRests() 
-    {
-        int index = getNextIndex(0);
-        int nextIndex = getNextIndex(index);
-
-        Note note = getNote(index);
-        Note nextNote = getNote(nextIndex);
-        
-        //variable declarations for the test conditions for merging rests
-        boolean bothRest;
-        boolean validRestLength;
-
-        while (nextNote != null) 
-        {
-            // true if both Notes are Rests, false otherwise 
-            bothRest = note.isRest() && nextNote.isRest();
-            // true if two Rests can be combined into a valid Rest Length
-            validRestLength = java.util.Arrays.binarySearch(knownRestValue, 
-                              note.getRhythmValue() 
-                              + nextNote.getRhythmValue()) >= 0;
-            
-            if (bothRest && validRestLength) 
-            {
-                // slots.set(nextIndex, null);
-                unitCount--;
-
-                //System.out.println("Correcting rests in measure "+((index/measureLength)+1));
-                
-                note.setRhythmValue(note.getRhythmValue() + nextNote.getRhythmValue());
-                
-                // skips over swung while allowing the next iteration to 
-                // compare against the note most recently corrected
-                nextNote = getNote(getNextIndex(nextIndex));
-            }
-            else 
-            {
-                //increments indices and notes
-                index = getNextIndex(index);
-                nextIndex = getNextIndex(nextIndex);
-                
-                note = getNote(index);
-                nextNote = getNote(nextIndex); 
-            }
-        }
-        //System.out.println("Merge rests quantization completed.");
-    }
+//    public void mergeAdjacentRests() 
+//    {
+//        int index = getNextIndex(0);
+//        int nextIndex = getNextIndex(index);
+//
+//        Note note = getNote(index);
+//        Note nextNote = getNote(nextIndex);
+//        
+//        //variable declarations for the test conditions for merging rests
+//        boolean bothRest;
+//        boolean validRestLength;
+//
+//        while (nextNote != null) 
+//        {
+//            // true if both Notes are Rests, false otherwise 
+//            bothRest = note.isRest() && nextNote.isRest();
+//            // true if two Rests can be combined into a valid Rest Length
+//            validRestLength = java.util.Arrays.binarySearch(knownRestValue, 
+//                              note.getRhythmValue() 
+//                              + nextNote.getRhythmValue()) >= 0;
+//            
+//            if (bothRest && validRestLength) 
+//            {
+//                // slots.set(nextIndex, null);
+//                unitCount--;
+//
+//                //System.out.println("Correcting rests in measure "+((index/measureLength)+1));
+//                
+//                note.setRhythmValue(note.getRhythmValue() + nextNote.getRhythmValue());
+//                
+//                // skips over swung while allowing the next iteration to 
+//                // compare against the note most recently corrected
+//                nextNote = getNote(getNextIndex(nextIndex));
+//            }
+//            else 
+//            {
+//                //increments indices and notes
+//                index = getNextIndex(index);
+//                nextIndex = getNextIndex(nextIndex);
+//                
+//                note = getNote(index);
+//                nextNote = getNote(nextIndex); 
+//            }
+//        }
+//        //System.out.println("Merge rests quantization completed.");
+//    }
 
 
     /**

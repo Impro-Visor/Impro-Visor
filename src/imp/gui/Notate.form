@@ -8327,6 +8327,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="quantizeMI">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+Q"/>
+                </Property>
                 <Property name="mnemonic" type="int" value="118"/>
                 <Property name="text" type="java.lang.String" value="Requantize Chorus"/>
                 <Property name="toolTipText" type="java.lang.String" value="Requantize the current chorus. Creates a new chorus."/>
