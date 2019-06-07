@@ -169,7 +169,7 @@ int getSelectedQuantumValue()
 
     private void quantizeButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_quantizeButtonActionPerformed
     {//GEN-HEADEREND:event_quantizeButtonActionPerformed
-         notate.quantizeCurrentMelody(60, false);
+         notate.quantizeCurrentMelody(getSelectedQuantumIndex(), eighthNoteSwingBox.isSelected());
     }//GEN-LAST:event_quantizeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
