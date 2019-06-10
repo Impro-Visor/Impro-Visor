@@ -47,8 +47,7 @@ public class QuantizationDialog extends javax.swing.JDialog
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
         eighthNoteSwingBox = new javax.swing.JCheckBox();
@@ -62,16 +61,13 @@ public class QuantizationDialog extends javax.swing.JDialog
         setPreferredSize(new java.awt.Dimension(408, 125));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        eighthNoteSwingBox.setSelected(true);
         eighthNoteSwingBox.setText("Swing Eighth-Notes");
         eighthNoteSwingBox.setToolTipText("");
         eighthNoteSwingBox.setMaximumSize(new java.awt.Dimension(158, 50));
         eighthNoteSwingBox.setMinimumSize(new java.awt.Dimension(158, 50));
         eighthNoteSwingBox.setPreferredSize(new java.awt.Dimension(158, 50));
-        eighthNoteSwingBox.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        eighthNoteSwingBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eighthNoteSwingBoxActionPerformed(evt);
             }
         });
@@ -91,10 +87,8 @@ public class QuantizationDialog extends javax.swing.JDialog
         quantizeButton.setMinimumSize(new java.awt.Dimension(210, 40));
         quantizeButton.setOpaque(true);
         quantizeButton.setPreferredSize(new java.awt.Dimension(210, 40));
-        quantizeButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        quantizeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quantizeButtonActionPerformed(evt);
             }
         });

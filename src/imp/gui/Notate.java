@@ -53,9 +53,7 @@ import imp.audio.SCHandler;
 import imp.roadmap.brickdictionary.Block;
 import imp.com.*;
 import imp.data.*;
-import static imp.data.MelodyPart.gcd;
 import imp.data.musicXML.ChordDescription;
-import static imp.gui.QuantizationDialog.quantumString;
 import imp.lickgen.GrammarEditorDialog;
 import imp.lickgen.LickGen;
 import imp.lickgen.LickgenFrame;
@@ -24086,8 +24084,8 @@ Part.PartIterator it = input.iterator();
 if( it.hasNext() )
   {
     result = new MelodyPart();
-    int originalSlot = 0; // Do not place notes before their original slot
-    int outputSlot = 0;
+    int originalSlot = 0; // Track original slot based on notes in MelodyPart
+    int outputSlot = 0;   // Track output slot based on notes placed in result
     while( it.hasNext() )
       {
         Note thisNote = (Note) it.next();
@@ -24100,33 +24098,41 @@ if( it.hasNext() )
           {
             if( originalSlot < outputSlot )
               {
-                // lose note
+                // Lose note if slot has already gone by.
               }
             else
               {
                 // originalSlot >= outputSlot
-                int accumulatedRest = 0;
+                int accumulatedRest = 0; 
                 while( originalSlot >= outputSlot + quantumValue )
-                  { // make outputSlot catch up 
+                  { // Make outputSlot catch up and account for slot advance.
                     outputSlot += quantumValue;
                     accumulatedRest += quantumValue;
                   }
                 if( accumulatedRest > 0 )
                   {
-                    result.addRest(new Rest(accumulatedRest) );
+//                    accumulatedRest = snapSlotsToDuration(accumulatedRest,
+//                                                          getSelectedQuantumIndex(), 
+//                                                          quantum);
+                    accumulatedRest = ceilToMultiple(accumulatedRest, quantumValue);
+                    
+                    Rest addedRest = new Rest(accumulatedRest);
+                    result.addRest(addedRest);
+                  //System.out.println("adding rest duration " + addedRest.getRhythmValue() + " input = " + formatSlot(originalSlot) + " output = " + formatSlot(outputSlot));
                   }
                 Note newNote = thisNote.copy();
 
                 // Here we should be using ceil rather than round.
-                int newDuration = 
-                        snapSlotsToDuration(oldDuration, 
-                                            getSelectedQuantumIndex(), 
-                                            quantum);
+                int newDuration = ceilToMultiple(oldDuration, quantumValue);
+//                        snapSlotsToDuration(oldDuration, 
+//                                            getSelectedQuantumIndex(), 
+//                                            quantum);
 
                 newNote.setRhythmValue(newDuration);
-
+ 
                 result.addNote(newNote);
                 outputSlot += newDuration;
+              //System.out.println("adding note " + newNote.toLeadsheet() + " duration " + newNote.getRhythmValue() + " input = " + formatSlot(originalSlot) + " output = " + formatSlot(outputSlot));
               }
           }
         originalSlot += oldDuration;
@@ -24136,6 +24142,10 @@ result.setInstrument(input.getInstrument());
 return result;
 }
 
+String formatSlot(int slot)
+{
+    return "bar " + (1 + slot/480) + " slot " + (slot % 480);
+}
 
 /**
 * Handle converting swing-eighth situations to appear as normal eights
