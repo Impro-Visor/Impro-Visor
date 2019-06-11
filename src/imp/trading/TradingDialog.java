@@ -115,7 +115,8 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
         java.awt.GridBagConstraints gridBagConstraints;
 
         leadingSelector = new javax.swing.ButtonGroup();
@@ -188,19 +189,25 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         setMinimumSize(new java.awt.Dimension(875, 190));
         setPreferredSize(new java.awt.Dimension(875, 200));
         setSize(new java.awt.Dimension(875, 200));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
+        addComponentListener(new java.awt.event.ComponentAdapter()
+        {
+            public void componentShown(java.awt.event.ComponentEvent evt)
+            {
                 activeTradingShown(evt);
             }
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
+            public void componentHidden(java.awt.event.ComponentEvent evt)
+            {
                 activingTradingHidden(evt);
             }
         });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 activeTradingWindowClosing(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
                 activeTradingWindowClosed(evt);
             }
         });
@@ -219,8 +226,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         userFirstButton.setText("User");
         userFirstButton.setMinimumSize(new java.awt.Dimension(64, 20));
         userFirstButton.setPreferredSize(new java.awt.Dimension(64, 20));
-        userFirstButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        userFirstButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 userFirstButtonActionPerformed(evt);
             }
         });
@@ -236,8 +245,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         improvisorFirstButton.setText("Impro-Visor");
         improvisorFirstButton.setMinimumSize(new java.awt.Dimension(122, 20));
         improvisorFirstButton.setPreferredSize(new java.awt.Dimension(122, 20));
-        improvisorFirstButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        improvisorFirstButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 improvisorFirstButtonActionPerformed(evt);
             }
         });
@@ -265,8 +276,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         activeButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         activeButton.setSelected(true);
         activeButton.setText("Active");
-        activeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        activeButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 activeButtonActionPerformed(evt);
             }
         });
@@ -280,8 +293,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         activePassiveGroup.add(passiveButton);
         passiveButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         passiveButton.setText("Passive");
-        passiveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        passiveButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 passiveButtonActionPerformed(evt);
             }
         });
@@ -309,8 +324,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         recordCheckBox.setMaximumSize(new java.awt.Dimension(81, 25));
         recordCheckBox.setMinimumSize(new java.awt.Dimension(81, 25));
         recordCheckBox.setPreferredSize(new java.awt.Dimension(81, 25));
-        recordCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        recordCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 recordCheckBoxActionPerformed(evt);
             }
         });
@@ -344,8 +361,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         grammarStatusButton.setMaximumSize(new java.awt.Dimension(300, 50));
         grammarStatusButton.setMinimumSize(new java.awt.Dimension(250, 40));
         grammarStatusButton.setPreferredSize(new java.awt.Dimension(300, 40));
-        grammarStatusButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        grammarStatusButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 grammarStatusButtonActionPerformed(evt);
             }
         });
@@ -363,8 +382,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         transformStatusButton.setMaximumSize(new java.awt.Dimension(300, 50));
         transformStatusButton.setMinimumSize(new java.awt.Dimension(250, 40));
         transformStatusButton.setPreferredSize(new java.awt.Dimension(300, 40));
-        transformStatusButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        transformStatusButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 transformStatusButtonActionPerformed(evt);
             }
         });
@@ -402,8 +423,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         tempoSlider.setMaximumSize(new java.awt.Dimension(150, 30));
         tempoSlider.setMinimumSize(new java.awt.Dimension(150, 30));
         tempoSlider.setPreferredSize(new java.awt.Dimension(190, 30));
-        tempoSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        tempoSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 tempoSliderStateChanged(evt);
             }
         });
@@ -448,8 +471,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         volumeSlider.setMaximumSize(new java.awt.Dimension(150, 30));
         volumeSlider.setMinimumSize(new java.awt.Dimension(150, 30));
         volumeSlider.setPreferredSize(new java.awt.Dimension(190, 30));
-        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 volumeSliderStateChanged(evt);
             }
         });
@@ -485,8 +510,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         midiPreferencesBtn.setMinimumSize(new java.awt.Dimension(40, 30));
         midiPreferencesBtn.setPreferredSize(new java.awt.Dimension(40, 30));
         midiPreferencesBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        midiPreferencesBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        midiPreferencesBtn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 midiPreferencesBtnActionPerformed(evt);
             }
         });
@@ -506,18 +533,24 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         processTimeSelector.setMaximumSize(new java.awt.Dimension(140, 50));
         processTimeSelector.setMinimumSize(new java.awt.Dimension(140, 25));
         processTimeSelector.setPreferredSize(new java.awt.Dimension(140, 25));
-        processTimeSelector.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+        processTimeSelector.addCaretListener(new javax.swing.event.CaretListener()
+        {
+            public void caretUpdate(javax.swing.event.CaretEvent evt)
+            {
                 processTimeSelectorCaretUpdate(evt);
             }
         });
-        processTimeSelector.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
+        processTimeSelector.addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusLost(java.awt.event.FocusEvent evt)
+            {
                 processTimeSelectorFocusLost(evt);
             }
         });
-        processTimeSelector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        processTimeSelector.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 processTimeSelectorActionPerformed(evt);
             }
         });
@@ -538,8 +571,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         generationGapSpinner.setMinimumSize(new java.awt.Dimension(80, 30));
         generationGapSpinner.setPreferredSize(new java.awt.Dimension(80, 30));
         generationGapSpinner.setValue(0.5);
-        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        generationGapSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 generationGapSpinnergenerationLeadSpinnerChanged(evt);
             }
         });
@@ -570,8 +605,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         countToggle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         countToggle.setSelected(true);
         countToggle.setText("Count In");
-        countToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        countToggle.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 countToggleActionPerformed(evt);
             }
         });
@@ -585,8 +622,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         loopToggle.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         loopToggle.setSelected(true);
         loopToggle.setText("Loop");
-        loopToggle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        loopToggle.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 loopToggleActionPerformed(evt);
             }
         });
@@ -604,8 +643,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         startOrStopTradingButton.setMaximumSize(new java.awt.Dimension(140, 28));
         startOrStopTradingButton.setMinimumSize(new java.awt.Dimension(100, 28));
         startOrStopTradingButton.setPreferredSize(new java.awt.Dimension(100, 28));
-        startOrStopTradingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        startOrStopTradingButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 startOrStopTradingButtonActionPerformed(evt);
             }
         });
@@ -633,8 +674,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         tradeLengthGroup.add(trade1);
         trade1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         trade1.setText("1");
-        trade1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        trade1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 trade1ActionPerformed(evt);
             }
         });
@@ -648,8 +691,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         tradeLengthGroup.add(trade2);
         trade2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         trade2.setLabel("2");
-        trade2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        trade2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 trade2ActionPerformed(evt);
             }
         });
@@ -664,8 +709,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         trade4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         trade4.setSelected(true);
         trade4.setText("4");
-        trade4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        trade4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 trade4ActionPerformed(evt);
             }
         });
@@ -679,8 +726,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         tradeLengthGroup.add(trade8);
         trade8.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         trade8.setText("8");
-        trade8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        trade8.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 trade8ActionPerformed(evt);
             }
         });
@@ -694,8 +743,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         tradeLengthGroup.add(trade12);
         trade12.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         trade12.setText("12");
-        trade12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        trade12.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 trade12ActionPerformed(evt);
             }
         });
@@ -709,8 +760,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         tradeLengthGroup.add(trade16);
         trade16.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         trade16.setLabel("16");
-        trade16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        trade16.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 trade16ActionPerformed(evt);
             }
         });
@@ -723,8 +776,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         tradeLengthGroup.add(tradeUseSpinner);
         tradeUseSpinner.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        tradeUseSpinner.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradeUseSpinner.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradeUseSpinnerActionPerformed(evt);
             }
         });
@@ -740,8 +795,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         tradeLengthSpinner.setMinimumSize(new java.awt.Dimension(50, 30));
         tradeLengthSpinner.setPreferredSize(new java.awt.Dimension(50, 30));
         tradeLengthSpinner.setValue(new Integer(32));
-        tradeLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        tradeLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
                 tradeLengthSpinnerlengthOfTradeSet(evt);
             }
         });
@@ -767,8 +824,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         tradePlayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, 0));
         tradePlayMenuItem.setText("Trade");
-        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradePlayMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradePlayMenuItemActionPerformed(evt);
             }
         });
@@ -776,8 +835,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         tradeStopMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, 0));
         tradeStopMenuItem.setText("Stop");
-        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradeStopMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradeStopMenuItemActionPerformed(evt);
             }
         });
@@ -798,8 +859,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         modeSelector.add(tradeRandomModify);
         tradeRandomModify.setText("Modify and Rectify");
-        tradeRandomModify.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tradeRandomModify.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 tradeRandomModifyActionPerformed(evt);
             }
         });
@@ -826,8 +889,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         modeSelector.add(MemorizeMotifsMenuItem);
         MemorizeMotifsMenuItem.setText("Memorize Motifs");
         MemorizeMotifsMenuItem.setToolTipText("learns a motif grammar from user");
-        MemorizeMotifsMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        MemorizeMotifsMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 MemorizeMotifsMenuItemActionPerformed(evt);
             }
         });
@@ -835,8 +900,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         modeSelector.add(RhythmHelperMenuItem);
         RhythmHelperMenuItem.setText("Rhythm Helper");
-        RhythmHelperMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        RhythmHelperMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 RhythmHelperMenuItemActionPerformed(evt);
             }
         });
@@ -848,8 +915,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         passiveOptionGroup.add(lstmNetworkRadio);
         lstmNetworkRadio.setText("Use Deep Learning");
-        lstmNetworkRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        lstmNetworkRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 lstmNetworkRadioActionPerformed(evt);
             }
         });
@@ -858,8 +927,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
         passiveOptionGroup.add(grammarRadio);
         grammarRadio.setSelected(true);
         grammarRadio.setText("Use Grammar");
-        grammarRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        grammarRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 grammarRadioActionPerformed(evt);
             }
         });
@@ -867,8 +938,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         passiveOptionGroup.add(transformRadio);
         transformRadio.setText("Use Grammar & Transform");
-        transformRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        transformRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 transformRadioActionPerformed(evt);
             }
         });
@@ -876,8 +949,10 @@ public class TradingDialog extends javax.swing.JDialog implements TradeListener,
 
         passiveOptionGroup.add(grammarDivideRadio);
         grammarDivideRadio.setText("Use Grammar & Divide");
-        grammarDivideRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        grammarDivideRadio.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 grammarDivideRadioActionPerformed(evt);
             }
         });

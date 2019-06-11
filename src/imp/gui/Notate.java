@@ -11249,6 +11249,29 @@ private boolean initLocationVoicingFrame = false;
           }
     }//GEN-LAST:event_pauseBtnActionPerformed
 
+public void pauseBtnPressed()
+{
+if( mode == Mode.PLAYING_PAUSED )
+  {
+    setMode(Mode.PLAYING);
+  }
+else
+  {
+    setMode(Mode.PLAYING_PAUSED);
+  }
+pauseScore();
+if( keyboard != null )
+  {
+    String v = keyboard.voicingFromKeyboard();
+    String currentChord = keyboard.getPresentChordDisplayText();
+
+    if( voicingTestDialog != null && voicingTestDialog.isVisible() )
+      {
+        selectVoicing(v, currentChord);
+      }
+  }    
+}
+
 public void pauseScore()
   {
     if( !playingStopped() )
@@ -18764,6 +18787,14 @@ public void playFirstChorus(){
     playScoreBody(0, false);
 }
 
+public void playSelectedChorus()
+{
+    Stave stave = getCurrentStave();
+    int slot = stave.getSelectionStart();
+    
+    playScoreBody(slot, false);
+}
+
 /**
  * playScore() calls either improviseContinuously() or playScoreBody(0)
  * depending on whether improvisation is on.
@@ -24919,28 +24950,6 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
         return grammarMenuDialog.getGrammarName();
     }
     
-    private void openRealTimeQuantization()
-    {
-        realtimeQuantizationDialog.setVisible(true);
-        realtimeQuantizationDialog.setTitle("Real-Time Input Quantization");
-        realtimeQuantizationDialog.hideQuantizeButton();        
-    }
-    
-//    /**
-//     * @return array of two ints indicating the time quanta for realtime
-//     * MIDI capture
-//     */
-//    public int[] getQuantizationQuanta()
-//    {
-//        return quantizationDialog.getQuanta();
-//    }
-//    
-//    public int getRealtimeQuantizationGCD()
-//    {
-//        int quanta[] = realtimeQuantizationDialog.getQuanta();
-//        return gcd(quanta[0], quanta[1]);
-//    }
-    
     public int getRealtimeQuantizationIndex(String value, String quantumString[])
     {
         for( int index = 0; index < quantumString.length; index++ )
@@ -24970,16 +24979,7 @@ public String getRealtimeQuantizationString()
     {
         return quantizationDialog.getSwing();
     }
-    
-    
-//    /**
-//     * @return int indicating the restAbsorption for realtime MIDI capture
-//     */
-//    public int getQuantizationRestAbsorption()
-//    {
-//        return quantizationDialog.getRestAbsorption();
-//    }
-    
+
     private void setModesThatCantTrade(boolean enabled)
     {
         guideToneRadio.setEnabled(enabled);
