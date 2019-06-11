@@ -810,7 +810,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     vocfc.setPreferredSize(fileChooserDimension);
     midfc.setPreferredSize(fileChooserDimension);
     musicxmlfc.setPreferredSize(fileChooserDimension);
-    grammarfc.setPreferredSize(fileChooserDimension);
+    //grammarfc.setPreferredSize(fileChooserDimension);
 
     setGrammarFilename(ImproVisor.getGrammarFile().getAbsolutePath());
 
@@ -2162,7 +2162,6 @@ public Critic getCritic()
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
-        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         improvMenu = new javax.swing.JMenu();
         tradingWindow = new javax.swing.JMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -9597,7 +9596,6 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(styleGenerator1);
-        utilitiesMenu.add(jSeparator10);
 
         menuBar.add(utilitiesMenu);
 
@@ -10762,7 +10760,8 @@ public void saveGrammarAs()
   {
     grammarfc.setDialogTitle("Save Grammar As");
 
-    File oldDirectory = grammarfc.getCurrentDirectory();
+    grammarfc.setBounds(0, 0, 1000, 500);
+    //File oldDirectory = grammarfc.getCurrentDirectory();
 
     grammarfc.setCurrentDirectory(ImproVisor.getGrammarDirectory());
 
@@ -10795,6 +10794,8 @@ public void saveGrammarAs()
       }
 
     lickgenFrame.toFront();
+    populateNotateGrammarMenu();
+
   }
 
 /**
@@ -24901,6 +24902,7 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     
     public void openGrammarMenuDialog()
     {
+        populateNotateGrammarMenu();
         grammarMenuDialog.setVisible(true);
     }
     
@@ -25805,6 +25807,7 @@ ButtonGroup group = new ButtonGroup();
 
 public void populateNotateGrammarMenu()
   {
+    grammarListModel.removeAllElements();
     File directory = ImproVisor.getGrammarDirectory();
     //System.out.println("populating from " + directory);
     if( directory.isDirectory() )
@@ -27417,7 +27420,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JSeparator jSeparator13;

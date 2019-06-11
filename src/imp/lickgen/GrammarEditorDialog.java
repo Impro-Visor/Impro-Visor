@@ -111,7 +111,6 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         sourceEditor = new javax.swing.JTextArea();
 
         setTitle("Grammar Editor");
-        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         setLocation(new java.awt.Point(0, 800));
@@ -190,7 +189,6 @@ public class GrammarEditorDialog extends javax.swing.JDialog implements BasicEdi
         reloadGrammarButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         reloadGrammarButton.setText("Reload");
         reloadGrammarButton.setToolTipText("Reload the current grammar (in case it was edited externally.)");
-        reloadGrammarButton.setActionCommand("Reload");
         reloadGrammarButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reloadGrammarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         reloadGrammarButton.setMaximumSize(new java.awt.Dimension(600, 40));
