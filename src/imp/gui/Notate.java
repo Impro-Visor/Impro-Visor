@@ -24085,13 +24085,14 @@ int getCountInBias() {
 
 public void quantizeCurrentMelody(int level, boolean toSwing)
     {
-        MelodyPart originalPart = getCurrentMelodyPart();
-        MelodyPart quantizedPart = quantizeMelody(originalPart,
-                                                  getQuantumValue());
+        MelodyPart quantizedPart = getCurrentMelodyPart();
         if( toSwing )
           {
             quantizedPart = makeSwingMelody(quantizedPart);
           }
+        
+        quantizedPart = quantizeMelody(quantizedPart,
+                                       getQuantumValue());
         addChorus(quantizedPart);    
     }  
   
