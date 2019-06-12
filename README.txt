@@ -144,7 +144,7 @@ Release notes for Impro-Visor 10.2
 
 Now entering a note by point-and-click or MIDI will extend the note all the way
 to the next note or to the end of the chorus, whichever comes first. This may
-be distracting at first, but is necessary to make note entry more rationale.
+be distracting at first, but is necessary to make note entry more rational.
 To truncate a note, click in another note, or select the ending slot and press
 r (for rest).
 
