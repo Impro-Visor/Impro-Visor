@@ -119,7 +119,8 @@ have worked on the project since June of 2005:
  Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
  Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, David Siah,
  Mira Jambusaria, Daniel Johnson, Sam Goree, Samantha Long, Nic Trieu,
- Joseph Yaconelli, Isys Archell Johnson, Cai Glencross, and Lukas Gnirke.
+ Joseph Yaconelli, Isys Archell Johnson, Cai Glencross, Lukas Gnirke,
+ Andy Vainauskas, and Rachel Goldstein
 
 We hope you enjoy using Impro-Visor. 
 
@@ -178,7 +179,7 @@ Now there is an initial facility for using a biofeedback device Muse to control
 grammars. This is done through OSC (Open Sound Control). This will be presented
 in a talk at the ICCC (International Conference on Computational Creativity)
 June 2019 by students Andy Vainauskas and Rachel Goldstein from Santa Clara 
-University. A special grammar construct muse-switch was introduce to facilitate
+University. A special grammar construct muse-switch was introduced to facilitate
 this new feature.
 
 Now transposing a chord symbol NC leaves it as is, rather than turning it into
