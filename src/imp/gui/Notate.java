@@ -4859,6 +4859,9 @@ public Critic getCritic()
 
         midiOutPanel.setBackground(new java.awt.Color(245, 245, 245));
         midiOutPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Select a device for MIDI output"));
+        midiOutPanel.setMaximumSize(new java.awt.Dimension(800, 32767));
+        midiOutPanel.setMinimumSize(new java.awt.Dimension(800, 96));
+        midiOutPanel.setPreferredSize(new java.awt.Dimension(800, 96));
         midiOutPanel.setLayout(new java.awt.GridLayout(2, 0));
 
         midiOutComboBox.setModel(midiOutChooser);
@@ -4880,12 +4883,14 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         devicesTab.add(midiOutPanel, gridBagConstraints);
 
         midiInPanel.setBackground(new java.awt.Color(245, 245, 245));
         midiInPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Select a device for MIDI input"));
+        midiInPanel.setMaximumSize(new java.awt.Dimension(800, 2147483647));
+        midiInPanel.setMinimumSize(new java.awt.Dimension(800, 87));
         midiInPanel.setLayout(new java.awt.GridBagLayout());
 
         midiInComboBox.setModel(midiInChooser);
@@ -4917,7 +4922,7 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         devicesTab.add(midiInPanel, gridBagConstraints);
 
@@ -4949,6 +4954,9 @@ public Critic getCritic()
         echoMidiCheckBox.setSelected(midiManager.getEcho());
         echoMidiCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         echoMidiCheckBox.setLabel("Echo MIDI input (send MIDI messages from MIDI input to MIDI output).");
+        echoMidiCheckBox.setMaximumSize(new java.awt.Dimension(350, 30));
+        echoMidiCheckBox.setMinimumSize(new java.awt.Dimension(400, 23));
+        echoMidiCheckBox.setPreferredSize(new java.awt.Dimension(350, 30));
         echoMidiCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4959,17 +4967,18 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 11, 10, 11);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(echoMidiCheckBox, gridBagConstraints);
 
         sendSetBankCheckBox.setSelected(Preferences.getMidiSendBankSelect());
         sendSetBankCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         sendSetBankCheckBox.setLabel("Send SetBank-to-0 MIDI messages with each note.");
-        sendSetBankCheckBox.setMaximumSize(new java.awt.Dimension(477, 23));
-        sendSetBankCheckBox.setMinimumSize(new java.awt.Dimension(477, 23));
-        sendSetBankCheckBox.setPreferredSize(new java.awt.Dimension(477, 23));
+        sendSetBankCheckBox.setMaximumSize(new java.awt.Dimension(350, 30));
+        sendSetBankCheckBox.setMinimumSize(new java.awt.Dimension(250, 30));
+        sendSetBankCheckBox.setPreferredSize(new java.awt.Dimension(350, 30));
         sendSetBankCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4980,9 +4989,10 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 11, 10, 11);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.6;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(sendSetBankCheckBox, gridBagConstraints);
 
         jLabel1.setText("MIDI output channel assignments are found in the Mixer panel.");
@@ -5011,19 +5021,24 @@ public Critic getCritic()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(rangeFilterBtn, gridBagConstraints);
 
         inChannelPanel.setBackground(new java.awt.Color(255, 255, 255));
         inChannelPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("MIDI input channels (grey means selected)"));
+        inChannelPanel.setMaximumSize(new java.awt.Dimension(670, 60));
+        inChannelPanel.setMinimumSize(new java.awt.Dimension(670, 53));
+        inChannelPanel.setPreferredSize(new java.awt.Dimension(670, 53));
         inChannelPanel.setLayout(new java.awt.GridBagLayout());
 
         inChannel1.setSelected(true);
         inChannel1.setText("1");
-        inChannel1.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel1.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel1.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel1.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel1.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel1.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5037,8 +5052,9 @@ public Critic getCritic()
 
         inChannel2.setSelected(true);
         inChannel2.setLabel("2");
-        inChannel2.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel2.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel2.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel2.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel2.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel2.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5052,8 +5068,9 @@ public Critic getCritic()
 
         inChannel3.setSelected(true);
         inChannel3.setLabel("3");
-        inChannel3.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel3.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel3.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel3.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel3.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel3.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5065,8 +5082,9 @@ public Critic getCritic()
 
         inChannel4.setSelected(true);
         inChannel4.setLabel("4");
-        inChannel4.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel4.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel4.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel4.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel4.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel4.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5078,8 +5096,9 @@ public Critic getCritic()
 
         inChannel5.setSelected(true);
         inChannel5.setLabel("5");
-        inChannel5.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel5.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel5.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel5.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel5.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel5.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5091,8 +5110,9 @@ public Critic getCritic()
 
         inChannel6.setSelected(true);
         inChannel6.setLabel("6");
-        inChannel6.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel6.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel6.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel6.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel6.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel6.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5104,8 +5124,9 @@ public Critic getCritic()
 
         inChannel7.setSelected(true);
         inChannel7.setLabel("7");
-        inChannel7.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel7.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel7.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel7.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel7.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel7.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5117,8 +5138,9 @@ public Critic getCritic()
 
         inChannel8.setSelected(true);
         inChannel8.setLabel("8");
-        inChannel8.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel8.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel8.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel8.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel8.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel8.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5130,8 +5152,9 @@ public Critic getCritic()
 
         inChannel9.setSelected(true);
         inChannel9.setLabel("9");
-        inChannel9.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel9.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel9.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel9.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel9.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel9.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5143,8 +5166,9 @@ public Critic getCritic()
 
         inChannel10.setSelected(true);
         inChannel10.setLabel("10");
-        inChannel10.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel10.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel10.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel10.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel10.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel10.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5156,8 +5180,9 @@ public Critic getCritic()
 
         inChannel11.setSelected(true);
         inChannel11.setLabel("11");
-        inChannel11.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel11.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel11.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel11.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel11.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel11.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5169,8 +5194,9 @@ public Critic getCritic()
 
         inChannel12.setSelected(true);
         inChannel12.setLabel("12");
-        inChannel12.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel12.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel12.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel12.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel12.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel12.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5182,8 +5208,9 @@ public Critic getCritic()
 
         inChannel13.setSelected(true);
         inChannel13.setLabel("13");
-        inChannel13.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel13.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel13.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel13.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel13.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel13.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5195,8 +5222,9 @@ public Critic getCritic()
 
         inChannel14.setSelected(true);
         inChannel14.setLabel("14");
-        inChannel14.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel14.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel14.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel14.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel14.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel14.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5208,8 +5236,9 @@ public Critic getCritic()
 
         inChannel15.setSelected(true);
         inChannel15.setLabel("15");
-        inChannel15.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel15.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel15.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel15.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel15.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel15.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5221,8 +5250,9 @@ public Critic getCritic()
 
         inChannel16.setSelected(true);
         inChannel16.setLabel("16");
-        inChannel16.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel16.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel16.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel16.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel16.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel16.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5235,6 +5265,8 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(inChannelPanel, gridBagConstraints);
 
         jTabbedPane2.addTab("MIDI Devices", devicesTab);
