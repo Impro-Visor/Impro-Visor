@@ -53,7 +53,6 @@ import imp.audio.SCHandler;
 import imp.roadmap.brickdictionary.Block;
 import imp.com.*;
 import imp.data.*;
-import static imp.data.MelodyPart.gcd;
 import imp.data.musicXML.ChordDescription;
 import imp.lickgen.GrammarEditorDialog;
 import imp.lickgen.LickGen;
@@ -811,7 +810,7 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
     vocfc.setPreferredSize(fileChooserDimension);
     midfc.setPreferredSize(fileChooserDimension);
     musicxmlfc.setPreferredSize(fileChooserDimension);
-    grammarfc.setPreferredSize(fileChooserDimension);
+    //grammarfc.setPreferredSize(fileChooserDimension);
 
     setGrammarFilename(ImproVisor.getGrammarFile().getAbsolutePath());
 
@@ -1135,16 +1134,46 @@ public Notate(Score score, Advisor adv, ImproVisor impro, int x, int y)
 
     setSliderVolumes(DEFAULT_SLIDER_VOLUME);
 
-    //midiRecordSnapSpinner.setValue(Preferences.getMidiRecordSnap());
-
     setNormalMode();
 
     guideToneLineDialog = new GuideToneLineDialog(this, false);
     guideToneLineDialog.setVisible(false);
     
     setLooping(false);
+    
+    recordingQuantizationSpinner.setModel(new javax.swing.SpinnerListModel(quantumString));
+    recordingQuantizationSpinner.setValue(getInitialQuantumString());
+       
   } // end of Notate constructor
 
+    public static int quantum[] = {20, 30, 40, 60, 120, 180, 240, 360, 480};
+    
+    public static String quantumString[] =             
+      {
+          "sixteenth note triplet",
+          "sixteenth note",
+          "eighth note triplet",
+          "eighth note",
+          "quarternote ",
+          "dotted quarter note",
+          "half note",
+          "dotted half note",
+          "whole note"          
+      };
+
+static String intialQuantumString = "eighth note";
+    
+
+public String[] getQuantumString()
+    {
+        return quantumString;
+    }
+    
+public String getInitialQuantumString()
+    {
+        return intialQuantumString;
+    }
+    
 boolean showConstructionLinesAndBoxes = true;
 boolean saveConstructionLineState;
 
@@ -1623,7 +1652,7 @@ public Critic getCritic()
         midiInStatus = new javax.swing.JLabel();
         midiQuantizationPanel = new javax.swing.JPanel();
         recordingLatencySpinner = new javax.swing.JSpinner();
-        openQuantizationButton = new javax.swing.JButton();
+        recordingQuantizationSpinner = new javax.swing.JSpinner();
         echoMidiCheckBox = new javax.swing.JCheckBox();
         sendSetBankCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
@@ -2133,7 +2162,6 @@ public Critic getCritic()
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         openLeadsheetEditorMI = new javax.swing.JMenuItem();
         styleGenerator1 = new javax.swing.JMenuItem();
-        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         improvMenu = new javax.swing.JMenu();
         tradingWindow = new javax.swing.JMenuItem();
         improvSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -4831,6 +4859,9 @@ public Critic getCritic()
 
         midiOutPanel.setBackground(new java.awt.Color(245, 245, 245));
         midiOutPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Select a device for MIDI output"));
+        midiOutPanel.setMaximumSize(new java.awt.Dimension(800, 32767));
+        midiOutPanel.setMinimumSize(new java.awt.Dimension(800, 96));
+        midiOutPanel.setPreferredSize(new java.awt.Dimension(800, 96));
         midiOutPanel.setLayout(new java.awt.GridLayout(2, 0));
 
         midiOutComboBox.setModel(midiOutChooser);
@@ -4852,12 +4883,14 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         devicesTab.add(midiOutPanel, gridBagConstraints);
 
         midiInPanel.setBackground(new java.awt.Color(245, 245, 245));
         midiInPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Select a device for MIDI input"));
+        midiInPanel.setMaximumSize(new java.awt.Dimension(800, 2147483647));
+        midiInPanel.setMinimumSize(new java.awt.Dimension(800, 87));
         midiInPanel.setLayout(new java.awt.GridBagLayout());
 
         midiInComboBox.setModel(midiInChooser);
@@ -4889,7 +4922,7 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         devicesTab.add(midiInPanel, gridBagConstraints);
 
@@ -4898,32 +4931,19 @@ public Critic getCritic()
 
         recordingLatencySpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8"}));
         recordingLatencySpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Recording Latency in Beats"));
-        recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(200, 40));
-        recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(200, 40));
+        recordingLatencySpinner.setMinimumSize(new java.awt.Dimension(250, 50));
+        recordingLatencySpinner.setPreferredSize(new java.awt.Dimension(250, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         midiQuantizationPanel.add(recordingLatencySpinner, gridBagConstraints);
 
-        openQuantizationButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        openQuantizationButton.setLabel("Open Recording Quantization");
-        openQuantizationButton.setMaximumSize(new java.awt.Dimension(195, 30));
-        openQuantizationButton.setMinimumSize(new java.awt.Dimension(195, 30));
-        openQuantizationButton.setPreferredSize(new java.awt.Dimension(195, 30));
-        openQuantizationButton.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                openQuantizationButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.4;
-        midiQuantizationPanel.add(openQuantizationButton, gridBagConstraints);
+        recordingQuantizationSpinner.setModel(new javax.swing.SpinnerListModel(new String[] {"Item 0", "Item 1", "Item 2", "Item 3"}));
+        recordingQuantizationSpinner.setBorder(javax.swing.BorderFactory.createTitledBorder("Recording Quantization Level"));
+        recordingQuantizationSpinner.setMinimumSize(new java.awt.Dimension(250, 50));
+        recordingQuantizationSpinner.setPreferredSize(new java.awt.Dimension(250, 50));
+        midiQuantizationPanel.add(recordingQuantizationSpinner, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -4934,6 +4954,9 @@ public Critic getCritic()
         echoMidiCheckBox.setSelected(midiManager.getEcho());
         echoMidiCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         echoMidiCheckBox.setLabel("Echo MIDI input (send MIDI messages from MIDI input to MIDI output).");
+        echoMidiCheckBox.setMaximumSize(new java.awt.Dimension(350, 30));
+        echoMidiCheckBox.setMinimumSize(new java.awt.Dimension(400, 23));
+        echoMidiCheckBox.setPreferredSize(new java.awt.Dimension(350, 30));
         echoMidiCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4944,17 +4967,18 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 11, 10, 11);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(echoMidiCheckBox, gridBagConstraints);
 
         sendSetBankCheckBox.setSelected(Preferences.getMidiSendBankSelect());
         sendSetBankCheckBox.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         sendSetBankCheckBox.setLabel("Send SetBank-to-0 MIDI messages with each note.");
-        sendSetBankCheckBox.setMaximumSize(new java.awt.Dimension(477, 23));
-        sendSetBankCheckBox.setMinimumSize(new java.awt.Dimension(477, 23));
-        sendSetBankCheckBox.setPreferredSize(new java.awt.Dimension(477, 23));
+        sendSetBankCheckBox.setMaximumSize(new java.awt.Dimension(350, 30));
+        sendSetBankCheckBox.setMinimumSize(new java.awt.Dimension(250, 30));
+        sendSetBankCheckBox.setPreferredSize(new java.awt.Dimension(350, 30));
         sendSetBankCheckBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -4965,9 +4989,10 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 11, 10, 11);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.6;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(sendSetBankCheckBox, gridBagConstraints);
 
         jLabel1.setText("MIDI output channel assignments are found in the Mixer panel.");
@@ -4996,19 +5021,24 @@ public Critic getCritic()
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(rangeFilterBtn, gridBagConstraints);
 
         inChannelPanel.setBackground(new java.awt.Color(255, 255, 255));
         inChannelPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("MIDI input channels (grey means selected)"));
+        inChannelPanel.setMaximumSize(new java.awt.Dimension(670, 60));
+        inChannelPanel.setMinimumSize(new java.awt.Dimension(670, 53));
+        inChannelPanel.setPreferredSize(new java.awt.Dimension(670, 53));
         inChannelPanel.setLayout(new java.awt.GridBagLayout());
 
         inChannel1.setSelected(true);
         inChannel1.setText("1");
-        inChannel1.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel1.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel1.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel1.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel1.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel1.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5022,8 +5052,9 @@ public Critic getCritic()
 
         inChannel2.setSelected(true);
         inChannel2.setLabel("2");
-        inChannel2.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel2.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel2.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel2.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel2.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel2.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5037,8 +5068,9 @@ public Critic getCritic()
 
         inChannel3.setSelected(true);
         inChannel3.setLabel("3");
-        inChannel3.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel3.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel3.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel3.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel3.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel3.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5050,8 +5082,9 @@ public Critic getCritic()
 
         inChannel4.setSelected(true);
         inChannel4.setLabel("4");
-        inChannel4.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel4.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel4.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel4.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel4.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel4.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5063,8 +5096,9 @@ public Critic getCritic()
 
         inChannel5.setSelected(true);
         inChannel5.setLabel("5");
-        inChannel5.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel5.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel5.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel5.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel5.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel5.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5076,8 +5110,9 @@ public Critic getCritic()
 
         inChannel6.setSelected(true);
         inChannel6.setLabel("6");
-        inChannel6.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel6.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel6.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel6.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel6.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel6.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5089,8 +5124,9 @@ public Critic getCritic()
 
         inChannel7.setSelected(true);
         inChannel7.setLabel("7");
-        inChannel7.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel7.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel7.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel7.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel7.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel7.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5102,8 +5138,9 @@ public Critic getCritic()
 
         inChannel8.setSelected(true);
         inChannel8.setLabel("8");
-        inChannel8.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel8.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel8.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel8.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel8.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel8.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5115,8 +5152,9 @@ public Critic getCritic()
 
         inChannel9.setSelected(true);
         inChannel9.setLabel("9");
-        inChannel9.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel9.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel9.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel9.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel9.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel9.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5128,8 +5166,9 @@ public Critic getCritic()
 
         inChannel10.setSelected(true);
         inChannel10.setLabel("10");
-        inChannel10.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel10.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel10.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel10.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel10.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel10.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5141,8 +5180,9 @@ public Critic getCritic()
 
         inChannel11.setSelected(true);
         inChannel11.setLabel("11");
-        inChannel11.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel11.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel11.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel11.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel11.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel11.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5154,8 +5194,9 @@ public Critic getCritic()
 
         inChannel12.setSelected(true);
         inChannel12.setLabel("12");
-        inChannel12.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel12.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel12.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel12.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel12.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel12.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5167,8 +5208,9 @@ public Critic getCritic()
 
         inChannel13.setSelected(true);
         inChannel13.setLabel("13");
-        inChannel13.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel13.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel13.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel13.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel13.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel13.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5180,8 +5222,9 @@ public Critic getCritic()
 
         inChannel14.setSelected(true);
         inChannel14.setLabel("14");
-        inChannel14.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel14.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel14.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel14.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel14.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel14.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5193,8 +5236,9 @@ public Critic getCritic()
 
         inChannel15.setSelected(true);
         inChannel15.setLabel("15");
-        inChannel15.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel15.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel15.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel15.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel15.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel15.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5206,8 +5250,9 @@ public Critic getCritic()
 
         inChannel16.setSelected(true);
         inChannel16.setLabel("16");
-        inChannel16.setMaximumSize(new java.awt.Dimension(30, 29));
-        inChannel16.setMinimumSize(new java.awt.Dimension(30, 29));
+        inChannel16.setMaximumSize(new java.awt.Dimension(38, 29));
+        inChannel16.setMinimumSize(new java.awt.Dimension(38, 29));
+        inChannel16.setPreferredSize(new java.awt.Dimension(38, 29));
         inChannel16.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -5220,6 +5265,8 @@ public Critic getCritic()
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         devicesTab.add(inChannelPanel, gridBagConstraints);
 
         jTabbedPane2.addTab("MIDI Devices", devicesTab);
@@ -9505,9 +9552,10 @@ public Critic getCritic()
         });
         utilitiesMenu.add(stepKeyboardMI);
 
+        quantizeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_MASK));
         quantizeMI.setMnemonic('v');
-        quantizeMI.setText("Quantize Chorus");
-        quantizeMI.setToolTipText("Quantize the current chorus into coarser units. Creates a new chorus.");
+        quantizeMI.setText("Requantize Chorus");
+        quantizeMI.setToolTipText("Requantize the current chorus. Creates a new chorus.");
         quantizeMI.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -9580,7 +9628,6 @@ public Critic getCritic()
             }
         });
         utilitiesMenu.add(styleGenerator1);
-        utilitiesMenu.add(jSeparator10);
 
         menuBar.add(utilitiesMenu);
 
@@ -10745,7 +10792,8 @@ public void saveGrammarAs()
   {
     grammarfc.setDialogTitle("Save Grammar As");
 
-    File oldDirectory = grammarfc.getCurrentDirectory();
+    grammarfc.setBounds(0, 0, 1000, 500);
+    //File oldDirectory = grammarfc.getCurrentDirectory();
 
     grammarfc.setCurrentDirectory(ImproVisor.getGrammarDirectory());
 
@@ -10778,6 +10826,8 @@ public void saveGrammarAs()
       }
 
     lickgenFrame.toFront();
+    populateNotateGrammarMenu();
+
   }
 
 /**
@@ -11232,6 +11282,29 @@ private boolean initLocationVoicingFrame = false;
           }
     }//GEN-LAST:event_pauseBtnActionPerformed
 
+public void pauseBtnPressed()
+{
+if( mode == Mode.PLAYING_PAUSED )
+  {
+    setMode(Mode.PLAYING);
+  }
+else
+  {
+    setMode(Mode.PLAYING_PAUSED);
+  }
+pauseScore();
+if( keyboard != null )
+  {
+    String v = keyboard.voicingFromKeyboard();
+    String currentChord = keyboard.getPresentChordDisplayText();
+
+    if( voicingTestDialog != null && voicingTestDialog.isVisible() )
+      {
+        selectVoicing(v, currentChord);
+      }
+  }    
+}
+
 public void pauseScore()
   {
     if( !playingStopped() )
@@ -11542,6 +11615,10 @@ private void startRecordingHelper()
                    -masterTransposition.getMelodyTransposition());   // set time to 0
   }
 
+int getCountInOffset()
+{
+    return score.getCountInOffset();
+}
 
 /**
  * This is like startRecording() without the playback.
@@ -18743,6 +18820,14 @@ public void playFirstChorus(){
     playScoreBody(0, false);
 }
 
+public void playSelectedChorus()
+{
+    Stave stave = getCurrentStave();
+    int slot = stave.getSelectionStart();
+    
+    playScoreBody(slot, false);
+}
+
 /**
  * playScore() calls either improviseContinuously() or playScoreBody(0)
  * depending on whether improvisation is on.
@@ -23900,38 +23985,329 @@ private boolean isDotted = false;
         themeWeaver.setVisible(true);
     }//GEN-LAST:event_soloGeneratorMIActionPerformed
 
-//    public void originalQuantize()
-//    {
-//        MelodyPart originalPart = getCurrentMelodyPart();
-//        MelodyPart quantizedPart;
-//        String quantizeString = ((String) quantizeComboBox.getSelectedItem());
-//        int quantizeResolution = getSlotsFromString(quantizeString);
-//        
-//        if( quantizeResolution > 0 )
-//          {
-//            int quantum[] = {quantizeResolution, quantizeResolution};
-//            quantizedPart = originalPart.applyResolution(BEAT, quantum, false, 1); // BEAT was quantizeResolution
-//            quantizedPart.setInstrument(getCurrentMelodyPart().getInstrument()); //fix bug 60
-//            addChorus(quantizedPart);
-//          }      
-//    }
-    
-    
-  public QuantizationDialog getQuantizationDialog(){
-      return quantizationDialog;
-  }  
-    
-  public void newQuantize(boolean toSwing)
+       
+int getSelectedQuantumIndex()
+{
+    return quantizationDialog.getSelectedQuantumIndex();
+}
+
+
+public int snapRecordingSlotsToDuration(int slots)
+{
+    return snapSlotsToDuration(slots, getRecordingQuantizationIndex(), quantum);
+}
+
+public int snapRecordingSlotsToIndex(int slots)
+{
+    return snapSlotsToIndex(slots, getRecordingQuantizationIndex(), quantum);
+}
+
+
+public int getRecordingQuantizationIndex()
     {
-        int[] quanta = quantizationDialog.getQuanta();
-        int restAbsorption = quantizationDialog.getRestAbsorption();
-        MelodyPart originalPart = getCurrentMelodyPart();
-        MelodyPart quantizedPart = originalPart.quantizeMelody(quanta, 
-                                                               toSwing, 
-                                                               restAbsorption);
-        addChorus(quantizedPart);    
+        String value =getRecordingQuantumString();
+        for( int index = 0; index < quantumString.length; index++ )
+          {
+            if( quantumString[index].equals(value) )
+              {
+                return index;
+              }
+          }
+        return -1;
     }
-      
+
+String getRecordingQuantumString()
+{
+    return (String)recordingQuantizationSpinner.getValue();
+}
+
+// Note that duration uses ceil where index uses round.
+  
+public static int snapSlotsToDuration(int slotsIn, 
+                                      int selectedQuantumIndex, 
+                                      int quantum[]) {
+    if( slotsIn <= 0 )
+      {
+        return 0;
+      }
+    else
+      {
+      int selectedQuantum = quantum[selectedQuantumIndex];
+      int slotsOut = ceilToMultiple(slotsIn, selectedQuantum);
+      int leastResidue = Math.abs(slotsIn - slotsOut);
+      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
+        {
+          int residue = Math.abs(slotsIn - ceilToMultiple(slotsIn, quantum[i]));
+          if( residue < leastResidue )
+            {
+              selectedQuantum = quantum[i];
+              slotsOut = ceilToMultiple(slotsIn, selectedQuantum);
+            }
+        }
+     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
+    return slotsOut;
+      }
+    }
+    
+    public int snapSlotsToIndex(int slotsIn, 
+                                int selectedQuantumIndex, 
+                                int quantum[]) {
+    slotsIn -= getCountInBias();
+    int slotsOut = 0;
+    if( slotsIn <= 0 )
+      {
+        return slotsOut;
+      }
+    else
+      {
+      int selectedQuantum = quantum[selectedQuantumIndex];
+      slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+      int leastResidue = Math.abs(slotsIn - slotsOut);
+      for( int i = 1 + selectedQuantumIndex; i < quantum.length; i++ )
+        {
+          int residue = Math.abs(slotsIn - roundToMultiple(slotsIn, quantum[i]));
+          if( residue < leastResidue )
+            {
+              selectedQuantum = quantum[i];
+              slotsOut = roundToMultiple(slotsIn, selectedQuantum);
+            }
+        }
+     //System.out.println("snapSlotsToIndex " + slotsIn + " to " + slotsOut);
+      }
+    return slotsOut;
+    }
+
+public int getQuantumValue()
+{
+    return quantizationDialog.getSelectedQuantumValue();
+}
+
+public int getQuantum(String value)
+    {
+    return quantum[getQuantumIndex(value)];
+    }
+
+public int getQuantumIndex(String value)  
+    {
+        for( int index = 0; index < quantumString.length; index++ )
+          {
+            if( quantumString[index].equals(value) )
+              {
+                return index;
+              }
+          }
+        return -1;
+    }
+    
+static public int roundToMultiple(int input, int base) {
+        return base * (int) Math.round(((double) input) / base);
+    }
+
+static public int floorToMultiple(int input, int base) {
+        return base * (int) Math.floor(((double) input) / base);
+    }
+
+static public int ceilToMultiple(int input, int base) {
+        return base * (int) Math.ceil(((double) input) / base);
+    }
+    
+int getCountInBias() {
+        //System.out.println("firstChorus = " + notate.getFirstChorus());
+        return getFirstChorus() ? getCountInOffset() : 0;
+    }  
+
+public void quantizeCurrentMelody(int level, boolean toSwing)
+    {
+        MelodyPart quantizedPart = getCurrentMelodyPart();
+        if( toSwing )
+          {
+            quantizedPart = makeSwingMelody(quantizedPart);
+          }
+        
+        quantizedPart = quantizeMelody(quantizedPart,
+                                       getQuantumValue());
+        addChorus(quantizedPart);    
+    }  
+  
+/**
+ * New version of quantizing melody, 21 June 2016.
+ * Self-contained and does not rely on classes in jMusic.
+ * Also preserves accidentals in the original melody.
+ * See "Attempt ..." to see case of swing not handled yet.
+ * @param input
+ * @param quantumValue
+ * @return a quantized melody part
+ */
+
+public MelodyPart quantizeMelody(MelodyPart input, int quantumValue)
+{
+MelodyPart result = input; // will be replaced if part is non-empty
+
+Part.PartIterator it = input.iterator();
+
+// Only quanitize non-empty melody part that is not maximum quantization
+if( it.hasNext() )
+  {
+    result = new MelodyPart();
+    int originalSlot = 0; // Track original slot based on notes in MelodyPart
+    int outputSlot = 0;   // Track output slot based on notes placed in result
+    while( it.hasNext() )
+      {
+        Note thisNote = (Note) it.next();
+        int oldDuration = thisNote.getRhythmValue();
+        if( thisNote.isRest() )
+          {
+          // Rests are ignored here, but reconstituted below 
+          }
+        else
+          {
+            if( originalSlot < outputSlot )
+              {
+                // Lose note if slot has already gone by.
+              }
+            else
+              {
+                // originalSlot >= outputSlot
+                int accumulatedRest = 0; 
+                while( originalSlot >= outputSlot + quantumValue )
+                  { // Make outputSlot catch up and account for slot advance.
+                    outputSlot += quantumValue;
+                    accumulatedRest += quantumValue;
+                  }
+                if( accumulatedRest > 0 )
+                  {
+//                    accumulatedRest = snapSlotsToDuration(accumulatedRest,
+//                                                          getSelectedQuantumIndex(), 
+//                                                          quantum);
+                    accumulatedRest = ceilToMultiple(accumulatedRest, quantumValue);
+                    
+                    Rest addedRest = new Rest(accumulatedRest);
+                    result.addRest(addedRest);
+                  //System.out.println("adding rest duration " + addedRest.getRhythmValue() + " input = " + formatSlot(originalSlot) + " output = " + formatSlot(outputSlot));
+                  }
+                Note newNote = thisNote.copy();
+
+                // Here we should be using ceil rather than round.
+                int newDuration = ceilToMultiple(oldDuration, quantumValue);
+//                        snapSlotsToDuration(oldDuration, 
+//                                            getSelectedQuantumIndex(), 
+//                                            quantum);
+
+                newNote.setRhythmValue(newDuration);
+ 
+                result.addNote(newNote);
+                outputSlot += newDuration;
+              //System.out.println("adding note " + newNote.toLeadsheet() + " duration " + newNote.getRhythmValue() + " input = " + formatSlot(originalSlot) + " output = " + formatSlot(outputSlot));
+              }
+          }
+        originalSlot += oldDuration;
+      } // while
+  }
+result.setInstrument(input.getInstrument());
+return result;
+}
+
+String formatSlot(int slot)
+{
+    return "bar " + (1 + slot/480) + " slot " + (slot % 480);
+}
+
+/**
+* Handle converting swing-eighth situations to appear as normal eights
+* including when second third of triplet is sixteenths etc.
+*/
+
+public MelodyPart makeSwingMelody(MelodyPart input)
+{
+int swingFirst = (2*BEAT)/3;
+int halfBeat = BEAT/2;
+int sixthBeat = BEAT/6;
+MelodyPart unswung = input.copy();
+MelodyPart result = new MelodyPart();
+MelodyPart.PartIterator it = unswung.iterator();
+int slot = 0;
+while( it.hasNext() )
+  {
+    // Use the note left over from previous iterationr, or a new one
+    Note unswungNote = (Note)it.next();
+    int unswungDuration = unswungNote.getRhythmValue();
+    if( slot % BEAT == 0 
+      && (unswungDuration % BEAT) == swingFirst 
+      && it.hasNext() 
+      )
+      {
+      // We may have a swing situation. 
+      // Keep track of "swung" and "unswung" values, until we
+      // know for sure.
+
+      Note swungNote = unswungNote.copy();
+      ArrayList<Note> unswungNotes = new ArrayList<Note>();
+      ArrayList<Note> swungNotes = new ArrayList<Note>();
+      unswungNotes.add(unswungNote);
+      swungNote.setRhythmValue(swungNote.getRhythmValue() - sixthBeat);
+      swungNotes.add(swungNote);
+
+      // See if the notes after the first fit the swing pattern.              
+      // Adjust note or notes following first swing note, 
+      // as long as they exactly fit into 1/2 of a beat
+
+      unswungNote = (Note)it.next();
+      swungNote = unswungNote.copy();
+      unswungDuration = unswungNote.getRhythmValue();
+      int swungDuration = unswungDuration + unswungDuration/2;
+      // Above converts value of 1/3 into 1/2 by multiplying by 1.5
+      swungNote.setRhythmValue(swungDuration);
+      unswungNotes.add(unswungNote);
+      swungNotes.add(swungNote);
+      int remainingSpace = halfBeat - swungDuration;
+
+      // Adjust durations in the second half of a swing figure
+      while( it.hasNext() && remainingSpace > 0 )
+        {
+          unswungNote = (Note)it.next();
+          swungNote = unswungNote.copy();                 
+          unswungDuration = unswungNote.getRhythmValue();
+          swungDuration = unswungDuration + unswungDuration/2;                  
+          swungNote.setRhythmValue(swungDuration);
+          unswungNotes.add(unswungNote);
+          swungNotes.add(swungNote);          
+          remainingSpace -= swungDuration;
+          }
+      /*
+      System.out.println("slot = " + slot + ", remainingSpace) = " + remainingSpace);
+      System.out.println("unswungNotes = " + unswungNotes);
+      System.out.println("swungNotes = " + swungNotes);
+      System.out.println("");
+      */
+
+      // If swing situation fits
+      if( remainingSpace == 0 )
+        {
+        for( Note n: swungNotes )
+          {
+            result.addNote(n);
+          }
+        }
+      else
+        {
+        for( Note n: unswungNotes )
+          {
+            result.addNote(n);
+            slot += n.getRhythmValue();
+          }                  
+        }
+      } // end of swing situation
+    else
+      {
+        // Not a swing situation. Just use the note as is.
+        result.addNote(unswungNote);
+        slot += unswungDuration;
+      } // end handling possible swing situation
+  } // end while
+result.setInstrument(input.getInstrument());
+return result;
+}
+
     /**
      * guideToneLineActionPerformed
      * Makes guideToneLineDialog visible
@@ -24104,11 +24480,6 @@ private boolean isDotted = false;
     private void adviceFilterTextFieldChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adviceFilterTextFieldChanged
         redoAdvice();
     }//GEN-LAST:event_adviceFilterTextFieldChanged
-
-    private void openQuantizationButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openQuantizationButtonActionPerformed
-    {//GEN-HEADEREND:event_openQuantizationButtonActionPerformed
-        openRealTimeQuantization();
-    }//GEN-LAST:event_openQuantizationButtonActionPerformed
 
     private void adviceScrollListRhythmsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_adviceScrollListRhythmsMouseClicked
     {//GEN-HEADEREND:event_adviceScrollListRhythmsMouseClicked
@@ -24563,6 +24934,7 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     
     public void openGrammarMenuDialog()
     {
+        populateNotateGrammarMenu();
         grammarMenuDialog.setVisible(true);
     }
     
@@ -24613,27 +24985,27 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
         return grammarMenuDialog.getGrammarName();
     }
     
-    private void openRealTimeQuantization()
+    public int getRealtimeQuantizationIndex(String value, String quantumString[])
     {
-        realtimeQuantizationDialog.setVisible(true);
-        realtimeQuantizationDialog.setTitle("Real-Time Input Quantization");
-        realtimeQuantizationDialog.hideQuantizeButton();        
+        for( int index = 0; index < quantumString.length; index++ )
+          {
+            if( quantumString[index].equals(value) )
+              {
+                return index;
+              }
+          }
+        return -1;
     }
     
-    /**
-     * @return array of two ints indicating the time quanta for realtime
-     * MIDI capture
-     */
-    public int[] getQuantizationQuanta()
+public int getRealtimeQuantization()
     {
-        return quantizationDialog.getQuanta();
+        return quantum[getRealtimeQuantizationIndex(getRealtimeQuantizationString(), quantumString)];
     }
-    
-    public int getRealtimeQuantizationGCD()
-    {
-        int quanta[] = realtimeQuantizationDialog.getQuanta();
-        return gcd(quanta[0], quanta[1]);
-    }
+
+public String getRealtimeQuantizationString()
+{
+    return (String)recordingQuantizationSpinner.getValue();
+}
     
     /**
      * @return boolean indicating the swing for realtime MIDI capture
@@ -24642,16 +25014,7 @@ public ArrayList<StaveType> setStaveTypes(ArrayList<StaveType> newTypes)
     {
         return quantizationDialog.getSwing();
     }
-    
-    
-    /**
-     * @return int indicating the restAbsorption for realtime MIDI capture
-     */
-    public int getQuantizationRestAbsorption()
-    {
-        return quantizationDialog.getRestAbsorption();
-    }
-    
+
     private void setModesThatCantTrade(boolean enabled)
     {
         guideToneRadio.setEnabled(enabled);
@@ -25476,6 +25839,7 @@ ButtonGroup group = new ButtonGroup();
 
 public void populateNotateGrammarMenu()
   {
+    grammarListModel.removeAllElements();
     File directory = ImproVisor.getGrammarDirectory();
     //System.out.println("populating from " + directory);
     if( directory.isDirectory() )
@@ -27088,7 +27452,6 @@ private ImageIcon pauseButton =
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
@@ -27214,7 +27577,6 @@ private ImageIcon pauseButton =
     private javax.swing.JMenuItem openGrammarMenuDialogMI;
     private javax.swing.JMenuItem openLeadsheetEditorMI;
     private javax.swing.JMenuItem openLeadsheetMI;
-    private javax.swing.JButton openQuantizationButton;
     private javax.swing.JMenuItem openQuantizeDialogMI;
     private javax.swing.JMenu openRecentLeadsheetMenu;
     private javax.swing.JMenu openRecentLeadsheetNewWindowMenu;
@@ -27280,6 +27642,7 @@ private ImageIcon pauseButton =
     private javax.swing.JButton recordBtn;
     private javax.swing.JMenuItem recordMI;
     private javax.swing.JSpinner recordingLatencySpinner;
+    private javax.swing.JSpinner recordingQuantizationSpinner;
     private javax.swing.JRadioButton redApproachBtn;
     private javax.swing.JRadioButton redChordBtn;
     private javax.swing.JRadioButton redColorBtn;

@@ -1,6 +1,6 @@
 
-Welcome to Impro-Visor (Improvisation Advisor) Version 10.1,
-from Prof. Robert Keller at Harvey Mudd College, December 21, 2018.
+Welcome to Impro-Visor (Improvisation Advisor) Version 10.2,
+from Prof. Robert Keller at Harvey Mudd College, June 12, 2019.
 
 Release notes for this version may be found below.
 
@@ -119,7 +119,8 @@ have worked on the project since June of 2005:
  Errick Jackson, Nathan Kim, Zachary Kondak, Mikayla Konst,  
  Baunnee Martinez, Daniel Scanteianu, Amelia Sheppard, David Siah,
  Mira Jambusaria, Daniel Johnson, Sam Goree, Samantha Long, Nic Trieu,
- Joseph Yaconelli, Isys Archell Johnson, Cai Glencross, and Lukas Gnirke.
+ Joseph Yaconelli, Isys Archell Johnson, Cai Glencross, Lukas Gnirke,
+ Andy Vainauskas, and Rachel Goldstein
 
 We hope you enjoy using Impro-Visor. 
 
@@ -130,6 +131,62 @@ Professor of Computer Science
 Harvey Mudd College
 Claremont, CA 91711
 keller@cs.hmc.edu
+
+===============================================================================
+Release notes for Impro-Visor 10.2
+
+ Be aware that when launching a new version of Impro-Visor for the first time,
+ an image of the master directory will be created in your home directory:
+     impro-visor-version-10.2-files
+ Leadsheets, etc. are opened from that directory by default, not from the
+ installation directory. Any files that are associated with previous versions
+ are not lost, but you may wish to move or copy them to the new version.
+
+Now entering a note by point-and-click or MIDI will extend the note all the way
+to the next note or to the end of the chorus, whichever comes first. This may
+be distracting at first, but is necessary to make note entry more rational.
+To truncate a note, click in another note, or select the ending slot and press
+r (for rest).
+
+Real-time quantization and manual requantization have been refined and improved.
+Now there are fewer options, but quantization is more accurate. (Further 
+improvements may be forthcoming.)
+
+Now roadmap colors can be set in the preferences file. The setting consists of
+a list of RGB triples, and corresponds to the key ordering C, C#, D, Eb, ...
+Be careful to get all of the parentheses right, for example by using a text
+editor that matches parentheses.
+
+The grammar editor has been extensively enhanced, partly motivated by the desire
+to do live coding using grammars. Now the grammar editor can be opened with a
+short-cut alt-E. For some reason, it may take two strokes of the same character
+to do this.
+
+Now a left-hand side of a grammar rule consisting of just a non-terminal (rather
+than a non-terminal with argument) can be used without surrounding parentheses.
+The same is true for a right-hand side consisting of a single terminal or 
+non-terminal unless the latter is not atomic, such as (slope ...).
+
+Now notes are merged when Avoid Repeat Pitches is on only if rectification is 
+also on.
+
+Now any subset of MIDI channels 1-16 can be selected for input. Formerly all
+channels were selected. This is useful in the case of interacting with a device
+that produces output on several channels, when only a subset of those channels
+is desired.
+
+Now there is an initial facility for using a biofeedback device Muse to control
+grammars. This is done through OSC (Open Sound Control). This will be presented
+in a talk at the ICCC (International Conference on Computational Creativity)
+June 2019 by students Andy Vainauskas and Rachel Goldstein from Santa Clara 
+University. A special grammar construct muse-switch was introduced to facilitate
+this new feature.
+
+Now transposing a chord symbol NC leaves it as is, rather than turning it into
+a bogus symbol.
+
+The voicing entries for chord CM6 inadvertently included an f#. This is now
+corrected.
 
 ===============================================================================
 Release notes for Impro-Visor 10.1

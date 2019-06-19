@@ -579,7 +579,7 @@ public class Grammar
           {
             // Next is the next rule to compare to
             Polylist next = (Polylist) search.first();
-            if( next == null | next.isEmpty() )
+            if( next == null | next.isEmpty() | !(next.first() instanceof String) )
               {
                 continue;
               }

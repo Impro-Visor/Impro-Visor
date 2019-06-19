@@ -1,8 +1,7 @@
 /**
  * This Java Class is part of the Impro-Visor Application.
  *
- * Copyright (C) 2005-2012 Robert Keller and Harvey Mudd College XML export code
- * is also Copyright (C) 2009-2010 Nicolas Froment (aka Lasconic).
+ * Copyright (C) 2005-2019 Robert Keller and Harvey Mudd College
  *
  * Impro-Visor is free software; you can redistribute it and/or modifyc it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -30,18 +29,14 @@ import imp.data.MelodyPart;
 import imp.data.Note;
 import imp.data.Part.PartIterator;
 import imp.data.Rest;
-import imp.data.Unit;
-import imp.gui.Notate;
 import imp.lickgen.LickGen;
 import imp.lickgen.NoteConverter;
 import imp.lickgen.transformations.trends.Trend;
 import java.util.ArrayList;
 import polya.Polylist;
 import polya.PolylistEnum;
-import polya.PolylistIterator;
 
 /**
- *
  * @author Alex Putman
  */
 public class TransformLearning{
@@ -63,8 +58,7 @@ private static final int HALF_STEP = 1;
 
 private int windowResolution;
 
-public TransformLearning()
-{}
+public TransformLearning(){}
 
 /**
 * Divides a melody by chords and flattens each section by resolution.
@@ -202,6 +196,7 @@ public MelodyPart flattenByResolution(MelodyPart melody,
     
     return newMelody;
 }
+
 /**
 * Returns an arraylist with all the notes in a given section
 * @param melody                      the melody to get notes from

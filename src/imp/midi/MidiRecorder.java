@@ -52,7 +52,6 @@ public class MidiRecorder implements imp.Constants, Receiver
     boolean notePlaying = false;
     int prevNote = 0;
     int resolution;
-    int snapTo;
     double latency = 0;
     boolean isSuspended = false;
     int transposition = 0;
@@ -79,29 +78,27 @@ public long getTime()
   {
     if( sequencer != null && sequencer.isRunning() )
       {
-            return sequencer.getMicrosecondPosition();
+      return sequencer.getMicrosecondPosition();
       }
     else
       {
-            //notate.stopRecording();
-            return -1;
-        }
+      return -1;
+      }
     }
 
 public long getTick()
   {
-    if( sequencer != null && sequencer.isRunning() )
+  if( sequencer != null && sequencer.isRunning() )
       {
-            double bpms = ((double) sequencer.getTempoInBPM()) / 60000;    // beats per millisecond
-            long latencyTicks = Math.round(bpms * resolution * latency);
+      double bpms = ((double) sequencer.getTempoInBPM()) / 60000;    // beats per millisecond
+      long latencyTicks = Math.round(bpms * resolution * latency);
 
-            return sequencer.getTickPosition() - latencyTicks;
+       return sequencer.getTickPosition() - latencyTicks;
       }
     else
       {
-            //notate.stopRecording();
-            return -1;
-        }
+      return -1;
+       }
     }
 
 /**
@@ -111,28 +108,24 @@ public long getTick()
  * @param transposition 
  */
 
-public void start(int countInOffset, int insertionOffset, int transposition) {
+public void start(int countInOffset, int insertionOffset, int transposition)
+    {
         this.countInOffset = countInOffset;
         this.insertionOffset = insertionOffset;
         this.transposition = transposition;
-        snapTo = notate.getRealtimeQuantizationGCD();
-        //System.out.println("start snapTo = " + snapTo + " countInOffset = " + countInOffset + " insertionOffset = " + insertionOffset);
         this.sequencer = notate.getSequencer();
-        if (sequencer == null || sequencer.getSequence() == null) {
+        if( sequencer == null || sequencer.getSequence() == null )
+          {
             return;
-        }
+          }
         resolution = sequencer.getSequence().getResolution();
-        
-         while ((noteOn = getTick()) < 0) {
-        }
+
+        while( (noteOn = getTick()) < 0 )
+          {
+          }
 
         noteOff = noteOn = getTick();
         notePlaying = false;
-
-    // Without the next statement, entered notes are offset by the amount
-        // of countin.
-        //notate.setCurrentSelectionStartAndEnd(0);
-
         unSuspend(); // make sure we aren't suspended
     }
 
@@ -228,33 +221,28 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
             handleNoteOff(prevNote, velocity, channel);
 
         } else {
-            int duration = snapSlots(tickToSlots(noteOff, lastEvent));
+            int duration = notate.snapRecordingSlotsToDuration(tickToSlots(noteOff, lastEvent));
 
             // this try is here because a function a few steps up in the call hierarchy tends to capture error messages
             try {
-                index = snapSlots(tickToSlots(noteOff)) - getCountInBias();
+                index = notate.snapRecordingSlotsToIndex(tickToSlots(noteOff));
 
                 // add rests since nothing was played between now and the previous note
                 if (duration > 0 && index >= 0) {
                     Note noteToAdd = new Rest(duration);
                     setNote(index, noteToAdd);
                 }
-
-//This is disastrous for improvisation because it messes up the selection.
-//            if( index >= 0 )
-//              {
-//                //notate.setCurrentSelectionStartAndEnd(index);
-//              }
             } catch (Exception e) {
                 //ErrorLog.log(ErrorLog.SEVERE, "Internal exception in MidiRecorder: " + e);
             }
         }
 
         noteOn = lastEvent;
-        index = snapSlots(tickToSlots(noteOn)) - getCountInBias();
+        index = notate.snapRecordingSlotsToIndex(tickToSlots(noteOn));
 
-        // add current note   MAYBE RIGHT HEREEREREREREREER
-        Note noteToAdd = new Note(note, snapTo);
+        // add current note 
+        int duration = notate.snapRecordingSlotsToDuration(tickToSlots(noteOn, noteOff));
+        Note noteToAdd = new Note(note, duration);
 
         try {
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
@@ -292,7 +280,7 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
      * @param index
      * @param noteToAdd
      */
-    private void setNote(int index, Note noteToAdd) //THIS COULD BE It
+    private void setNote(int index, Note noteToAdd)
     {
         if (tradePart == null) {
             this.melodyPart = notate.getCurrentMelodyPart();
@@ -334,31 +322,25 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         noteOff = lastEvent;
         notePlaying = false;
 
-        int index = snapSlots(tickToSlots(noteOn)) - getCountInBias();
+        int index = notate.snapRecordingSlotsToIndex(tickToSlots(noteOn));
 
         if (index < 0) {
             return;
         }
 
-        int duration = snapSlots(tickToSlots(noteOn, noteOff));
+        int duration = notate.snapRecordingSlotsToDuration(tickToSlots(noteOn, noteOff));
 
         if (duration == 0) {
         } else {
             Note noteToAdd = new Note(note, duration);
             noteToAdd.setEnharmonic(score.getCurrentEnharmonics(index));
             setNote(index, noteToAdd);
+        //System.out.println("at " + index + " add " + noteToAdd);
         }
 
         index += duration;
 
-    //Does this mess up improvisation?
-    //notate.setCurrentSelectionStartAndEnd(index);
-    // System.out.println("duration: " + duration + "; corrected: " + ((double) slots) / BEAT);
         notate.repaint();
-    }
-
-    int snapToMultiple(int input, int base) {
-        return base * (int) Math.round(((double) input) / base);
     }
 
     int microsecondsToSlots(long start, long finish) {
@@ -378,11 +360,12 @@ public void start(int countInOffset, int insertionOffset, int transposition) {
         return (int) (BEAT * duration / resolution);
     }
 
-    int snapSlots(int slots) {
-        slots = snapToMultiple(slots, snapTo);
-        return slots;
+    boolean multipleOf(int value, int divisor)
+    {
+    return (value % divisor) == 0;  
     }
-
+    
+    @Override
     public void close() {
     }
     
