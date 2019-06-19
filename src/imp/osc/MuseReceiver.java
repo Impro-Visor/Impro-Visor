@@ -27,7 +27,7 @@ import oscP5.*;
 public class MuseReceiver {
 
     MuseServer museServer;
-    int recvPort = 5003;
+    int recvPort = 5000;
 
     public MuseReceiver() {
         museServer = new MuseServer();
