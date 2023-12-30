@@ -9,7 +9,6 @@
   <url>http://maven.apache.org</url>
   <properties>
     <distDir>improvisor</distDir>
-    <miscDir>misc</miscDir>
     <srcDir>src</srcDir>
     <lsDir>leadsheets</lsDir>
     <vocabDir>vocab</vocabDir>
@@ -123,7 +122,6 @@
                 <copy todir="${distDir}/vocab">
                   <fileset dir="${vocabDir}" includes="**/*" />
                 </copy>
-
                 <copy todir="${distDir}/vocab">
                   <fileset dir="${vocabDir}" includes="**/*.voc" />
                 </copy>
@@ -181,9 +179,7 @@
                 <copy todir="${distDir}/voicings">
                   <fileset dir="${voicingsDir}" includes="**/*.fv" />
                 </copy>
-                <copy todir="${distDir}">
-                  <fileset dir="${miscDir}" includes="**/*.*" />
-                </copy>
+                <copy file="README.txt" tofile="${distDir}/README.txt" />
               </target>
             </configuration>
           </execution>

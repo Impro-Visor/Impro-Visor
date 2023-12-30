@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <property name="dist-win"               value="improvisor-win"        />
     <property name="zipName"                value="improvisor.zip"        />
     <property name="zipMacName"             value="improvisormac.zip"     />
-    <property name="miscDir"                value="misc"               />
     <property name="srcDir"                 value="src"                      />
     <property name="impDir"                 value="src/imp"                  />
     <property name="jmDir"                  value="src/jm"                   />
@@ -342,9 +341,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <copy todir="${distDir}/voicings">
         <fileset dir="${voicingsDir}" includes="**/*.fv" />
     </copy>
-    <copy todir="${distDir}">
-        <fileset dir="${miscDir}" includes="**/*.*" />
-    </copy>
+    <copy file="README.txt" tofile="${distDir}/README.txt" />
 </target>
 
 <target name="test" depends="compile" description="compile the test">
@@ -566,12 +563,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
      <copy todir="${dist-mac}/midi">
         <fileset dir="${midiDir}" includes="**/*.mid **/*.MID" />
     </copy>
-    
-    <copy todir="${dist-mac}">
-        <fileset dir="${miscDir}" includes="**/*.*" />
-    </copy>
-   
-    
+
+    <copy file="README.txt" tofile="${distDir}/README.txt" />
 </target>
 
 <target name="dist-win" depends="dist">
@@ -617,11 +610,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
     <copy todir="${dist-win}/leadsheets">
         <fileset dir="${lsDir}" includes="**/*.ls" />
     </copy>
-    
-    <copy todir="${dist-win}">
-        <fileset dir="${miscDir}" includes="**/*.*" />
-    </copy>
-    
+
+    <copy file="README.txt" tofile="${distDir}/README.txt" />
+
     <move todir="${dist-win}" file="${winDir}/Impro-Visor.exe" />
 </target>
 
