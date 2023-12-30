@@ -1,0 +1,190 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>www.impro-visor.com</groupId>
+  <artifactId>impro-visor</artifactId>
+  <packaging>jar</packaging>
+  <version>10.2</version>
+  <name>impro-visor</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <distDir>improvisor</distDir>
+    <srcDir>src</srcDir>
+    <lsDir>leadsheets</lsDir>
+    <vocabDir>vocab</vocabDir>
+    <grammarDir>grammars</grammarDir>
+    <styleDir>styles</styleDir>
+    <styleExtractDir>styleExtract</styleExtractDir>
+    <midiDir>midi</midiDir>
+    <scDir>sc</scDir>
+    <countsDir>counts</countsDir>
+    <fractalsDir>fractals</fractalsDir>
+    <connectomesDir>connectomes</connectomesDir>
+    <transformsDir>transforms</transformsDir>
+    <voicingsDir>voicings</voicingsDir>
+    <packagingDir>packaging</packagingDir>
+    <javadocDir>javadoc</javadocDir>
+    <improvisorClass>imp.ImproVisor</improvisorClass>
+    <formatClass>imp.util.FormatLeadsheet</formatClass>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.mikera</groupId>
+      <artifactId>vectorz</artifactId>
+      <version>0.48.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-configuration2</artifactId>
+      <version>2.0</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <includes>
+          <include>**/*.gif</include>
+          <include>**/*.png</include>
+          <include>**/*.jpg</include>
+          <include>**/*.JPG</include>
+        </includes>
+      </resource>
+    </resources>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${distDir}</directory>
+              <includes>
+                <include>**</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>imp.ImproVisor</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>create-folders</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <mkdir dir="${distDir}" />
+                <mkdir dir="${javadocDir}" />
+              </target>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-resources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <copy file="target/impro-visor-${version}.jar" tofile="${distDir}/improvisor.jar" />
+                <copy todir="${distDir}">
+                  <fileset dir="${vocabDir}" includes="**/*" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*.voc" />
+                </copy>
+                <copy todir="${distDir}">
+                  <fileset dir="" includes="LICENSE.txt README.txt" />
+                </copy>
+                <copy todir="${distDir}/grammars">
+                  <fileset dir="${grammarDir}" includes="**/*.grammar **/*.transform **/*.soloist **/HeadData.data" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*.prefs" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*.cluster" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*.rhythms" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*.xml" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*.dictionary" />
+                </copy>
+                <copy todir="${distDir}/vocab">
+                  <fileset dir="${vocabDir}" includes="**/*.substitutions" />
+                </copy>
+                <copy todir="${distDir}/styles">
+                  <fileset dir="${styleDir}" includes="**/*.sty" />
+                </copy>
+                <copy todir="${distDir}/styleExtract">
+                  <fileset dir="${styleExtractDir}" includes="**/*.mid **/*.MID **/*.ls" />
+                </copy>
+                <copy todir="${distDir}/midi">
+                  <fileset dir="${midiDir}" includes="**/*.mid **/*.MID" />
+                </copy>
+                <copy todir="${distDir}/leadsheets">
+                  <fileset dir="${lsDir}" includes="**/*.ls" />
+                </copy>
+                <copy todir="${distDir}/sc">
+                  <fileset dir="${scDir}" includes="**/*.*" />
+                </copy>
+                <copy todir="${distDir}/counts">
+                  <fileset dir="${countsDir}" includes="**/*.counts" />
+                </copy>
+                <copy todir="${distDir}/fractals">
+                  <fileset dir="${fractalsDir}" includes="**/*.fractal" />
+                </copy>
+                <copy todir="${distDir}/connectomes">
+                  <fileset dir="${connectomesDir}" includes="**/*.ctome" />
+                </copy>
+                <copy todir="${distDir}/transforms">
+                  <fileset dir="${transformsDir}" includes="**/*.transform" />
+                </copy>
+                <copy todir="${distDir}/voicings">
+                  <fileset dir="${voicingsDir}" includes="**/*.fv" />
+                </copy>
+                <copy file="README.txt" tofile="${distDir}/README.txt" />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
