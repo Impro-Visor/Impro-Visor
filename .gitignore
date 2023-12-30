@@ -6,3 +6,8 @@ build/
 nbproject/private/private.xml
 .DS_Store
 /nbproject/private/
+target/
+.idea/
+improvisor1020/
+ivysettings.xml
+.bak/
