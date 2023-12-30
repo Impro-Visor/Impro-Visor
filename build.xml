@@ -22,13 +22,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 </description>
     
 <target name="init">
+
     <property name="appName"                value="Impro-Visor"              />
-    <property name="distDir"                value="improvisor1020"            />
-    <property name="dist-mac"               value="improvisor1020-mac"        />
-    <property name="dist-win"               value="improvisor1020-win"        />
-    <property name="zipName"                value="improvisor1020.zip"        />
-    <property name="zipMacName"             value="improvisor1020mac.zip"     />
-    <property name="miscDir"                value="improvisor"               />
+    <property name="distDir"                value="improvisor"            />
+    <property name="dist-mac"               value="improvisor-mac"        />
+    <property name="dist-win"               value="improvisor-win"        />
+    <property name="zipName"                value="improvisor.zip"        />
+    <property name="zipMacName"             value="improvisormac.zip"     />
+    <property name="miscDir"                value="misc"               />
     <property name="srcDir"                 value="src"                      />
     <property name="impDir"                 value="src/imp"                  />
     <property name="jmDir"                  value="src/jm"                   />
@@ -453,7 +454,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 </target>
 
 <target name="zipSrc" depends="cleanSrc" description="zips up the source">
-    <zip destfile="improvisor1020-src.zip" basedir="${srcDir}" />
+    <zip destfile="improvisor-src.zip" basedir="${srcDir}" />
 </target>
 
 <target name="cleanJavadoc" depends="init" description="">
@@ -488,7 +489,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 </target>
 
 <target name="cleanZipSrc" depends="init" description="removes zipSrc file">
-   <delete file="improvisor1020-src.zip" />
+   <delete file="improvisor-src.zip" />
 </target>
 
 <target name="clean" depends="cleanBuild,cleanTest,cleanDist,cleanZip,cleanSrc,cleanZipSrc,cleanJavadoc,cleanLib" 

@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>puguan.me</groupId>
+  <groupId>www.impro-visor.com</groupId>
   <artifactId>impro-visor</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>10.2</version>
   <name>impro-visor</name>
   <url>http://maven.apache.org</url>
   <properties>
-    <distDir>improvisor1020</distDir>
-    <miscDir>improvisor</miscDir>
+    <distDir>improvisor</distDir>
+    <miscDir>misc</miscDir>
     <srcDir>src</srcDir>
     <lsDir>leadsheets</lsDir>
     <vocabDir>vocab</vocabDir>
@@ -116,7 +116,7 @@
             </goals>
             <configuration>
               <target>
-                <copy file="target/impro-visor-1.0-SNAPSHOT.jar" tofile="${distDir}/impro-visor.jar" />
+                <copy file="target/impro-visor-${version}.jar" tofile="${distDir}/improvisor.jar" />
                 <copy todir="${distDir}">
                   <fileset dir="${vocabDir}" includes="**/*" />
                 </copy>

@@ -22,7 +22,7 @@
       <mountPoint id="87" root="" location="" mode="755" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="87" file="./improvisor1020" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="improvisor1020" excludeSuffixes="" dirMode="755" overrideDirMode="false">
+      <dirEntry mountPoint="87" file="./improvisor" overwriteMode="4" shared="false" fileMode="644" uninstallMode="0" overrideFileMode="false" overrideOverwriteMode="false" overrideUninstallMode="false" entryMode="direct" subDirectory="improvisor" excludeSuffixes="" dirMode="755" overrideDirMode="false">
         <exclude />
       </dirEntry>
     </entries>
